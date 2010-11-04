@@ -28,7 +28,7 @@
 
 - (void)refresh
 {
-    NSLog(@"will display: %@", [CalendarAdapter calendarAsJSON]);
+    NSLog(@"will display: %@", [[CalendarAdapter sharedCalendarAdapter] calendarAsJSON]);
 }
 
 @end

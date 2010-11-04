@@ -10,9 +10,12 @@
 
 
 @interface CalendarAdapter : NSObject {
-
+    NSDate *beginningDate;
+    NSDate *endDate;
 }
 
-+ (NSString *)calendarAsJSON;
++ (CalendarAdapter *)sharedCalendarAdapter;
+
+- (NSString *)calendarAsJSON;
 
 @end
