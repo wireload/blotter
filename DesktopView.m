@@ -7,7 +7,7 @@
 //
 
 #import "DesktopView.h"
-
+#import "CalendarAdapter.h"
 
 @implementation DesktopView
 
@@ -20,12 +20,15 @@
         [webContentView setMainFrameURL:[calendarURL absoluteString]];
         [webContentView setDrawsBackground:NO];
         [self addSubview:webContentView];
+
+        [self refresh];
     }
     return self;
 }
 
-/*
-- (void)drawRect:(NSRect)dirtyRect {
-}*/
+- (void)refresh
+{
+    NSLog(@"will display: %@", [CalendarAdapter calendarAsJSON]);
+}
 
 @end

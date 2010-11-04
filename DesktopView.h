@@ -13,4 +13,6 @@
     WebView *webContentView;
 }
 
+- (void)refresh;
+
 @end
