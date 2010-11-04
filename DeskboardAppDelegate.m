@@ -19,15 +19,21 @@
                                                  styleMask:NSBorderlessWindowMask
                                                    backing:NSBackingStoreBuffered
                                                      defer:NO];
-    [desktopWindow setLevel:kCGDesktopIconWindowLevel];
+    // The -1 ensures we start out underneath the icons, not at the same level.
+    [desktopWindow setLevel:kCGDesktopWindowLevel - 1];
+    [desktopWindow setOpaque:NO];
     [desktopWindow setHasShadow:NO];
     [desktopWindow setBackgroundColor:[NSColor clearColor]];
-    [desktopWindow setOpaque:NO];
-
-    [desktopWindow orderFront:NSApp];
+    [desktopWindow setIgnoresMouseEvents:YES];
 
     overlayView = [[DesktopView alloc] initWithFrame:[[desktopWindow contentView] frame]];
     [desktopWindow setContentView:overlayView];
+
+    [desktopWindow orderFront:NSApp];
+    // [desktopWindow useOptimizedDrawing:YES];
+    [desktopWindow flushWindow];
+    [desktopWindow display];
 }
+
 
 @end
