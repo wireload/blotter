@@ -8,14 +8,17 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "SS_PrefsController.h"
+
 #import "DesktopView.h"
 
 @interface DeskboardAppDelegate : NSObject <NSApplicationDelegate> {
-    NSWindow    *preferencesWindow;
     NSWindow    *desktopWindow;
     DesktopView *overlayView;
+
+    SS_PrefsController *prefs;
 }
 
-@property (assign) IBOutlet NSWindow *preferencesWindow;
+- (IBAction)showPrefs:(id)sender;
 
 @end

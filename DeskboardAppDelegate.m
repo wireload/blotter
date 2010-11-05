@@ -10,8 +10,6 @@
 
 @implementation DeskboardAppDelegate
 
-@synthesize preferencesWindow;
-
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     NSRect frame = [[NSScreen mainScreen] visibleFrame];
     NSLog(@"Covering desktop (%f, %f, %f x %f)", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
@@ -35,5 +33,29 @@
     [desktopWindow display];
 }
 
+
+- (IBAction)showPrefs:(id)sender
+{
+    if (!prefs) {
+        // Determine path to the sample preference panes
+        NSString *pathToPanes = [[NSString stringWithFormat:@"%@/../Preference Panes/", [[NSBundle mainBundle] resourcePath]]
+            stringByStandardizingPath];
+
+        prefs = [[SS_PrefsController alloc] initWithPanesSearchPath:pathToPanes];
+        [prefs setDebug:YES];
+
+        // Set which panes are included, and their order.
+        [prefs setPanesOrder:[NSArray arrayWithObjects:@"General", @"Positioning", nil]];
+    }
+
+    // Show the preferences window.
+    [prefs showPreferencesWindow];
+}
+
+- (void)dealloc
+{
+    [prefs release];
+    [super dealloc];
+}
 
 @end
