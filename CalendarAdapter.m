@@ -88,6 +88,36 @@ static void * volatile sharedInstance = nil;
     return r;
 }
 
+- (NSArray *)jsonTasks
+{
+    NSPredicate *predicate = [CalCalendarStore taskPredicateWithUncompletedTasks:[[CalCalendarStore defaultCalendarStore] calendars]];
+    NSArray *tasks = [[CalCalendarStore defaultCalendarStore] tasksWithPredicate:predicate];
+
+    NSMutableArray *r = [NSMutableArray array];
+    for (int i = 0; i < [tasks count]; i++)
+    {
+        NSMutableDictionary *jsonTask = [NSMutableDictionary new];
+        NSMutableDictionary *jsonCalendar = [NSMutableDictionary new];
+
+        CalTask *task = [tasks objectAtIndex:i];
+
+        [jsonCalendar setValue:[[task calendar] title]                  forKey:@"title"];
+        [jsonCalendar setValue:[[[task calendar] color] hexString]      forKey:@"color"];
+        [jsonTask setValue:jsonCalendar                                 forKey:@"calendar"];
+        [jsonTask setValue:[task title]                                 forKey:@"title"];
+        [jsonTask setValue:[NSNumber numberWithInt:[task priority]]     forKey:@"priority"];
+        // [jsonTask setValue:[NSNumber numberWithBool:[task isCompleted]] forKey:@"isCompleted"];
+
+        [r addObject:jsonTask];
+
+        [jsonTask autorelease];
+        [jsonCalendar autorelease];
+    }
+
+    return r;
+
+}
+
 - (NSString *)calendarAsJSON
 {
     [self setDateRangeToCurrentWeek];
@@ -97,6 +127,7 @@ static void * volatile sharedInstance = nil;
     [jsonCalendar setValue:[beginningDate description] forKey:@"beginningDate"];
     [jsonCalendar setValue:[endDate description] forKey:@"endDate"];
     [jsonCalendar setValue:[self jsonEvents] forKey:@"events"];
+    [jsonCalendar setValue:[self jsonTasks] forKey:@"tasks"];
 
     NSString *JSONString = [jsonCalendar yajl_JSONStringWithOptions:YAJLGenOptionsBeautify indentString:@"  "];
 
