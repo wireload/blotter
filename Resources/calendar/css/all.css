@@ -1,235 +1,355 @@
-body{
-	margin:0;
-	color:#fff;
-	font:14px/18px Helvetica, Arial, sans-serif;
-	background:#bbb;
-	min-width:800px;
-	padding:0 0 115px;
+body
+{
+  background: #bbb;
+  color: #fff;
+  font: 14px/18px Helvetica, Arial, sans-serif;
+  margin: 0;
+  min-width: 800px;
+  padding: 0 0 115px;
 }
-img{border-style:none;}
-a{
-	text-decoration:none;
-	color:#ff3131;
+img
+{
+  border-style: none;
 }
-a:hover{text-decoration:underline;}
+a
+{
+  color: #ff3131;
+  text-decoration: none;
+}
+a:hover
+{
+  text-decoration: underline;
+}
 input,
 textarea,
-select{
-	font:12px Arial, Helvetica, sans-serif;
-	vertical-align:middle;
-	color:#fff;
+select
+{
+  color: #fff;
+  font: 12px Arial, Helvetica, sans-serif;
+  vertical-align: middle;
 }
-#main{
-	width:100%;	overflow:hidden;
+#main
+{
+  overflow: hidden;
+  width: 100%;
 }
-#wrapper{
-	background:#8c8c90;
-	margin:115px 20px 0;
-	height:1%;
-	overflow:hidden;
+#wrapper
+{
+  background: #8c8c90;
+  height: 1%;
+  margin: 115px 20px 0;
+  overflow: hidden;
 }
-#wrapper .bg-t {background:url(../images/bg-wrapper-t.gif) repeat-x;}
-#wrapper .bg-b {background:url(../images/bg-wrapper-b.gif) repeat-x 0 100%;}
-#wrapper .bg-tl {background:url(../images/bg-wrapper-tl.gif) no-repeat;}
-#wrapper .bg-tr {background:url(../images/bg-wrapper-tr.gif) no-repeat 100% 0;}
-#wrapper .bg-bl {
-	background:url(../images/bg-wrapper-bl.gif) no-repeat 0 100%;
-	padding:16px 20px 10px 10px;
+#wrapper .bg-t
+{
+  background: url(../images/bg-wrapper-t.gif) repeat-x;
 }
-#wrapper .bg-br {background:url(../images/bg-wrapper-br.gif) no-repeat 100% 100%;}
-#wrapper .bg-l {background:url(../images/bg-wrapper-l.gif) repeat-y;}
-#wrapper .bg-r {background:url(../images/bg-wrapper-r.gif) repeat-y 100% 0;}
-.info{
-	float:left;
-	background:#8c8c90;
-	margin:16px 0 0 2%;
-	width:22%;
-	display:inline;
+#wrapper .bg-b
+{
+  background: url(../images/bg-wrapper-b.gif) repeat-x 0 100%;
 }
-.main-table{
-	float:right;
-	width:75%;
-	font-size:10px;
-	line-height:12px;
-	margin:0 0 17px;
+#wrapper .bg-tl
+{
+  background: url(../images/bg-wrapper-tl.gif) no-repeat;
 }
-.date{
-	width:100%;	overflow:hidden;
-	text-align:center;
-	margin:0 0 14px;
-	font:26px/30px Helvetica, Arial, sans-serif;
+#wrapper .bg-tr
+{
+  background: url(../images/bg-wrapper-tr.gif) no-repeat 100% 0;
 }
-.date p{margin:0 0 9px;}
-.date strong{
-	font-weight:normal;
-	font-size:200px;
-	line-height:152px;
+#wrapper .bg-bl
+{
+  background: url(../images/bg-wrapper-bl.gif) no-repeat 0 100%;
+  padding: 16px 20px 10px 10px;
 }
-.box-holder{
-	margin:0 0 -13px;
-	width:100%;
+#wrapper .bg-br
+{
+  background: url(../images/bg-wrapper-br.gif) no-repeat 100% 100%;
 }
-.box{
-	margin:0 0 32px;
-	width:100%;	overflow:hidden;
-	background:#868f93 url(../images/bg-box.gif) repeat-x;
+#wrapper .bg-l
+{
+  background: url(../images/bg-wrapper-l.gif) repeat-y;
 }
-.box .t {background:url(../images/bg-t.gif) repeat-x;}
-.box .b {background:url(../images/bg-b.gif) repeat-x 0 100%;}
-.box .tl {background:url(../images/bg-tl.gif) no-repeat;}
-.box .tr {
-	padding-top:3px;
-	background:url(../images/bg-tr.gif) no-repeat 100% 0;
+#wrapper .bg-r
+{
+  background: url(../images/bg-wrapper-r.gif) repeat-y 100% 0;
 }
-.box .bl {background:url(../images/bg-bl.gif) no-repeat 0 100%;}
-.box .br {
-	background:url(../images/bg-br.gif) no-repeat 100% 100%;
-	padding-bottom:3px;
+.info
+{
+  background: #8c8c90;
+  display: inline;
+  float: left;
+  margin: 16px 0 0 2%;
+  width: 22%;
 }
-.box .l {background:url(../images/bg-r.gif) repeat-y;}
-.box .r {
-	background:url(../images/bg-r.gif) repeat-y 100% 0;
-	padding:9px 13px;
-	min-height:200px;
+.main-table
+{
+  float: right;
+  font-size: 10px;
+  line-height: 12px;
+  margin: 0 0 17px;
+  width: 75%;
 }
-* html .box .r{height:200px;}
+.date
+{
+  font: 26px/30px Helvetica, Arial, sans-serif;
+  margin: 0 0 14px;
+  overflow: hidden;
+  text-align: center;
+  width: 100%;
+}
+.date p
+{
+  margin: 0 0 9px;
+}
+.date strong
+{
+  font-size: 200px;
+  font-weight: normal;
+  line-height: 152px;
+}
+.box-holder
+{
+  margin: 0 0 -13px;
+  width: 100%;
+}
+.box
+{
+  background: #868f93 url(../images/bg-box.gif) repeat-x;
+  margin: 0 0 32px;
+  overflow: hidden;
+  width: 100%;
+}
+.box .t
+{
+  background: url(../images/bg-t.gif) repeat-x;
+}
+.box .b
+{
+  background: url(../images/bg-b.gif) repeat-x 0 100%;
+}
+.box .tl
+{
+  background: url(../images/bg-tl.gif) no-repeat;
+}
+.box .tr
+{
+  background: url(../images/bg-tr.gif) no-repeat 100% 0;
+  padding-top: 3px;
+}
+.box .bl
+{
+  background: url(../images/bg-bl.gif) no-repeat 0 100%;
+}
+.box .br
+{
+  background: url(../images/bg-br.gif) no-repeat 100% 100%;
+  padding-bottom: 3px;
+}
+.box .l
+{
+  background: url(../images/bg-r.gif) repeat-y;
+}
+.box .r
+{
+  background: url(../images/bg-r.gif) repeat-y 100% 0;
+  min-height: 200px;
+  padding: 9px 13px;
+}
+* html .box .r
+{
+  height: 200px;
+}
 .box h1,
-.box h2{
-	margin:0 0 13px;
-	font:26px/28px Helvetica, Arial, sans-serif;
+.box h2
+{
+  font: 26px/28px Helvetica, Arial, sans-serif;
+  margin: 0 0 13px;
 }
-.box h2{margin:0 0 10px;}
-.box ul{
-	margin:0;	padding:0 0 0 4px;	list-style:none;
+.box h2
+{
+  margin: 0 0 10px;
 }
-.box li{
-	background:url(../images/bullet.gif) no-repeat 0 7px;
-	padding:0 0 12px 7px;
+.box ul
+{
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 4px;
 }
-.box p{margin:0;}
-.calendar{
-	width:100%;
-	border-collapse:collapse;
-	background:url(../images/bg-table.png);
+.box li
+{
+  background: url(../images/bullet.gif) no-repeat 0 7px;
+  padding: 0 0 12px 7px;
 }
-.top-table{
-	margin:0 0 9px;
-	border-collapse:collapse;
+.box p
+{
+  margin: 0;
+}
+.calendar
+{
+  background: url(../images/bg-table.png);
+  border-collapse: collapse;
+  width: 100%;
+}
+.top-table
+{
+  border-collapse: collapse;
+  margin: 0 0 9px;
 }
 .calendar td,
-.top-table td{
-	padding:2px 5px 2px 10px;
-	background:url(../images/bg-cell.gif) repeat-y;
-	height:50px;
-	width:14%;
-	vertical-align:top;
-	overflow:hidden;
+.top-table td
+{
+  background: url(../images/bg-cell.gif) repeat-y;
+  height: 50px;
+  overflow: hidden;
+  padding: 2px 5px 2px 10px;
+  vertical-align: top;
+  width: 14%;
 }
-.top-table td{
-	height:113px;
-	background:none !important;
-	padding:2px 0 2px 7px;
+.top-table td
+{
+  background: none !important;
+  height: 113px;
+  padding: 2px 0 2px 7px;
 }
-.top-table .col1{
-	width:0;
-	text-align:center;
-	padding:0 16px 0 15px;
-	white-space:nowrap;
-	background:none;
-	line-height:0;
-	font-size:0;
+.top-table .col1
+{
+  background: none;
+  font-size: 0;
+  line-height: 0;
+  padding: 0 16px 0 15px;
+  text-align: center;
+  white-space: nowrap;
+  width: 0;
 }
-.top-table div{
-	width:100%;	overflow:hidden;
-	border:1px solid #848488;
-	height:100%;
-	background:url(../images/bg-top-cell.png) repeat-x;
+.top-table div
+{
+  background: url(../images/bg-top-cell.png) repeat-x;
+  border: 1px solid #848488;
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
 }
-.calendar .col1{
-	width:34px;
-	text-align:center;
-	background:#80878a;
-	padding:2px 3px 0 5px;
-	font-size:9px;
-	white-space:nowrap;
+.calendar .col1
+{
+  background: #80878a;
+  font-size: 9px;
+  padding: 2px 3px 0 5px;
+  text-align: center;
+  white-space: nowrap;
+  width: 34px;
 }
-.box .calendar{
-	font-size:10px;
-	line-height:12px;
-	background:#666c6e !important;
+.box .calendar
+{
+  background: #666c6e !important;
+  font-size: 10px;
+  line-height: 12px;
 }
-.box .calendar td{
-	width:auto;
-	padding:2px 5px 0 10px;
-	border:0;
-	background:url(../images/bg-cell2.gif) repeat-y;
+.box .calendar td
+{
+  background: url(../images/bg-cell2.gif) repeat-y;
+  border: 0;
+  padding: 2px 5px 0 10px;
+  width: auto;
 }
-.box .calendar .col1{
-	width:26px;
-	padding:2px 2px 0 3px;
-	background:#828e91;
+.box .calendar .col1
+{
+  background: #828e91;
+  padding: 2px 2px 0 3px;
+  width: 26px;
 }
-.calendar th{
-	padding:0 0 0 5px;
-	background:url(../images/bg-cell.gif) repeat-y;
-	height:20px;
-	text-align:center;
-	font-size:11px;
-	vertical-align:top;
-	font-weight:normal;
+.calendar th
+{
+  background: url(../images/bg-cell.gif) repeat-y;
+  font-size: 11px;
+  font-weight: normal;
+  height: 20px;
+  padding: 0 0 0 5px;
+  text-align: center;
+  vertical-align: top;
 }
-.top{border-top:1px solid #8c8c90;}
-.bottom{border-bottom:1px solid #8c8c90;}
+.top
+{
+  border-top: 1px solid #8c8c90;
+}
+.bottom
+{
+  border-bottom: 1px solid #8c8c90;
+}
 .calendar th span,
-.top-table span{
-	display:block;
-	width:100%;
-	padding:6px 0 4px;
-	background:url(../images/bg-heading.png) repeat-x;
+.top-table span
+{
+  background: url(../images/bg-heading.png) repeat-x;
+  display: block;
+  padding: 6px 0 4px;
+  width: 100%;
 }
-.red{background:#984a4c url(../images/bg-cell.gif) repeat-y !important;}
-.green{background:#4e9e4f url(../images/bg-cell.gif) repeat-y !important;}
-.magenta{background:#98559c url(../images/bg-cell.gif) repeat-y !important;}
-.box .magenta{background:#98559c url(../images/bg-cell2.gif) repeat-y !important;}
-.green2{background:#599d94 url(../images/bg-cell.gif) repeat-y !important;}
+.red
+{
+  background: #984a4c url(../images/bg-cell.gif) repeat-y !important;
+}
+.green
+{
+  background: #4e9e4f url(../images/bg-cell.gif) repeat-y !important;
+}
+.magenta
+{
+  background: #98559c url(../images/bg-cell.gif) repeat-y !important;
+}
+.box .magenta
+{
+  background: #98559c url(../images/bg-cell2.gif) repeat-y !important;
+}
+.green2
+{
+  background: #599d94 url(../images/bg-cell.gif) repeat-y !important;
+}
 .top-table .green,
-.top-table .magenta{
-	margin:5px 0 0;
-	border:1px solid #abb1b4;
-	border-width:1px 0;
-	padding:5px;
-	background:#4e9e4f !important;
+.top-table .magenta
+{
+  background: #4e9e4f !important;
+  border: 1px solid #abb1b4;
+  border-width: 1px 0;
+  margin: 5px 0 0;
+  padding: 5px;
 }
-.top-table .magenta{background:#98559c !important;}
-.calendar td.mask{
-	background:url(../images/bg-mask1.gif) repeat-x;
-	padding:0;
-	height:21px;
-	width:100%;
+.top-table .magenta
+{
+  background: #98559c !important;
 }
-.box .calendar .mask2{
-	background:url(../images/bg-mask2.gif) no-repeat;
-	left:0;
-	padding:0;
-	top:0;
-	height:21px;
-	width:36px;
+.calendar td.mask
+{
+  background: url(../images/bg-mask1.gif) repeat-x;
+  height: 21px;
+  padding: 0;
+  width: 100%;
 }
-.box .mask3{
-	background:url(../images/bg-mask3.gif) repeat-x;
-	bottom:-1px;
-	height:16px;
-	left:36px;
-	padding:0;
-	position:absolute;
-	width:100%;
-	z-index:333;
-	line-height:0;
-	font-size:0;
-	overflow:hidden;
+.box .calendar .mask2
+{
+  background: url(../images/bg-mask2.gif) no-repeat;
+  height: 21px;
+  left: 0;
+  padding: 0;
+  top: 0;
+  width: 36px;
 }
-.area{
-	width:100%;	overflow:hidden;
-	position:relative;
-	margin:0 0 -8px;
+.box .mask3
+{
+  background: url(../images/bg-mask3.gif) repeat-x;
+  bottom: -1px;
+  font-size: 0;
+  height: 16px;
+  left: 36px;
+  line-height: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+  z-index: 333;
+}
+.area
+{
+  margin: 0 0 -8px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
 }
