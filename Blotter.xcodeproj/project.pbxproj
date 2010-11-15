@@ -17,8 +17,8 @@
 		284064E112833EC0000816FF /* YAJL.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 284064D212833EBC000816FF /* YAJL.framework */; };
 		284064FC12834B98000816FF /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 284064FB12834B98000816FF /* CalendarStore.framework */; };
 		2840653812836E78000816FF /* NSColor-Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 2840653712836E78000816FF /* NSColor-Utilities.m */; };
-		28805C02128E4617001FE4E2 /* Blotter-B5.icns in Resources */ = {isa = PBXBuildFile; fileRef = 28805C01128E4617001FE4E2 /* Blotter-B5.icns */; };
 		28B54DB61283BABF0037BF53 /* SS_PrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54DB51283BABF0037BF53 /* SS_PrefsController.m */; };
+		28D1AAEC1291DCE100EB938F /* Blotter-B6.icns in Resources */ = {isa = PBXBuildFile; fileRef = 28D1AAEB1291DCE100EB938F /* Blotter-B6.icns */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -55,10 +55,10 @@
 		284064FB12834B98000816FF /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = System/Library/Frameworks/CalendarStore.framework; sourceTree = SDKROOT; };
 		2840653612836E78000816FF /* NSColor-Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor-Utilities.h"; sourceTree = "<group>"; };
 		2840653712836E78000816FF /* NSColor-Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor-Utilities.m"; sourceTree = "<group>"; };
-		28805C01128E4617001FE4E2 /* Blotter-B5.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Blotter-B5.icns"; sourceTree = "<group>"; };
 		28B54DB31283BABF0037BF53 /* SS_PreferencePaneProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SS_PreferencePaneProtocol.h; sourceTree = "<group>"; };
 		28B54DB41283BABF0037BF53 /* SS_PrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SS_PrefsController.h; sourceTree = "<group>"; };
 		28B54DB51283BABF0037BF53 /* SS_PrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SS_PrefsController.m; sourceTree = "<group>"; };
+		28D1AAEB1291DCE100EB938F /* Blotter-B6.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Blotter-B6.icns"; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -152,7 +152,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				28805C01128E4617001FE4E2 /* Blotter-B5.icns */,
+				28D1AAEB1291DCE100EB938F /* Blotter-B6.icns */,
 				8D1107310486CEB800E47090 /* Blotter-Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
@@ -227,7 +227,7 @@
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
 				28406264127E773A000816FF /* calendar.html in Resources */,
-				28805C02128E4617001FE4E2 /* Blotter-B5.icns in Resources */,
+				28D1AAEC1291DCE100EB938F /* Blotter-B6.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
