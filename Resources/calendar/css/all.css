@@ -38,6 +38,8 @@ select
 {
   overflow: hidden;
 
+  min-height: 800px;
+
   position: absolute;
   left: 13px;
   top: 13px;
@@ -67,19 +69,36 @@ select
 
 .info
 {
-  background: #8c8c90;
-  display: inline;
-  float: left;
-  margin: 16px 0 0 2%;
-  width: 22%;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  bottom: 10px;
+  width: 250px;
 }
-.main-table
+
+.info-boxes-space
 {
-  float: right;
-  font-size: 10px;
-  line-height: 12px;
-  margin: 0 0 17px;
-  width: 75%;
+  position: absolute;
+  top: 245px;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+}
+
+#to-do-box
+{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 48%;
+}
+
+#next-up-box
+{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 48%;
 }
 .date
 {
@@ -93,64 +112,35 @@ select
 {
   margin: 0 0 9px;
 }
+
 .date strong
 {
   font-size: 200px;
   font-weight: normal;
   line-height: 152px;
 }
-.box-holder
-{
-  margin: 0 0 -13px;
-  width: 100%;
-}
+
 .box
 {
-  background: #868f93 url(../images/bg-box.gif) repeat-x;
-  margin: 0 0 32px;
   overflow: hidden;
+
+  border-image: url("../images/info-box-combined.png") 5 stretch stretch;
+  -webkit-border-image: url("../images/info-box-combined.png") 5 stretch stretch;
+
+  border-image-width: auto;
+  -webkit-border-image-width: auto;
+}
+
+.box div
+{
+  display: table;
+
   width: 100%;
+  height: 100%;
+
+  padding: 12px;
 }
-.box .t
-{
-  background: url(../images/bg-t.gif) repeat-x;
-}
-.box .b
-{
-  background: url(../images/bg-b.gif) repeat-x 0 100%;
-}
-.box .tl
-{
-  background: url(../images/bg-tl.gif) no-repeat;
-}
-.box .tr
-{
-  background: url(../images/bg-tr.gif) no-repeat 100% 0;
-  padding-top: 3px;
-}
-.box .bl
-{
-  background: url(../images/bg-bl.gif) no-repeat 0 100%;
-}
-.box .br
-{
-  background: url(../images/bg-br.gif) no-repeat 100% 100%;
-  padding-bottom: 3px;
-}
-.box .l
-{
-  background: url(../images/bg-r.gif) repeat-y;
-}
-.box .r
-{
-  background: url(../images/bg-r.gif) repeat-y 100% 0;
-  min-height: 200px;
-  padding: 9px 13px;
-}
-* html .box .r
-{
-  height: 200px;
-}
+
 .box h1,
 .box h2
 {
@@ -176,6 +166,17 @@ select
 {
   margin: 0;
 }
+
+
+.main-table
+{
+  float: right;
+  font-size: 10px;
+  line-height: 12px;
+  margin: 0 0 17px;
+  width: 75%;
+}
+
 .calendar
 {
   background: url(../images/bg-table.png);
