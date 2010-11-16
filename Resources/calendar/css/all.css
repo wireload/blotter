@@ -1,6 +1,6 @@
 body
 {
-  background: #bbb;
+  background: url('../../../../../../Desktop/Aqua Blue.jpg');
   color: #fff;
   font: 14px/18px Helvetica, Arial, sans-serif;
   margin: 0;
@@ -33,46 +33,38 @@ select
   overflow: hidden;
   width: 100%;
 }
-#wrapper
+
+#calendar-border
 {
-  background: #8c8c90;
-  height: 1%;
-  margin: 115px 20px 0;
   overflow: hidden;
+
+  position: absolute;
+  left: 13px;
+  top: 13px;
+  right: 13px;
+  bottom: 13px;
+
+  border: 13px solid transparent;
+
+  border-image: url("../images/glass-bezel-combined.png") 13 stretch stretch;
+  -webkit-border-image: url("../images/glass-bezel-combined.png") 13 stretch stretch;
+
+  border-image-width: auto;
+  -webkit-border-image-width: auto;
 }
-#wrapper .bg-t
+
+#calendar
 {
-  background: url(../images/bg-wrapper-t.gif) repeat-x;
+  display: table;
+
+  width: 100%;
+  height: 100%;
+
+  background: url('../images/glass-bezel-5.png');
+  background-size: cover;
+  -webkit-background-size: cover;
 }
-#wrapper .bg-b
-{
-  background: url(../images/bg-wrapper-b.gif) repeat-x 0 100%;
-}
-#wrapper .bg-tl
-{
-  background: url(../images/bg-wrapper-tl.gif) no-repeat;
-}
-#wrapper .bg-tr
-{
-  background: url(../images/bg-wrapper-tr.gif) no-repeat 100% 0;
-}
-#wrapper .bg-bl
-{
-  background: url(../images/bg-wrapper-bl.gif) no-repeat 0 100%;
-  padding: 16px 20px 10px 10px;
-}
-#wrapper .bg-br
-{
-  background: url(../images/bg-wrapper-br.gif) no-repeat 100% 100%;
-}
-#wrapper .bg-l
-{
-  background: url(../images/bg-wrapper-l.gif) repeat-y;
-}
-#wrapper .bg-r
-{
-  background: url(../images/bg-wrapper-r.gif) repeat-y 100% 0;
-}
+
 .info
 {
   background: #8c8c90;
