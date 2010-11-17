@@ -6,9 +6,12 @@ Combine a nine-part image into a single merged file for use with border-image.
 
 """
 
+from __future__ import division
+
 import argparse
 import Image
 import sys
+import math
 
 def combine(args):
   parts = []
@@ -23,13 +26,21 @@ def combine(args):
 
   x, y = 0, 0
   for n, part in enumerate(parts):
-    print (x, y)
+    # The top 3 pieces define the width of each column.
+    part_width = parts[n % 3].size[0]
+    # The leftmost 3 pieces define the height of each row.
+    part_height = parts[3 * int(math.floor(n / 3))].size[1]
+
+    print (x, y, part_width, part_height)
     if not args.empty or n != 4:
+      if part.size != (part_width, part_height):
+        part = part.resize((part_width, part_height), Image.BICUBIC)
       combo_image.paste(part, (x, y))
-    x += parts[n % 3].size[0]
+
+    x += part_width
     if n % 3 == 2:
       x = 0
-      y += part.size[1]
+      y += part_height
 
   combo_image.save(args.outfile)
   print "Created a %dx%d combination in %s" % (width, height, args.outfile)
