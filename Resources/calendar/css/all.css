@@ -199,19 +199,28 @@ select
   height: 113px;
 }
 
-.top-table td div
+#calendar td div
 {
-  /* The time entries stick out a bit to reach the border. */
-  overflow: visible;
   height: 100%;
 
   padding-top: 5px;
 }
 
+/*
+This mask clips the left and right event borders which are only
+meant to be visible when two events are alongside eachother.
+The div also offsets the event from the background borders.
+*/
+#calendar td div div.event-mask
+{
+  overflow: hidden;
+  margin: 1px;
+}
+
 .event
 {
-  margin-left: 1px;
-  margin-right: 1px;
+  margin-left: -1px;
+  margin-right: -1px;
 
   display: block;
 
@@ -299,10 +308,6 @@ td.timeline div
   width: 100%;
 }
 
-.calender .event
-{
-}
-
 #calendar th.timeline,
 #calendar td.timeline
 {
@@ -349,41 +354,46 @@ td.timeline div
   width: 100%;
 }
 
-.red
+.event
 {
-  background: #984a4c  repeat-y !important;
+  border-image-width: auto;
+  -webkit-border-image-width: auto;
 }
+
+.blue
+{
+  border-image: url("../images/event-bezel-blue-combined.png") 3 stretch stretch;
+  -webkit-border-image: url("../images/event-bezel-blue-combined.png") 3 stretch stretch;
+}
+
 .green
 {
-  background: #4e9e4f  repeat-y !important;
-}
-.magenta
-{
-  background: #98559c  repeat-y !important;
-}
-.box .magenta
-{
-  background: #98559c ) repeat-y !important;
-}
-.green2
-{
-  background: #599d94  repeat-y !important;
+  border-image: url("../images/event-bezel-green-combined.png") 3 stretch stretch;
+  -webkit-border-image: url("../images/event-bezel-green-combined.png") 3 stretch stretch;
 }
 
-.event {
-  border: 1px solid #abb1b4;
-  border-width: 1px 0;
+.orange
+{
+  border-image: url("../images/event-bezel-orange-combined.png") 3 stretch stretch;
+  -webkit-border-image: url("../images/event-bezel-orange-combined.png") 3 stretch stretch;
 }
 
-.top-table .green,
-.top-table .magenta
+.pink
 {
-  background: #4e9e4f !important;
+  border-image: url("../images/event-bezel-pink-combined.png") 3 stretch stretch;
+  -webkit-border-image: url("../images/event-bezel-pink-combined.png") 3 stretch stretch;
 }
 
-.top-table .magenta
+.red
 {
-  background: #98559c !important;
+  border-image: url("../images/event-bezel-red-combined.png") 3 stretch stretch;
+  -webkit-border-image: url("../images/event-bezel-red-combined.png") 3 stretch stretch;
+}
+
+.turquoise
+{
+  border-image: url("../images/event-bezel-turquoise-combined.png") 3 stretch stretch;
+  -webkit-border-image: url("../images/event-bezel-turquoise-combined.png") 3 stretch stretch;
 }
 
 .calendar td.mask
