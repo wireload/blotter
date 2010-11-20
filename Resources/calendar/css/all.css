@@ -16,10 +16,12 @@ a
   color: #ff3131;
   text-decoration: none;
 }
+
 a:hover
 {
   text-decoration: underline;
 }
+
 input,
 textarea,
 select
@@ -28,13 +30,14 @@ select
   font: 12px Arial, Helvetica, sans-serif;
   vertical-align: middle;
 }
+
 #main
 {
   overflow: hidden;
   width: 100%;
 }
 
-#calendar-border
+#glass-border
 {
   overflow: hidden;
 
@@ -55,7 +58,7 @@ select
   -webkit-border-image-width: auto;
 }
 
-#calendar
+#glass-pane
 {
   display: table;
 
@@ -100,6 +103,7 @@ select
   width: 100%;
   height: 48%;
 }
+
 .date
 {
   font: 26px/30px Helvetica, Arial, sans-serif;
@@ -131,7 +135,7 @@ select
   -webkit-border-image-width: auto;
 }
 
-.box div
+.box > div
 {
   display: table;
 
@@ -167,7 +171,6 @@ select
   margin: 0;
 }
 
-.calendar,
 .top-table
 {
   border-collapse: collapse;
@@ -175,13 +178,13 @@ select
   width: 100%;
 }
 
-#calendar table
+.calendar table
 {
   /* Very critical to prevent the content of table cells from expanding the cells. */
   table-layout: fixed;
 }
 
-#calendar td
+.calendar td.timeline
 {
   height: 50px;
   overflow: hidden;
@@ -190,7 +193,7 @@ select
   padding-right: 3px;
 }
 
-#calendar .top-table td
+.calendar .top-table td
 {
   background: none;
 
@@ -199,7 +202,7 @@ select
   height: 113px;
 }
 
-#calendar td div
+.calendar td div
 {
   height: 100%;
 
@@ -211,7 +214,7 @@ This mask clips the left and right event borders which are only
 meant to be visible when two events are alongside eachother.
 The div also offsets the event from the background borders.
 */
-#calendar td div div.event-mask
+.calendar td div div.event-mask
 {
   overflow: hidden;
   margin: 1px;
@@ -249,7 +252,7 @@ The div also offsets the event from the background borders.
   border-collapse: collapse;
 }
 
-#main-table-underlay .top-table td div
+.main-table-underlay .top-table td div
 {
   border-image: url("../images/info-box-combined.png") 5 stretch stretch;
   -webkit-border-image: url("../images/info-box-combined.png") 5 stretch stretch;
@@ -258,7 +261,7 @@ The div also offsets the event from the background borders.
   -webkit-border-image-width: auto;
 }
 
-#main-table-underlay .calendar td div
+.main-table-underlay table td div
 {
   height: 100%;
 
@@ -278,7 +281,7 @@ td.timeline div
   height: 100%;
 }
 
-#main-table-underlay .calendar td.timeline div
+.main-table-underlay table td.timeline div
 {
   border-image: url("../images/time-column-bezel-combined.png") 3 stretch stretch;
   -webkit-border-image: url("../images/time-column-bezel-combined.png") 3 stretch stretch;
@@ -302,39 +305,20 @@ td.timeline div
   right: 0px;
 }
 
-.calendar
+.calendar-wrapper > table
 {
   height: 100%;
   width: 100%;
 }
 
-#calendar th.timeline,
-#calendar td.timeline
+.calendar th.timeline,
+.calendar td.timeline
 {
   font-size: 9px;
   padding: 2px 7px 0 5px;
   text-align: center;
   white-space: nowrap;
   width: 42px;
-}
-
-.box .calendar
-{
-  background: #666c6e !important;
-  font-size: 10px;
-  line-height: 12px;
-}
-.box .calendar td
-{
-  border: 0;
-  padding: 2px 5px 0 10px;
-  width: auto;
-}
-.box .calendar .timeline
-{
-  background: #828e91;
-  padding: 2px 2px 0 3px;
-  width: 26px;
 }
 
 .calendar th
@@ -426,10 +410,24 @@ td.timeline div
   width: 100%;
   z-index: 333;
 }
-.area
+
+#next-up-box div
 {
-  margin: 0 0 -8px;
-  overflow: hidden;
   position: relative;
-  width: 100%;
+}
+
+#next-up-box .main-table
+{
+  position: absolute;
+  left: 0px;
+  top: 10px;
+  right: 0px;
+  bottom: 10px;
+
+  border-collapse: collapse;
+}
+
+#next-up-box .calendar-wrapper
+{
+  top: 0px;
 }

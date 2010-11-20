@@ -7,8 +7,8 @@
 	<!--[if lt IE 8]><link rel="stylesheet" type="text/css" href="css/ie.css"/><![endif]-->
 </head>
 <body>
-  <div id='calendar-border'>
-    <div id='calendar'>
+  <div id='glass-border'>
+    <div id='glass-pane'>
 			<div id="main">
 				<div class="info">
 					<div class="date" id='date-box'>
@@ -31,32 +31,37 @@
   					<div class="box" id="next-up-box">
   					  <div>
   							<h2>Next Up</h2>
-  							<div class="area">
-  								<table class="calendar">
-  									<tr>
-  										<td class="mask2"></td>
-  										<td class="mask"></td>
-  									</tr>
-  									<tr>
-  										<td class="timeline">11&nbsp;am</td>
-  										<td class="pink">Oversee new aqueduct construction.</td>
-  									</tr>
-  									<tr>
-  										<td class="timeline">12&nbsp;pm</td>
-  										<td class="pink"></td>
-  									</tr>
-  									<tr>
-  										<td class="timeline">1&nbsp;pm</td>
-  										<td></td>
-  									</tr>
-  								</table>
-  								<div class="mask3"></div>
-  							</div>
+  							<div class="calendar">
+          				<div class="main-table main-table-underlay ">
+          					<div class='calendar-wrapper'>
+            					<table>
+            						<tr>
+            							<td class="timeline"><div></div></td>
+            							<td><div></div></td>
+            						</tr>
+            					</table>
+          					</div>
+          				</div>
+          				<div class="main-table">
+          					<div class='calendar-wrapper'>
+          					  <table>
+            						<tr>
+            							<th class="timeline"></th>
+            							<th><span>Monday</span></th>
+            						</tr>
+            						<tr>
+            							<td class="timeline">9&nbsp;am</td>
+            							<td><div><div class='event-mask'><span class="event green">Meet Julius Caesar for wine and grapes.</span></div></div></td>
+            						</tr>
+            					</table>
+            				</div>
+            			</div>
+            		</div>
   						</div>
   					</div>
 					</div>
 				</div>
-				<div id="main-table-underlay" class="main-table">
+				<div class="main-table main-table-underlay calendar">
 					<table class="top-table">
 						<tr>
 							<td class="timeline">&nbsp;</td>
@@ -84,7 +89,7 @@
   					</table>
 					</div>
 				</div>
-				<div class="main-table">
+				<div class="main-table calendar">
 					<table class="top-table">
 						<tr>
 							<td class="timeline">&nbsp;</td>
