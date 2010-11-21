@@ -7,24 +7,25 @@
 	<!--[if lt IE 8]><link rel="stylesheet" type="text/css" href="css/ie.css"/><![endif]-->
 </head>
 <body>
+  {{ calendar }}
+
   <div id='glass-border'>
     <div id='glass-pane'>
 			<div id="main">
 				<div class="info">
 					<div class="date" id='date-box'>
-						<p><strong>5</strong></p>
-						<p>November, 2010</p>
-						<p>Friday</p>
+						<p><strong>{{ calendar.date | date_format:"d" }}</strong></p>
+						<p>{{ calendar.date | date_format:"MMMM" }}, {{ calendar.date | date_format:"y"}}</p>
+						<p>{{ calendar.date | date_format:"EEEE" }}</p>
 					</div>
 					<div class="info-boxes-space">
   					<div class="box" id="to-do-box">
   						<div>
   							<h1>To do</h1>
   							<ul>
-  								<li>Finish budget report.</li>
-  								<li>Buy bread at the market.</li>
-  								<li>Give away bread.</li>
-  								<li>Present budget report.</li>
+  							  {% for task in calendar.tasks %}
+  							  <li>{{ task.title }}</li>
+  							  {% /for %}
   							</ul>
   						</div>
   					</div>

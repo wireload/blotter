@@ -123,8 +123,9 @@ static void * volatile sharedInstance = nil;
 
     NSMutableDictionary *jsonCalendar = [NSMutableDictionary dictionaryWithCapacity:10];
 
-    [jsonCalendar setValue:[beginningDate description] forKey:@"beginningDate"];
-    [jsonCalendar setValue:[endDate description] forKey:@"endDate"];
+    [jsonCalendar setValue:[NSDate date] forKey:@"date"];
+    [jsonCalendar setValue:beginningDate forKey:@"beginningDate"];
+    [jsonCalendar setValue:endDate forKey:@"endDate"];
     [jsonCalendar setValue:[self currentEvents] forKey:@"events"];
     [jsonCalendar setValue:[self currentTasks] forKey:@"tasks"];
 
