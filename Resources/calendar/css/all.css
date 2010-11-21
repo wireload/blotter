@@ -173,8 +173,6 @@ select
 
 .top-table
 {
-  border-collapse: collapse;
-  margin: 0 0 9px;
   width: 100%;
 }
 
@@ -186,7 +184,6 @@ select
 
 .calendar td.timeline
 {
-  height: 50px;
   overflow: hidden;
   vertical-align: top;
   padding-left: 3px;
@@ -195,18 +192,7 @@ select
 
 .calendar .top-table td
 {
-  background: none;
-
-  overflow: hidden;
-
   height: 113px;
-}
-
-.calendar td div
-{
-  height: 100%;
-
-  padding-top: 5px;
 }
 
 /*
@@ -218,6 +204,12 @@ The div also offsets the event from the background borders.
 {
   overflow: hidden;
   margin: 1px;
+}
+
+.content-column
+{
+  height: 100%;
+  vertical-align: top;
 }
 
 .event
@@ -272,15 +264,6 @@ The div also offsets the event from the background borders.
   -webkit-border-image-width: auto;
 }
 
-th.timeline div,
-td.timeline div
-{
-  border: none;
-
-  width: 28px;
-  height: 100%;
-}
-
 .main-table-underlay table td.timeline div
 {
   border-image: url("../images/time-column-bezel-combined.png") 3 stretch stretch;
@@ -314,11 +297,18 @@ td.timeline div
 .calendar th.timeline,
 .calendar td.timeline
 {
+  border: none;
+  width: 40px;
   font-size: 9px;
-  padding: 2px 7px 0 5px;
+  padding: 0px 4px;
   text-align: center;
   white-space: nowrap;
-  width: 42px;
+}
+
+.calendar th,
+.calendar td
+{
+  padding: 0px 2px;
 }
 
 .calendar th
@@ -411,9 +401,13 @@ td.timeline div
   z-index: 333;
 }
 
-#next-up-box div
+#next-up-box > div > div.calendar
 {
-  position: relative;
+  position: absolute;
+  top: 38px;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 #next-up-box .main-table
@@ -423,8 +417,6 @@ td.timeline div
   top: 10px;
   right: 0px;
   bottom: 10px;
-
-  border-collapse: collapse;
 }
 
 #next-up-box .calendar-wrapper
