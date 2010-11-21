@@ -370,37 +370,6 @@ The div also offsets the event from the background borders.
   -webkit-border-image: url("../images/event-bezel-turquoise-combined.png") 3 stretch stretch;
 }
 
-.calendar td.mask
-{
-  background: url(../images/bg-mask1.gif) repeat-x;
-  height: 21px;
-  padding: 0;
-  width: 100%;
-}
-.box .calendar .mask2
-{
-  background: url(../images/bg-mask2.gif) no-repeat;
-  height: 21px;
-  left: 0;
-  padding: 0;
-  top: 0;
-  width: 36px;
-}
-.box .mask3
-{
-  background: url(../images/bg-mask3.gif) repeat-x;
-  bottom: -1px;
-  font-size: 0;
-  height: 16px;
-  left: 36px;
-  line-height: 0;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 100%;
-  z-index: 333;
-}
-
 #next-up-box > div > div.calendar
 {
   position: absolute;
@@ -414,7 +383,7 @@ The div also offsets the event from the background borders.
 {
   position: absolute;
   left: 0px;
-  top: 10px;
+  top: 0px;
   right: 0px;
   bottom: 10px;
 }
@@ -422,4 +391,14 @@ The div also offsets the event from the background borders.
 #next-up-box .calendar-wrapper
 {
   top: 0px;
+}
+
+#next-up-box .calendar
+{
+  -webkit-mask-image: -webkit-gradient(linear, left top, left 10%, from(rgba(0,0,1,0)), to(rgba(0,0,0,1)));  
+}
+
+#next-up-box .calendar > *
+{
+  -webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,1,0)));  
 }
