@@ -12,6 +12,13 @@
 
 #import "DesktopView.h"
 
+enum {
+    BASmallSize = 0,
+    BANormalSize = 1,
+    BAFullSize = 2,
+
+};
+
 @interface DeskboardAppDelegate : NSObject <NSApplicationDelegate> {
     NSWindow    *desktopWindow;
     DesktopView *overlayView;
@@ -21,4 +28,5 @@
 
 - (IBAction)showPrefs:(id)sender;
 
+- (void)layout;
 @end

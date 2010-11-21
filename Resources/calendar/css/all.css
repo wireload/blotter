@@ -4,8 +4,8 @@ body
   color: #fff;
   font: 14px/18px Helvetica, Arial, sans-serif;
   margin: 0;
-  min-width: 800px;
   padding: 0 0 115px;
+  overflow: hidden;
 }
 img
 {
@@ -41,7 +41,8 @@ select
 {
   overflow: hidden;
 
-  min-height: 800px;
+  min-width: 150px;
+  min-height: 600px;
 
   position: absolute;
   left: 13px;
@@ -395,10 +396,10 @@ The div also offsets the event from the background borders.
 
 #next-up-box .calendar
 {
-  -webkit-mask-image: -webkit-gradient(linear, left top, left 10%, from(rgba(0,0,1,0)), to(rgba(0,0,0,1)));  
+  -webkit-mask-image: -webkit-gradient(linear, left top, left 10%, from(rgba(0,0,1,0)), to(rgba(0,0,0,1)));
 }
 
 #next-up-box .calendar > *
 {
-  -webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,1,0)));  
+  -webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,1,0)));
 }

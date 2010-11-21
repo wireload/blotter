@@ -11,9 +11,7 @@
 @implementation DeskboardAppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    NSRect frame = [[NSScreen mainScreen] visibleFrame];
-    NSLog(@"Covering desktop (%f, %f, %f x %f)", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
-    desktopWindow  = [[NSWindow alloc] initWithContentRect:frame
+    desktopWindow  = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 0, 0)
                                                  styleMask:NSBorderlessWindowMask
                                                    backing:NSBackingStoreBuffered
                                                      defer:NO];
@@ -26,6 +24,8 @@
 
     overlayView = [[DesktopView alloc] initWithFrame:[[desktopWindow contentView] frame]];
     [desktopWindow setContentView:overlayView];
+
+    [self layout];
 
     [desktopWindow orderFront:NSApp];
     // [desktopWindow useOptimizedDrawing:YES];
@@ -50,6 +50,26 @@
 
     // Show the preferences window.
     [prefs showPreferencesWindow];
+}
+
+- (void)layout
+{
+    int sizePrefs = BANormalSize;
+
+    CGSize size;
+
+    switch (sizePrefs) {
+        case BANormalSize:
+            size = CGSizeMake(1200, 800);
+            break;
+        default:
+            break;
+    }
+
+    NSRect frame = [[NSScreen mainScreen] visibleFrame];
+    NSLog(@"Covering desktop (%f, %f, %f x %f)", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+
+    [desktopWindow setFrame:NSMakeRect(10, 10, size.width, size.height) display:YES];
 }
 
 - (void)dealloc

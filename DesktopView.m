@@ -6,7 +6,11 @@
 //  Copyright 2010 SlevenBits. All rights reserved.
 //
 
+#import <WebKit/WebView.h>
+#import <WebKit/WebFrame.h>
+
 #import <YAJL/YAJL.h>
+
 #import "ICUTemplateMatcher.h"
 
 #import "DesktopView.h"
@@ -51,7 +55,6 @@
 	NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"calendar"];
     NSLog(@"templatePath: %@", templatePath);
 
-	// Set up some variables for this specific template.
 	NSDictionary *variables = [NSDictionary dictionaryWithObjectsAndKeys:
 							   currentCalendar, @"calendar",
                                json, @"json",
