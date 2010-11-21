@@ -7,7 +7,6 @@
 //
 
 #import <libkern/OSAtomic.h>
-#import <YAJL/YAJL.h>
 #import <CalendarStore/CalendarStore.h>
 
 #import "CalendarAdapter.h"
@@ -57,7 +56,7 @@ static void * volatile sharedInstance = nil;
     [gregorian autorelease];
 }
 
-- (NSArray *)jsonEvents
+- (NSArray *)currentEvents
 {
     NSPredicate *eventsForThisWeek = [CalCalendarStore eventPredicateWithStartDate:beginningDate endDate:endDate calendars:[[CalCalendarStore defaultCalendarStore] calendars]];
     NSArray *events = [[CalCalendarStore defaultCalendarStore] eventsWithPredicate:eventsForThisWeek];
@@ -88,7 +87,7 @@ static void * volatile sharedInstance = nil;
     return r;
 }
 
-- (NSArray *)jsonTasks
+- (NSArray *)currentTasks
 {
     NSPredicate *predicate = [CalCalendarStore taskPredicateWithUncompletedTasks:[[CalCalendarStore defaultCalendarStore] calendars]];
     NSArray *tasks = [[CalCalendarStore defaultCalendarStore] tasksWithPredicate:predicate];
@@ -118,7 +117,7 @@ static void * volatile sharedInstance = nil;
 
 }
 
-- (NSString *)calendarAsJSON
+- (NSDictionary *)currentCalendar
 {
     [self setDateRangeToCurrentWeek];
 
@@ -126,12 +125,10 @@ static void * volatile sharedInstance = nil;
 
     [jsonCalendar setValue:[beginningDate description] forKey:@"beginningDate"];
     [jsonCalendar setValue:[endDate description] forKey:@"endDate"];
-    [jsonCalendar setValue:[self jsonEvents] forKey:@"events"];
-    [jsonCalendar setValue:[self jsonTasks] forKey:@"tasks"];
+    [jsonCalendar setValue:[self currentEvents] forKey:@"events"];
+    [jsonCalendar setValue:[self currentTasks] forKey:@"tasks"];
 
-    NSString *JSONString = [jsonCalendar yajl_JSONStringWithOptions:YAJLGenOptionsBeautify indentString:@"  "];
-
-    return JSONString;
+    return jsonCalendar;
 }
 
 @end

@@ -6,6 +6,7 @@
 //  Copyright 2010 SlevenBits. All rights reserved.
 //
 
+#import <YAJL/YAJL.h>
 #import "ICUTemplateMatcher.h"
 
 #import "DesktopView.h"
@@ -36,22 +37,23 @@
 - (void)refresh
 {
     NSString *html = [self calendarHtml];
-    NSLog(@"will display: %@", html);
-    [[webContentView mainFrame] loadHTMLString:html baseURL:[[NSBundle mainBundle] pathForResource:@"calendar" ofType:@""]];
+    NSURL *baseURL = [[NSBundle mainBundle] URLForResource:@"calendar" withExtension:@""];
+    NSLog(@"will display: %@ (base: %@)", html, baseURL);
+    [[webContentView mainFrame] loadHTMLString:html baseURL:baseURL];
 }
 
 - (NSString *)calendarHtml
 {
-    NSString *json = [[CalendarAdapter sharedCalendarAdapter] calendarAsJSON];
+    NSDictionary *currentCalendar = [[CalendarAdapter sharedCalendarAdapter] currentCalendar];
 
-	// Get path to template.
-	NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"calendar" ofType:@"html"];
+    NSString *json = [currentCalendar yajl_JSONStringWithOptions:YAJLGenOptionsBeautify indentString:@"  "];
+
+	NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"calendar"];
+    NSLog(@"templatePath: %@", templatePath);
 
 	// Set up some variables for this specific template.
 	NSDictionary *variables = [NSDictionary dictionaryWithObjectsAndKeys:
-							   [NSArray arrayWithObjects:
-								@"matt", @"iain", @"neil", @"chris", @"steve", nil], @"guys",
-							   [NSDictionary dictionaryWithObjectsAndKeys:@"baz", @"bar", nil], @"foo",
+							   currentCalendar, @"calendar",
                                json, @"json",
 							   nil];
 

@@ -16,6 +16,6 @@
 
 + (CalendarAdapter *)sharedCalendarAdapter;
 
-- (NSString *)calendarAsJSON;
+- (NSDictionary *)currentCalendar;
 
 @end
