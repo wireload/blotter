@@ -15,6 +15,7 @@
 
 #import "DesktopView.h"
 #import "CalendarAdapter.h"
+#import "NSDate-Utilities.h"
 
 @implementation DesktopView
 
@@ -50,14 +51,14 @@
 {
     NSDictionary *currentCalendar = [[CalendarAdapter sharedCalendarAdapter] currentCalendar];
 
-    //NSString *json = [currentCalendar yajl_JSONStringWithOptions:YAJLGenOptionsBeautify indentString:@"  "];
+    NSString *json = [currentCalendar yajl_JSONStringWithOptions:YAJLGenOptionsBeautify indentString:@"  "];
 
 	NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"calendar"];
     NSLog(@"templatePath: %@", templatePath);
 
 	NSDictionary *variables = [NSDictionary dictionaryWithObjectsAndKeys:
 							   currentCalendar, @"calendar",
-                               //json, @"json",
+                               json, @"json",
 							   nil];
 
 	// Process the template and display the results.

@@ -123,9 +123,40 @@ static void * volatile sharedInstance = nil;
 
     NSMutableDictionary *jsonCalendar = [NSMutableDictionary dictionaryWithCapacity:10];
 
+    NSMutableArray *dayNames = [NSMutableArray array];
+    NSCalendar *gregorian = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
+
+    for (int j = 0; j < 7; j++)
+    {
+        NSDateComponents *components = [[[NSDateComponents alloc] init] autorelease];
+        [components setDay:j];
+
+        NSDate *dayDate = [gregorian dateByAddingComponents:components toDate:beginningDate options:0];
+
+        [dayNames addObject:[dayDate descriptionWithCalendarFormat:@"%A" timeZone:nil
+			locale:[[NSUserDefaults standardUserDefaults] dictionaryRepresentation]]];
+    }
+
+    NSMutableArray *hourNames = [NSMutableArray array];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterNoStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+
+    for (int j = 0; j < 24; j++)
+    {
+        NSDateComponents *components = [[[NSDateComponents alloc] init] autorelease];
+        [components setHour:j];
+
+        NSDate *dayDate = [gregorian dateFromComponents:components];
+
+        [hourNames addObject:[dateFormatter stringFromDate:dayDate]];
+    }
+
     [jsonCalendar setValue:[NSDate date] forKey:@"date"];
     [jsonCalendar setValue:beginningDate forKey:@"beginningDate"];
     [jsonCalendar setValue:endDate forKey:@"endDate"];
+    [jsonCalendar setValue:dayNames forKey:@"dayNames"];
+    [jsonCalendar setValue:hourNames forKey:@"hourNames"];
     [jsonCalendar setValue:[self currentEvents] forKey:@"events"];
     [jsonCalendar setValue:[self currentTasks] forKey:@"tasks"];
 

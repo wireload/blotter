@@ -7,7 +7,14 @@
 	<!--[if lt IE 8]><link rel="stylesheet" type="text/css" href="css/ie.css"/><![endif]-->
 </head>
 <body>
-  {{ calendar }}
+  <script src="jquery-1.4.4.min.js"></script>
+  <script src="calendar-compiled.js"></script>
+  <script>
+  $(document).ready(function() {
+    var json = {{ json }};
+    update(json);
+  });
+  </script>
 
   <div id='glass-border'>
     <div id='glass-pane'>
@@ -94,59 +101,41 @@
 					<table class="top-table">
 						<tr>
 							<td class="timeline"><div></div></td>
-							<td class="content-column"><div>&nbsp;</div></td>
-							<td class="content-column"><div><div class='event-mask'><span class="event green">Chariot driving practice.</span></div></div></td>
-							<td class="content-column"><div></div></td>
-							<td class="content-column"><div></div></td>
-							<td class="content-column"><div></div></td>
-							<td class="content-column"><div><div class='event-mask'><span class="event pink">Throw dice across river.</span></div></div></td>
-							<td class="content-column"><div></div></td>
+							<td class="content-column"><div id="main-all-day-0">&nbsp;</div></td>
+							<td class="content-column"><div id="main-all-day-1"></div></td>
+							<td class="content-column"><div id="main-all-day-2"></div></td>
+							<td class="content-column"><div id="main-all-day-3"></div></td>
+							<td class="content-column"><div id="main-all-day-4"></div></td>
+							<td class="content-column"><div id="main-all-day-5"></div></td>
+							<td class="content-column"><div id="main-all-day-6"></div></td>
 						</tr>
 					</table>
 					<div class='calendar-wrapper'>
 					  <table class="calendar">
   						<tr>
   							<th class="timeline"></th>
-  							<th><span>Monday</span></th>
-  							<th><span>Tuesday</span></th>
-  							<th><span>Wednesday</span></th>
-  							<th><span>Thursday</span></th>
-  							<th><span>Friday</span></th>
-  							<th><span>Saturday</span></th>
-  							<th><span>Sunday</span></th>
+  							<th><span id="main-header-0"></span></th>
+  							<th><span id="main-header-1"></span></th>
+  							<th><span id="main-header-2"></span></th>
+  							<th><span id="main-header-3"></span></th>
+  							<th><span id="main-header-4"></span></th>
+  							<th><span id="main-header-5"></span></th>
+  							<th><span id="main-header-6"></span></th>
   						</tr>
   						<tr>
-  							<td class="timeline content-column">
-  							  <div class="time">9&nbsp;am</div>
-  							</td>
-  							<td class="monday content-column">
-  							  <div><div class='event-mask'><span class="event green">Meet Julius Caesar for wine and grapes.</span></div></div>
-  							  <div><div class='event-mask'><span class="event red">Convince Pompeii to accept treaty.</span></div></div>
-  							</td>
-  							<td class="tuesday content-column">
-
-  							</td>
-  							<td class="wednesday content-column">
-  							  <div><div class='event-mask'><span  class="event pink ">Get Black Flux vaccination.</span></div></div>
-  							</td>
-  							<td class="thursday content-column">
-  							  <div><div class='event-mask'><span  class="event turquoise ">Gaius Marius on manipular military formations. <em>One Colluseum Way 7</em></span></div></div>
-  							  <div><div class='event-mask'><span  class="event orange">Rally the legions.</span></div></div>
-  							</td>
-  							<td class="friday content-column">
-  							  <div><div class='event-mask'><span  class="event pink">Oversee new aqueduct construction.</span></div></div>
-  							  <div><div class='event-mask'><span class="event blue">Turn back towards Brutus, see what happens.</span></div></div>
-  							</td>
-  							<td class="saturday content-column">
-   							  <div><div class='event-mask'><span  class="event green">Circus Maximus Circus Maximus.</span></div></div>
-  							</td>
-  							<td class="sunday content-column">
-
-  							</td>
+  							<td class="timeline content-column"><div id="main-timeline"></div></td>
+  							<td class="content-column"><div id="main-content-0"></div></td>
+  							<td class="content-column"><div id="main-content-1"></div></td>
+  							<td class="content-column"><div id="main-content-2"></div></td>
+  							<td class="content-column"><div id="main-content-3"></div></td>
+  							<td class="content-column"><div id="main-content-4"></div></td>
+  							<td class="content-column"><div id="main-content-5"></div></td>
+  							<td class="content-column"><div id="main-content-6"></div></td>
   						</tr>
   					</table>
 					</div>
 				</div>
 			</div>
-</body>
+		</div>
+  </body>
 </html>

@@ -1,10 +1,15 @@
+body, htm
+{
+  width: 100%;
+  height: 100%;
+}
 body
 {
-  background: url('../../../../../../Desktop/Aqua Blue.jpg');
+  background: transparent;
   color: #fff;
   font: 14px/18px Helvetica, Arial, sans-serif;
   margin: 0;
-  padding: 0 0 115px;
+  padding: 0;
   overflow: hidden;
 }
 img
@@ -177,6 +182,11 @@ select
   width: 100%;
 }
 
+.top-table .content-column > div
+{
+  padding: 5px 0px;
+}
+
 .calendar table
 {
   /* Very critical to prevent the content of table cells from expanding the cells. */
@@ -187,8 +197,6 @@ select
 {
   overflow: hidden;
   vertical-align: top;
-  padding-left: 3px;
-  padding-right: 3px;
 }
 
 .calendar .top-table td
@@ -196,15 +204,53 @@ select
   height: 113px;
 }
 
-/*
-This mask clips the left and right event borders which are only
-meant to be visible when two events are alongside eachother.
-The div also offsets the event from the background borders.
-*/
-.calendar td div div.event-mask
+.calendar td.content-column > div
 {
-  overflow: hidden;
+  -webkit-mask-image: url(../images/left-right-edge-cutter-1px-mask.png);
   margin: 1px;
+}
+
+/*
+If there's a mask over the timeline the text loses its antialias.
+*/
+.calendar td.timeline > div
+{
+  -webkit-mask-image: none;
+}
+
+/*
+The div offsets the event from the background borders.
+*/
+.calendar td div > div.event-mask
+{
+  overflow: visible;
+  position: absolute;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  top: 0;
+  bottom: 0;
+  right: -1px;
+  left: -1px;
+}
+
+.calendar td div div.event-mask > span
+{
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  line-height: 10px;
+}
+
+.calendar td div div.event-mask > span > span.location
+{
+  display: block;
+  font-style: italic;
+  color: #ddd;
 }
 
 .content-column
@@ -232,6 +278,12 @@ The div also offsets the event from the background borders.
 
   font-size: 0;
   line-height: 0;
+}
+
+.top-table td.content-column > div > div
+{
+  position: relative;
+  margin-bottom: 3px;
 }
 
 .main-table
@@ -299,7 +351,7 @@ The div also offsets the event from the background borders.
 .calendar td.timeline
 {
   border: none;
-  width: 40px;
+  width: 45px;
   font-size: 9px;
   padding: 0px 4px;
   text-align: center;
@@ -402,4 +454,29 @@ The div also offsets the event from the background borders.
 #next-up-box .calendar > *
 {
   -webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,1,0)));
+}
+
+#main-timeline
+{
+  position: relative;
+  height: 100%;
+}
+
+#main-timeline > span
+{
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+
+td.content-column > div
+{
+  position: relative;
+  height: 100%;
+}
+
+td.content-column > div > div
+{
+  position: absolute;
+  width: 100%;
 }

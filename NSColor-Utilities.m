@@ -16,7 +16,7 @@
     CGFloat red, green, blue;
     [[self colorUsingColorSpaceName:NSCalibratedRGBColorSpace] getRed:&red green:&green blue:&blue alpha:nil];
 
-    return [NSString stringWithFormat: @"%X%X%X", (unsigned)(red*255), (unsigned)(green*255), (unsigned)(blue*255)];
+    return [NSString stringWithFormat: @"%02X%02X%02X", (unsigned)(red*255), (unsigned)(green*255), (unsigned)(blue*255)];
 }
 
 @end
