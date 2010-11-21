@@ -19,6 +19,13 @@
 		2840653812836E78000816FF /* NSColor-Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 2840653712836E78000816FF /* NSColor-Utilities.m */; };
 		28B54DB61283BABF0037BF53 /* SS_PrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54DB51283BABF0037BF53 /* SS_PrefsController.m */; };
 		28F695801298AA0A00D4BB97 /* Blotter-B6.icns in Resources */ = {isa = PBXBuildFile; fileRef = 28F6957F1298AA0A00D4BB97 /* Blotter-B6.icns */; };
+		28F695981298AAE700D4BB97 /* ICUTemplateMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F695851298AAE700D4BB97 /* ICUTemplateMatcher.m */; };
+		28F695991298AAE700D4BB97 /* MGTemplateEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F695891298AAE700D4BB97 /* MGTemplateEngine.m */; };
+		28F6959A1298AAE700D4BB97 /* MGTemplateStandardFilters.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6958D1298AAE700D4BB97 /* MGTemplateStandardFilters.m */; };
+		28F6959B1298AAE700D4BB97 /* MGTemplateStandardMarkers.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6958F1298AAE700D4BB97 /* MGTemplateStandardMarkers.m */; };
+		28F6959C1298AAE700D4BB97 /* NSArray_DeepMutableCopy.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F695911298AAE700D4BB97 /* NSArray_DeepMutableCopy.m */; };
+		28F6959D1298AAE700D4BB97 /* NSDictionary_DeepMutableCopy.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F695931298AAE700D4BB97 /* NSDictionary_DeepMutableCopy.m */; };
+		28F6959E1298AAE700D4BB97 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F695951298AAE700D4BB97 /* RegexKitLite.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -59,6 +66,23 @@
 		28B54DB41283BABF0037BF53 /* SS_PrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SS_PrefsController.h; path = libs/SS_PrefsController.h; sourceTree = "<group>"; };
 		28B54DB51283BABF0037BF53 /* SS_PrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SS_PrefsController.m; path = libs/SS_PrefsController.m; sourceTree = "<group>"; };
 		28F6957F1298AA0A00D4BB97 /* Blotter-B6.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "Blotter-B6.icns"; path = "Resources/Blotter-B6.icns"; sourceTree = "<group>"; };
+		28F695831298AAE700D4BB97 /* DeepMutableCopy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeepMutableCopy.h; path = ../deps/MGTemplateEngine/DeepMutableCopy.h; sourceTree = SOURCE_ROOT; };
+		28F695841298AAE700D4BB97 /* ICUTemplateMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICUTemplateMatcher.h; path = ../deps/MGTemplateEngine/ICUTemplateMatcher.h; sourceTree = SOURCE_ROOT; };
+		28F695851298AAE700D4BB97 /* ICUTemplateMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICUTemplateMatcher.m; path = ../deps/MGTemplateEngine/ICUTemplateMatcher.m; sourceTree = SOURCE_ROOT; };
+		28F695881298AAE700D4BB97 /* MGTemplateEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGTemplateEngine.h; path = ../deps/MGTemplateEngine/MGTemplateEngine.h; sourceTree = SOURCE_ROOT; };
+		28F695891298AAE700D4BB97 /* MGTemplateEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGTemplateEngine.m; path = ../deps/MGTemplateEngine/MGTemplateEngine.m; sourceTree = SOURCE_ROOT; };
+		28F6958A1298AAE700D4BB97 /* MGTemplateFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGTemplateFilter.h; path = ../deps/MGTemplateEngine/MGTemplateFilter.h; sourceTree = SOURCE_ROOT; };
+		28F6958B1298AAE700D4BB97 /* MGTemplateMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGTemplateMarker.h; path = ../deps/MGTemplateEngine/MGTemplateMarker.h; sourceTree = SOURCE_ROOT; };
+		28F6958C1298AAE700D4BB97 /* MGTemplateStandardFilters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGTemplateStandardFilters.h; path = ../deps/MGTemplateEngine/MGTemplateStandardFilters.h; sourceTree = SOURCE_ROOT; };
+		28F6958D1298AAE700D4BB97 /* MGTemplateStandardFilters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGTemplateStandardFilters.m; path = ../deps/MGTemplateEngine/MGTemplateStandardFilters.m; sourceTree = SOURCE_ROOT; };
+		28F6958E1298AAE700D4BB97 /* MGTemplateStandardMarkers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGTemplateStandardMarkers.h; path = ../deps/MGTemplateEngine/MGTemplateStandardMarkers.h; sourceTree = SOURCE_ROOT; };
+		28F6958F1298AAE700D4BB97 /* MGTemplateStandardMarkers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGTemplateStandardMarkers.m; path = ../deps/MGTemplateEngine/MGTemplateStandardMarkers.m; sourceTree = SOURCE_ROOT; };
+		28F695901298AAE700D4BB97 /* NSArray_DeepMutableCopy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSArray_DeepMutableCopy.h; path = ../deps/MGTemplateEngine/NSArray_DeepMutableCopy.h; sourceTree = SOURCE_ROOT; };
+		28F695911298AAE700D4BB97 /* NSArray_DeepMutableCopy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSArray_DeepMutableCopy.m; path = ../deps/MGTemplateEngine/NSArray_DeepMutableCopy.m; sourceTree = SOURCE_ROOT; };
+		28F695921298AAE700D4BB97 /* NSDictionary_DeepMutableCopy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSDictionary_DeepMutableCopy.h; path = ../deps/MGTemplateEngine/NSDictionary_DeepMutableCopy.h; sourceTree = SOURCE_ROOT; };
+		28F695931298AAE700D4BB97 /* NSDictionary_DeepMutableCopy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSDictionary_DeepMutableCopy.m; path = ../deps/MGTemplateEngine/NSDictionary_DeepMutableCopy.m; sourceTree = SOURCE_ROOT; };
+		28F695941298AAE700D4BB97 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegexKitLite.h; path = ../deps/MGTemplateEngine/RegexKitLite.h; sourceTree = SOURCE_ROOT; };
+		28F695951298AAE700D4BB97 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegexKitLite.m; path = ../deps/MGTemplateEngine/RegexKitLite.m; sourceTree = SOURCE_ROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -128,6 +152,30 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		28F695A01298AAFB00D4BB97 /* MGTemplateEngine */ = {
+			isa = PBXGroup;
+			children = (
+				28F695831298AAE700D4BB97 /* DeepMutableCopy.h */,
+				28F695841298AAE700D4BB97 /* ICUTemplateMatcher.h */,
+				28F695851298AAE700D4BB97 /* ICUTemplateMatcher.m */,
+				28F695881298AAE700D4BB97 /* MGTemplateEngine.h */,
+				28F695891298AAE700D4BB97 /* MGTemplateEngine.m */,
+				28F6958A1298AAE700D4BB97 /* MGTemplateFilter.h */,
+				28F6958B1298AAE700D4BB97 /* MGTemplateMarker.h */,
+				28F6958C1298AAE700D4BB97 /* MGTemplateStandardFilters.h */,
+				28F6958D1298AAE700D4BB97 /* MGTemplateStandardFilters.m */,
+				28F6958E1298AAE700D4BB97 /* MGTemplateStandardMarkers.h */,
+				28F6958F1298AAE700D4BB97 /* MGTemplateStandardMarkers.m */,
+				28F695901298AAE700D4BB97 /* NSArray_DeepMutableCopy.h */,
+				28F695911298AAE700D4BB97 /* NSArray_DeepMutableCopy.m */,
+				28F695921298AAE700D4BB97 /* NSDictionary_DeepMutableCopy.h */,
+				28F695931298AAE700D4BB97 /* NSDictionary_DeepMutableCopy.m */,
+				28F695941298AAE700D4BB97 /* RegexKitLite.h */,
+				28F695951298AAE700D4BB97 /* RegexKitLite.m */,
+			);
+			name = MGTemplateEngine;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* Deskboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -143,6 +191,7 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				28F695A01298AAFB00D4BB97 /* MGTemplateEngine */,
 				256AC3F00F4B6AF500CF3369 /* Deskboard_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
@@ -244,6 +293,13 @@
 				284063EC1283176F000816FF /* CalendarAdapter.m in Sources */,
 				2840653812836E78000816FF /* NSColor-Utilities.m in Sources */,
 				28B54DB61283BABF0037BF53 /* SS_PrefsController.m in Sources */,
+				28F695981298AAE700D4BB97 /* ICUTemplateMatcher.m in Sources */,
+				28F695991298AAE700D4BB97 /* MGTemplateEngine.m in Sources */,
+				28F6959A1298AAE700D4BB97 /* MGTemplateStandardFilters.m in Sources */,
+				28F6959B1298AAE700D4BB97 /* MGTemplateStandardMarkers.m in Sources */,
+				28F6959C1298AAE700D4BB97 /* NSArray_DeepMutableCopy.m in Sources */,
+				28F6959D1298AAE700D4BB97 /* NSDictionary_DeepMutableCopy.m in Sources */,
+				28F6959E1298AAE700D4BB97 /* RegexKitLite.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,6 +343,7 @@
 				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
 				INFOPLIST_FILE = "Blotter-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = Blotter;
 			};
 			name = Debug;
@@ -306,6 +363,7 @@
 				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
 				INFOPLIST_FILE = "Blotter-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = Blotter;
 			};
 			name = Release;

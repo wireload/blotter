@@ -6,6 +6,8 @@
 //  Copyright 2010 SlevenBits. All rights reserved.
 //
 
+#import "ICUTemplateMatcher.h"
+
 #import "DesktopView.h"
 #import "CalendarAdapter.h"
 
@@ -16,10 +18,15 @@
     if (self) {
         webContentView = [[WebView alloc] initWithFrame:frame];
         [webContentView setAutoresizingMask:NSViewHeightSizable | NSViewWidthSizable];
-        NSURL *calendarURL = [[NSBundle mainBundle] URLForResource:@"calendar" withExtension:@"html"];
-        [webContentView setMainFrameURL:[calendarURL absoluteString]];
         [webContentView setDrawsBackground:NO];
         [self addSubview:webContentView];
+
+        templateEngine = [MGTemplateEngine templateEngine];
+        // [engine setDelegate:self];
+        [templateEngine setMatcher:[ICUTemplateMatcher matcherWithTemplateEngine:templateEngine]];
+
+        // Set up any needed global variables.
+        // [engine setObject:@"Hi there!" forKey:@"hello"];
 
         [self refresh];
     }
@@ -28,7 +35,28 @@
 
 - (void)refresh
 {
-    NSLog(@"will display: %@", [[CalendarAdapter sharedCalendarAdapter] calendarAsJSON]);
+    NSString *html = [self calendarHtml];
+    NSLog(@"will display: %@", html);
+    [[webContentView mainFrame] loadHTMLString:html baseURL:[[NSBundle mainBundle] pathForResource:@"calendar" ofType:@""]];
+}
+
+- (NSString *)calendarHtml
+{
+    NSString *json = [[CalendarAdapter sharedCalendarAdapter] calendarAsJSON];
+
+	// Get path to template.
+	NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"calendar" ofType:@"html"];
+
+	// Set up some variables for this specific template.
+	NSDictionary *variables = [NSDictionary dictionaryWithObjectsAndKeys:
+							   [NSArray arrayWithObjects:
+								@"matt", @"iain", @"neil", @"chris", @"steve", nil], @"guys",
+							   [NSDictionary dictionaryWithObjectsAndKeys:@"baz", @"bar", nil], @"foo",
+                               json, @"json",
+							   nil];
+
+	// Process the template and display the results.
+	return [templateEngine processTemplateInFileAtPath:templatePath withVariables:variables];
 }
 
 @end

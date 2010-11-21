@@ -9,8 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebView.h>
 
+#import "MGTemplateEngine.h"
+
 @interface DesktopView : NSView {
-    WebView *webContentView;
+    WebView             *webContentView;
+    MGTemplateEngine    *templateEngine;
 }
 
 - (void)refresh;
