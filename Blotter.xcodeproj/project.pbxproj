@@ -26,6 +26,7 @@
 		28F6959D1298AAE700D4BB97 /* NSDictionary_DeepMutableCopy.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F695931298AAE700D4BB97 /* NSDictionary_DeepMutableCopy.m */; };
 		28F6959E1298AAE700D4BB97 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F695951298AAE700D4BB97 /* RegexKitLite.m */; };
 		28F696811298B99800D4BB97 /* calendar in Resources */ = {isa = PBXBuildFile; fileRef = 28F6966B1298B99800D4BB97 /* calendar */; };
+		28F6972C1298C76700D4BB97 /* General Preferences.preferencePane in Resources */ = {isa = PBXBuildFile; fileRef = 28F6971D1298C76700D4BB97 /* General Preferences.preferencePane */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -83,6 +84,7 @@
 		28F695941298AAE700D4BB97 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegexKitLite.h; path = ../deps/MGTemplateEngine/RegexKitLite.h; sourceTree = SOURCE_ROOT; };
 		28F695951298AAE700D4BB97 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegexKitLite.m; path = ../deps/MGTemplateEngine/RegexKitLite.m; sourceTree = SOURCE_ROOT; };
 		28F6966B1298B99800D4BB97 /* calendar */ = {isa = PBXFileReference; lastKnownFileType = folder; name = calendar; path = Resources/calendar; sourceTree = "<group>"; };
+		28F6971D1298C76700D4BB97 /* General Preferences.preferencePane */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "General Preferences.preferencePane"; path = "auxiliary/General Preferences/build/Release/General Preferences.preferencePane"; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -201,6 +203,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				28F6971D1298C76700D4BB97 /* General Preferences.preferencePane */,
 				28F6966B1298B99800D4BB97 /* calendar */,
 				28F6957F1298AA0A00D4BB97 /* Blotter-B6.icns */,
 				8D1107310486CEB800E47090 /* Blotter-Info.plist */,
@@ -277,6 +280,7 @@
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
 				28F695801298AA0A00D4BB97 /* Blotter-B6.icns in Resources */,
 				28F696811298B99800D4BB97 /* calendar in Resources */,
+				28F6972C1298C76700D4BB97 /* General Preferences.preferencePane in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

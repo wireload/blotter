@@ -38,8 +38,7 @@
 {
     if (!prefs) {
         // Determine path to the sample preference panes
-        NSString *pathToPanes = [[NSString stringWithFormat:@"%@/../Preference Panes/", [[NSBundle mainBundle] resourcePath]]
-            stringByStandardizingPath];
+        NSString *pathToPanes = [[[NSBundle mainBundle] resourcePath] stringByStandardizingPath];
 
         prefs = [[SS_PrefsController alloc] initWithPanesSearchPath:pathToPanes];
         [prefs setDebug:YES];
