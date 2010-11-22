@@ -50,6 +50,7 @@
 - (NSString *)calendarHtml
 {
     NSDictionary *currentCalendar = [[CalendarAdapter sharedCalendarAdapter] currentCalendar];
+    [currentCalendar setValue:[NSNumber numberWithBool:NO] forKey:@"fastForwardNextUp"];
 
     NSString *json = [currentCalendar yajl_JSONStringWithOptions:YAJLGenOptionsBeautify indentString:@"  "];
 

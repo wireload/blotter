@@ -83,11 +83,18 @@ function fillInTimeline(timelineElement, earliestHour, latestHour, pixelsPerHour
     }
 }
 
+var MINIMUM_EVENT_HEIGHT = 28,
+    FAST_FORWARD_NEXT_UP = false,
+
+    lastUpdateDate = null,
+    nextUpTimer = null;
+
 function update(json)
 {
     console.log(json);
 
-    var MINIMUM_EVENT_HEIGHT = 28;
+    lastUpdateDate = new goog.date.DateTime();
+    FAST_FORWARD_NEXT_UP = json.fastForwardNextUp;
 
     var startDate       = goog.date.fromIsoString(json.beginningDate),
         endDate         = goog.date.fromIsoString(json.endDate),
@@ -205,9 +212,6 @@ function update(json)
 
     console.log(days);
 
-    console.log("earliestHour: " + earliestHour);
-    console.log("latestHour: " + latestHour);
-
     var visibleHours = latestHour - earliestHour + 1,
         timelineElement = $('#main-timeline'),
         timelineHeight = timelineElement.height(),
@@ -289,17 +293,41 @@ function update(json)
             $('#next-up-timeline').height(Math.floor(pixelsPerHour * 24));
             $('#next-up-content-0').height(Math.floor(pixelsPerHour * 24));
             $('#next-up-box .calendar-wrapper').css('top', '0 px');
+
+            if (nextUpTimer)
+                window.clearTimeout(nextUpTimer);
+
             // Allow the screen to draw fully before animating.
-            window.setTimeout(function() {
-                $('#next-up-box .calendar-wrapper').animate({
-                    top: -1 * pixelsPerMinute * minutesIntoNextUp
-                  },
-                  2000,
-                  'easeInOutBounce'
-                );
-                // For CSS animation, currently commented out in all.css.
-                // $('#next-up-box .calendar-wrapper').css('top', (-1 * pixelsPerMinute * minutesIntoNextUp) + 'px');
-            }, 0.5);
+            nextUpTimer = window.setTimeout(function() {
+                advanceNextUp(pixelsPerMinute, minutesIntoNextUp);
+            }, 500);
         }
     }
+}
+
+function advanceNextUp(pixelsPerMinute, minutesIntoNextUp)
+{
+    var nextUpWrapper = $('#next-up-box .calendar-wrapper'),
+        oldTop = parseInt($('#next-up-box .calendar-wrapper').css('top').replace("px", "")),
+        fastForwardFactor = FAST_FORWARD_NEXT_UP ? 60 : 1;
+        minutesSinceUpdate = fastForwardFactor * (new goog.date.DateTime().getTime() - lastUpdateDate.getTime()) / 1000 / 60,
+        newTop = Math.floor(-1 * pixelsPerMinute * (minutesIntoNextUp + minutesSinceUpdate));
+
+    // Don't scroll past the bottom.
+    newTop = Math.max(newTop, Math.floor(-1 * pixelsPerMinute * 60 * 25 + 0.9 * $("#next-up-box").height()));
+    console.log("advancing Next Up to " + minutesSinceUpdate + " minutes from start (" + oldTop + " to " + newTop + " px).");
+
+    nextUpWrapper.animate({
+        top: newTop
+      },
+      Math.abs(newTop - oldTop) > 100 ? 2000 : 500, // Roll in small changes with a snappier animation.
+      'easeInOutQuad'
+    );
+    // For CSS animation, currently commented out in all.css.
+    // $('#next-up-box .calendar-wrapper').css('top', (-1 * pixelsPerMinute * minutesIntoNextUp) + 'px');
+
+    // Update again in 15 minutes.
+    nextUpTimer = window.setTimeout(function() {
+        advanceNextUp(pixelsPerMinute, minutesIntoNextUp);
+    }, 15000 * 60 / fastForwardFactor);
 }
