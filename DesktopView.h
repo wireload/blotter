@@ -17,5 +17,6 @@
 }
 
 - (void)refresh;
+- (NSString *)calendarHtml;
 
 @end

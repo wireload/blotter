@@ -22,18 +22,15 @@
 			<div id="main">
 				<div class="info">
 					<div class="date" id='date-box'>
-						<p><strong>{{ calendar.date | date_format:"d" }}</strong></p>
-						<p>{{ calendar.date | date_format:"MMMM" }}, {{ calendar.date | date_format:"y"}}</p>
-						<p>{{ calendar.date | date_format:"EEEE" }}</p>
+						<p><strong class="date-date"></strong></p>
+						<p class="date-month-year"></p>
+						<p class="date-day"></p>
 					</div>
 					<div class="info-boxes-space">
   					<div class="box" id="to-do-box">
   						<div>
   							<h1>To do</h1>
-  							<ul>
-  							  {% for task in calendar.tasks %}
-  							  <li>{{ task.title }}</li>
-  							  {% /for %}
+  							<ul class="tasks">
   							</ul>
   						</div>
   					</div>

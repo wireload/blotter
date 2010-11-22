@@ -3,6 +3,7 @@
 // positioning data for overlapping events.
 
 goog.require('goog.date');
+goog.require('goog.i18n.DateTimeFormat');
 
 jQuery.easing.def = "easeInOutQuad";
 
@@ -91,6 +92,8 @@ var MINIMUM_EVENT_HEIGHT = 28,
 
 function update(json)
 {
+    if (typeof(json) == 'string')
+        json = $.parseJSON(json);
     console.log(json);
 
     lastUpdateDate = new goog.date.DateTime();
@@ -98,9 +101,22 @@ function update(json)
 
     var startDate       = goog.date.fromIsoString(json.beginningDate),
         endDate         = goog.date.fromIsoString(json.endDate),
+        today           = goog.date.fromIsoString(json.date),
         earliestHour    = 9,
         latestHour      = 17,
         days            = [];
+
+    $(".info .date .date-date").text(today.getDate());
+    $(".info .date .date-month-year").text(new goog.i18n.DateTimeFormat("MMMM, y").format(today));
+    $(".info .date .date-day").text(new goog.i18n.DateTimeFormat("EEEE").format(today));
+
+    var tasksElement = $("#to-do-box .tasks");
+    tasksElement.html("");
+    for (var i = 0, count = json.tasks.length; i < count; i++)
+    {
+        var task = json.tasks[i];
+        tasksElement.append($("<li></li>").text(task.title));
+    }
 
     for (var dayIndex = 0; dayIndex < 7; dayIndex++)
     {
@@ -222,7 +238,6 @@ function update(json)
     fillInTimeline($('#next-up-timeline'), 0, 23, pixelsPerHour, json);
 
     var topMinutes = earliestHour * 60,
-        today = goog.date.fromIsoString(json.date),
         nextUpElement = null,
         minutesIntoNextUp = null;
 

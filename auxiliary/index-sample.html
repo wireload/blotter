@@ -13,6 +13,7 @@
   <script src="../../auxiliary/closure-library/closure/goog/base.js"></script>
   <script>
     goog.require('goog.date');
+    goog.require('goog.i18n.DateTimeFormat');
   </script>
   <script src="../../auxiliary/calendar.js"></script>
 
@@ -257,19 +258,15 @@
 			<div id="main">
 				<div class="info">
 					<div class="date" id='date-box'>
-						<p><strong>5</strong></p>
-						<p>November, 2010</p>
-						<p>Friday</p>
+						<p><strong class="date-date"></strong></p>
+						<p class="date-month-year"></p>
+						<p class="date-day"></p>
 					</div>
 					<div class="info-boxes-space">
   					<div class="box" id="to-do-box">
   						<div>
   							<h1>To do</h1>
-  							<ul>
-  								<li>Finish budget report.</li>
-  								<li>Buy bread at the market.</li>
-  								<li>Give away bread.</li>
-  								<li>Present budget report.</li>
+  							<ul class="tasks">
   							</ul>
   						</div>
   					</div>

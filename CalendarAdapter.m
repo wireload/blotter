@@ -32,12 +32,54 @@ static void * volatile sharedInstance = nil;
     return sharedInstance;
 }
 
++ (void)initialize
+{
+}
+
 - (id)init
 {
     if (self = [super init])
     {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(calendarsChanged:)
+                                                     name:CalCalendarsChangedExternallyNotification
+                                                   object:[CalCalendarStore defaultCalendarStore]];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(eventsChanged:)
+                                                     name:CalEventsChangedExternallyNotification
+                                                   object:[CalCalendarStore defaultCalendarStore]];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(tasksChanged:)
+                                                     name:CalTasksChangedExternallyNotification
+                                                   object:[CalCalendarStore defaultCalendarStore]];
     }
     return self;
+}
+
+- (void)calendarsChanged:(NSNotification *)aNotification
+{
+    NSLog(@"calendarsChanged: %@", aNotification);
+    // TODO Only react if something visible changes.
+    [self _postCalendarChanged];
+}
+
+- (void)eventsChanged:(NSNotification *)aNotification
+{
+    NSLog(@"eventsChanged: %@", aNotification);
+    // TODO Only react if something visible changes.
+    [self _postCalendarChanged];
+}
+
+- (void)tasksChanged:(NSNotification *)aNotification
+{
+    NSLog(@"tasksChanged: %@", aNotification);
+    // TODO Only react if something visible changes.
+    [self _postCalendarChanged];
+}
+
+- (void)_postCalendarChanged
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"CalendarAdapterChangedNotification" object:self];
 }
 
 - (void)focusDateRangeAround:(NSDate *)aDate
@@ -48,8 +90,10 @@ static void * volatile sharedInstance = nil;
     // This makes the week begin on Monday, Sunday or any other day depending on the locale.
     [gregorian setLocale:[NSLocale currentLocale]];
 
-    [self setBeginningDate:[NSDate date]];
-    [gregorian rangeOfUnit:NSWeekCalendarUnit startDate:&beginningDate interval:NULL forDate:aDate];
+    NSLog(@"old beginning date: %@", beginningDate);
+    NSDate *tmpDate = nil;
+    [gregorian rangeOfUnit:NSWeekCalendarUnit startDate:&tmpDate interval:NULL forDate:aDate];
+    [self setBeginningDate:tmpDate];
 
     NSDateComponents *offsetComponents = [[NSDateComponents alloc] init];
     [offsetComponents setDay:7];
@@ -173,6 +217,10 @@ static void * volatile sharedInstance = nil;
     [self setEndDate:nil];
     [self setBeginningDate:nil];
     [self setFocusDate:nil];
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+    [super dealloc];
 }
 
 @end

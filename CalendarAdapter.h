@@ -8,21 +8,23 @@
 
 #import <Cocoa/Cocoa.h>
 
-
 @interface CalendarAdapter : NSObject {
-    NSDate *focusDate;
-    NSDate *beginningDate;
-    NSDate *endDate;
+    NSDate* focusDate;
+    NSDate* beginningDate;
+    NSDate* endDate;
 }
 
-@property (retain) NSDate* focusDate;
-@property (retain) NSDate* beginningDate;
-@property (retain) NSDate* endDate;
+@property (retain) NSDate*  focusDate;
+@property (retain) NSDate*  beginningDate;
+@property (retain) NSDate*  endDate;
 
 + (CalendarAdapter *)sharedCalendarAdapter;
 
 - (NSDictionary *)currentCalendar;
 
-
+- (void)calendarsChanged:(NSNotification *)aNotification;
+- (void)eventsChanged:(NSNotification *)aNotification;
+- (void)tasksChanged:(NSNotification *)aNotification;
+- (void)_postCalendarChanged;
 
 @end
