@@ -9,7 +9,9 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface NSDate (JSON)
+@interface NSDate (Utilities)
+
++ (NSDate *)midnight;
 
 - (id)JSON;
 

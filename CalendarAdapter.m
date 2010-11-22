@@ -10,6 +10,7 @@
 #import <CalendarStore/CalendarStore.h>
 
 #import "CalendarAdapter.h"
+#import "NSDate-Utilities.h"
 #import "NSColor-Utilities.h"
 
 static void * volatile sharedInstance = nil;
@@ -57,8 +58,34 @@ static void * volatile sharedInstance = nil;
                                                  selector:@selector(tasksChanged:)
                                                      name:CalTasksChangedExternallyNotification
                                                    object:[CalCalendarStore defaultCalendarStore]];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(dateChanged)
+                                                     name:NSSystemClockDidChangeNotification
+                                                   object:nil];
+        [self createTomorrowTimer];
     }
     return self;
+}
+
+- (void)createTomorrowTimer
+{
+    [tomorrowTimer invalidate];
+    [tomorrowTimer release];
+
+    tomorrowTimer = [[[NSTimer alloc] initWithFireDate:[NSDate midnight]
+                     interval:60 * 60 * 24
+                       target:self
+                     selector:@selector(dateChanged)
+                     userInfo:nil
+                      repeats:NO] retain];
+    [[NSRunLoop mainRunLoop] addTimer:tomorrowTimer forMode:NSDefaultRunLoopMode];
+}
+
+- (void)dateChanged
+{
+    NSLog(@"dateChanged");
+    [self _postCalendarChanged];
+    [self createTomorrowTimer];
 }
 
 - (void)calendarsChanged:(NSNotification *)aNotification
@@ -95,7 +122,7 @@ static void * volatile sharedInstance = nil;
     // This makes the week begin on Monday, Sunday or any other day depending on the locale.
     [gregorian setLocale:[NSLocale currentLocale]];
 
-    NSLog(@"old beginning date: %@", beginningDate);
+    // NSLog(@"old beginning date: %@", beginningDate);
     NSDate *tmpDate = nil;
     [gregorian rangeOfUnit:NSWeekCalendarUnit startDate:&tmpDate interval:NULL forDate:aDate];
     [self setBeginningDate:tmpDate];

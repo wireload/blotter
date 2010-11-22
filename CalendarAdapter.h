@@ -9,9 +9,11 @@
 #import <Cocoa/Cocoa.h>
 
 @interface CalendarAdapter : NSObject {
-    NSDate* focusDate;
-    NSDate* beginningDate;
-    NSDate* endDate;
+    NSDate  *focusDate;
+    NSDate  *beginningDate;
+    NSDate  *endDate;
+
+    NSTimer *tomorrowTimer;
 }
 
 @property (retain) NSDate*  focusDate;
