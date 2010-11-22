@@ -453,16 +453,25 @@ The div offsets the event from the background borders.
 
 #next-up-box .calendar > *
 {
+  overflow: hidden;
   -webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,1,0)));
 }
 
-#main-timeline
+#next-up-box .calendar > .main-table > .calendar-wrapper
+{
+  -webkit-perspective: 1000;
+  -webkit-backface-visibility: hidden;
+  -webkit-transition: all 3s ease-in-out;
+	transition: all 3s ease-in-out;
+}
+
+.calendar td.timeline > div
 {
   position: relative;
   height: 100%;
 }
 
-#main-timeline > span
+.calendar td.timeline > div > span
 {
   position: absolute;
   text-align: center;

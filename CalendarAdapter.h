@@ -10,12 +10,19 @@
 
 
 @interface CalendarAdapter : NSObject {
+    NSDate *focusDate;
     NSDate *beginningDate;
     NSDate *endDate;
 }
 
+@property (retain) NSDate* focusDate;
+@property (retain) NSDate* beginningDate;
+@property (retain) NSDate* endDate;
+
 + (CalendarAdapter *)sharedCalendarAdapter;
 
 - (NSDictionary *)currentCalendar;
+
+
 
 @end

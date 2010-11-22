@@ -11,8 +11,10 @@
   <script src="calendar-compiled.js"></script>
   <script>
   $(document).ready(function() {
-    var json = {{ json }};
-    update(json);
+    window.setTimeout(function() {
+      var json = {{ json }};
+      update(json);
+    }, 1.0);
   });
   </script>
 
@@ -58,9 +60,9 @@
             							<th><span></span></th>
             						</tr>
             						<tr>
-            							<td class="timeline">9&nbsp;am</td>
-            							<td class="content-column"><div><div class='event-mask'><span class="event green">Meet Julius Caesar for wine and grapes.</span></div></div></td>
-            						</tr>
+            							<td class="timeline content-column"><div id="next-up-timeline"></div></td>
+            							<td class="content-column"><div id="next-up-content-0"></div></td>
+                        </tr>
             					</table>
             				</div>
             			</div>

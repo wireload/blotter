@@ -16,3 +16,6 @@ build/*
 # osx noise
 .DS_Store
 profile
+
+# Generated stuff.
+Resources/calendar/calendar-compiled.js

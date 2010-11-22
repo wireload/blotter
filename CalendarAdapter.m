@@ -16,6 +16,10 @@ static void * volatile sharedInstance = nil;
 
 @implementation CalendarAdapter
 
+@synthesize focusDate;
+@synthesize beginningDate;
+@synthesize endDate;
+
 + (CalendarAdapter *)sharedCalendarAdapter
 {
     // http://stackoverflow.com/questions/145154/what-does-your-objective-c-singleton-look-like/2449664#2449664
@@ -32,25 +36,24 @@ static void * volatile sharedInstance = nil;
 {
     if (self = [super init])
     {
-        beginningDate = nil;
-        endDate = nil;
     }
     return self;
 }
 
-- (void)setDateRangeToCurrentWeek
+- (void)focusDateRangeAround:(NSDate *)aDate
 {
+    [self setFocusDate:aDate];
+
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     // This makes the week begin on Monday, Sunday or any other day depending on the locale.
     [gregorian setLocale:[NSLocale currentLocale]];
 
-    NSDate *today = [[NSDate alloc] init];
-    [gregorian rangeOfUnit:NSWeekCalendarUnit startDate:&beginningDate interval:NULL forDate:today];
-    [today autorelease];
+    [self setBeginningDate:[NSDate date]];
+    [gregorian rangeOfUnit:NSWeekCalendarUnit startDate:&beginningDate interval:NULL forDate:aDate];
 
     NSDateComponents *offsetComponents = [[NSDateComponents alloc] init];
     [offsetComponents setDay:7];
-    endDate = [gregorian dateByAddingComponents:offsetComponents toDate:beginningDate options:0];
+    [self setEndDate:[gregorian dateByAddingComponents:offsetComponents toDate:beginningDate options:0]];
     [offsetComponents autorelease];
 
     [gregorian autorelease];
@@ -119,7 +122,9 @@ static void * volatile sharedInstance = nil;
 
 - (NSDictionary *)currentCalendar
 {
-    [self setDateRangeToCurrentWeek];
+    // Use a fixed date for testing.
+    [self focusDateRangeAround:[NSDate dateWithString:@"2010-11-18 12:50:00 -0300"]];
+    //[self focusDateRangeAround:[NSDate date]];
 
     NSMutableDictionary *jsonCalendar = [NSMutableDictionary dictionaryWithCapacity:10];
 
@@ -152,7 +157,7 @@ static void * volatile sharedInstance = nil;
         [hourNames addObject:[dateFormatter stringFromDate:dayDate]];
     }
 
-    [jsonCalendar setValue:[NSDate date] forKey:@"date"];
+    [jsonCalendar setValue:focusDate forKey:@"date"];
     [jsonCalendar setValue:beginningDate forKey:@"beginningDate"];
     [jsonCalendar setValue:endDate forKey:@"endDate"];
     [jsonCalendar setValue:dayNames forKey:@"dayNames"];
@@ -161,6 +166,13 @@ static void * volatile sharedInstance = nil;
     [jsonCalendar setValue:[self currentTasks] forKey:@"tasks"];
 
     return jsonCalendar;
+}
+
+- (void)dealloc
+{
+    [self setEndDate:nil];
+    [self setBeginningDate:nil];
+    [self setFocusDate:nil];
 }
 
 @end

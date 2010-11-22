@@ -62,6 +62,25 @@ function createEventElement(theEvent)
     return outterWrapper.append(eventMask.append(innerSpan));
 }
 
+function fillInTimeline(timelineElement, earliestHour, latestHour, pixelsPerHour, json)
+{
+    timelineElement.html('');
+    for (var hour = earliestHour; hour <= latestHour; hour++)
+    {
+        var element = $('<span></span>'),
+            hourName = json['hourNames'][hour];
+
+        // If there's an am/pm marker, drop the :XX minute bit to make it smaller.
+        if (hourName.toUpperCase().indexOf('AM') > 0 || hourName.toUpperCase().indexOf('PM') > 0)
+            hourName = hourName.replace(/:(\d)+/, '');
+
+        element.text(hourName);
+        element.height(Math.floor(pixelsPerHour));
+        element.css('top', Math.floor((hour - earliestHour) * pixelsPerHour));
+        timelineElement.append(element);
+    }
+}
+
 function update(json)
 {
     console.log(json);
@@ -97,7 +116,7 @@ function update(json)
         columnEndDate.setMinutes(59);
         columnEndDate.setSeconds(59);
 
-        column['start_date'] = columnStartDate;
+        column['startDate'] = columnStartDate;
 
         // Go through all events, splitting and adding them into the day columns.
         // It'd probably be more efficient to only go through the list of events once,
@@ -193,24 +212,13 @@ function update(json)
         pixelsPerHour = timelineHeight / visibleHours,
         pixelsPerMinute = pixelsPerHour / 60;
 
-    timelineElement.html('');
+    fillInTimeline(timelineElement, earliestHour, latestHour, pixelsPerHour, json);
+    fillInTimeline($('#next-up-timeline'), 0, 23, pixelsPerHour, json);
 
-    for (var hour = earliestHour; hour <= latestHour; hour++)
-    {
-        var element = $('<span></span>'),
-            hourName = json['hourNames'][hour];
-
-        // If there's an am/pm marker, drop the :XX minute bit to make it smaller.
-        if (hourName.toUpperCase().indexOf('AM') > 0 || hourName.toUpperCase().indexOf('PM') > 0)
-            hourName = hourName.replace(/:(\d)+/, '');
-
-        element.text(hourName);
-        element.height(Math.floor(pixelsPerHour));
-        element.css('top', Math.floor((hour - earliestHour) * pixelsPerHour));
-        timelineElement.append(element);
-    }
-
-    var topMinutes = earliestHour * 60;
+    var topMinutes = earliestHour * 60,
+        today = goog.date.fromIsoString(json.date),
+        nextUpElement = null,
+        minutesIntoNextUp = null;
 
     for (var i = 0; i < 7; i++)
     {
@@ -232,12 +240,22 @@ function update(json)
         var mainElement = $('#main-content-' + i),
             dayEvents = day['events'];
 
+        if (day['startDate'].getDate() == today.getDate())
+        {
+            nextUpElement = $('#next-up-content-0');
+            minutesIntoNextUp = (today.getTime() - day['startDate'].getTime()) / 1000 / 60;
+        }
+        else
+            nextUpElement = null;
+
         mainElement.html("");
+        if (nextUpElement)
+            nextUpElement.html("");
         for (var j = 0, count = dayEvents.length; j < count; j++)
         {
             var theEvent = dayEvents[j],
                 element = createEventElement(theEvent),
-                minutesIntoDay = (theEvent.startDate.getTime() - days[i]['start_date'].getTime()) / 1000 / 60,
+                minutesIntoDay = (theEvent.startDate.getTime() - days[i]['startDate'].getTime()) / 1000 / 60,
                 minutes = (theEvent.endDate.getTime() - theEvent.startDate.getTime()) / 1000 / 60;
 
             element.height(Math.max(MINIMUM_EVENT_HEIGHT, Math.floor(minutes * pixelsPerMinute)));
@@ -254,6 +272,24 @@ function update(json)
             element.css('left', percentOffset + '%');
 
             mainElement.append(element);
+
+            if (nextUpElement)
+            {
+                element = element.clone();
+                // No 'top minutes' in Next Up.
+                element.css('top', Math.floor(pixelsPerMinute * minutesIntoDay) + 'px');
+                nextUpElement.append(element);
+            }
+        }
+
+        if (nextUpElement)
+        {
+            $('#next-up-timeline').height(Math.floor(pixelsPerHour * 24));
+            $('#next-up-content-0').height(Math.floor(pixelsPerHour * 24));
+            // Allow the screen to draw fully before animating.
+            window.setTimeout(function() {
+                $('#next-up-box .calendar-wrapper').css('top', (-1 * pixelsPerMinute * minutesIntoNextUp) + 'px');
+            }, 1.0);
         }
     }
 }
