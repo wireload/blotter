@@ -457,6 +457,7 @@ The div offsets the event from the background borders.
   -webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,1,0)));
 }
 
+/*
 #next-up-box .calendar > .main-table > .calendar-wrapper
 {
   -webkit-perspective: 1000;
@@ -464,7 +465,7 @@ The div offsets the event from the background borders.
   -webkit-transition: all 3s ease-in-out;
 	transition: all 3s ease-in-out;
 }
-
+*/
 .calendar td.timeline > div
 {
   position: relative;

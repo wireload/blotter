@@ -4,6 +4,8 @@
 
 goog.require('goog.date');
 
+jQuery.easing.def = "easeInOutQuad";
+
 // What class to use for each standard iCal color.
 var colorMap = {
     "blue":	        0x3C63DB,
@@ -286,10 +288,18 @@ function update(json)
         {
             $('#next-up-timeline').height(Math.floor(pixelsPerHour * 24));
             $('#next-up-content-0').height(Math.floor(pixelsPerHour * 24));
+            $('#next-up-box .calendar-wrapper').css('top', '0 px');
             // Allow the screen to draw fully before animating.
             window.setTimeout(function() {
-                $('#next-up-box .calendar-wrapper').css('top', (-1 * pixelsPerMinute * minutesIntoNextUp) + 'px');
-            }, 1.0);
+                $('#next-up-box .calendar-wrapper').animate({
+                    top: -1 * pixelsPerMinute * minutesIntoNextUp
+                  },
+                  2000,
+                  'easeInOutBounce'
+                );
+                // For CSS animation, currently commented out in all.css.
+                // $('#next-up-box .calendar-wrapper').css('top', (-1 * pixelsPerMinute * minutesIntoNextUp) + 'px');
+            }, 0.5);
         }
     }
 }

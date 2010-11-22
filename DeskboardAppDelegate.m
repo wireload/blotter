@@ -21,6 +21,7 @@
     [desktopWindow setHasShadow:NO];
     [desktopWindow setBackgroundColor:[NSColor clearColor]];
     [desktopWindow setIgnoresMouseEvents:YES];
+    [desktopWindow setPreferredBackingLocation:NSWindowBackingLocationVideoMemory];
 
     overlayView = [[DesktopView alloc] initWithFrame:[[desktopWindow contentView] frame]];
     [desktopWindow setContentView:overlayView];
