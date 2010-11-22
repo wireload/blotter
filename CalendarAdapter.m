@@ -32,8 +32,13 @@ static void * volatile sharedInstance = nil;
     return sharedInstance;
 }
 
-+ (void)initialize
-{
++ (void)initialize {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSDictionary *viewDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
+							   nil, @"ShowDate",
+							   nil];
+
+    [defaults registerDefaults:viewDefaults];
 }
 
 - (id)init
@@ -166,8 +171,21 @@ static void * volatile sharedInstance = nil;
 
 - (NSDictionary *)currentCalendar
 {
-    // Use a fixed date for testing.
-    [self focusDateRangeAround:[NSDate dateWithString:@"2010-11-18 12:50:00 -0300"]];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    // Maybe use a fixed date for testing.
+    NSString *focusDateString = [defaults stringForKey:@"ShowDate"];
+    if (focusDateString != nil)
+    {
+        NSDate *aDate = [NSDate dateWithString:focusDateString];
+        NSLog(@"Showing date %@", aDate);
+        [self focusDateRangeAround:aDate];
+    }
+    else
+    {
+        [self focusDateRangeAround:[NSDate date]];
+    }
+
     //[self focusDateRangeAround:[NSDate date]];
 
     NSMutableDictionary *jsonCalendar = [NSMutableDictionary dictionaryWithCapacity:10];

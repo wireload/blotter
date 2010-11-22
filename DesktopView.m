@@ -20,7 +20,20 @@
 
 @implementation DesktopView
 
-- (id)initWithFrame:(NSRect)frame {
++ (void)initialize
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSDictionary *viewDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  @"NO", @"FastForward",
+                                  nil, @"DumpJsonPath",
+                                  nil, @"DisplayJsonPath",
+                                  nil];
+
+    [defaults registerDefaults:viewDefaults];
+}
+
+- (id)initWithFrame:(NSRect)frame
+{
     self = [super initWithFrame:frame];
     if (self) {
         webContentView = [[WebView alloc] initWithFrame:frame];
@@ -36,7 +49,7 @@
         // [engine setObject:@"Hi there!" forKey:@"hello"];
         NSString *html = [self calendarHtml];
         NSURL *baseURL = [[NSBundle mainBundle] URLForResource:@"calendar" withExtension:@""];
-        NSLog(@"will display: %@ (base: %@)", html, baseURL);
+        // NSLog(@"will display: %@ (base: %@)", html, baseURL);
         [[webContentView mainFrame] loadHTMLString:html baseURL:baseURL];
 
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -47,11 +60,16 @@
     return self;
 }
 
-- (void)refresh
+- (NSDictionary *)calendarInput
 {
     NSDictionary *currentCalendar = [[CalendarAdapter sharedCalendarAdapter] currentCalendar];
-    [currentCalendar setValue:[NSNumber numberWithBool:NO] forKey:@"fastForwardNextUp"];
-    NSString *json = [currentCalendar yajl_JSONStringWithOptions:YAJLGenOptionsBeautify indentString:@"  "];
+    [currentCalendar setValue:[NSNumber numberWithBool:[[NSUserDefaults standardUserDefaults] boolForKey:@"FastForward"]] forKey:@"fastForwardNextUp"];
+    return currentCalendar;
+}
+
+- (void)refresh
+{
+    NSString *json = [[self calendarInput] yajl_JSONStringWithOptions:YAJLGenOptionsBeautify indentString:@"  "];
 
     WebScriptObject *scriptObject = [webContentView windowScriptObject];
     [scriptObject callWebScriptMethod:@"update" withArguments:[NSArray arrayWithObject:json]];
@@ -59,16 +77,47 @@
 
 - (NSString *)calendarHtml
 {
-    NSDictionary *currentCalendar = [[CalendarAdapter sharedCalendarAdapter] currentCalendar];
-    [currentCalendar setValue:[NSNumber numberWithBool:NO] forKey:@"fastForwardNextUp"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    NSString *json = [currentCalendar yajl_JSONStringWithOptions:YAJLGenOptionsBeautify indentString:@"  "];
+    NSString *json = nil;
+    NSString *displayJsonPath = [defaults stringForKey:@"DisplayJsonPath"];
+
+    if (displayJsonPath != nil)
+    {
+        NSLog(@"Loading JSON from %@", displayJsonPath);
+        NSError *error;
+        NSStringEncoding enc;
+        json = [NSString stringWithContentsOfFile:displayJsonPath
+                                     usedEncoding:&enc
+                                            error:&error];
+        if (json == nil)
+            // an error occurred
+            NSLog(@"Error reading file at %@\n%@",
+                  displayJsonPath, [error localizedFailureReason]);
+    }
+    else
+    {
+        NSDictionary *currentCalendar = [self calendarInput];
+        json = [currentCalendar yajl_JSONStringWithOptions:YAJLGenOptionsBeautify indentString:@"  "];
+    }
+
+    NSString *dumpJsonPath = [defaults stringForKey:@"DumpJsonPath"];
+    if (dumpJsonPath != nil)
+    {
+        NSLog(@"Dumping JSON to %@", dumpJsonPath);
+        NSError *error;
+        BOOL ok = [json writeToFile:dumpJsonPath
+                         atomically:YES
+                           encoding:NSUnicodeStringEncoding error:&error];
+        if (!ok)
+            NSLog(@"Error writing file at %@\n%@",
+                  dumpJsonPath, [error localizedFailureReason]);
+    }
 
 	NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"calendar"];
-    NSLog(@"templatePath: %@", templatePath);
+    // NSLog(@"templatePath: %@", templatePath);
 
 	NSDictionary *variables = [NSDictionary dictionaryWithObjectsAndKeys:
-							   currentCalendar, @"calendar",
                                json, @"json",
 							   nil];
 
