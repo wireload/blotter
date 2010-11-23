@@ -37,6 +37,7 @@ static void * volatile sharedInstance = nil;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSDictionary *viewDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
 							   nil, @"ShowDate",
+                               @"NO", @"RollingCalendar",
 							   nil];
 
     [defaults registerDefaults:viewDefaults];
@@ -62,9 +63,20 @@ static void * volatile sharedInstance = nil;
                                                  selector:@selector(dateChanged)
                                                      name:NSSystemClockDidChangeNotification
                                                    object:nil];
+        [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self
+                                                                  forKeyPath:@"values.RollingCalendar"
+                                                                     options:0
+                                                                     context:NULL];
+
         [self createTomorrowTimer];
     }
     return self;
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    NSLog(@"Updating due to %@ setting change", keyPath);
+    [self _postCalendarChanged];
 }
 
 - (void)createTomorrowTimer
@@ -118,21 +130,27 @@ static void * volatile sharedInstance = nil;
 {
     [self setFocusDate:aDate];
 
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    NSCalendar *gregorian = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
     // This makes the week begin on Monday, Sunday or any other day depending on the locale.
     [gregorian setLocale:[NSLocale currentLocale]];
 
-    // NSLog(@"old beginning date: %@", beginningDate);
-    NSDate *tmpDate = nil;
-    [gregorian rangeOfUnit:NSWeekCalendarUnit startDate:&tmpDate interval:NULL forDate:aDate];
-    [self setBeginningDate:tmpDate];
+    if ([defaults boolForKey:@"RollingCalendar"])
+    {
+        // focusDate is now simply the first day.
+        [self setBeginningDate:[aDate firstMoment]];
+    }
+    else
+    {
+        NSDate *tmpDate;
+        [gregorian rangeOfUnit:NSWeekCalendarUnit startDate:&tmpDate interval:NULL forDate:aDate];
+        [self setBeginningDate:tmpDate];
+    }
 
-    NSDateComponents *offsetComponents = [[NSDateComponents alloc] init];
+    NSDateComponents *offsetComponents = [[[NSDateComponents alloc] init] autorelease];
     [offsetComponents setDay:7];
     [self setEndDate:[gregorian dateByAddingComponents:offsetComponents toDate:beginningDate options:0]];
-    [offsetComponents autorelease];
-
-    [gregorian autorelease];
 }
 
 - (NSArray *)currentEvents

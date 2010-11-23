@@ -338,7 +338,7 @@ function advanceNextUp(pixelsPerMinute, minutesIntoNextUp)
 
     // Don't scroll past the bottom.
     newTop = Math.max(newTop, Math.floor(-1 * pixelsPerMinute * 60 * 25 + 0.9 * $("#next-up-box").height()));
-    console.log("advancing Next Up to " + minutesSinceUpdate + " minutes from start (" + oldTop + " to " + newTop + " px).");
+    // console.log("advancing Next Up to " + minutesSinceUpdate + " minutes from start (" + oldTop + " to " + newTop + " px).");
 
     nextUpWrapper.animate({
         top: newTop

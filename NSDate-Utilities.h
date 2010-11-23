@@ -13,6 +13,8 @@
 
 + (NSDate *)midnight;
 
+- (NSDate *)firstMoment;
+
 - (id)JSON;
 
 @end
