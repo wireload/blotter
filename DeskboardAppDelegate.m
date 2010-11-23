@@ -29,9 +29,7 @@
     [self layout];
 
     [desktopWindow orderFront:NSApp];
-    // [desktopWindow useOptimizedDrawing:YES];
-    [desktopWindow flushWindow];
-    [desktopWindow display];
+    [desktopWindow useOptimizedDrawing:YES];
 }
 
 

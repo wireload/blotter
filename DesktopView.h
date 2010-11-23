@@ -14,6 +14,7 @@
 @interface DesktopView : NSView {
     WebView             *webContentView;
     MGTemplateEngine    *templateEngine;
+    NSTimer             *fadeOutTimer;
 }
 
 - (void)refresh;

@@ -295,7 +295,7 @@
 				</object>
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
-			<object class="NSCustomObject" id="477404663">
+			<object class="NSCustomObject" id="348573719">
 				<string key="NSClassName">LaunchAtLoginController</string>
 			</object>
 		</object>
@@ -344,26 +344,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.AutoFadeSeconds</string>
-						<reference key="source" ref="66188539"/>
-						<reference key="destination" ref="282032805"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="66188539"/>
-							<reference key="NSDestination" ref="282032805"/>
-							<string key="NSLabel">value: values.AutoFadeSeconds</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.AutoFadeSeconds</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSNullPlaceholder</string>
-								<real value="60" key="NS.object.0"/>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">66</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">enabled: values.AutoFade</string>
 						<reference key="source" ref="66188539"/>
 						<reference key="destination" ref="282032805"/>
@@ -382,10 +362,10 @@
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: launchAtLogin</string>
 						<reference key="source" ref="932265259"/>
-						<reference key="destination" ref="477404663"/>
+						<reference key="destination" ref="348573719"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="932265259"/>
-							<reference key="NSDestination" ref="477404663"/>
+							<reference key="NSDestination" ref="348573719"/>
 							<string key="NSLabel">value: launchAtLogin</string>
 							<string key="NSBinding">value</string>
 							<string key="NSKeyPath">launchAtLogin</string>
@@ -393,6 +373,26 @@
 						</object>
 					</object>
 					<int key="connectionID">70</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: values.AutoFadeSeconds</string>
+						<reference key="source" ref="66188539"/>
+						<reference key="destination" ref="282032805"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="66188539"/>
+							<reference key="NSDestination" ref="282032805"/>
+							<string key="NSLabel">value: values.AutoFadeSeconds</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">values.AutoFadeSeconds</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSNullPlaceholder</string>
+								<real value="60" key="NS.object.0"/>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">72</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -555,7 +555,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">68</int>
-						<reference key="object" ref="477404663"/>
+						<reference key="object" ref="348573719"/>
 						<reference key="parent" ref="0"/>
 					</object>
 				</object>
@@ -659,7 +659,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">70</int>
+			<int key="maxID">72</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

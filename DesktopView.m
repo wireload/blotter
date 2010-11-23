@@ -27,6 +27,8 @@
                                   @"NO", @"FastForward",
                                   nil, @"DumpJsonPath",
                                   nil, @"DisplayJsonPath",
+                                  @"NO", @"AutoFade",
+                                  @"60", @"AutoFadeSeconds",
                                   nil];
 
     [defaults registerDefaults:viewDefaults];
@@ -56,8 +58,94 @@
                                                  selector:@selector(refresh)
                                                      name:@"CalendarAdapterChangedNotification"
                                                    object:[CalendarAdapter sharedCalendarAdapter]];
+
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(applicationDidBecomeActive:)
+                                                     name:NSApplicationDidBecomeActiveNotification
+                                                   object:NSApp];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(applicationDidResignActive:)
+                                                     name:NSApplicationDidResignActiveNotification
+                                                   object:NSApp];
+
+        [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self
+                                                                  forKeyPath:@"values.AutoFade"
+                                                                     options:0
+                                                                     context:NULL];
+        [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self
+                                                                  forKeyPath:@"values.AutoFadeSeconds"
+                                                                     options:NSKeyValueObservingOptionInitial
+                                                                     context:NULL];
+
     }
     return self;
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"values.AutoFade"] || [keyPath isEqualToString:@"values.AutoFadeSeconds"])
+    {
+        [self createFadeOutTimer];
+    }
+}
+
+- (void)applicationDidBecomeActive:(NSNotification *)aNotification
+{
+    [self fadeIn];
+}
+
+- (void)applicationDidResignActive:(NSNotification *)aNotification
+{
+    [self createFadeOutTimer];
+}
+
+- (void)fadeIn
+{
+    if ([self alphaValue] < 1.0)
+    {
+        /*[NSAnimationContext beginGrouping];
+        [[NSAnimationContext currentContext] setDuration:0.1];
+        [[self animator] setAlphaValue:1.0];
+        [NSAnimationContext endGrouping];*/
+        [self setAlphaValue:1.0];
+    }
+}
+
+- (void)fadeOut
+{
+    if ([self alphaValue] > 0.5)
+    {
+        [NSAnimationContext beginGrouping];
+        [[NSAnimationContext currentContext] setDuration:1.0];
+        [[self animator] setAlphaValue:0.5];
+        [NSAnimationContext endGrouping];
+    }
+}
+
+- (void)createFadeOutTimer
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL shouldFade = [defaults boolForKey:@"AutoFade"];
+
+    [fadeOutTimer invalidate];
+    [fadeOutTimer release];
+    fadeOutTimer = nil;
+
+    if (!shouldFade || [NSApp isActive])
+    {
+        [self fadeIn];
+    }
+    else
+    {
+        int fadeSeconds = [defaults integerForKey:@"AutoFadeSeconds"];
+        if (fadeSeconds < 1)
+            fadeSeconds = 60;
+
+        NSLog(@"Fade out in %d seconds", fadeSeconds);
+
+        fadeOutTimer = [NSTimer scheduledTimerWithTimeInterval:fadeSeconds target:self selector:@selector(fadeOut) userInfo:nil repeats:NO];
+        [fadeOutTimer retain];
+    }
 }
 
 - (NSDictionary *)calendarInput
