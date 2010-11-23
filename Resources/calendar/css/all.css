@@ -269,6 +269,13 @@ The div offsets the event from the background borders.
   padding: 4px;
 }
 
+.event .title
+{
+  display: block;
+  overflow: hidden;
+  max-height: 100%;
+}
+
 .top-table .timeline
 {
   background: none;

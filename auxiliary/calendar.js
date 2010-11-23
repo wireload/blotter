@@ -92,7 +92,7 @@ function fillInTimeline(timelineElement, earliestHour, latestHour, pixelsPerHour
     }
 }
 
-var MINIMUM_EVENT_HEIGHT = 28,
+var MINIMUM_EVENT_HEIGHT = 29,
     FAST_FORWARD_NEXT_UP = false,
 
     lastUpdateDate = null,
