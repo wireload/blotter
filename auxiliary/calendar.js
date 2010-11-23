@@ -20,20 +20,28 @@ var colorMap = {
     "turquoise":	0x6237B0   // purple in iCal
 };
 
+function colorComponents(color)
+{
+    return [(color & 0xFF0000) >> 16, (color & 0x00FF00) >> 8, (color & 0x0000FF)];
+}
+
 function mapColorToClass(color)
 {
     var bestMatch = '',
-        distance = 0xFFFFFF;
+        distance = 0xFFFFFF,
+        c1 = colorComponents(color);
 
-    //console.log("matching " + color.toString(16));
+    //console.log("matching " + color.toString(16) + "(" + c1 + ")");
     for (var key in colorMap)
     {
-        var value = colorMap[key],
-            d = Math.abs(color - value);
+        var value = colorMap[key];
+
+        c2 = colorComponents(value);
+        d = Math.sqrt(Math.pow(c1[0] - c2[0], 2) + Math.pow(c1[1] - c2[1], 2) + Math.pow(c1[2] - c2[2], 2));
 
         if (d < distance)
         {
-            //console.log("key: " + key + "value: " + value.toString(16) + " d: " + d.toString(16));
+            //console.log("key: " + key + "value: " + value.toString(16) + " d: " + d);
             bestMatch = key;
             distance = d;
         }
