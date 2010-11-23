@@ -7,6 +7,15 @@ goog.require('goog.i18n.DateTimeFormat');
 
 jQuery.easing.def = "easeInOutQuad";
 
+function implementSizingHacks()
+{
+    var infoHeight = $(".info-boxes-space").height();
+    $("#to-do-box").height(infoHeight / 2 - 20);
+}
+
+$(document).ready(implementSizingHacks);
+$(window).resize(implementSizingHacks);
+
 // What class to use for each standard iCal color.
 var colorMap = {
     "blue":	        0x3C63DB,
@@ -238,10 +247,12 @@ function update(json)
 
     var visibleHours = latestHour - earliestHour + 1,
         timelineElement = $('#main-timeline'),
-        timelineHeight = timelineElement.height(),
+        nextUpTimelineElement = $('#next-up-timeline'),
+        timelineHeight = timelineElement.height() || $('#next-up-timeline').height(),
         pixelsPerHour = timelineHeight / visibleHours,
         pixelsPerMinute = pixelsPerHour / 60;
 
+    console.log("pixelsPerHour: " + pixelsPerHour);
     fillInTimeline(timelineElement, earliestHour, latestHour, pixelsPerHour, json);
     fillInTimeline($('#next-up-timeline'), 0, 23, pixelsPerHour, json);
 
