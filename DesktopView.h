@@ -11,10 +11,12 @@
 
 #import "MGTemplateEngine.h"
 
+#import "BLFadeController.h"
+
 @interface DesktopView : NSView {
     WebView             *webContentView;
     MGTemplateEngine    *templateEngine;
-    NSTimer             *fadeOutTimer;
+    BLFadeController    *fadeController;
 }
 
 - (void)refresh;

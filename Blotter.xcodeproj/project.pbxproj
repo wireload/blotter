@@ -28,6 +28,7 @@
 		28F696811298B99800D4BB97 /* calendar in Resources */ = {isa = PBXBuildFile; fileRef = 28F6966B1298B99800D4BB97 /* calendar */; };
 		28F6972C1298C76700D4BB97 /* General Preferences.preferencePane in Resources */ = {isa = PBXBuildFile; fileRef = 28F6971D1298C76700D4BB97 /* General Preferences.preferencePane */; };
 		28F6975B129969E500D4BB97 /* NSDate-Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6975A129969E500D4BB97 /* NSDate-Utilities.m */; };
+		28F699E4129C0EBC00D4BB97 /* BLFadeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F699E3129C0EBC00D4BB97 /* BLFadeController.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -88,6 +89,8 @@
 		28F6971D1298C76700D4BB97 /* General Preferences.preferencePane */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "General Preferences.preferencePane"; path = "auxiliary/General Preferences/build/Release/General Preferences.preferencePane"; sourceTree = "<group>"; };
 		28F69759129969E500D4BB97 /* NSDate-Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate-Utilities.h"; sourceTree = "<group>"; };
 		28F6975A129969E500D4BB97 /* NSDate-Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate-Utilities.m"; sourceTree = "<group>"; };
+		28F699E2129C0EBC00D4BB97 /* BLFadeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLFadeController.h; sourceTree = "<group>"; };
+		28F699E3129C0EBC00D4BB97 /* BLFadeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLFadeController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -126,6 +129,8 @@
 				284063EB1283176F000816FF /* CalendarAdapter.m */,
 				2840653612836E78000816FF /* NSColor-Utilities.h */,
 				2840653712836E78000816FF /* NSColor-Utilities.m */,
+				28F699E2129C0EBC00D4BB97 /* BLFadeController.h */,
+				28F699E3129C0EBC00D4BB97 /* BLFadeController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -310,6 +315,7 @@
 				28F6959D1298AAE700D4BB97 /* NSDictionary_DeepMutableCopy.m in Sources */,
 				28F6959E1298AAE700D4BB97 /* RegexKitLite.m in Sources */,
 				28F6975B129969E500D4BB97 /* NSDate-Utilities.m in Sources */,
+				28F699E4129C0EBC00D4BB97 /* BLFadeController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
