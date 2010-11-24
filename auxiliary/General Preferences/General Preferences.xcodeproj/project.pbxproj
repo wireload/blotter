@@ -12,6 +12,9 @@
 		28B54D7A1283AEEE0037BF53 /* PositionPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54D791283AEEE0037BF53 /* PositionPrefController.m */; };
 		28B54D811283B57E0037BF53 /* PositionPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28B54D801283B57E0037BF53 /* PositionPrefPaneView.xib */; };
 		28F6993D129B723900D4BB97 /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */; };
+		28F69A29129C587F00D4BB97 /* BLPositionerControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69A28129C587F00D4BB97 /* BLPositionerControl.m */; };
+		28F69A55129C5EA100D4BB97 /* Recreated-Aqua.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 28F69A54129C5EA100D4BB97 /* Recreated-Aqua.jpg */; };
+		28F69B53129C82E800D4BB97 /* BLPositionerControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69B52129C82E800D4BB97 /* BLPositionerControlCell.m */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -30,6 +33,11 @@
 		28B54D801283B57E0037BF53 /* PositionPrefPaneView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PositionPrefPaneView.xib; sourceTree = "<group>"; };
 		28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAtLoginController.m; sourceTree = "<group>"; };
 		28F6993C129B723900D4BB97 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
+		28F69A27129C587F00D4BB97 /* BLPositionerControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLPositionerControl.h; sourceTree = "<group>"; };
+		28F69A28129C587F00D4BB97 /* BLPositionerControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLPositionerControl.m; sourceTree = "<group>"; };
+		28F69A54129C5EA100D4BB97 /* Recreated-Aqua.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Recreated-Aqua.jpg"; sourceTree = "<group>"; };
+		28F69B51129C82E800D4BB97 /* BLPositionerControlCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLPositionerControlCell.h; sourceTree = "<group>"; };
+		28F69B52129C82E800D4BB97 /* BLPositionerControlCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLPositionerControlCell.m; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* General Preferences_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "General Preferences_Prefix.pch"; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* General Preferences.preferencePane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "General Preferences.preferencePane"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -75,6 +83,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				28F69A54129C5EA100D4BB97 /* Recreated-Aqua.jpg */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 			);
@@ -90,6 +99,10 @@
 				28B54D5D12839B8D0037BF53 /* GeneralPrefController.m */,
 				28B54D781283AEEE0037BF53 /* PositionPrefController.h */,
 				28B54D791283AEEE0037BF53 /* PositionPrefController.m */,
+				28F69A27129C587F00D4BB97 /* BLPositionerControl.h */,
+				28F69A28129C587F00D4BB97 /* BLPositionerControl.m */,
+				28F69B51129C82E800D4BB97 /* BLPositionerControlCell.h */,
+				28F69B52129C82E800D4BB97 /* BLPositionerControlCell.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -181,6 +194,7 @@
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				28B54D56128398530037BF53 /* GeneralPrefPaneView.xib in Resources */,
 				28B54D811283B57E0037BF53 /* PositionPrefPaneView.xib in Resources */,
+				28F69A55129C5EA100D4BB97 /* Recreated-Aqua.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +208,8 @@
 				28B54D5E12839B8D0037BF53 /* GeneralPrefController.m in Sources */,
 				28B54D7A1283AEEE0037BF53 /* PositionPrefController.m in Sources */,
 				28F6993D129B723900D4BB97 /* LaunchAtLoginController.m in Sources */,
+				28F69A29129C587F00D4BB97 /* BLPositionerControl.m in Sources */,
+				28F69B53129C82E800D4BB97 /* BLPositionerControlCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

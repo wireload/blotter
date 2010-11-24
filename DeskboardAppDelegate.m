@@ -7,6 +7,8 @@
 //
 
 #import "DeskboardAppDelegate.h"
+#import "BLPositionerControl.h"
+
 
 @implementation DeskboardAppDelegate
 
@@ -29,7 +31,16 @@
     [self layout];
 
     [desktopWindow orderFront:NSApp];
-    [desktopWindow useOptimizedDrawing:YES];
+    // [desktopWindow useOptimizedDrawing:YES];
+
+    [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self
+                                                              forKeyPath:@"values.CalendarPosition"
+                                                                 options:0
+                                                                 context:NULL];
+    [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self
+                                                              forKeyPath:@"values.CalendarSize"
+                                                                 options:0
+                                                                 context:NULL];
 }
 
 
@@ -50,24 +61,71 @@
     [prefs showPreferencesWindow];
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    NSLog(@"Resizing due to %@ settings change", keyPath);
+    [self layout];
+}
+
 - (void)layout
 {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    NSString *sizeSetting = [defaults stringForKey:@"CalendarSize"];
     int sizePrefs = BANormalSize;
+    if ([sizeSetting isEqualToString:@"Narrow"])
+        sizePrefs = BANarrowSize;
+    else if ([sizeSetting isEqualToString:@"Full"])
+        sizePrefs = BAFullSize;
 
     CGSize size;
+    NSRect frame = [[NSScreen mainScreen] visibleFrame];
 
     switch (sizePrefs) {
-        case BANormalSize:
-            size = CGSizeMake(1200, 800);
+        case BANarrowSize:
+            size = CGSizeMake(270, 750);
+            break;
+        case BAFullSize:
+            size = CGSizeMake(frame.size.width - 20, frame.size.height - 20);
             break;
         default:
+            size = CGSizeMake(frame.size.width / 2, MAX(750, frame.size.height / 2));
             break;
     }
 
-    NSRect frame = [[NSScreen mainScreen] visibleFrame];
-    NSLog(@"Covering desktop (%f, %f, %f x %f)", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+    CGFloat px = 10;
+    CGFloat py = 10;
 
-    [desktopWindow setFrame:NSMakeRect(10, 10, size.width, size.height) display:YES];
+    int aPosition = MIN(BLPositionBottomRight, MAX(BLPositionTopLeft, [defaults integerForKey:@"CalendarPosition"]));
+
+    if (aPosition == BLPositionTopCenter ||
+        aPosition == BLPositionCenterCenter ||
+        aPosition == BLPositionBottomCenter)
+        px = floor(frame.size.width / 2.0 - size.width / 2.0);
+
+    if (aPosition == BLPositionTopRight ||
+        aPosition == BLPositionCenterRight ||
+        aPosition == BLPositionBottomRight)
+        px = frame.size.width - size.width - 10;
+
+    if (aPosition == BLPositionTopLeft ||
+        aPosition == BLPositionTopCenter ||
+        aPosition == BLPositionTopRight)
+        py = frame.size.height - size.height - 10;
+
+    if (aPosition == BLPositionCenterLeft ||
+        aPosition == BLPositionCenterCenter ||
+        aPosition == BLPositionCenterRight)
+        py = floor(frame.size.height / 2.0 - size.height / 2.0);
+
+
+    NSRect desiredFrame = NSMakeRect(px, py, size.width, size.height);
+    NSLog(@"Placing at %@", NSStringFromRect(desiredFrame));
+
+    [desktopWindow setFrame:desiredFrame display:YES];
+
+    // FIXME Only do this if the size actually changed. Also, the view should do this by itself.
+    [overlayView refresh];
 }
 
 - (void)dealloc

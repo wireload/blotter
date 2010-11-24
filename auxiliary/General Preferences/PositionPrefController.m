@@ -11,15 +11,30 @@
 
 @implementation PositionPrefController
 
+- (NSArray *)calendarSizes
+{
+    return [NSArray arrayWithObjects:@"Narrow", @"Normal", @"Full", nil];
+}
+
 - (NSView *)paneView
 {
     BOOL loaded = YES;
 
-    if (!positionView)
+    if (!mainView)
+    {
         loaded = [NSBundle loadNibNamed:@"PositionPrefPaneView" owner:self];
 
+        if (loaded)
+        {
+            [positionView bind:NSValueBinding
+                      toObject:[NSUserDefaultsController sharedUserDefaultsController]
+                   withKeyPath:@"values.CalendarPosition"
+                       options:0];
+        }
+    }
+
     if (loaded)
-        return positionView;
+        return mainView;
 
     return nil;
 }
@@ -35,7 +50,6 @@
 
 }
 
-
 - (NSString *)paneToolTip
 {
     return @"Position and Size Preferences";
@@ -46,7 +60,6 @@
 {
     return NO;
 }
-
 
 - (BOOL)allowsVerticalResizing
 {

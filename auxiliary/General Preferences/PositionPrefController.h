@@ -9,10 +9,14 @@
 #import <Cocoa/Cocoa.h>
 
 #import "SS_PreferencePaneProtocol.h"
+#import "BLPositionerControl.h"
 
 @interface PositionPrefController : NSObject<SS_PreferencePaneProtocol>
 {
-    IBOutlet NSView *positionView;
+    IBOutlet NSView *mainView;
+    IBOutlet BLPositionerControl *positionView;
 }
+
+- (NSArray *)calendarSizes;
 
 @end
