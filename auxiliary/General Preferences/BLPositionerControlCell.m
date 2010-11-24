@@ -26,6 +26,11 @@
         // Initialization code here.
         NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"Recreated-Aqua" ofType:@"jpg"];
         backgroundImage = [[NSImage alloc] initWithContentsOfFile:path];
+
+        [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self
+                                                                  forKeyPath:@"values.CalendarSize"
+                                                                     options:0
+                                                                     context:NULL];
     }
     return self;
 }
@@ -33,8 +38,14 @@
 - (void)dealloc
 {
     [backgroundImage release];
+    [[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self];
 
     [super dealloc];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    [[self controlView] setNeedsDisplay:YES];
 }
 
 - (void)mouseDown:(NSEvent *)anEvent
@@ -45,14 +56,13 @@
 {
     if (!isDragging)
     {
-        int positionConstant = [self intValue];
-        NSRect positionRect = [self rectForPosition:positionConstant];
+        NSRect positionRect = [self selectedRect];
         if (NSPointInRect(location, positionRect))
         {
             isDragging = YES;
             dragStart = location;
+            return [self continueTracking:location at:location inView:controlView];
         }
-        [[self controlView] setNeedsDisplay:YES];
    }
    return isDragging;
 }
@@ -126,6 +136,17 @@
     return NSMakeRect(px, py, pWidth, pHeight);
 }
 
+- (NSRect)selectedRect
+{
+    int position = [self intValue];
+    NSSize boundsSize = [[self controlView] bounds].size;
+    NSRect fullFrame = [[NSScreen mainScreen] visibleFrame];
+    NSPoint scaleFactor = NSMakePoint(boundsSize.width / fullFrame.size.width, boundsSize.height / fullFrame.size.height);
+    NSRect relativeFrame = [BLCalendarFramer frameForPosition:position scaleFactor:scaleFactor margin:NSMakeSize(10, 10)];
+
+    return relativeFrame;
+}
+
 - (void)drawWithFrame:(NSRect)bounds inView:(NSView *)controlView
 {
     [NSBezierPath setDefaultLineWidth:1.0];
@@ -170,6 +191,10 @@
 
             if (positionConstant == position)
             {
+                path = [NSBezierPath bezierPath];
+
+                [path appendBezierPathWithRect:[self selectedRect]];
+
                 if (isDragging && (abs(dragOffset.x) > 2 || abs(dragOffset.y) > 2))
                 {
                     NSAffineTransform *transform = [NSAffineTransform transform];

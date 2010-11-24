@@ -33,6 +33,8 @@ extern NSSize const BLNormalMinimumSize;
 
 }
 
++ (NSRect)frameForPosition:(BLPosition)aPosition scaleFactor:(NSPoint)scaleFactor margin:(NSSize)aMargin;
 + (NSRect)frameForPosition:(BLPosition)aPosition size:(NSString *)aCalendarSize;
++ (NSRect)frameForPosition:(BLPosition)aPosition size:(NSString *)aCalendarSize scaleFactor:(NSPoint)scaleFactor margin:(NSSize)aMargin;
 
 @end

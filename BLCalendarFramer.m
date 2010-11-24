@@ -13,7 +13,21 @@ const NSSize BLNormalMinimumSize = {801, 750};
 
 @implementation BLCalendarFramer
 
-+ (NSRect)frameForPosition:(BLPosition)aPosition size:(NSString *)aCalendarSize;
++ (NSRect)frameForPosition:(BLPosition)aPosition scaleFactor:(NSPoint)scaleFactor margin:(NSSize)aMargin
+{
+    return [self frameForPosition:aPosition
+                             size:[[NSUserDefaults standardUserDefaults]
+                                   stringForKey:@"CalendarSize"]
+                      scaleFactor:scaleFactor
+                           margin:aMargin];
+}
+
++ (NSRect)frameForPosition:(BLPosition)aPosition size:(NSString *)aCalendarSize
+{
+    return [self frameForPosition:aPosition size:aCalendarSize scaleFactor:NSMakePoint(1.0, 1.0) margin:NSMakeSize(10, 10)];
+}
+
++ (NSRect)frameForPosition:(BLPosition)aPosition size:(NSString *)aCalendarSize scaleFactor:(NSPoint)scaleFactor margin:(NSSize)aMargin
 {
     NSRect frame = [[NSScreen mainScreen] visibleFrame];
 
@@ -29,35 +43,38 @@ const NSSize BLNormalMinimumSize = {801, 750};
             size = BLNarrowMinimumSize;
             break;
         case BLFullSize:
-            size = NSMakeSize(frame.size.width - 20, frame.size.height - 20);
+            size = NSMakeSize(frame.size.width - aMargin.width * 2, frame.size.height - aMargin.height * 2);
             break;
         default:
             size = NSMakeSize(MAX(BLNormalMinimumSize.width, frame.size.width / 2), MAX(BLNormalMinimumSize.height, frame.size.height / 2));
             break;
     }
 
-    CGFloat px = 10;
-    CGFloat py = 10;
+    size.width *= scaleFactor.x;
+    size.height *= scaleFactor.y;
+
+    CGFloat px = aMargin.width * scaleFactor.x;
+    CGFloat py = aMargin.height * scaleFactor.y;
 
     if (aPosition == BLPositionTopCenter ||
         aPosition == BLPositionCenterCenter ||
         aPosition == BLPositionBottomCenter)
-        px = floor(frame.size.width / 2.0 - size.width / 2.0);
+        px = floor(frame.size.width * scaleFactor.x / 2.0 - size.width / 2.0);
 
     if (aPosition == BLPositionTopRight ||
         aPosition == BLPositionCenterRight ||
         aPosition == BLPositionBottomRight)
-        px = frame.size.width - size.width - 10;
+        px = frame.size.width * scaleFactor.x - size.width - aMargin.width * scaleFactor.x;
 
     if (aPosition == BLPositionTopLeft ||
         aPosition == BLPositionTopCenter ||
         aPosition == BLPositionTopRight)
-        py = frame.size.height - size.height - 10;
+        py = frame.size.height * scaleFactor.y - size.height - aMargin.height * scaleFactor.y;
 
     if (aPosition == BLPositionCenterLeft ||
         aPosition == BLPositionCenterCenter ||
         aPosition == BLPositionCenterRight)
-        py = floor(frame.size.height / 2.0 - size.height / 2.0);
+        py = floor(frame.size.height * scaleFactor.y / 2.0 - size.height / 2.0);
 
 
     return NSMakeRect(px, py, size.width, size.height);

@@ -20,5 +20,6 @@
 }
 
 - (NSRect)rectForPosition:(BLPosition)aPosition;
+- (NSRect)selectedRect;
 
 @end
