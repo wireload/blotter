@@ -297,7 +297,8 @@ function update(json)
     {
         var day = days[i],
             allDayEvents = day['allday'],
-            allDayElement = $("#main-all-day-" + i);
+            allDayElement = $("#main-all-day-" + i),
+            isToday = day['startDate'].getDate() == today.getDate();
 
         allDayElement.html("");
         for (var j = 0, count = allDayEvents.length; j < count; j++)
@@ -309,11 +310,15 @@ function update(json)
 
         // Day titles.
         $('#main-header-' + i).html("" + days[i]['title']);
+        if (isToday)
+            $('#main-header-' + i).addClass('today');
+        else
+            $('#main-header-' + i).removeClass('today');
 
         var mainElement = $('#main-content-' + i),
             dayEvents = day['events'];
 
-        if (day['startDate'].getDate() == today.getDate())
+        if (isToday)
         {
             nextUpElement = $('#next-up-content-0');
             minutesIntoNextUp = (today.getTime() - day['startDate'].getTime()) / 1000 / 60;
