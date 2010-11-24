@@ -191,9 +191,11 @@
 
             if (positionConstant == position)
             {
+                // Draw the calendar widget.
+
                 path = [NSBezierPath bezierPath];
 
-                [path appendBezierPathWithRect:[self selectedRect]];
+                [path appendBezierPathWithRoundedRect:NSInsetRect([self selectedRect], 2.5, 2.5) xRadius:5 yRadius:5];
 
                 if (isDragging && (abs(dragOffset.x) > 2 || abs(dragOffset.y) > 2))
                 {
@@ -202,11 +204,12 @@
                     [path transformUsingAffineTransform:transform];
                 }
 
-                [selectedColor setFill];
+                [[[NSColor blackColor] colorWithAlphaComponent:0.25] setFill];
                 [path fill];
 
+                [[[NSColor blackColor] colorWithAlphaComponent:0.75] setStroke];
                 [path setLineDash:0 count:0 phase:0];
-                [[NSColor whiteColor] set];
+                [path setLineWidth:5];
                 [path stroke];
             }
         }
