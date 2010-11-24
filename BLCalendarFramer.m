@@ -9,7 +9,7 @@
 #import "BLCalendarFramer.h"
 
 const NSSize BLNarrowMinimumSize = {270, 750};
-const NSSize BLNormalMinimumSize = {801, 750};
+const NSSize BLNormalMinimumSize = {950, 750};
 
 @implementation BLCalendarFramer
 
