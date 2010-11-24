@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "BLCalendarFramer.h"
 
 @interface BLPositionerControlCell : NSActionCell {
     NSImage *backgroundImage;

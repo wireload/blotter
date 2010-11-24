@@ -11,15 +11,8 @@
 #import "SS_PrefsController.h"
 
 #import "DesktopView.h"
+#import "BLCalendarFramer.h"
 
-enum {
-    BLNarrowSize    = 0,
-    BLNormalSize    = 1,
-    BLFullSize      = 2,
-};
-
-extern NSSize const BLNarrowMinimumSize;
-extern NSSize const BLNormalMinimumSize;
 
 @interface DeskboardAppDelegate : NSObject <NSApplicationDelegate> {
     NSWindow    *desktopWindow;
@@ -31,4 +24,5 @@ extern NSSize const BLNormalMinimumSize;
 - (IBAction)showPrefs:(id)sender;
 
 - (void)layout;
+
 @end

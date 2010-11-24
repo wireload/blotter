@@ -8,9 +8,7 @@
 
 #import "DeskboardAppDelegate.h"
 #import "BLPositionerControl.h"
-
-const NSSize BLNarrowMinimumSize = {270, 750};
-const NSSize BLNormalMinimumSize = {801, 750};
+#import "BLCalendarFramer.h"
 
 @implementation DeskboardAppDelegate
 
@@ -74,54 +72,9 @@ const NSSize BLNormalMinimumSize = {801, 750};
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
     NSString *sizeSetting = [defaults stringForKey:@"CalendarSize"];
-    int sizePrefs = BLNormalSize;
-    if ([sizeSetting isEqualToString:@"Narrow"])
-        sizePrefs = BLNarrowSize;
-    else if ([sizeSetting isEqualToString:@"Full"])
-        sizePrefs = BLFullSize;
-
-    NSSize size;
-    NSRect frame = [[NSScreen mainScreen] visibleFrame];
-
-    switch (sizePrefs) {
-        case BLNarrowSize:
-            size = BLNarrowMinimumSize;
-            break;
-        case BLFullSize:
-            size = NSMakeSize(frame.size.width - 20, frame.size.height - 20);
-            break;
-        default:
-            size = NSMakeSize(MAX(BLNormalMinimumSize.width, frame.size.width / 2), MAX(BLNormalMinimumSize.height, frame.size.height / 2));
-            break;
-    }
-
-    CGFloat px = 10;
-    CGFloat py = 10;
-
     int aPosition = MIN(BLPositionBottomRight, MAX(BLPositionTopLeft, [defaults integerForKey:@"CalendarPosition"]));
 
-    if (aPosition == BLPositionTopCenter ||
-        aPosition == BLPositionCenterCenter ||
-        aPosition == BLPositionBottomCenter)
-        px = floor(frame.size.width / 2.0 - size.width / 2.0);
-
-    if (aPosition == BLPositionTopRight ||
-        aPosition == BLPositionCenterRight ||
-        aPosition == BLPositionBottomRight)
-        px = frame.size.width - size.width - 10;
-
-    if (aPosition == BLPositionTopLeft ||
-        aPosition == BLPositionTopCenter ||
-        aPosition == BLPositionTopRight)
-        py = frame.size.height - size.height - 10;
-
-    if (aPosition == BLPositionCenterLeft ||
-        aPosition == BLPositionCenterCenter ||
-        aPosition == BLPositionCenterRight)
-        py = floor(frame.size.height / 2.0 - size.height / 2.0);
-
-
-    NSRect desiredFrame = NSMakeRect(px, py, size.width, size.height);
+    NSRect desiredFrame = [BLCalendarFramer frameForPosition:(BLPosition) aPosition size:sizeSetting];
     NSLog(@"Placing at %@", NSStringFromRect(desiredFrame));
 
     [desktopWindow setFrame:desiredFrame display:YES];

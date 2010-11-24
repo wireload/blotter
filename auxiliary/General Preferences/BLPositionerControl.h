@@ -8,18 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-typedef enum BLPosition {
-    BLPositionTopLeft,
-    BLPositionTopCenter,
-    BLPositionTopRight,
-    BLPositionCenterLeft,
-    BLPositionCenterCenter,
-    BLPositionCenterRight,
-    BLPositionBottomLeft,
-    BLPositionBottomCenter,
-    BLPositionBottomRight
-} BLPosition;
-
 @interface BLPositionerControl : NSControl {
 }
 
