@@ -179,26 +179,13 @@
 				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
-			<object class="NSUserDefaultsController" id="348415115">
-				<object class="NSMutableArray" key="NSDeclaredKeys">
-					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>CalendarSize</string>
-					<string>values.CalendarSize</string>
-				</object>
+			<object class="NSUserDefaultsController" id="670922412">
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<object class="NSMutableArray" key="connectionRecords">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">desktopView</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="827254361"/>
-					</object>
-					<int key="connectionID">18</int>
-				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">positionView</string>
@@ -220,7 +207,7 @@
 						<string key="label">contentValues: calendarSizes</string>
 						<reference key="source" ref="138711095"/>
 						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector" id="932221302">
+						<object class="NSNibBindingConnector" key="connector" id="720848489">
 							<reference key="NSSource" ref="138711095"/>
 							<reference key="NSDestination" ref="1001"/>
 							<string key="NSLabel">contentValues: calendarSizes</string>
@@ -235,10 +222,10 @@
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">selectedValue: self.values.CalendarSize</string>
 						<reference key="source" ref="138711095"/>
-						<reference key="destination" ref="348415115"/>
+						<reference key="destination" ref="670922412"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="138711095"/>
-							<reference key="NSDestination" ref="348415115"/>
+							<reference key="NSDestination" ref="670922412"/>
 							<string key="NSLabel">selectedValue: self.values.CalendarSize</string>
 							<string key="NSBinding">selectedValue</string>
 							<string key="NSKeyPath">self.values.CalendarSize</string>
@@ -246,7 +233,7 @@
 								<string key="NS.key.0">NSNullPlaceholder</string>
 								<string key="NS.object.0">Normal</string>
 							</object>
-							<reference key="NSPreviousConnector" ref="932221302"/>
+							<reference key="NSPreviousConnector" ref="720848489"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
@@ -372,7 +359,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">25</int>
-						<reference key="object" ref="348415115"/>
+						<reference key="object" ref="670922412"/>
 						<reference key="parent" ref="0"/>
 					</object>
 				</object>
