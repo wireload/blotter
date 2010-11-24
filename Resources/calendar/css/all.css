@@ -11,7 +11,13 @@ body
   margin: 0;
   padding: 0;
   overflow: hidden;
+
+  /*
+  Prevent weird blocky antialiasing on the desktop.
+  */
+  -webkit-font-smoothing: subpixel-antialiased;
 }
+
 img
 {
   border-style: none;
@@ -124,6 +130,9 @@ select
   text-shadow: rgba(47, 47, 47, 0.3) 0px 1px 0px;
   overflow: hidden;
   max-height: 100%;
+
+  font-family: "Helvetica", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 #next-up-box
@@ -136,11 +145,14 @@ select
 
 .date
 {
-  font: 26px/30px "HelveticaNeue-Light","Helvetica Neue Light","HelveticaNeue", "Helvetica Neue", Arial, sans-serif;
+  font: 26px/30px Helvetica, Arial, sans-serif;
   margin: 0 0 14px;
   overflow: hidden;
   text-align: center;
   width: 100%;
+
+  text-shadow: rgba(47, 47, 47, 0.1) 0px 1px 0px;
+  -webkit-font-smoothing: antialiased;
 }
 .date p
 {
@@ -180,6 +192,8 @@ select
   font-weight: normal;
   text-shadow: rgba(47, 47, 47, 0.3) 0px 1px 0px;
   margin: 0 0 13px;
+
+  -webkit-font-smoothing: antialiased;
 }
 .box h2
 {

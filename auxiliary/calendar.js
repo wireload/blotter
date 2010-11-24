@@ -190,7 +190,7 @@ function fillInTimeline(timelineElement, earliestHour, latestHour, pixelsPerHour
     }
 }
 
-var MINIMUM_EVENT_HEIGHT = 29,
+var MINIMUM_EVENT_HEIGHT = 28,
     FAST_FORWARD_NEXT_UP = false,
 
     lastUpdateDate = null,
@@ -200,7 +200,6 @@ function update(json)
 {
     if (typeof(json) == 'string')
         json = $.parseJSON(json);
-    console.log(json);
 
     lastUpdateDate = new goog.date.DateTime();
     FAST_FORWARD_NEXT_UP = json.fastForwardNextUp;
