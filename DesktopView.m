@@ -42,7 +42,7 @@
 
         NSString *html = [self calendarHtml];
         NSURL *baseURL = [[NSBundle mainBundle] URLForResource:@"calendar" withExtension:@""];
-        NSLog(@"will display: %@ (base: %@)", html, baseURL);
+        // NSLog(@"will display: %@ (base: %@)", html, baseURL);
         [[webContentView mainFrame] loadHTMLString:html baseURL:baseURL];
         [webContentView setFrameLoadDelegate:self];
 
