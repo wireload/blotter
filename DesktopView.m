@@ -12,8 +12,6 @@
 
 #import <YAJL/YAJL.h>
 
-#import "ICUTemplateMatcher.h"
-
 #import "DesktopView.h"
 #import "CalendarAdapter.h"
 #import "NSDate-Utilities.h"
@@ -42,16 +40,11 @@
         [webContentView setDrawsBackground:NO];
         [self addSubview:webContentView];
 
-        templateEngine = [[MGTemplateEngine templateEngine] retain];
-        // [engine setDelegate:self];
-        [templateEngine setMatcher:[ICUTemplateMatcher matcherWithTemplateEngine:templateEngine]];
-
-        // Set up any needed global variables.
-        // [engine setObject:@"Hi there!" forKey:@"hello"];
         NSString *html = [self calendarHtml];
         NSURL *baseURL = [[NSBundle mainBundle] URLForResource:@"calendar" withExtension:@""];
-        // NSLog(@"will display: %@ (base: %@)", html, baseURL);
+        NSLog(@"will display: %@ (base: %@)", html, baseURL);
         [[webContentView mainFrame] loadHTMLString:html baseURL:baseURL];
+        [webContentView setFrameLoadDelegate:self];
 
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(refresh)
@@ -62,6 +55,16 @@
         [fadeController retain];
     }
     return self;
+}
+
+- (void)webView:(WebView *)aWebView didFinishLoadForFrame:(WebFrame *)aFrame
+{
+    NSLog(@"initial load");
+    if (!initialHtmlLoaded)
+    {
+        initialHtmlLoaded = YES;
+        [self refresh];
+    }
 }
 
 - (NSDictionary *)calendarInput
@@ -76,7 +79,7 @@
     NSString *json = [[self calendarInput] yajl_JSONStringWithOptions:YAJLGenOptionsBeautify indentString:@"  "];
 
     WebScriptObject *scriptObject = [webContentView windowScriptObject];
-    [scriptObject callWebScriptMethod:@"update" withArguments:[NSArray arrayWithObject:json]];
+    [scriptObject callWebScriptMethod:@"updateWhenReady" withArguments:[NSArray arrayWithObject:json]];
 }
 
 - (NSString *)calendarHtml
@@ -119,20 +122,26 @@
     }
 
 	NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"calendar"];
-    // NSLog(@"templatePath: %@", templatePath);
-
-	NSDictionary *variables = [NSDictionary dictionaryWithObjectsAndKeys:
-                               json, @"json",
-							   nil];
 
 	// Process the template and display the results.
-	return [templateEngine processTemplateInFileAtPath:templatePath withVariables:variables];
+
+    NSError *error;
+    NSStringEncoding enc;
+	NSString *html = [NSString stringWithContentsOfFile:templatePath
+                                           usedEncoding:&enc
+                                                  error:&error];
+    if (html == nil)
+    {
+        html = @"";
+        // an error occurred
+        NSLog(@"Error reading file at %@\n%@", templatePath, [error localizedFailureReason]);
+    }
+    return html;
 }
 
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [templateEngine release];
 
     [super dealloc];
 }

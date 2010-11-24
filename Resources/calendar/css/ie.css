@@ -1,10 +1,0 @@
-* html .calendar{
-	background:none;	filter:progid:dximagetransform.microsoft.alphaimageloader(src='images/bg-table.png', sizingmethod='scale');
-}
-* html .calendar th span{
-	background:none;	filter:progid:dximagetransform.microsoft.alphaimageloader(src='images/bg-heading.png', sizingmethod='scale');
-}
-* html .top-table div{
-	background:url(../images/none.gif);	filter:progid:dximagetransform.microsoft.alphaimageloader(src='images/bg-top-cell.png', sizingmethod='scale');
-}
-* html body{width: expression(document.documentElement.clientWidth < 800 ? "800px" : "auto");}

@@ -9,14 +9,12 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebView.h>
 
-#import "MGTemplateEngine.h"
-
 #import "BLFadeController.h"
 
 @interface DesktopView : NSView {
     WebView             *webContentView;
-    MGTemplateEngine    *templateEngine;
     BLFadeController    *fadeController;
+    BOOL                initialHtmlLoaded;
 }
 
 - (void)refresh;

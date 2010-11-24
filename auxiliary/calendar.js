@@ -365,3 +365,11 @@ function advanceNextUp(pixelsPerMinute, minutesIntoNextUp)
         advanceNextUp(pixelsPerMinute, minutesIntoNextUp);
     }, 15000 * 60 / fastForwardFactor);
 }
+
+function updateWhenReady(json)
+{
+    $(document).ready(function()
+    {
+        update(json);
+    });
+}

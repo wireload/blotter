@@ -2,20 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Project title</title>
+	<title>Blotter Calendar</title>
 	<link media="all" type="text/css" rel="stylesheet" href="css/all.css" />
-	<!--[if lt IE 8]><link rel="stylesheet" type="text/css" href="css/ie.css"/><![endif]-->
 </head>
 <body>
   <script src="calendar-compiled.js"></script>
-  <script>
-  $(document).ready(function() {
-    window.setTimeout(function() {
-      var json = {{ json }};
-      update(json);
-    }, 100.0);
-  });
-  </script>
 
   <div id='glass-border'>
     <div id='glass-pane'>
@@ -36,7 +27,7 @@
   					</div>
   					<div class="box" id="next-up-box">
   					  <div>
-  							<h2>Next Up</h2>
+  							<h2>Right Now</h2>
   							<div class="calendar">
           				<div class="main-table main-table-underlay ">
           					<div class='calendar-wrapper'>
