@@ -36,6 +36,13 @@ select
   vertical-align: middle;
 }
 
+.single-ellipsis
+{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 #main
 {
   overflow: hidden;
@@ -102,6 +109,17 @@ select
   height: 50%; /* Margin added by JS. */
 }
 
+#to-do-box > div
+{
+  max-height: 100%;
+}
+
+#to-do-box ul
+{
+  overflow: hidden;
+  max-height: 100%;
+}
+
 #next-up-box
 {
   position: absolute;
@@ -143,9 +161,6 @@ select
 
 .box > div
 {
-  display: table;
-
-  width: 100%;
   height: 100%;
 
   padding: 12px;
@@ -170,7 +185,7 @@ select
 .box li
 {
   background: url(../images/bullet.gif) no-repeat 0 7px;
-  padding: 0 0 12px 7px;
+  padding: 0 0 8px 7px;
 }
 .box p
 {

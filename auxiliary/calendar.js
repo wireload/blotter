@@ -7,10 +7,43 @@ goog.require('goog.i18n.DateTimeFormat');
 
 jQuery.easing.def = "easeInOutQuad";
 
+jQuery.fn.reverse = function() {
+    return this.pushStack(this.get().reverse(), arguments);
+};
+
+/*
+    Make children of element into one-liners with ellipsis, or entirely hide
+    children until the given element fits within its parent.
+*/
+function fitWholeChildrenOnly(element)
+{
+    var availableHeight = element.parent().height();
+
+    // Reset any changes previously made by fitWholeChildrenOnly.
+    element.children().show();
+    element.children().removeClass('single-ellipsis');
+
+    //  Prune from the back.
+    element.children().reverse().each(function()
+    {
+        if (element.position().top + element.height() > availableHeight)
+        {
+            $(this).addClass('single-ellipsis');
+
+            // Was the single line ellipsis sufficient or do we need more
+            // drastic measures?
+            if (element.position().top + element.height() > availableHeight)
+                $(this).hide();
+        }
+    });
+}
+
 function implementSizingHacks()
 {
     var infoHeight = $(".info-boxes-space").height();
     $("#to-do-box").height(infoHeight / 2 - 20);
+
+    fitWholeChildrenOnly($("#to-do-box ul"));
 }
 
 $(document).ready(implementSizingHacks);
@@ -337,6 +370,8 @@ function update(json)
             }, 500);
         }
     }
+
+    implementSizingHacks();
 }
 
 function advanceNextUp(pixelsPerMinute, minutesIntoNextUp)
@@ -351,12 +386,16 @@ function advanceNextUp(pixelsPerMinute, minutesIntoNextUp)
     newTop = Math.max(newTop, Math.floor(-1 * pixelsPerMinute * 60 * 25 + 0.9 * $("#next-up-box").height()));
     // console.log("advancing Next Up to " + minutesSinceUpdate + " minutes from start (" + oldTop + " to " + newTop + " px).");
 
-    nextUpWrapper.animate({
-        top: newTop
-      },
-      Math.abs(newTop - oldTop) > 100 ? 2000 : 500, // Roll in small changes with a snappier animation.
-      'easeInOutQuad'
-    );
+    // Only animate small changes - larger animations cause flickering in the transparent version.
+    if (Math.abs(newTop - oldTop) < 100)
+    {
+        nextUpWrapper.animate({
+            top: newTop
+          },
+          2000,
+          'easeInOutQuad'
+        );
+    }
     // For CSS animation, currently commented out in all.css.
     // $('#next-up-box .calendar-wrapper').css('top', (-1 * pixelsPerMinute * minutesIntoNextUp) + 'px');
 
