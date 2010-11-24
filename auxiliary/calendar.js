@@ -11,6 +11,11 @@ jQuery.fn.reverse = function() {
     return this.pushStack(this.get().reverse(), arguments);
 };
 
+function bottomOfElement(element)
+{
+    return element.position().top + element.height();
+}
+
 /*
     Make children of element into one-liners with ellipsis, or entirely hide
     children until the given element fits within its parent.
@@ -26,14 +31,61 @@ function fitWholeChildrenOnly(element)
     //  Prune from the back.
     element.children().reverse().each(function()
     {
-        if (element.position().top + element.height() > availableHeight)
+        if (bottomOfElement(element) > availableHeight)
         {
             $(this).addClass('single-ellipsis');
 
             // Was the single line ellipsis sufficient or do we need more
             // drastic measures?
-            if (element.position().top + element.height() > availableHeight)
+            if (bottomOfElement(element) > availableHeight)
                 $(this).hide();
+        }
+    });
+}
+
+/*
+    Allow all day events to become multiline when there's space for that. Add
+    ellipsis if not.
+*/
+function layoutAllDayEvents(element)
+{
+    // The default is single line events with ellipsis. Then we'll
+    // expand from the top when possible.
+
+    element.find('.event').each(function()
+    {
+        var topWrapper = $(this).parent().parent();
+        topWrapper.show();
+        $(this).addClass('single-ellipsis');
+        topWrapper.height($(this).height() + 16);
+    });
+
+    var availableHeight = element.height(),
+        lastVisibleTopWrapper = null;
+    // If we don't fit now we must remove items.
+
+    element.find('.event').reverse().each(function()
+    {
+        var topWrapper = $(this).parent().parent();
+        if (bottomOfElement(topWrapper) > availableHeight)
+            topWrapper.hide();
+        else if (lastVisibleTopWrapper === null)
+            lastVisibleTopWrapper = topWrapper;
+    });
+
+    // Now that we have hidden all elements which definitely
+    // will not fit, allow the remaining elements to expand.
+    element.find('.event').each(function()
+    {
+        var topWrapper = $(this).parent().parent();
+
+        $(this).removeClass('single-ellipsis');
+        topWrapper.height($(this).height() + 16);
+
+        if (bottomOfElement(lastVisibleTopWrapper) >= availableHeight)
+        {
+            $(this).addClass('single-ellipsis');
+            topWrapper.height($(this).height() + 16);
         }
     });
 }
@@ -44,6 +96,10 @@ function implementSizingHacks()
     $("#to-do-box").height(infoHeight / 2 - 20);
 
     fitWholeChildrenOnly($("#to-do-box ul"));
+    for (var i = 0; i < 7; i++)
+    {
+        layoutAllDayEvents($("#main-all-day-" + i));
+    }
 }
 
 $(document).ready(implementSizingHacks);
@@ -304,7 +360,8 @@ function update(json)
         for (var j = 0, count = allDayEvents.length; j < count; j++)
         {
             var element = createEventElement(allDayEvents[j]);
-            element.height(MINIMUM_EVENT_HEIGHT, Math.floor(minutes * pixelsPerMinute));
+            // Will be calculated by the layout fixer later.
+            // element.height(MINIMUM_EVENT_HEIGHT, Math.floor(minutes * pixelsPerMinute));
             allDayElement.append(element);
         }
 
