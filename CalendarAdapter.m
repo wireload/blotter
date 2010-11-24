@@ -250,7 +250,7 @@ static void * volatile sharedInstance = nil;
     }
 
     NSMutableArray *hourNames = [NSMutableArray array];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
     [dateFormatter setDateStyle:NSDateFormatterNoStyle];
     [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
 

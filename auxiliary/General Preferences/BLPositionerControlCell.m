@@ -30,6 +30,13 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [backgroundImage release];
+
+    [super dealloc];
+}
+
 - (void)mouseDown:(NSEvent *)anEvent
 {
 }
