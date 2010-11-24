@@ -9,6 +9,8 @@
 #import "DeskboardAppDelegate.h"
 #import "BLPositionerControl.h"
 
+const NSSize BLNarrowMinimumSize = {270, 750};
+const NSSize BLNormalMinimumSize = {801, 750};
 
 @implementation DeskboardAppDelegate
 
@@ -72,24 +74,24 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
     NSString *sizeSetting = [defaults stringForKey:@"CalendarSize"];
-    int sizePrefs = BANormalSize;
+    int sizePrefs = BLNormalSize;
     if ([sizeSetting isEqualToString:@"Narrow"])
-        sizePrefs = BANarrowSize;
+        sizePrefs = BLNarrowSize;
     else if ([sizeSetting isEqualToString:@"Full"])
-        sizePrefs = BAFullSize;
+        sizePrefs = BLFullSize;
 
-    CGSize size;
+    NSSize size;
     NSRect frame = [[NSScreen mainScreen] visibleFrame];
 
     switch (sizePrefs) {
-        case BANarrowSize:
-            size = CGSizeMake(270, 750);
+        case BLNarrowSize:
+            size = BLNarrowMinimumSize;
             break;
-        case BAFullSize:
-            size = CGSizeMake(frame.size.width - 20, frame.size.height - 20);
+        case BLFullSize:
+            size = NSMakeSize(frame.size.width - 20, frame.size.height - 20);
             break;
         default:
-            size = CGSizeMake(frame.size.width / 2, MAX(750, frame.size.height / 2));
+            size = NSMakeSize(MAX(BLNormalMinimumSize.width, frame.size.width / 2), MAX(BLNormalMinimumSize.height, frame.size.height / 2));
             break;
     }
 

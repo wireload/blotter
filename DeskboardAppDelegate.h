@@ -13,10 +13,13 @@
 #import "DesktopView.h"
 
 enum {
-    BANarrowSize = 0,
-    BANormalSize = 1,
-    BAFullSize = 2,
+    BLNarrowSize    = 0,
+    BLNormalSize    = 1,
+    BLFullSize      = 2,
 };
+
+extern NSSize const BLNarrowMinimumSize;
+extern NSSize const BLNormalMinimumSize;
 
 @interface DeskboardAppDelegate : NSObject <NSApplicationDelegate> {
     NSWindow    *desktopWindow;
