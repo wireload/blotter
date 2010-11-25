@@ -441,13 +441,15 @@ function update(json)
 function advanceNextUp(pixelsPerMinute, minutesIntoNextUp)
 {
     var nextUpWrapper = $('#next-up-box .calendar-wrapper'),
+        availableHeight = nextUpWrapper.parent().height(),
+        columnHeight = 24 * 60 * pixelsPerMinute,
         oldTop = parseInt($('#next-up-box .calendar-wrapper').css('top').replace("px", "")),
         fastForwardFactor = FAST_FORWARD_NEXT_UP ? 60 : 1;
         minutesSinceUpdate = fastForwardFactor * (new goog.date.DateTime().getTime() - lastUpdateDate.getTime()) / 1000 / 60,
         newTop = Math.floor(-1 * pixelsPerMinute * (minutesIntoNextUp + minutesSinceUpdate));
 
     // Don't scroll past the bottom.
-    newTop = Math.max(newTop, Math.floor(-1 * pixelsPerMinute * 60 * 25 + 0.9 * $("#next-up-box").height()));
+    newTop = Math.max(newTop, Math.floor(-1 * columnHeight + availableHeight - 35)); // -35 for the bottom fade.
     // console.log("advancing Next Up to " + minutesSinceUpdate + " minutes from start (" + oldTop + " to " + newTop + " px).");
 
     // Only animate small changes - larger animations cause flickering in the transparent version.
