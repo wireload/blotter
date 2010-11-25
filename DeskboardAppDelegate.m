@@ -43,7 +43,6 @@
                                                                  context:NULL];
 }
 
-
 - (IBAction)showPrefs:(id)sender
 {
     if (!prefs) {
@@ -63,7 +62,11 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    NSLog(@"Resizing due to %@ settings change", keyPath);
+    [self layout];
+}
+
+-(void)applicationDidChangeScreenParameters:(NSNotification *)notice
+{
     [self layout];
 }
 

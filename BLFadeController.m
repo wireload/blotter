@@ -112,7 +112,7 @@
         if (fadeSeconds < 1)
             fadeSeconds = 60;
 
-        NSLog(@"Fade out in %d seconds", fadeSeconds);
+        // NSLog(@"Fade out in %d seconds", fadeSeconds);
 
         fadeOutTimer = [NSTimer scheduledTimerWithTimeInterval:fadeSeconds target:self selector:@selector(fadeOut) userInfo:nil repeats:NO];
         [fadeOutTimer retain];

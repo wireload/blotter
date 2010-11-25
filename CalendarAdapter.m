@@ -75,7 +75,7 @@ static void * volatile sharedInstance = nil;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    NSLog(@"Updating due to %@ setting change", keyPath);
+    // NSLog(@"Updating due to %@ setting change", keyPath);
     [self _postCalendarChanged];
 }
 
@@ -95,28 +95,28 @@ static void * volatile sharedInstance = nil;
 
 - (void)dateChanged
 {
-    NSLog(@"dateChanged");
+    // NSLog(@"dateChanged");
     [self _postCalendarChanged];
     [self createTomorrowTimer];
 }
 
 - (void)calendarsChanged:(NSNotification *)aNotification
 {
-    NSLog(@"calendarsChanged: %@", aNotification);
+    // NSLog(@"calendarsChanged: %@", aNotification);
     // TODO Only react if something visible changes.
     [self _postCalendarChanged];
 }
 
 - (void)eventsChanged:(NSNotification *)aNotification
 {
-    NSLog(@"eventsChanged: %@", aNotification);
+    // NSLog(@"eventsChanged: %@", aNotification);
     // TODO Only react if something visible changes.
     [self _postCalendarChanged];
 }
 
 - (void)tasksChanged:(NSNotification *)aNotification
 {
-    NSLog(@"tasksChanged: %@", aNotification);
+    // NSLog(@"tasksChanged: %@", aNotification);
     // TODO Only react if something visible changes.
     [self _postCalendarChanged];
 }

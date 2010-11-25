@@ -59,7 +59,6 @@
 
 - (void)webView:(WebView *)aWebView didFinishLoadForFrame:(WebFrame *)aFrame
 {
-    NSLog(@"initial load");
     if (!initialHtmlLoaded)
     {
         initialHtmlLoaded = YES;
