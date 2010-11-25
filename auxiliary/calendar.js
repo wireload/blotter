@@ -11,6 +11,11 @@ jQuery.fn.reverse = function() {
     return this.pushStack(this.get().reverse(), arguments);
 };
 
+function capitaliseFirstLetter(string)
+{
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 function bottomOfElement(element)
 {
     return element.position().top + element.height();
@@ -331,8 +336,6 @@ function update(json)
         days.push(column);
     }
 
-    console.log(days);
-
     var visibleHours = latestHour - earliestHour + 1,
         timelineElement = $('#main-timeline'),
         nextUpTimelineElement = $('#next-up-timeline'),
@@ -340,7 +343,6 @@ function update(json)
         pixelsPerHour = timelineHeight / visibleHours,
         pixelsPerMinute = pixelsPerHour / 60;
 
-    console.log("pixelsPerHour: " + pixelsPerHour);
     fillInTimeline(timelineElement, earliestHour, latestHour, pixelsPerHour, json);
     fillInTimeline($('#next-up-timeline'), 0, 23, pixelsPerHour, json);
 
@@ -364,8 +366,9 @@ function update(json)
             allDayElement.append(element);
         }
 
-        // Day titles.
-        $('#main-header-' + i).html("" + days[i]['title']);
+        // Day titles. Capitalise first letter since day names are lowercase in some locales
+        // but we still want capitalised headers.
+        $('#main-header-' + i).html(capitaliseFirstLetter("" + days[i]['title']));
         if (isToday)
             $('#main-header-' + i).addClass('today');
         else
