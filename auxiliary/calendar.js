@@ -431,7 +431,7 @@ function update(json)
             // Allow the screen to draw fully before animating.
             nextUpTimer = window.setTimeout(function() {
                 advanceNextUp(pixelsPerMinute, minutesIntoNextUp);
-            }, 500);
+            }, 100);
         }
     }
 
@@ -459,6 +459,10 @@ function advanceNextUp(pixelsPerMinute, minutesIntoNextUp)
           2000,
           'easeInOutQuad'
         );
+    }
+    else
+    {
+        nextUpWrapper.css('top', newTop);
     }
     // For CSS animation, currently commented out in all.css.
     // $('#next-up-box .calendar-wrapper').css('top', (-1 * pixelsPerMinute * minutesIntoNextUp) + 'px');
