@@ -13,7 +13,7 @@
 	<key>CFBundleIconFile</key>
 	<string>Blotter-B6.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>net.wireload.${PRODUCT_NAME:rfc1034identifier}.mac</string>
+	<string>net.wireload.blotter.mac</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
