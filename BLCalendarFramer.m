@@ -13,24 +13,27 @@ const NSSize BLNormalMinimumSize = {950, 750};
 
 @implementation BLCalendarFramer
 
-+ (NSRect)frameForPosition:(BLPosition)aPosition scaleFactor:(NSPoint)scaleFactor margin:(NSSize)aMargin
++ (NSRect)frameForPosition:(BLPosition)aPosition inFrame:(NSRect)frame  scaleFactor:(NSPoint)scaleFactor margin:(NSSize)aMargin
 {
     return [self frameForPosition:aPosition
+                          inFrame:frame
                              size:[[NSUserDefaults standardUserDefaults]
                                    stringForKey:@"CalendarSize"]
                       scaleFactor:scaleFactor
                            margin:aMargin];
 }
 
-+ (NSRect)frameForPosition:(BLPosition)aPosition size:(NSString *)aCalendarSize
++ (NSRect)frameForPosition:(BLPosition)aPosition inFrame:(NSRect)frame size:(NSString *)aCalendarSize
 {
-    return [self frameForPosition:aPosition size:aCalendarSize scaleFactor:NSMakePoint(1.0, 1.0) margin:NSMakeSize(10, 10)];
+    return [self frameForPosition:aPosition
+                          inFrame:frame
+                             size:aCalendarSize
+                      scaleFactor:NSMakePoint(1.0, 1.0)
+                           margin:NSMakeSize(14, 14)];
 }
 
-+ (NSRect)frameForPosition:(BLPosition)aPosition size:(NSString *)aCalendarSize scaleFactor:(NSPoint)scaleFactor margin:(NSSize)aMargin
++ (NSRect)frameForPosition:(BLPosition)aPosition inFrame:(NSRect)frame size:(NSString *)aCalendarSize scaleFactor:(NSPoint)scaleFactor margin:(NSSize)aMargin
 {
-    NSRect frame = [[NSScreen mainScreen] visibleFrame];
-
     int sizePrefs = BLNormalSize;
     if ([aCalendarSize isEqualToString:@"Narrow"])
         sizePrefs = BLNarrowSize;
@@ -77,7 +80,7 @@ const NSSize BLNormalMinimumSize = {950, 750};
         py = floor(frame.size.height * scaleFactor.y / 2.0 - size.height / 2.0);
 
 
-    return NSMakeRect(px, py, size.width, size.height);
+    return NSMakeRect(frame.origin.x * scaleFactor.x + px, frame.origin.y * scaleFactor.y + py, size.width, size.height);
 }
 
 @end

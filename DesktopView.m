@@ -73,15 +73,7 @@
     return currentCalendar;
 }
 
-- (void)refresh
-{
-    NSString *json = [[self calendarInput] yajl_JSONStringWithOptions:YAJLGenOptionsBeautify indentString:@"  "];
-
-    WebScriptObject *scriptObject = [webContentView windowScriptObject];
-    [scriptObject callWebScriptMethod:@"updateWhenReady" withArguments:[NSArray arrayWithObject:json]];
-}
-
-- (NSString *)calendarHtml
+- (NSString *)calendarJson
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
@@ -120,6 +112,20 @@
                   dumpJsonPath, [error localizedFailureReason]);
     }
 
+    return json;
+}
+
+
+- (void)refresh
+{
+    NSString *json = [self calendarJson];
+
+    WebScriptObject *scriptObject = [webContentView windowScriptObject];
+    [scriptObject callWebScriptMethod:@"updateWhenReady" withArguments:[NSArray arrayWithObject:json]];
+}
+
+- (NSString *)calendarHtml
+{
 	NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"calendar"];
 
 	// Process the template and display the results.
@@ -135,6 +141,7 @@
         // an error occurred
         NSLog(@"Error reading file at %@\n%@", templatePath, [error localizedFailureReason]);
     }
+
     return html;
 }
 

@@ -77,7 +77,7 @@
     NSString *sizeSetting = [defaults stringForKey:@"CalendarSize"];
     int aPosition = MIN(BLPositionBottomRight, MAX(BLPositionTopLeft, [defaults integerForKey:@"CalendarPosition"]));
 
-    NSRect desiredFrame = [BLCalendarFramer frameForPosition:(BLPosition) aPosition size:sizeSetting];
+    NSRect desiredFrame = [BLCalendarFramer frameForPosition:(BLPosition) aPosition inFrame:[[NSScreen mainScreen] visibleFrame] size:sizeSetting];
     NSLog(@"Placing at %@", NSStringFromRect(desiredFrame));
 
     [desktopWindow setFrame:desiredFrame display:YES];
