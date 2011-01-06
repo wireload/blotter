@@ -18,8 +18,8 @@
 		284064FC12834B98000816FF /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 284064FB12834B98000816FF /* CalendarStore.framework */; };
 		2840653812836E78000816FF /* NSColor-Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 2840653712836E78000816FF /* NSColor-Utilities.m */; };
 		2844DB2D129DA1BD006C5545 /* BLCalendarFramer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2844DB2C129DA1BD006C5545 /* BLCalendarFramer.m */; };
+		285C7A7212A60808005D4A23 /* Blotter-B7.icns in Resources */ = {isa = PBXBuildFile; fileRef = 285C7A7112A60808005D4A23 /* Blotter-B7.icns */; };
 		28B54DB61283BABF0037BF53 /* SS_PrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54DB51283BABF0037BF53 /* SS_PrefsController.m */; };
-		28F695801298AA0A00D4BB97 /* Blotter-B6.icns in Resources */ = {isa = PBXBuildFile; fileRef = 28F6957F1298AA0A00D4BB97 /* Blotter-B6.icns */; };
 		28F696811298B99800D4BB97 /* calendar in Resources */ = {isa = PBXBuildFile; fileRef = 28F6966B1298B99800D4BB97 /* calendar */; };
 		28F6975B129969E500D4BB97 /* NSDate-Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6975A129969E500D4BB97 /* NSDate-Utilities.m */; };
 		28F699E4129C0EBC00D4BB97 /* BLFadeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F699E3129C0EBC00D4BB97 /* BLFadeController.m */; };
@@ -62,10 +62,10 @@
 		2840653612836E78000816FF /* NSColor-Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor-Utilities.h"; sourceTree = "<group>"; };
 		2840653712836E78000816FF /* NSColor-Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor-Utilities.m"; sourceTree = "<group>"; };
 		2844DB2C129DA1BD006C5545 /* BLCalendarFramer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLCalendarFramer.m; sourceTree = "<group>"; };
+		285C7A7112A60808005D4A23 /* Blotter-B7.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "Blotter-B7.icns"; path = "Resources/Blotter-B7.icns"; sourceTree = "<group>"; };
 		28B54DB31283BABF0037BF53 /* SS_PreferencePaneProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SS_PreferencePaneProtocol.h; path = libs/SS_PreferencePaneProtocol.h; sourceTree = "<group>"; };
 		28B54DB41283BABF0037BF53 /* SS_PrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SS_PrefsController.h; path = libs/SS_PrefsController.h; sourceTree = "<group>"; };
 		28B54DB51283BABF0037BF53 /* SS_PrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SS_PrefsController.m; path = libs/SS_PrefsController.m; sourceTree = "<group>"; };
-		28F6957F1298AA0A00D4BB97 /* Blotter-B6.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "Blotter-B6.icns"; path = "Resources/Blotter-B6.icns"; sourceTree = "<group>"; };
 		28F6966B1298B99800D4BB97 /* calendar */ = {isa = PBXFileReference; lastKnownFileType = folder; name = calendar; path = Resources/calendar; sourceTree = "<group>"; };
 		28F69759129969E500D4BB97 /* NSDate-Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate-Utilities.h"; sourceTree = "<group>"; };
 		28F6975A129969E500D4BB97 /* NSDate-Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate-Utilities.m"; sourceTree = "<group>"; };
@@ -175,10 +175,10 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				285C7A7112A60808005D4A23 /* Blotter-B7.icns */,
 				281BA565129EF84D00114D3C /* Blotter Preferences.preferencePane */,
 				28F69A1A129C1CAA00D4BB97 /* Credits.rtf */,
 				28F6966B1298B99800D4BB97 /* calendar */,
-				28F6957F1298AA0A00D4BB97 /* Blotter-B6.icns */,
 				8D1107310486CEB800E47090 /* Blotter-Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
@@ -252,11 +252,11 @@
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
-				28F695801298AA0A00D4BB97 /* Blotter-B6.icns in Resources */,
 				28F696811298B99800D4BB97 /* calendar in Resources */,
 				28F69A1B129C1CAA00D4BB97 /* Credits.rtf in Resources */,
 				28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */,
 				281BA56F129EF84D00114D3C /* Blotter Preferences.preferencePane in Resources */,
+				285C7A7212A60808005D4A23 /* Blotter-B7.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
