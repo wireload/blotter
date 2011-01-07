@@ -41,6 +41,14 @@
                                                               forKeyPath:@"values.CalendarSize"
                                                                  options:0
                                                                  context:NULL];
+
+    // Show prefs at first start
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *showPrefsAtStartup = [userDefaults objectForKey:@"ShowPreferencesAtStartUp"];
+    if (showPrefsAtStartup == nil || [showPrefsAtStartup boolValue]) {
+        [self showPrefs:self];
+        [userDefaults setBool:NO forKey:@"ShowPreferencesAtStartUp"];
+    }
 }
 
 - (IBAction)showPrefs:(id)sender
