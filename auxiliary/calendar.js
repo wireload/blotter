@@ -218,6 +218,10 @@ function updateTasksElement(tasksElement, json)
     }
 }
 
+/**
+    Represent a week in the calendar, with events laid out into a per day data structure
+    with various data pieces precalculated.
+*/
 var CalendarWeek = function(startDate, json)
 {
     this.startDate = startDate;
@@ -337,9 +341,59 @@ var CalendarWeek = function(startDate, json)
     this.getVisibleHours = function() {
         return this.latestHour - this.earliestHour + 1
     }
+}
 
-    this.getDayTitle = function(dayIndex) {
-        return capitaliseFirstLetter("" + this.days[dayIndex]['title']);
+function updateAllDayElement(allDayElement, day)
+{
+    var allDayEvents = day['allday'];
+
+    allDayElement.html("");
+    for (var i = 0, count = allDayEvents.length; i < count; i++)
+    {
+        var element = createEventElement(allDayEvents[i]);
+        // Will be calculated by the layout fixer later.
+        // element.height(MINIMUM_EVENT_HEIGHT, Math.floor(minutes * pixelsPerMinute));
+        allDayElement.append(element);
+    }
+}
+
+function updateDayHeaderElement(headerElement, day, isToday)
+{
+    // Day titles. Capitalise first letter since day names are lowercase in some locales
+    // but we still want capitalised headers.
+    headerElement.html(capitaliseFirstLetter("" + day['title']));
+    if (isToday)
+        headerElement.addClass('today');
+    else
+        headerElement.removeClass('today');
+}
+
+function updateDayElement(mainElement, day, pixelsPerMinute, topMinutes)
+{
+    var dayEvents = day['events'];
+
+    mainElement.html("");
+    for (var j = 0, count = dayEvents.length; j < count; j++)
+    {
+        var theEvent = dayEvents[j],
+            element = createEventElement(theEvent),
+            minutesIntoDay = (theEvent.startDate.getTime() - day['startDate'].getTime()) / 1000 / 60,
+            minutes = (theEvent.endDate.getTime() - theEvent.startDate.getTime()) / 1000 / 60;
+
+        element.height(Math.max(MINIMUM_EVENT_HEIGHT, Math.floor(minutes * pixelsPerMinute)));
+        element.css('top', Math.floor(pixelsPerMinute * (minutesIntoDay - topMinutes)) + 'px');
+
+        // Event stacking
+        element.css('zindex', theEvent['z_index']);
+        var offsetness = 100 / (1 + theEvent['compression']);
+        element.css('width', offsetness + '%');
+        var percentOffset = 0;
+        if (theEvent['z_index'])
+            percentOffset = (offsetness + 1) * theEvent['z_index'];
+
+        element.css('left', percentOffset + '%');
+
+        mainElement.append(element);
     }
 }
 
@@ -370,81 +424,24 @@ function update(json)
     fillInTimeline(timelineElement, calendarWeek.earliestHour, calendarWeek.latestHour, pixelsPerHour, json);
     fillInTimeline($('#next-up-timeline'), 0, 23, pixelsPerHour, json);
 
-    var topMinutes = calendarWeek.earliestHour * 60,
-        nextUpElement = null,
-        minutesIntoNextUp = null;
+    var topMinutes = calendarWeek.earliestHour * 60;
 
     for (var i = 0; i < 7; i++)
     {
         var day = calendarWeek.days[i],
-            allDayEvents = day['allday'],
-            allDayElement = $("#main-all-day-" + i),
             isToday = day['startDate'].getDate() == today.getDate();
 
-        allDayElement.html("");
-        for (var j = 0, count = allDayEvents.length; j < count; j++)
-        {
-            var element = createEventElement(allDayEvents[j]);
-            // Will be calculated by the layout fixer later.
-            // element.height(MINIMUM_EVENT_HEIGHT, Math.floor(minutes * pixelsPerMinute));
-            allDayElement.append(element);
-        }
+        updateAllDayElement($("#main-all-day-" + i), day);
+        updateDayHeaderElement($('#main-header-' + i), day, isToday);
 
-        // Day titles. Capitalise first letter since day names are lowercase in some locales
-        // but we still want capitalised headers.
-        $('#main-header-' + i).html(calendarWeek.getDayTitle(i));
-        if (isToday)
-            $('#main-header-' + i).addClass('today');
-        else
-            $('#main-header-' + i).removeClass('today');
-
-        var mainElement = $('#main-content-' + i),
-            dayEvents = day['events'];
+        updateDayElement($('#main-content-' + i), day, pixelsPerMinute, topMinutes);
 
         if (isToday)
         {
-            nextUpElement = $('#next-up-content-0');
-            minutesIntoNextUp = (today.getTime() - day['startDate'].getTime()) / 1000 / 60;
-        }
-        else
-            nextUpElement = null;
+            var nextUpElement = $('#next-up-content-0');
+            // No 'top minutes' in Next Up.
+            updateDayElement(nextUpElement, day, pixelsPerMinute, 0);
 
-        mainElement.html("");
-        if (nextUpElement)
-            nextUpElement.html("");
-        for (var j = 0, count = dayEvents.length; j < count; j++)
-        {
-            var theEvent = dayEvents[j],
-                element = createEventElement(theEvent),
-                minutesIntoDay = (theEvent.startDate.getTime() - day['startDate'].getTime()) / 1000 / 60,
-                minutes = (theEvent.endDate.getTime() - theEvent.startDate.getTime()) / 1000 / 60;
-
-            element.height(Math.max(MINIMUM_EVENT_HEIGHT, Math.floor(minutes * pixelsPerMinute)));
-            element.css('top', Math.floor(pixelsPerMinute * (minutesIntoDay - topMinutes)) + 'px');
-
-            // Event stacking
-            element.css('zindex', theEvent['z_index']);
-            var offsetness = 100 / (1 + theEvent['compression']);
-            element.css('width', offsetness + '%');
-            var percentOffset = 0;
-            if (theEvent['z_index'])
-                percentOffset = (offsetness + 1) * theEvent['z_index'];
-
-            element.css('left', percentOffset + '%');
-
-            mainElement.append(element);
-
-            if (nextUpElement)
-            {
-                element = element.clone();
-                // No 'top minutes' in Next Up.
-                element.css('top', Math.floor(pixelsPerMinute * minutesIntoDay) + 'px');
-                nextUpElement.append(element);
-            }
-        }
-
-        if (nextUpElement)
-        {
             $('#next-up-timeline').height(Math.floor(pixelsPerHour * 24));
             $('#next-up-content-0').height(Math.floor(pixelsPerHour * 24));
             $('#next-up-box .calendar-wrapper').css('top', '0 px');
@@ -453,6 +450,7 @@ function update(json)
                 window.clearTimeout(nextUpTimer);
 
             // Allow the screen to draw fully before animating.
+            var minutesIntoNextUp = (today.getTime() - day['startDate'].getTime()) / 1000 / 60;
             nextUpTimer = window.setTimeout(function() {
                 advanceNextUp(pixelsPerMinute, minutesIntoNextUp);
             }, 100);
