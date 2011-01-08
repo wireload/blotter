@@ -13,6 +13,22 @@
 
 @implementation DeskboardAppDelegate
 
++ (void)initialize {
+    if ([NSStringFromClass(self) isEqualToString:@"DeskboardAppDelegate"]) {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSNumber *displayAllCalendars = [userDefaults objectForKey:@"DisplayAllCalendars"];
+        if (displayAllCalendars == nil) {
+            // Enabled by default
+            [userDefaults setObject:[NSNumber numberWithInteger:1] forKey:@"DisplayAllCalendars"];
+        }
+        
+        NSArray *calendars = [userDefaults arrayForKey:@"Calendars"];
+        if (calendars == nil) {
+            [userDefaults setObject:[NSArray array] forKey:@"Calendars"];
+        }
+    }
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     desktopWindow  = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 0, 0)
                                                  styleMask:NSBorderlessWindowMask

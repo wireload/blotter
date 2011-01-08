@@ -29,8 +29,6 @@
 
 - (NSDictionary *)_calendarForUID:(NSString *)anUID {
     NSMutableArray *calendars = [[[[NSUserDefaults standardUserDefaults] objectForKey:@"Calendars"] mutableCopy] autorelease];
-    if (calendars == nil)
-        calendars = [NSMutableArray array];
 
     NSUInteger index = [calendars indexOfObject:[NSDictionary dictionaryWithObject:anUID forKey:@"uid"]
                                   inSortedRange:NSMakeRange(0, [calendars count])
