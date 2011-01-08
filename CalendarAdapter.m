@@ -33,6 +33,40 @@ static void * volatile sharedInstance = nil;
     return sharedInstance;
 }
 
+- (NSArray *)calendarsToDisplay {
+    static NSArray *_cachedCalendars = nil;
+
+    if (_cachedCalendars == nil || _shouldUpdateCalendars) {
+        NSArray *allCalendars = [[CalCalendarStore defaultCalendarStore] calendars];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        if ([defaults boolForKey:@"DisplayAllCalendars"]) {
+            return allCalendars;
+        }
+        else {
+            NSArray *userCalendars = [defaults arrayForKey:@"Calendars"];
+            NSIndexSet *indexes = [allCalendars indexesOfObjectsWithOptions:NSEnumerationConcurrent
+                                                                passingTest:^(id obj, NSUInteger idx, BOOL *stop) {
+                                                                    NSUInteger i = [userCalendars indexOfObject:obj
+                                                                                                  inSortedRange:NSMakeRange(0, [userCalendars count])
+                                                                                                        options:NSBinarySearchingFirstEqual
+                                                                                                usingComparator:^(id left, id right) {
+                                                                                                    return [[left valueForKey:@"uid"] compare:[right valueForKey:@"uid"]];
+                                                                                                }];
+                                                                    if (i != NSNotFound) {
+                                                                        return [[[userCalendars objectAtIndex:i] objectForKey:@"check"] boolValue];
+                                                                    }
+                                                                    else {
+                                                                        return NO;
+                                                                    }
+                                                                }];
+            [_cachedCalendars release];
+            _cachedCalendars = [[allCalendars objectsAtIndexes:indexes] retain];
+            _shouldUpdateCalendars = NO;
+        }
+    }
+    return _cachedCalendars;
+}
+
 + (void)initialize {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSDictionary *viewDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -67,6 +101,14 @@ static void * volatile sharedInstance = nil;
                                                                   forKeyPath:@"values.RollingCalendar"
                                                                      options:0
                                                                      context:NULL];
+        [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self
+                                                                  forKeyPath:@"values.Calendars"
+                                                                     options:NSKeyValueObservingOptionNew
+                                                                     context:NULL];
+        [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self
+                                                                  forKeyPath:@"values.DisplayAllCalendars"
+                                                                     options:NSKeyValueObservingOptionNew
+                                                                     context:NULL];
 
         [self createTomorrowTimer];
     }
@@ -76,6 +118,7 @@ static void * volatile sharedInstance = nil;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     // NSLog(@"Updating due to %@ setting change", keyPath);
+    _shouldUpdateCalendars = YES;
     [self _postCalendarChanged];
 }
 
@@ -155,7 +198,7 @@ static void * volatile sharedInstance = nil;
 
 - (NSArray *)currentEvents
 {
-    NSPredicate *eventsForThisWeek = [CalCalendarStore eventPredicateWithStartDate:beginningDate endDate:endDate calendars:[[CalCalendarStore defaultCalendarStore] calendars]];
+    NSPredicate *eventsForThisWeek = [CalCalendarStore eventPredicateWithStartDate:beginningDate endDate:endDate calendars:[self calendarsToDisplay]];
     NSArray *events = [[CalCalendarStore defaultCalendarStore] eventsWithPredicate:eventsForThisWeek];
 
     NSMutableArray *r = [NSMutableArray array];
@@ -186,7 +229,7 @@ static void * volatile sharedInstance = nil;
 
 - (NSArray *)currentTasks
 {
-    NSPredicate *predicate = [CalCalendarStore taskPredicateWithUncompletedTasks:[[CalCalendarStore defaultCalendarStore] calendars]];
+    NSPredicate *predicate = [CalCalendarStore taskPredicateWithUncompletedTasks:[self calendarsToDisplay]];
     NSArray *tasks = [[CalCalendarStore defaultCalendarStore] tasksWithPredicate:predicate];
 
     NSMutableArray *r = [NSMutableArray array];

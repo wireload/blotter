@@ -14,6 +14,8 @@
     NSDate  *endDate;
 
     NSTimer *tomorrowTimer;
+
+    BOOL _shouldUpdateCalendars;
 }
 
 @property (retain) NSDate*  focusDate;
@@ -21,6 +23,8 @@
 @property (retain) NSDate*  endDate;
 
 + (CalendarAdapter *)sharedCalendarAdapter;
+
++ (NSArray *)calendarsToDisplay;
 
 - (NSDictionary *)currentCalendar;
 
