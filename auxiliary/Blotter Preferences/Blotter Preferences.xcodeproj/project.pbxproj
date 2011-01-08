@@ -18,6 +18,13 @@
 		28F69B53129C82E800D4BB97 /* BLPositionerControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69B52129C82E800D4BB97 /* BLPositionerControlCell.m */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		E2FE5ED112D74F5E00003E48 /* CalendarsPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FE5ED012D74F5E00003E48 /* CalendarsPrefController.m */; };
+		E2FE5EDE12D7505800003E48 /* CalendarsPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2FE5EDD12D7505800003E48 /* CalendarsPrefPaneView.xib */; };
+		E2FE5EF712D75C7700003E48 /* ColorCheckboxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FE5EF612D75C7700003E48 /* ColorCheckboxCell.m */; };
+		E2FE5F0D12D760BA00003E48 /* chkbxBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = E2FE5F0112D760BA00003E48 /* chkbxBackground.png */; };
+		E2FE5F1312D760BA00003E48 /* chkbxCheck.png in Resources */ = {isa = PBXBuildFile; fileRef = E2FE5F0712D760BA00003E48 /* chkbxCheck.png */; };
+		E2FE5F6112D7734000003E48 /* chkbxColormask.png in Resources */ = {isa = PBXBuildFile; fileRef = E2FE5F6012D7734000003E48 /* chkbxColormask.png */; };
+		E2FE5FDD12D77D1F00003E48 /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2FE5FDC12D77D1F00003E48 /* CalendarStore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +52,15 @@
 		8D5B49B6048680CD000E48DA /* Blotter Preferences.preferencePane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Blotter Preferences.preferencePane"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		E2FE5ECF12D74F5E00003E48 /* CalendarsPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarsPrefController.h; sourceTree = "<group>"; };
+		E2FE5ED012D74F5E00003E48 /* CalendarsPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarsPrefController.m; sourceTree = "<group>"; };
+		E2FE5EDD12D7505800003E48 /* CalendarsPrefPaneView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
+		E2FE5EF512D75C7700003E48 /* ColorCheckboxCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorCheckboxCell.h; sourceTree = "<group>"; };
+		E2FE5EF612D75C7700003E48 /* ColorCheckboxCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorCheckboxCell.m; sourceTree = "<group>"; };
+		E2FE5F0112D760BA00003E48 /* chkbxBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chkbxBackground.png; sourceTree = "<group>"; };
+		E2FE5F0712D760BA00003E48 /* chkbxCheck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chkbxCheck.png; sourceTree = "<group>"; };
+		E2FE5F6012D7734000003E48 /* chkbxColormask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chkbxColormask.png; sourceTree = "<group>"; };
+		E2FE5FDC12D77D1F00003E48 /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = System/Library/Frameworks/CalendarStore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +69,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
+				E2FE5FDD12D77D1F00003E48 /* CalendarStore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +87,7 @@
 				19C28FB8FE9D52D311CA2CBB /* Products */,
 				28B54D55128398530037BF53 /* GeneralPrefPaneView.xib */,
 				28B54D801283B57E0037BF53 /* PositionPrefPaneView.xib */,
+				E2FE5EDD12D7505800003E48 /* CalendarsPrefPaneView.xib */,
 			);
 			name = "General Preferences";
 			sourceTree = "<group>";
@@ -96,6 +114,7 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E2FE5F1612D760E000003E48 /* ColorCheckboxCell */,
 				28F69D55129D854F00D4BB97 /* BLCalendarFramer.h */,
 				2844DB25129DA197006C5545 /* BLCalendarFramer.m */,
 				28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */,
@@ -108,6 +127,8 @@
 				28F69A28129C587F00D4BB97 /* BLPositionerControl.m */,
 				28F69B51129C82E800D4BB97 /* BLPositionerControlCell.h */,
 				28F69B52129C82E800D4BB97 /* BLPositionerControlCell.m */,
+				E2FE5ECF12D74F5E00003E48 /* CalendarsPrefController.h */,
+				E2FE5ED012D74F5E00003E48 /* CalendarsPrefController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -115,6 +136,7 @@
 		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E2FE5FDC12D77D1F00003E48 /* CalendarStore.framework */,
 				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
@@ -144,6 +166,18 @@
 				32DBCF630370AF2F00C91783 /* Blotter Preferences_Prefix.pch */,
 			);
 			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		E2FE5F1612D760E000003E48 /* ColorCheckboxCell */ = {
+			isa = PBXGroup;
+			children = (
+				E2FE5EF512D75C7700003E48 /* ColorCheckboxCell.h */,
+				E2FE5EF612D75C7700003E48 /* ColorCheckboxCell.m */,
+				E2FE5F0112D760BA00003E48 /* chkbxBackground.png */,
+				E2FE5F0712D760BA00003E48 /* chkbxCheck.png */,
+				E2FE5F6012D7734000003E48 /* chkbxColormask.png */,
+			);
+			name = ColorCheckboxCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,6 +234,10 @@
 				28B54D56128398530037BF53 /* GeneralPrefPaneView.xib in Resources */,
 				28B54D811283B57E0037BF53 /* PositionPrefPaneView.xib in Resources */,
 				28F69A55129C5EA100D4BB97 /* Recreated-Aqua.jpg in Resources */,
+				E2FE5EDE12D7505800003E48 /* CalendarsPrefPaneView.xib in Resources */,
+				E2FE5F0D12D760BA00003E48 /* chkbxBackground.png in Resources */,
+				E2FE5F1312D760BA00003E48 /* chkbxCheck.png in Resources */,
+				E2FE5F6112D7734000003E48 /* chkbxColormask.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,6 +254,8 @@
 				28F69A29129C587F00D4BB97 /* BLPositionerControl.m in Sources */,
 				28F69B53129C82E800D4BB97 /* BLPositionerControlCell.m in Sources */,
 				2844DB26129DA197006C5545 /* BLCalendarFramer.m in Sources */,
+				E2FE5ED112D74F5E00003E48 /* CalendarsPrefController.m in Sources */,
+				E2FE5EF712D75C7700003E48 /* ColorCheckboxCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

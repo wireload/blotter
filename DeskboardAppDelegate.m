@@ -9,6 +9,7 @@
 #import "DeskboardAppDelegate.h"
 #import "BLPositionerControl.h"
 #import "BLCalendarFramer.h"
+#import <CalendarStore/CalendarStore.h>
 
 @implementation DeskboardAppDelegate
 
@@ -61,7 +62,7 @@
         [prefs setDebug:YES];
 
         // Set which panes are included, and their order.
-        [prefs setPanesOrder:[NSArray arrayWithObjects:@"General", @"Positioning", nil]];
+        [prefs setPanesOrder:[NSArray arrayWithObjects:@"General", @"Positioning", @"Calendars", nil]];
     }
 
     // Show the preferences window.
