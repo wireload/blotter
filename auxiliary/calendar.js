@@ -336,16 +336,43 @@ var CalendarWeek = function(startDate, json)
             return (a.startDate > b.startDate) - (a.startDate < b.startDate);
         });
 
+        this.days.push(column);
+    }
+
+    this.getVisibleHours = function()
+    {
+        return this.latestHour - this.earliestHour + 1
+    }
+
+    this.stackEvents = function(minimumEventDuration)
+    {
         // Now that we have all the events split and sorted, find side by side events.
-        // FIXME Account for minimum event size.
-        var stack = [];
-        for (var i = 0, count = column['events'].length; i < count; i++)
+        for (var i = 0, count = this.days.length; i < count; i++)
         {
-            var theEvent = column['events'][i];
+            var day = this.days[i];
+            this.stackEventsDay(minimumEventDuration, day);
+        }
+    }
+
+    this.stackEventsDay = function(minimumEventDuration, day)
+    {
+        var calculateEffectiveEndDate = function(theEvent)
+        {
+            var startDate = theEvent.startDate,
+                endDate = theEvent.endDate,
+                effectiveEndDate = startDate.clone();
+            effectiveEndDate.add(new goog.date.Interval(goog.date.Interval.SECONDS, minimumEventDuration));
+            return endDate > effectiveEndDate ? endDate : effectiveEndDate;
+        }
+
+        var stack = [];
+        for (var i = 0, count = day['events'].length; i < count; i++)
+        {
+            var theEvent = day['events'][i];
 
             for (var j = 0; j < stack.length; j++)
             {
-                if (stack[j].endDate <= theEvent.startDate)
+                if (calculateEffectiveEndDate(stack[j]) <= theEvent.startDate)
                 {
                     // Collapse down when the root of a stack is over.
                     stack = stack.slice(0, j);
@@ -362,12 +389,6 @@ var CalendarWeek = function(startDate, json)
                 stack[j].compression = Math.max(stack[j].compression, stack.length - 1);
             }
         }
-
-        this.days.push(column);
-    }
-
-    this.getVisibleHours = function() {
-        return this.latestHour - this.earliestHour + 1
     }
 }
 
@@ -380,7 +401,6 @@ function updateAllDayElement(allDayElement, day)
     {
         var element = createEventElement(allDayEvents[i]);
         // Will be calculated by the layout fixer later.
-        // element.height(MINIMUM_EVENT_HEIGHT, Math.floor(minutes * pixelsPerMinute));
         allDayElement.append(element);
     }
 }
@@ -450,6 +470,11 @@ function update(json)
         timelineHeight = timelineElement.height() || $('#next-up-timeline').height(),
         pixelsPerHour = timelineHeight / visibleHours,
         pixelsPerMinute = pixelsPerHour / 60;
+
+    // When stacking events, the effective length of each event in seconds needs
+    // to be known, which is determined by how many seconds the MINIMUM_EVENT_HEIGHT
+    // is.
+    calendarWeek.stackEvents(60 * MINIMUM_EVENT_HEIGHT / pixelsPerMinute);
 
     fillInTimeline(timelineElement, calendarWeek.earliestHour, calendarWeek.latestHour, pixelsPerHour, json);
     fillInTimeline($('#next-up-timeline'), 0, 23, pixelsPerHour, json);
