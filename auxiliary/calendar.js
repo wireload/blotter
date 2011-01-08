@@ -218,24 +218,12 @@ function updateTasksElement(tasksElement, json)
     }
 }
 
-function update(json)
+var CalendarWeek = function(startDate, json)
 {
-    if (typeof(json) == 'string')
-        json = $.parseJSON(json);
-
-    lastUpdateDate = new goog.date.DateTime();
-    FAST_FORWARD_NEXT_UP = json.fastForwardNextUp;
-
-    var startDate       = goog.date.fromIsoString(json.beginningDate),
-        endDate         = goog.date.fromIsoString(json.endDate),
-        today           = goog.date.fromIsoString(json.date),
-        earliestHour    = 9,
-        latestHour      = 17,
-        days            = [];
-
-    updateDateElement($(".info .date"), today);
-
-    updateTasksElement($("#to-do-box .tasks"), json)
+    this.startDate = startDate;
+    this.days = [];
+    this.earliestHour = 9;
+    this.latestHour = 17;
 
     for (var dayIndex = 0; dayIndex < 7; dayIndex++)
     {
@@ -284,10 +272,10 @@ function update(json)
                 if (eventEnd > columnEndDate)
                     eventEnd = columnEndDate;
 
-                if (eventStart.getHours() < earliestHour)
-                    earliestHour = eventStart.getHours();
-                if (eventEnd.getHours() > latestHour)
-                    latestHour = eventEnd.getHours();
+                if (eventStart.getHours() < this.earliestHour)
+                    this.earliestHour = eventStart.getHours();
+                if (eventEnd.getHours() > this.latestHour)
+                    this.latestHour = eventEnd.getHours();
             }
 
             var formattedEvent = {};
@@ -317,6 +305,7 @@ function update(json)
         });
 
         // Now that we have all the events split and sorted, find side by side events.
+        // FIXME Account for minimum event size.
         var stack = [];
         for (var i = 0, count = column['events'].length; i < count; i++)
         {
@@ -342,26 +331,52 @@ function update(json)
             }
         }
 
-        days.push(column);
+        this.days.push(column);
     }
 
-    var visibleHours = latestHour - earliestHour + 1,
+    this.getVisibleHours = function() {
+        return this.latestHour - this.earliestHour + 1
+    }
+
+    this.getDayTitle = function(dayIndex) {
+        return capitaliseFirstLetter("" + this.days[dayIndex]['title']);
+    }
+}
+
+function update(json)
+{
+    if (typeof(json) == 'string')
+        json = $.parseJSON(json);
+
+    lastUpdateDate = new goog.date.DateTime();
+    FAST_FORWARD_NEXT_UP = json.fastForwardNextUp;
+
+    var startDate       = goog.date.fromIsoString(json.beginningDate),
+        endDate         = goog.date.fromIsoString(json.endDate),
+        today           = goog.date.fromIsoString(json.date);
+
+    updateDateElement($(".info .date"), today);
+
+    updateTasksElement($("#to-do-box .tasks"), json)
+
+    var calendarWeek = new CalendarWeek(startDate, json),
+        visibleHours = calendarWeek.getVisibleHours(),
         timelineElement = $('#main-timeline'),
         nextUpTimelineElement = $('#next-up-timeline'),
         timelineHeight = timelineElement.height() || $('#next-up-timeline').height(),
         pixelsPerHour = timelineHeight / visibleHours,
         pixelsPerMinute = pixelsPerHour / 60;
 
-    fillInTimeline(timelineElement, earliestHour, latestHour, pixelsPerHour, json);
+    fillInTimeline(timelineElement, calendarWeek.earliestHour, calendarWeek.latestHour, pixelsPerHour, json);
     fillInTimeline($('#next-up-timeline'), 0, 23, pixelsPerHour, json);
 
-    var topMinutes = earliestHour * 60,
+    var topMinutes = calendarWeek.earliestHour * 60,
         nextUpElement = null,
         minutesIntoNextUp = null;
 
     for (var i = 0; i < 7; i++)
     {
-        var day = days[i],
+        var day = calendarWeek.days[i],
             allDayEvents = day['allday'],
             allDayElement = $("#main-all-day-" + i),
             isToday = day['startDate'].getDate() == today.getDate();
@@ -377,7 +392,7 @@ function update(json)
 
         // Day titles. Capitalise first letter since day names are lowercase in some locales
         // but we still want capitalised headers.
-        $('#main-header-' + i).html(capitaliseFirstLetter("" + days[i]['title']));
+        $('#main-header-' + i).html(calendarWeek.getDayTitle(i));
         if (isToday)
             $('#main-header-' + i).addClass('today');
         else
@@ -401,7 +416,7 @@ function update(json)
         {
             var theEvent = dayEvents[j],
                 element = createEventElement(theEvent),
-                minutesIntoDay = (theEvent.startDate.getTime() - days[i]['startDate'].getTime()) / 1000 / 60,
+                minutesIntoDay = (theEvent.startDate.getTime() - day['startDate'].getTime()) / 1000 / 60,
                 minutes = (theEvent.endDate.getTime() - theEvent.startDate.getTime()) / 1000 / 60;
 
             element.height(Math.max(MINIMUM_EVENT_HEIGHT, Math.floor(minutes * pixelsPerMinute)));
