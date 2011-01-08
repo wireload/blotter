@@ -14,7 +14,7 @@
 @implementation DeskboardAppDelegate
 
 + (void)initialize {
-    if ([NSStringFromClass(self) isEqualToString:@"DeskboardAppDelegate"]) {
+    if (self == [DeskboardAppDelegate class]) {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         NSNumber *displayAllCalendars = [userDefaults objectForKey:@"DisplayAllCalendars"];
         if (displayAllCalendars == nil) {
