@@ -18,7 +18,10 @@ function capitaliseFirstLetter(string)
 
 function bottomOfElement(element)
 {
-    return element.position().top + element.height();
+    var pos = element.position();
+    if (pos === null)
+        return 0;
+    return pos.top + element.height();
 }
 
 /*
@@ -67,8 +70,8 @@ function layoutAllDayEvents(element)
 
     var availableHeight = element.height(),
         lastVisibleTopWrapper = null;
-    // If we don't fit now we must remove items.
 
+    // If we don't fit now we must remove items.
     element.find('.event').reverse().each(function()
     {
         var topWrapper = $(this).parent().parent();
@@ -93,6 +96,31 @@ function layoutAllDayEvents(element)
             topWrapper.height($(this).height() + 16);
         }
     });
+}
+
+/**
+    Implement ellipsis for regular day events.
+*/
+function layoutDayEvent(eventElement)
+{
+    // This case is pretty easy because events have fixed height. So basically
+    // just remove stuff until it fits - no need to balance with other events.
+    var innerWrapper = eventElement.find('.event'),
+        availableHeight = innerWrapper.height(),
+        locationElement = innerWrapper.find('.location');
+
+    // Cut the location element?
+    if (locationElement && bottomOfElement(locationElement) >= availableHeight)
+        locationElement.hide();
+
+    // Ellipsify the title?
+    var titleElement = innerWrapper.find('.title');
+    if (bottomOfElement(titleElement) >= availableHeight)
+    {
+        titleElement.addClass('ellipsis').addClass('multiline');
+        titleElement.height(availableHeight);
+        titleElement.ellipsis();
+    }
 }
 
 function implementSizingHacks()
@@ -195,7 +223,7 @@ function fillInTimeline(timelineElement, earliestHour, latestHour, pixelsPerHour
     }
 }
 
-var MINIMUM_EVENT_HEIGHT = 28,
+var MINIMUM_EVENT_HEIGHT = 30,
     FAST_FORWARD_NEXT_UP = false,
 
     lastUpdateDate = null,
@@ -394,6 +422,8 @@ function updateDayElement(mainElement, day, pixelsPerMinute, topMinutes)
         element.css('left', percentOffset + '%');
 
         mainElement.append(element);
+
+        layoutDayEvent(element);
     }
 }
 

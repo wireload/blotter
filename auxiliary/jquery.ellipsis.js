@@ -28,7 +28,7 @@
 
                                 while (text.length > 0 && func())
                                 {
-                                        text = text.substr(0, text.length - 1);
+                                        text = text.substr(0, text.length - 1).trim();
                                         t.html(text + "...");
                                 }
 
