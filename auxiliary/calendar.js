@@ -201,6 +201,23 @@ var MINIMUM_EVENT_HEIGHT = 28,
     lastUpdateDate = null,
     nextUpTimer = null;
 
+function updateDateElement(dateElement, todayDate)
+{
+    dateElement.find(".date-date").text(todayDate.getDate());
+    dateElement.find(".date-month-year").text(new goog.i18n.DateTimeFormat("MMMM, y").format(todayDate));
+    dateElement.find(".date-day").text(new goog.i18n.DateTimeFormat("EEEE").format(todayDate));
+}
+
+function updateTasksElement(tasksElement, json)
+{
+    tasksElement.html("");
+    for (var i = 0, count = json.tasks.length; i < count; i++)
+    {
+        var task = json.tasks[i];
+        tasksElement.append($("<li></li>").text(task.title));
+    }
+}
+
 function update(json)
 {
     if (typeof(json) == 'string')
@@ -216,17 +233,9 @@ function update(json)
         latestHour      = 17,
         days            = [];
 
-    $(".info .date .date-date").text(today.getDate());
-    $(".info .date .date-month-year").text(new goog.i18n.DateTimeFormat("MMMM, y").format(today));
-    $(".info .date .date-day").text(new goog.i18n.DateTimeFormat("EEEE").format(today));
+    updateDateElement($(".info .date"), today);
 
-    var tasksElement = $("#to-do-box .tasks");
-    tasksElement.html("");
-    for (var i = 0, count = json.tasks.length; i < count; i++)
-    {
-        var task = json.tasks[i];
-        tasksElement.append($("<li></li>").text(task.title));
-    }
+    updateTasksElement($("#to-do-box .tasks"), json)
 
     for (var dayIndex = 0; dayIndex < 7; dayIndex++)
     {
