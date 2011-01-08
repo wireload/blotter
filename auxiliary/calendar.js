@@ -556,6 +556,10 @@ function updateWhenReady(json)
 {
     $(document).ready(function()
     {
-        update(json);
+        try {
+            update(json);
+        } catch (e) {
+            console.log(e.toString());
+        }
     });
 }

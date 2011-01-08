@@ -38,13 +38,14 @@
         webContentView = [[WebView alloc] initWithFrame:frame];
         [webContentView setAutoresizingMask:NSViewHeightSizable | NSViewWidthSizable];
         [webContentView setDrawsBackground:NO];
+        [webContentView setFrameLoadDelegate:self];
+        [webContentView setResourceLoadDelegate:self];
         [self addSubview:webContentView];
 
         NSString *html = [self calendarHtml];
         NSURL *baseURL = [[NSBundle mainBundle] URLForResource:@"calendar" withExtension:@""];
         // NSLog(@"will display: %@ (base: %@)", html, baseURL);
         [[webContentView mainFrame] loadHTMLString:html baseURL:baseURL];
-        [webContentView setFrameLoadDelegate:self];
 
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(refresh)
@@ -115,6 +116,10 @@
     return json;
 }
 
+- (void)webView:(WebView *)webView windowScriptObjectAvailable:(WebScriptObject *)windowScriptObject {
+    // Trap console.log calls.
+    [windowScriptObject setValue:self forKey:@"console"];
+}
 
 - (void)refresh
 {
@@ -151,5 +156,35 @@
 
     [super dealloc];
 }
+
+
+/* From http://developer.apple.com/library/mac/#samplecode/CallJS/Listings/SampleController_m.html */
+
++ (BOOL)isKeyExcludedFromWebScript:(const char *)property
+{
+    // NSLog(@"%@ received %@ for '%s'", self, NSStringFromSelector(_cmd), property);
+    return YES;
+}
+
++ (BOOL)isSelectorExcludedFromWebScript:(SEL)selector
+{
+    // NSLog(@"%@ received %@ for '%@'", self, NSStringFromSelector(_cmd), NSStringFromSelector(selector));
+    return selector != @selector(doOutputToLog:);
+}
+
++ (NSString *)webScriptNameForSelector:(SEL)sel
+{
+    // NSLog(@"%@ received %@ with sel='%@'", self, NSStringFromSelector(_cmd), NSStringFromSelector(sel));
+    if (sel == @selector(doOutputToLog:))
+        return @"log";
+    else
+        return nil;
+}
+
+- (void)doOutputToLog:(NSString*)theMessage
+{
+    NSLog(@"Renderer: %@", theMessage);
+}
+
 
 @end
