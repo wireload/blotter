@@ -81,6 +81,7 @@
                                                  selector:@selector(reloadData)
                                                      name:CalCalendarsChangedExternallyNotification
                                                    object:[CalCalendarStore defaultCalendarStore]];
+        [tableView setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
     }
 
     if (loaded)

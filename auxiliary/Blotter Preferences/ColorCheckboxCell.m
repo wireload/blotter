@@ -65,12 +65,13 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
         // NSButtonCell
+        [self setButtonType:NSSwitchButton];
         [self setBackgroundColor:nil];
         [self setBezelStyle:NSRegularSquareBezelStyle];
         [self setGradientType:NSGradientNone];
         [self setHighlightsBy:NSNoCellMask];
-        [self setImageDimsWhenDisabled:NO];
-        [self setImagePosition:NSImageOverlaps];
+        [self setImageDimsWhenDisabled:YES];
+        [self setImagePosition:NSImageOnly];
         [self setImageScaling:NSImageScaleNone];
         [self setTransparent:NO];
         [self setShowsBorderOnlyWhileMouseInside:NO];
