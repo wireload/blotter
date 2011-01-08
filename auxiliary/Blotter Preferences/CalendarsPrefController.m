@@ -20,23 +20,26 @@
 
 @implementation CalendarsPrefController
 
+- (void)dealloc {
+    if (tableView != nil) {
+        [[NSNotificationCenter defaultCenter] removeObserver:tableView];
+    }
+    [super dealloc];
+}
+
 - (NSDictionary *)_calendarForUID:(NSString *)anUID {
     NSMutableArray *calendars = [[[[NSUserDefaults standardUserDefaults] objectForKey:@"Calendars"] mutableCopy] autorelease];
     if (calendars == nil)
-        calendars = [[NSMutableArray new] autorelease];
+        calendars = [NSMutableArray array];
 
-    __block BOOL isFound = NO;
     NSUInteger index = [calendars indexOfObject:[NSDictionary dictionaryWithObject:anUID forKey:@"uid"]
                                   inSortedRange:NSMakeRange(0, [calendars count])
                                         options:NSBinarySearchingFirstEqual | NSBinarySearchingInsertionIndex
                                 usingComparator:^(id left, id right) {
-                                    NSComparisonResult result = [[left objectForKey:@"uid"] compare:[right objectForKey:@"uid"]];
-                                    if (result == NSOrderedSame)
-                                        isFound = YES;
-                                    return result;
+                                    return [[left objectForKey:@"uid"] compare:[right objectForKey:@"uid"]];
                                 }];
 
-    if (isFound) {
+    if (index != NSNotFound && index != [calendars count] && [[[calendars objectAtIndex:index] objectForKey:@"uid"] isEqualToString:anUID]) {
         return [calendars objectAtIndex:index];
     }
     else {
@@ -76,6 +79,10 @@
     {
         loaded = [NSBundle loadNibNamed:@"CalendarsPrefPaneView" owner:self];
         [tableView setIntercellSpacing:NSMakeSize(3, 0)];
+        [[NSNotificationCenter defaultCenter] addObserver:tableView
+                                                 selector:@selector(reloadData)
+                                                     name:CalCalendarsChangedExternallyNotification
+                                                   object:[CalCalendarStore defaultCalendarStore]];
     }
 
     if (loaded)
@@ -121,6 +128,7 @@
         [cell setButtonColor:calColor];
     }
 }
+
 
 #pragma mark NSTableViewDataSource
 
