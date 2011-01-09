@@ -244,7 +244,13 @@ static void * volatile sharedInstance = nil;
         [jsonCalendar setValue:[[[task calendar] color] hexString]      forKey:@"color"];
         [jsonTask setValue:jsonCalendar                                 forKey:@"calendar"];
         [jsonTask setValue:[task title]                                 forKey:@"title"];
-        [jsonTask setValue:[NSNumber numberWithInt:[task priority]]     forKey:@"priority"];
+        CalPriority priority = [task priority];
+        if (priority == CalPriorityNone) {
+            // Tasks without priority must go after tasks that have priority
+            priority = CalPriorityLow + 1;
+        }
+        [jsonTask setValue:[NSNumber numberWithInteger:priority]        forKey:@"priority"];
+        [jsonTask setValue:[task dueDate]                               forKey:@"dueDate"];
         // [jsonTask setValue:[NSNumber numberWithBool:[task isCompleted]] forKey:@"isCompleted"];
 
         [r addObject:jsonTask];
@@ -253,6 +259,10 @@ static void * volatile sharedInstance = nil;
         [jsonCalendar autorelease];
     }
 
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:
+                                [NSSortDescriptor sortDescriptorWithKey:@"dueDate" ascending:YES],
+                                [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:YES], nil];
+    [r sortUsingDescriptors:sortDescriptors];
     return r;
 
 }
