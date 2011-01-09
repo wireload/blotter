@@ -246,11 +246,17 @@ static void * volatile sharedInstance = nil;
         [jsonTask setValue:[task title]                                 forKey:@"title"];
         CalPriority priority = [task priority];
         if (priority == CalPriorityNone) {
-            // Tasks without priority must go after tasks that have priority
+            // Tasks without priority must go after tasks that have
             priority = CalPriorityLow + 1;
         }
         [jsonTask setValue:[NSNumber numberWithInteger:priority]        forKey:@"priority"];
-        [jsonTask setValue:[task dueDate]                               forKey:@"dueDate"];
+
+        NSDate *dueDate = [task dueDate];
+        if (dueDate == nil) {
+            // Tasks without due date must go after tasks that have
+            dueDate = [NSDate distantFuture];
+        }
+        [jsonTask setValue:dueDate                                      forKey:@"dueDate"];
         // [jsonTask setValue:[NSNumber numberWithBool:[task isCompleted]] forKey:@"isCompleted"];
 
         [r addObject:jsonTask];
@@ -263,6 +269,7 @@ static void * volatile sharedInstance = nil;
                                 [NSSortDescriptor sortDescriptorWithKey:@"dueDate" ascending:YES],
                                 [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:YES], nil];
     [r sortUsingDescriptors:sortDescriptors];
+
     return r;
 
 }
