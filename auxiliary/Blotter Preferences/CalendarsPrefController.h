@@ -13,8 +13,10 @@
 
 @interface CalendarsPrefController : NSObject<SS_PreferencePaneProtocol, NSTableViewDelegate>
 {
-    IBOutlet NSView *mainView;
-    IBOutlet NSTableView *tableView;
+    IBOutlet NSView *_mainView;
+    IBOutlet NSTableView *_tableView;
+    NSArray *_cachedCalCalendars;
+    id _calCalendarStoreObserver;
 }
 
 @end

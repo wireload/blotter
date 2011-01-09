@@ -10,6 +10,7 @@
 #import "ColorCheckboxCell.h"
 
 @interface CalendarsPrefController (/* Private */)
+@property (copy) NSArray *_cachedCalCalendars;
 
 - (NSDictionary *)_calendarForUID:(NSString *)anUID;
 
@@ -19,11 +20,24 @@
 
 
 @implementation CalendarsPrefController
+@synthesize _cachedCalCalendars;
+
+- (id)init {
+    if (self = [super init]) {
+        _calCalendarStoreObserver = [[NSNotificationCenter defaultCenter] addObserverForName:CalCalendarsChangedExternallyNotification
+                                                                                      object:[CalCalendarStore defaultCalendarStore]
+                                                                                       queue:nil
+                                                                                  usingBlock:^(NSNotification *arg1) {
+                                                                                      self._cachedCalCalendars = [[CalCalendarStore defaultCalendarStore] calendars];
+                                                                                      [_tableView reloadData];
+                                                                                  }];
+        self._cachedCalCalendars = [[CalCalendarStore defaultCalendarStore] calendars];
+    }
+    return self;
+}
 
 - (void)dealloc {
-    if (tableView != nil) {
-        [[NSNotificationCenter defaultCenter] removeObserver:tableView];
-    }
+    [[NSNotificationCenter defaultCenter] removeObserver:_calCalendarStoreObserver];
     [super dealloc];
 }
 
@@ -73,19 +87,15 @@
 {
     BOOL loaded = YES;
 
-    if (!mainView)
+    if (!_mainView)
     {
         loaded = [NSBundle loadNibNamed:@"CalendarsPrefPaneView" owner:self];
-        [tableView setIntercellSpacing:NSMakeSize(3, 0)];
-        [[NSNotificationCenter defaultCenter] addObserver:tableView
-                                                 selector:@selector(reloadData)
-                                                     name:CalCalendarsChangedExternallyNotification
-                                                   object:[CalCalendarStore defaultCalendarStore]];
-        [tableView setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
+        [_tableView setIntercellSpacing:NSMakeSize(3, 0)];
+        [_tableView setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
     }
 
     if (loaded)
-        return mainView;
+        return _mainView;
 
     return nil;
 }
@@ -123,7 +133,7 @@
 - (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex {
     if ([[aTableColumn identifier] isEqualToString:@"check"]) {
         ColorCheckboxCell *cell = aCell;
-        NSColor *calColor = [[[[CalCalendarStore defaultCalendarStore] calendars] objectAtIndex:rowIndex] color];
+        NSColor *calColor = [[self._cachedCalCalendars objectAtIndex:rowIndex] color];
         [cell setButtonColor:calColor];
     }
 }
@@ -132,23 +142,22 @@
 #pragma mark NSTableViewDataSource
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {
-    return [[[CalCalendarStore defaultCalendarStore] calendars] count];
+    return [self._cachedCalCalendars count];
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex {
     if ([[aTableColumn identifier] isEqualToString:@"check"]) {
-        NSArray *calendars = [[CalCalendarStore defaultCalendarStore] calendars];
-        NSString *uid = [[calendars objectAtIndex:rowIndex] uid];
+        NSString *uid = [[self._cachedCalCalendars objectAtIndex:rowIndex] uid];
         return [[self _calendarForUID:uid] objectForKey:@"check"];
     }
     else {
-        return [[[[CalCalendarStore defaultCalendarStore] calendars] objectAtIndex:rowIndex] title];
+        return [[self._cachedCalCalendars objectAtIndex:rowIndex] title];
     }
 }
 
 - (void)tableView:(NSTableView *)aTableView setObjectValue:(id)anObject forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex {
     if ([[aTableColumn identifier] isEqualToString:@"check"]) {
-        NSString *uid = [[[[CalCalendarStore defaultCalendarStore] calendars] objectAtIndex:rowIndex] uid];
+        NSString *uid = [[self._cachedCalCalendars objectAtIndex:rowIndex] uid];
         [self _setState:anObject forCalendarWithUID:uid];
     }
 }
