@@ -23,17 +23,13 @@
 //	TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 //	SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#import <Cocoa/Cocoa.h>
+// Modified by Ilya Kulakov on 16/01/11.
 
 
 @interface LaunchAtLoginController : NSObject {
-
+    LSSharedFileListRef _loginItems;
+    BOOL launchAtLogin;
 }
-
 @property BOOL launchAtLogin;
-
-- (BOOL)willLaunchAtLogin:(NSURL *)itemUrl;
-- (void)setLaunchAtLogin:(BOOL)enabled;
-- (void)setLaunchAtLogin:(NSURL *)itemURL enabled:(BOOL)enabled;
 
 @end
