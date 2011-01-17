@@ -3,7 +3,6 @@
 // positioning data for overlapping events.
 
 goog.require('goog.date');
-goog.require('goog.i18n.DateTimeFormat');
 
 jQuery.easing.def = "easeInOutQuad";
 
@@ -232,8 +231,8 @@ var MINIMUM_EVENT_HEIGHT = 30,
 function updateDateElement(dateElement, todayDate)
 {
     dateElement.find(".date-date").text(todayDate.getDate());
-    dateElement.find(".date-month-year").text(new goog.i18n.DateTimeFormat("MMMM, y").format(todayDate));
-    dateElement.find(".date-day").text(new goog.i18n.DateTimeFormat("EEEE").format(todayDate));
+    dateElement.find(".date-month-year").text(date_formatter.DateTimeFormat(todayDate.getTime(), "MMMM, y"));
+    dateElement.find(".date-day").text(date_formatter.DateTimeFormat(todayDate.getTime(), "EEEE"));
 }
 
 function updateTasksElement(tasksElement, json)

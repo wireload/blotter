@@ -16,6 +16,14 @@
 #import "CalendarAdapter.h"
 #import "NSDate-Utilities.h"
 
+
+@interface DesktopView (/* Private */)
+
+- (NSString *)_stringFromDateInMilliseconds:(NSNumber *)milliseconds withFormat:(NSString *)aFormat;
+
+@end
+
+
 @implementation DesktopView
 
 + (void)initialize
@@ -54,6 +62,8 @@
 
         fadeController = [[BLFadeController alloc] initWithView:self];
         [fadeController retain];
+
+        dateFormatter = [NSDateFormatter new];
     }
     return self;
 }
@@ -116,9 +126,10 @@
     return json;
 }
 
-- (void)webView:(WebView *)webView windowScriptObjectAvailable:(WebScriptObject *)windowScriptObject {
-    // Trap console.log calls.
-    [windowScriptObject setValue:self forKey:@"console"];
+- (void)webView:(WebView *)sender didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
+{
+    [windowObject setValue:self forKey:@"console"];
+    [windowObject setValue:self forKey:@"date_formatter"];
 }
 
 - (void)refresh
@@ -153,30 +164,30 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-
+    [dateFormatter release];
     [super dealloc];
 }
 
 
+#pragma mark WebScriptObject
 /* From http://developer.apple.com/library/mac/#samplecode/CallJS/Listings/SampleController_m.html */
 
 + (BOOL)isKeyExcludedFromWebScript:(const char *)property
 {
-    // NSLog(@"%@ received %@ for '%s'", self, NSStringFromSelector(_cmd), property);
     return YES;
 }
 
-+ (BOOL)isSelectorExcludedFromWebScript:(SEL)selector
++ (BOOL)isSelectorExcludedFromWebScript:(SEL)selector 
 {
-    // NSLog(@"%@ received %@ for '%@'", self, NSStringFromSelector(_cmd), NSStringFromSelector(selector));
-    return selector != @selector(doOutputToLog:);
+    return selector != @selector(doOutputToLog:) && selector != @selector(_stringFromDateInMilliseconds:withFormat:);
 }
 
 + (NSString *)webScriptNameForSelector:(SEL)sel
 {
-    // NSLog(@"%@ received %@ with sel='%@'", self, NSStringFromSelector(_cmd), NSStringFromSelector(sel));
     if (sel == @selector(doOutputToLog:))
         return @"log";
+    else if (sel == @selector(_stringFromDateInMilliseconds:withFormat:))
+        return @"DateTimeFormat";
     else
         return nil;
 }
@@ -186,5 +197,10 @@
     NSLog(@"Renderer: %@", theMessage);
 }
 
+- (NSString *)_stringFromDateInMilliseconds:(NSNumber *)milliseconds withFormat:(NSString *)aFormat
+{
+    [dateFormatter setDateFormat:aFormat];
+    return [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:[milliseconds integerValue]/1000]];
+}
 
 @end

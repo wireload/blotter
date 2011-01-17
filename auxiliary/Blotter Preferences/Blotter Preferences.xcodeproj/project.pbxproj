@@ -16,7 +16,6 @@
 		28F69A29129C587F00D4BB97 /* BLPositionerControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69A28129C587F00D4BB97 /* BLPositionerControl.m */; };
 		28F69A55129C5EA100D4BB97 /* Recreated-Aqua.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 28F69A54129C5EA100D4BB97 /* Recreated-Aqua.jpg */; };
 		28F69B53129C82E800D4BB97 /* BLPositionerControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69B52129C82E800D4BB97 /* BLPositionerControlCell.m */; };
-		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		E2FE5ED112D74F5E00003E48 /* CalendarsPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FE5ED012D74F5E00003E48 /* CalendarsPrefController.m */; };
 		E2FE5EDE12D7505800003E48 /* CalendarsPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2FE5EDD12D7505800003E48 /* CalendarsPrefPaneView.xib */; };
@@ -29,7 +28,6 @@
 
 /* Begin PBXFileReference section */
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		2844DB25129DA197006C5545 /* BLCalendarFramer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLCalendarFramer.m; path = ../../BLCalendarFramer.m; sourceTree = SOURCE_ROOT; };
@@ -106,7 +104,6 @@
 			children = (
 				28F69A54129C5EA100D4BB97 /* Recreated-Aqua.jpg */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
-				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -230,7 +227,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				28B54D56128398530037BF53 /* GeneralPrefPaneView.xib in Resources */,
 				28B54D811283B57E0037BF53 /* PositionPrefPaneView.xib in Resources */,
 				28F69A55129C5EA100D4BB97 /* Recreated-Aqua.jpg in Resources */,
@@ -260,17 +256,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		089C167DFE841241C02AAC07 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				089C167EFE841241C02AAC07 /* English */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		1DEB913B08733D840010E9CD /* Debug */ = {

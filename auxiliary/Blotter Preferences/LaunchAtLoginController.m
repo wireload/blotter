@@ -23,85 +23,114 @@
 //	TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 //	SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+// Modified by Ilya Kulakov on 16/01/11.
+
 #import "LaunchAtLoginController.h"
 
 
-@implementation LaunchAtLoginController
+static BOOL _GetLaunchAtLogin(LSSharedFileListRef inList, NSURL* itemURL);
+static void _SetLaunchAtLogin(LSSharedFileListRef inList, NSURL* itemURL, BOOL enabled);
+static void _UpdateLaunchAtLoginVar(LSSharedFileListRef inList, void *context);
 
-- (NSURL *)appURL {
+
+@implementation LaunchAtLoginController
+@synthesize launchAtLogin;
+
++ (NSURL *)appURL {
     return [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
 }
 
-- (BOOL)launchAtLogin {
-    return [self willLaunchAtLogin:[self appURL]];
+- (id)init {
+    if (self = [super init]) {
+        _loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
+        if (_loginItems) {
+            launchAtLogin = _GetLaunchAtLogin(_loginItems, [[self class] appURL]);
+            LSSharedFileListAddObserver(_loginItems,
+                                        CFRunLoopGetCurrent(),
+                                        kCFRunLoopDefaultMode,
+                                        &_UpdateLaunchAtLoginVar,
+                                        self);
+        }
+    }
+    return self;
 }
 
-- (BOOL)willLaunchAtLogin:(NSURL *)itemURL {
+- (void)finalize {
+    if (_loginItems) {
+        LSSharedFileListRemoveObserver(_loginItems,
+                                       CFRunLoopGetCurrent(),
+                                       kCFRunLoopDefaultMode,
+                                       &_UpdateLaunchAtLoginVar,
+                                       self);
+        CFRelease(_loginItems);
+    }
+    [super finalize];
+}
+
+- (void)setLaunchAtLogin:(BOOL)enabled {
+    _SetLaunchAtLogin(_loginItems, [[self class] appURL], enabled);
+}
+
+static BOOL _GetLaunchAtLogin(LSSharedFileListRef inList, NSURL* itemURL) {
     Boolean foundIt=false;
-    LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-    if (loginItems) {
-        UInt32 seed = 0U;
-        NSArray *currentLoginItems = [NSMakeCollectable(LSSharedFileListCopySnapshot(loginItems, &seed)) autorelease];
-        for (id itemObject in currentLoginItems) {
-            LSSharedFileListItemRef item = (LSSharedFileListItemRef)itemObject;
-			
-            UInt32 resolutionFlags = kLSSharedFileListNoUserInteraction | kLSSharedFileListDoNotMountVolumes;
-            CFURLRef URL = NULL;
-            OSStatus err = LSSharedFileListItemResolve(item, resolutionFlags, &URL, /*outRef*/ NULL);
-            if (err == noErr) {
-                foundIt = CFEqual(URL, itemURL);
-                CFRelease(URL);
-				
-                if (foundIt)
-                    break;
-            }
+    UInt32 seed = 0U;
+    NSArray *currentLoginItems = [NSMakeCollectable(LSSharedFileListCopySnapshot(inList, &seed)) autorelease];
+    for (id itemObject in currentLoginItems) {
+        LSSharedFileListItemRef item = (LSSharedFileListItemRef)itemObject;
+        
+        UInt32 resolutionFlags = kLSSharedFileListNoUserInteraction | kLSSharedFileListDoNotMountVolumes;
+        CFURLRef URL = NULL;
+        OSStatus err = LSSharedFileListItemResolve(item, resolutionFlags, &URL, /*outRef*/ NULL);
+        if (err == noErr) {
+            foundIt = CFEqual(URL, itemURL);
+            CFRelease(URL);
+            
+            if (foundIt)
+                break;
         }
-        CFRelease(loginItems);
     }
     return (BOOL)foundIt;
 }
 
-- (void)setLaunchAtLogin:(BOOL)enabled {
-    [self willChangeValueForKey:@"startAtLogin"];
-    [self setLaunchAtLogin:[self appURL] enabled:enabled];
-    [self didChangeValueForKey:@"startAtLogin"];
-}
-
-
-- (void)setLaunchAtLogin:(NSURL *)itemURL enabled:(BOOL)enabled {
+static void _SetLaunchAtLogin(LSSharedFileListRef inList, NSURL* itemURL, BOOL enabled) {
     LSSharedFileListItemRef existingItem = NULL;
-	
-    LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-    if (loginItems) {
-        UInt32 seed = 0U;
-        NSArray *currentLoginItems = [NSMakeCollectable(LSSharedFileListCopySnapshot(loginItems, &seed)) autorelease];
-        for (id itemObject in currentLoginItems) {
-            LSSharedFileListItemRef item = (LSSharedFileListItemRef)itemObject;
-			
-            UInt32 resolutionFlags = kLSSharedFileListNoUserInteraction | kLSSharedFileListDoNotMountVolumes;
-            CFURLRef URL = NULL;
-            OSStatus err = LSSharedFileListItemResolve(item, resolutionFlags, &URL, /*outRef*/ NULL);
-            if (err == noErr) {
-                Boolean foundIt = CFEqual(URL, itemURL);
-                CFRelease(URL);
-				
-                if (foundIt) {
-                    existingItem = item;
-                    break;
-                }
+    UInt32 seed = 0U;
+    NSArray *currentLoginItems = [NSMakeCollectable(LSSharedFileListCopySnapshot(inList, &seed)) autorelease];
+    for (id itemObject in currentLoginItems) {
+        LSSharedFileListItemRef item = (LSSharedFileListItemRef)itemObject;
+        
+        UInt32 resolutionFlags = kLSSharedFileListNoUserInteraction | kLSSharedFileListDoNotMountVolumes;
+        CFURLRef URL = NULL;
+        OSStatus err = LSSharedFileListItemResolve(item, resolutionFlags, &URL, /*outRef*/ NULL);
+        if (err == noErr) {
+            Boolean foundIt = CFEqual(URL, itemURL);
+            CFRelease(URL);
+            
+            if (foundIt) {
+                existingItem = item;
+                break;
             }
         }
-		
-        if (enabled && (existingItem == NULL)) {
-            LSSharedFileListInsertItemURL(loginItems, kLSSharedFileListItemBeforeFirst,
-                                          NULL, NULL, (CFURLRef)itemURL, NULL, NULL);
-			
-        } else if (!enabled && (existingItem != NULL))
-            LSSharedFileListItemRemove(loginItems, existingItem);
-		
-        CFRelease(loginItems);
-    }       
+    }
+    
+    if (enabled && (existingItem == NULL)) {
+        LSSharedFileListInsertItemURL(inList, kLSSharedFileListItemBeforeFirst,
+                                      NULL, NULL, (CFURLRef)itemURL, NULL, NULL);
+        
+    } else if (!enabled && (existingItem != NULL))
+        LSSharedFileListItemRemove(inList, existingItem);
 }
 
+static void _UpdateLaunchAtLoginVar(LSSharedFileListRef inList, void *context) {
+    assert(context != NULL);
+
+    LaunchAtLoginController* self = (LaunchAtLoginController*)context;
+    if (inList == self->_loginItems) {
+        BOOL willLaunchAtLogin = _GetLaunchAtLogin(self->_loginItems, [[self class] appURL]);
+        [self willChangeValueForKey:@"launchAtLogin"];
+        self->launchAtLogin = willLaunchAtLogin;
+        [self didChangeValueForKey:@"launchAtLogin"];
+    }
+}
 
 @end
