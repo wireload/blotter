@@ -15,6 +15,7 @@
     WebView             *webContentView;
     BLFadeController    *fadeController;
     BOOL                initialHtmlLoaded;
+    NSDateFormatter     *dateFormatter;
 }
 
 - (void)refresh;
