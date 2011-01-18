@@ -211,8 +211,11 @@ function fillInTimeline(timelineElement, earliestHour, latestHour, pixelsPerHour
         var element = $('<span></span>'),
             hourName = json['hourNames'][hour];
 
-        // If there's an am/pm marker, drop the :XX minute bit to make it smaller.
-        if (hourName.toUpperCase().indexOf('AM') > 0 || hourName.toUpperCase().indexOf('PM') > 0)
+        // If there's an AM/PM marker, drop the :XX minute bit to make it smaller.
+        // We don't know what the AM/PM marker looks like in the local language, so
+        // we'll simply look for hour strings longer than 5 characters (00:00 is the
+        // longest non AM/PM time).
+        if (hourName.length > 5)
             hourName = hourName.replace(/:(\d)+/, '');
 
         element.text(hourName);
