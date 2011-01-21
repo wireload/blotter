@@ -215,7 +215,7 @@
 }
 
 - (NSString *)_weekdayOfDateInMilliseconds:(NSNumber *)milliseconds {
-    NSString *format = [NSDateFormatter dateFormatFromTemplate:@"EEEE" options:0 locale:[NSLocale currentLocale]];
+    NSString *format = [NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:[NSLocale currentLocale]];
     [dateFormatter setDateFormat:format];
     return [dateFormatter stringFromDate:[NSDate dateWithMillisecondsIntervalSince1970:[milliseconds integerValue]]];
 }
