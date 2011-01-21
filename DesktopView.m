@@ -23,6 +23,8 @@
 
 - (NSString *)_weekdayOfDateInMilliseconds:(NSNumber *)milliseconds;
 
+- (void)_doOutputToLog:(NSString*)theMessage;
+
 @end
 
 
@@ -75,15 +77,6 @@
     return self;
 }
 
-- (void)webView:(WebView *)aWebView didFinishLoadForFrame:(WebFrame *)aFrame
-{
-    if (!initialHtmlLoaded)
-    {
-        initialHtmlLoaded = YES;
-        [self refresh];
-    }
-}
-
 - (NSDictionary *)calendarInput
 {
     NSDictionary *currentCalendar = [[CalendarAdapter sharedCalendarAdapter] currentCalendar];
@@ -133,12 +126,6 @@
     return json;
 }
 
-- (void)webView:(WebView *)sender didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
-{
-    [windowObject setValue:self forKey:@"console"];
-    [windowObject setValue:self forKey:@"date_formatter"];
-}
-
 - (void)refresh
 {
     NSString *json = [self calendarJson];
@@ -176,6 +163,30 @@
 }
 
 
+#pragma mark WebFrameLoadDelegate
+
+- (void)webView:(WebView *)sender didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
+{
+    [windowObject setValue:self forKey:@"console"];
+    [windowObject setValue:self forKey:@"date_formatter"];
+}
+
+- (void)webView:(WebView *)aWebView didFinishLoadForFrame:(WebFrame *)aFrame
+{
+    if (!initialHtmlLoaded)
+    {
+        initialHtmlLoaded = YES;
+        [self refresh];
+    }
+
+    // Localize strings
+    [[aFrame windowObject] evaluateWebScript:[NSString stringWithFormat:@"$(\"#to-do-box .to-do-string\").text(\"%@\");",
+                                              NSLocalizedStringFromTable(@"To Do", @"Calendar", @"To Do Items")]];
+    [[aFrame windowObject] evaluateWebScript:[NSString stringWithFormat:@"$(\"#next-up-box .right-now-string\").text(\"%@\");",
+                                              NSLocalizedStringFromTable(@"Right Now", @"Calendar", @"Next tasks")]];
+}
+
+
 #pragma mark WebScriptObject
 /* From http://developer.apple.com/library/mac/#samplecode/CallJS/Listings/SampleController_m.html */
 
@@ -186,14 +197,14 @@
 
 + (BOOL)isSelectorExcludedFromWebScript:(SEL)selector 
 {
-    return selector != @selector(doOutputToLog:) &&
+    return selector != @selector(_doOutputToLog:) &&
            selector != @selector(_monthAndYearOfDateInMilliseconds:) &&
            selector != @selector(_weekdayOfDateInMilliseconds:);
 }
 
 + (NSString *)webScriptNameForSelector:(SEL)sel
 {
-    if (sel == @selector(doOutputToLog:))
+    if (sel == @selector(_doOutputToLog:))
         return @"log";
     else if (sel == @selector(_monthAndYearOfDateInMilliseconds:))
         return @"MonthAndYear";
@@ -203,18 +214,20 @@
         return nil;
 }
 
-- (void)doOutputToLog:(NSString*)theMessage
+- (void)_doOutputToLog:(NSString*)theMessage
 {
     NSLog(@"Renderer: %@", theMessage);
 }
 
-- (NSString *)_monthAndYearOfDateInMilliseconds:(NSNumber *)milliseconds {
+- (NSString *)_monthAndYearOfDateInMilliseconds:(NSNumber *)milliseconds
+{
     NSString *format = [NSDateFormatter dateFormatFromTemplate:@"MMMMy" options:0 locale:[NSLocale currentLocale]];
     [dateFormatter setDateFormat:format];
     return [dateFormatter stringFromDate:[NSDate dateWithMillisecondsIntervalSince1970:[milliseconds integerValue]]];
 }
 
-- (NSString *)_weekdayOfDateInMilliseconds:(NSNumber *)milliseconds {
+- (NSString *)_weekdayOfDateInMilliseconds:(NSNumber *)milliseconds
+{
     NSString *format = [NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:[NSLocale currentLocale]];
     [dateFormatter setDateFormat:format];
     return [dateFormatter stringFromDate:[NSDate dateWithMillisecondsIntervalSince1970:[milliseconds integerValue]]];
