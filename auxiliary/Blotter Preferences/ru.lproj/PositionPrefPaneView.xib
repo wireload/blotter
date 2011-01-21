@@ -12,7 +12,6 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -39,14 +38,14 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="453662770">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="NSTextField" id="551017980">
 						<reference key="NSNextResponder" ref="453662770"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{17, 318}, {127, 17}}</string>
+						<string key="NSFrame">{{17, 317}, {94, 17}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="202913726">
@@ -82,7 +81,7 @@
 					<object class="NSPopUpButton" id="138711095">
 						<reference key="NSNextResponder" ref="453662770"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{146, 312}, {141, 26}}</string>
+						<string key="NSFrame">{{113, 311}, {141, 26}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="608658124">
@@ -154,7 +153,7 @@
 					<object class="NSTextField" id="437884597">
 						<reference key="NSNextResponder" ref="453662770"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{17, 279}, {466, 17}}</string>
+						<string key="NSFrame">{{17, 278}, {359, 17}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="262417130">
@@ -170,13 +169,12 @@
 					<object class="NSCustomView" id="827254361">
 						<reference key="NSNextResponder" ref="453662770"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrame">{{20, 20}, {460, 251}}</string>
+						<string key="NSFrame">{{20, 20}, {400, 250}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
 						<string key="NSClassName">BLPositionerControl</string>
 					</object>
 				</object>
-				<string key="NSFrameSize">{500, 357}</string>
-				<reference key="NSSuperview"/>
+				<string key="NSFrameSize">{440, 356}</string>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSUserDefaultsController" id="670922412">
@@ -389,7 +387,7 @@
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>{{1682, 349}, {500, 357}}</string>
+					<string>{{1972, 489}, {440, 356}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -953,7 +951,7 @@
 			<integer value="3000" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
-		<string key="IBDocument.LastKnownRelativeProjectPath">../Blotter Preferences.xcodeproj</string>
+		<string key="IBDocument.LastKnownRelativeProjectPath">Blotter Preferences.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<bool key="EncodedWithXMLCoder">YES</bool>

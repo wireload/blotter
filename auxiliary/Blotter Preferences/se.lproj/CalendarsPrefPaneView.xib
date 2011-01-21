@@ -55,7 +55,7 @@
 							<object class="NSButtonCell" id="717580258">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">0</int>
-								<string key="NSContents">All Calendars</string>
+								<string key="NSContents">Alla Kalendrar</string>
 								<object class="NSFont" key="NSSupport" id="223543474">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -65,7 +65,7 @@
 								<int key="NSTag">1</int>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">0</int>
-								<object class="NSCustomResource" key="NSNormalImage" id="111253729">
+								<object class="NSCustomResource" key="NSNormalImage" id="840923812">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">NSRadioButton</string>
 								</object>
@@ -80,12 +80,12 @@
 							<object class="NSButtonCell" id="448796142">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">0</int>
-								<string key="NSContents">Selected Calendars:</string>
+								<string key="NSContents">Valda Kalendrar:</string>
 								<reference key="NSSupport" ref="223543474"/>
 								<reference key="NSControlView" ref="804758204"/>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">0</int>
-								<reference key="NSNormalImage" ref="111253729"/>
+								<reference key="NSNormalImage" ref="840923812"/>
 								<reference key="NSAlternateImage" ref="781256633"/>
 								<string key="NSAlternateContents"/>
 								<int key="NSPeriodicDelay">400</int>
@@ -103,7 +103,7 @@
 							<reference key="NSSupport" ref="223543474"/>
 							<int key="NSButtonFlags">1211912703</int>
 							<int key="NSButtonFlags2">0</int>
-							<reference key="NSNormalImage" ref="111253729"/>
+							<reference key="NSNormalImage" ref="840923812"/>
 							<reference key="NSAlternateImage" ref="781256633"/>
 							<string key="NSAlternateContents"/>
 							<int key="NSPeriodicDelay">400</int>

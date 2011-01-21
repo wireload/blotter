@@ -51,7 +51,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="202913726">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">71304192</int>
-							<string key="NSContents">Calendar Size:</string>
+							<string key="NSContents">Kalender Storlek:</string>
 							<object class="NSFont" key="NSSupport" id="943739518">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">13</double>
@@ -97,7 +97,7 @@
 							<int key="NSPeriodicInterval">75</int>
 							<object class="NSMenuItem" key="NSMenuItem" id="474883905">
 								<reference key="NSMenu" ref="514710584"/>
-								<string key="NSTitle">Size</string>
+								<string key="NSTitle">Storlek</string>
 								<string key="NSKeyEquiv"/>
 								<int key="NSKeyEquivModMask">1048576</int>
 								<int key="NSMnemonicLoc">2147483647</int>
@@ -159,7 +159,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="262417130">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272630784</int>
-							<string key="NSContents">To position the calendar, drag it to the desired position.</string>
+							<string key="NSContents">För att placera kalender, drag och släpa den nedan.</string>
 							<reference key="NSSupport" ref="943739518"/>
 							<reference key="NSControlView" ref="437884597"/>
 							<reference key="NSBackgroundColor" ref="48242679"/>

@@ -51,6 +51,7 @@
 		256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeskboardAppDelegate.m; sourceTree = "<group>"; };
 		256AC3F00F4B6AF500CF3369 /* Deskboard_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deskboard_Prefix.pch; sourceTree = "<group>"; };
 		28153EDE12D78EBE00A239C4 /* Blotter-B8.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "Blotter-B8.icns"; path = "../blotter/Resources/Blotter-B8.icns"; sourceTree = SOURCE_ROOT; };
+		2818D6D112EA10910073CF3A /* se */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = se; path = Resources/se.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		281BA565129EF84D00114D3C /* Blotter Preferences.preferencePane */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Blotter Preferences.preferencePane"; path = "auxiliary/Blotter Preferences/build/Release/Blotter Preferences.preferencePane"; sourceTree = "<group>"; };
 		284061CE127E6C4F000816FF /* DesktopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DesktopView.h; sourceTree = "<group>"; };
 		284061CF127E6C4F000816FF /* DesktopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DesktopView.m; sourceTree = "<group>"; };
@@ -319,6 +320,7 @@
 			children = (
 				1DDD58150DA1D0A300B32029 /* English */,
 				E29DDC8812E9C7C900751CFA /* ru */,
+				2818D6D112EA10910073CF3A /* se */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
