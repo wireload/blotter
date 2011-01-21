@@ -8,17 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		2844DB26129DA197006C5545 /* BLCalendarFramer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2844DB25129DA197006C5545 /* BLCalendarFramer.m */; };
-		28B54D56128398530037BF53 /* GeneralPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28B54D55128398530037BF53 /* GeneralPrefPaneView.xib */; };
 		28B54D5E12839B8D0037BF53 /* GeneralPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54D5D12839B8D0037BF53 /* GeneralPrefController.m */; };
 		28B54D7A1283AEEE0037BF53 /* PositionPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54D791283AEEE0037BF53 /* PositionPrefController.m */; };
-		28B54D811283B57E0037BF53 /* PositionPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28B54D801283B57E0037BF53 /* PositionPrefPaneView.xib */; };
 		28F6993D129B723900D4BB97 /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */; };
 		28F69A29129C587F00D4BB97 /* BLPositionerControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69A28129C587F00D4BB97 /* BLPositionerControl.m */; };
 		28F69A55129C5EA100D4BB97 /* Recreated-Aqua.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 28F69A54129C5EA100D4BB97 /* Recreated-Aqua.jpg */; };
 		28F69B53129C82E800D4BB97 /* BLPositionerControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69B52129C82E800D4BB97 /* BLPositionerControlCell.m */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		E29DDD0412E9DCED00751CFA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E29DDD0312E9DCED00751CFA /* Localizable.strings */; };
+		E29DDD0C12E9DD1000751CFA /* GeneralPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29DDD0B12E9DD1000751CFA /* GeneralPrefPaneView.xib */; };
+		E29DDD0E12E9DD1000751CFA /* PositionPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29DDD0D12E9DD1000751CFA /* PositionPrefPaneView.xib */; };
+		E29DDD1012E9DD1000751CFA /* CalendarsPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29DDD0F12E9DD1000751CFA /* CalendarsPrefPaneView.xib */; };
 		E2FE5ED112D74F5E00003E48 /* CalendarsPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FE5ED012D74F5E00003E48 /* CalendarsPrefController.m */; };
-		E2FE5EDE12D7505800003E48 /* CalendarsPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2FE5EDD12D7505800003E48 /* CalendarsPrefPaneView.xib */; };
 		E2FE5EF712D75C7700003E48 /* ColorCheckboxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FE5EF612D75C7700003E48 /* ColorCheckboxCell.m */; };
 		E2FE5F0D12D760BA00003E48 /* chkbxBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = E2FE5F0112D760BA00003E48 /* chkbxBackground.png */; };
 		E2FE5F1312D760BA00003E48 /* chkbxCheck.png in Resources */ = {isa = PBXBuildFile; fileRef = E2FE5F0712D760BA00003E48 /* chkbxCheck.png */; };
@@ -32,12 +33,12 @@
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		2844DB25129DA197006C5545 /* BLCalendarFramer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLCalendarFramer.m; path = ../../BLCalendarFramer.m; sourceTree = SOURCE_ROOT; };
 		28B54D52128398250037BF53 /* SS_PreferencePaneProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SS_PreferencePaneProtocol.h; sourceTree = "<group>"; };
-		28B54D55128398530037BF53 /* GeneralPrefPaneView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeneralPrefPaneView.xib; sourceTree = "<group>"; };
+		28B54D55128398530037BF53 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
 		28B54D5C12839B8D0037BF53 /* GeneralPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralPrefController.h; sourceTree = "<group>"; };
 		28B54D5D12839B8D0037BF53 /* GeneralPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralPrefController.m; sourceTree = "<group>"; wrapsLines = 1; };
 		28B54D781283AEEE0037BF53 /* PositionPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PositionPrefController.h; sourceTree = "<group>"; };
 		28B54D791283AEEE0037BF53 /* PositionPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PositionPrefController.m; sourceTree = "<group>"; };
-		28B54D801283B57E0037BF53 /* PositionPrefPaneView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PositionPrefPaneView.xib; sourceTree = "<group>"; };
+		28B54D801283B57E0037BF53 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/PositionPrefPaneView.xib; sourceTree = "<group>"; };
 		28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAtLoginController.m; sourceTree = "<group>"; };
 		28F6993C129B723900D4BB97 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
 		28F69A27129C587F00D4BB97 /* BLPositionerControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLPositionerControl.h; sourceTree = "<group>"; };
@@ -50,9 +51,37 @@
 		8D5B49B6048680CD000E48DA /* Blotter Preferences.preferencePane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Blotter Preferences.preferencePane"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		E29DDD0112E9DCE800751CFA /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E29DDD0512E9DCF100751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E29DDD0612E9DCF500751CFA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E29DDD0712E9DCF700751CFA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E29DDD0812E9DCF900751CFA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E29DDD0912E9DCFA00751CFA /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = se.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E29DDD0A12E9DD0300751CFA /* kr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kr; path = kr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E29DDD1712E9DD1900751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
+		E29DDD1D12E9DD2900751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/PositionPrefPaneView.xib; sourceTree = "<group>"; };
+		E29DDD2312E9DD3800751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
+		E29DDD4B12E9DE6C00751CFA /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/CalendarsPrefPaneView.strings; sourceTree = "<group>"; };
+		E29DDD4D12E9DE6C00751CFA /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/GeneralPrefPaneView.strings; sourceTree = "<group>"; };
+		E29DDD4F12E9DE6C00751CFA /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/PositionPrefPaneView.strings; sourceTree = "<group>"; };
+		E29DDD5312E9DE7700751CFA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/CalendarsPrefPaneView.strings; sourceTree = "<group>"; };
+		E29DDD5412E9DE7700751CFA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/GeneralPrefPaneView.strings; sourceTree = "<group>"; };
+		E29DDD5512E9DE7700751CFA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/PositionPrefPaneView.strings; sourceTree = "<group>"; };
+		E29DDD5612E9DE8400751CFA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/CalendarsPrefPaneView.strings; sourceTree = "<group>"; };
+		E29DDD5712E9DE8400751CFA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/GeneralPrefPaneView.strings; sourceTree = "<group>"; };
+		E29DDD5812E9DE8400751CFA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/PositionPrefPaneView.strings; sourceTree = "<group>"; };
+		E29DDD5912E9DE9400751CFA /* kr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kr; path = kr.lproj/CalendarsPrefPaneView.strings; sourceTree = "<group>"; };
+		E29DDD5A12E9DE9400751CFA /* kr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kr; path = kr.lproj/GeneralPrefPaneView.strings; sourceTree = "<group>"; };
+		E29DDD5B12E9DE9400751CFA /* kr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kr; path = kr.lproj/PositionPrefPaneView.strings; sourceTree = "<group>"; };
+		E29DDD5C12E9DE9F00751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/CalendarsPrefPaneView.strings; sourceTree = "<group>"; };
+		E29DDD5D12E9DE9F00751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/GeneralPrefPaneView.strings; sourceTree = "<group>"; };
+		E29DDD5E12E9DE9F00751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/PositionPrefPaneView.strings; sourceTree = "<group>"; };
+		E29DDD5F12E9DEA900751CFA /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = se.lproj/CalendarsPrefPaneView.strings; sourceTree = "<group>"; };
+		E29DDD6012E9DEA900751CFA /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = se.lproj/GeneralPrefPaneView.strings; sourceTree = "<group>"; };
+		E29DDD6112E9DEA900751CFA /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = se.lproj/PositionPrefPaneView.strings; sourceTree = "<group>"; };
 		E2FE5ECF12D74F5E00003E48 /* CalendarsPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarsPrefController.h; sourceTree = "<group>"; };
 		E2FE5ED012D74F5E00003E48 /* CalendarsPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarsPrefController.m; sourceTree = "<group>"; };
-		E2FE5EDD12D7505800003E48 /* CalendarsPrefPaneView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
+		E2FE5EDD12D7505800003E48 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
 		E2FE5EF512D75C7700003E48 /* ColorCheckboxCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorCheckboxCell.h; sourceTree = "<group>"; };
 		E2FE5EF612D75C7700003E48 /* ColorCheckboxCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorCheckboxCell.m; sourceTree = "<group>"; };
 		E2FE5F0112D760BA00003E48 /* chkbxBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chkbxBackground.png; sourceTree = "<group>"; };
@@ -83,9 +112,9 @@
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
-				28B54D55128398530037BF53 /* GeneralPrefPaneView.xib */,
-				28B54D801283B57E0037BF53 /* PositionPrefPaneView.xib */,
-				E2FE5EDD12D7505800003E48 /* CalendarsPrefPaneView.xib */,
+				E29DDD0B12E9DD1000751CFA /* GeneralPrefPaneView.xib */,
+				E29DDD0D12E9DD1000751CFA /* PositionPrefPaneView.xib */,
+				E29DDD0F12E9DD1000751CFA /* CalendarsPrefPaneView.xib */,
 			);
 			name = "General Preferences";
 			sourceTree = "<group>";
@@ -102,6 +131,10 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E29DDD4A12E9DE6C00751CFA /* CalendarsPrefPaneView.strings */,
+				E29DDD4C12E9DE6C00751CFA /* GeneralPrefPaneView.strings */,
+				E29DDD4E12E9DE6C00751CFA /* PositionPrefPaneView.strings */,
+				E29DDD0312E9DCED00751CFA /* Localizable.strings */,
 				28F69A54129C5EA100D4BB97 /* Recreated-Aqua.jpg */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 			);
@@ -212,6 +245,12 @@
 				Japanese,
 				French,
 				German,
+				ru,
+				fr,
+				de,
+				es,
+				se,
+				kr,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* General Preferences */;
 			projectDirPath = "";
@@ -227,13 +266,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28B54D56128398530037BF53 /* GeneralPrefPaneView.xib in Resources */,
-				28B54D811283B57E0037BF53 /* PositionPrefPaneView.xib in Resources */,
+				E29DDD0C12E9DD1000751CFA /* GeneralPrefPaneView.xib in Resources */,
+				E29DDD0E12E9DD1000751CFA /* PositionPrefPaneView.xib in Resources */,
 				28F69A55129C5EA100D4BB97 /* Recreated-Aqua.jpg in Resources */,
-				E2FE5EDE12D7505800003E48 /* CalendarsPrefPaneView.xib in Resources */,
+				E29DDD1012E9DD1000751CFA /* CalendarsPrefPaneView.xib in Resources */,
 				E2FE5F0D12D760BA00003E48 /* chkbxBackground.png in Resources */,
 				E2FE5F1312D760BA00003E48 /* chkbxCheck.png in Resources */,
 				E2FE5F6112D7734000003E48 /* chkbxColormask.png in Resources */,
+				E29DDD0412E9DCED00751CFA /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,6 +296,89 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E29DDD0312E9DCED00751CFA /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E29DDD0112E9DCE800751CFA /* English */,
+				E29DDD0512E9DCF100751CFA /* ru */,
+				E29DDD0612E9DCF500751CFA /* fr */,
+				E29DDD0712E9DCF700751CFA /* de */,
+				E29DDD0812E9DCF900751CFA /* es */,
+				E29DDD0912E9DCFA00751CFA /* se */,
+				E29DDD0A12E9DD0300751CFA /* kr */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		E29DDD0B12E9DD1000751CFA /* GeneralPrefPaneView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				28B54D55128398530037BF53 /* English */,
+				E29DDD1712E9DD1900751CFA /* ru */,
+			);
+			name = GeneralPrefPaneView.xib;
+			sourceTree = "<group>";
+		};
+		E29DDD0D12E9DD1000751CFA /* PositionPrefPaneView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				28B54D801283B57E0037BF53 /* English */,
+				E29DDD1D12E9DD2900751CFA /* ru */,
+			);
+			name = PositionPrefPaneView.xib;
+			sourceTree = "<group>";
+		};
+		E29DDD0F12E9DD1000751CFA /* CalendarsPrefPaneView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E2FE5EDD12D7505800003E48 /* English */,
+				E29DDD2312E9DD3800751CFA /* ru */,
+			);
+			name = CalendarsPrefPaneView.xib;
+			sourceTree = "<group>";
+		};
+		E29DDD4A12E9DE6C00751CFA /* CalendarsPrefPaneView.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E29DDD4B12E9DE6C00751CFA /* de */,
+				E29DDD5312E9DE7700751CFA /* es */,
+				E29DDD5612E9DE8400751CFA /* fr */,
+				E29DDD5912E9DE9400751CFA /* kr */,
+				E29DDD5C12E9DE9F00751CFA /* ru */,
+				E29DDD5F12E9DEA900751CFA /* se */,
+			);
+			name = CalendarsPrefPaneView.strings;
+			sourceTree = "<group>";
+		};
+		E29DDD4C12E9DE6C00751CFA /* GeneralPrefPaneView.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E29DDD4D12E9DE6C00751CFA /* de */,
+				E29DDD5412E9DE7700751CFA /* es */,
+				E29DDD5712E9DE8400751CFA /* fr */,
+				E29DDD5A12E9DE9400751CFA /* kr */,
+				E29DDD5D12E9DE9F00751CFA /* ru */,
+				E29DDD6012E9DEA900751CFA /* se */,
+			);
+			name = GeneralPrefPaneView.strings;
+			sourceTree = "<group>";
+		};
+		E29DDD4E12E9DE6C00751CFA /* PositionPrefPaneView.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E29DDD4F12E9DE6C00751CFA /* de */,
+				E29DDD5512E9DE7700751CFA /* es */,
+				E29DDD5812E9DE8400751CFA /* fr */,
+				E29DDD5B12E9DE9400751CFA /* kr */,
+				E29DDD5E12E9DE9F00751CFA /* ru */,
+				E29DDD6112E9DEA900751CFA /* se */,
+			);
+			name = PositionPrefPaneView.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		1DEB913B08733D840010E9CD /* Debug */ = {

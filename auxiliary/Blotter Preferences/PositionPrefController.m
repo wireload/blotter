@@ -41,7 +41,7 @@
 
 - (NSString *)paneName
 {
-    return @"Positioning";
+    return NSLocalizedStringFromTableInBundle(@"Positioning", nil, [NSBundle bundleForClass:[self class]], @"Positioing pref pane title");
 }
 
 - (NSImage *)paneIcon
@@ -52,7 +52,7 @@
 
 - (NSString *)paneToolTip
 {
-    return @"Position and Size Preferences";
+    return NSLocalizedStringFromTableInBundle(@"Position and Size Preferences", nil, [NSBundle bundleForClass:[self class]], @"Positioning pref pane tooltip");
 }
 
 

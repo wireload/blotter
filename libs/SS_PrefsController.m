@@ -125,6 +125,9 @@
     if (searchPath) {
         [searchPath release];
     }
+    if (bundle) {
+        [bundle release];
+    }
     [super dealloc];
 }
 
@@ -232,6 +235,7 @@
 - (void)activatePane:(NSString*)path {
     NSBundle* paneBundle = [NSBundle bundleWithPath:path];
     if (paneBundle) {
+        bundle = [paneBundle retain];
         NSDictionary* paneDict = [paneBundle infoDictionary];
         NSString* paneName = [paneDict objectForKey:@"NSPrincipalClass"];
         if (paneName) {
@@ -516,6 +520,12 @@ float ToolbarHeightForWindow(NSWindow *window)
 - (NSArray *)panesOrder
 {
     return panesOrder;
+}
+
+
+- (NSBundle *)bundle
+{
+    return bundle;
 }
 
 

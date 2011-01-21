@@ -78,7 +78,9 @@
         [prefs setDebug:YES];
 
         // Set which panes are included, and their order.
-        [prefs setPanesOrder:[NSArray arrayWithObjects:@"General", @"Positioning", @"Calendars", nil]];
+        [prefs setPanesOrder:[NSArray arrayWithObjects:NSLocalizedStringFromTableInBundle(@"General", nil, [prefs bundle], nil),
+                              NSLocalizedStringFromTableInBundle(@"Positioning", nil, [prefs bundle], nil),
+                              NSLocalizedStringFromTableInBundle(@"Calendars", nil, [prefs bundle], nil), nil]];
     }
 
     // Show the preferences window.

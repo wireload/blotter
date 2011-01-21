@@ -32,7 +32,7 @@
 
 - (NSString *)paneName
 {
-    return @"General";
+    return NSLocalizedStringFromTableInBundle(@"General", nil, [NSBundle bundleForClass:[self class]], @"General pref pane title");
 }
 
 - (NSImage *)paneIcon
@@ -43,7 +43,7 @@
 
 - (NSString *)paneToolTip
 {
-    return @"General Preferences";
+    return NSLocalizedStringFromTableInBundle(@"General Preferences", nil, [NSBundle bundleForClass:[self class]], @"General pref pane tooltip");
 }
 
 

@@ -18,6 +18,8 @@
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_2
     NSToolbarSizeMode toolbarSizeMode;
 #endif
+    NSBundle *bundle;
+    
     BOOL usesTexturedWindow;
     BOOL alwaysShowsToolbar;
     BOOL alwaysOpensCentered;
@@ -54,6 +56,7 @@ float ToolbarHeightForWindow(NSWindow *window);
 - (NSWindow *)preferencesWindow;
 - (NSString *)bundleExtension;
 - (NSString *)searchPath;
+- (NSBundle *)bundle;
 
 - (NSArray *)loadedPanes;
 - (NSArray *)panesOrder;

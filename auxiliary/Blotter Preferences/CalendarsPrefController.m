@@ -102,7 +102,7 @@
 
 - (NSString *)paneName
 {
-    return @"Calendars";
+    return NSLocalizedStringFromTableInBundle(@"Calendars", nil, [NSBundle bundleForClass:[self class]], @"Calendars pref pane title");
 }
 
 - (NSImage *)paneIcon
@@ -113,7 +113,7 @@
 
 - (NSString *)paneToolTip
 {
-    return @"Calendars to display";
+    return NSLocalizedStringFromTableInBundle(@"Calendars to display", nil, [NSBundle bundleForClass:[self class]], @"Calendars pref pane tooltip");
 }
 
 
