@@ -23,8 +23,6 @@
 
 - (NSString *)_weekdayOfDateInMilliseconds:(NSNumber *)milliseconds;
 
-- (void)_doOutputToLog:(NSString*)theMessage;
-
 @end
 
 
@@ -135,9 +133,9 @@
 
     // Localize strings
     [scriptObject evaluateWebScript:[NSString stringWithFormat:@"$(\"#to-do-box .to-do-string\").text(\"%@\");",
-                                              NSLocalizedStringFromTable(@"To Do", @"Calendar", @"To Do Items")]];
+                                              NSLocalizedString(@"To Do", @"Header of To Do items list")]];
     [scriptObject evaluateWebScript:[NSString stringWithFormat:@"$(\"#next-up-box .right-now-string\").text(\"%@\");",
-                                              NSLocalizedStringFromTable(@"Right Now", @"Calendar", @"Next tasks")]];
+                                              NSLocalizedString(@"Right Now", @"Header of Right Now items list")]];
 }
 
 - (NSString *)calendarHtml
@@ -197,14 +195,14 @@
 
 + (BOOL)isSelectorExcludedFromWebScript:(SEL)selector 
 {
-    return selector != @selector(_doOutputToLog:) &&
+    return selector != @selector(doOutputToLog:) &&
            selector != @selector(_monthAndYearOfDateInMilliseconds:) &&
            selector != @selector(_weekdayOfDateInMilliseconds:);
 }
 
 + (NSString *)webScriptNameForSelector:(SEL)sel
 {
-    if (sel == @selector(_doOutputToLog:))
+    if (sel == @selector(doOutputToLog:))
         return @"log";
     else if (sel == @selector(_monthAndYearOfDateInMilliseconds:))
         return @"MonthAndYear";
@@ -214,20 +212,18 @@
         return nil;
 }
 
-- (void)_doOutputToLog:(NSString*)theMessage
+- (void)doOutputToLog:(NSString*)theMessage
 {
     NSLog(@"Renderer: %@", theMessage);
 }
 
-- (NSString *)_monthAndYearOfDateInMilliseconds:(NSNumber *)milliseconds
-{
+- (NSString *)_monthAndYearOfDateInMilliseconds:(NSNumber *)milliseconds {
     NSString *format = [NSDateFormatter dateFormatFromTemplate:@"MMMMy" options:0 locale:[NSLocale currentLocale]];
     [dateFormatter setDateFormat:format];
     return [dateFormatter stringFromDate:[NSDate dateWithMillisecondsIntervalSince1970:[milliseconds integerValue]]];
 }
 
-- (NSString *)_weekdayOfDateInMilliseconds:(NSNumber *)milliseconds
-{
+- (NSString *)_weekdayOfDateInMilliseconds:(NSNumber *)milliseconds {
     NSString *format = [NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:[NSLocale currentLocale]];
     [dateFormatter setDateFormat:format];
     return [dateFormatter stringFromDate:[NSDate dateWithMillisecondsIntervalSince1970:[milliseconds integerValue]]];
