@@ -231,8 +231,8 @@ var MINIMUM_EVENT_HEIGHT = 30,
 function updateDateElement(dateElement, todayDate)
 {
     dateElement.find(".date-date").text(todayDate.getDate());
-    dateElement.find(".date-month-year").text(date_formatter.DateTimeFormat(todayDate.getTime(), "MMMM, y"));
-    dateElement.find(".date-day").text(date_formatter.DateTimeFormat(todayDate.getTime(), "EEEE"));
+    dateElement.find(".date-month-year").text(date_formatter.MonthAndYear(todayDate.getTime()));
+    dateElement.find(".date-day").text(date_formatter.Weekday(todayDate.getTime()));
 }
 
 function updateTasksElement(tasksElement, json)

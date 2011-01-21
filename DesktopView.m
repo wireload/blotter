@@ -19,7 +19,9 @@
 
 @interface DesktopView (/* Private */)
 
-- (NSString *)_stringFromDateInMilliseconds:(NSNumber *)milliseconds withFormat:(NSString *)aFormat;
+- (NSString *)_monthAndYearOfDateInMilliseconds:(NSNumber *)milliseconds;
+
+- (NSString *)_weekdayOfDateInMilliseconds:(NSNumber *)milliseconds;
 
 @end
 
@@ -59,6 +61,11 @@
                                                  selector:@selector(refresh)
                                                      name:@"CalendarAdapterChangedNotification"
                                                    object:[CalendarAdapter sharedCalendarAdapter]];
+
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(refresh)
+                                                     name:NSCurrentLocaleDidChangeNotification
+                                                   object:nil];
 
         fadeController = [[BLFadeController alloc] initWithView:self];
         [fadeController retain];
@@ -179,15 +186,19 @@
 
 + (BOOL)isSelectorExcludedFromWebScript:(SEL)selector 
 {
-    return selector != @selector(doOutputToLog:) && selector != @selector(_stringFromDateInMilliseconds:withFormat:);
+    return selector != @selector(doOutputToLog:) &&
+           selector != @selector(_monthAndYearOfDateInMilliseconds:) &&
+           selector != @selector(_weekdayOfDateInMilliseconds:);
 }
 
 + (NSString *)webScriptNameForSelector:(SEL)sel
 {
     if (sel == @selector(doOutputToLog:))
         return @"log";
-    else if (sel == @selector(_stringFromDateInMilliseconds:withFormat:))
-        return @"DateTimeFormat";
+    else if (sel == @selector(_monthAndYearOfDateInMilliseconds:))
+        return @"MonthAndYear";
+    else if (sel == @selector(_weekdayOfDateInMilliseconds:))
+        return @"Weekday";
     else
         return nil;
 }
@@ -197,10 +208,16 @@
     NSLog(@"Renderer: %@", theMessage);
 }
 
-- (NSString *)_stringFromDateInMilliseconds:(NSNumber *)milliseconds withFormat:(NSString *)aFormat
-{
-    [dateFormatter setDateFormat:aFormat];
-    return [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:[milliseconds integerValue]/1000]];
+- (NSString *)_monthAndYearOfDateInMilliseconds:(NSNumber *)milliseconds {
+    NSString *format = [NSDateFormatter dateFormatFromTemplate:@"MMMMy" options:0 locale:[NSLocale currentLocale]];
+    [dateFormatter setDateFormat:format];
+    return [dateFormatter stringFromDate:[NSDate dateWithMillisecondsIntervalSince1970:[milliseconds integerValue]]];
+}
+
+- (NSString *)_weekdayOfDateInMilliseconds:(NSNumber *)milliseconds {
+    NSString *format = [NSDateFormatter dateFormatFromTemplate:@"EEEE" options:0 locale:[NSLocale currentLocale]];
+    [dateFormatter setDateFormat:format];
+    return [dateFormatter stringFromDate:[NSDate dateWithMillisecondsIntervalSince1970:[milliseconds integerValue]]];
 }
 
 @end

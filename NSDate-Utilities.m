@@ -15,6 +15,11 @@
     return [self description];
 }
 
++ (id)dateWithMillisecondsIntervalSince1970:(NSTimeInterval)milliseconds
+{
+    return [self dateWithTimeIntervalSince1970:milliseconds/1000];
+}
+
 + (NSDate *)midnight
 {
     // From http://stackoverflow.com/questions/181459/is-there-a-better-way-to-find-midnight-tomorrow

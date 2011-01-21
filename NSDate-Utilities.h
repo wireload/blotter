@@ -11,6 +11,8 @@
 
 @interface NSDate (Utilities)
 
++ (id)dateWithMillisecondsIntervalSince1970:(NSTimeInterval)milliseconds;
+
 + (NSDate *)midnight;
 
 - (NSDate *)firstMoment;
