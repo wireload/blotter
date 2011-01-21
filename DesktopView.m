@@ -132,6 +132,12 @@
 
     WebScriptObject *scriptObject = [webContentView windowScriptObject];
     [scriptObject callWebScriptMethod:@"updateWhenReady" withArguments:[NSArray arrayWithObject:json]];
+
+    // Localize strings
+    [scriptObject evaluateWebScript:[NSString stringWithFormat:@"$(\"#to-do-box .to-do-string\").text(\"%@\");",
+                                              NSLocalizedStringFromTable(@"To Do", @"Calendar", @"To Do Items")]];
+    [scriptObject evaluateWebScript:[NSString stringWithFormat:@"$(\"#next-up-box .right-now-string\").text(\"%@\");",
+                                              NSLocalizedStringFromTable(@"Right Now", @"Calendar", @"Next tasks")]];
 }
 
 - (NSString *)calendarHtml
@@ -178,12 +184,6 @@
         initialHtmlLoaded = YES;
         [self refresh];
     }
-
-    // Localize strings
-    [[aFrame windowObject] evaluateWebScript:[NSString stringWithFormat:@"$(\"#to-do-box .to-do-string\").text(\"%@\");",
-                                              NSLocalizedStringFromTable(@"To Do", @"Calendar", @"To Do Items")]];
-    [[aFrame windowObject] evaluateWebScript:[NSString stringWithFormat:@"$(\"#next-up-box .right-now-string\").text(\"%@\");",
-                                              NSLocalizedStringFromTable(@"Right Now", @"Calendar", @"Next tasks")]];
 }
 
 
