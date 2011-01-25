@@ -7,6 +7,7 @@ from subprocess import check_call
 from shutil import copy, rmtree
 from re import findall
 import sys
+import argparse
 from codecs import open
 
 BLOTTER_DIR = join(dirname(abspath(__file__)), pardir)
@@ -179,16 +180,24 @@ def GenerateSourcesStrings(sources_paths, output_path, langs):
     rmtree(t_dir_path)
 
 if __name__ == '__main__':
-    if '--localize-xibs' in sys.argv:
+    parser = argparse.ArgumentParser(description='Create localized nibs, or create .strings for sources.')
+
+    parser.add_argument('mode', nargs=1, choices=('xibs', 'strings'), help="Type of localization file to generate.")
+    parser.add_argument('--sources', action='store_true', help="When in strings mode, generate strings for sources. If neither --sources nor --xibs is specified, both are generated.")
+    parser.add_argument('--xibs', action='store_true', help="When in strings mode, generate strings for xibs. If neither --sources nor --xibs is specified, both are generated.")
+
+    args  = parser.parse_args()
+
+    if 'xibs' in args.mode:
         for xib in Xibs():
             LocalizeXib(xib['file'], xib['old'], xib['output'], Langs())
             print ""
-    elif '--generate-strings' in sys.argv:
-        if '--sources' in sys.argv:
+    elif 'strings' in args.mode:
+        if args.sources or not args.xibs:
             for sources in Sources():
                 GenerateSourcesStrings(sources['files'], sources['output'], Langs())
                 print ""
-        if '--xibs' in sys.argv:
+        if args.xibs or not args.sources:
             for xib in Xibs():
                 GenerateXibStrings(xib['file'], xib['output'], Langs())
                 print ""
