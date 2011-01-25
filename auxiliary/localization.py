@@ -180,7 +180,7 @@ def GenerateSourcesStrings(sources_paths, output_path, langs):
     rmtree(t_dir_path)
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Create localized nibs, or create .strings for sources.')
+    parser = argparse.ArgumentParser(description='Create localized xibs, or create .strings for sources.')
 
     parser.add_argument('mode', nargs=1, choices=('xibs', 'strings'), help="Type of localization file to generate.")
     parser.add_argument('--sources', action='store_true', help="When in strings mode, generate strings for sources. If neither --sources nor --xibs is specified, both are generated.")
