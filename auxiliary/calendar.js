@@ -25,12 +25,14 @@ function bottomOfElement(element)
 
 /*
     Make children of element into one-liners with ellipsis, or entirely hide
-    children until the given element fits within its parent.
-*/
-function fitWholeChildrenOnly(element)
-{
-    var availableHeight = element.parent().height();
+    children until no children extends beyond bottomLine.
 
+    @param element - the element whose children to fix.
+    @param bottomLine - a pixel offset relative to the closest positioned ancestor.
+        Don't allow children to extend past this point.
+*/
+function fitWholeChildrenOnly(element, bottomLine)
+{
     // Reset any changes previously made by fitWholeChildrenOnly.
     element.children().show();
     element.children().removeClass('single-ellipsis');
@@ -38,13 +40,13 @@ function fitWholeChildrenOnly(element)
     //  Prune from the back.
     element.children().reverse().each(function()
     {
-        if (bottomOfElement(element) > availableHeight)
+        if (bottomOfElement(element) > bottomLine)
         {
             $(this).addClass('single-ellipsis');
 
             // Was the single line ellipsis sufficient or do we need more
             // drastic measures?
-            if (bottomOfElement(element) > availableHeight)
+            if (bottomOfElement(element) > bottomLine)
                 $(this).hide();
         }
     });
@@ -124,18 +126,18 @@ function layoutDayEvent(eventElement)
 
 function implementSizingHacks()
 {
-    var infoHeight = $(".info-boxes-space").height();
-    $("#to-do-box").height(infoHeight / 2 - 20);
+    var infoHeight = $(".info-boxes-space").height(),
+        todoHeight = infoHeight / 2 - 20,
+        todoElement = $("#to-do-box");
 
-    fitWholeChildrenOnly($("#to-do-box ul"));
+    todoElement.height(todoHeight);
+    fitWholeChildrenOnly(todoElement.find('ul'), bottomOfElement(todoElement));
+
     for (var i = 0; i < 7; i++)
     {
         layoutAllDayEvents($("#main-all-day-" + i));
     }
 }
-
-$(document).ready(implementSizingHacks);
-$(window).resize(implementSizingHacks);
 
 // What class to use for each standard iCal color.
 var colorMap = {
@@ -565,3 +567,5 @@ function updateWhenReady(json)
         }
     });
 }
+
+$(window).resize(implementSizingHacks);
