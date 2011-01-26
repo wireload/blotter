@@ -36,14 +36,17 @@ const NSSize BLNormalMinimumSize = {950, 750};
     NSSize size;
     switch (aCalendarSize) {
         case BLNarrowSize:
-            size = BLNarrowMinimumSize;
+            size = NSMakeSize(BLNarrowMinimumSize.width, MIN(BLNarrowMinimumSize.height, frame.size.height - aMargin.height * 2));
             break;
         case BLFullSize:
             size = NSMakeSize(frame.size.width - aMargin.width * 2, frame.size.height - aMargin.height * 2);
             break;
-        default:
-            size = NSMakeSize(MAX(BLNormalMinimumSize.width, frame.size.width / 2), MAX(BLNormalMinimumSize.height, frame.size.height / 2));
+        default: {
+            CGFloat normalWidth = MAX(BLNormalMinimumSize.width, frame.size.width / 2);
+            CGFloat normalHeight = MAX(BLNormalMinimumSize.height, frame.size.height / 2);
+            size = NSMakeSize(normalWidth, MIN(normalHeight, frame.size.height - aMargin.height * 2));
             break;
+        }
     }
 
     size.width *= scaleFactor.x;
