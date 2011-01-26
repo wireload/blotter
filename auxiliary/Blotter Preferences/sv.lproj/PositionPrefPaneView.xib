@@ -97,7 +97,7 @@
 							<int key="NSPeriodicInterval">75</int>
 							<object class="NSMenuItem" key="NSMenuItem" id="474883905">
 								<reference key="NSMenu" ref="514710584"/>
-								<string key="NSTitle">Narrow</string>
+								<string key="NSTitle">Smal</string>
 								<string key="NSKeyEquiv"/>
 								<int key="NSKeyEquivModMask">1048576</int>
 								<int key="NSMnemonicLoc">2147483647</int>
