@@ -32,13 +32,13 @@
         }
         else {
             if ([[userDefaults stringForKey:@"CalendarSize"] isEqualToString:@"Narrow"]) {
-                [userDefaults setInteger:0 forKey:@"CalendarSize"];
+                [userDefaults setInteger:BLNarrowSize forKey:@"CalendarSize"];
             }
             else if ([[userDefaults stringForKey:@"CalendarSize"] isEqualToString:@"Normal"]) {
-                [userDefaults setInteger:1 forKey:@"CalendarSize"];
+                [userDefaults setInteger:BLNormalSize forKey:@"CalendarSize"];
             }
             else if ([[userDefaults stringForKey:@"CalendarSize"] isEqualToString:@"Full"]) {
-                [userDefaults setInteger:2 forKey:@"CalendarSize"];
+                [userDefaults setInteger:BLFullSize forKey:@"CalendarSize"];
             }
         }
 
