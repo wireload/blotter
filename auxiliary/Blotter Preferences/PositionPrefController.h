@@ -17,6 +17,4 @@
     IBOutlet BLPositionerControl *positionView;
 }
 
-- (NSArray *)calendarSizes;
-
 @end

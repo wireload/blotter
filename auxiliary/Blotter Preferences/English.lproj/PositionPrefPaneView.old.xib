@@ -12,6 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="1"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -38,7 +39,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="453662770">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -97,7 +98,7 @@
 							<int key="NSPeriodicInterval">75</int>
 							<object class="NSMenuItem" key="NSMenuItem" id="474883905">
 								<reference key="NSMenu" ref="514710584"/>
-								<string key="NSTitle">Size</string>
+								<string key="NSTitle">Narrow</string>
 								<string key="NSKeyEquiv"/>
 								<int key="NSKeyEquivModMask">1048576</int>
 								<int key="NSMnemonicLoc">2147483647</int>
@@ -121,7 +122,7 @@
 									<reference ref="474883905"/>
 									<object class="NSMenuItem" id="1015351341">
 										<reference key="NSMenu" ref="514710584"/>
-										<string key="NSTitle">Item 2</string>
+										<string key="NSTitle">Normal</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
@@ -132,7 +133,7 @@
 									</object>
 									<object class="NSMenuItem" id="356211315">
 										<reference key="NSMenu" ref="514710584"/>
-										<string key="NSTitle">Item 3</string>
+										<string key="NSTitle">Full</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
@@ -175,9 +176,14 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{440, 356}</string>
+				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSUserDefaultsController" id="670922412">
+				<object class="NSMutableArray" key="NSDeclaredKeys">
+					<bool key="EncodedWithXMLCoder">YES</bool>
+					<string>CalendarSize</string>
+				</object>
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
 		</object>
@@ -202,40 +208,19 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">contentValues: calendarSizes</string>
-						<reference key="source" ref="138711095"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector" id="720848489">
-							<reference key="NSSource" ref="138711095"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">contentValues: calendarSizes</string>
-							<string key="NSBinding">contentValues</string>
-							<string key="NSKeyPath">calendarSizes</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">23</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedValue: self.values.CalendarSize</string>
+						<string key="label">selectedIndex: values.CalendarSize</string>
 						<reference key="source" ref="138711095"/>
 						<reference key="destination" ref="670922412"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="138711095"/>
 							<reference key="NSDestination" ref="670922412"/>
-							<string key="NSLabel">selectedValue: self.values.CalendarSize</string>
-							<string key="NSBinding">selectedValue</string>
-							<string key="NSKeyPath">self.values.CalendarSize</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSNullPlaceholder</string>
-								<string key="NS.object.0">Normal</string>
-							</object>
-							<reference key="NSPreviousConnector" ref="720848489"/>
+							<string key="NSLabel">selectedIndex: values.CalendarSize</string>
+							<string key="NSBinding">selectedIndex</string>
+							<string key="NSKeyPath">values.CalendarSize</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">30</int>
+					<int key="connectionID">33</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -437,7 +422,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">30</int>
+			<int key="maxID">33</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -951,7 +936,7 @@
 			<integer value="3000" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
-		<string key="IBDocument.LastKnownRelativeProjectPath">Blotter Preferences.xcodeproj</string>
+		<string key="IBDocument.LastKnownRelativeProjectPath">../Blotter Preferences.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<bool key="EncodedWithXMLCoder">YES</bool>

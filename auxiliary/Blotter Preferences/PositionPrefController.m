@@ -11,11 +11,6 @@
 
 @implementation PositionPrefController
 
-- (NSArray *)calendarSizes
-{
-    return [NSArray arrayWithObjects:@"Narrow", @"Normal", @"Full", nil];
-}
-
 - (NSView *)paneView
 {
     BOOL loaded = YES;

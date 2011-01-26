@@ -8,11 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
-enum {
+typedef enum {
     BLNarrowSize    = 0,
     BLNormalSize    = 1,
     BLFullSize      = 2,
-};
+} BLSize;
 
 typedef enum BLPosition {
     BLPositionTopLeft,
@@ -34,7 +34,7 @@ extern NSSize const BLNormalMinimumSize;
 }
 
 + (NSRect)frameForPosition:(BLPosition)aPosition inFrame:(NSRect)frame scaleFactor:(NSPoint)scaleFactor margin:(NSSize)aMargin;
-+ (NSRect)frameForPosition:(BLPosition)aPosition inFrame:(NSRect)frame size:(NSString *)aCalendarSize;
-+ (NSRect)frameForPosition:(BLPosition)aPosition inFrame:(NSRect)frame size:(NSString *)aCalendarSize scaleFactor:(NSPoint)scaleFactor margin:(NSSize)aMargin;
++ (NSRect)frameForPosition:(BLPosition)aPosition inFrame:(NSRect)frame size:(BLSize)aCalendarSize;
++ (NSRect)frameForPosition:(BLPosition)aPosition inFrame:(NSRect)frame size:(BLSize)aCalendarSize scaleFactor:(NSPoint)scaleFactor margin:(NSSize)aMargin;
 
 @end

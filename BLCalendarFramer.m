@@ -17,13 +17,12 @@ const NSSize BLNormalMinimumSize = {950, 750};
 {
     return [self frameForPosition:aPosition
                           inFrame:frame
-                             size:[[NSUserDefaults standardUserDefaults]
-                                   stringForKey:@"CalendarSize"]
+                             size:[[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"]
                       scaleFactor:scaleFactor
                            margin:aMargin];
 }
 
-+ (NSRect)frameForPosition:(BLPosition)aPosition inFrame:(NSRect)frame size:(NSString *)aCalendarSize
++ (NSRect)frameForPosition:(BLPosition)aPosition inFrame:(NSRect)frame size:(BLSize)aCalendarSize
 {
     return [self frameForPosition:aPosition
                           inFrame:frame
@@ -32,16 +31,10 @@ const NSSize BLNormalMinimumSize = {950, 750};
                            margin:NSMakeSize(14, 14)];
 }
 
-+ (NSRect)frameForPosition:(BLPosition)aPosition inFrame:(NSRect)frame size:(NSString *)aCalendarSize scaleFactor:(NSPoint)scaleFactor margin:(NSSize)aMargin
++ (NSRect)frameForPosition:(BLPosition)aPosition inFrame:(NSRect)frame size:(BLSize)aCalendarSize scaleFactor:(NSPoint)scaleFactor margin:(NSSize)aMargin
 {
-    int sizePrefs = BLNormalSize;
-    if ([aCalendarSize isEqualToString:@"Narrow"])
-        sizePrefs = BLNarrowSize;
-    else if ([aCalendarSize isEqualToString:@"Full"])
-        sizePrefs = BLFullSize;
-
     NSSize size;
-    switch (sizePrefs) {
+    switch (aCalendarSize) {
         case BLNarrowSize:
             size = BLNarrowMinimumSize;
             break;

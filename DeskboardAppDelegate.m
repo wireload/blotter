@@ -26,6 +26,10 @@
         if (calendars == nil) {
             [userDefaults setObject:[NSArray array] forKey:@"Calendars"];
         }
+        
+        if ([userDefaults objectForKey:@"CalendarSize"] == nil) {
+            [userDefaults setInteger:BLNormalSize forKey:@"CalendarSize"];
+        }
     }
 }
 
@@ -101,7 +105,7 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    NSString *sizeSetting = [defaults stringForKey:@"CalendarSize"];
+    NSInteger sizeSetting = [defaults integerForKey:@"CalendarSize"];
     int aPosition = MIN(BLPositionBottomRight, MAX(BLPositionTopLeft, [defaults integerForKey:@"CalendarPosition"]));
 
     NSRect desiredFrame = [BLCalendarFramer frameForPosition:(BLPosition) aPosition inFrame:[[NSScreen mainScreen] visibleFrame] size:sizeSetting];
