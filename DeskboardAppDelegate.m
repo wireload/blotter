@@ -21,12 +21,12 @@
             // Enabled by default
             [userDefaults setObject:[NSNumber numberWithInteger:1] forKey:@"DisplayAllCalendars"];
         }
-        
+
         NSArray *calendars = [userDefaults arrayForKey:@"Calendars"];
         if (calendars == nil) {
             [userDefaults setObject:[NSArray array] forKey:@"Calendars"];
         }
-        
+
         if ([userDefaults objectForKey:@"CalendarSize"] == nil) {
             [userDefaults setInteger:BLNormalSize forKey:@"CalendarSize"];
         }
@@ -50,8 +50,6 @@
                                                  styleMask:NSBorderlessWindowMask
                                                    backing:NSBackingStoreBuffered
                                                      defer:NO];
-    // The -1 ensures we start out underneath the icons, not at the same level.
-    [desktopWindow setLevel:kCGDesktopWindowLevel - 1];
     [desktopWindow setOpaque:NO];
     [desktopWindow setHasShadow:NO];
     [desktopWindow setBackgroundColor:[NSColor clearColor]];
@@ -63,7 +61,12 @@
 
     [self layout];
 
-    [desktopWindow orderFront:NSApp];
+    // Not -1 anymore because that causes Blotter to disappear underneath the
+    // wallpaper under certain (rare) circumstances, like when Quiet activates.
+    [desktopWindow setLevel:kCGDesktopWindowLevel];
+    // Order back to get underneath the icons.
+    [desktopWindow orderBack:NSApp];
+
     // [desktopWindow useOptimizedDrawing:YES];
 
     [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self

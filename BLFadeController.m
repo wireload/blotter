@@ -16,7 +16,7 @@
 + (void)initialize
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSDictionary *viewDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
+    NSDictionary *viewDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
                                   @"NO", @"AutoFade",
                                   @"60", @"AutoFadeSeconds",
                                   nil];
