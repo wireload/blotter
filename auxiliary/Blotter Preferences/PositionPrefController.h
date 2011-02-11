@@ -15,6 +15,10 @@
 {
     IBOutlet NSView *mainView;
     IBOutlet BLPositionerControl *positionView;
+    IBOutlet NSArrayController *screensController;
+    id screensObserver;
 }
+
+- (NSArray *)screens;
 
 @end

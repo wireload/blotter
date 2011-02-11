@@ -15,6 +15,8 @@
 		28F69A55129C5EA100D4BB97 /* Recreated-Aqua.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 28F69A54129C5EA100D4BB97 /* Recreated-Aqua.jpg */; };
 		28F69B53129C82E800D4BB97 /* BLPositionerControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69B52129C82E800D4BB97 /* BLPositionerControlCell.m */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		E2863F971305BEC4004CFC9D /* NSScreen+WLScreenName.m in Sources */ = {isa = PBXBuildFile; fileRef = E2863F961305BEC4004CFC9D /* NSScreen+WLScreenName.m */; };
+		E28640971305C7C9004CFC9D /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2863FDB1305C741004CFC9D /* IOKit.framework */; };
 		E29DDD0412E9DCED00751CFA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E29DDD0312E9DCED00751CFA /* Localizable.strings */; };
 		E29DDD0C12E9DD1000751CFA /* GeneralPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29DDD0B12E9DD1000751CFA /* GeneralPrefPaneView.xib */; };
 		E29DDD0E12E9DD1000751CFA /* PositionPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29DDD0D12E9DD1000751CFA /* PositionPrefPaneView.xib */; };
@@ -58,6 +60,9 @@
 		8D5B49B6048680CD000E48DA /* Blotter Preferences.preferencePane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Blotter Preferences.preferencePane"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		E2863F951305BEC4004CFC9D /* NSScreen+WLScreenName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSScreen+WLScreenName.h"; sourceTree = "<group>"; };
+		E2863F961305BEC4004CFC9D /* NSScreen+WLScreenName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSScreen+WLScreenName.m"; sourceTree = "<group>"; };
+		E2863FDB1305C741004CFC9D /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		E29DDD0112E9DCE800751CFA /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E29DDD0512E9DCF100751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E29DDD0612E9DCF500751CFA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -100,6 +105,7 @@
 			files = (
 				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
 				E2FE5FDD12D77D1F00003E48 /* CalendarStore.framework in Frameworks */,
+				E28640971305C7C9004CFC9D /* IOKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,6 +175,7 @@
 		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E2863FDB1305C741004CFC9D /* IOKit.framework */,
 				E2FE5FDC12D77D1F00003E48 /* CalendarStore.framework */,
 				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
 			);
@@ -197,6 +204,8 @@
 			isa = PBXGroup;
 			children = (
 				32DBCF630370AF2F00C91783 /* Blotter Preferences_Prefix.pch */,
+				E2863F951305BEC4004CFC9D /* NSScreen+WLScreenName.h */,
+				E2863F961305BEC4004CFC9D /* NSScreen+WLScreenName.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -296,6 +305,7 @@
 				2844DB26129DA197006C5545 /* BLCalendarFramer.m in Sources */,
 				E2FE5ED112D74F5E00003E48 /* CalendarsPrefController.m in Sources */,
 				E2FE5EF712D75C7700003E48 /* ColorCheckboxCell.m in Sources */,
+				E2863F971305BEC4004CFC9D /* NSScreen+WLScreenName.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

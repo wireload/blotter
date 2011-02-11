@@ -15,14 +15,15 @@
 
 
 @interface DeskboardAppDelegate : NSObject <NSApplicationDelegate> {
-    NSWindow    *desktopWindow;
-    DesktopView *overlayView;
+    NSMutableDictionary *screenWindows;
 
     SS_PrefsController *prefs;
 }
 
 - (IBAction)showPrefs:(id)sender;
 
-- (void)layout;
+- (void)showOnScreen:(NSScreen *)screen;
+
+- (void)show;
 
 @end
