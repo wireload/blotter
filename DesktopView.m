@@ -28,6 +28,8 @@
 
 @implementation DesktopView
 
+@synthesize initialHtmlLoaded;
+
 + (void)initialize
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -126,10 +128,31 @@
 
 - (void)refresh
 {
+    if (!initialHtmlLoaded)
+        // refresh will be called automatically when html is loaded.
+        return;
+
     NSString *json = [self calendarJson];
 
     WebScriptObject *scriptObject = [webContentView windowScriptObject];
-    [scriptObject callWebScriptMethod:@"updateWhenReady" withArguments:[NSArray arrayWithObject:json]];
+
+    id updateFunction = [scriptObject evaluateWebScript:@"updateWhenReady"];
+    if ([[updateFunction description] isEqual:@"undefined"])
+    {
+        // Even that the frame has been loaded, the updateWhenReady function isn't always ready for some reason,
+        // even that it was specifically made to be ready when the frame had loaded.
+        NSLog(@"warning: retrying refresh due to unloaded scripts");
+        [NSRunLoop cancelPreviousPerformRequestsWithTarget:self];
+        [[NSRunLoop currentRunLoop] performSelector:@selector(refresh) target:self argument:nil order:0 modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
+        return;
+    }
+
+    id result = [scriptObject callWebScriptMethod:@"updateWhenReady" withArguments:[NSArray arrayWithObject:json]];
+    if (![[result description] isEqual:@"1"])
+    {
+        NSLog(@"error: scheduling of Blotter data update failed.");
+        return;
+    }
 
     // Localize strings
     [scriptObject evaluateWebScript:[NSString stringWithFormat:@"$(\"#to-do-box .to-do-string\").text(\"%@\");",
@@ -166,7 +189,6 @@
     [super dealloc];
 }
 
-
 #pragma mark WebFrameLoadDelegate
 
 - (void)webView:(WebView *)sender didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
@@ -184,7 +206,6 @@
     }
 }
 
-
 #pragma mark WebScriptObject
 /* From http://developer.apple.com/library/mac/#samplecode/CallJS/Listings/SampleController_m.html */
 
@@ -193,7 +214,7 @@
     return YES;
 }
 
-+ (BOOL)isSelectorExcludedFromWebScript:(SEL)selector 
++ (BOOL)isSelectorExcludedFromWebScript:(SEL)selector
 {
     return selector != @selector(doOutputToLog:) &&
            selector != @selector(_monthAndYearOfDateInMilliseconds:) &&

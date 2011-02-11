@@ -558,14 +558,26 @@ function advanceNextUp(pixelsPerMinute, minutesIntoNextUp)
 
 function updateWhenReady(json)
 {
-    $(document).ready(function()
-    {
-        try {
-            update(json);
-        } catch (e) {
-            console.log(e.toString());
+    try {
+        if (!$ || !$(document))
+        {
+            console.log("document not ready");
+            return false;
         }
-    });
+
+        $(document).ready(function()
+        {
+            try {
+                update(json);
+            } catch (e) {
+                console.log(e.toString());
+            }
+        });
+    } catch (e) {
+        console.log(e.toString());
+    }
+
+    return true;
 }
 
 $(window).resize(implementSizingHacks);
