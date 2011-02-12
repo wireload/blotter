@@ -28,6 +28,7 @@
 
 - (NSDictionary *)currentCalendar;
 
+- (void)createTomorrowTimer;
 - (void)calendarsChanged:(NSNotification *)aNotification;
 - (void)eventsChanged:(NSNotification *)aNotification;
 - (void)tasksChanged:(NSNotification *)aNotification;

@@ -102,6 +102,10 @@ static void * volatile sharedInstance = nil;
                                                                      options:0
                                                                      context:NULL];
         [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self
+                                                                  forKeyPath:@"values.PerDayDate"
+                                                                     options:0
+                                                                     context:NULL];
+        [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self
                                                                   forKeyPath:@"values.Calendars"
                                                                      options:NSKeyValueObservingOptionNew
                                                                      context:NULL];
@@ -305,7 +309,9 @@ static void * volatile sharedInstance = nil;
 
         NSDate *dayDate = [gregorian dateByAddingComponents:components toDate:beginningDate options:0];
 
-        [dayNames addObject:[dayDate descriptionWithCalendarFormat:@"%A" timeZone:nil
+        // FIXME Might need to make this more locale sensitive.
+        NSString *dayFormat = [defaults boolForKey:@"PerDayDate"] ? @"%a, %e %b" : @"%A";
+        [dayNames addObject:[dayDate descriptionWithCalendarFormat:dayFormat timeZone:nil
 			locale:[[NSUserDefaults standardUserDefaults] dictionaryRepresentation]]];
     }
 
