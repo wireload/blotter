@@ -13,62 +13,42 @@
 
 @implementation DeskboardAppDelegate
 
-+ (void)initialize {
-    if (self == [DeskboardAppDelegate class]) {
++ (void)initialize
+{
+    if (self == [DeskboardAppDelegate class])
+    {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        NSNumber *displayAllCalendars = [userDefaults objectForKey:@"DisplayAllCalendars"];
-        if (displayAllCalendars == nil) {
+
+        if ([userDefaults objectForKey:@"DisplayAllCalendars"] == nil)
             // Enabled by default
             [userDefaults setObject:[NSNumber numberWithInteger:1] forKey:@"DisplayAllCalendars"];
-        }
 
         NSArray *calendars = [userDefaults arrayForKey:@"Calendars"];
-        if (calendars == nil) {
+        if (calendars == nil)
             [userDefaults setObject:[NSArray array] forKey:@"Calendars"];
-        }
 
-        if ([userDefaults objectForKey:@"CalendarSize"] == nil) {
+        if ([userDefaults objectForKey:@"CalendarSize"] == nil)
             [userDefaults setInteger:BLNormalSize forKey:@"CalendarSize"];
-        }
         else {
-            if ([[userDefaults stringForKey:@"CalendarSize"] isEqualToString:@"Narrow"]) {
+            if ([[userDefaults stringForKey:@"CalendarSize"] isEqualToString:@"Narrow"])
                 [userDefaults setInteger:BLNarrowSize forKey:@"CalendarSize"];
-            }
-            else if ([[userDefaults stringForKey:@"CalendarSize"] isEqualToString:@"Normal"]) {
+            else if ([[userDefaults stringForKey:@"CalendarSize"] isEqualToString:@"Normal"])
                 [userDefaults setInteger:BLNormalSize forKey:@"CalendarSize"];
-            }
-            else if ([[userDefaults stringForKey:@"CalendarSize"] isEqualToString:@"Full"]) {
+            else if ([[userDefaults stringForKey:@"CalendarSize"] isEqualToString:@"Full"])
                 [userDefaults setInteger:BLFullSize forKey:@"CalendarSize"];
-            }
         }
 
+        if ([userDefaults objectForKey:@"ScreenIdentifier"] == nil)
+        {
+            NSNumber *mainScreenID = [[[NSScreen mainScreen] deviceDescription] objectForKey:@"NSScreenNumber"];
+            [userDefaults setObject:mainScreenID forKey:@"ScreenIdentifier"];
+        }
     }
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    desktopWindow  = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 0, 0)
-                                                 styleMask:NSBorderlessWindowMask
-                                                   backing:NSBackingStoreBuffered
-                                                     defer:NO];
-    [desktopWindow setOpaque:NO];
-    [desktopWindow setHasShadow:NO];
-    [desktopWindow setBackgroundColor:[NSColor clearColor]];
-    [desktopWindow setIgnoresMouseEvents:YES];
-    [desktopWindow setPreferredBackingLocation:NSWindowBackingLocationVideoMemory];
-
-    overlayView = [[DesktopView alloc] initWithFrame:[[desktopWindow contentView] frame]];
-    [desktopWindow setContentView:overlayView];
-
-    [self layout];
-
-    // Not -1 anymore because that causes Blotter to disappear underneath the
-    // wallpaper under certain (rare) circumstances, like when Quiet activates.
-    [desktopWindow setLevel:kCGDesktopWindowLevel];
-    // Order back to get underneath the icons.
-    [desktopWindow orderBack:NSApp];
-
-    // [desktopWindow useOptimizedDrawing:YES];
-
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+    screenWindows = [NSMutableDictionary new];
     [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self
                                                               forKeyPath:@"values.CalendarPosition"
                                                                  options:0
@@ -77,6 +57,14 @@
                                                               forKeyPath:@"values.CalendarSize"
                                                                  options:0
                                                                  context:NULL];
+    [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self
+                                                              forKeyPath:@"values.ScreenIdentifier"
+                                                                 options:0
+                                                                 context:NULL];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(show)
+                                                 name:NSApplicationDidChangeScreenParametersNotification
+                                               object:nil];
 
     // Show prefs at first start
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -85,6 +73,8 @@
         [self showPrefs:self];
         [userDefaults setBool:NO forKey:@"ShowPreferencesAtStartUp"];
     }
+
+    [self show];
 }
 
 - (IBAction)showPrefs:(id)sender
@@ -108,32 +98,96 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    [self layout];
+    [self show];
 }
 
 -(void)applicationDidChangeScreenParameters:(NSNotification *)notice
 {
-    [self layout];
+    [self show];
 }
 
-- (void)layout
+- (void)showOnScreen:(NSScreen *)screen
 {
+    NSNumber *screenID = [[screen deviceDescription] objectForKey:@"NSScreenNumber"];
+    NSWindow *window = [screenWindows objectForKey:screenID];
+    if (window == nil)
+    {
+        window = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 0, 0)
+                                             styleMask:NSBorderlessWindowMask
+                                               backing:NSBackingStoreBuffered
+                                                 defer:NO];
+        [window setOpaque:NO];
+        [window setHasShadow:NO];
+        [window setBackgroundColor:[NSColor clearColor]];
+        [window setIgnoresMouseEvents:YES];
+        [window setPreferredBackingLocation:NSWindowBackingLocationVideoMemory];
+
+        DesktopView *overlayView = [[DesktopView alloc] initWithFrame:[[window contentView] frame]];
+        [window setContentView:overlayView];
+        [overlayView release];
+
+        // [window useOptimizedDrawing:YES];
+
+        [screenWindows setObject:window forKey:screenID];
+    }
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
     NSInteger sizeSetting = [defaults integerForKey:@"CalendarSize"];
     int aPosition = MIN(BLPositionBottomRight, MAX(BLPositionTopLeft, [defaults integerForKey:@"CalendarPosition"]));
 
-    NSRect desiredFrame = [BLCalendarFramer frameForPosition:(BLPosition) aPosition inFrame:[[NSScreen mainScreen] visibleFrame] size:sizeSetting];
+    NSRect desiredFrame = [BLCalendarFramer frameForPosition:(BLPosition) aPosition inFrame:[screen visibleFrame] size:sizeSetting];
     NSLog(@"Placing at %@", NSStringFromRect(desiredFrame));
 
-    [desktopWindow setFrame:desiredFrame display:YES];
+    [window setFrame:desiredFrame display:YES];
 
     // FIXME Only do this if the size actually changed. Also, the view should do this by itself.
-    [overlayView refresh];
+    [(DesktopView *)[window contentView] refresh];
+
+    if (![window isVisible])
+    {
+        // Not -1 anymore because that causes Blotter to disappear underneath the
+        // wallpaper under certain (rare) circumstances, like when Quiet activates.
+        [window setLevel:kCGDesktopWindowLevel];
+        // Order back to get underneath the icons.
+        [window orderBack:NSApp];
+    }
+}
+
+- (void)show
+{
+    NSNumber *usedScreenID = [[NSUserDefaults standardUserDefaults] objectForKey:@"ScreenIdentifier"];
+    NSArray *screens = [NSScreen screens];
+    NSUInteger usedScreenIdx = [screens indexOfObjectPassingTest:^(id obj, NSUInteger idx, BOOL *stop)
+    {
+        return (BOOL)([[[obj deviceDescription] objectForKey:@"NSScreenNumber"] isEqualToNumber:usedScreenID]);
+    }];
+
+    if (usedScreenIdx != NSNotFound)
+        [self showOnScreen:[screens objectAtIndex:usedScreenIdx]];
+    else
+    {
+        // User has unplugged selected screen.
+        // Main screen will be used instead.
+        NSScreen *mainScreen = [NSScreen mainScreen];
+        usedScreenID = [[mainScreen deviceDescription] objectForKey:@"NSScreenNumber"];
+        [[NSUserDefaults standardUserDefaults] setObject:usedScreenID forKey:@"ScreenIdentifier"];
+        [self showOnScreen:mainScreen];
+    }
+
+    // Windows on other screens should be hidden.
+    NSMutableDictionary *windowsToHide = [screenWindows mutableCopy];
+    [windowsToHide removeObjectForKey:usedScreenID];
+    for (NSWindow *window in [windowsToHide allValues]) {
+        [window orderOut:nil];
+    }
 }
 
 - (void)dealloc
 {
+    [[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [screenWindows release];
     [prefs release];
     [super dealloc];
 }

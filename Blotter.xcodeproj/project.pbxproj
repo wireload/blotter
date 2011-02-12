@@ -53,7 +53,7 @@
 		28153EDE12D78EBE00A239C4 /* Blotter-B8.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "Blotter-B8.icns"; path = "../blotter/Resources/Blotter-B8.icns"; sourceTree = SOURCE_ROOT; };
 		281BA565129EF84D00114D3C /* Blotter Preferences.preferencePane */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Blotter Preferences.preferencePane"; path = "auxiliary/Blotter Preferences/build/Release/Blotter Preferences.preferencePane"; sourceTree = "<group>"; };
 		284061CE127E6C4F000816FF /* DesktopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DesktopView.h; sourceTree = "<group>"; };
-		284061CF127E6C4F000816FF /* DesktopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DesktopView.m; sourceTree = "<group>"; };
+		284061CF127E6C4F000816FF /* DesktopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DesktopView.m; sourceTree = "<group>"; wrapsLines = 1; };
 		2840624C127E75FC000816FF /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		284063EA1283176F000816FF /* CalendarAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarAdapter.h; sourceTree = "<group>"; };
 		284063EB1283176F000816FF /* CalendarAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarAdapter.m; sourceTree = "<group>"; wrapsLines = 1; };

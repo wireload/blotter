@@ -18,6 +18,8 @@
     NSDateFormatter     *dateFormatter;
 }
 
+@property (nonatomic, assign, getter=isLoaded) BOOL initialHtmlLoaded;
+
 - (void)refresh;
 - (NSString *)calendarHtml;
 

@@ -57,7 +57,8 @@ def Sources():
     sources = [{'output': join(BLOTTER_DIR, "Resources"), 'files': [join(BLOTTER_DIR, "DesktopView.m")]},
                {'output': BLOTTER_PREFS_DIR, 'files': [join(BLOTTER_PREFS_DIR, "GeneralPrefController.m"),
                                                        join(BLOTTER_PREFS_DIR, "PositionPrefController.m"),
-                                                       join(BLOTTER_PREFS_DIR, "CalendarsPrefController.m")]}]
+                                                       join(BLOTTER_PREFS_DIR, "CalendarsPrefController.m"),
+                                                       join(BLOTTER_PREFS_DIR, "NSScreen+WLScreenName.m")]}]
     return sources
 
 def Langs():
@@ -65,6 +66,12 @@ def Langs():
     Returns list of supported languages excluding development language.
     """
     return ["de", "es", "fr", "kr", "sv", "ru"]
+
+def DevLang():
+    """
+    Returns development language.
+    """
+    return "English"
 
 def MergeStrings(src_path, dst_path):
     """
@@ -195,7 +202,7 @@ if __name__ == '__main__':
     elif 'strings' in args.mode:
         if args.sources or not args.xibs:
             for sources in Sources():
-                GenerateSourcesStrings(sources['files'], sources['output'], Langs())
+                GenerateSourcesStrings(sources['files'], sources['output'], Langs() + [DevLang()])
                 print ""
         if args.xibs or not args.sources:
             for xib in Xibs():
