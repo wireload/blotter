@@ -121,9 +121,6 @@
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
-				E29DDD0B12E9DD1000751CFA /* GeneralPrefPaneView.xib */,
-				E29DDD0D12E9DD1000751CFA /* PositionPrefPaneView.xib */,
-				E29DDD0F12E9DD1000751CFA /* CalendarsPrefPaneView.xib */,
 			);
 			name = "General Preferences";
 			sourceTree = "<group>";
@@ -140,6 +137,9 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E29DDD0B12E9DD1000751CFA /* GeneralPrefPaneView.xib */,
+				E29DDD0D12E9DD1000751CFA /* PositionPrefPaneView.xib */,
+				E29DDD0F12E9DD1000751CFA /* CalendarsPrefPaneView.xib */,
 				E29DDD4A12E9DE6C00751CFA /* CalendarsPrefPaneView.strings */,
 				E29DDD4C12E9DE6C00751CFA /* GeneralPrefPaneView.strings */,
 				E29DDD4E12E9DE6C00751CFA /* PositionPrefPaneView.strings */,
