@@ -52,7 +52,7 @@
 						<object class="NSPopUpButtonCell" key="NSCell" id="769130927">
 							<int key="NSCellFlags">-2076049856</int>
 							<int key="NSCellFlags2">2048</int>
-							<object class="NSFont" key="NSSupport">
+							<object class="NSFont" key="NSSupport" id="764664996">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">13</double>
 								<int key="NSfFlags">16</int>
@@ -92,9 +92,9 @@
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="389274649">
 							<int key="NSCellFlags">68288064</int>
-							<int key="NSCellFlags2">272630784</int>
-							<string key="NSContents">Affected Screen:</string>
-							<reference key="NSSupport" ref="943739518"/>
+							<int key="NSCellFlags2">71304192</int>
+							<string key="NSContents">Display:</string>
+							<reference key="NSSupport" ref="764664996"/>
 							<reference key="NSControlView" ref="219358551"/>
 							<object class="NSColor" key="NSBackgroundColor" id="48242679">
 								<int key="NSColorSpace">6</int>
@@ -119,7 +119,7 @@
 					<object class="NSTextField" id="551017980">
 						<reference key="NSNextResponder" ref="453662770"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{30, 318}, {94, 17}}</string>
+						<string key="NSFrame">{{17, 318}, {107, 17}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="202913726">
@@ -240,6 +240,10 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>WL_localizedScreenName</string>
 					<string>deviceDescription.NSScreenNumber</string>
+					<object class="NSMutableString">
+						<characters key="NS.bytes">ScreenIdentifier</characters>
+					</object>
+					<string>count</string>
 				</object>
 				<string key="NSObjectClassName">NSScreen</string>
 				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
@@ -372,6 +376,37 @@
 						</object>
 					</object>
 					<int key="connectionID">105</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: arrangedObjects.WL_localizedScreenName</string>
+						<reference key="source" ref="738986184"/>
+						<reference key="destination" ref="388316468"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="738986184"/>
+							<reference key="NSDestination" ref="388316468"/>
+							<string key="NSLabel">enabled: arrangedObjects.WL_localizedScreenName</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">arrangedObjects.WL_localizedScreenName</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSNullPlaceholder</string>
+									<string>NSValueTransformerName</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<integer value="1"/>
+									<integer value="0"/>
+									<string>WLCountGreaterThanOneTransformer</string>
+								</object>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">118</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -636,7 +671,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">105</int>
+			<int key="maxID">118</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
