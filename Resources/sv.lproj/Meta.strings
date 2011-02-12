@@ -1,0 +1,34 @@
+/*
+   Meta.strings
+   Blotter
+
+   Created by Alexander Ljungberg on 12/02/2011.
+   Copyright 2011 WireLoad. All rights reserved.
+ */
+
+/* App Store Description */
+"App Store Description" = "Har det hänt att du markerat något i din kalender men sedan missat det ändå? Nu finns en lösning. Blotter är en strömlinjeformad kalender visare som placerar sig själv på dit Macs skrivbord. Vackert diskret och ur vägen, men ändå aldrig längre än ett ögonkast bort.
+
+Blotter är ett lätt sätt att öka din produktivitet. Med din veckoplanering framför dig går det alltid snabbt att se efter ifall du hinner med ett möte på tisdag eller om det finns en lucka att gå hem tidigt på fredag.
+
+• Behåll din existerande kalender. Blotter knyter direkt in i den Mac OS X iCal kalender istället för att återskapa den.
+• Kom igång på nolltid utan arbete.
+• Bevara din dators snärtighet. Blotter använder väldigt lite minne och processor kraft.
+• Välj om du vill se de kommmande 7 dagarna istället för en vanlig kalender vecka.
+• Slå på Smal läget för att spara yta och bara se uppgifter och kommande händelser.
+
+Fungerar även med Google Calendar. Se vår FAQ för mer information.
+
+Observera att Blotter inte möjliggör kalender editering.";
+
+/* App Store What's New */
+"App Store What's New" = "Nytt val för att visa veckodags datum, stöd för bildskärmsval, bättre stöd för olika språk och mindre bug fixar.
+
+• Veckodags datum: välj att visa datumet för varje veckodagskolumn.
+• Välj bildskärm: för Macar med fler än en bildskärm kan du nu välja vilken bildskärm som skall användas.
+• Löser ett problem där Blotter försvann ifall det användes tillsammans med tredjepartsprogrammet Hyperspaces.
+• Förbättrar datum formattering och språk lokalisering när system språket inte är engelska.
+• Löser ett problem där timmarna i tids kolumnen inte fick plats för vissa språk.";
+
+/* App Store Keywords */
+"App Store Keywords" = "kalender, att göra, uppgifter, organisation, skrivbord, skärmunderlägg";

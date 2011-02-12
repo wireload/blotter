@@ -1,0 +1,35 @@
+/*
+   Meta.strings
+   Blotter
+
+   Created by Alexander Ljungberg on 12/02/2011.
+   Copyright 2011 WireLoad. All rights reserved.
+ */
+
+/* App Store Description */
+"App Store Description" = "Did you ever mark something in your calendar only to forget to check the calendar? No more. Blotter is a streamlined calendar viewer which displays itself right on your desktop. Beautifully discreet and out of the way, yet only a glance away.
+
+Blotter is an easy way to increase your productivity. With your week right before you, it is fast to see if you can make a meeting on Tuesday or if you’ll be able to go home early on Friday.
+
+• Keep your existing calendar. Blotter will tie directly into your Mac OS X iCal calendar instead of recreating it.
+• Get setup in no time and no work.
+• Keep things snappy. Blotter uses very little memory and processing power.
+• Optionally view the next 7 days instead of a regular week.
+• Turn on the Narrow option to save space with only a to do list and upcoming events.
+
+Also works with Google Calendar. See our FAQ for more information.
+
+Note that Blotter does not support calendar editing.";
+
+/* App Store What's New */
+"App Store What's New" = "New date display option, multi display support, better international support and minor bug fixes.
+
+• Weekday dates: optionally display the date of each weekday column.
+• Pick display: for Macs with more than one display, you can now choose which one to use for Blotter.
+• Resolves an issue with Blotter disappearing if used together with third party application Hyperspaces.
+• Improves date formatting and localization when the system language is not English.
+• Resolves an issue with the time column not fitting in the allotted space for some languages.";
+
+/* App Store Keywords */
+"App Store Keywords" = "calendar, to do, tasks, organization, desktop, wallpaper";
+
