@@ -11,32 +11,6 @@
 
 @implementation PositionPrefController
 
-- (id)init {
-    if (self = [super init]) {
-        screensObserver = [[NSNotificationCenter defaultCenter] addObserverForName:NSApplicationDidChangeScreenParametersNotification
-                                                                            object:nil
-                                                                             queue:nil
-                                                                        usingBlock:^(NSNotification *arg1) {
-                                                                            // We need to emulate "changing" of screens property to make array controller reload its content.
-                                                                            [self willChangeValueForKey:@"screens"];
-                                                                            [self didChangeValueForKey:@"screens"];
-                                                                        }];
-    }
-    return self;
-}
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:screensObserver];
-    [super dealloc];
-}
-
-- (NSArray *)screens {
-    return [NSScreen screens];
-}
-
-
-#pragma mark SS_PreferencePaneProtocol
-
 - (NSView *)paneView
 {
     BOOL loaded = YES;

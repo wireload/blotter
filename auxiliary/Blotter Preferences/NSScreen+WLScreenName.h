@@ -13,4 +13,6 @@
 
 - (NSString *)WL_localizedScreenName;
 
+- (NSString *)WL_localizedScreenSizeString;
+
 @end

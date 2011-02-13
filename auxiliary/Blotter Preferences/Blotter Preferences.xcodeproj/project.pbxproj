@@ -22,6 +22,7 @@
 		E29DDD0C12E9DD1000751CFA /* GeneralPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29DDD0B12E9DD1000751CFA /* GeneralPrefPaneView.xib */; };
 		E29DDD0E12E9DD1000751CFA /* PositionPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29DDD0D12E9DD1000751CFA /* PositionPrefPaneView.xib */; };
 		E29DDD1012E9DD1000751CFA /* CalendarsPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29DDD0F12E9DD1000751CFA /* CalendarsPrefPaneView.xib */; };
+		E2DC7DDD130810F00065CEAD /* WLScreensController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2DC7DDC130810F00065CEAD /* WLScreensController.m */; };
 		E2FE5ED112D74F5E00003E48 /* CalendarsPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FE5ED012D74F5E00003E48 /* CalendarsPrefController.m */; };
 		E2FE5EF712D75C7700003E48 /* ColorCheckboxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FE5EF612D75C7700003E48 /* ColorCheckboxCell.m */; };
 		E2FE5F0D12D760BA00003E48 /* chkbxBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = E2FE5F0112D760BA00003E48 /* chkbxBackground.png */; };
@@ -90,6 +91,8 @@
 		E29DDD5C12E9DE9F00751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/CalendarsPrefPaneView.strings; sourceTree = "<group>"; };
 		E29DDD5D12E9DE9F00751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/GeneralPrefPaneView.strings; sourceTree = "<group>"; };
 		E29DDD5E12E9DE9F00751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/PositionPrefPaneView.strings; sourceTree = "<group>"; };
+		E2DC7DDB130810F00065CEAD /* WLScreensController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLScreensController.h; sourceTree = "<group>"; };
+		E2DC7DDC130810F00065CEAD /* WLScreensController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLScreensController.m; sourceTree = "<group>"; };
 		E2FE5ECF12D74F5E00003E48 /* CalendarsPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarsPrefController.h; sourceTree = "<group>"; };
 		E2FE5ED012D74F5E00003E48 /* CalendarsPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarsPrefController.m; sourceTree = "<group>"; };
 		E2FE5EDD12D7505800003E48 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
@@ -173,6 +176,8 @@
 				E2FE5ED012D74F5E00003E48 /* CalendarsPrefController.m */,
 				283A5EE41306CDA2006B916A /* WLCountGreaterThanOneTransformer.h */,
 				283A5EE51306CDA2006B916A /* WLCountGreaterThanOneTransformer.m */,
+				E2DC7DDB130810F00065CEAD /* WLScreensController.h */,
+				E2DC7DDC130810F00065CEAD /* WLScreensController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -312,6 +317,7 @@
 				E2FE5EF712D75C7700003E48 /* ColorCheckboxCell.m in Sources */,
 				E2863F971305BEC4004CFC9D /* NSScreen+WLScreenName.m in Sources */,
 				283A5EE61306CDA2006B916A /* WLCountGreaterThanOneTransformer.m in Sources */,
+				E2DC7DDD130810F00065CEAD /* WLScreensController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,14 +11,12 @@
 #import "SS_PreferencePaneProtocol.h"
 #import "BLPositionerControl.h"
 
+
 @interface PositionPrefController : NSObject<SS_PreferencePaneProtocol>
 {
     IBOutlet NSView *mainView;
     IBOutlet BLPositionerControl *positionView;
     IBOutlet NSArrayController *screensController;
-    id screensObserver;
 }
-
-- (NSArray *)screens;
 
 @end
