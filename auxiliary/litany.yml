@@ -22,7 +22,7 @@ strings:
   -
     id:       'Other Preferences'
     path:     "auxiliary/Blotter Preferences/%(lang)s.lproj/Localizable.strings"
-    skip:     ['%@, %.0f x %.0f']
+    skip:     ["%.0f x %.0f", "%@, %@"]
   -
     id:   'main menu'
     path: "Resources/%(lang)s.lproj/MainMenu.strings"
