@@ -92,7 +92,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="389274649">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">71304192</int>
-							<string key="NSContents">Affected Screen:</string>
+							<string key="NSContents">Bildskärm:</string>
 							<reference key="NSSupport" ref="764664996"/>
 							<reference key="NSControlView" ref="219358551"/>
 							<object class="NSColor" key="NSBackgroundColor" id="48242679">

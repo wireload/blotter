@@ -1,0 +1,35 @@
+project:
+  comment: |
+    /*
+         Combined Blotter.strings
+         Blotter
+         Copyright 2011 WireLoad. All rights reserved.
+    */
+
+strings:
+  -
+    id:       'General Preferences'
+    comment:  "Options shown on the General preferences page."
+    path:     "auxiliary/Blotter Preferences/%(lang)s.lproj/GeneralPrefPaneView.strings"
+  -
+    id:       'Position Preferences'
+    path:     "auxiliary/Blotter Preferences/%(lang)s.lproj/PositionPrefPaneView.strings"
+    skip:     ['10.title', '66.title']
+  -
+    id:       'Calendar Preferences'
+    path:     "auxiliary/Blotter Preferences/%(lang)s.lproj/CalendarsPrefPaneView.strings"
+    skip:     ['14.title', '76.title']
+  -
+    id:       'Other Preferences'
+    path:     "auxiliary/Blotter Preferences/%(lang)s.lproj/Localizable.strings"
+    skip:     ['%@, %.0f x %.0f']
+  -
+    id:   'main menu'
+    path: "Resources/%(lang)s.lproj/MainMenu.strings"
+    skip:     ['29.title']
+  -
+    id:   'other'
+    path: "Resources/%(lang)s.lproj/Localizable.strings"
+  -
+    id:   'store description'
+    path: "Resources/%(lang)s.lproj/Meta.strings"
