@@ -36,6 +36,9 @@
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		283A5EE41306CDA2006B916A /* WLCountGreaterThanOneTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCountGreaterThanOneTransformer.h; sourceTree = "<group>"; };
 		283A5EE51306CDA2006B916A /* WLCountGreaterThanOneTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCountGreaterThanOneTransformer.m; sourceTree = "<group>"; };
+		283A5F3513076D63006B916A /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
+		283A5F3613076D70006B916A /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/PositionPrefPaneView.xib; sourceTree = "<group>"; };
+		283A5F3713076D78006B916A /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
 		2844DB25129DA197006C5545 /* BLCalendarFramer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLCalendarFramer.m; path = ../../BLCalendarFramer.m; sourceTree = SOURCE_ROOT; };
 		28B54D52128398250037BF53 /* SS_PreferencePaneProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SS_PreferencePaneProtocol.h; sourceTree = "<group>"; };
 		28B54D55128398530037BF53 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
@@ -338,6 +341,7 @@
 				28B54D55128398530037BF53 /* English */,
 				E29DDD1712E9DD1900751CFA /* ru */,
 				28E96D2812EA30C3000AF199 /* sv */,
+				283A5F3713076D78006B916A /* es */,
 			);
 			name = GeneralPrefPaneView.xib;
 			sourceTree = "<group>";
@@ -348,6 +352,7 @@
 				28B54D801283B57E0037BF53 /* English */,
 				E29DDD1D12E9DD2900751CFA /* ru */,
 				28E96D2912EA30CB000AF199 /* sv */,
+				283A5F3613076D70006B916A /* es */,
 			);
 			name = PositionPrefPaneView.xib;
 			sourceTree = "<group>";
@@ -358,6 +363,7 @@
 				E2FE5EDD12D7505800003E48 /* English */,
 				E29DDD2312E9DD3800751CFA /* ru */,
 				28E96D2A12EA30D4000AF199 /* sv */,
+				283A5F3513076D63006B916A /* es */,
 			);
 			name = CalendarsPrefPaneView.xib;
 			sourceTree = "<group>";
