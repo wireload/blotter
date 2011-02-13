@@ -58,7 +58,8 @@ def Sources():
                {'output': BLOTTER_PREFS_DIR, 'files': [join(BLOTTER_PREFS_DIR, "GeneralPrefController.m"),
                                                        join(BLOTTER_PREFS_DIR, "PositionPrefController.m"),
                                                        join(BLOTTER_PREFS_DIR, "CalendarsPrefController.m"),
-                                                       join(BLOTTER_PREFS_DIR, "NSScreen+WLScreenName.m")]}]
+                                                       join(BLOTTER_PREFS_DIR, "NSScreen+WLScreenName.m"),
+                                                       join(BLOTTER_PREFS_DIR, "WLScreensController.m")]}]
     return sources
 
 def Langs():
