@@ -301,6 +301,11 @@ static void * volatile sharedInstance = nil;
 
     NSMutableArray *dayNames = [NSMutableArray array];
     NSCalendar *gregorian = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter new] autorelease];
+    if ([defaults boolForKey:@"PerDayDate"])
+        [dateFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"cccdMMM" options:0 locale:[NSLocale currentLocale]]];
+    else
+        [dateFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:[NSLocale currentLocale]]];
 
     for (int j = 0; j < 7; j++)
     {
@@ -308,15 +313,10 @@ static void * volatile sharedInstance = nil;
         [components setDay:j];
 
         NSDate *dayDate = [gregorian dateByAddingComponents:components toDate:beginningDate options:0];
-
-        // FIXME Might need to make this more locale sensitive.
-        NSString *dayFormat = [defaults boolForKey:@"PerDayDate"] ? @"%a, %e %b" : @"%A";
-        [dayNames addObject:[dayDate descriptionWithCalendarFormat:dayFormat timeZone:nil
-			locale:[[NSUserDefaults standardUserDefaults] dictionaryRepresentation]]];
+        [dayNames addObject:[dateFormatter stringFromDate:dayDate]];
     }
 
     NSMutableArray *hourNames = [NSMutableArray array];
-    NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
     [dateFormatter setDateStyle:NSDateFormatterNoStyle];
     [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
 
