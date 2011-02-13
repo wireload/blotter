@@ -6,10 +6,11 @@
 //  Copyright 2010 SlevenBits. All rights reserved.
 //
 
+#import <CalendarStore/CalendarStore.h>
 #import "DeskboardAppDelegate.h"
 #import "BLPositionerControl.h"
 #import "BLCalendarFramer.h"
-#import <CalendarStore/CalendarStore.h>
+#import "WLFitWindow.h"
 
 @implementation DeskboardAppDelegate
 
@@ -61,10 +62,6 @@
                                                               forKeyPath:@"values.ScreenIdentifier"
                                                                  options:0
                                                                  context:NULL];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(show)
-                                                 name:NSApplicationDidChangeScreenParametersNotification
-                                               object:nil];
 
     // Show prefs at first start
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -101,7 +98,7 @@
     [self show];
 }
 
--(void)applicationDidChangeScreenParameters:(NSNotification *)notice
+-(void)applicationDidChangeScreenParameters:(NSNotification *)aNotification
 {
     [self show];
 }
@@ -109,13 +106,13 @@
 - (void)showOnScreen:(NSScreen *)screen
 {
     NSNumber *screenID = [[screen deviceDescription] objectForKey:@"NSScreenNumber"];
-    NSWindow *window = [screenWindows objectForKey:screenID];
+    WLFitWindow *window = [screenWindows objectForKey:screenID];
     if (window == nil)
     {
-        window = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 0, 0)
-                                             styleMask:NSBorderlessWindowMask
-                                               backing:NSBackingStoreBuffered
-                                                 defer:NO];
+        window = [[WLFitWindow alloc] initWithContentRect:NSMakeRect(0, 0, 0, 0)
+                                                styleMask:NSBorderlessWindowMask
+                                                  backing:NSBackingStoreBuffered
+                                                    defer:NO];
         [window setOpaque:NO];
         [window setHasShadow:NO];
         [window setBackgroundColor:[NSColor clearColor]];
@@ -131,18 +128,8 @@
         [screenWindows setObject:window forKey:screenID];
     }
 
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
-    NSInteger sizeSetting = [defaults integerForKey:@"CalendarSize"];
-    int aPosition = MIN(BLPositionBottomRight, MAX(BLPositionTopLeft, [defaults integerForKey:@"CalendarPosition"]));
-
-    NSRect desiredFrame = [BLCalendarFramer frameForPosition:(BLPosition) aPosition inFrame:[screen visibleFrame] size:sizeSetting];
-    NSLog(@"Placing at %@", NSStringFromRect(desiredFrame));
-
-    [window setFrame:desiredFrame display:YES];
-
-    // FIXME Only do this if the size actually changed. Also, the view should do this by itself.
-    [(DesktopView *)[window contentView] refresh];
+    if (![window fitWithinFrame:[screen visibleFrame]])
+        [(DesktopView *)[window contentView] refresh];
 
     if (![window isVisible])
     {
@@ -164,29 +151,21 @@
     }];
 
     if (usedScreenIdx != NSNotFound)
-        [self showOnScreen:[screens objectAtIndex:usedScreenIdx]];
-    else
     {
-        // User has unplugged selected screen.
-        // Main screen will be used instead.
-        NSScreen *mainScreen = [NSScreen mainScreen];
-        usedScreenID = [[mainScreen deviceDescription] objectForKey:@"NSScreenNumber"];
-        [[NSUserDefaults standardUserDefaults] setObject:usedScreenID forKey:@"ScreenIdentifier"];
-        [self showOnScreen:mainScreen];
+        [self showOnScreen:[screens objectAtIndex:usedScreenIdx]];
+        // Windows on other screens should be hidden.
+        NSMutableDictionary *windowsToHide = [screenWindows mutableCopy];
+        [windowsToHide removeObjectForKey:usedScreenID];
+        for (NSWindow *window in [windowsToHide allValues]) {
+            [window orderOut:nil];
+        }
     }
-
-    // Windows on other screens should be hidden.
-    NSMutableDictionary *windowsToHide = [screenWindows mutableCopy];
-    [windowsToHide removeObjectForKey:usedScreenID];
-    for (NSWindow *window in [windowsToHide allValues]) {
-        [window orderOut:nil];
-    }
+    // If
 }
 
 - (void)dealloc
 {
     [[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [screenWindows release];
     [prefs release];
     [super dealloc];

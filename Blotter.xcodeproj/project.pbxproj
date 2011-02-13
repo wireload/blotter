@@ -28,6 +28,7 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		E29DDC8712E9C7BF00751CFA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29DDC8612E9C7BF00751CFA /* MainMenu.xib */; };
 		E29DDCB212E9D54C00751CFA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E29DDCB012E9D54C00751CFA /* Localizable.strings */; };
+		E2DC7D3113071F7E0065CEAD /* WLFitWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E2DC7D3013071F7E0065CEAD /* WLFitWindow.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -94,6 +95,8 @@
 		E29DDCB512E9D56B00751CFA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = Resources/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E29DDCB612E9D57500751CFA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E29DDCB712E9D57F00751CFA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E2DC7D2F13071F7E0065CEAD /* WLFitWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLFitWindow.h; sourceTree = "<group>"; };
+		E2DC7D3013071F7E0065CEAD /* WLFitWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLFitWindow.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +135,8 @@
 				2840653712836E78000816FF /* NSColor-Utilities.m */,
 				28F699E2129C0EBC00D4BB97 /* BLFadeController.h */,
 				28F699E3129C0EBC00D4BB97 /* BLFadeController.m */,
+				E2DC7D2F13071F7E0065CEAD /* WLFitWindow.h */,
+				E2DC7D3013071F7E0065CEAD /* WLFitWindow.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -298,6 +303,7 @@
 				28F6975B129969E500D4BB97 /* NSDate-Utilities.m in Sources */,
 				28F699E4129C0EBC00D4BB97 /* BLFadeController.m in Sources */,
 				2844DB2D129DA1BD006C5545 /* BLCalendarFramer.m in Sources */,
+				E2DC7D3113071F7E0065CEAD /* WLFitWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
