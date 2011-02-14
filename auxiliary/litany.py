@@ -77,14 +77,14 @@ def tokenize_strings(data):
       yield tok
 
 def pairs_of_strings(file_name, data):
-  last_comment = None
+  preceeding_comments = []
   last_key = None
   last_value = None
   expected = 'key'
 
   for token in tokenize_strings(data):
     if token.type == 'COMMENT':
-      last_comment = token.value
+      preceeding_comments.append(token.value)
       continue
 
     if expected == 'key':
@@ -106,8 +106,8 @@ def pairs_of_strings(file_name, data):
         raise "Expected ';' at %s:%d" % (file_name, token.lineno)
 
       bare_key = last_key[1:-1]
-      yield { 'key': bare_key, 'comment': last_comment, 'value': last_value }
-      last_comment = None
+      yield { 'key': bare_key, 'comments': preceeding_comments, 'value': last_value }
+      preceeding_comments = []
       expected = 'key'
   if expected != 'key':
     raise u"Unexpected EOF after key %s" % last_key
@@ -136,18 +136,52 @@ class Litany(object):
       for pair in pairs_of_strings(path, infile.read()):
           if not pair['key'] in skip_list:
             # Output our key value pair.
-            if pair.get('comment'):
-              output.write(pair['comment'] + "\n")
+            if pair.get('comments'):
+              output.write(pair['comments'][0] + "\n")
 
             key = u'"%s.%s"' % (id, pair['key'])
             output.write(u'%s = %s;\n' % (key, pair['value']))
 
       output.write("\n")
 
-  def process_from_file(self, input, language):
+  def process(self, input, language):
     # TODO How do we write this without losing the whitespace formatting of the original .strings files?
-    pass
 
+    pairs = list(pairs_of_strings('<input>', input.read()))
+
+    for file in self.config.get('strings', []):
+      self.process_to_file(pairs, file['path'] % {'lang': language}, file['id'])
+
+  def process_to_file(self, pairs, path, id):
+    # First read the destination so that we can recreate it.
+    with open(path, "rb", 'utf-16') as target_read:
+      existing_pairs = list(pairs_of_strings(path, target_read.read()))
+
+    print "Updating %s with %d keys..." % (path, len(existing_pairs))
+    matches = 0
+    new_values = 0
+    # Now write out each key and comment in the same order, substituting values from pairs when possible.
+    with open(path, "wb" 'utf-16') as target_write:
+      for pair in existing_pairs:
+        for comment in pair['comments']:
+          # XXX Why is .encode necessary? The codecs wrapping is supposed to take of that.
+          target_write.write((comment + '\n').encode('utf-16'))
+        value = pair['value']
+        source_key = "%s.%s" % (id, pair['key'])
+        for source_pair in pairs:
+          if source_pair['key'] == source_key:
+            value = source_pair['value']
+            matches += 1
+            if value != pair['value']:
+              new_values += 1
+            break
+        # Notice the leading space - this brings our version closer to the original from genstrings.
+        output_line = u' "%s" = %s;\n\n' % (pair['key'], value)
+        # XXX Why is .encode necessary? The codecs wrapping is supposed to take of that.
+        target_write.writelines([output_line.encode('utf-16')])
+
+    print "Found %d matching keys (%d updated)" % (matches, new_values)
+        
 if __name__ == '__main__':
   parser = argparse.ArgumentParser(description='Combine .strings file into a single global .strings file for translation.')
 
@@ -161,8 +195,10 @@ if __name__ == '__main__':
   litany = Litany(args.config or open('litany.yml', 'r', 'utf-8'))
   if args.action[0] == 'create_global':
     of = args.strings_file[0]
-    output = sys.stdout if of == '-' else open(args.strings_file[0], 'wb', 'utf-16')
+    output = sys.stdout if of == '-' else open(of, 'wb', 'utf-16')
     litany.write(output, args.language)
     output.close()
-
-  
+  else:
+    inpf = args.strings_file[0]
+    input = sys.stdin if inpf == '-' else open(inpf, 'rb', 'utf-8')
+    litany.process(input, args.language)
