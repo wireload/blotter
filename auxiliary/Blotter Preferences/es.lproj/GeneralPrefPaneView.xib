@@ -45,13 +45,13 @@
 					<object class="NSButton" id="39277589">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{95, 71}, {231, 18}}</string>
+						<string key="NSFrame">{{135, 70}, {300, 18}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="520784055">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">0</int>
-							<string key="NSContents">Show the next 7 days from today</string>
+							<string key="NSContents">Mostrar los próximos 7 días a partir de hoy.</string>
 							<object class="NSFont" key="NSSupport" id="129810539">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">13</double>
@@ -76,13 +76,13 @@
 					<object class="NSTextField" id="942139524">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{94, 20}, {244, 14}}</string>
+						<string key="NSFrame">{{134, 19}, {302, 14}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="202400882">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272761856</int>
-							<string key="NSContents">Activate Blotter in the Dock to bring it back.</string>
+							<string key="NSContents">Activar Blotter en el Dock para hacerlo más visible.</string>
 							<object class="NSFont" key="NSSupport">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">11</double>
@@ -112,13 +112,13 @@
 					<object class="NSTextField" id="671274566">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{265, 42}, {56, 17}}</string>
+						<string key="NSFrame">{{372, 42}, {56, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="305810239">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272630784</int>
-							<string key="NSContents">seconds</string>
+							<string key="NSContents">segundos</string>
 							<reference key="NSSupport" ref="129810539"/>
 							<reference key="NSControlView" ref="671274566"/>
 							<reference key="NSBackgroundColor" ref="1020045005"/>
@@ -136,7 +136,7 @@
 					<object class="NSTextField" id="66188539">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{210, 38}, {50, 22}}</string>
+						<string key="NSFrame">{{317, 38}, {50, 22}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="98714313">
@@ -229,13 +229,13 @@
 					<object class="NSButton" id="343803889">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{95, 40}, {115, 18}}</string>
+						<string key="NSFrame">{{135, 39}, {184, 18}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="941279270">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">0</int>
-							<string key="NSContents">Fade out after </string>
+							<string key="NSContents">Desaparecer después de</string>
 							<reference key="NSSupport" ref="129810539"/>
 							<reference key="NSControlView" ref="343803889"/>
 							<int key="NSButtonFlags">1211912703</int>
@@ -251,13 +251,13 @@
 					<object class="NSTextField" id="720789252">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{17, 93}, {75, 17}}</string>
+						<string key="NSFrame">{{17, 92}, {115, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="776088675">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">71304192</int>
-							<string key="NSContents">Behavior:</string>
+							<string key="NSContents">Comportamiento:</string>
 							<reference key="NSSupport" ref="129810539"/>
 							<reference key="NSControlView" ref="720789252"/>
 							<reference key="NSBackgroundColor" ref="1020045005"/>
@@ -267,13 +267,13 @@
 					<object class="NSTextField" id="762517277">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{17, 133}, {75, 17}}</string>
+						<string key="NSFrame">{{17, 132}, {115, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="268685653">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">71304192</int>
-							<string key="NSContents">Startup:</string>
+							<string key="NSContents">Arranque:</string>
 							<reference key="NSSupport" ref="129810539"/>
 							<reference key="NSControlView" ref="762517277"/>
 							<reference key="NSBackgroundColor" ref="1020045005"/>
@@ -283,13 +283,13 @@
 					<object class="NSButton" id="389516795">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{95, 91}, {231, 18}}</string>
+						<string key="NSFrame">{{135, 90}, {255, 18}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="1070356213">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">0</int>
-							<string key="NSContents">Show the next 7 days from today</string>
+							<string key="NSContents">Mostrar día de la semana con fecha</string>
 							<reference key="NSSupport" ref="129810539"/>
 							<reference key="NSControlView" ref="389516795"/>
 							<int key="NSButtonFlags">1211912703</int>
@@ -305,13 +305,13 @@
 					<object class="NSButton" id="932265259">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{95, 131}, {242, 18}}</string>
+						<string key="NSFrame">{{135, 130}, {242, 18}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="157948707">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">0</int>
-							<string key="NSContents">Launch at Login</string>
+							<string key="NSContents">Abrir al iniciar sesión</string>
 							<reference key="NSSupport" ref="129810539"/>
 							<reference key="NSControlView" ref="932265259"/>
 							<int key="NSButtonFlags">1211912703</int>
@@ -325,7 +325,7 @@
 						</object>
 					</object>
 				</object>
-				<string key="NSFrameSize">{355, 167}</string>
+				<string key="NSFrameSize">{453, 166}</string>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSUserDefaultsController" id="282032805">

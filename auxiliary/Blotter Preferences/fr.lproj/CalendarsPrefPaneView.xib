@@ -12,7 +12,6 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -39,7 +38,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="1005">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -66,7 +65,7 @@
 								<int key="NSTag">1</int>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">0</int>
-								<object class="NSCustomResource" key="NSNormalImage" id="729591990">
+								<object class="NSCustomResource" key="NSNormalImage" id="21751169">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">NSRadioButton</string>
 								</object>
@@ -86,7 +85,7 @@
 								<reference key="NSControlView" ref="804758204"/>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">0</int>
-								<reference key="NSNormalImage" ref="729591990"/>
+								<reference key="NSNormalImage" ref="21751169"/>
 								<reference key="NSAlternateImage" ref="781256633"/>
 								<string key="NSAlternateContents"/>
 								<int key="NSPeriodicDelay">400</int>
@@ -104,7 +103,7 @@
 							<reference key="NSSupport" ref="223543474"/>
 							<int key="NSButtonFlags">1211912703</int>
 							<int key="NSButtonFlags2">0</int>
-							<reference key="NSNormalImage" ref="729591990"/>
+							<reference key="NSNormalImage" ref="21751169"/>
 							<reference key="NSAlternateImage" ref="781256633"/>
 							<string key="NSAlternateContents"/>
 							<int key="NSPeriodicDelay">400</int>
@@ -305,7 +304,6 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{440, 356}</string>
-				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSUserDefaultsController" id="441258873">
@@ -535,7 +533,7 @@
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>{{1148, 167}, {440, 356}}</string>
+					<string>{{1478, 167}, {440, 356}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{628, 654}</string>
 					<string>{{217, 442}, {480, 272}}</string>

@@ -447,10 +447,10 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="827254361"/>
 							<reference ref="437884597"/>
-							<reference ref="551017980"/>
-							<reference ref="738986184"/>
 							<reference ref="138711095"/>
+							<reference ref="551017980"/>
 							<reference ref="219358551"/>
+							<reference ref="738986184"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Position View</string>
@@ -650,7 +650,7 @@
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABBkAAAw5eAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABBiAAAw5aAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -671,7 +671,7 @@
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABDJgAAw6gAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABC/AAAw6UAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>

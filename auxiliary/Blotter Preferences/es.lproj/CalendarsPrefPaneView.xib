@@ -12,6 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="1"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -38,14 +39,14 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="1005">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="NSMatrix" id="804758204">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{20, 294}, {145, 38}}</string>
+						<string key="NSFrame">{{20, 294}, {400, 38}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<int key="NSNumRows">2</int>
@@ -55,7 +56,7 @@
 							<object class="NSButtonCell" id="717580258">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">0</int>
-								<string key="NSContents">All Calendars</string>
+								<string key="NSContents">Todos los Calendarios</string>
 								<object class="NSFont" key="NSSupport" id="223543474">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -65,7 +66,7 @@
 								<int key="NSTag">1</int>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">0</int>
-								<object class="NSCustomResource" key="NSNormalImage" id="1043646116">
+								<object class="NSCustomResource" key="NSNormalImage" id="466152487">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">NSRadioButton</string>
 								</object>
@@ -80,19 +81,19 @@
 							<object class="NSButtonCell" id="448796142">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">0</int>
-								<string key="NSContents">Selected Calendars:</string>
+								<string key="NSContents">Calendarios Seleccionados</string>
 								<reference key="NSSupport" ref="223543474"/>
 								<reference key="NSControlView" ref="804758204"/>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">0</int>
-								<reference key="NSNormalImage" ref="1043646116"/>
+								<reference key="NSNormalImage" ref="466152487"/>
 								<reference key="NSAlternateImage" ref="781256633"/>
 								<string key="NSAlternateContents"/>
 								<int key="NSPeriodicDelay">400</int>
 								<int key="NSPeriodicInterval">75</int>
 							</object>
 						</object>
-						<string key="NSCellSize">{145, 18}</string>
+						<string key="NSCellSize">{400, 18}</string>
 						<string key="NSIntercellSpacing">{4, 2}</string>
 						<int key="NSMatrixFlags">1151868928</int>
 						<string key="NSCellClass">NSActionCell</string>
@@ -103,7 +104,7 @@
 							<reference key="NSSupport" ref="223543474"/>
 							<int key="NSButtonFlags">1211912703</int>
 							<int key="NSButtonFlags2">0</int>
-							<reference key="NSNormalImage" ref="1043646116"/>
+							<reference key="NSNormalImage" ref="466152487"/>
 							<reference key="NSAlternateImage" ref="781256633"/>
 							<string key="NSAlternateContents"/>
 							<int key="NSPeriodicDelay">400</int>
@@ -290,6 +291,7 @@
 								<int key="NSsFlags">1</int>
 								<reference key="NSTarget" ref="981560013"/>
 								<string key="NSAction">_doScroller:</string>
+								<double key="NSCurValue">0.020997375328083989</double>
 								<double key="NSPercent">0.94089834515366433</double>
 							</object>
 						</object>
@@ -304,6 +306,7 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{440, 356}</string>
+				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSUserDefaultsController" id="441258873">
@@ -533,7 +536,7 @@
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>{{1478, 167}, {440, 356}}</string>
+					<string>{{168, 616}, {440, 356}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{628, 654}</string>
 					<string>{{217, 442}, {480, 272}}</string>
@@ -1072,7 +1075,7 @@
 			<integer value="3000" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
-		<string key="IBDocument.LastKnownRelativeProjectPath">Blotter Preferences.xcodeproj</string>
+		<string key="IBDocument.LastKnownRelativeProjectPath">../Blotter Preferences.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<bool key="EncodedWithXMLCoder">YES</bool>
