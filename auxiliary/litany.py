@@ -4,7 +4,7 @@
 import argparse
 import sys
 import yaml
-from codecs import open
+import codecs
 import ply.lex as lex
 
 COMPLEX_TEST = u'''
@@ -46,18 +46,18 @@ def tokenize_strings(data):
     'SEMICOLON'
   )
 
-  t_COMMENT = r'/\*([^*]+|\*[^/])*\*/'
-  t_EQUALS = r'='
-  t_QUOTED_STRING = r'''"([^\\"]+|\\"|\\\\)*"'''
-  t_SEMICOLON = r';'
+  t_COMMENT = ur'/\*([^*]+|\*[^/])*\*/'
+  t_EQUALS = ur'='
+  t_QUOTED_STRING = ur'''"([^\\"]+|\\"|\\\\)*"'''
+  t_SEMICOLON = ur';'
 
   # Define a rule so we can track line numbers
   def t_newline(t):
-      r'\n+'
+      ur'\n+'
       t.lexer.lineno += len(t.value)
 
   # A string containing ignored characters (spaces and tabs)
-  t_ignore  = ' \t'
+  t_ignore  = u' \t'
 
   # Error handling rule
   def t_error(t):
@@ -106,7 +106,7 @@ def pairs_of_strings(file_name, data):
         raise "Expected ';' at %s:%d" % (file_name, token.lineno)
 
       bare_key = last_key[1:-1]
-      yield { 'key': bare_key, 'comments': preceeding_comments, 'value': last_value }
+      yield { 'key': bare_key, 'comments': preceeding_comments, 'value': unicode(last_value) }
       preceeding_comments = []
       expected = 'key'
   if expected != 'key':
@@ -124,12 +124,12 @@ class Litany(object):
 
   def write_from_file(self, language, path, id, comment, skip_list):
       path = path % {'lang': language}
-      infile = open(path, "rb", 'utf-16')
+      infile = codecs.open(path, "rb", 'utf-16')
 
       if comment:
-        output.write("""/*\n    %s\n\n    (Source = '%s')\n*/\n\n""" % (comment, path))
+        output.write(u"""/*\n    %s\n\n    (Source = '%s')\n*/\n\n""" % (comment, path))
       else:
-        output.write("""/*\n    '%s'\n*/\n\n""" % path)
+        output.write(u"""/*\n    '%s'\n*/\n\n""" % path)
 
       print id, path
 
@@ -154,18 +154,17 @@ class Litany(object):
 
   def process_to_file(self, pairs, path, id):
     # First read the destination so that we can recreate it.
-    with open(path, "rb", 'utf-16') as target_read:
+    with codecs.open(path, "rb", 'utf-16') as target_read:
       existing_pairs = list(pairs_of_strings(path, target_read.read()))
 
     print "Updating %s with %d keys..." % (path, len(existing_pairs))
     matches = 0
     new_values = 0
     # Now write out each key and comment in the same order, substituting values from pairs when possible.
-    with open(path, "wb" 'utf-16') as target_write:
+    with codecs.open(path, "wb", 'utf-16') as target_write:
       for pair in existing_pairs:
         for comment in pair['comments']:
-          # XXX Why is .encode necessary? The codecs wrapping is supposed to take of that.
-          target_write.write((unicode(comment) + u'\n').encode('utf-16'))
+          target_write.write(comment + u'\n')
         value = pair['value']
         source_key = "%s.%s" % (id, pair['key'])
         for source_pair in pairs:
@@ -175,9 +174,8 @@ class Litany(object):
             if value != pair['value']:
               new_values += 1
             break
-        output_line = u'/**/"%s" = %s;\n\n' % (pair['key'], value)
-        # XXX Why is .encode necessary? The codecs wrapping is supposed to take of that.
-        target_write.write(output_line.encode('utf-16'))
+        output_line = u'"%s" = %s;\n\n' % (pair['key'], value)
+        target_write.write(output_line)
 
     print "Found %d matching keys (%d updated)" % (matches, new_values)
         
@@ -191,13 +189,13 @@ if __name__ == '__main__':
 
   args  = parser.parse_args()
 
-  litany = Litany(args.config or open('litany.yml', 'r', 'utf-8'))
+  litany = Litany(args.config or codecs.open('litany.yml', 'r', 'utf-8'))
   if args.action[0] == 'create_global':
     of = args.strings_file[0]
-    output = sys.stdout if of == '-' else open(of, 'wb', 'utf-16')
+    output = sys.stdout if of == '-' else codecs.open(of, 'wb', 'utf-16')
     litany.write(output, args.language)
     output.close()
   else:
     inpf = args.strings_file[0]
-    input = sys.stdin if inpf == '-' else open(inpf, 'rb', 'utf-8')
+    input = sys.stdin if inpf == '-' else codecs.open(inpf, 'rb', 'utf-16')
     litany.process(input, args.language)
