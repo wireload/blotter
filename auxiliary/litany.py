@@ -76,6 +76,42 @@ def tokenize_strings(data):
       if not tok: break      # No more input
       yield tok
 
+def pairs_of_strings(file_name, data):
+  last_comment = None
+  last_key = None
+  last_value = None
+  expected = 'key'
+
+  for token in tokenize_strings(data):
+    if token.type == 'COMMENT':
+      last_comment = token.value
+      continue
+
+    if expected == 'key':
+      if token.type != 'QUOTED_STRING':
+        raise "Expected KEY at %s:%d" % (file_name, token.lineno)
+      last_key = token.value
+      expected = 'equals'
+    elif expected == 'equals':
+      if token.type != 'EQUALS':
+        raise "Expected '=' at %s:%d" % (file_name, token.lineno)
+      expected = 'value'
+    elif expected == 'value':
+      if token.type != 'QUOTED_STRING':
+        raise "Expected VALUE at %s:%d" % (file_name, token.lineno)
+      last_value = token.value
+      expected = 'semicolon'
+    elif expected == 'semicolon':
+      if token.type != 'SEMICOLON':
+        raise "Expected ';' at %s:%d" % (file_name, token.lineno)
+
+      bare_key = last_key[1:-1]
+      yield { 'key': bare_key, 'comment': last_comment, 'value': last_value }
+      last_comment = None
+      expected = 'key'
+  if expected != 'key':
+    raise u"Unexpected EOF after key %s" % last_key
+
 class Litany(object):
   def __init__(self, config_file):
     self.config = yaml.load(config_file.read())
@@ -96,51 +132,21 @@ class Litany(object):
         output.write("""/*\n    '%s'\n*/\n\n""" % path)
 
       print id, path
-      last_comment = None
-      last_key = None
-      last_value = None
-      expected = 'key'
 
-      for token in tokenize_strings(infile.read()):
-        if token.type == 'COMMENT':
-          last_comment = token.value
-          continue
-
-        if expected == 'key':
-          if token.type != 'QUOTED_STRING':
-            raise "Expected KEY at %s:%d" % (path, token.lineno)
-          last_key = token.value
-          expected = 'equals'
-        elif expected == 'equals':
-          if token.type != 'EQUALS':
-            raise "Expected '=' at %s:%d" % (path, token.lineno)
-          expected = 'value'
-        elif expected == 'value':
-          if token.type != 'QUOTED_STRING':
-            raise "Expected VALUE at %s:%d" % (path, token.lineno)
-          last_value = token.value
-          expected = 'semicolon'
-        elif expected == 'semicolon':
-          if token.type != 'SEMICOLON':
-            raise "Expected ';' at %s:%d" % (path, token.lineno)
-
-          bare_key = last_key[1:-1]
-          if not bare_key in skip_list:
+      for pair in pairs_of_strings(path, infile.read()):
+          if not pair['key'] in skip_list:
             # Output our key value pair.
-            if last_comment:
-              output.write(last_comment + "\n")
+            if pair.get('comment'):
+              output.write(pair['comment'] + "\n")
 
-            key = u'"%s.%s"' % (id, bare_key)
-            output.write(u'%s = %s;\n' % (key, last_value))
-
-          expected = 'key'
-
-      if expected != 'key':
-        raise u"Unexpected EOF after key %s" % last_key
+            key = u'"%s.%s"' % (id, pair['key'])
+            output.write(u'%s = %s;\n' % (key, pair['value']))
 
       output.write("\n")
-      
 
+  def process_from_file(self, input, language):
+    # TODO How do we write this without losing the whitespace formatting of the original .strings files?
+    pass
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser(description='Combine .strings file into a single global .strings file for translation.')
