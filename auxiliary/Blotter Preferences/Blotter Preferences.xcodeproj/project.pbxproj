@@ -38,6 +38,10 @@
 		283A5EE41306CDA2006B916A /* WLCountGreaterThanOneTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCountGreaterThanOneTransformer.h; sourceTree = "<group>"; };
 		283A5EE51306CDA2006B916A /* WLCountGreaterThanOneTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCountGreaterThanOneTransformer.m; sourceTree = "<group>"; };
 		2844DB25129DA197006C5545 /* BLCalendarFramer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLCalendarFramer.m; path = ../../BLCalendarFramer.m; sourceTree = SOURCE_ROOT; };
+		28A09A0B1308E3C5005EA923 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/PositionPrefPaneView.strings; sourceTree = "<group>"; };
+		28A09A0C1308E3C5005EA923 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		28A09A0D1308E3C5005EA923 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/GeneralPrefPaneView.strings; sourceTree = "<group>"; };
+		28A09A0E1308E3C5005EA923 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/CalendarsPrefPaneView.strings; sourceTree = "<group>"; };
 		28B54D52128398250037BF53 /* SS_PreferencePaneProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SS_PreferencePaneProtocol.h; sourceTree = "<group>"; };
 		28B54D55128398530037BF53 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
 		28B54D5C12839B8D0037BF53 /* GeneralPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralPrefController.h; sourceTree = "<group>"; };
@@ -72,7 +76,6 @@
 		E29DDD0612E9DCF500751CFA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E29DDD0712E9DCF700751CFA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E29DDD0812E9DCF900751CFA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E29DDD0A12E9DD0300751CFA /* kr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kr; path = kr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E29DDD1712E9DD1900751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
 		E29DDD1D12E9DD2900751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/PositionPrefPaneView.xib; sourceTree = "<group>"; };
 		E29DDD2312E9DD3800751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
@@ -85,9 +88,6 @@
 		E29DDD5612E9DE8400751CFA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/CalendarsPrefPaneView.strings; sourceTree = "<group>"; };
 		E29DDD5712E9DE8400751CFA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/GeneralPrefPaneView.strings; sourceTree = "<group>"; };
 		E29DDD5812E9DE8400751CFA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/PositionPrefPaneView.strings; sourceTree = "<group>"; };
-		E29DDD5912E9DE9400751CFA /* kr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kr; path = kr.lproj/CalendarsPrefPaneView.strings; sourceTree = "<group>"; };
-		E29DDD5A12E9DE9400751CFA /* kr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kr; path = kr.lproj/GeneralPrefPaneView.strings; sourceTree = "<group>"; };
-		E29DDD5B12E9DE9400751CFA /* kr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kr; path = kr.lproj/PositionPrefPaneView.strings; sourceTree = "<group>"; };
 		E29DDD5C12E9DE9F00751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/CalendarsPrefPaneView.strings; sourceTree = "<group>"; };
 		E29DDD5D12E9DE9F00751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/GeneralPrefPaneView.strings; sourceTree = "<group>"; };
 		E29DDD5E12E9DE9F00751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/PositionPrefPaneView.strings; sourceTree = "<group>"; };
@@ -274,6 +274,7 @@
 				se,
 				kr,
 				sv,
+				ko,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* General Preferences */;
 			projectDirPath = "";
@@ -332,8 +333,8 @@
 				E29DDD0612E9DCF500751CFA /* fr */,
 				E29DDD0712E9DCF700751CFA /* de */,
 				E29DDD0812E9DCF900751CFA /* es */,
-				E29DDD0A12E9DD0300751CFA /* kr */,
 				28E96D1E12EA30B3000AF199 /* sv */,
+				28A09A0C1308E3C5005EA923 /* ko */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -374,9 +375,9 @@
 				E29DDD4B12E9DE6C00751CFA /* de */,
 				E29DDD5312E9DE7700751CFA /* es */,
 				E29DDD5612E9DE8400751CFA /* fr */,
-				E29DDD5912E9DE9400751CFA /* kr */,
 				E29DDD5C12E9DE9F00751CFA /* ru */,
 				28E96D2412EA30B3000AF199 /* sv */,
+				28A09A0E1308E3C5005EA923 /* ko */,
 			);
 			name = CalendarsPrefPaneView.strings;
 			sourceTree = "<group>";
@@ -387,9 +388,9 @@
 				E29DDD4D12E9DE6C00751CFA /* de */,
 				E29DDD5412E9DE7700751CFA /* es */,
 				E29DDD5712E9DE8400751CFA /* fr */,
-				E29DDD5A12E9DE9400751CFA /* kr */,
 				E29DDD5D12E9DE9F00751CFA /* ru */,
 				28E96D2112EA30B3000AF199 /* sv */,
+				28A09A0D1308E3C5005EA923 /* ko */,
 			);
 			name = GeneralPrefPaneView.strings;
 			sourceTree = "<group>";
@@ -400,9 +401,9 @@
 				E29DDD4F12E9DE6C00751CFA /* de */,
 				E29DDD5512E9DE7700751CFA /* es */,
 				E29DDD5812E9DE8400751CFA /* fr */,
-				E29DDD5B12E9DE9400751CFA /* kr */,
 				E29DDD5E12E9DE9F00751CFA /* ru */,
 				28E96D1D12EA30B3000AF199 /* sv */,
+				28A09A0B1308E3C5005EA923 /* ko */,
 			);
 			name = PositionPrefPaneView.strings;
 			sourceTree = "<group>";
