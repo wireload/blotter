@@ -150,9 +150,9 @@ class Litany(object):
     pairs = list(pairs_of_strings('<input>', input.read()))
 
     for file in self.config.get('strings', []):
-      self.process_to_file(pairs, file['path'] % {'lang': language}, file['id'])
+      self.process_to_file(pairs, file['path'] % {'lang': language}, file['id'], file.get('skip', []))
 
-  def process_to_file(self, pairs, path, id):
+  def process_to_file(self, pairs, path, id, skip_list):
     # First read the destination so that we can recreate it.
     with codecs.open(path, "rb", 'utf-16') as target_read:
       existing_pairs = list(pairs_of_strings(path, target_read.read()))
@@ -166,19 +166,25 @@ class Litany(object):
         for comment in pair['comments']:
           target_write.write(comment + u'\n')
         value = pair['value']
-        source_key = "%s.%s" % (id, pair['key'])
-        for source_pair in pairs:
-          if source_pair['key'] == source_key:
-            value = source_pair['value']
-            matches += 1
-            if value != pair['value']:
-              new_values += 1
-            break
+
+        if not pair['key'] in skip_list:
+          source_key = "%s.%s" % (id, pair['key'])
+          for source_pair in pairs:
+            if source_pair['key'] == source_key:
+              value = source_pair['value']
+              matches += 1
+              if value != pair['value']:
+                new_values += 1
+              break
+          else:
+            #print u"Did not replace %s = %s" % (pair['key'], value)
+            pass
+
         output_line = u'"%s" = %s;\n\n' % (pair['key'], value)
         target_write.write(output_line)
 
     print "Found %d matching keys (%d updated)" % (matches, new_values)
-        
+
 if __name__ == '__main__':
   parser = argparse.ArgumentParser(description='Combine .strings file into a single global .strings file for translation.')
 
@@ -197,5 +203,5 @@ if __name__ == '__main__':
     output.close()
   else:
     inpf = args.strings_file[0]
-    input = sys.stdin if inpf == '-' else codecs.open(inpf, 'rb', 'utf-16')
+    input = sys.stdin if inpf == '-' else codecs.open(inpf, 'rb', 'utf-8')
     litany.process(input, args.language)
