@@ -303,7 +303,7 @@ static void * volatile sharedInstance = nil;
     NSCalendar *gregorian = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
     NSDateFormatter *dateFormatter = [[NSDateFormatter new] autorelease];
     if ([defaults boolForKey:@"PerDayDate"])
-        [dateFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"cccdMMM" options:0 locale:[NSLocale currentLocale]]];
+        [dateFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"eeedMMM" options:0 locale:[NSLocale currentLocale]]];
     else
         [dateFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:[NSLocale currentLocale]]];
 

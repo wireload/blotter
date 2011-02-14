@@ -49,7 +49,6 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    screenWindows = [NSMutableDictionary new];
     [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self
                                                               forKeyPath:@"values.CalendarPosition"
                                                                  options:0
@@ -70,6 +69,22 @@
         [self showPrefs:self];
         [userDefaults setBool:NO forKey:@"ShowPreferencesAtStartUp"];
     }
+
+    blotterWindow = [[WLFitWindow alloc] initWithContentRect:NSMakeRect(0, 0, 0, 0)
+                                                   styleMask:NSBorderlessWindowMask
+                                                     backing:NSBackingStoreBuffered
+                                                       defer:NO];
+    [blotterWindow setOpaque:NO];
+    [blotterWindow setHasShadow:NO];
+    [blotterWindow setBackgroundColor:[NSColor clearColor]];
+    [blotterWindow setIgnoresMouseEvents:YES];
+    [blotterWindow setPreferredBackingLocation:NSWindowBackingLocationVideoMemory];
+
+    DesktopView *overlayView = [[DesktopView alloc] initWithFrame:[[blotterWindow contentView] frame]];
+    [blotterWindow setContentView:overlayView];
+    [overlayView release];
+
+    // [blotterWindow useOptimizedDrawing:YES];
 
     [self show];
 }
@@ -105,39 +120,16 @@
 
 - (void)showOnScreen:(NSScreen *)screen
 {
-    NSNumber *screenID = [[screen deviceDescription] objectForKey:@"NSScreenNumber"];
-    WLFitWindow *window = [screenWindows objectForKey:screenID];
-    if (window == nil)
-    {
-        window = [[WLFitWindow alloc] initWithContentRect:NSMakeRect(0, 0, 0, 0)
-                                                styleMask:NSBorderlessWindowMask
-                                                  backing:NSBackingStoreBuffered
-                                                    defer:NO];
-        [window setOpaque:NO];
-        [window setHasShadow:NO];
-        [window setBackgroundColor:[NSColor clearColor]];
-        [window setIgnoresMouseEvents:YES];
-        [window setPreferredBackingLocation:NSWindowBackingLocationVideoMemory];
+    if (![blotterWindow fitWithinFrame:[screen visibleFrame]])
+        [(DesktopView *)[blotterWindow contentView] refresh];
 
-        DesktopView *overlayView = [[DesktopView alloc] initWithFrame:[[window contentView] frame]];
-        [window setContentView:overlayView];
-        [overlayView release];
-
-        // [window useOptimizedDrawing:YES];
-
-        [screenWindows setObject:window forKey:screenID];
-    }
-
-    if (![window fitWithinFrame:[screen visibleFrame]])
-        [(DesktopView *)[window contentView] refresh];
-
-    if (![window isVisible])
+    if (![blotterWindow isVisible])
     {
         // Not -1 anymore because that causes Blotter to disappear underneath the
         // wallpaper under certain (rare) circumstances, like when Quiet activates.
-        [window setLevel:kCGDesktopWindowLevel];
+        [blotterWindow setLevel:kCGDesktopWindowLevel];
         // Order back to get underneath the icons.
-        [window orderBack:NSApp];
+        [blotterWindow orderBack:NSApp];
     }
 }
 
@@ -151,22 +143,13 @@
     }];
 
     if (usedScreenIdx != NSNotFound)
-    {
         [self showOnScreen:[screens objectAtIndex:usedScreenIdx]];
-        // Windows on other screens should be hidden.
-        NSMutableDictionary *windowsToHide = [screenWindows mutableCopy];
-        [windowsToHide removeObjectForKey:usedScreenID];
-        for (NSWindow *window in [windowsToHide allValues]) {
-            [window orderOut:nil];
-        }
-    }
-    // If
 }
 
 - (void)dealloc
 {
     [[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self];
-    [screenWindows release];
+    [blotterWindow release];
     [prefs release];
     [super dealloc];
 }

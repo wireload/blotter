@@ -14,8 +14,10 @@
 #import "BLCalendarFramer.h"
 
 
+@class WLFitWindow;
+
 @interface DeskboardAppDelegate : NSObject <NSApplicationDelegate> {
-    NSMutableDictionary *screenWindows;
+    WLFitWindow *blotterWindow;
 
     SS_PrefsController *prefs;
 }
