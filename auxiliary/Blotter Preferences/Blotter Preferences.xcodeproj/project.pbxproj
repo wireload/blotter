@@ -42,6 +42,18 @@
 		28A09A0C1308E3C5005EA923 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		28A09A0D1308E3C5005EA923 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/GeneralPrefPaneView.strings; sourceTree = "<group>"; };
 		28A09A0E1308E3C5005EA923 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/CalendarsPrefPaneView.strings; sourceTree = "<group>"; };
+		28A09A781308E763005EA923 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
+		28A09A791308E766005EA923 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
+		28A09A7A1308E768005EA923 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
+		28A09A7B1308E76A005EA923 /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = ko.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
+		28A09A7C1308E777005EA923 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/PositionPrefPaneView.xib; sourceTree = "<group>"; };
+		28A09A7D1308E779005EA923 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/PositionPrefPaneView.xib; sourceTree = "<group>"; };
+		28A09A7E1308E77C005EA923 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/PositionPrefPaneView.xib; sourceTree = "<group>"; };
+		28A09A7F1308E77E005EA923 /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = ko.lproj/PositionPrefPaneView.xib; sourceTree = "<group>"; };
+		28A09A801308E787005EA923 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
+		28A09A811308E789005EA923 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
+		28A09A821308E78C005EA923 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
+		28A09A831308E78E005EA923 /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = ko.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
 		28B54D52128398250037BF53 /* SS_PreferencePaneProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SS_PreferencePaneProtocol.h; sourceTree = "<group>"; };
 		28B54D55128398530037BF53 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
 		28B54D5C12839B8D0037BF53 /* GeneralPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralPrefController.h; sourceTree = "<group>"; };
@@ -345,6 +357,10 @@
 				28B54D55128398530037BF53 /* English */,
 				E29DDD1712E9DD1900751CFA /* ru */,
 				28E96D2812EA30C3000AF199 /* sv */,
+				28A09A781308E763005EA923 /* de */,
+				28A09A791308E766005EA923 /* es */,
+				28A09A7A1308E768005EA923 /* fr */,
+				28A09A7B1308E76A005EA923 /* ko */,
 			);
 			name = GeneralPrefPaneView.xib;
 			sourceTree = "<group>";
@@ -355,6 +371,10 @@
 				28B54D801283B57E0037BF53 /* English */,
 				E29DDD1D12E9DD2900751CFA /* ru */,
 				28E96D2912EA30CB000AF199 /* sv */,
+				28A09A7C1308E777005EA923 /* de */,
+				28A09A7D1308E779005EA923 /* es */,
+				28A09A7E1308E77C005EA923 /* fr */,
+				28A09A7F1308E77E005EA923 /* ko */,
 			);
 			name = PositionPrefPaneView.xib;
 			sourceTree = "<group>";
@@ -365,6 +385,10 @@
 				E2FE5EDD12D7505800003E48 /* English */,
 				E29DDD2312E9DD3800751CFA /* ru */,
 				28E96D2A12EA30D4000AF199 /* sv */,
+				28A09A801308E787005EA923 /* de */,
+				28A09A811308E789005EA923 /* es */,
+				28A09A821308E78C005EA923 /* fr */,
+				28A09A831308E78E005EA923 /* ko */,
 			);
 			name = CalendarsPrefPaneView.xib;
 			sourceTree = "<group>";

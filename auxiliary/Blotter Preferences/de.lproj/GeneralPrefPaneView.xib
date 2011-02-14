@@ -51,7 +51,7 @@
 						<object class="NSButtonCell" key="NSCell" id="520784055">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">0</int>
-							<string key="NSContents">Show the next 7 days from today</string>
+							<string key="NSContents">Nächste sieben Tage ab heute anzeigen</string>
 							<object class="NSFont" key="NSSupport" id="129810539">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">13</double>
@@ -82,7 +82,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="202400882">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272761856</int>
-							<string key="NSContents">Activate Blotter in the Dock to bring it back.</string>
+							<string key="NSContents">Blotter zum Wiederanzeigen im Dock aktivieren</string>
 							<object class="NSFont" key="NSSupport">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">11</double>
@@ -118,7 +118,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="305810239">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272630784</int>
-							<string key="NSContents">seconds</string>
+							<string key="NSContents">Sekunden</string>
 							<reference key="NSSupport" ref="129810539"/>
 							<reference key="NSControlView" ref="671274566"/>
 							<reference key="NSBackgroundColor" ref="1020045005"/>
@@ -235,7 +235,7 @@
 						<object class="NSButtonCell" key="NSCell" id="941279270">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">0</int>
-							<string key="NSContents">Fade out after </string>
+							<string key="NSContents">Ausblenden nach</string>
 							<reference key="NSSupport" ref="129810539"/>
 							<reference key="NSControlView" ref="343803889"/>
 							<int key="NSButtonFlags">1211912703</int>
@@ -257,7 +257,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="776088675">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">71304192</int>
-							<string key="NSContents">Behavior:</string>
+							<string key="NSContents">Verhalten:</string>
 							<reference key="NSSupport" ref="129810539"/>
 							<reference key="NSControlView" ref="720789252"/>
 							<reference key="NSBackgroundColor" ref="1020045005"/>
@@ -289,7 +289,7 @@
 						<object class="NSButtonCell" key="NSCell" id="1070356213">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">0</int>
-							<string key="NSContents">Show the next 7 days from today</string>
+							<string key="NSContents"/>
 							<reference key="NSSupport" ref="129810539"/>
 							<reference key="NSControlView" ref="389516795"/>
 							<int key="NSButtonFlags">1211912703</int>
@@ -311,7 +311,7 @@
 						<object class="NSButtonCell" key="NSCell" id="157948707">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">0</int>
-							<string key="NSContents">Launch at Login</string>
+							<string key="NSContents">Bei Anmeldung starten</string>
 							<reference key="NSSupport" ref="129810539"/>
 							<reference key="NSControlView" ref="932265259"/>
 							<int key="NSButtonFlags">1211912703</int>
