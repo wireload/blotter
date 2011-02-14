@@ -165,7 +165,7 @@ class Litany(object):
       for pair in existing_pairs:
         for comment in pair['comments']:
           # XXX Why is .encode necessary? The codecs wrapping is supposed to take of that.
-          target_write.write((comment + '\n').encode('utf-16'))
+          target_write.write((unicode(comment) + u'\n').encode('utf-16'))
         value = pair['value']
         source_key = "%s.%s" % (id, pair['key'])
         for source_pair in pairs:
@@ -175,10 +175,9 @@ class Litany(object):
             if value != pair['value']:
               new_values += 1
             break
-        # Notice the leading space - this brings our version closer to the original from genstrings.
-        output_line = u' "%s" = %s;\n\n' % (pair['key'], value)
+        output_line = u'/**/"%s" = %s;\n\n' % (pair['key'], value)
         # XXX Why is .encode necessary? The codecs wrapping is supposed to take of that.
-        target_write.writelines([output_line.encode('utf-16')])
+        target_write.write(output_line.encode('utf-16'))
 
     print "Found %d matching keys (%d updated)" % (matches, new_values)
         
