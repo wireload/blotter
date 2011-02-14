@@ -45,7 +45,7 @@
 					<object class="NSMatrix" id="804758204">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{20, 294}, {145, 38}}</string>
+						<string key="NSFrame">{{20, 294}, {400, 38}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<int key="NSNumRows">2</int>
@@ -65,7 +65,7 @@
 								<int key="NSTag">1</int>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">0</int>
-								<object class="NSCustomResource" key="NSNormalImage" id="502905863">
+								<object class="NSCustomResource" key="NSNormalImage" id="438400000">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">NSRadioButton</string>
 								</object>
@@ -85,14 +85,14 @@
 								<reference key="NSControlView" ref="804758204"/>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">0</int>
-								<reference key="NSNormalImage" ref="502905863"/>
+								<reference key="NSNormalImage" ref="438400000"/>
 								<reference key="NSAlternateImage" ref="781256633"/>
 								<string key="NSAlternateContents"/>
 								<int key="NSPeriodicDelay">400</int>
 								<int key="NSPeriodicInterval">75</int>
 							</object>
 						</object>
-						<string key="NSCellSize">{145, 18}</string>
+						<string key="NSCellSize">{400, 18}</string>
 						<string key="NSIntercellSpacing">{4, 2}</string>
 						<int key="NSMatrixFlags">1151868928</int>
 						<string key="NSCellClass">NSActionCell</string>
@@ -103,7 +103,7 @@
 							<reference key="NSSupport" ref="223543474"/>
 							<int key="NSButtonFlags">1211912703</int>
 							<int key="NSButtonFlags2">0</int>
-							<reference key="NSNormalImage" ref="502905863"/>
+							<reference key="NSNormalImage" ref="438400000"/>
 							<reference key="NSAlternateImage" ref="781256633"/>
 							<string key="NSAlternateContents"/>
 							<int key="NSPeriodicDelay">400</int>

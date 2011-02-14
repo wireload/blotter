@@ -12,6 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="1"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -38,20 +39,20 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="1005">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="NSButton" id="39277589">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{95, 71}, {231, 18}}</string>
+						<string key="NSFrame">{{128, 70}, {345, 18}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="520784055">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">0</int>
-							<string key="NSContents">Show the next 7 days from today</string>
+							<string key="NSContents">Montrer les 7 prochains jours à partir d'aujourd'hui</string>
 							<object class="NSFont" key="NSSupport" id="129810539">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">13</double>
@@ -76,13 +77,13 @@
 					<object class="NSTextField" id="942139524">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{94, 20}, {244, 14}}</string>
+						<string key="NSFrame">{{127, 19}, {244, 14}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="202400882">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272761856</int>
-							<string key="NSContents">Activate Blotter in the Dock to bring it back.</string>
+							<string key="NSContents">Activer Blotter sur le dock pour le ramener</string>
 							<object class="NSFont" key="NSSupport">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">11</double>
@@ -112,13 +113,13 @@
 					<object class="NSTextField" id="671274566">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{265, 42}, {56, 17}}</string>
+						<string key="NSFrame">{{321, 41}, {56, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="305810239">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272630784</int>
-							<string key="NSContents">seconds</string>
+							<string key="NSContents">secondes</string>
 							<reference key="NSSupport" ref="129810539"/>
 							<reference key="NSControlView" ref="671274566"/>
 							<reference key="NSBackgroundColor" ref="1020045005"/>
@@ -136,7 +137,7 @@
 					<object class="NSTextField" id="66188539">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{210, 38}, {50, 22}}</string>
+						<string key="NSFrame">{{265, 38}, {50, 22}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="98714313">
@@ -229,13 +230,13 @@
 					<object class="NSButton" id="343803889">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{95, 40}, {115, 18}}</string>
+						<string key="NSFrame">{{128, 39}, {141, 18}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="941279270">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">0</int>
-							<string key="NSContents">Fade out after </string>
+							<string key="NSContents">Disparaître après</string>
 							<reference key="NSSupport" ref="129810539"/>
 							<reference key="NSControlView" ref="343803889"/>
 							<int key="NSButtonFlags">1211912703</int>
@@ -251,13 +252,13 @@
 					<object class="NSTextField" id="720789252">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{17, 93}, {75, 17}}</string>
+						<string key="NSFrame">{{17, 92}, {108, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="776088675">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">71304192</int>
-							<string key="NSContents">Behavior:</string>
+							<string key="NSContents">Comportement :</string>
 							<reference key="NSSupport" ref="129810539"/>
 							<reference key="NSControlView" ref="720789252"/>
 							<reference key="NSBackgroundColor" ref="1020045005"/>
@@ -267,13 +268,13 @@
 					<object class="NSTextField" id="762517277">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{17, 133}, {75, 17}}</string>
+						<string key="NSFrame">{{17, 132}, {108, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="268685653">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">71304192</int>
-							<string key="NSContents">Startup:</string>
+							<string key="NSContents">Démarrage :</string>
 							<reference key="NSSupport" ref="129810539"/>
 							<reference key="NSControlView" ref="762517277"/>
 							<reference key="NSBackgroundColor" ref="1020045005"/>
@@ -283,13 +284,13 @@
 					<object class="NSButton" id="389516795">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{95, 91}, {231, 18}}</string>
+						<string key="NSFrame">{{128, 90}, {305, 18}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="1070356213">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">0</int>
-							<string key="NSContents">Show the next 7 days from today</string>
+							<string key="NSContents">Afficher les dates en semaine</string>
 							<reference key="NSSupport" ref="129810539"/>
 							<reference key="NSControlView" ref="389516795"/>
 							<int key="NSButtonFlags">1211912703</int>
@@ -305,13 +306,13 @@
 					<object class="NSButton" id="932265259">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{95, 131}, {242, 18}}</string>
+						<string key="NSFrame">{{128, 130}, {242, 18}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="157948707">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">0</int>
-							<string key="NSContents">Launch at Login</string>
+							<string key="NSContents">Lancer à la connexion</string>
 							<reference key="NSSupport" ref="129810539"/>
 							<reference key="NSControlView" ref="932265259"/>
 							<int key="NSButtonFlags">1211912703</int>
@@ -325,7 +326,8 @@
 						</object>
 					</object>
 				</object>
-				<string key="NSFrameSize">{355, 167}</string>
+				<string key="NSFrameSize">{491, 166}</string>
+				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSUserDefaultsController" id="282032805">
@@ -689,7 +691,7 @@
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>{{93, 874}, {355, 167}}</string>
+					<string>{{93, 875}, {491, 166}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform"/>
 					<string>{628, 654}</string>

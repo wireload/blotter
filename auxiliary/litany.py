@@ -4,7 +4,7 @@
 import argparse
 import sys
 import yaml
-from codecs import open
+import codecs
 import ply.lex as lex
 
 COMPLEX_TEST = u'''
@@ -46,18 +46,18 @@ def tokenize_strings(data):
     'SEMICOLON'
   )
 
-  t_COMMENT = r'/\*([^*]+|\*[^/])*\*/'
-  t_EQUALS = r'='
-  t_QUOTED_STRING = r'''"([^\\"]+|\\"|\\\\)*"'''
-  t_SEMICOLON = r';'
+  t_COMMENT = ur'/\*([^*]+|\*[^/])*\*/'
+  t_EQUALS = ur'='
+  t_QUOTED_STRING = ur'''"([^\\"]+|\\"|\\\\)*"'''
+  t_SEMICOLON = ur';'
 
   # Define a rule so we can track line numbers
   def t_newline(t):
-      r'\n+'
+      ur'\n+'
       t.lexer.lineno += len(t.value)
 
   # A string containing ignored characters (spaces and tabs)
-  t_ignore  = ' \t'
+  t_ignore  = u' \t'
 
   # Error handling rule
   def t_error(t):
@@ -76,6 +76,42 @@ def tokenize_strings(data):
       if not tok: break      # No more input
       yield tok
 
+def pairs_of_strings(file_name, data):
+  preceeding_comments = []
+  last_key = None
+  last_value = None
+  expected = 'key'
+
+  for token in tokenize_strings(data):
+    if token.type == 'COMMENT':
+      preceeding_comments.append(token.value)
+      continue
+
+    if expected == 'key':
+      if token.type != 'QUOTED_STRING':
+        raise "Expected KEY at %s:%d" % (file_name, token.lineno)
+      last_key = token.value
+      expected = 'equals'
+    elif expected == 'equals':
+      if token.type != 'EQUALS':
+        raise "Expected '=' at %s:%d" % (file_name, token.lineno)
+      expected = 'value'
+    elif expected == 'value':
+      if token.type != 'QUOTED_STRING':
+        raise "Expected VALUE at %s:%d" % (file_name, token.lineno)
+      last_value = token.value
+      expected = 'semicolon'
+    elif expected == 'semicolon':
+      if token.type != 'SEMICOLON':
+        raise "Expected ';' at %s:%d" % (file_name, token.lineno)
+
+      bare_key = last_key[1:-1]
+      yield { 'key': bare_key, 'comments': preceeding_comments, 'value': unicode(last_value) }
+      preceeding_comments = []
+      expected = 'key'
+  if expected != 'key':
+    raise u"Unexpected EOF after key %s" % last_key
+
 class Litany(object):
   def __init__(self, config_file):
     self.config = yaml.load(config_file.read())
@@ -88,59 +124,66 @@ class Litany(object):
 
   def write_from_file(self, language, path, id, comment, skip_list):
       path = path % {'lang': language}
-      infile = open(path, "rb", 'utf-16')
+      infile = codecs.open(path, "rb", 'utf-16')
 
       if comment:
-        output.write("""/*\n    %s\n\n    (Source = '%s')\n*/\n\n""" % (comment, path))
+        output.write(u"""/*\n    %s\n\n    (Source = '%s')\n*/\n\n""" % (comment, path))
       else:
-        output.write("""/*\n    '%s'\n*/\n\n""" % path)
+        output.write(u"""/*\n    '%s'\n*/\n\n""" % path)
 
       print id, path
-      last_comment = None
-      last_key = None
-      last_value = None
-      expected = 'key'
 
-      for token in tokenize_strings(infile.read()):
-        if token.type == 'COMMENT':
-          last_comment = token.value
-          continue
-
-        if expected == 'key':
-          if token.type != 'QUOTED_STRING':
-            raise "Expected KEY at %s:%d" % (path, token.lineno)
-          last_key = token.value
-          expected = 'equals'
-        elif expected == 'equals':
-          if token.type != 'EQUALS':
-            raise "Expected '=' at %s:%d" % (path, token.lineno)
-          expected = 'value'
-        elif expected == 'value':
-          if token.type != 'QUOTED_STRING':
-            raise "Expected VALUE at %s:%d" % (path, token.lineno)
-          last_value = token.value
-          expected = 'semicolon'
-        elif expected == 'semicolon':
-          if token.type != 'SEMICOLON':
-            raise "Expected ';' at %s:%d" % (path, token.lineno)
-
-          bare_key = last_key[1:-1]
-          if not bare_key in skip_list:
+      for pair in pairs_of_strings(path, infile.read()):
+          if not pair['key'] in skip_list:
             # Output our key value pair.
-            if last_comment:
-              output.write(last_comment + "\n")
+            if pair.get('comments'):
+              output.write(pair['comments'][0] + "\n")
 
-            key = u'"%s.%s"' % (id, bare_key)
-            output.write(u'%s = %s;\n' % (key, last_value))
-
-          expected = 'key'
-
-      if expected != 'key':
-        raise u"Unexpected EOF after key %s" % last_key
+            key = u'"%s.%s"' % (id, pair['key'])
+            output.write(u'%s = %s;\n' % (key, pair['value']))
 
       output.write("\n")
-      
 
+  def process(self, input, language):
+    # TODO How do we write this without losing the whitespace formatting of the original .strings files?
+
+    pairs = list(pairs_of_strings('<input>', input.read()))
+
+    for file in self.config.get('strings', []):
+      self.process_to_file(pairs, file['path'] % {'lang': language}, file['id'], file.get('skip', []))
+
+  def process_to_file(self, pairs, path, id, skip_list):
+    # First read the destination so that we can recreate it.
+    with codecs.open(path, "rb", 'utf-16') as target_read:
+      existing_pairs = list(pairs_of_strings(path, target_read.read()))
+
+    print "Updating %s with %d keys..." % (path, len(existing_pairs))
+    matches = 0
+    new_values = 0
+    # Now write out each key and comment in the same order, substituting values from pairs when possible.
+    with codecs.open(path, "wb", 'utf-16') as target_write:
+      for pair in existing_pairs:
+        for comment in pair['comments']:
+          target_write.write(comment + u'\n')
+        value = pair['value']
+
+        if not pair['key'] in skip_list:
+          source_key = "%s.%s" % (id, pair['key'])
+          for source_pair in pairs:
+            if source_pair['key'] == source_key:
+              value = source_pair['value']
+              matches += 1
+              if value != pair['value']:
+                new_values += 1
+              break
+          else:
+            #print u"Did not replace %s = %s" % (pair['key'], value)
+            pass
+
+        output_line = u'"%s" = %s;\n\n' % (pair['key'], value)
+        target_write.write(output_line)
+
+    print "Found %d matching keys (%d updated)" % (matches, new_values)
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser(description='Combine .strings file into a single global .strings file for translation.')
@@ -152,11 +195,13 @@ if __name__ == '__main__':
 
   args  = parser.parse_args()
 
-  litany = Litany(args.config or open('litany.yml', 'r', 'utf-8'))
+  litany = Litany(args.config or codecs.open('litany.yml', 'r', 'utf-8'))
   if args.action[0] == 'create_global':
     of = args.strings_file[0]
-    output = sys.stdout if of == '-' else open(args.strings_file[0], 'wb', 'utf-16')
+    output = sys.stdout if of == '-' else codecs.open(of, 'wb', 'utf-16')
     litany.write(output, args.language)
     output.close()
-
-  
+  else:
+    inpf = args.strings_file[0]
+    input = sys.stdin if inpf == '-' else codecs.open(inpf, 'rb', 'utf-8')
+    litany.process(input, args.language)
