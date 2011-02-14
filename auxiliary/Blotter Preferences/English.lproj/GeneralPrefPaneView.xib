@@ -313,7 +313,7 @@
 						<object class="NSButtonCell" key="NSCell" id="157948707">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">0</int>
-							<string key="NSContents">Launch at Login</string>
+							<string key="NSContents">Open at Login</string>
 							<reference key="NSSupport" ref="129810539"/>
 							<reference key="NSControlView" ref="932265259"/>
 							<int key="NSButtonFlags">1211912703</int>
