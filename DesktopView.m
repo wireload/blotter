@@ -241,13 +241,13 @@
 - (NSString *)_monthAndYearOfDateInMilliseconds:(NSNumber *)milliseconds {
     NSString *format = [NSDateFormatter dateFormatFromTemplate:@"MMMMy" options:0 locale:[NSLocale currentLocale]];
     [dateFormatter setDateFormat:format];
-    return [dateFormatter stringFromDate:[NSDate dateWithMillisecondsIntervalSince1970:[milliseconds integerValue]]];
+    return [dateFormatter stringFromDate:[NSDate dateWithMillisecondsIntervalSince1970:[milliseconds unsignedLongLongValue]]];
 }
 
 - (NSString *)_weekdayOfDateInMilliseconds:(NSNumber *)milliseconds {
     NSString *format = [NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:[NSLocale currentLocale]];
     [dateFormatter setDateFormat:format];
-    return [dateFormatter stringFromDate:[NSDate dateWithMillisecondsIntervalSince1970:[milliseconds integerValue]]];
+    return [dateFormatter stringFromDate:[NSDate dateWithMillisecondsIntervalSince1970:[milliseconds unsignedLongLongValue]]];
 }
 
 @end
