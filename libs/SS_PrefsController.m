@@ -164,10 +164,10 @@
     if (usesTexturedWindow) {
         styleMask = (styleMask | NSTexturedBackgroundWindowMask);
     }
-    prefsWindow = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 350, 200)
-                                              styleMask:styleMask
-                                                backing:NSBackingStoreBuffered
-                                                  defer:NO];
+    prefsWindow = [[WLClosableWindow alloc] initWithContentRect:NSMakeRect(0, 0, 350, 200)
+                                                      styleMask:styleMask
+                                                        backing:NSBackingStoreBuffered
+                                                          defer:NO];
     
     [prefsWindow setReleasedWhenClosed:NO];
     [prefsWindow setTitle:@"Preferences"]; // initial default title
@@ -499,7 +499,7 @@ float ToolbarHeightForWindow(NSWindow *window)
 // ************************************************
 
 
-- (NSWindow *)preferencesWindow
+- (WLClosableWindow *)preferencesWindow
 {
     return prefsWindow;
 }

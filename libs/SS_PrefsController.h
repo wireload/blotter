@@ -1,10 +1,11 @@
 /* SS_PrefsController */
 
 #import <Cocoa/Cocoa.h>
+#import "WLClosableWindow.h"
 
 @interface SS_PrefsController : NSObject
 {
-    NSWindow *prefsWindow;
+    WLClosableWindow *prefsWindow;
     NSMutableDictionary *preferencePanes;
     NSMutableArray *panesOrder;
 
@@ -53,7 +54,7 @@ float ToolbarHeightForWindow(NSWindow *window);
 - (void)prefsToolbarItemClicked:(NSToolbarItem*)item;
 
 // Accessors
-- (NSWindow *)preferencesWindow;
+- (WLClosableWindow *)preferencesWindow;
 - (NSString *)bundleExtension;
 - (NSString *)searchPath;
 - (NSBundle *)bundle;
