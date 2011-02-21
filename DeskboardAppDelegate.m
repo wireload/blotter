@@ -62,14 +62,6 @@
                                                                  options:0
                                                                  context:NULL];
 
-    // Show prefs at first start
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSNumber *showPrefsAtStartup = [userDefaults objectForKey:@"ShowPreferencesAtStartUp"];
-    if (showPrefsAtStartup == nil || [showPrefsAtStartup boolValue]) {
-        [self showPrefs:self];
-        [userDefaults setBool:NO forKey:@"ShowPreferencesAtStartUp"];
-    }
-
     blotterWindow = [[WLFitWindow alloc] initWithContentRect:NSMakeRect(0, 0, 0, 0)
                                                    styleMask:NSBorderlessWindowMask
                                                      backing:NSBackingStoreBuffered
@@ -86,6 +78,23 @@
 
     // [blotterWindow useOptimizedDrawing:YES];
 
+    [self show];
+}
+
+- (void)applicationDidBecomeActive:(NSNotification *)aNotification
+{
+    // TODO: 1.3 Show about pref pane at first start.
+//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//    NSNumber *showPrefsAtStartup = [userDefaults objectForKey:@"ShowPreferencesAtStartUp"];
+//    if (showPrefsAtStartup == nil || [showPrefsAtStartup boolValue]) {
+//        [self showPrefs:self];
+//        [userDefaults setBool:NO forKey:@"ShowPreferencesAtStartUp"];
+//    }
+    [self showPrefs:self];
+}
+
+-(void)applicationDidChangeScreenParameters:(NSNotification *)aNotification
+{
     [self show];
 }
 
@@ -109,11 +118,6 @@
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    [self show];
-}
-
--(void)applicationDidChangeScreenParameters:(NSNotification *)aNotification
 {
     [self show];
 }
