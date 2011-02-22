@@ -18,6 +18,8 @@
 
 @interface DeskboardAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate> {
     WLFitWindow *blotterWindow;
+    NSStatusItem *statusItem;
+    IBOutlet NSMenu *statusMenu;
 
     SS_PrefsController *prefs;
 }

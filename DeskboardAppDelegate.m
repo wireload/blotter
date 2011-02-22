@@ -62,6 +62,12 @@
                                                                  options:0
                                                                  context:NULL];
 
+    // Configure system-wide menubar item
+    statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength] retain];;
+    [statusItem setTitle:@"Blotter"];
+    [statusItem setHighlightMode:YES];
+    [statusItem setMenu:statusMenu];
+
     blotterWindow = [[WLFitWindow alloc] initWithContentRect:NSMakeRect(0, 0, 0, 0)
                                                    styleMask:NSBorderlessWindowMask
                                                      backing:NSBackingStoreBuffered
