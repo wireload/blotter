@@ -22,7 +22,7 @@
     [super update];
 }
 
-- (BOOL)fitWithinFrame:(NSRect)aFrame
+- (void)fitWithinFrame:(NSRect)aFrame
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -35,10 +35,7 @@
     {
         NSLog(@"Placing at %@", NSStringFromRect(desiredFrame));
         [self setFrame:desiredFrame display:YES];
-        return YES;
     }
-    else
-        return NO;
 }
 
 @end

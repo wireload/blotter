@@ -16,7 +16,7 @@
 
 @class WLFitWindow;
 
-@interface DeskboardAppDelegate : NSObject <NSApplicationDelegate> {
+@interface DeskboardAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate> {
     WLFitWindow *blotterWindow;
 
     SS_PrefsController *prefs;

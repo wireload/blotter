@@ -13,9 +13,8 @@
 
 /*!
     @abstract   Fits currend window withing a given frame according to user settings.
-    @result     YES if frame is changed, otherwise NO.
 */
 
-- (BOOL)fitWithinFrame:(NSRect)aFrame;
+- (void)fitWithinFrame:(NSRect)aFrame;
 
 @end

@@ -75,6 +75,7 @@
     DesktopView *overlayView = [[DesktopView alloc] initWithFrame:[[blotterWindow contentView] frame]];
     [blotterWindow setContentView:overlayView];
     [overlayView release];
+    [blotterWindow setDelegate:self];
 
     // [blotterWindow useOptimizedDrawing:YES];
 
@@ -124,8 +125,7 @@
 
 - (void)showOnScreen:(NSScreen *)screen
 {
-    if (![blotterWindow fitWithinFrame:[screen visibleFrame]])
-        [(DesktopView *)[blotterWindow contentView] refresh];
+    [blotterWindow fitWithinFrame:[screen visibleFrame]];
 
     if (![blotterWindow isVisible])
     {
@@ -146,8 +146,12 @@
         return (BOOL)([[[obj deviceDescription] objectForKey:@"NSScreenNumber"] isEqualToNumber:usedScreenID]);
     }];
 
+    // If user selected screen is connected, use it. Otherwise use screen with main menu.
     if (usedScreenIdx != NSNotFound)
         [self showOnScreen:[screens objectAtIndex:usedScreenIdx]];
+    else
+        [self showOnScreen:[[NSScreen screens] objectAtIndex:0]];
+
 }
 
 - (void)dealloc
@@ -156,6 +160,14 @@
     [blotterWindow release];
     [prefs release];
     [super dealloc];
+}
+
+
+#pragma mark NSWindowDelegate
+
+- (void)windowDidResize:(NSNotification *)notification
+{
+    [(DesktopView *)[blotterWindow contentView] refresh];
 }
 
 @end
