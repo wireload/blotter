@@ -12,6 +12,13 @@
 #import "BLCalendarFramer.h"
 #import "WLFitWindow.h"
 
+@interface DeskboardAppDelegate (/* Private */)
+
+- (void)_addStatusItem;
+
+@end
+
+
 @implementation DeskboardAppDelegate
 
 + (void)initialize
@@ -44,6 +51,9 @@
             NSNumber *mainScreenID = [[[NSScreen mainScreen] deviceDescription] objectForKey:@"NSScreenNumber"];
             [userDefaults setObject:mainScreenID forKey:@"ScreenIdentifier"];
         }
+
+        if ([userDefaults objectForKey:@"ShowInMenuBar"] == nil)
+            [userDefaults setBool:YES forKey:@"ShowInMenuBar"];
     }
 }
 
@@ -61,12 +71,6 @@
                                                               forKeyPath:@"values.ScreenIdentifier"
                                                                  options:0
                                                                  context:NULL];
-
-    // Configure system-wide menubar item
-    statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength] retain];;
-    [statusItem setTitle:@"Blotter"];
-    [statusItem setHighlightMode:YES];
-    [statusItem setMenu:statusMenu];
 
     blotterWindow = [[WLFitWindow alloc] initWithContentRect:NSMakeRect(0, 0, 0, 0)
                                                    styleMask:NSBorderlessWindowMask
@@ -94,11 +98,17 @@
         [self showPrefs:self];
         [userDefaults setBool:NO forKey:@"ShowPreferencesAtStartUp"];
     }
+
+    if ([userDefaults boolForKey:@"ShowInMenuBar"])
+        [self _addStatusItem];
+
+    [userDefaults addObserver:self forKeyPath:@"ShowInMenuBar" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)aNotification
 {
-    [self showPrefs:self];
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"ShowInMenuBar"])
+        [self showPrefs:self];
 }
 
 -(void)applicationDidChangeScreenParameters:(NSNotification *)aNotification
@@ -123,11 +133,23 @@
 
     // Show the preferences window.
     [prefs showPreferencesWindow];
+    [NSApp activateIgnoringOtherApps:YES];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    [self show];
+    if ([keyPath isEqualToString:@"ShowInMenuBar"])
+    {
+        if ([[change objectForKey:NSKeyValueChangeNewKey] boolValue])
+            [self _addStatusItem];
+        else
+        {
+            [[NSStatusBar systemStatusBar] removeStatusItem:statusItem];
+            [statusItem release], statusItem = nil;
+        }
+    }
+    else
+        [self show];
 }
 
 - (void)showOnScreen:(NSScreen *)screen
@@ -167,6 +189,16 @@
     [blotterWindow release];
     [prefs release];
     [super dealloc];
+}
+
+- (void)_addStatusItem
+{
+    NSAssert(statusItem == nil, @"You cannot add status bar twice");
+    // Configure system-wide menubar item
+    statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength] retain];;
+    [statusItem setTitle:@"Blotter"];
+    [statusItem setHighlightMode:YES];
+    [statusItem setMenu:statusMenu];
 }
 
 
