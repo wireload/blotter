@@ -129,6 +129,8 @@
         [prefs setPanesOrder:[NSArray arrayWithObjects:NSLocalizedStringFromTableInBundle(@"General", nil, [prefs bundle], nil),
                               NSLocalizedStringFromTableInBundle(@"Positioning", nil, [prefs bundle], nil),
                               NSLocalizedStringFromTableInBundle(@"Calendars", nil, [prefs bundle], nil), nil]];
+        [prefs createPreferencesWindow];
+        [[prefs preferencesWindow] setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
     }
 
     // Show the preferences window.

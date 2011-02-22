@@ -145,7 +145,7 @@
 
 - (void)createPreferencesWindow
 {
-    [self createPreferencesWindowAndDisplay:YES];
+    [self createPreferencesWindowAndDisplay:NO];
 }
 
 
