@@ -80,17 +80,18 @@
     // [blotterWindow useOptimizedDrawing:YES];
 
     [self show];
+
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *showPrefsAtStartup = [userDefaults objectForKey:@"ShowPreferencesAtStartUp"];
+    if (showPrefsAtStartup == nil || [showPrefsAtStartup boolValue]) {
+        // TODO: 1.3 Show about pref pane at first start.
+        [self showPrefs:self];
+        [userDefaults setBool:NO forKey:@"ShowPreferencesAtStartUp"];
+    }
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)aNotification
 {
-    // TODO: 1.3 Show about pref pane at first start.
-//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//    NSNumber *showPrefsAtStartup = [userDefaults objectForKey:@"ShowPreferencesAtStartUp"];
-//    if (showPrefsAtStartup == nil || [showPrefsAtStartup boolValue]) {
-//        [self showPrefs:self];
-//        [userDefaults setBool:NO forKey:@"ShowPreferencesAtStartUp"];
-//    }
     [self showPrefs:self];
 }
 
