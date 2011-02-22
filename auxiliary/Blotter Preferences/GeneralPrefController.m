@@ -12,6 +12,14 @@
 
 @implementation GeneralPrefController
 
+- (IBAction)quitBlotter:(id)sender
+{
+    [[NSApplication sharedApplication] terminate:sender];
+}
+
+
+#pragma mark SS_PreferencePaneProtocol
+
 + (NSArray *)preferencePanes
 {
     return [NSArray arrayWithObjects:[[[GeneralPrefController alloc] init] autorelease], [[[PositionPrefController alloc] init] autorelease], [[[CalendarsPrefController alloc] init] autorelease], nil];

@@ -16,4 +16,6 @@
     IBOutlet NSView *prefsView;
 }
 
+- (IBAction)quitBlotter:(id)sender;
+
 @end
