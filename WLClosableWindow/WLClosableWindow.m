@@ -6,8 +6,8 @@
 //  Copyright 2011 Wireload. All rights reserved.
 //
 
-#import "WLClosableWindow.h"
 #import <Carbon/Carbon.h>
+#import "WLClosableWindow.h"
 
 
 @implementation WLClosableWindow

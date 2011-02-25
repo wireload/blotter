@@ -11,6 +11,16 @@
 #import "BLPositionerControl.h"
 #import "BLCalendarFramer.h"
 #import "WLFitWindow.h"
+#import "WLNewEventWindowController.h"
+
+
+enum {
+    _NewEventMenuItemTag = 1,
+    _NewTaskMenuItemTag,
+    _PreferencesMenuItemTag,
+    _QuitMenuItemTag
+};
+
 
 @interface DeskboardAppDelegate (/* Private */)
 
@@ -55,6 +65,14 @@
         if ([userDefaults objectForKey:@"ShowInMenuBar"] == nil)
             [userDefaults setBool:YES forKey:@"ShowInMenuBar"];
     }
+}
+
+- (void)dealloc
+{
+    [[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self];
+    [blotterWindow release];
+    [prefs release];
+    [super dealloc];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -138,6 +156,18 @@
     [NSApp activateIgnoringOtherApps:YES];
 }
 
+- (IBAction)newEvent:(id)sender
+{
+    WLNewEventWindowController *controller = [WLNewEventWindowController sharedWindowController];
+    [controller reset];
+    [controller showWindow:sender];
+    [NSApp activateIgnoringOtherApps:YES];
+}
+
+- (IBAction)newTask:(id)sender
+{
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"ShowInMenuBar"])
@@ -185,13 +215,8 @@
 
 }
 
-- (void)dealloc
-{
-    [[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self];
-    [blotterWindow release];
-    [prefs release];
-    [super dealloc];
-}
+
+#pragma mark Private
 
 - (void)_addStatusItem
 {
@@ -209,6 +234,19 @@
 - (void)windowDidResize:(NSNotification *)notification
 {
     [(DesktopView *)[blotterWindow contentView] refresh];
+}
+
+
+#pragma mark NSMenuValidation
+
+- (BOOL)validateMenuItem:(NSMenuItem *)aMenuItem {
+    NSInteger tag = [aMenuItem tag];
+    switch (tag) {
+        case _NewEventMenuItemTag: {
+            return [WLNewEventWindowController canCreateEvent];
+        }
+    }
+    return YES;
 }
 
 @end

@@ -26,7 +26,10 @@
 		28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 28F69CF4129CC12100D4BB97 /* Licenses.rtf */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		E233C865131819AF00C227B1 /* WLClosablePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = E233C864131819AF00C227B1 /* WLClosablePanel.m */; };
 		E23779EF1312AD6000F46E7D /* WLClosableWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E23779D71312AD6000F46E7D /* WLClosableWindow.m */; };
+		E2596D611316B20400A8B15E /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2596D601316B20400A8B15E /* NewEventWindow.xib */; };
+		E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */; };
 		E29DDC8712E9C7BF00751CFA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29DDC8612E9C7BF00751CFA /* MainMenu.xib */; };
 		E29DDCB212E9D54C00751CFA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E29DDCB012E9D54C00751CFA /* Localizable.strings */; };
 		E2DC7D3113071F7E0065CEAD /* WLFitWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E2DC7D3013071F7E0065CEAD /* WLFitWindow.m */; };
@@ -90,8 +93,13 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		8D1107310486CEB800E47090 /* Blotter-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Blotter-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Blotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E23779D61312AD6000F46E7D /* WLClosableWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLClosableWindow.h; sourceTree = "<group>"; };
-		E23779D71312AD6000F46E7D /* WLClosableWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLClosableWindow.m; sourceTree = "<group>"; };
+		E233C863131819AF00C227B1 /* WLClosablePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLClosablePanel.h; sourceTree = "<group>"; };
+		E233C864131819AF00C227B1 /* WLClosablePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLClosablePanel.m; sourceTree = "<group>"; };
+		E23779D61312AD6000F46E7D /* WLClosableWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WLClosableWindow.h; path = WLClosableWindow/WLClosableWindow.h; sourceTree = "<group>"; };
+		E23779D71312AD6000F46E7D /* WLClosableWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WLClosableWindow.m; path = WLClosableWindow/WLClosableWindow.m; sourceTree = "<group>"; };
+		E2596D601316B20400A8B15E /* NewEventWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewEventWindow.xib; sourceTree = "<group>"; };
+		E2596D711316C8C100A8B15E /* WLNewEventWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNewEventWindowController.h; sourceTree = "<group>"; };
+		E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNewEventWindowController.m; sourceTree = "<group>"; };
 		E267AADF12EDF7AE00EDB7B6 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = Resources/English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E29DDC8812E9C7C900751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = Resources/ru.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		E29DDC8E12E9C7E000751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Resources/ru.lproj/MainMenu.strings; sourceTree = "<group>"; };
@@ -124,7 +132,10 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				E23779AE1312AD6000F46E7D /* WLClosableWindow */,
+				E233C863131819AF00C227B1 /* WLClosablePanel.h */,
+				E233C864131819AF00C227B1 /* WLClosablePanel.m */,
+				E23779D61312AD6000F46E7D /* WLClosableWindow.h */,
+				E23779D71312AD6000F46E7D /* WLClosableWindow.m */,
 				28F69D52129D854300D4BB97 /* BLCalendarFramer.h */,
 				2844DB2C129DA1BD006C5545 /* BLCalendarFramer.m */,
 				28F69C4A129C9B3D00D4BB97 /* BLPositionerControl.h */,
@@ -145,6 +156,8 @@
 				28F699E3129C0EBC00D4BB97 /* BLFadeController.m */,
 				E2DC7D2F13071F7E0065CEAD /* WLFitWindow.h */,
 				E2DC7D3013071F7E0065CEAD /* WLFitWindow.m */,
+				E2596D711316C8C100A8B15E /* WLNewEventWindowController.h */,
+				E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -211,6 +224,7 @@
 				E29DDC8512E9C7BF00751CFA /* MainMenu.strings */,
 				E29DDC8612E9C7BF00751CFA /* MainMenu.xib */,
 				28F69CF4129CC12100D4BB97 /* Licenses.rtf */,
+				E2596D601316B20400A8B15E /* NewEventWindow.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -222,15 +236,6 @@
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		E23779AE1312AD6000F46E7D /* WLClosableWindow */ = {
-			isa = PBXGroup;
-			children = (
-				E23779D61312AD6000F46E7D /* WLClosableWindow.h */,
-				E23779D71312AD6000F46E7D /* WLClosableWindow.m */,
-			);
-			path = WLClosableWindow;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -302,6 +307,7 @@
 				281BA56F129EF84D00114D3C /* Blotter Preferences.preferencePane in Resources */,
 				28153EDF12D78EBE00A239C4 /* Blotter-B8.icns in Resources */,
 				E29DDCB212E9D54C00751CFA /* Localizable.strings in Resources */,
+				E2596D611316B20400A8B15E /* NewEventWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,6 +329,8 @@
 				2844DB2D129DA1BD006C5545 /* BLCalendarFramer.m in Sources */,
 				E2DC7D3113071F7E0065CEAD /* WLFitWindow.m in Sources */,
 				E23779EF1312AD6000F46E7D /* WLClosableWindow.m in Sources */,
+				E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */,
+				E233C865131819AF00C227B1 /* WLClosablePanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

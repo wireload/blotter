@@ -26,6 +26,10 @@
 
 - (IBAction)showPrefs:(id)sender;
 
+- (IBAction)newEvent:(id)sender;
+
+- (IBAction)newTask:(id)sender;
+
 - (void)showOnScreen:(NSScreen *)screen;
 
 - (void)show;
