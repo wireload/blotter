@@ -6,8 +6,8 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
-#import "WLNewEventWindowController.h"
 #import <CalendarStore/CalendarStore.h>
+#import "WLNewEventWindowController.h"
 
 
 @interface WLNewEventWindowController (/* Private */)
