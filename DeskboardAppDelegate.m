@@ -12,6 +12,7 @@
 #import "BLCalendarFramer.h"
 #import "WLFitWindow.h"
 #import "WLNewEventWindowController.h"
+#import "WLNewTaskWindowController.h"
 
 
 enum {
@@ -166,6 +167,10 @@ enum {
 
 - (IBAction)newTask:(id)sender
 {
+    WLNewTaskWindowController *controller = [WLNewTaskWindowController sharedWindowController];
+    [controller reset];
+    [controller showWindow:sender];
+    [NSApp activateIgnoringOtherApps:YES];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context

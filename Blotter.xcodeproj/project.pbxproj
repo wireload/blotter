@@ -32,6 +32,8 @@
 		E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */; };
 		E29DDC8712E9C7BF00751CFA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29DDC8612E9C7BF00751CFA /* MainMenu.xib */; };
 		E29DDCB212E9D54C00751CFA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E29DDCB012E9D54C00751CFA /* Localizable.strings */; };
+		E29F38EB131968B200A865D9 /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29F38EA131968B200A865D9 /* NewTaskWindow.xib */; };
+		E29F38EE1319694C00A865D9 /* WLNewTaskWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E29F38ED1319694C00A865D9 /* WLNewTaskWindowController.m */; };
 		E2DC7D3113071F7E0065CEAD /* WLFitWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E2DC7D3013071F7E0065CEAD /* WLFitWindow.m */; };
 /* End PBXBuildFile section */
 
@@ -110,6 +112,9 @@
 		E29DDCB512E9D56B00751CFA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = Resources/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E29DDCB612E9D57500751CFA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E29DDCB712E9D57F00751CFA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E29F38EA131968B200A865D9 /* NewTaskWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewTaskWindow.xib; sourceTree = "<group>"; };
+		E29F38EC1319694C00A865D9 /* WLNewTaskWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNewTaskWindowController.h; sourceTree = "<group>"; };
+		E29F38ED1319694C00A865D9 /* WLNewTaskWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNewTaskWindowController.m; sourceTree = "<group>"; };
 		E2DC7D2F13071F7E0065CEAD /* WLFitWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLFitWindow.h; sourceTree = "<group>"; };
 		E2DC7D3013071F7E0065CEAD /* WLFitWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLFitWindow.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -158,6 +163,8 @@
 				E2DC7D3013071F7E0065CEAD /* WLFitWindow.m */,
 				E2596D711316C8C100A8B15E /* WLNewEventWindowController.h */,
 				E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */,
+				E29F38EC1319694C00A865D9 /* WLNewTaskWindowController.h */,
+				E29F38ED1319694C00A865D9 /* WLNewTaskWindowController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -225,6 +232,7 @@
 				E29DDC8612E9C7BF00751CFA /* MainMenu.xib */,
 				28F69CF4129CC12100D4BB97 /* Licenses.rtf */,
 				E2596D601316B20400A8B15E /* NewEventWindow.xib */,
+				E29F38EA131968B200A865D9 /* NewTaskWindow.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -308,6 +316,7 @@
 				28153EDF12D78EBE00A239C4 /* Blotter-B8.icns in Resources */,
 				E29DDCB212E9D54C00751CFA /* Localizable.strings in Resources */,
 				E2596D611316B20400A8B15E /* NewEventWindow.xib in Resources */,
+				E29F38EB131968B200A865D9 /* NewTaskWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,6 +340,7 @@
 				E23779EF1312AD6000F46E7D /* WLClosableWindow.m in Sources */,
 				E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */,
 				E233C865131819AF00C227B1 /* WLClosablePanel.m in Sources */,
+				E29F38EE1319694C00A865D9 /* WLNewTaskWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
