@@ -16,6 +16,7 @@
 		28F69A55129C5EA100D4BB97 /* Recreated-Aqua.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 28F69A54129C5EA100D4BB97 /* Recreated-Aqua.jpg */; };
 		28F69B53129C82E800D4BB97 /* BLPositionerControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69B52129C82E800D4BB97 /* BLPositionerControlCell.m */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		E2794F9F131A6425008AE1DA /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2794F9E131A6425008AE1DA /* Carbon.framework */; };
 		E2863F971305BEC4004CFC9D /* NSScreen+WLScreenName.m in Sources */ = {isa = PBXBuildFile; fileRef = E2863F961305BEC4004CFC9D /* NSScreen+WLScreenName.m */; };
 		E28640971305C7C9004CFC9D /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2863FDB1305C741004CFC9D /* IOKit.framework */; };
 		E29DDD0412E9DCED00751CFA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E29DDD0312E9DCED00751CFA /* Localizable.strings */; };
@@ -31,9 +32,52 @@
 		E2FE5FDD12D77D1F00003E48 /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2FE5FDC12D77D1F00003E48 /* CalendarStore.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		E2794F92131A6401008AE1DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2794F85131A6401008AE1DA /* ShortcutRecorder.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 939837800DA42965007F53F3 /* ShortcutRecorder.framework */;
+			remoteInfo = "ShortcutRecorder.framework - with embedded ibplugin";
+		};
+		E2794F94131A6401008AE1DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2794F85131A6401008AE1DA /* ShortcutRecorder.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 939838A50DA4300F007F53F3 /* ShortcutRecorder.ibplugin */;
+			remoteInfo = "ShortcutRecorder.ibplugin - for embedding in framework";
+		};
+		E2794F96131A6401008AE1DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2794F85131A6401008AE1DA /* ShortcutRecorder.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 93983B220DA43C4E007F53F3 /* ShortcutRecorder.app */;
+			remoteInfo = ShortcutRecorderFramework_Tester;
+		};
+		E2794F98131A6401008AE1DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2794F85131A6401008AE1DA /* ShortcutRecorder.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 342E00CF109CCBF5009AD8CA /* ShortcutRecorder.ibplugin */;
+			remoteInfo = "ShortcutRecorder.ibplugin - standalone";
+		};
+		E2794F9A131A6401008AE1DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2794F85131A6401008AE1DA /* ShortcutRecorder.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 342E0104109CCC36009AD8CA /* ShortcutRecorder.framework */;
+			remoteInfo = "ShortcutRecorder.framework - for embedding in ibplugin";
+		};
+		E2794F9C131A6410008AE1DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2794F85131A6401008AE1DA /* ShortcutRecorder.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 342E00BA109CCBF5009AD8CA /* ShortcutRecorder.ibplugin - standalone */;
+			remoteInfo = "ShortcutRecorder.ibplugin - standalone";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		283A5EE41306CDA2006B916A /* WLCountGreaterThanOneTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCountGreaterThanOneTransformer.h; sourceTree = "<group>"; };
 		283A5EE51306CDA2006B916A /* WLCountGreaterThanOneTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCountGreaterThanOneTransformer.m; sourceTree = "<group>"; };
@@ -79,7 +123,8 @@
 		32DBCF630370AF2F00C91783 /* Blotter Preferences_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Blotter Preferences_Prefix.pch"; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Blotter Preferences.preferencePane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Blotter Preferences.preferencePane"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		E2794F85131A6401008AE1DA /* ShortcutRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShortcutRecorder.xcodeproj; path = ../../ShortcutRecorder/ShortcutRecorder.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E2794F9E131A6425008AE1DA /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		E2863F951305BEC4004CFC9D /* NSScreen+WLScreenName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSScreen+WLScreenName.h"; sourceTree = "<group>"; };
 		E2863F961305BEC4004CFC9D /* NSScreen+WLScreenName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSScreen+WLScreenName.m"; sourceTree = "<group>"; };
 		E2863FDB1305C741004CFC9D /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -124,6 +169,7 @@
 				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
 				E2FE5FDD12D77D1F00003E48 /* CalendarStore.framework in Frameworks */,
 				E28640971305C7C9004CFC9D /* IOKit.framework in Frameworks */,
+				E2794F9F131A6425008AE1DA /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,6 +179,7 @@
 		089C166AFE841209C02AAC07 /* General Preferences */ = {
 			isa = PBXGroup;
 			children = (
+				E2794F85131A6401008AE1DA /* ShortcutRecorder.xcodeproj */,
 				28B54D52128398250037BF53 /* SS_PreferencePaneProtocol.h */,
 				08FB77AFFE84173DC02AAC07 /* Classes */,
 				32C88E010371C26100C91783 /* Other Sources */,
@@ -147,7 +194,6 @@
 			isa = PBXGroup;
 			children = (
 				1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */,
-				1058C7AEFEA557BF11CA2CBB /* Other Frameworks */,
 			);
 			name = "Frameworks and Libraries";
 			sourceTree = "<group>";
@@ -200,18 +246,9 @@
 				E2863FDB1305C741004CFC9D /* IOKit.framework */,
 				E2FE5FDC12D77D1F00003E48 /* CalendarStore.framework */,
 				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
+				E2794F9E131A6425008AE1DA /* Carbon.framework */,
 			);
 			name = "Linked Frameworks";
-			sourceTree = "<group>";
-		};
-		1058C7AEFEA557BF11CA2CBB /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				089C167FFE841241C02AAC07 /* AppKit.framework */,
-				D2F7E65807B2D6F200F64583 /* CoreData.framework */,
-				089C1672FE841209C02AAC07 /* Foundation.framework */,
-			);
-			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
 		19C28FB8FE9D52D311CA2CBB /* Products */ = {
@@ -230,6 +267,18 @@
 				E2863F961305BEC4004CFC9D /* NSScreen+WLScreenName.m */,
 			);
 			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		E2794F86131A6401008AE1DA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E2794F93131A6401008AE1DA /* ShortcutRecorder.framework */,
+				E2794F95131A6401008AE1DA /* ShortcutRecorder.ibplugin */,
+				E2794F97131A6401008AE1DA /* ShortcutRecorder.app */,
+				E2794F99131A6401008AE1DA /* ShortcutRecorder.ibplugin */,
+				E2794F9B131A6401008AE1DA /* ShortcutRecorder.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		E2FE5F1612D760E000003E48 /* ColorCheckboxCell */ = {
@@ -258,6 +307,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				E2794F9D131A6410008AE1DA /* PBXTargetDependency */,
 			);
 			name = "Blotter Preferences";
 			productInstallPath = "$(HOME)/Library/Bundles";
@@ -290,12 +340,56 @@
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* General Preferences */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = E2794F86131A6401008AE1DA /* Products */;
+					ProjectRef = E2794F85131A6401008AE1DA /* ShortcutRecorder.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8D5B49AC048680CD000E48DA /* Blotter Preferences */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		E2794F93131A6401008AE1DA /* ShortcutRecorder.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ShortcutRecorder.framework;
+			remoteRef = E2794F92131A6401008AE1DA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E2794F95131A6401008AE1DA /* ShortcutRecorder.ibplugin */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ShortcutRecorder.ibplugin;
+			remoteRef = E2794F94131A6401008AE1DA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E2794F97131A6401008AE1DA /* ShortcutRecorder.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ShortcutRecorder.app;
+			remoteRef = E2794F96131A6401008AE1DA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E2794F99131A6401008AE1DA /* ShortcutRecorder.ibplugin */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ShortcutRecorder.ibplugin;
+			remoteRef = E2794F98131A6401008AE1DA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E2794F9B131A6401008AE1DA /* ShortcutRecorder.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ShortcutRecorder.framework;
+			remoteRef = E2794F9A131A6401008AE1DA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8D5B49AF048680CD000E48DA /* Resources */ = {
@@ -335,6 +429,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E2794F9D131A6410008AE1DA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "ShortcutRecorder.ibplugin - standalone";
+			targetProxy = E2794F9C131A6410008AE1DA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		E29DDD0312E9DCED00751CFA /* Localizable.strings */ = {
@@ -446,6 +548,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Blotter Preferences_Prefix.pch";
+				IBC_OTHER_FLAGS = "";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Blotter Preferences";
@@ -461,6 +564,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Blotter Preferences_Prefix.pch";
+				IBC_OTHER_FLAGS = "";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Blotter Preferences";
@@ -476,6 +580,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IBC_OTHER_FLAGS = "--plugin ${SRCROOT}/../../ShortcutRecorder/build/${CONFIGURATION}/ShortcutRecorder.ibplugin";
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
@@ -494,6 +599,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IBC_OTHER_FLAGS = "--plugin ${SRCROOT}/../../ShortcutRecorder/build/${CONFIGURATION}/ShortcutRecorder.ibplugin";
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 			};

@@ -30,6 +30,10 @@
 		E23779EF1312AD6000F46E7D /* WLClosableWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E23779D71312AD6000F46E7D /* WLClosableWindow.m */; };
 		E2596D611316B20400A8B15E /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2596D601316B20400A8B15E /* NewEventWindow.xib */; };
 		E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */; };
+		E2794F56131A636E008AE1DA /* PTHotKey.m in Sources */ = {isa = PBXBuildFile; fileRef = E2794F4F131A636E008AE1DA /* PTHotKey.m */; };
+		E2794F57131A636E008AE1DA /* PTHotKeyCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = E2794F51131A636E008AE1DA /* PTHotKeyCenter.m */; };
+		E2794F58131A636E008AE1DA /* PTKeyCodeTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = E2794F53131A636E008AE1DA /* PTKeyCodeTranslator.m */; };
+		E2794F59131A636E008AE1DA /* PTKeyCombo.m in Sources */ = {isa = PBXBuildFile; fileRef = E2794F55131A636E008AE1DA /* PTKeyCombo.m */; };
 		E29DDC8712E9C7BF00751CFA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29DDC8612E9C7BF00751CFA /* MainMenu.xib */; };
 		E29DDCB212E9D54C00751CFA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E29DDCB012E9D54C00751CFA /* Localizable.strings */; };
 		E29F38EB131968B200A865D9 /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29F38EA131968B200A865D9 /* NewTaskWindow.xib */; };
@@ -52,7 +56,6 @@
 
 /* Begin PBXFileReference section */
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		256AC3D80F4B6AC300CF3369 /* DeskboardAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeskboardAppDelegate.h; sourceTree = "<group>"; };
 		256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeskboardAppDelegate.m; sourceTree = "<group>"; };
@@ -91,8 +94,6 @@
 		28F69CF4129CC12100D4BB97 /* Licenses.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = Licenses.rtf; path = Resources/Licenses.rtf; sourceTree = "<group>"; };
 		28F69D52129D854300D4BB97 /* BLCalendarFramer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLCalendarFramer.h; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
-		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		8D1107310486CEB800E47090 /* Blotter-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Blotter-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Blotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E233C863131819AF00C227B1 /* WLClosablePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLClosablePanel.h; sourceTree = "<group>"; };
@@ -103,6 +104,14 @@
 		E2596D711316C8C100A8B15E /* WLNewEventWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNewEventWindowController.h; sourceTree = "<group>"; };
 		E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNewEventWindowController.m; sourceTree = "<group>"; };
 		E267AADF12EDF7AE00EDB7B6 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = Resources/English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E2794F4E131A636E008AE1DA /* PTHotKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTHotKey.h; sourceTree = "<group>"; };
+		E2794F4F131A636E008AE1DA /* PTHotKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTHotKey.m; sourceTree = "<group>"; };
+		E2794F50131A636E008AE1DA /* PTHotKeyCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTHotKeyCenter.h; sourceTree = "<group>"; };
+		E2794F51131A636E008AE1DA /* PTHotKeyCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTHotKeyCenter.m; sourceTree = "<group>"; };
+		E2794F52131A636E008AE1DA /* PTKeyCodeTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTKeyCodeTranslator.h; sourceTree = "<group>"; };
+		E2794F53131A636E008AE1DA /* PTKeyCodeTranslator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTKeyCodeTranslator.m; sourceTree = "<group>"; };
+		E2794F54131A636E008AE1DA /* PTKeyCombo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTKeyCombo.h; sourceTree = "<group>"; };
+		E2794F55131A636E008AE1DA /* PTKeyCombo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTKeyCombo.m; sourceTree = "<group>"; };
 		E29DDC8812E9C7C900751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = Resources/ru.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		E29DDC8E12E9C7E000751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Resources/ru.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		E29DDC8F12E9C7E200751CFA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/MainMenu.strings; sourceTree = "<group>"; };
@@ -137,6 +146,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E2794F4D131A636E008AE1DA /* HotKey */,
 				E233C863131819AF00C227B1 /* WLClosablePanel.h */,
 				E233C864131819AF00C227B1 /* WLClosablePanel.m */,
 				E23779D61312AD6000F46E7D /* WLClosableWindow.h */,
@@ -178,16 +188,6 @@
 				284064FB12834B98000816FF /* CalendarStore.framework */,
 			);
 			name = "Linked Frameworks";
-			sourceTree = "<group>";
-		};
-		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
-				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
-				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
-			);
-			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
@@ -241,9 +241,24 @@
 			isa = PBXGroup;
 			children = (
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
-				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E2794F4D131A636E008AE1DA /* HotKey */ = {
+			isa = PBXGroup;
+			children = (
+				E2794F4E131A636E008AE1DA /* PTHotKey.h */,
+				E2794F4F131A636E008AE1DA /* PTHotKey.m */,
+				E2794F50131A636E008AE1DA /* PTHotKeyCenter.h */,
+				E2794F51131A636E008AE1DA /* PTHotKeyCenter.m */,
+				E2794F52131A636E008AE1DA /* PTKeyCodeTranslator.h */,
+				E2794F53131A636E008AE1DA /* PTKeyCodeTranslator.m */,
+				E2794F54131A636E008AE1DA /* PTKeyCombo.h */,
+				E2794F55131A636E008AE1DA /* PTKeyCombo.m */,
+			);
+			name = HotKey;
+			path = ShortcutRecorder/Demo/HotKey;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -341,6 +356,10 @@
 				E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */,
 				E233C865131819AF00C227B1 /* WLClosablePanel.m in Sources */,
 				E29F38EE1319694C00A865D9 /* WLNewTaskWindowController.m in Sources */,
+				E2794F56131A636E008AE1DA /* PTHotKey.m in Sources */,
+				E2794F57131A636E008AE1DA /* PTHotKeyCenter.m in Sources */,
+				E2794F58131A636E008AE1DA /* PTKeyCodeTranslator.m in Sources */,
+				E2794F59131A636E008AE1DA /* PTKeyCombo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,6 +464,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IBC_OTHER_FLAGS = "";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
@@ -466,6 +486,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IBC_OTHER_FLAGS = "";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
