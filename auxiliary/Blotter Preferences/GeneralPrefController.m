@@ -9,6 +9,8 @@
 #import "GeneralPrefController.h"
 #import "PositionPrefController.h"
 #import "CalendarsPrefController.h"
+#import "SRRecorderControl.h"
+
 
 @implementation GeneralPrefController
 
@@ -63,6 +65,27 @@
 
 - (BOOL)allowsVerticalResizing
 {
+    return NO;
+}
+
+
+#pragma mark SRRecorderControlDelegate
+
+- (BOOL)shortcutRecorder:(SRRecorderControl *)aRecorder isKeyCode:(signed short)keyCode andFlagsTaken:(unsigned int)flags reason:(NSString **)aReason
+{
+    KeyCombo keyCombo = SRMakeKeyCombo(keyCode, flags);
+
+    if (aRecorder != newEventRecorderControl && SRKeyComboEqualToKeyCombo([newEventRecorderControl keyCombo], keyCombo))
+    {
+        *aReason = NSLocalizedString(@"it is already taken by New Event", @"Shortcut is taken alert");
+        return YES;
+    }
+
+    if (aRecorder != newTaskRecorderControl && SRKeyComboEqualToKeyCombo([newTaskRecorderControl keyCombo], keyCombo))
+    {
+        *aReason = NSLocalizedString(@"it is already taken by New Task", @"Shortcut is taken alert");
+        return YES;
+    }
     return NO;
 }
 

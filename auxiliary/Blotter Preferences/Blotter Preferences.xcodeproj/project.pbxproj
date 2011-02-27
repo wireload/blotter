@@ -17,6 +17,11 @@
 		28F69B53129C82E800D4BB97 /* BLPositionerControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69B52129C82E800D4BB97 /* BLPositionerControlCell.m */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		E2794F9F131A6425008AE1DA /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2794F9E131A6425008AE1DA /* Carbon.framework */; };
+		E279523E131AA2EA008AE1DA /* SRCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = E2795235131AA2EA008AE1DA /* SRCommon.m */; };
+		E279523F131AA2EA008AE1DA /* SRKeyCodeTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2795237131AA2EA008AE1DA /* SRKeyCodeTransformer.m */; };
+		E2795240131AA2EA008AE1DA /* SRRecorderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2795239131AA2EA008AE1DA /* SRRecorderCell.m */; };
+		E2795241131AA2EA008AE1DA /* SRRecorderControl.m in Sources */ = {isa = PBXBuildFile; fileRef = E279523B131AA2EA008AE1DA /* SRRecorderControl.m */; };
+		E2795242131AA2EA008AE1DA /* SRValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = E279523D131AA2EA008AE1DA /* SRValidator.m */; };
 		E2863F971305BEC4004CFC9D /* NSScreen+WLScreenName.m in Sources */ = {isa = PBXBuildFile; fileRef = E2863F961305BEC4004CFC9D /* NSScreen+WLScreenName.m */; };
 		E28640971305C7C9004CFC9D /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2863FDB1305C741004CFC9D /* IOKit.framework */; };
 		E29DDD0412E9DCED00751CFA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E29DDD0312E9DCED00751CFA /* Localizable.strings */; };
@@ -37,42 +42,42 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = E2794F85131A6401008AE1DA /* ShortcutRecorder.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 939837800DA42965007F53F3 /* ShortcutRecorder.framework */;
+			remoteGlobalIDString = 939837800DA42965007F53F3;
 			remoteInfo = "ShortcutRecorder.framework - with embedded ibplugin";
 		};
 		E2794F94131A6401008AE1DA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E2794F85131A6401008AE1DA /* ShortcutRecorder.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 939838A50DA4300F007F53F3 /* ShortcutRecorder.ibplugin */;
+			remoteGlobalIDString = 939838A50DA4300F007F53F3;
 			remoteInfo = "ShortcutRecorder.ibplugin - for embedding in framework";
 		};
 		E2794F96131A6401008AE1DA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E2794F85131A6401008AE1DA /* ShortcutRecorder.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 93983B220DA43C4E007F53F3 /* ShortcutRecorder.app */;
+			remoteGlobalIDString = 93983B220DA43C4E007F53F3;
 			remoteInfo = ShortcutRecorderFramework_Tester;
 		};
 		E2794F98131A6401008AE1DA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E2794F85131A6401008AE1DA /* ShortcutRecorder.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 342E00CF109CCBF5009AD8CA /* ShortcutRecorder.ibplugin */;
+			remoteGlobalIDString = 342E00CF109CCBF5009AD8CA;
 			remoteInfo = "ShortcutRecorder.ibplugin - standalone";
 		};
 		E2794F9A131A6401008AE1DA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E2794F85131A6401008AE1DA /* ShortcutRecorder.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 342E0104109CCC36009AD8CA /* ShortcutRecorder.framework */;
+			remoteGlobalIDString = 342E0104109CCC36009AD8CA;
 			remoteInfo = "ShortcutRecorder.framework - for embedding in ibplugin";
 		};
 		E2794F9C131A6410008AE1DA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E2794F85131A6401008AE1DA /* ShortcutRecorder.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 342E00BA109CCBF5009AD8CA /* ShortcutRecorder.ibplugin - standalone */;
+			remoteGlobalIDString = 342E00BA109CCBF5009AD8CA;
 			remoteInfo = "ShortcutRecorder.ibplugin - standalone";
 		};
 /* End PBXContainerItemProxy section */
@@ -125,6 +130,16 @@
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E2794F85131A6401008AE1DA /* ShortcutRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShortcutRecorder.xcodeproj; path = ../../ShortcutRecorder/ShortcutRecorder.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E2794F9E131A6425008AE1DA /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		E2795234131AA2EA008AE1DA /* SRCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRCommon.h; sourceTree = "<group>"; };
+		E2795235131AA2EA008AE1DA /* SRCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRCommon.m; sourceTree = "<group>"; };
+		E2795236131AA2EA008AE1DA /* SRKeyCodeTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRKeyCodeTransformer.h; sourceTree = "<group>"; };
+		E2795237131AA2EA008AE1DA /* SRKeyCodeTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRKeyCodeTransformer.m; sourceTree = "<group>"; };
+		E2795238131AA2EA008AE1DA /* SRRecorderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRRecorderCell.h; sourceTree = "<group>"; };
+		E2795239131AA2EA008AE1DA /* SRRecorderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRRecorderCell.m; sourceTree = "<group>"; };
+		E279523A131AA2EA008AE1DA /* SRRecorderControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRRecorderControl.h; sourceTree = "<group>"; };
+		E279523B131AA2EA008AE1DA /* SRRecorderControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRRecorderControl.m; sourceTree = "<group>"; };
+		E279523C131AA2EA008AE1DA /* SRValidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRValidator.h; sourceTree = "<group>"; };
+		E279523D131AA2EA008AE1DA /* SRValidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRValidator.m; sourceTree = "<group>"; };
 		E2863F951305BEC4004CFC9D /* NSScreen+WLScreenName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSScreen+WLScreenName.h"; sourceTree = "<group>"; };
 		E2863F961305BEC4004CFC9D /* NSScreen+WLScreenName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSScreen+WLScreenName.m"; sourceTree = "<group>"; };
 		E2863FDB1305C741004CFC9D /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -217,6 +232,7 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E2795233131AA2EA008AE1DA /* ShortcutRecorder */,
 				E2FE5F1612D760E000003E48 /* ColorCheckboxCell */,
 				28F69D55129D854F00D4BB97 /* BLCalendarFramer.h */,
 				2844DB25129DA197006C5545 /* BLCalendarFramer.m */,
@@ -236,6 +252,8 @@
 				283A5EE51306CDA2006B916A /* WLCountGreaterThanOneTransformer.m */,
 				E2DC7DDB130810F00065CEAD /* WLScreensController.h */,
 				E2DC7DDC130810F00065CEAD /* WLScreensController.m */,
+				E2863F951305BEC4004CFC9D /* NSScreen+WLScreenName.h */,
+				E2863F961305BEC4004CFC9D /* NSScreen+WLScreenName.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -263,8 +281,6 @@
 			isa = PBXGroup;
 			children = (
 				32DBCF630370AF2F00C91783 /* Blotter Preferences_Prefix.pch */,
-				E2863F951305BEC4004CFC9D /* NSScreen+WLScreenName.h */,
-				E2863F961305BEC4004CFC9D /* NSScreen+WLScreenName.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -280,6 +296,24 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		E2795233131AA2EA008AE1DA /* ShortcutRecorder */ = {
+			isa = PBXGroup;
+			children = (
+				E2795234131AA2EA008AE1DA /* SRCommon.h */,
+				E2795235131AA2EA008AE1DA /* SRCommon.m */,
+				E2795236131AA2EA008AE1DA /* SRKeyCodeTransformer.h */,
+				E2795237131AA2EA008AE1DA /* SRKeyCodeTransformer.m */,
+				E2795238131AA2EA008AE1DA /* SRRecorderCell.h */,
+				E2795239131AA2EA008AE1DA /* SRRecorderCell.m */,
+				E279523A131AA2EA008AE1DA /* SRRecorderControl.h */,
+				E279523B131AA2EA008AE1DA /* SRRecorderControl.m */,
+				E279523C131AA2EA008AE1DA /* SRValidator.h */,
+				E279523D131AA2EA008AE1DA /* SRValidator.m */,
+			);
+			name = ShortcutRecorder;
+			path = ../../ShortcutRecorder/Source;
+			sourceTree = SOURCE_ROOT;
 		};
 		E2FE5F1612D760E000003E48 /* ColorCheckboxCell */ = {
 			isa = PBXGroup;
@@ -425,6 +459,11 @@
 				E2863F971305BEC4004CFC9D /* NSScreen+WLScreenName.m in Sources */,
 				283A5EE61306CDA2006B916A /* WLCountGreaterThanOneTransformer.m in Sources */,
 				E2DC7DDD130810F00065CEAD /* WLScreensController.m in Sources */,
+				E279523E131AA2EA008AE1DA /* SRCommon.m in Sources */,
+				E279523F131AA2EA008AE1DA /* SRKeyCodeTransformer.m in Sources */,
+				E2795240131AA2EA008AE1DA /* SRRecorderCell.m in Sources */,
+				E2795241131AA2EA008AE1DA /* SRRecorderControl.m in Sources */,
+				E2795242131AA2EA008AE1DA /* SRValidator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

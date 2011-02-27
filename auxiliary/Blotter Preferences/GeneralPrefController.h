@@ -11,9 +11,14 @@
 #import "SS_PreferencePaneProtocol.h"
 
 
-@interface GeneralPrefController : NSObject<SS_PreferencePaneProtocol>
+@class SRRecorderControl;
+
+
+@interface GeneralPrefController : NSObject<SS_PreferencePaneProtocol /*, SRRecorderControlDelegate */>
 {
     IBOutlet NSView *prefsView;
+    IBOutlet SRRecorderControl *newEventRecorderControl;
+    IBOutlet SRRecorderControl *newTaskRecorderControl;
 }
 
 - (IBAction)quitBlotter:(id)sender;

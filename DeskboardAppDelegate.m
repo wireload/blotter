@@ -13,14 +13,15 @@
 #import "WLFitWindow.h"
 #import "WLNewEventWindowController.h"
 #import "WLNewTaskWindowController.h"
+#import "SRCommon.h"
+#import "PTHotKeyCenter.h"
+#import "PTHotKey+ShortcutRecorder.h"
 
 
-enum {
-    _NewEventMenuItemTag = 1,
-    _NewTaskMenuItemTag,
-    _PreferencesMenuItemTag,
-    _QuitMenuItemTag
-};
+extern NSString* const SRShortcutCodeKey;
+extern NSString* const SRShortcutFlagsKey;
+extern NSString* const SRShortcutCharacters;
+extern NSString* const SRShortcutCharactersIgnoringModifiers;
 
 
 @interface DeskboardAppDelegate (/* Private */)
@@ -91,6 +92,7 @@ enum {
                                                                  options:0
                                                                  context:NULL];
 
+    // Configure Blotter
     blotterWindow = [[WLFitWindow alloc] initWithContentRect:NSMakeRect(0, 0, 0, 0)
                                                    styleMask:NSBorderlessWindowMask
                                                      backing:NSBackingStoreBuffered
@@ -100,17 +102,15 @@ enum {
     [blotterWindow setBackgroundColor:[NSColor clearColor]];
     [blotterWindow setIgnoresMouseEvents:YES];
     [blotterWindow setPreferredBackingLocation:NSWindowBackingLocationVideoMemory];
-
     DesktopView *overlayView = [[DesktopView alloc] initWithFrame:[[blotterWindow contentView] frame]];
     [blotterWindow setContentView:overlayView];
     [overlayView release];
     [blotterWindow setDelegate:self];
-
-    // [blotterWindow useOptimizedDrawing:YES];
-
     [self show];
 
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+
+    // Show preferences at first start.
     NSNumber *showPrefsAtStartup = [userDefaults objectForKey:@"ShowPreferencesAtStartUp"];
     if (showPrefsAtStartup == nil || [showPrefsAtStartup boolValue]) {
         // TODO: 1.3 Show about pref pane at first start.
@@ -118,10 +118,24 @@ enum {
         [userDefaults setBool:NO forKey:@"ShowPreferencesAtStartUp"];
     }
 
+    // Configure status bar
     if ([userDefaults boolForKey:@"ShowInMenuBar"])
         [self _addStatusItem];
-
     [userDefaults addObserver:self forKeyPath:@"ShowInMenuBar" options:NSKeyValueObservingOptionNew context:NULL];
+
+    // Configure shortcuts
+    NSDictionary *newEventShortcut = [userDefaults dictionaryForKey:@"shortcutNewEvent"];
+    if (newEventShortcut != nil) {
+        PTHotKey *hotKey = [PTHotKey hotKeyWithIdentifier:@"shortcutNewEvent" keyCombo:newEventShortcut target:self action:@selector(newEvent:)];
+        [[PTHotKeyCenter sharedCenter] registerHotKey:hotKey];
+    }
+    NSDictionary *newTaskShortcut = [userDefaults dictionaryForKey:@"shortcutNewTask"];
+    if (newTaskShortcut != nil) {
+        PTHotKey *hotKey = [PTHotKey hotKeyWithIdentifier:@"shortcutNewTask" keyCombo:newTaskShortcut target:self action:@selector(newTask:)];
+        [[PTHotKeyCenter sharedCenter] registerHotKey:hotKey];
+    }
+    [userDefaults addObserver:self forKeyPath:@"shortcutNewEvent" options:NSKeyValueObservingOptionNew context:NULL];
+    [userDefaults addObserver:self forKeyPath:@"shortcutNewTask" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)aNotification
@@ -185,6 +199,24 @@ enum {
             [statusItem release], statusItem = nil;
         }
     }
+    else if ([keyPath isEqualToString:@"shortcutNewEvent"] || [keyPath isEqualToString:@"shortcutNewTask"])
+    {
+        PTHotKeyCenter *hotKeyCenter = [PTHotKeyCenter sharedCenter];
+        PTHotKey *oldHotKey = [hotKeyCenter hotKeyWithIdentifier:keyPath];
+        [hotKeyCenter unregisterHotKey:oldHotKey];
+
+        NSDictionary *newHotKeyDict = [change objectForKey:NSKeyValueChangeNewKey];
+        if (newHotKeyDict != nil && (id)newHotKeyDict != [NSNull null]) {
+            PTHotKey *newHotKey = nil;
+            if ([keyPath isEqualToString:@"shortcutNewEvent"]) {
+                newHotKey = [PTHotKey hotKeyWithIdentifier:keyPath keyCombo:newHotKeyDict target:self action:@selector(newEvent:)];
+            }
+            else {
+                newHotKey = [PTHotKey hotKeyWithIdentifier:keyPath keyCombo:newHotKeyDict target:self action:@selector(newTask:)];
+            }
+            [hotKeyCenter registerHotKey:newHotKey];
+        }
+    }
     else
         [self show];
 }
@@ -245,13 +277,34 @@ enum {
 #pragma mark NSMenuValidation
 
 - (BOOL)validateMenuItem:(NSMenuItem *)aMenuItem {
-    NSInteger tag = [aMenuItem tag];
-    switch (tag) {
-        case _NewEventMenuItemTag: {
-            return [WLNewEventWindowController canCreateEvent];
+    if (aMenuItem == newEventMenuItem)
+    {
+        NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutNewEvent"];
+        if (shortcut != nil) {
+            [aMenuItem setKeyEquivalent:[shortcut objectForKey:SRShortcutCharactersIgnoringModifiers]];
+            [aMenuItem setKeyEquivalentModifierMask:[[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue]];
         }
+        else {
+            [aMenuItem setKeyEquivalent:@""];
+            [aMenuItem setKeyEquivalentModifierMask:0];
+        }
+        return [WLNewEventWindowController canCreateEvent];
     }
-    return YES;
+    else if (aMenuItem == newTaskMenuItem)
+    {
+        NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutNewTask"];
+        if (shortcut != nil) {
+            [aMenuItem setKeyEquivalent:[shortcut objectForKey:SRShortcutCharactersIgnoringModifiers]];
+            [aMenuItem setKeyEquivalentModifierMask:[[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue]];
+        }
+        else {
+            [aMenuItem setKeyEquivalent:@""];
+            [aMenuItem setKeyEquivalentModifierMask:0];
+        }
+        return [WLNewTaskWindowController canCreateTask];
+    }
+    else
+        return YES;
 }
 
 @end
