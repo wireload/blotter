@@ -90,6 +90,14 @@ static void * volatile sharedInstance = nil;
                                                      name:CalCalendarsChangedNotification
                                                    object:[CalCalendarStore defaultCalendarStore]];
         [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(eventsChanged:)
+                                                     name:CalEventsChangedExternallyNotification
+                                                   object:[CalCalendarStore defaultCalendarStore]];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(tasksChanged:)
+                                                     name:CalTasksChangedExternallyNotification
+                                                   object:[CalCalendarStore defaultCalendarStore]];
+        [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(dateChanged)
                                                      name:NSSystemClockDidChangeNotification
                                                    object:nil];
