@@ -74,6 +74,23 @@ static WLNewTaskWindowController *_sharedInstance;
 
 - (IBAction)create:(id)aSender
 {
+    CalTask *task = [CalTask task];
+    task.title = [_titleField stringValue];
+    task.dueDate = [_dueDatePicker dateValue];
+    task.priority = [[_priorityPopUp selectedItem] tag];
+
+    NSUInteger selectedCalendarIndex = [_calendarsController selectionIndex];
+    if (selectedCalendarIndex != NSNotFound)
+        task.calendar = [[_calendarsController arrangedObjects] objectAtIndex:selectedCalendarIndex];
+
+    NSError *error = nil;
+    if ([[CalCalendarStore defaultCalendarStore] saveTask:task error:&error])
+        [[self window] performClose:aSender];
+    else
+    {
+        // TODO: show the error.
+        NSLog(@"Cannot create event: %@", error);
+    }
 }
 
 @end
