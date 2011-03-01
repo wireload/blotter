@@ -68,6 +68,7 @@ static WLNewEventWindowController *_sharedInstance;
 - (void)reset
 {
     [_titleField setStringValue:NSLocalizedString(@"New Event", @"Default text for title field on the New Event panel")];
+    [_titleField selectText:nil];
     [_locationField setStringValue:@""];
     [_isAllDayButton setState:NSOffState];
     [_startDatePicker setDateValue:[NSDate date]];
@@ -88,10 +89,10 @@ static WLNewEventWindowController *_sharedInstance;
         event.calendar = [[_calendarsController arrangedObjects] objectAtIndex:selectedCalendarIndex];
     
     NSError *error = nil;
-    if ([[CalCalendarStore defaultCalendarStore] saveEvent:event span:CalSpanThisEvent error:&error]) {
+    if ([[CalCalendarStore defaultCalendarStore] saveEvent:event span:CalSpanThisEvent error:&error])
         [[self window] performClose:aSender];
-    }
-    else {
+    else
+    {
         // TODO: show the error.
         NSLog(@"Cannot create event: %@", error);
     }

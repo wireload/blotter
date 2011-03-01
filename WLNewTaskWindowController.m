@@ -68,8 +68,9 @@ static WLNewTaskWindowController *_sharedInstance;
 - (void)reset
 {
     [_titleField setStringValue:NSLocalizedString(@"New Task", @"Default text for title field on the New Task panel")];
+    [_titleField selectText:nil];
     [_dueDatePicker setDateValue:[NSDate date]];
-    [_priorityPopUp setTag:CalPriorityNone];
+    [_priorityPopUp selectItemWithTag:CalPriorityNone];
 }
 
 - (IBAction)create:(id)aSender
