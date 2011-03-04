@@ -1,3 +1,6 @@
 [submodule "ShortcutRecorder"]
 	path = ShortcutRecorder
 	url = git://github.com/Kentzo/ShortcutRecorder.git
+[submodule "auxiliary/BGHUDAppKit"]
+	path = auxiliary/BGHUDAppKit
+	url = git://github.com/Kentzo/BGHUDAppKit.git
