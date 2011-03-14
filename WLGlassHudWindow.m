@@ -29,6 +29,20 @@
     return self;
 }
 
+- (BOOL)makeFirstResponder:(NSResponder *)responder
+{
+    BOOL result = [super makeFirstResponder:responder];
+    if (result && [responder isKindOfClass:[NSControl class]] && ![responder isEqual:_lastControl])
+    {
+        [_lastControl setDrawsBackground:NO];
+        [_lastControl setBezeled:NO];
+        _lastControl = responder;
+        [_lastControl setDrawsBackground:YES];
+        [_lastControl setBezeled:YES];
+    }
+    return result;
+}
+
 - (NSRect)contentRectForFrameRect:(NSRect)windowFrame
 {
     return windowFrame;
@@ -52,11 +66,21 @@
             frameView = [[[WLGlassHudView alloc] initWithFrame:bounds] autorelease];
             [super setContentView:frameView];
         }
-        
+
         if (_realContentView != nil)
             [_realContentView removeFromSuperview];
 
         _realContentView = aView;
+
+        for (id view in [aView subviews])
+        {
+            if ([view respondsToSelector:@selector(setBezeled:)])
+            {
+                [_lastControl setDrawsBackground:NO];
+                [view setBezeled:NO];
+            }
+        }
+
         [_realContentView setFrame:[self contentRectForFrameRect:bounds]];
         [_realContentView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
         [frameView addSubview:_realContentView];

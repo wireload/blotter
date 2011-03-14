@@ -11,6 +11,7 @@
 
 @interface WLGlassHudWindow : NSWindow {
     NSView *_realContentView;
+    id _lastControl;
 }
 
 
