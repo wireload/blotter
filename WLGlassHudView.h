@@ -12,6 +12,4 @@
 @interface WLGlassHudView : NSView {
 }
 
-- (NSSize)minimalSize;
-
 @end
