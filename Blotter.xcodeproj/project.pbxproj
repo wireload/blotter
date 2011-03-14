@@ -30,6 +30,19 @@
 		E23779EF1312AD6000F46E7D /* WLClosableWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E23779D71312AD6000F46E7D /* WLClosableWindow.m */; };
 		E2596D611316B20400A8B15E /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2596D601316B20400A8B15E /* NewEventWindow.xib */; };
 		E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */; };
+		E267035A132CA21F003FBFC2 /* glass-hud-button-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E2670357132CA21F003FBFC2 /* glass-hud-button-right.png */; };
+		E267035B132CA21F003FBFC2 /* glass-hud-button-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = E2670358132CA21F003FBFC2 /* glass-hud-button-middle.png */; };
+		E267035C132CA21F003FBFC2 /* glass-hud-button-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E2670359132CA21F003FBFC2 /* glass-hud-button-left.png */; };
+		E2670391132CA887003FBFC2 /* WLGlassHudButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2670390132CA887003FBFC2 /* WLGlassHudButtonCell.m */; };
+		E279363A1324F05800BC5224 /* WLGlassHudWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E27936391324F05800BC5224 /* WLGlassHudWindow.m */; };
+		E27936461324F6E200BC5224 /* WLGlassHudView.m in Sources */ = {isa = PBXBuildFile; fileRef = E27936451324F6E200BC5224 /* WLGlassHudView.m */; };
+		E27937F513254D9400BC5224 /* glass-hud-content-top.png in Resources */ = {isa = PBXBuildFile; fileRef = E27937EE13254D9400BC5224 /* glass-hud-content-top.png */; };
+		E27937F613254D9400BC5224 /* glass-hud-content-top-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E27937EF13254D9400BC5224 /* glass-hud-content-top-right.png */; };
+		E27937F713254D9400BC5224 /* glass-hud-content-top-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E27937F013254D9400BC5224 /* glass-hud-content-top-left.png */; };
+		E27937F813254D9400BC5224 /* glass-hud-content-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = E27937F113254D9400BC5224 /* glass-hud-content-middle.png */; };
+		E27937F913254D9400BC5224 /* glass-hud-content-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = E27937F213254D9400BC5224 /* glass-hud-content-bottom.png */; };
+		E27937FA13254D9400BC5224 /* glass-hud-content-bottom-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E27937F313254D9400BC5224 /* glass-hud-content-bottom-right.png */; };
+		E27937FB13254D9400BC5224 /* glass-hud-content-bottom-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E27937F413254D9400BC5224 /* glass-hud-content-bottom-left.png */; };
 		E2794F56131A636E008AE1DA /* PTHotKey.m in Sources */ = {isa = PBXBuildFile; fileRef = E2794F4F131A636E008AE1DA /* PTHotKey.m */; };
 		E2794F57131A636E008AE1DA /* PTHotKeyCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = E2794F51131A636E008AE1DA /* PTHotKeyCenter.m */; };
 		E2794F58131A636E008AE1DA /* PTKeyCodeTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = E2794F53131A636E008AE1DA /* PTKeyCodeTranslator.m */; };
@@ -46,32 +59,14 @@
 		E29F38EB131968B200A865D9 /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29F38EA131968B200A865D9 /* NewTaskWindow.xib */; };
 		E29F38EE1319694C00A865D9 /* WLNewTaskWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E29F38ED1319694C00A865D9 /* WLNewTaskWindowController.m */; };
 		E2DC7D3113071F7E0065CEAD /* WLFitWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E2DC7D3013071F7E0065CEAD /* WLFitWindow.m */; };
-		E2F5E428132151860028DD5A /* BGHUDAppKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E2F5E427132151720028DD5A /* BGHUDAppKit.framework */; };
+		E2F9E1DF1322A4F4007598E2 /* glass-hud-border-bottom-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1D81322A4F4007598E2 /* glass-hud-border-bottom-left.png */; };
+		E2F9E1E01322A4F4007598E2 /* glass-hud-border-bottom-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1D91322A4F4007598E2 /* glass-hud-border-bottom-right.png */; };
+		E2F9E1E11322A4F4007598E2 /* glass-hud-border-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1DA1322A4F4007598E2 /* glass-hud-border-bottom.png */; };
+		E2F9E1E21322A4F4007598E2 /* glass-hud-border-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1DB1322A4F4007598E2 /* glass-hud-border-middle.png */; };
+		E2F9E1E31322A4F4007598E2 /* glass-hud-border-top-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1DC1322A4F4007598E2 /* glass-hud-border-top-left.png */; };
+		E2F9E1E41322A4F4007598E2 /* glass-hud-border-top-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1DD1322A4F4007598E2 /* glass-hud-border-top-right.png */; };
+		E2F9E1E51322A4F4007598E2 /* glass-hud-border-top.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1DE1322A4F4007598E2 /* glass-hud-border-top.png */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		E2F5E424132151720028DD5A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E2F5E41B132151720028DD5A /* BGHUDAppKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D1AC9740486D14A00FE50C9 /* BGHUDAppKitPlugin.ibplugin */;
-			remoteInfo = BGHUDAppKitPlugin;
-		};
-		E2F5E426132151720028DD5A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E2F5E41B132151720028DD5A /* BGHUDAppKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 53DF68FD067E5B5A0090B5B0 /* BGHUDAppKit.framework */;
-			remoteInfo = BGHUDAppKit;
-		};
-		E2F5E429132151910028DD5A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E2F5E41B132151720028DD5A /* BGHUDAppKit.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 53DF6901067E5B8E0090B5B0 /* All */;
-			remoteInfo = All;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		2840647F12833643000816FF /* CopyFiles */ = {
@@ -80,7 +75,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E2F5E428132151860028DD5A /* BGHUDAppKit.framework in CopyFiles */,
 				284064E112833EC0000816FF /* YAJL.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -133,10 +127,26 @@
 		E233C864131819AF00C227B1 /* WLClosablePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLClosablePanel.m; sourceTree = "<group>"; };
 		E23779D61312AD6000F46E7D /* WLClosableWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WLClosableWindow.h; path = WLClosableWindow/WLClosableWindow.h; sourceTree = "<group>"; };
 		E23779D71312AD6000F46E7D /* WLClosableWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WLClosableWindow.m; path = WLClosableWindow/WLClosableWindow.m; sourceTree = "<group>"; };
-		E2596D601316B20400A8B15E /* NewEventWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewEventWindow.xib; sourceTree = "<group>"; };
+		E2596D601316B20400A8B15E /* NewEventWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewEventWindow.xib; path = Resources/NewEventWindow.xib; sourceTree = "<group>"; };
 		E2596D711316C8C100A8B15E /* WLNewEventWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNewEventWindowController.h; sourceTree = "<group>"; };
 		E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNewEventWindowController.m; sourceTree = "<group>"; };
+		E2670357132CA21F003FBFC2 /* glass-hud-button-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-right.png"; sourceTree = "<group>"; };
+		E2670358132CA21F003FBFC2 /* glass-hud-button-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-middle.png"; sourceTree = "<group>"; };
+		E2670359132CA21F003FBFC2 /* glass-hud-button-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-left.png"; sourceTree = "<group>"; };
+		E267038F132CA887003FBFC2 /* WLGlassHudButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudButtonCell.h; sourceTree = "<group>"; };
+		E2670390132CA887003FBFC2 /* WLGlassHudButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudButtonCell.m; sourceTree = "<group>"; };
 		E267AADF12EDF7AE00EDB7B6 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = Resources/English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E27936381324F05800BC5224 /* WLGlassHudWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudWindow.h; sourceTree = "<group>"; };
+		E27936391324F05800BC5224 /* WLGlassHudWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudWindow.m; sourceTree = "<group>"; };
+		E27936441324F6E200BC5224 /* WLGlassHudView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudView.h; sourceTree = "<group>"; };
+		E27936451324F6E200BC5224 /* WLGlassHudView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudView.m; sourceTree = "<group>"; };
+		E27937EE13254D9400BC5224 /* glass-hud-content-top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-content-top.png"; sourceTree = "<group>"; };
+		E27937EF13254D9400BC5224 /* glass-hud-content-top-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-content-top-right.png"; sourceTree = "<group>"; };
+		E27937F013254D9400BC5224 /* glass-hud-content-top-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-content-top-left.png"; sourceTree = "<group>"; };
+		E27937F113254D9400BC5224 /* glass-hud-content-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-content-middle.png"; sourceTree = "<group>"; };
+		E27937F213254D9400BC5224 /* glass-hud-content-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-content-bottom.png"; sourceTree = "<group>"; };
+		E27937F313254D9400BC5224 /* glass-hud-content-bottom-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-content-bottom-right.png"; sourceTree = "<group>"; };
+		E27937F413254D9400BC5224 /* glass-hud-content-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-content-bottom-left.png"; sourceTree = "<group>"; };
 		E2794F4E131A636E008AE1DA /* PTHotKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTHotKey.h; sourceTree = "<group>"; };
 		E2794F4F131A636E008AE1DA /* PTHotKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTHotKey.m; sourceTree = "<group>"; };
 		E2794F50131A636E008AE1DA /* PTHotKeyCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTHotKeyCenter.h; sourceTree = "<group>"; };
@@ -167,12 +177,18 @@
 		E29DDCB512E9D56B00751CFA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = Resources/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E29DDCB612E9D57500751CFA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E29DDCB712E9D57F00751CFA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E29F38EA131968B200A865D9 /* NewTaskWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewTaskWindow.xib; sourceTree = "<group>"; };
+		E29F38EA131968B200A865D9 /* NewTaskWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewTaskWindow.xib; path = Resources/NewTaskWindow.xib; sourceTree = "<group>"; };
 		E29F38EC1319694C00A865D9 /* WLNewTaskWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNewTaskWindowController.h; sourceTree = "<group>"; };
 		E29F38ED1319694C00A865D9 /* WLNewTaskWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNewTaskWindowController.m; sourceTree = "<group>"; };
 		E2DC7D2F13071F7E0065CEAD /* WLFitWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLFitWindow.h; sourceTree = "<group>"; };
 		E2DC7D3013071F7E0065CEAD /* WLFitWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLFitWindow.m; sourceTree = "<group>"; };
-		E2F5E41B132151720028DD5A /* BGHUDAppKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BGHUDAppKit.xcodeproj; path = auxiliary/BGHUDAppKit/BGHUDAppKit.xcodeproj; sourceTree = "<group>"; };
+		E2F9E1D81322A4F4007598E2 /* glass-hud-border-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-border-bottom-left.png"; sourceTree = "<group>"; };
+		E2F9E1D91322A4F4007598E2 /* glass-hud-border-bottom-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-border-bottom-right.png"; sourceTree = "<group>"; };
+		E2F9E1DA1322A4F4007598E2 /* glass-hud-border-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-border-bottom.png"; sourceTree = "<group>"; };
+		E2F9E1DB1322A4F4007598E2 /* glass-hud-border-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-border-middle.png"; sourceTree = "<group>"; };
+		E2F9E1DC1322A4F4007598E2 /* glass-hud-border-top-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-border-top-left.png"; sourceTree = "<group>"; };
+		E2F9E1DD1322A4F4007598E2 /* glass-hud-border-top-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-border-top-right.png"; sourceTree = "<group>"; };
+		E2F9E1DE1322A4F4007598E2 /* glass-hud-border-top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-border-top.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +210,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E27936431324F6BD00BC5224 /* WLGlassHud */,
 				E27951EB131AA0E1008AE1DA /* ShortcutRecorder */,
 				E2794F4D131A636E008AE1DA /* HotKey */,
 				E233C863131819AF00C227B1 /* WLClosablePanel.h */,
@@ -251,7 +268,6 @@
 		29B97314FDCFA39411CA2CEA /* Deskboard */ = {
 			isa = PBXGroup;
 			children = (
-				E2F5E41B132151720028DD5A /* BGHUDAppKit.xcodeproj */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -273,6 +289,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E2F9E1D71322A4F4007598E2 /* glass-hud */,
 				E29DDCB012E9D54C00751CFA /* Localizable.strings */,
 				28153EDE12D78EBE00A239C4 /* Blotter-B8.icns */,
 				281BA565129EF84D00114D3C /* Blotter Preferences.preferencePane */,
@@ -294,6 +311,19 @@
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E27936431324F6BD00BC5224 /* WLGlassHud */ = {
+			isa = PBXGroup;
+			children = (
+				E27936381324F05800BC5224 /* WLGlassHudWindow.h */,
+				E27936391324F05800BC5224 /* WLGlassHudWindow.m */,
+				E27936441324F6E200BC5224 /* WLGlassHudView.h */,
+				E27936451324F6E200BC5224 /* WLGlassHudView.m */,
+				E267038F132CA887003FBFC2 /* WLGlassHudButtonCell.h */,
+				E2670390132CA887003FBFC2 /* WLGlassHudButtonCell.m */,
+			);
+			name = WLGlassHud;
 			sourceTree = "<group>";
 		};
 		E2794F4D131A636E008AE1DA /* HotKey */ = {
@@ -332,13 +362,29 @@
 			path = ShortcutRecorder/Source;
 			sourceTree = "<group>";
 		};
-		E2F5E41C132151720028DD5A /* Products */ = {
+		E2F9E1D71322A4F4007598E2 /* glass-hud */ = {
 			isa = PBXGroup;
 			children = (
-				E2F5E425132151720028DD5A /* BGHUDAppKitPlugin.ibplugin */,
-				E2F5E427132151720028DD5A /* BGHUDAppKit.framework */,
+				E2670357132CA21F003FBFC2 /* glass-hud-button-right.png */,
+				E2670358132CA21F003FBFC2 /* glass-hud-button-middle.png */,
+				E2670359132CA21F003FBFC2 /* glass-hud-button-left.png */,
+				E27937EE13254D9400BC5224 /* glass-hud-content-top.png */,
+				E27937EF13254D9400BC5224 /* glass-hud-content-top-right.png */,
+				E27937F013254D9400BC5224 /* glass-hud-content-top-left.png */,
+				E27937F113254D9400BC5224 /* glass-hud-content-middle.png */,
+				E27937F213254D9400BC5224 /* glass-hud-content-bottom.png */,
+				E27937F313254D9400BC5224 /* glass-hud-content-bottom-right.png */,
+				E27937F413254D9400BC5224 /* glass-hud-content-bottom-left.png */,
+				E2F9E1D81322A4F4007598E2 /* glass-hud-border-bottom-left.png */,
+				E2F9E1D91322A4F4007598E2 /* glass-hud-border-bottom-right.png */,
+				E2F9E1DA1322A4F4007598E2 /* glass-hud-border-bottom.png */,
+				E2F9E1DB1322A4F4007598E2 /* glass-hud-border-middle.png */,
+				E2F9E1DC1322A4F4007598E2 /* glass-hud-border-top-left.png */,
+				E2F9E1DD1322A4F4007598E2 /* glass-hud-border-top-right.png */,
+				E2F9E1DE1322A4F4007598E2 /* glass-hud-border-top.png */,
 			);
-			name = Products;
+			name = "glass-hud";
+			path = "Resources/glass-hud";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -356,7 +402,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				E2F5E42A132151910028DD5A /* PBXTargetDependency */,
 			);
 			name = Blotter;
 			productInstallPath = "$(HOME)/Applications";
@@ -392,35 +437,12 @@
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* Deskboard */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = E2F5E41C132151720028DD5A /* Products */;
-					ProjectRef = E2F5E41B132151720028DD5A /* BGHUDAppKit.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* Blotter */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		E2F5E425132151720028DD5A /* BGHUDAppKitPlugin.ibplugin */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = BGHUDAppKitPlugin.ibplugin;
-			remoteRef = E2F5E424132151720028DD5A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		E2F5E427132151720028DD5A /* BGHUDAppKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = BGHUDAppKit.framework;
-			remoteRef = E2F5E426132151720028DD5A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8D1107290486CEB800E47090 /* Resources */ = {
@@ -436,6 +458,23 @@
 				E29DDCB212E9D54C00751CFA /* Localizable.strings in Resources */,
 				E2596D611316B20400A8B15E /* NewEventWindow.xib in Resources */,
 				E29F38EB131968B200A865D9 /* NewTaskWindow.xib in Resources */,
+				E2F9E1DF1322A4F4007598E2 /* glass-hud-border-bottom-left.png in Resources */,
+				E2F9E1E01322A4F4007598E2 /* glass-hud-border-bottom-right.png in Resources */,
+				E2F9E1E11322A4F4007598E2 /* glass-hud-border-bottom.png in Resources */,
+				E2F9E1E21322A4F4007598E2 /* glass-hud-border-middle.png in Resources */,
+				E2F9E1E31322A4F4007598E2 /* glass-hud-border-top-left.png in Resources */,
+				E2F9E1E41322A4F4007598E2 /* glass-hud-border-top-right.png in Resources */,
+				E2F9E1E51322A4F4007598E2 /* glass-hud-border-top.png in Resources */,
+				E27937F513254D9400BC5224 /* glass-hud-content-top.png in Resources */,
+				E27937F613254D9400BC5224 /* glass-hud-content-top-right.png in Resources */,
+				E27937F713254D9400BC5224 /* glass-hud-content-top-left.png in Resources */,
+				E27937F813254D9400BC5224 /* glass-hud-content-middle.png in Resources */,
+				E27937F913254D9400BC5224 /* glass-hud-content-bottom.png in Resources */,
+				E27937FA13254D9400BC5224 /* glass-hud-content-bottom-right.png in Resources */,
+				E27937FB13254D9400BC5224 /* glass-hud-content-bottom-left.png in Resources */,
+				E267035A132CA21F003FBFC2 /* glass-hud-button-right.png in Resources */,
+				E267035B132CA21F003FBFC2 /* glass-hud-button-middle.png in Resources */,
+				E267035C132CA21F003FBFC2 /* glass-hud-button-left.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,18 +509,13 @@
 				E27951F8131AA0E1008AE1DA /* SRRecorderCell.m in Sources */,
 				E27951F9131AA0E1008AE1DA /* SRRecorderControl.m in Sources */,
 				E27951FA131AA0E1008AE1DA /* SRValidator.m in Sources */,
+				E279363A1324F05800BC5224 /* WLGlassHudWindow.m in Sources */,
+				E27936461324F6E200BC5224 /* WLGlassHudView.m in Sources */,
+				E2670391132CA887003FBFC2 /* WLGlassHudButtonCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		E2F5E42A132151910028DD5A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = All;
-			targetProxy = E2F5E429132151910028DD5A /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		E29DDC8512E9C7BF00751CFA /* MainMenu.strings */ = {
@@ -574,7 +608,10 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = (
+					i386,
+					x86_64,
+				);
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: WireLoad, LLC";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -583,7 +620,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/ShortcutRecorder/Source";
-				IBC_OTHER_FLAGS = "";
+				IBC_OTHER_FLAGS = "--plugin ${SRCROOT}/auxiliary/BGHUDAppKit/build/${CONFIGURATION}/BGHUDAppKit.framework/Versions/A/Resources/BGHUDAppKitPlugin.ibplugin";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
