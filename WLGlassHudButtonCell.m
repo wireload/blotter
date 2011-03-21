@@ -13,7 +13,6 @@
 
 -(void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-    NSLog(@"State: %d", [self state]);
     if ([self isHighlighted] || [self state] == NSOffState)
     {
         NSDrawThreePartImage(cellFrame,
