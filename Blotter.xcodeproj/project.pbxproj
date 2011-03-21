@@ -37,6 +37,8 @@
 		E271E506133762A300BF7F2B /* glass-hud-button-pressed-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E271E503133762A300BF7F2B /* glass-hud-button-pressed-right.png */; };
 		E271E507133762A300BF7F2B /* glass-hud-button-pressed-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = E271E504133762A300BF7F2B /* glass-hud-button-pressed-middle.png */; };
 		E271E508133762A300BF7F2B /* glass-hud-button-pressed-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E271E505133762A300BF7F2B /* glass-hud-button-pressed-left.png */; };
+		E271E5B513377E6100BF7F2B /* blotter-status-bar.png in Resources */ = {isa = PBXBuildFile; fileRef = E271E5B313377E6100BF7F2B /* blotter-status-bar.png */; };
+		E271E5B613377E6100BF7F2B /* blotter-status-bar-active.png in Resources */ = {isa = PBXBuildFile; fileRef = E271E5B413377E6100BF7F2B /* blotter-status-bar-active.png */; };
 		E279363A1324F05800BC5224 /* WLGlassHudWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E27936391324F05800BC5224 /* WLGlassHudWindow.m */; };
 		E27936461324F6E200BC5224 /* WLGlassHudView.m in Sources */ = {isa = PBXBuildFile; fileRef = E27936451324F6E200BC5224 /* WLGlassHudView.m */; };
 		E27937F513254D9400BC5224 /* glass-hud-content-top.png in Resources */ = {isa = PBXBuildFile; fileRef = E27937EE13254D9400BC5224 /* glass-hud-content-top.png */; };
@@ -142,6 +144,8 @@
 		E271E503133762A300BF7F2B /* glass-hud-button-pressed-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-pressed-right.png"; sourceTree = "<group>"; };
 		E271E504133762A300BF7F2B /* glass-hud-button-pressed-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-pressed-middle.png"; sourceTree = "<group>"; };
 		E271E505133762A300BF7F2B /* glass-hud-button-pressed-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-pressed-left.png"; sourceTree = "<group>"; };
+		E271E5B313377E6100BF7F2B /* blotter-status-bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blotter-status-bar.png"; path = "Resources/blotter-status-bar.png"; sourceTree = "<group>"; };
+		E271E5B413377E6100BF7F2B /* blotter-status-bar-active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blotter-status-bar-active.png"; path = "Resources/blotter-status-bar-active.png"; sourceTree = "<group>"; };
 		E27936381324F05800BC5224 /* WLGlassHudWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudWindow.h; sourceTree = "<group>"; };
 		E27936391324F05800BC5224 /* WLGlassHudWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudWindow.m; sourceTree = "<group>"; };
 		E27936441324F6E200BC5224 /* WLGlassHudView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudView.h; sourceTree = "<group>"; };
@@ -295,6 +299,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E271E5B313377E6100BF7F2B /* blotter-status-bar.png */,
+				E271E5B413377E6100BF7F2B /* blotter-status-bar-active.png */,
 				E2F9E1D71322A4F4007598E2 /* glass-hud */,
 				E29DDCB012E9D54C00751CFA /* Localizable.strings */,
 				28153EDE12D78EBE00A239C4 /* Blotter-B8.icns */,
@@ -487,6 +493,8 @@
 				E271E506133762A300BF7F2B /* glass-hud-button-pressed-right.png in Resources */,
 				E271E507133762A300BF7F2B /* glass-hud-button-pressed-middle.png in Resources */,
 				E271E508133762A300BF7F2B /* glass-hud-button-pressed-left.png in Resources */,
+				E271E5B513377E6100BF7F2B /* blotter-status-bar.png in Resources */,
+				E271E5B613377E6100BF7F2B /* blotter-status-bar-active.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
