@@ -76,7 +76,7 @@
         {
             if ([view respondsToSelector:@selector(setBezeled:)])
             {
-                [_lastControl setDrawsBackground:NO];
+                [view setDrawsBackground:NO];
                 [view setBezeled:NO];
             }
         }
