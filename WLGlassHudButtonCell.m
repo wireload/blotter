@@ -13,7 +13,7 @@
 
 -(void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-    if ([self isHighlighted] || [self state] == NSOffState)
+    if (![self isHighlighted])
     {
         NSDrawThreePartImage(cellFrame,
                              [NSImage imageNamed:@"glass-hud-button-left"],
@@ -24,7 +24,8 @@
                              1.0,
                              YES);
     }
-    else {
+    else
+    {
         NSDrawThreePartImage(cellFrame,
                              [NSImage imageNamed:@"glass-hud-button-pressed-left"],
                              [NSImage imageNamed:@"glass-hud-button-pressed-middle"],
