@@ -90,9 +90,10 @@ static WLNewEventWindowController *_sharedInstance;
     
     NSError *error = nil;
     if ([[CalCalendarStore defaultCalendarStore] saveEvent:event span:CalSpanThisEvent error:&error])
-        [[self window] performClose:aSender];
+        [[self window] orderOut:self];
     else
     {
+        NSBeep();
         // TODO: show the error.
         NSLog(@"Cannot create event: %@", error);
     }
