@@ -13,14 +13,29 @@
 
 -(void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-    NSDrawThreePartImage(cellFrame,
-                         [NSImage imageNamed:@"glass-hud-button-left"],
-                         [NSImage imageNamed:@"glass-hud-button-middle"],
-                         [NSImage imageNamed:@"glass-hud-button-right"],
-                         NO,
-                         NSCompositeSourceOver,
-                         1.0,
-                         NO);
+    NSLog(@"State: %d", [self state]);
+    if ([self isHighlighted] || [self state] == NSOffState)
+    {
+        NSDrawThreePartImage(cellFrame,
+                             [NSImage imageNamed:@"glass-hud-button-left"],
+                             [NSImage imageNamed:@"glass-hud-button-middle"],
+                             [NSImage imageNamed:@"glass-hud-button-right"],
+                             NO,
+                             NSCompositeSourceOver,
+                             1.0,
+                             YES);
+    }
+    else {
+        NSDrawThreePartImage(cellFrame,
+                             [NSImage imageNamed:@"glass-hud-button-pressed-left"],
+                             [NSImage imageNamed:@"glass-hud-button-pressed-middle"],
+                             [NSImage imageNamed:@"glass-hud-button-pressed-right"],
+                             NO,
+                             NSCompositeSourceOver,
+                             1.0,
+                             YES);
+    }
+
     [self drawTitle:[self attributedTitle] withFrame:cellFrame inView:controlView];
 }
 
