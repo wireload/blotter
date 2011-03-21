@@ -68,11 +68,11 @@ static WLNewEventWindowController *_sharedInstance;
 - (void)reset
 {
     [_titleField setStringValue:NSLocalizedString(@"New Event", @"Default text for title field on the New Event panel")];
-    [_titleField selectText:nil];
     [_locationField setStringValue:@""];
     [_isAllDayButton setState:NSOffState];
     [_startDatePicker setDateValue:[NSDate date]];
     [_endDatePicker setDateValue:[[NSDate date] dateByAddingTimeInterval:3600]];
+    [[self window] makeFirstResponder:_titleField];
 }
 
 - (IBAction)create:(id)aSender;
