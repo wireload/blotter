@@ -29,6 +29,7 @@
 @implementation DesktopView
 
 @synthesize initialHtmlLoaded;
+@synthesize fadeController;
 
 + (void)initialize
 {

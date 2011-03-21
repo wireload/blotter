@@ -18,4 +18,6 @@
 
 - (id)initWithView:(NSView *)aView;
 
+- (void)fadeIn;
+
 @end

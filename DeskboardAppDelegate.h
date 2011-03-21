@@ -16,7 +16,7 @@
 
 @class WLFitWindow;
 
-@interface DeskboardAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate> {
+@interface DeskboardAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate> {
     WLFitWindow *blotterWindow;
     NSStatusItem *statusItem;
     IBOutlet NSMenu *statusMenu;

@@ -313,4 +313,13 @@ extern NSString* const SRShortcutCharactersIgnoringModifiers;
         return YES;
 }
 
+
+#pragma mark NSMenuDelegate
+
+- (void)menuWillOpen:(NSMenu *)menu
+{
+    BLFadeController *fadeController = [(DesktopView *)[blotterWindow contentView] fadeController];
+    [fadeController fadeIn];
+}
+
 @end

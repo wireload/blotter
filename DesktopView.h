@@ -19,6 +19,7 @@
 }
 
 @property (nonatomic, assign, getter=isLoaded) BOOL initialHtmlLoaded;
+@property (readonly) BLFadeController *fadeController;
 
 - (void)refresh;
 - (NSString *)calendarHtml;
