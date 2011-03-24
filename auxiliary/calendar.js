@@ -516,6 +516,11 @@ function update(json)
 
     var topMinutes = calendarWeek.earliestHour * 60;
 
+    // Grab a handle to the time indicators before updating the day columns. When the columns are updated,
+    // the indicators are removed from the DOM so we'd no longer be able to get them back.
+    var mainTimeIndicator = $('#main-time-indicator'),
+        nextUpTimeIndicator = $('#next-up-time-indicator');
+
     for (var i = 0; i < 7; i++)
     {
         var day = calendarWeek.days[i],
@@ -529,12 +534,12 @@ function update(json)
 
         if (isToday)
         {
-            placeTimeIndicator($('#main-time-indicator'), todayColumnElement);
+            placeTimeIndicator(mainTimeIndicator, todayColumnElement);
 
             var nextUpElement = $('#next-up-content-0');
             // No 'top minutes' in Next Up.
             updateDayElement(nextUpElement, day, pixelsPerMinute, 0);
-            placeTimeIndicator($('#next-up-time-indicator'), nextUpElement);
+            placeTimeIndicator(nextUpTimeIndicator, nextUpElement);
 
             $('#next-up-timeline').height(Math.floor(pixelsPerHour * 24));
             $('#next-up-content-0').height(Math.floor(pixelsPerHour * 24));
