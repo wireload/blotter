@@ -443,6 +443,11 @@ The div offsets the event from the background borders.
   text-shadow: rgba(47, 47, 47, 0.3) 0px 1px 0px;
 }
 
+.time-indicator
+{
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.50);
+}
+
 .blue
 {
   border-image: url("../images/event-bezel-blue-combined.png") 3 stretch stretch;
@@ -499,7 +504,7 @@ The div offsets the event from the background borders.
 
 #next-up-box .calendar-wrapper
 {
-  top: 10px;
+  top: 0px;
 }
 
 #next-up-box .calendar
@@ -511,6 +516,12 @@ The div offsets the event from the background borders.
 {
   overflow: hidden;
   -webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,1,0)));
+}
+
+#next-up-box .calendar-wrapper th
+{
+  /* The Next Up box doesn't use a header, but we still want a little whitespace on top just to push down 00:00 a little. */
+  height: 5px;
 }
 
 /*

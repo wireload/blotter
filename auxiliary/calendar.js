@@ -231,7 +231,8 @@ var MINIMUM_EVENT_HEIGHT = 30,
     FAST_FORWARD_NEXT_UP = false,
 
     lastUpdateDate = null,
-    nextUpTimer = null;
+    lastUpdateSpecifiedDate = null,
+    timeTimer = null;
 
 function updateDateElement(dateElement, todayDate)
 {
@@ -260,6 +261,7 @@ var CalendarWeek = function(startDate, json)
     this.days = [];
     this.earliestHour = 9;
     this.latestHour = 17;
+    this.today = null;
 
     for (var dayIndex = 0; dayIndex < 7; dayIndex++)
     {
@@ -394,6 +396,19 @@ var CalendarWeek = function(startDate, json)
             }
         }
     }
+    /**
+        Return the day instance for the this.today date.
+    */
+    this.getDayOfToday = function()
+    {
+        for (i = 0; i < 7; i++)
+        {
+            var day = this.days[i];
+            if (day['startDate'].getDate() == this.today.getDate())
+                return day;
+        }
+        return null;
+    }
 }
 
 function updateAllDayElement(allDayElement, day)
@@ -451,6 +466,15 @@ function updateDayElement(mainElement, day, pixelsPerMinute, topMinutes)
     }
 }
 
+function placeTimeIndicator(timeIndicatorElement, parentElement)
+{
+    timeIndicatorElement.hide();
+    timeIndicatorElement.detach();
+    // Make sure this is the last element so that it goes above events.
+    parentElement.append(timeIndicatorElement);
+    timeIndicatorElement.css('top', '0px');
+}
+
 function update(json)
 {
     if (typeof(json) == 'string')
@@ -462,6 +486,12 @@ function update(json)
     var startDate       = goog.date.fromIsoString(json.beginningDate),
         endDate         = goog.date.fromIsoString(json.endDate),
         today           = goog.date.fromIsoString(json.date);
+
+    // A global used to track the date considered to be 'now' for purposes
+    // of displaying the calendar. This might be different from what JS
+    // considers 'right now' due to browser differences, or because we're in
+    // a debugging situation and testing some random date.
+    lastUpdateSpecifiedDate = today;
 
     updateDateElement($(".info .date"), today);
 
@@ -475,6 +505,7 @@ function update(json)
         pixelsPerHour = timelineHeight / visibleHours,
         pixelsPerMinute = pixelsPerHour / 60;
 
+    calendarWeek.today = today;
     // When stacking events, the effective length of each event in seconds needs
     // to be known, which is determined by how many seconds the MINIMUM_EVENT_HEIGHT
     // is.
@@ -488,72 +519,109 @@ function update(json)
     for (var i = 0; i < 7; i++)
     {
         var day = calendarWeek.days[i],
-            isToday = day['startDate'].getDate() == today.getDate();
+            isToday = day === calendarWeek.getDayOfToday();
 
         updateAllDayElement($("#main-all-day-" + i), day);
         updateDayHeaderElement($('#main-header-' + i), day, isToday);
 
-        updateDayElement($('#main-content-' + i), day, pixelsPerMinute, topMinutes);
+        var todayColumnElement = $('#main-content-' + i);
+        updateDayElement(todayColumnElement, day, pixelsPerMinute, topMinutes);
 
         if (isToday)
         {
+            placeTimeIndicator($('#main-time-indicator'), todayColumnElement);
+
             var nextUpElement = $('#next-up-content-0');
             // No 'top minutes' in Next Up.
             updateDayElement(nextUpElement, day, pixelsPerMinute, 0);
+            placeTimeIndicator($('#next-up-time-indicator'), nextUpElement);
 
             $('#next-up-timeline').height(Math.floor(pixelsPerHour * 24));
             $('#next-up-content-0').height(Math.floor(pixelsPerHour * 24));
-            $('#next-up-box .calendar-wrapper').css('top', '0 px');
+            $('#next-up-box .calendar-wrapper').css('top', '0px');
 
-            if (nextUpTimer)
-                window.clearTimeout(nextUpTimer);
+            if (timeTimer)
+                window.clearTimeout(timeTimer);
 
             // Allow the screen to draw fully before animating.
-            var minutesIntoNextUp = (today.getTime() - day['startDate'].getTime()) / 1000 / 60;
-            nextUpTimer = window.setTimeout(function() {
-                advanceNextUp(pixelsPerMinute, minutesIntoNextUp);
-            }, 100);
+            timeTimer = window.setTimeout(function() {
+                advanceTime(pixelsPerMinute, calendarWeek);
+            }, 10);
         }
     }
 
     implementSizingHacks();
 }
 
-function advanceNextUp(pixelsPerMinute, minutesIntoNextUp)
+/*
+    Advance the 'next up' view to the current time and move the current
+    time indicator to the right spot.
+
+    @param day the 'today' day instance
+*/
+function advanceTime(pixelsPerMinute, calendarWeek)
 {
     var nextUpWrapper = $('#next-up-box .calendar-wrapper'),
+        day = calendarWeek.getDayOfToday(),
         availableHeight = nextUpWrapper.parent().height(),
         columnHeight = 24 * 60 * pixelsPerMinute,
         oldTop = parseInt($('#next-up-box .calendar-wrapper').css('top').replace("px", "")),
         fastForwardFactor = FAST_FORWARD_NEXT_UP ? 60 : 1;
         minutesSinceUpdate = fastForwardFactor * (new goog.date.DateTime().getTime() - lastUpdateDate.getTime()) / 1000 / 60,
-        newTop = Math.floor(-1 * pixelsPerMinute * (minutesIntoNextUp + minutesSinceUpdate));
+        // This is relative to midnight of the day column.
+        minutesIntoDay = (lastUpdateSpecifiedDate.getTime() - day['startDate'].getTime()) / 1000 / 60,
+        newTop = Math.floor(-1 * pixelsPerMinute * (minutesIntoDay + minutesSinceUpdate));
 
     // Don't scroll past the bottom.
     newTop = Math.max(newTop, Math.floor(-1 * columnHeight + availableHeight - 35)); // -35 for the bottom fade.
-    // console.log("advancing Next Up to " + minutesSinceUpdate + " minutes from start (" + oldTop + " to " + newTop + " px).");
+    //console.log("advancing Next Up to " + minutesSinceUpdate + " minutes from start (" + oldTop + " to " + newTop + " px).");
 
     // Only animate small changes - larger animations cause flickering in the transparent version.
-    if (Math.abs(newTop - oldTop) < 100)
+    // Also only move when we have at least 0.25 hours worth of change so we can make a smooth animated
+    // advance.
+    var delta = Math.abs(newTop - oldTop);
+    if (delta >= (pixelsPerMinute * 15)  && nextUpWrapper.queue().length == 0)
     {
-        nextUpWrapper.animate({
-            top: newTop
-          },
-          2000,
-          'easeInOutQuad'
-        );
-    }
-    else
-    {
-        nextUpWrapper.css('top', newTop);
+        if (Math.abs(newTop - oldTop) < 100)
+        {
+            nextUpWrapper.animate({
+                top: newTop
+              },
+              2000,
+              'easeInOutQuad'
+            );
+        }
+        else
+        {
+            nextUpWrapper.css('top', newTop + 'px');
+        }
     }
     // For CSS animation, currently commented out in all.css.
-    // $('#next-up-box .calendar-wrapper').css('top', (-1 * pixelsPerMinute * minutesIntoNextUp) + 'px');
+    // $('#next-up-box .calendar-wrapper').css('top', (-1 * pixelsPerMinute * minutesIntoDay) + 'px');
 
-    // Update again in 15 minutes.
-    nextUpTimer = window.setTimeout(function() {
-        advanceNextUp(pixelsPerMinute, minutesIntoNextUp);
-    }, 15000 * 60 / fastForwardFactor);
+    // Place the time indicator. Note that 'minutesIntoDay' is relative to midnight, but the day column
+    // starts at the week's "earliest hour". So if we offset by the full minutes into the day, the time
+    // indicator will end up going too low.
+    var timeIndicatorElement = $('#main-time-indicator'),
+        timeIndicatorTop = Math.floor(pixelsPerMinute * (minutesIntoDay + minutesSinceUpdate - calendarWeek.earliestHour * 60));
+    if (timeIndicatorTop < 0)
+        timeIndicatorElement.hide();
+    else
+    {
+        timeIndicatorElement.show();
+        timeIndicatorElement.css('top', timeIndicatorTop + 'px');
+    }
+
+    // Time indicator for Next Up.
+    var nextUpTimeIndicatorElement = $('#next-up-time-indicator')
+        timeIndicatorTop = Math.floor(pixelsPerMinute * (minutesIntoDay + minutesSinceUpdate));
+    nextUpTimeIndicatorElement.show();
+    nextUpTimeIndicatorElement.css('top', timeIndicatorTop + 'px');
+
+    // Update again in 1 minute.
+    timeTimer = window.setTimeout(function() {
+        advanceTime(pixelsPerMinute, calendarWeek);
+    }, 1000 / Math.max(0.01, pixelsPerMinute) / fastForwardFactor);
 }
 
 function updateWhenReady(json)
