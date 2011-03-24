@@ -20,14 +20,13 @@ static const CGFloat _WLRightPadding = 18.0;
 {
     [[NSColor clearColor] setFill];
     NSRectFill(dirtyRect);
-    
     NSRect bounds = [self bounds];
-    
+
     // Calculate border part sizes
     NSSize bottomBorderSize = NSMakeSize(bounds.size.width, [[NSImage imageNamed:@"glass-hud-border-bottom"] size].height);
     NSSize topBorderSize = NSMakeSize(bounds.size.width, [[NSImage imageNamed:@"glass-hud-border-top"] size].height);
     NSSize centerBorderSize = NSMakeSize(bounds.size.width, bounds.size.height - bottomBorderSize.height - topBorderSize.height);
-    
+
     // Draw border parts
     NSRect bottomBorderFrame = NSMakeRect(0.0, 0.0, bottomBorderSize.width, bottomBorderSize.height);
     if (NSIntersectsRect(dirtyRect, bottomBorderFrame))
@@ -41,7 +40,7 @@ static const CGFloat _WLRightPadding = 18.0;
                              1.0,
                              NO);
     }
-    
+
     NSRect centerBorderFrame = NSMakeRect(0.0, NSMaxY(bottomBorderFrame), centerBorderSize.width, centerBorderSize.height);
     if (NSIntersectsRect(dirtyRect, centerBorderFrame))
     {
@@ -53,7 +52,7 @@ static const CGFloat _WLRightPadding = 18.0;
         NSRectFill(centerBorderFrame);
         [resizedCenterFill release];
     }
-    
+
     NSRect topBorderFrame = NSMakeRect(0.0, NSMaxY(centerBorderFrame), topBorderSize.width, topBorderSize.height);
     if (NSIntersectsRect(dirtyRect, topBorderFrame))
     {
@@ -66,13 +65,13 @@ static const CGFloat _WLRightPadding = 18.0;
                              1.0,
                              NO);
     }
-    
+
     // Calculate content part sizes
     NSSize bottomContentSize = NSMakeSize(bounds.size.width - _WLLeftPadding - _WLRightPadding, [[NSImage imageNamed:@"glass-hud-content-bottom"] size].height);
     NSSize topContentSize = NSMakeSize(bounds.size.width - _WLLeftPadding - _WLRightPadding, [[NSImage imageNamed:@"glass-hud-content-top"] size].height);
     NSSize centerContentSize = NSMakeSize(bounds.size.width - _WLLeftPadding - _WLRightPadding,
                                           bounds.size.height - _WLTopPadding - _WLBottomPadding - bottomContentSize.height - topContentSize.height);
-    
+
     // Draw content parts
     NSRect bottomContentFrame = NSMakeRect(_WLLeftPadding, _WLBottomPadding, bottomContentSize.width, bottomContentSize.height);
     if (NSIntersectsRect(dirtyRect, bottomContentFrame))
@@ -86,7 +85,7 @@ static const CGFloat _WLRightPadding = 18.0;
                              1.0,
                              NO);
     }
-    
+
     NSRect centerContentFrame = NSMakeRect(_WLLeftPadding, NSMaxY(bottomContentFrame), centerContentSize.width, centerContentSize.height);
     if (NSIntersectsRect(dirtyRect, centerContentFrame))
     {
@@ -98,7 +97,7 @@ static const CGFloat _WLRightPadding = 18.0;
         NSRectFillUsingOperation(centerContentFrame, NSCompositeSourceOver);
         [resizedCenterFill release];
     }
-    
+
     NSRect topContentFrame = NSMakeRect(_WLLeftPadding, NSMaxY(centerContentFrame), topContentSize.width, topContentSize.height);
     if (NSIntersectsRect(dirtyRect, topContentFrame))
     {
@@ -113,29 +112,19 @@ static const CGFloat _WLRightPadding = 18.0;
     }
 }
 
-- (void)mouseDown:(NSEvent *)event
-{	
-	NSWindow *window = [self window];
-	NSPoint originalMouseLocation = [window convertBaseToScreen:[event locationInWindow]];
-	NSRect originalFrame = [window frame];
-	
-    while (YES)
-	{
-        NSEvent *newEvent = [window nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
-		
-        if ([newEvent type] == NSLeftMouseUp)
-            break;
-		
-		NSPoint newMouseLocation = [window convertBaseToScreen:[newEvent locationInWindow]];
-		NSPoint delta = NSMakePoint(newMouseLocation.x - originalMouseLocation.x, newMouseLocation.y - originalMouseLocation.y);
-		
-		NSRect newFrame = originalFrame;
-		
-        newFrame.origin.x += delta.x;
-        newFrame.origin.y += delta.y;
-        
-		[window setFrame:newFrame display:YES animate:NO];
-	}
+- (void)mouseDown:(NSEvent *)anEvent
+{
+    _draggingPoint = [[self window] convertBaseToScreen:[anEvent locationInWindow]];
+}
+
+- (void)mouseDragged:(NSEvent *)anEvent
+{
+    NSWindow *window = [self window];
+    NSPoint newPoint = [window convertBaseToScreen:[anEvent locationInWindow]];
+    NSSize delta = NSMakeSize(newPoint.x - _draggingPoint.x, newPoint.y - _draggingPoint.y);
+    NSRect newFrame = NSOffsetRect([window frame], delta.width, delta.height);
+    [window setFrame:newFrame display:YES animate:NO];
+    _draggingPoint = newPoint;
 }
 
 @end

@@ -10,6 +10,7 @@
 
 
 @interface WLGlassHudView : NSView {
+    CGPoint _draggingPoint;
 }
 
 @end
