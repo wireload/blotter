@@ -310,6 +310,8 @@ The div offsets the event from the background borders.
   display: block;
 
   padding: 4px;
+
+  word-wrap: break-word;
 }
 
 .event .title
@@ -441,6 +443,10 @@ The div offsets the event from the background borders.
   border-image-width: auto;
   -webkit-border-image-width: auto;
   text-shadow: rgba(47, 47, 47, 0.3) 0px 1px 0px;
+  font-size: 10px;
+  font-family: "HelveticaNeue", "Helvetica Neue", Arial, sans-serif;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
 }
 
 .time-indicator
