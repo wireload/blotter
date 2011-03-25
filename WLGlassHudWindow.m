@@ -8,6 +8,7 @@
 
 #import "WLGlassHudWindow.h"
 #import "WLGlassHudView.h"
+#import "WLGlassHudTextView.h"
 
 
 @implementation WLGlassHudWindow
@@ -32,13 +33,19 @@
 - (BOOL)makeFirstResponder:(NSResponder *)responder
 {
     BOOL result = [super makeFirstResponder:responder];
-    if (result && [responder isKindOfClass:[NSControl class]] && ![responder isEqual:_lastControl])
+    if (result
+        && ![responder isEqual:_lastControl]
+        && ([responder respondsToSelector:@selector(setDrawsBackground:)] || [responder respondsToSelector:@selector(setBezeled:)]))
     {
-        [_lastControl setDrawsBackground:NO];
-        [_lastControl setBezeled:NO];
+        if ([_lastControl respondsToSelector:@selector(setDrawsBackground:)])
+            [_lastControl setDrawsBackground:NO];
+        if ([_lastControl respondsToSelector:@selector(setBezeled:)])
+            [_lastControl setBezeled:NO];
         _lastControl = responder;
-        [_lastControl setDrawsBackground:YES];
-        [_lastControl setBezeled:YES];
+        if ([_lastControl respondsToSelector:@selector(setDrawsBackground:)])
+            [_lastControl setDrawsBackground:YES];
+        if ([_lastControl respondsToSelector:@selector(setBezeled:)])
+            [_lastControl setBezeled:YES];
     }
     return result;
 }
@@ -75,10 +82,10 @@
         for (id view in [aView subviews])
         {
             if ([view respondsToSelector:@selector(setBezeled:)])
-            {
-                [view setDrawsBackground:NO];
                 [view setBezeled:NO];
-            }
+            if ([view respondsToSelector:@selector(setDrawsBackground:)])
+                [view setDrawsBackground:NO];
+
         }
 
         [_realContentView setFrame:[self contentRectForFrameRect:bounds]];
