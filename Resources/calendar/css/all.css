@@ -310,6 +310,8 @@ The div offsets the event from the background borders.
   display: block;
 
   padding: 4px;
+
+  word-wrap: break-word;
 }
 
 .event .title
@@ -441,6 +443,17 @@ The div offsets the event from the background borders.
   border-image-width: auto;
   -webkit-border-image-width: auto;
   text-shadow: rgba(47, 47, 47, 0.3) 0px 1px 0px;
+  font-size: 10px;
+  font-family: "HelveticaNeue", "Helvetica Neue", Arial, sans-serif;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+.time-indicator
+{
+  border-top: 1px dashed rgba(255, 255, 255, 0.75);
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.25);
+  z-index: 2;
 }
 
 .blue
@@ -499,7 +512,7 @@ The div offsets the event from the background borders.
 
 #next-up-box .calendar-wrapper
 {
-  top: 10px;
+  top: 0px;
 }
 
 #next-up-box .calendar
@@ -511,6 +524,12 @@ The div offsets the event from the background borders.
 {
   overflow: hidden;
   -webkit-mask-image: -webkit-gradient(linear, left 90%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,1,0)));
+}
+
+#next-up-box .calendar-wrapper th
+{
+  /* The Next Up box doesn't use a header, but we still want a little whitespace on top just to push down 00:00 a little. */
+  height: 5px;
 }
 
 /*
