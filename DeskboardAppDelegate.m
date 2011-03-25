@@ -260,13 +260,11 @@ extern NSString* const SRShortcutCharactersIgnoringModifiers;
     NSAssert(statusItem == nil, @"You cannot add status bar twice");
     // Configure system-wide menubar item
     statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength] retain];;
-    // [statusItem setTitle:@"Blotter"];
     [statusItem setHighlightMode:YES];
     [statusItem setMenu:statusMenu];
 
-    NSBundle *bundle = [NSBundle mainBundle];
-    NSImage *statusImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"blotter-status-bar" ofType:@"png"]];
-    NSImage *statusHighlightImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"blotter-status-bar-active" ofType:@"png"]];
+    NSImage *statusImage = [NSImage imageNamed:@"blotter-status-bar"];
+    NSImage *statusHighlightImage = [NSImage imageNamed:@"blotter-status-bar-active"];
     [statusItem setImage:statusImage];
     [statusItem setAlternateImage:statusHighlightImage];
 }
