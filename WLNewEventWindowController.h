@@ -9,13 +9,18 @@
 #import <Cocoa/Cocoa.h>
 
 
+@class WLGlassHudTextView;
+
 @interface WLNewEventWindowController : NSWindowController <NSWindowDelegate> {
-    IBOutlet NSTextField *_titleField;
-    IBOutlet NSTextField *_locationField;
+    IBOutlet WLGlassHudTextView *_titleView;
+    id _titleViewObserver;
+    IBOutlet WLGlassHudTextView *_locationView;
+    IBOutlet NSView *_locationViewContainer;
+    id _locationViewObserver;
     IBOutlet NSButton *_isAllDayButton;
     IBOutlet NSDatePicker *_startDatePicker;
     IBOutlet NSDatePicker *_endDatePicker;
-    
+
     IBOutlet NSArrayController *_calendarsController;
     id _calendarsChangedObserver;
     NSArray *calendars;
