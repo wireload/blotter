@@ -12,6 +12,17 @@
 #import "WLGlassHudTextView.h"
 
 
+BOOL _WLIsEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int shortcutKey)
+{
+    static NSUInteger FlagsMask = NSShiftKeyMask | NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask;
+
+    NSUInteger eventFlags = [event modifierFlags];
+    NSUInteger eventKeyCode = [event keyCode];
+
+    return (eventFlags & (FlagsMask ^ shortcutFlags)) == 0 && (eventFlags & shortcutFlags) && eventKeyCode == shortcutKey;
+}
+
+
 @implementation WLGlassHudWindow
 
 - (id)initWithContentRect:(NSRect)contentRect
@@ -107,13 +118,48 @@
 
 - (BOOL)performKeyEquivalent:(NSEvent *)theEvent
 {
-    NSUInteger flags = [theEvent modifierFlags];
-    if (!(flags & NSControlKeyMask)
-        && !(flags & NSAlternateKeyMask)
-        && (flags & NSCommandKeyMask)
-        && [theEvent keyCode] == kVK_ANSI_A)
+    if (_WLIsEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_A))
     {
         [[self firstResponder] selectAll:self];
+        return YES;
+    }
+    // Cut/Copy/Paste
+    else if (_WLIsEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_X))
+    {
+        id firstResponder = [self firstResponder];
+        if ([firstResponder respondsToSelector:@selector(cut:)])
+        {
+            [firstResponder cut:self];
+            return YES;
+        }
+    }
+    else if (_WLIsEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_C))
+    {
+        id firstResponder = [self firstResponder];
+        if ([firstResponder respondsToSelector:@selector(copy:)])
+        {
+            [firstResponder copy:self];
+            return YES;
+        }
+    }
+    else if (_WLIsEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_V))
+    {
+        id firstResponder = [self firstResponder];
+        if ([firstResponder respondsToSelector:@selector(paste:)])
+        {
+            [firstResponder paste:self];
+            return YES;
+        }
+    }
+    // Undo/Redo
+    else if (_WLIsEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_Z))
+    {
+        [[[self firstResponder] undoManager] undo];
+        return YES;
+    }
+    else if (_WLIsEventContainShortcut(theEvent, NSCommandKeyMask | NSShiftKeyMask, kVK_ANSI_Z))
+    {
+        [[[self firstResponder] undoManager] redo];
         return YES;
     }
     return NO;
