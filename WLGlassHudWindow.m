@@ -12,7 +12,7 @@
 #import "WLGlassHudTextView.h"
 
 
-BOOL _WLIsEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int shortcutKey)
+BOOL _WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int shortcutKey)
 {
     static NSUInteger FlagsMask = NSShiftKeyMask | NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask;
 
