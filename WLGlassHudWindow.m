@@ -87,11 +87,6 @@
     }
 }
 
-- (id)contentView
-{
-    return _realContentView;
-}
-
 - (BOOL)canBecomeKeyWindow
 {
 	return YES;
