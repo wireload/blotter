@@ -118,13 +118,13 @@ BOOL _WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int s
 
 - (BOOL)performKeyEquivalent:(NSEvent *)theEvent
 {
-    if (_WLIsEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_A))
+    if (_WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_A))
     {
         [[self firstResponder] selectAll:self];
         return YES;
     }
     // Cut/Copy/Paste
-    else if (_WLIsEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_X))
+    else if (_WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_X))
     {
         id firstResponder = [self firstResponder];
         if ([firstResponder respondsToSelector:@selector(cut:)])
@@ -133,7 +133,7 @@ BOOL _WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int s
             return YES;
         }
     }
-    else if (_WLIsEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_C))
+    else if (_WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_C))
     {
         id firstResponder = [self firstResponder];
         if ([firstResponder respondsToSelector:@selector(copy:)])
@@ -142,7 +142,7 @@ BOOL _WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int s
             return YES;
         }
     }
-    else if (_WLIsEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_V))
+    else if (_WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_V))
     {
         id firstResponder = [self firstResponder];
         if ([firstResponder respondsToSelector:@selector(paste:)])
@@ -152,12 +152,12 @@ BOOL _WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int s
         }
     }
     // Undo/Redo
-    else if (_WLIsEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_Z))
+    else if (_WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_Z))
     {
         [[[self firstResponder] undoManager] undo];
         return YES;
     }
-    else if (_WLIsEventContainShortcut(theEvent, NSCommandKeyMask | NSShiftKeyMask, kVK_ANSI_Z))
+    else if (_WLDoesEventContainShortcut(theEvent, NSCommandKeyMask | NSShiftKeyMask, kVK_ANSI_Z))
     {
         [[[self firstResponder] undoManager] redo];
         return YES;
