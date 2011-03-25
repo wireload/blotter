@@ -58,6 +58,7 @@ NSString* const WLSizeDiff = @"WLSizeDiff";
         _textView = [[_WLGlassHudTextViewInternal alloc] initWithFrame:textViewFrame];
         [_textView setDelegate:self];
         [_textView setBackgroundColor:[NSColor clearColor]];
+        [_textView setAllowsUndo:YES];
         _textView.containerView = self;
         [self addSubview:_textView];
         [_textView release];
