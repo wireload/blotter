@@ -6,6 +6,7 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
+#import <Carbon/Carbon.h>
 #import "WLGlassHudWindow.h"
 #import "WLGlassHudView.h"
 #import "WLGlassHudTextView.h"
@@ -102,6 +103,20 @@
 - (BOOL)canBecomeMainWindow
 {
 	return YES;
+}
+
+- (BOOL)performKeyEquivalent:(NSEvent *)theEvent
+{
+    NSUInteger flags = [theEvent modifierFlags];
+    if (!(flags & NSControlKeyMask)
+        && !(flags & NSAlternateKeyMask)
+        && (flags & NSCommandKeyMask)
+        && [theEvent keyCode] == kVK_ANSI_A)
+    {
+        [[self firstResponder] selectAll:self];
+        return YES;
+    }
+    return NO;
 }
 
 @end
