@@ -8,6 +8,7 @@
 
 #import <CalendarStore/CalendarStore.h>
 #import "WLNewTaskWindowController.h"
+#import "WLGlassHudTextView.h"
 
 
 @interface WLNewTaskWindowController (/* Private */)
@@ -20,6 +21,7 @@ static WLNewTaskWindowController *_sharedInstance;
 
 @implementation WLNewTaskWindowController
 @synthesize calendars;
+@synthesize showDueDatePicker;
 
 + (BOOL)canCreateTask
 {
@@ -56,28 +58,46 @@ static WLNewTaskWindowController *_sharedInstance;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:_calendarsChangedObserver];
+    if (_titleViewObserver != nil)
+        [[NSNotificationCenter defaultCenter] removeObserver:_titleViewObserver];
     [calendars release];
     [super dealloc];
 }
 
 - (void)windowDidLoad
 {
+    _titleViewObserver = [[NSNotificationCenter defaultCenter] addObserverForName:WLViewSizeDidChangeNotification
+                                                                           object:_titleView
+                                                                            queue:nil
+                                                                       usingBlock:^(NSNotification *arg1)
+    {
+        CGFloat heightDiff = [[[arg1 userInfo] objectForKey:WLSizeDiff] sizeValue].height;
+        NSRect newWindowFrame = [[self window] frame];
+        newWindowFrame.size.height += heightDiff;
+        newWindowFrame.origin.y -= heightDiff;
+
+        [[self window] setFrame:newWindowFrame display:YES animate:NO];
+    }];
+    _titleView.postsSizeChangedNotifications = YES;
+    
     [self reset];
 }
 
 - (void)reset
 {
-    [_titleField setStringValue:NSLocalizedString(@"New Task", @"Default text for title field on the New Task panel")];
-    [_titleField selectText:nil];
+    [(NSTextView *)_titleView setString:NSLocalizedString(@"New Task", @"Default text for title field on the New Task panel")];
     [_dueDatePicker setDateValue:[NSDate date]];
     [_priorityPopUp selectItemWithTag:CalPriorityNone];
+    self.showDueDatePicker = NO;
+    [(NSTextView *)_titleView selectAll:self];
 }
 
 - (IBAction)create:(id)aSender
 {
     CalTask *task = [CalTask task];
-    task.title = [_titleField stringValue];
-    task.dueDate = [_dueDatePicker dateValue];
+    task.title = [(NSTextView *)_titleView string];
+    if (showDueDatePicker)
+        task.dueDate = [_dueDatePicker dateValue];
     task.priority = [[_priorityPopUp selectedItem] tag];
 
     NSUInteger selectedCalendarIndex = [_calendarsController selectionIndex];
@@ -86,11 +106,11 @@ static WLNewTaskWindowController *_sharedInstance;
 
     NSError *error = nil;
     if ([[CalCalendarStore defaultCalendarStore] saveTask:task error:&error])
-        [[self window] performClose:aSender];
+        [[self window] orderOut:self];
     else
     {
-        // TODO: show the error.
-        NSLog(@"Cannot create event: %@", error);
+        NSBeep();
+        [NSApp presentError:error];
     }
 }
 

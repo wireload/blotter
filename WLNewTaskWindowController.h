@@ -9,16 +9,21 @@
 #import <Cocoa/Cocoa.h>
 
 
+@class WLGlassHudTextView;
+
 @interface WLNewTaskWindowController : NSWindowController {
-    IBOutlet NSTextField *_titleField;
+    IBOutlet WLGlassHudTextView *_titleView;
+    id _titleViewObserver;
     IBOutlet NSDatePicker *_dueDatePicker;
     IBOutlet NSPopUpButton *_priorityPopUp;
+    BOOL showDueDatePicker;
     
     IBOutlet NSArrayController *_calendarsController;
     id _calendarsChangedObserver;
     NSArray *calendars;
 }
 @property (copy, readonly) NSArray *calendars;
+@property BOOL showDueDatePicker;
 
 + (BOOL)canCreateTask;
 
