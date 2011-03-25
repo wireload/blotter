@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="251"/>
+			<integer value="4"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -54,7 +54,7 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSCustomView" id="1015655719">
 							<reference key="NSNextResponder" ref="675070131"/>
-							<int key="NSvFlags">274</int>
+							<int key="NSvFlags">4370</int>
 							<string key="NSFrame">{{33, 173.5}, {217, 24}}</string>
 							<reference key="NSSuperview" ref="675070131"/>
 							<string key="NSClassName">WLGlassHudTextView</string>
@@ -151,7 +151,7 @@
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="919854082">
 										<int key="NSCellFlags">67239424</int>
-										<int key="NSCellFlags2">134217728</int>
+										<int key="NSCellFlags2">134250496</int>
 										<string key="NSContents">Cancel</string>
 										<object class="NSFont" key="NSSupport" id="618754605">
 											<string key="NSName">LucidaGrande</string>
@@ -175,7 +175,7 @@
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="413100244">
 										<int key="NSCellFlags">67239424</int>
-										<int key="NSCellFlags2">134217728</int>
+										<int key="NSCellFlags2">134250496</int>
 										<string key="NSContents">Create Event</string>
 										<reference key="NSSupport" ref="618754605"/>
 										<reference key="NSControlView" ref="1026362590"/>
@@ -328,7 +328,7 @@
 								</object>
 								<object class="NSCustomView" id="553055910">
 									<reference key="NSNextResponder" ref="690297653"/>
-									<int key="NSvFlags">274</int>
+									<int key="NSvFlags">4370</int>
 									<string key="NSFrame">{{83, 152}, {166, 20}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<string key="NSClassName">WLGlassHudTextView</string>
@@ -946,13 +946,13 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABDJgAAwhAAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABDMwAAwgwAAA</bytes>
 					</object>
 					<string>WLGlassHudButtonCell</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABC0AAAwhAAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABC6gAAwgwAAA</bytes>
 					</object>
 					<string>WLGlassHudButtonCell</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -968,7 +968,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABCRAAAwxoAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABCRAAAwvoAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -993,10 +993,10 @@
 					<object class="NSAffineTransform">
 						<bytes key="NSTransformStruct">AQAAAABBoAAAA</bytes>
 					</object>
-					<string>{{613, 786}, {285, 230}}</string>
+					<string>{{851, 740}, {285, 230}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{613, 786}, {285, 230}}</string>
+					<string>{{851, 740}, {285, 230}}</string>
 					<boolean value="NO"/>
 					<boolean value="NO"/>
 					<boolean value="NO"/>
