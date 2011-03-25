@@ -162,7 +162,7 @@ BOOL _WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int s
         [[[self firstResponder] undoManager] redo];
         return YES;
     }
-    return NO;
+    return [super performKeyEquivalent:theEvent];
 }
 
 @end
