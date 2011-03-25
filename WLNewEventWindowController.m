@@ -134,8 +134,7 @@ static WLNewEventWindowController *_sharedInstance;
     else
     {
         NSBeep();
-        // TODO: show the error.
-        NSLog(@"Cannot create event: %@", error);
+        [NSApp presentError:error];
     }
 }
 
