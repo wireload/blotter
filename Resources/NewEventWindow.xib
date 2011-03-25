@@ -223,16 +223,20 @@
 								<object class="NSButton" id="456489716">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">290</int>
-									<string key="NSFrame">{{81, 139}, {18, 18}}</string>
+									<string key="NSFrame">{{83, 140}, {168, 18}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="648425809">
 										<int key="NSCellFlags">67239424</int>
-										<int key="NSCellFlags2">163840</int>
+										<int key="NSCellFlags2">294912</int>
 										<string key="NSContents"/>
-										<reference key="NSSupport" ref="26"/>
+										<object class="NSFont" key="NSSupport">
+											<string key="NSName">LucidaGrande</string>
+											<double key="NSSize">9</double>
+											<int key="NSfFlags">3614</int>
+										</object>
 										<reference key="NSControlView" ref="456489716"/>
-										<int key="NSButtonFlags">1215582719</int>
+										<int key="NSButtonFlags">1211912703</int>
 										<int key="NSButtonFlags2">2</int>
 										<object class="NSCustomResource" key="NSNormalImage">
 											<string key="NSClassName">NSImage</string>
@@ -325,7 +329,7 @@
 								<object class="NSCustomView" id="553055910">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">274</int>
-									<string key="NSFrame">{{84, 156}, {165, 20}}</string>
+									<string key="NSFrame">{{85, 156}, {164, 20}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<string key="NSClassName">WLGlassHudTextView</string>
 								</object>
