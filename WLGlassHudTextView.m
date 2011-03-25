@@ -27,6 +27,7 @@ NSString* const WLSizeDiff = @"WLSizeDiff";
 
 - (BOOL)becomeFirstResponder
 {
+    // Move cursor to the end
     BOOL result = [super becomeFirstResponder];
     if (result && [[[self selectedRanges] objectAtIndex:0] rangeValue].length == 0)
         [self setSelectedRange:NSMakeRange([[self string] length], 0)];
@@ -54,12 +55,12 @@ NSString* const WLSizeDiff = @"WLSizeDiff";
         NSRect textViewFrame = [self convertRect:frameRect fromView:[self superview]];
         textViewFrame.origin.y += _WLTextViewTopOffset;
         textViewFrame.size.height -= _WLTextViewTopOffset + _WLTextViewBottomOffset;
-        textView = [[_WLGlassHudTextViewInternal alloc] initWithFrame:textViewFrame];
-        [textView setDelegate:self];
-        [textView setBackgroundColor:[NSColor clearColor]];
-        textView.containerView = self;
-        [self addSubview:textView];
-        [textView release];
+        _textView = [[_WLGlassHudTextViewInternal alloc] initWithFrame:textViewFrame];
+        [_textView setDelegate:self];
+        [_textView setBackgroundColor:[NSColor clearColor]];
+        _textView.containerView = self;
+        [self addSubview:_textView];
+        [_textView release];
     }
     return self;
 }
@@ -75,31 +76,26 @@ NSString* const WLSizeDiff = @"WLSizeDiff";
     postsSizeChangedNotifications = flag;
     if (!postsSizeChangedNotifications && _textViewFrameObserver != nil)
     {
-        [textView setPostsFrameChangedNotifications:NO];
+        [_textView setPostsFrameChangedNotifications:NO];
         [[NSNotificationCenter defaultCenter] removeObserver:_textViewFrameObserver];
         _textViewFrameObserver = nil;
     }
     else if (postsSizeChangedNotifications && _textViewFrameObserver == nil)
     {
         _textViewFrameObserver = [[NSNotificationCenter defaultCenter] addObserverForName:NSViewFrameDidChangeNotification
-                                                                                   object:textView
+                                                                                   object:_textView
                                                                                     queue:nil
                                                                                usingBlock:^(NSNotification *arg1)
         {
             _WLGlassHudTextViewInternal *view = [arg1 object];
-            if ([view frame].size.height != [view minSize].height)
-            {
-                CGFloat heightDiff = [view frame].size.height - [self frame].size.height + _WLTextViewTopOffset + _WLTextViewBottomOffset;
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSValue valueWithSize:NSMakeSize(0.0, heightDiff)]
-                                                                     forKey:WLSizeDiff];
-                [[NSNotificationCenter defaultCenter] postNotificationName:WLViewSizeDidChangeNotification
-                                                                    object:self
-                                                                  userInfo:userInfo];
-            }
-            else
-                [self setNeedsDisplay:YES];
+            CGFloat heightDiff = [view frame].size.height - [self frame].size.height + _WLTextViewTopOffset + _WLTextViewBottomOffset;
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSValue valueWithSize:NSMakeSize(0.0, heightDiff)]
+                                                                 forKey:WLSizeDiff];
+            [[NSNotificationCenter defaultCenter] postNotificationName:WLViewSizeDidChangeNotification
+                                                                object:self
+                                                              userInfo:userInfo];
         }];
-        [textView setPostsFrameChangedNotifications:YES];
+        [_textView setPostsFrameChangedNotifications:YES];
     }
 }
 
@@ -110,7 +106,7 @@ NSString* const WLSizeDiff = @"WLSizeDiff";
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    if ([textView drawsBackground])
+    if ([_textView drawsBackground])
     {
         NSDrawNinePartImage([self bounds],
                             [NSImage imageNamed:@"glass-hud-textview-top-left"],
@@ -128,17 +124,28 @@ NSString* const WLSizeDiff = @"WLSizeDiff";
     }
 }
 
+- (NSSize)textViewSize
+{
+    return [_textView frame].size;
+}
+
+- (void)selectAll:(id)sender
+{
+    [_textView selectAll:sender];
+    [[self window] makeFirstResponder:_textView];
+}
+
 
 #pragma mark Message forwarding
 
 - (BOOL)respondsToSelector:(SEL)aSelector
 {
-    return ([super respondsToSelector:aSelector] || [textView respondsToSelector:aSelector]);
+    return ([super respondsToSelector:aSelector] || [_textView respondsToSelector:aSelector]);
 }
 
 - (id)forwardingTargetForSelector:(SEL)aSelector
 {
-    return textView;
+    return _textView;
 }
 
 

@@ -24,11 +24,13 @@
     @discussion  Coordinates is flipped. Forwards most of received methods to a NSTextView instance.
 */
 @interface WLGlassHudTextView : NSView <NSTextViewDelegate> {
-    _WLGlassHudTextViewInternal *textView;
+    _WLGlassHudTextViewInternal *_textView;
     id _textViewFrameObserver;
     BOOL postsSizeChangedNotifications;
 }
 @property (nonatomic) BOOL postsSizeChangedNotifications;
+
+- (NSSize)textViewSize;
 
 @end
 

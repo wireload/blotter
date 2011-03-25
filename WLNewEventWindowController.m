@@ -70,13 +70,15 @@ static WLNewEventWindowController *_sharedInstance;
 
 - (void)windowDidLoad
 {
+    [(NSTextView *)_titleView setDrawsBackground:NO];
+    [(NSTextView *)_titleView setFont:[NSFont boldSystemFontOfSize:16]];
+    [(NSTextView *)_locationView setDrawsBackground:NO];
     _titleViewObserver = [[NSNotificationCenter defaultCenter] addObserverForName:WLViewSizeDidChangeNotification
                                                                            object:_titleView
                                                                             queue:nil
                                                                        usingBlock:^(NSNotification *arg1)
     {
         CGFloat heightDiff = [[[arg1 userInfo] objectForKey:WLSizeDiff] sizeValue].height;
-        // Resize window
         NSRect newWindowFrame = [[self window] frame];
         newWindowFrame.size.height += heightDiff;
         newWindowFrame.origin.y -= heightDiff;
@@ -100,21 +102,17 @@ static WLNewEventWindowController *_sharedInstance;
     }];
     _locationView.postsSizeChangedNotifications = YES;
 
-    [(NSTextView *)_titleView setDrawsBackground:NO];
-    [(NSTextView *)_titleView setFont:[NSFont boldSystemFontOfSize:16]];
-    [(NSTextView *)_locationView setDrawsBackground:NO];
     [self reset];
 }
 
 - (void)reset
 {
     [(NSTextView *)_titleView setString:NSLocalizedString(@"New Event", @"Default text for title field on the New Event panel")];
-    [(NSTextView *)_titleView selectAll:self];
     [(NSTextView *)_locationView setString:@""];
     [_isAllDayButton setState:NSOffState];
     [_startDatePicker setDateValue:[NSDate date]];
     [_endDatePicker setDateValue:[[NSDate date] dateByAddingTimeInterval:3600]];
-    [[self window] makeFirstResponder:_titleView];
+    [(NSTextView *)_titleView selectAll:self];
 }
 
 - (IBAction)create:(id)aSender;
