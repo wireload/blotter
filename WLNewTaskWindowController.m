@@ -66,6 +66,7 @@ static WLNewTaskWindowController *_sharedInstance;
 
 - (void)windowDidLoad
 {
+    [(NSTextView *)_titleView setFont:[NSFont boldSystemFontOfSize:16]];
     _titleViewObserver = [[NSNotificationCenter defaultCenter] addObserverForName:WLViewSizeDidChangeNotification
                                                                            object:_titleView
                                                                             queue:nil
