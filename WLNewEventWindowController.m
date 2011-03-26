@@ -133,7 +133,7 @@ static WLNewEventWindowController *_sharedInstance;
     [(NSTextView *)_locationView setString:@""];
     [_isAllDayButton setState:NSOffState];
     [_startDatePicker setDateValue:[NSDate date]];
-    [_endDatePicker setDateValue:[[NSDate date] dateByAddingTimeInterval:3600]];
+    [_endDatePicker setDateValue:[[_startDatePicker dateValue] dateByAddingTimeInterval:3600]];
     [(NSTextView *)_titleView selectAll:self];
 }
 
