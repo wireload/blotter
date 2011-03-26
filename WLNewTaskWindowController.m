@@ -99,9 +99,7 @@ static WLNewTaskWindowController *_sharedInstance;
         task.dueDate = [_dueDatePicker dateValue];
     task.priority = [[_priorityPopUp selectedItem] tag];
 
-    NSUInteger selectedCalendarIndex = [_calendarsController selectionIndex];
-    if (selectedCalendarIndex != NSNotFound)
-        task.calendar = [[_calendarsController arrangedObjects] objectAtIndex:selectedCalendarIndex];
+    task.calendar = [[_calendarsController selectedObjects] lastObject];
 
     NSError *error = nil;
     if ([[CalCalendarStore defaultCalendarStore] saveTask:task error:&error])

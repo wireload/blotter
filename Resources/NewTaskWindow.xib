@@ -50,7 +50,7 @@
 						<object class="NSCustomView" id="903219286">
 							<reference key="NSNextResponder" ref="414427165"/>
 							<int key="NSvFlags">4370</int>
-							<string key="NSFrame">{{30, 141}, {224, 24}}</string>
+							<string key="NSFrame">{{30, 141}, {224, 28}}</string>
 							<reference key="NSSuperview" ref="414427165"/>
 							<string key="NSClassName">WLGlassHudTextView</string>
 						</object>
@@ -206,7 +206,7 @@
 								<object class="NSPopUpButton" id="93078503">
 									<reference key="NSNextResponder" ref="577727828"/>
 									<int key="NSvFlags">266</int>
-									<string key="NSFrame">{{77, 64}, {173, 26}}</string>
+									<string key="NSFrame">{{77, 63}, {173, 26}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSPopUpButtonCell" key="NSCell" id="359745811">
@@ -452,7 +452,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						<string key="label">contentValues: arrangedObjects.title</string>
 						<reference key="source" ref="93078503"/>
 						<reference key="destination" ref="347016224"/>
-						<object class="NSNibBindingConnector" key="connector">
+						<object class="NSNibBindingConnector" key="connector" id="912097377">
 							<reference key="NSSource" ref="93078503"/>
 							<reference key="NSDestination" ref="347016224"/>
 							<string key="NSLabel">contentValues: arrangedObjects.title</string>
@@ -635,6 +635,23 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						<reference key="destination" ref="447760508"/>
 					</object>
 					<int key="connectionID">882</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedIndex: selectionIndex</string>
+						<reference key="source" ref="93078503"/>
+						<reference key="destination" ref="347016224"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="93078503"/>
+							<reference key="NSDestination" ref="347016224"/>
+							<string key="NSLabel">selectedIndex: selectionIndex</string>
+							<string key="NSBinding">selectedIndex</string>
+							<string key="NSKeyPath">selectionIndex</string>
+							<reference key="NSPreviousConnector" ref="912097377"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">883</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1039,7 +1056,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">882</int>
+			<int key="maxID">883</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

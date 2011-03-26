@@ -146,9 +146,7 @@ static WLNewEventWindowController *_sharedInstance;
     event.startDate = [_startDatePicker dateValue];
     event.endDate = [_startDatePicker dateValue];
 
-    NSUInteger selectedCalendarIndex = [_calendarsController selectionIndex];
-    if (selectedCalendarIndex != NSNotFound)
-        event.calendar = [[_calendarsController arrangedObjects] objectAtIndex:selectedCalendarIndex];
+    event.calendar = [[_calendarsController selectedObjects] lastObject];
 
     NSError *error = nil;
     if ([[CalCalendarStore defaultCalendarStore] saveEvent:event span:CalSpanThisEvent error:&error])
