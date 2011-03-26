@@ -103,8 +103,7 @@ static WLNewEventWindowController *_sharedInstance;
         NSRect newWindowFrame = [[self window] frame];
         newWindowFrame.size.height += heightDiff;
         newWindowFrame.origin.y -= heightDiff;
-
-        [[self window] setFrame:newWindowFrame display:YES animate:NO];
+        [[self window] setFrame:newWindowFrame display:YES animate:YES];
     }];
     _titleView.postsSizeChangedNotifications = YES;
 
@@ -118,7 +117,7 @@ static WLNewEventWindowController *_sharedInstance;
         newWindowFrame.size.height += heightDiff;
         newWindowFrame.origin.y -= heightDiff;
         [_locationViewContainer setAutoresizingMask:([_locationViewContainer autoresizingMask] | NSViewHeightSizable) ^ NSViewMaxYMargin];
-        [[self window] setFrame:newWindowFrame display:YES animate:NO];
+        [[self window] setFrame:newWindowFrame display:YES animate:YES];
         [_locationViewContainer setAutoresizingMask:([_locationViewContainer autoresizingMask] ^ NSViewHeightSizable) | NSViewMaxYMargin];
     }];
     _locationView.postsSizeChangedNotifications = YES;

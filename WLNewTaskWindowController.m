@@ -76,10 +76,9 @@ static WLNewTaskWindowController *_sharedInstance;
         newWindowFrame.size.height += heightDiff;
         newWindowFrame.origin.y -= heightDiff;
 
-        [[self window] setFrame:newWindowFrame display:YES animate:NO];
+        [[self window] setFrame:newWindowFrame display:YES animate:YES];
     }];
     _titleView.postsSizeChangedNotifications = YES;
-    
     [self reset];
 }
 
