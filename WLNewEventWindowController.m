@@ -91,9 +91,12 @@ static WLNewEventWindowController *_sharedInstance;
 
 - (void)windowDidLoad
 {
+    [_startDatePicker setDelegate:self];
+    [_endDatePicker bind:@"minDate" toObject:_startDatePicker withKeyPath:@"cell.dateValue" options:nil];
     [(NSTextView *)_titleView setDrawsBackground:NO];
     [(NSTextView *)_titleView setFont:[NSFont boldSystemFontOfSize:16]];
     [(NSTextView *)_locationView setDrawsBackground:NO];
+
     _titleViewObserver = [[NSNotificationCenter defaultCenter] addObserverForName:WLViewSizeDidChangeNotification
                                                                            object:_titleView
                                                                             queue:nil
@@ -155,6 +158,20 @@ static WLNewEventWindowController *_sharedInstance;
     {
         NSBeep();
         [NSApp presentError:error];
+    }
+}
+
+
+#pragma mark NSDatePickerDelegate
+
+- (void)datePickerCell:(NSDatePickerCell *)aDatePickerCell
+validateProposedDateValue:(NSDate **)proposedDateValue
+          timeInterval:(NSTimeInterval *)proposedTimeInterval
+{
+    if (aDatePickerCell == [_startDatePicker cell])
+    {
+        NSTimeInterval diffBetweenDates = [*proposedDateValue timeIntervalSinceDate:[_startDatePicker dateValue]];
+        [_endDatePicker setDateValue:[[_endDatePicker dateValue] dateByAddingTimeInterval:diffBetweenDates]];
     }
 }
 

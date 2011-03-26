@@ -11,7 +11,7 @@
 
 @class WLGlassHudTextView;
 
-@interface WLNewEventWindowController : NSWindowController <NSWindowDelegate> {
+@interface WLNewEventWindowController : NSWindowController <NSWindowDelegate, NSDatePickerCellDelegate> {
     IBOutlet WLGlassHudTextView *_titleView;
     id _titleViewObserver;
     IBOutlet WLGlassHudTextView *_locationView;
