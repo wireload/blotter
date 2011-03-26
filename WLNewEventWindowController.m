@@ -59,6 +59,7 @@ static WLNewEventWindowController *_sharedInstance;
 
 - (void)dealloc
 {
+    [_isAllDayButton removeObserver:self forKeyPath:@"cell.state"];
     [[NSNotificationCenter defaultCenter] removeObserver:_calendarsChangedObserver];
     if (_titleViewObserver != nil)
         [[NSNotificationCenter defaultCenter] removeObserver:_titleViewObserver];
@@ -66,6 +67,26 @@ static WLNewEventWindowController *_sharedInstance;
         [[NSNotificationCenter defaultCenter] removeObserver:_locationViewObserver];
     [calendars release];
     [super dealloc];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualTo:@"cell.state"])
+    {
+        NSInteger newState = [[change objectForKey:NSKeyValueChangeNewKey] integerValue];
+        if (newState == NSOnState)
+        {
+            [_startDatePicker setDatePickerElements:NSYearMonthDayDatePickerElementFlag];
+            [_endDatePicker setDatePickerElements:NSYearMonthDayDatePickerElementFlag];
+        }
+        else
+        {
+            [_startDatePicker setDatePickerElements:NSYearMonthDayDatePickerElementFlag | NSHourMinuteDatePickerElementFlag];
+            [_endDatePicker setDatePickerElements:NSYearMonthDayDatePickerElementFlag | NSHourMinuteDatePickerElementFlag];
+        }
+    }
+    else
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 }
 
 - (void)windowDidLoad
@@ -101,6 +122,8 @@ static WLNewEventWindowController *_sharedInstance;
         [_locationViewContainer setAutoresizingMask:([_locationViewContainer autoresizingMask] ^ NSViewHeightSizable) | NSViewMaxYMargin];
     }];
     _locationView.postsSizeChangedNotifications = YES;
+
+    [_isAllDayButton addObserver:self forKeyPath:@"cell.state" options:NSKeyValueObservingOptionNew context:NULL];
 
     [self reset];
 }
