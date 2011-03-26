@@ -14,16 +14,15 @@
 @interface WLNewTaskWindowController : NSWindowController {
     IBOutlet WLGlassHudTextView *_titleView;
     id _titleViewObserver;
+    IBOutlet NSButton *_isDueDate;
     IBOutlet NSDatePicker *_dueDatePicker;
     IBOutlet NSPopUpButton *_priorityPopUp;
-    BOOL showDueDatePicker;
     
     IBOutlet NSArrayController *_calendarsController;
     id _calendarsChangedObserver;
     NSArray *calendars;
 }
 @property (copy, readonly) NSArray *calendars;
-@property BOOL showDueDatePicker;
 
 + (BOOL)canCreateTask;
 

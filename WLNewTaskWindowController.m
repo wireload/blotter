@@ -21,7 +21,6 @@ static WLNewTaskWindowController *_sharedInstance;
 
 @implementation WLNewTaskWindowController
 @synthesize calendars;
-@synthesize showDueDatePicker;
 
 + (BOOL)canCreateTask
 {
@@ -48,9 +47,9 @@ static WLNewTaskWindowController *_sharedInstance;
                                                                                       object:[CalCalendarStore defaultCalendarStore]
                                                                                        queue:nil
                                                                                   usingBlock:^(NSNotification *arg1)
-                                     {
-                                         self.calendars = [[CalCalendarStore defaultCalendarStore] calendars];
-                                     }];
+        {
+            self.calendars = [[CalCalendarStore defaultCalendarStore] calendars];
+        }];
     }
     return self;
 }
@@ -67,6 +66,12 @@ static WLNewTaskWindowController *_sharedInstance;
 - (void)windowDidLoad
 {
     [(NSTextView *)_titleView setFont:[NSFont boldSystemFontOfSize:16]];
+    [_dueDatePicker bind:@"hidden"
+                toObject:_isDueDate
+             withKeyPath:@"cell.state"
+                 options:[NSDictionary dictionaryWithObject:[NSValueTransformer valueTransformerForName:NSNegateBooleanTransformerName]
+                                                     forKey:NSValueTransformerBindingOption]];
+
     _titleViewObserver = [[NSNotificationCenter defaultCenter] addObserverForName:WLViewSizeDidChangeNotification
                                                                            object:_titleView
                                                                             queue:nil
@@ -80,15 +85,16 @@ static WLNewTaskWindowController *_sharedInstance;
         [[self window] setFrame:newWindowFrame display:YES animate:YES];
     }];
     _titleView.postsSizeChangedNotifications = YES;
+
     [self reset];
 }
 
 - (void)reset
 {
     [(NSTextView *)_titleView setString:NSLocalizedString(@"New Task", @"Default text for title field on the New Task panel")];
+    [_isDueDate setState:NSOffState];
     [_dueDatePicker setDateValue:[NSDate date]];
     [_priorityPopUp selectItemWithTag:CalPriorityNone];
-    self.showDueDatePicker = NO;
     [(NSTextView *)_titleView selectAll:self];
 }
 
@@ -96,7 +102,7 @@ static WLNewTaskWindowController *_sharedInstance;
 {
     CalTask *task = [CalTask task];
     task.title = [(NSTextView *)_titleView string];
-    if (showDueDatePicker)
+    if ([_isDueDate state] == NSOnState)
         task.dueDate = [_dueDatePicker dateValue];
     task.priority = [[_priorityPopUp selectedItem] tag];
 
