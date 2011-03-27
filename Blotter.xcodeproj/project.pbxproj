@@ -81,6 +81,7 @@
 		E2F9E1E31322A4F4007598E2 /* glass-hud-border-top-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1DC1322A4F4007598E2 /* glass-hud-border-top-left.png */; };
 		E2F9E1E41322A4F4007598E2 /* glass-hud-border-top-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1DD1322A4F4007598E2 /* glass-hud-border-top-right.png */; };
 		E2F9E1E51322A4F4007598E2 /* glass-hud-border-top.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1DE1322A4F4007598E2 /* glass-hud-border-top.png */; };
+		E2FCE09D133F9264006E713F /* WLGlassHudDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FCE09C133F9264006E713F /* WLGlassHudDatePicker.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -220,6 +221,8 @@
 		E2F9E1DC1322A4F4007598E2 /* glass-hud-border-top-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-border-top-left.png"; sourceTree = "<group>"; };
 		E2F9E1DD1322A4F4007598E2 /* glass-hud-border-top-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-border-top-right.png"; sourceTree = "<group>"; };
 		E2F9E1DE1322A4F4007598E2 /* glass-hud-border-top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-border-top.png"; sourceTree = "<group>"; };
+		E2FCE09B133F9264006E713F /* WLGlassHudDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudDatePicker.h; sourceTree = "<group>"; };
+		E2FCE09C133F9264006E713F /* WLGlassHudDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudDatePicker.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -357,6 +360,8 @@
 				E2670390132CA887003FBFC2 /* WLGlassHudButtonCell.m */,
 				E2701FA7133B563B0098CD79 /* WLGlassHudTextView.h */,
 				E2701FA8133B563B0098CD79 /* WLGlassHudTextView.m */,
+				E2FCE09B133F9264006E713F /* WLGlassHudDatePicker.h */,
+				E2FCE09C133F9264006E713F /* WLGlassHudDatePicker.m */,
 			);
 			name = WLGlassHud;
 			sourceTree = "<group>";
@@ -574,6 +579,7 @@
 				E27936461324F6E200BC5224 /* WLGlassHudView.m in Sources */,
 				E2670391132CA887003FBFC2 /* WLGlassHudButtonCell.m in Sources */,
 				E2701FA9133B563B0098CD79 /* WLGlassHudTextView.m in Sources */,
+				E2FCE09D133F9264006E713F /* WLGlassHudDatePicker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

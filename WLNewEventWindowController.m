@@ -11,7 +11,7 @@
 #import "WLGlassHudTextView.h"
 
 
-static const CGFloat _WLMaxTitleHeight = 250.0f;
+static const NSTimeInterval _WLDefaultTimeDiff = 3600; // seconds
 
 
 @interface WLNewEventWindowController (/* Private */)
@@ -66,6 +66,7 @@ static WLNewEventWindowController *_sharedInstance;
     if (_locationViewObserver != nil)
         [[NSNotificationCenter defaultCenter] removeObserver:_locationViewObserver];
     [calendars release];
+    [_datePickerValueBackup release];
     [super dealloc];
 }
 
@@ -92,7 +93,7 @@ static WLNewEventWindowController *_sharedInstance;
 - (void)windowDidLoad
 {
     [_startDatePicker setDelegate:self];
-    [_endDatePicker bind:@"minDate" toObject:_startDatePicker withKeyPath:@"cell.dateValue" options:nil];
+    [_endDatePicker setDelegate:self];
     [(NSTextView *)_titleView setDrawsBackground:NO];
     [(NSTextView *)_titleView setFont:[NSFont boldSystemFontOfSize:16]];
     [(NSTextView *)_locationView setDrawsBackground:NO];
@@ -136,8 +137,9 @@ static WLNewEventWindowController *_sharedInstance;
     [(NSTextView *)_locationView setString:@""];
     [_isAllDayButton setState:NSOffState];
     [_startDatePicker setDateValue:[NSDate date]];
-    [_endDatePicker setDateValue:[[_startDatePicker dateValue] dateByAddingTimeInterval:3600]];
+    [_endDatePicker setDateValue:[[_startDatePicker dateValue] dateByAddingTimeInterval:_WLDefaultTimeDiff]];
     [(NSTextView *)_titleView selectAll:self];
+    [_datePickerValueBackup release], _datePickerValueBackup = nil;
 }
 
 - (IBAction)create:(id)aSender;
@@ -147,7 +149,7 @@ static WLNewEventWindowController *_sharedInstance;
     event.location = [(NSTextView *)_locationView string];
     event.isAllDay = ([_isAllDayButton state] == NSOnState);
     event.startDate = [_startDatePicker dateValue];
-    event.endDate = [_startDatePicker dateValue];
+    event.endDate = [_endDatePicker dateValue];
 
     event.calendar = [[_calendarsController selectedObjects] lastObject];
 
@@ -168,11 +170,34 @@ static WLNewEventWindowController *_sharedInstance;
 validateProposedDateValue:(NSDate **)proposedDateValue
           timeInterval:(NSTimeInterval *)proposedTimeInterval
 {
+
+}
+
+- (void)datePickerCellDidResignFirstResponder:(NSDatePickerCell *)aDatePickerCell
+{
     if (aDatePickerCell == [_startDatePicker cell])
     {
-        NSTimeInterval diffBetweenDates = [*proposedDateValue timeIntervalSinceDate:[_startDatePicker dateValue]];
-        [_endDatePicker setDateValue:[[_endDatePicker dateValue] dateByAddingTimeInterval:diffBetweenDates]];
+        NSDate *newDate = [_startDatePicker dateValue];
+        NSTimeInterval diffBetweenDates = [newDate timeIntervalSinceDate:_datePickerValueBackup];
+        if (diffBetweenDates >= 0)
+            [_endDatePicker setDateValue:[[_endDatePicker dateValue] dateByAddingTimeInterval:diffBetweenDates]];
+        else
+            [_endDatePicker setDateValue:[newDate dateByAddingTimeInterval:_WLDefaultTimeDiff]];
     }
+    else if (aDatePickerCell == [_endDatePicker cell])
+    {
+        if ([[_endDatePicker dateValue] compare:[_startDatePicker dateValue]] == NSOrderedAscending)
+        {
+            NSBeep();
+            [_endDatePicker setDateValue:_datePickerValueBackup];
+        }
+    }
+    [_datePickerValueBackup release], _datePickerValueBackup = nil;
+}
+
+- (void)datePickerCellDidBecomeFirstResponder:(NSDatePickerCell *)aDatePickerCell
+{
+    _datePickerValueBackup = [[aDatePickerCell dateValue] copy];
 }
 
 @end
