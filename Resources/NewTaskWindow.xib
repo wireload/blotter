@@ -50,7 +50,7 @@
 						<object class="NSCustomView" id="903219286">
 							<reference key="NSNextResponder" ref="414427165"/>
 							<int key="NSvFlags">4370</int>
-							<string key="NSFrame">{{30, 141}, {224, 24}}</string>
+							<string key="NSFrame">{{30, 141}, {224, 28}}</string>
 							<reference key="NSSuperview" ref="414427165"/>
 							<string key="NSClassName">WLGlassHudTextView</string>
 						</object>
@@ -110,7 +110,7 @@
 									<reference key="NSSuperview" ref="577727828"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="931242854">
-										<int key="NSCellFlags">-1543373312</int>
+										<int key="NSCellFlags">-2080244224</int>
 										<int key="NSCellFlags2">294912</int>
 										<string key="NSContents"/>
 										<object class="NSFont" key="NSSupport">
@@ -206,7 +206,7 @@
 								<object class="NSPopUpButton" id="93078503">
 									<reference key="NSNextResponder" ref="577727828"/>
 									<int key="NSvFlags">266</int>
-									<string key="NSFrame">{{77, 64}, {173, 26}}</string>
+									<string key="NSFrame">{{77, 63}, {173, 26}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSPopUpButtonCell" key="NSCell" id="359745811">
@@ -452,7 +452,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						<string key="label">contentValues: arrangedObjects.title</string>
 						<reference key="source" ref="93078503"/>
 						<reference key="destination" ref="347016224"/>
-						<object class="NSNibBindingConnector" key="connector">
+						<object class="NSNibBindingConnector" key="connector" id="1009433587">
 							<reference key="NSSource" ref="93078503"/>
 							<reference key="NSDestination" ref="347016224"/>
 							<string key="NSLabel">contentValues: arrangedObjects.title</string>
@@ -503,42 +503,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						<reference key="destination" ref="903219286"/>
 					</object>
 					<int key="connectionID">854</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: showDueDatePicker</string>
-						<reference key="source" ref="113646877"/>
-						<reference key="destination" ref="1021"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="113646877"/>
-							<reference key="NSDestination" ref="1021"/>
-							<string key="NSLabel">value: showDueDatePicker</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">showDueDatePicker</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">859</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">hidden: showDueDatePicker</string>
-						<reference key="source" ref="758771597"/>
-						<reference key="destination" ref="1021"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="758771597"/>
-							<reference key="NSDestination" ref="1021"/>
-							<string key="NSLabel">hidden: showDueDatePicker</string>
-							<string key="NSBinding">hidden</string>
-							<string key="NSKeyPath">showDueDatePicker</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">NSNegateBoolean</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">860</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -635,6 +599,31 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						<reference key="destination" ref="447760508"/>
 					</object>
 					<int key="connectionID">882</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedIndex: selectionIndex</string>
+						<reference key="source" ref="93078503"/>
+						<reference key="destination" ref="347016224"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="93078503"/>
+							<reference key="NSDestination" ref="347016224"/>
+							<string key="NSLabel">selectedIndex: selectionIndex</string>
+							<string key="NSBinding">selectedIndex</string>
+							<string key="NSKeyPath">selectionIndex</string>
+							<reference key="NSPreviousConnector" ref="1009433587"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">883</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_isDueDate</string>
+						<reference key="source" ref="1021"/>
+						<reference key="destination" ref="113646877"/>
+					</object>
+					<int key="connectionID">884</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1039,7 +1028,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">882</int>
+			<int key="maxID">884</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1109,6 +1098,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>_calendarsController</string>
 							<string>_dueDatePicker</string>
+							<string>_isDueDate</string>
 							<string>_priorityPopUp</string>
 							<string>_titleView</string>
 						</object>
@@ -1116,6 +1106,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSArrayController</string>
 							<string>NSDatePicker</string>
+							<string>NSButton</string>
 							<string>NSPopUpButton</string>
 							<string>WLGlassHudTextView</string>
 						</object>
@@ -1126,6 +1117,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>_calendarsController</string>
 							<string>_dueDatePicker</string>
+							<string>_isDueDate</string>
 							<string>_priorityPopUp</string>
 							<string>_titleView</string>
 						</object>
@@ -1138,6 +1130,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<object class="IBToOneOutletInfo">
 								<string key="name">_dueDatePicker</string>
 								<string key="candidateClassName">NSDatePicker</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">_isDueDate</string>
+								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">_priorityPopUp</string>

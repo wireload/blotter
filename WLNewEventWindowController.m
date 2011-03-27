@@ -59,6 +59,7 @@ static WLNewEventWindowController *_sharedInstance;
 
 - (void)dealloc
 {
+    [_isAllDayButton removeObserver:self forKeyPath:@"cell.state"];
     [[NSNotificationCenter defaultCenter] removeObserver:_calendarsChangedObserver];
     if (_titleViewObserver != nil)
         [[NSNotificationCenter defaultCenter] removeObserver:_titleViewObserver];
@@ -68,11 +69,34 @@ static WLNewEventWindowController *_sharedInstance;
     [super dealloc];
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualTo:@"cell.state"])
+    {
+        NSInteger newState = [[change objectForKey:NSKeyValueChangeNewKey] integerValue];
+        if (newState == NSOnState)
+        {
+            [_startDatePicker setDatePickerElements:NSYearMonthDayDatePickerElementFlag];
+            [_endDatePicker setDatePickerElements:NSYearMonthDayDatePickerElementFlag];
+        }
+        else
+        {
+            [_startDatePicker setDatePickerElements:NSYearMonthDayDatePickerElementFlag | NSHourMinuteDatePickerElementFlag];
+            [_endDatePicker setDatePickerElements:NSYearMonthDayDatePickerElementFlag | NSHourMinuteDatePickerElementFlag];
+        }
+    }
+    else
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+}
+
 - (void)windowDidLoad
 {
+    [_startDatePicker setDelegate:self];
+    [_endDatePicker bind:@"minDate" toObject:_startDatePicker withKeyPath:@"cell.dateValue" options:nil];
     [(NSTextView *)_titleView setDrawsBackground:NO];
     [(NSTextView *)_titleView setFont:[NSFont boldSystemFontOfSize:16]];
     [(NSTextView *)_locationView setDrawsBackground:NO];
+
     _titleViewObserver = [[NSNotificationCenter defaultCenter] addObserverForName:WLViewSizeDidChangeNotification
                                                                            object:_titleView
                                                                             queue:nil
@@ -82,8 +106,7 @@ static WLNewEventWindowController *_sharedInstance;
         NSRect newWindowFrame = [[self window] frame];
         newWindowFrame.size.height += heightDiff;
         newWindowFrame.origin.y -= heightDiff;
-
-        [[self window] setFrame:newWindowFrame display:YES animate:NO];
+        [[self window] setFrame:newWindowFrame display:YES animate:YES];
     }];
     _titleView.postsSizeChangedNotifications = YES;
 
@@ -97,10 +120,12 @@ static WLNewEventWindowController *_sharedInstance;
         newWindowFrame.size.height += heightDiff;
         newWindowFrame.origin.y -= heightDiff;
         [_locationViewContainer setAutoresizingMask:([_locationViewContainer autoresizingMask] | NSViewHeightSizable) ^ NSViewMaxYMargin];
-        [[self window] setFrame:newWindowFrame display:YES animate:NO];
+        [[self window] setFrame:newWindowFrame display:YES animate:YES];
         [_locationViewContainer setAutoresizingMask:([_locationViewContainer autoresizingMask] ^ NSViewHeightSizable) | NSViewMaxYMargin];
     }];
     _locationView.postsSizeChangedNotifications = YES;
+
+    [_isAllDayButton addObserver:self forKeyPath:@"cell.state" options:NSKeyValueObservingOptionNew context:NULL];
 
     [self reset];
 }
@@ -111,7 +136,7 @@ static WLNewEventWindowController *_sharedInstance;
     [(NSTextView *)_locationView setString:@""];
     [_isAllDayButton setState:NSOffState];
     [_startDatePicker setDateValue:[NSDate date]];
-    [_endDatePicker setDateValue:[[NSDate date] dateByAddingTimeInterval:3600]];
+    [_endDatePicker setDateValue:[[_startDatePicker dateValue] dateByAddingTimeInterval:3600]];
     [(NSTextView *)_titleView selectAll:self];
 }
 
@@ -124,9 +149,7 @@ static WLNewEventWindowController *_sharedInstance;
     event.startDate = [_startDatePicker dateValue];
     event.endDate = [_startDatePicker dateValue];
 
-    NSUInteger selectedCalendarIndex = [_calendarsController selectionIndex];
-    if (selectedCalendarIndex != NSNotFound)
-        event.calendar = [[_calendarsController arrangedObjects] objectAtIndex:selectedCalendarIndex];
+    event.calendar = [[_calendarsController selectedObjects] lastObject];
 
     NSError *error = nil;
     if ([[CalCalendarStore defaultCalendarStore] saveEvent:event span:CalSpanThisEvent error:&error])
@@ -135,6 +158,20 @@ static WLNewEventWindowController *_sharedInstance;
     {
         NSBeep();
         [NSApp presentError:error];
+    }
+}
+
+
+#pragma mark NSDatePickerDelegate
+
+- (void)datePickerCell:(NSDatePickerCell *)aDatePickerCell
+validateProposedDateValue:(NSDate **)proposedDateValue
+          timeInterval:(NSTimeInterval *)proposedTimeInterval
+{
+    if (aDatePickerCell == [_startDatePicker cell])
+    {
+        NSTimeInterval diffBetweenDates = [*proposedDateValue timeIntervalSinceDate:[_startDatePicker dateValue]];
+        [_endDatePicker setDateValue:[[_endDatePicker dateValue] dateByAddingTimeInterval:diffBetweenDates]];
     }
 }
 

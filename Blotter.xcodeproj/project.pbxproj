@@ -115,7 +115,7 @@
 		2840653712836E78000816FF /* NSColor-Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor-Utilities.m"; sourceTree = "<group>"; };
 		2844DB2C129DA1BD006C5545 /* BLCalendarFramer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLCalendarFramer.m; sourceTree = "<group>"; };
 		28A09A591308E4A7005EA923 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = Resources/ko.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		28A09A5A1308E4A7005EA923 /* ko */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ko; path = Resources/ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		28A09A5A1308E4A7005EA923 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = Resources/ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		28A09A9C1308F188005EA923 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = Resources/de.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		28A09A9D1308F18B005EA923 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = Resources/fr.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		28A09A9E1308F18E005EA923 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = Resources/es.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -125,7 +125,7 @@
 		28B54DB51283BABF0037BF53 /* SS_PrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SS_PrefsController.m; path = libs/SS_PrefsController.m; sourceTree = "<group>"; };
 		28E96D7312EA3145000AF199 /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = Resources/sv.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		28E96D7412EA3145000AF199 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = Resources/sv.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		28E96D7512EA3145000AF199 /* sv */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = sv; path = Resources/sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		28E96D7512EA3145000AF199 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = Resources/sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		28F6966B1298B99800D4BB97 /* calendar */ = {isa = PBXFileReference; lastKnownFileType = folder; name = calendar; path = Resources/calendar; sourceTree = "<group>"; };
 		28F69759129969E500D4BB97 /* NSDate-Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate-Utilities.h"; sourceTree = "<group>"; };
 		28F6975A129969E500D4BB97 /* NSDate-Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate-Utilities.m"; sourceTree = "<group>"; };
@@ -150,7 +150,7 @@
 		E2670359132CA21F003FBFC2 /* glass-hud-button-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-left.png"; sourceTree = "<group>"; };
 		E267038F132CA887003FBFC2 /* WLGlassHudButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudButtonCell.h; sourceTree = "<group>"; };
 		E2670390132CA887003FBFC2 /* WLGlassHudButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudButtonCell.m; sourceTree = "<group>"; };
-		E267AADF12EDF7AE00EDB7B6 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = Resources/English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E267AADF12EDF7AE00EDB7B6 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = Resources/English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E2701FA7133B563B0098CD79 /* WLGlassHudTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudTextView.h; sourceTree = "<group>"; };
 		E2701FA8133B563B0098CD79 /* WLGlassHudTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudTextView.m; sourceTree = "<group>"; };
 		E2702193133BA7610098CD79 /* glass-hud-textview-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-textview-bottom-left.png"; sourceTree = "<group>"; };
@@ -204,10 +204,10 @@
 		E29DDC8F12E9C7E200751CFA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		E29DDC9012E9C7E300751CFA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = Resources/fr.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		E29DDC9112E9C7E600751CFA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		E29DDCB312E9D55500751CFA /* ru */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ru; path = Resources/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E29DDCB512E9D56B00751CFA /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = Resources/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E29DDCB612E9D57500751CFA /* es */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E29DDCB712E9D57F00751CFA /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E29DDCB312E9D55500751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Resources/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E29DDCB512E9D56B00751CFA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = Resources/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E29DDCB612E9D57500751CFA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E29DDCB712E9D57F00751CFA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E29F38EA131968B200A865D9 /* NewTaskWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewTaskWindow.xib; path = Resources/NewTaskWindow.xib; sourceTree = "<group>"; };
 		E29F38EC1319694C00A865D9 /* WLNewTaskWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNewTaskWindowController.h; sourceTree = "<group>"; };
 		E29F38ED1319694C00A865D9 /* WLNewTaskWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNewTaskWindowController.m; sourceTree = "<group>"; };
@@ -682,7 +682,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/ShortcutRecorder/Source";
-				IBC_OTHER_FLAGS = "--plugin ${SRCROOT}/auxiliary/BGHUDAppKit/build/${CONFIGURATION}/BGHUDAppKit.framework/Versions/A/Resources/BGHUDAppKitPlugin.ibplugin";
+				IBC_OTHER_FLAGS = "";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
@@ -705,7 +705,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/ShortcutRecorder/Source";
-				IBC_OTHER_FLAGS = "--plugin ${SRCROOT}/auxiliary/BGHUDAppKit/build/${CONFIGURATION}/BGHUDAppKit.framework/Versions/A/Resources/BGHUDAppKitPlugin.ibplugin";
+				IBC_OTHER_FLAGS = "";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
