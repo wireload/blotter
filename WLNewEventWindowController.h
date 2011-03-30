@@ -7,19 +7,21 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "WLGlassHudDatePicker.h"
 
 
 @class WLGlassHudTextView;
 
-@interface WLNewEventWindowController : NSWindowController <NSWindowDelegate, NSDatePickerCellDelegate> {
+@interface WLNewEventWindowController : NSWindowController <NSWindowDelegate, WLGlassHudDatePickerCellDelegate> {
     IBOutlet WLGlassHudTextView *_titleView;
     id _titleViewObserver;
     IBOutlet WLGlassHudTextView *_locationView;
     IBOutlet NSView *_locationViewContainer;
     id _locationViewObserver;
     IBOutlet NSButton *_isAllDayButton;
-    IBOutlet NSDatePicker *_startDatePicker;
-    IBOutlet NSDatePicker *_endDatePicker;
+    IBOutlet WLGlassHudDatePicker *_startDatePicker;
+    IBOutlet WLGlassHudDatePicker *_endDatePicker;
+    NSDate *_datePickerValueBackup;
 
     IBOutlet NSArrayController *_calendarsController;
     id _calendarsChangedObserver;
