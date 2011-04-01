@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
-		<string key="IBDocument.SystemVersion">10J567</string>
-		<string key="IBDocument.InterfaceBuilderVersion">823</string>
+		<string key="IBDocument.SystemVersion">10J869</string>
+		<string key="IBDocument.InterfaceBuilderVersion">851</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">462.00</string>
+		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSArray" key="dict.sortedKeys">
@@ -15,7 +15,7 @@
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>823</string>
+				<string>851</string>
 				<string>1</string>
 			</object>
 		</object>
@@ -111,7 +111,7 @@
 						<string key="NSFrame">{{97, 99}, {147, 22}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
-						<object class="SRRecorderCell" key="NSCell">
+						<object class="SRRecorderCell" key="NSCell" id="121929858">
 							<int key="NSCellFlags">130560</int>
 							<int key="NSCellFlags2">0</int>
 							<reference key="NSControlView" ref="335876334"/>
@@ -131,7 +131,7 @@
 						<string key="NSFrame">{{97, 69}, {147, 22}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
-						<object class="SRRecorderCell" key="NSCell">
+						<object class="SRRecorderCell" key="NSCell" id="475977160">
 							<int key="NSCellFlags">130560</int>
 							<int key="NSCellFlags2">0</int>
 							<reference key="NSControlView" ref="654507568"/>
@@ -170,7 +170,7 @@
 						<object class="NSButtonCell" key="NSCell" id="802886380">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">0</int>
-							<string key="NSContents">Show in menu bar</string>
+							<string key="NSContents">Hide menu bar icon</string>
 							<reference key="NSSupport" ref="129810539"/>
 							<reference key="NSControlView" ref="189155685"/>
 							<int key="NSButtonFlags">1211912703</int>
@@ -494,11 +494,6 @@
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSUserDefaultsController" id="282032805">
-				<object class="NSMutableArray" key="NSDeclaredKeys">
-					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>shortcutNewEvent</string>
-					<string>shortcutNewTask</string>
-				</object>
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
 			<object class="NSCustomObject" id="933909425">
@@ -630,22 +625,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.ShowInMenuBar</string>
-						<reference key="source" ref="189155685"/>
-						<reference key="destination" ref="282032805"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="189155685"/>
-							<reference key="NSDestination" ref="282032805"/>
-							<string key="NSLabel">value: values.ShowInMenuBar</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.ShowInMenuBar</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">88</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: values.shortcutNewEvent</string>
 						<reference key="source" ref="335876334"/>
 						<reference key="destination" ref="282032805"/>
@@ -691,6 +670,26 @@
 						<reference key="destination" ref="654507568"/>
 					</object>
 					<int key="connectionID">101</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: values.ShowInMenuBar</string>
+						<reference key="source" ref="189155685"/>
+						<reference key="destination" ref="282032805"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="189155685"/>
+							<reference key="NSDestination" ref="282032805"/>
+							<string key="NSLabel">value: values.ShowInMenuBar</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">values.ShowInMenuBar</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSNegateBoolean</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">104</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -944,11 +943,19 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">91</int>
 						<reference key="object" ref="654507568"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="475977160"/>
+						</object>
 						<reference key="parent" ref="1005"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">92</int>
 						<reference key="object" ref="335876334"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="121929858"/>
+						</object>
 						<reference key="parent" ref="1005"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -978,6 +985,16 @@
 						<int key="objectID">96</int>
 						<reference key="object" ref="491983833"/>
 						<reference key="parent" ref="78208689"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">102</int>
+						<reference key="object" ref="475977160"/>
+						<reference key="parent" ref="654507568"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">103</int>
+						<reference key="object" ref="121929858"/>
+						<reference key="parent" ref="335876334"/>
 					</object>
 				</object>
 			</object>
@@ -1045,7 +1062,7 @@
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>{{1696, 210}, {355, 298}}</string>
+					<string>{{1561, 255}, {355, 298}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform"/>
 					<string>{628, 654}</string>
@@ -1154,7 +1171,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">101</int>
+			<int key="maxID">104</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1227,7 +1244,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="248344893">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../../ShortcutRecorder/Source/SRRecorderCell.h</string>
 					</object>
@@ -1245,6 +1262,22 @@
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../../ShortcutRecorder/Source/SRValidator.h</string>
 					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SRRecorderCell</string>
+					<string key="superclassName">NSActionCell</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">delegate</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">delegate</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">delegate</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<reference key="sourceIdentifier" ref="248344893"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">SRRecorderControl</string>
