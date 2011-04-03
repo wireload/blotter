@@ -11,6 +11,7 @@
 		2844DB26129DA197006C5545 /* BLCalendarFramer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2844DB25129DA197006C5545 /* BLCalendarFramer.m */; };
 		28B54D5E12839B8D0037BF53 /* GeneralPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54D5D12839B8D0037BF53 /* GeneralPrefController.m */; };
 		28B54D7A1283AEEE0037BF53 /* PositionPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54D791283AEEE0037BF53 /* PositionPrefController.m */; };
+		28EA6F021347FD15001B0BFE /* exclamation.png in Resources */ = {isa = PBXBuildFile; fileRef = 28EA6F011347FD15001B0BFE /* exclamation.png */; };
 		28F6993D129B723900D4BB97 /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */; };
 		28F69A29129C587F00D4BB97 /* BLPositionerControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69A28129C587F00D4BB97 /* BLPositionerControl.m */; };
 		28F69A55129C5EA100D4BB97 /* Recreated-Aqua.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 28F69A54129C5EA100D4BB97 /* Recreated-Aqua.jpg */; };
@@ -117,6 +118,7 @@
 		28E96D2812EA30C3000AF199 /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = sv.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
 		28E96D2912EA30CB000AF199 /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = sv.lproj/PositionPrefPaneView.xib; sourceTree = "<group>"; };
 		28E96D2A12EA30D4000AF199 /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = sv.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
+		28EA6F011347FD15001B0BFE /* exclamation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exclamation.png; sourceTree = "<group>"; };
 		28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAtLoginController.m; sourceTree = "<group>"; };
 		28F6993C129B723900D4BB97 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
 		28F69A27129C587F00D4BB97 /* BLPositionerControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLPositionerControl.h; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				28EA6F011347FD15001B0BFE /* exclamation.png */,
 				E29DDD0B12E9DD1000751CFA /* GeneralPrefPaneView.xib */,
 				E29DDD0D12E9DD1000751CFA /* PositionPrefPaneView.xib */,
 				E29DDD0F12E9DD1000751CFA /* CalendarsPrefPaneView.xib */,
@@ -438,6 +441,7 @@
 				E2FE5F1312D760BA00003E48 /* chkbxCheck.png in Resources */,
 				E2FE5F6112D7734000003E48 /* chkbxColormask.png in Resources */,
 				E29DDD0412E9DCED00751CFA /* Localizable.strings in Resources */,
+				28EA6F021347FD15001B0BFE /* exclamation.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
