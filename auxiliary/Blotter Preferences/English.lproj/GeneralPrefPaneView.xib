@@ -1050,8 +1050,10 @@
 					<string>89.IBPluginDependency</string>
 					<string>89.IBViewBoundsToFrameTransform</string>
 					<string>90.IBPluginDependency</string>
+					<string>91.CustomClassName</string>
 					<string>91.IBPluginDependency</string>
 					<string>91.IBViewBoundsToFrameTransform</string>
+					<string>92.CustomClassName</string>
 					<string>92.IBPluginDependency</string>
 					<string>92.IBViewBoundsToFrameTransform</string>
 					<string>93.IBPluginDependency</string>
@@ -1144,10 +1146,12 @@
 						<bytes key="NSTransformStruct">P4AAAL+AAABCEAAAwkgAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>WLRecorderControl</string>
 					<string>net.wafflesoftware.ShortcutRecorder.IB.Leopard</string>
 					<object class="NSAffineTransform">
 						<bytes key="NSTransformStruct">AUMBAABCigAAA</bytes>
 					</object>
+					<string>WLRecorderControl</string>
 					<string>net.wafflesoftware.ShortcutRecorder.IB.Leopard</string>
 					<object class="NSAffineTransform">
 						<bytes key="NSTransformStruct">AUMBAABCzAAAA</bytes>
@@ -1303,6 +1307,14 @@
 						</object>
 					</object>
 					<reference key="sourceIdentifier" ref="900491562"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">WLRecorderControl</string>
+					<string key="superclassName">SRRecorderControl</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">WLRecorderControl.h</string>
+					</object>
 				</object>
 			</object>
 		</object>
