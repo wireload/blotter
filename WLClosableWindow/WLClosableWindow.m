@@ -22,7 +22,7 @@
         [self performClose:theEvent];
         return YES;
     }
-    return NO;
+    return [super performKeyEquivalent:theEvent];
 }
 
 @end

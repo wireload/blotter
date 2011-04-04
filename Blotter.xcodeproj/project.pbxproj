@@ -26,7 +26,6 @@
 		28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 28F69CF4129CC12100D4BB97 /* Licenses.rtf */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		E233C865131819AF00C227B1 /* WLClosablePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = E233C864131819AF00C227B1 /* WLClosablePanel.m */; };
 		E23779EF1312AD6000F46E7D /* WLClosableWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E23779D71312AD6000F46E7D /* WLClosableWindow.m */; };
 		E2596D611316B20400A8B15E /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2596D601316B20400A8B15E /* NewEventWindow.xib */; };
 		E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */; };
@@ -139,8 +138,6 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Blotter-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Blotter-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Blotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E233C863131819AF00C227B1 /* WLClosablePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLClosablePanel.h; sourceTree = "<group>"; };
-		E233C864131819AF00C227B1 /* WLClosablePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLClosablePanel.m; sourceTree = "<group>"; };
 		E23779D61312AD6000F46E7D /* WLClosableWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WLClosableWindow.h; path = WLClosableWindow/WLClosableWindow.h; sourceTree = "<group>"; };
 		E23779D71312AD6000F46E7D /* WLClosableWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WLClosableWindow.m; path = WLClosableWindow/WLClosableWindow.m; sourceTree = "<group>"; };
 		E2596D601316B20400A8B15E /* NewEventWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewEventWindow.xib; path = Resources/NewEventWindow.xib; sourceTree = "<group>"; };
@@ -247,8 +244,6 @@
 				E27936431324F6BD00BC5224 /* WLGlassHud */,
 				E27951EB131AA0E1008AE1DA /* ShortcutRecorder */,
 				E2794F4D131A636E008AE1DA /* HotKey */,
-				E233C863131819AF00C227B1 /* WLClosablePanel.h */,
-				E233C864131819AF00C227B1 /* WLClosablePanel.m */,
 				E23779D61312AD6000F46E7D /* WLClosableWindow.h */,
 				E23779D71312AD6000F46E7D /* WLClosableWindow.m */,
 				28F69D52129D854300D4BB97 /* BLCalendarFramer.h */,
@@ -563,7 +558,6 @@
 				E2DC7D3113071F7E0065CEAD /* WLFitWindow.m in Sources */,
 				E23779EF1312AD6000F46E7D /* WLClosableWindow.m in Sources */,
 				E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */,
-				E233C865131819AF00C227B1 /* WLClosablePanel.m in Sources */,
 				E29F38EE1319694C00A865D9 /* WLNewTaskWindowController.m in Sources */,
 				E2794F56131A636E008AE1DA /* PTHotKey.m in Sources */,
 				E2794F57131A636E008AE1DA /* PTHotKeyCenter.m in Sources */,
