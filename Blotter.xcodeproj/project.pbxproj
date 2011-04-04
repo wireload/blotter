@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		256AC3DA0F4B6AC300CF3369 /* DeskboardAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */; };
 		28153EDF12D78EBE00A239C4 /* Blotter-B8.icns in Resources */ = {isa = PBXBuildFile; fileRef = 28153EDE12D78EBE00A239C4 /* Blotter-B8.icns */; };
-		281BA56F129EF84D00114D3C /* Blotter Preferences.preferencePane in Resources */ = {isa = PBXBuildFile; fileRef = 281BA565129EF84D00114D3C /* Blotter Preferences.preferencePane */; };
 		284061D0127E6C4F000816FF /* DesktopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 284061CF127E6C4F000816FF /* DesktopView.m */; };
 		2840624D127E75FC000816FF /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2840624C127E75FC000816FF /* WebKit.framework */; };
 		284063EC1283176F000816FF /* CalendarAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 284063EB1283176F000816FF /* CalendarAdapter.m */; };
@@ -48,6 +47,12 @@
 		E271E508133762A300BF7F2B /* glass-hud-button-pressed-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E271E505133762A300BF7F2B /* glass-hud-button-pressed-left.png */; };
 		E271E5B513377E6100BF7F2B /* blotter-status-bar.png in Resources */ = {isa = PBXBuildFile; fileRef = E271E5B313377E6100BF7F2B /* blotter-status-bar.png */; };
 		E271E5B613377E6100BF7F2B /* blotter-status-bar-active.png in Resources */ = {isa = PBXBuildFile; fileRef = E271E5B413377E6100BF7F2B /* blotter-status-bar-active.png */; };
+		E27311471349D76700A84433 /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2730FA01349C4A500A84433 /* ShortcutRecorder.framework */; };
+		E27311631349D81900A84433 /* ShortcutRecorder.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E2730FA01349C4A500A84433 /* ShortcutRecorder.framework */; };
+		E273117C1349D88100A84433 /* Blotter Preferences.preferencePane in Resources */ = {isa = PBXBuildFile; fileRef = E27311791349D86200A84433 /* Blotter Preferences.preferencePane */; };
+		E27313171349F0E200A84433 /* PTHotKey.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E27312321349EC9000A84433 /* PTHotKey.framework */; };
+		E27313181349F0EB00A84433 /* PTHotKey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E27312321349EC9000A84433 /* PTHotKey.framework */; };
+		E27313C51349F41200A84433 /* PTHotKey+ShortcutRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = E27313C41349F41200A84433 /* PTHotKey+ShortcutRecorder.m */; };
 		E279363A1324F05800BC5224 /* WLGlassHudWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E27936391324F05800BC5224 /* WLGlassHudWindow.m */; };
 		E27936461324F6E200BC5224 /* WLGlassHudView.m in Sources */ = {isa = PBXBuildFile; fileRef = E27936451324F6E200BC5224 /* WLGlassHudView.m */; };
 		E27937F513254D9400BC5224 /* glass-hud-content-top.png in Resources */ = {isa = PBXBuildFile; fileRef = E27937EE13254D9400BC5224 /* glass-hud-content-top.png */; };
@@ -57,17 +62,7 @@
 		E27937F913254D9400BC5224 /* glass-hud-content-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = E27937F213254D9400BC5224 /* glass-hud-content-bottom.png */; };
 		E27937FA13254D9400BC5224 /* glass-hud-content-bottom-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E27937F313254D9400BC5224 /* glass-hud-content-bottom-right.png */; };
 		E27937FB13254D9400BC5224 /* glass-hud-content-bottom-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E27937F413254D9400BC5224 /* glass-hud-content-bottom-left.png */; };
-		E2794F56131A636E008AE1DA /* PTHotKey.m in Sources */ = {isa = PBXBuildFile; fileRef = E2794F4F131A636E008AE1DA /* PTHotKey.m */; };
-		E2794F57131A636E008AE1DA /* PTHotKeyCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = E2794F51131A636E008AE1DA /* PTHotKeyCenter.m */; };
-		E2794F58131A636E008AE1DA /* PTKeyCodeTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = E2794F53131A636E008AE1DA /* PTKeyCodeTranslator.m */; };
-		E2794F59131A636E008AE1DA /* PTKeyCombo.m in Sources */ = {isa = PBXBuildFile; fileRef = E2794F55131A636E008AE1DA /* PTKeyCombo.m */; };
-		E2795176131A9F0C008AE1DA /* PTHotKey+ShortcutRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = E2795174131A9F0C008AE1DA /* PTHotKey+ShortcutRecorder.m */; };
 		E27951BB131AA060008AE1DA /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E27951BA131AA060008AE1DA /* Carbon.framework */; };
-		E27951F6131AA0E1008AE1DA /* SRCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = E27951ED131AA0E1008AE1DA /* SRCommon.m */; };
-		E27951F7131AA0E1008AE1DA /* SRKeyCodeTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = E27951EF131AA0E1008AE1DA /* SRKeyCodeTransformer.m */; };
-		E27951F8131AA0E1008AE1DA /* SRRecorderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E27951F1131AA0E1008AE1DA /* SRRecorderCell.m */; };
-		E27951F9131AA0E1008AE1DA /* SRRecorderControl.m in Sources */ = {isa = PBXBuildFile; fileRef = E27951F3131AA0E1008AE1DA /* SRRecorderControl.m */; };
-		E27951FA131AA0E1008AE1DA /* SRValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = E27951F5131AA0E1008AE1DA /* SRValidator.m */; };
 		E29DDC8712E9C7BF00751CFA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29DDC8612E9C7BF00751CFA /* MainMenu.xib */; };
 		E29DDCB212E9D54C00751CFA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E29DDCB012E9D54C00751CFA /* Localizable.strings */; };
 		E29F38EB131968B200A865D9 /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29F38EA131968B200A865D9 /* NewTaskWindow.xib */; };
@@ -83,6 +78,72 @@
 		E2FCE09D133F9264006E713F /* WLGlassHudDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FCE09C133F9264006E713F /* WLGlassHudDatePicker.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		E2730F9F1349C4A500A84433 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2730F961349C4A500A84433 /* ShortcutRecorder.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 939837800DA42965007F53F3 /* ShortcutRecorder.framework */;
+			remoteInfo = "ShortcutRecorder.framework - with embedded ibplugin";
+		};
+		E2730FA11349C4A500A84433 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2730F961349C4A500A84433 /* ShortcutRecorder.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 939838A50DA4300F007F53F3 /* ShortcutRecorder.ibplugin */;
+			remoteInfo = "ShortcutRecorder.ibplugin - for embedding in framework";
+		};
+		E2730FA31349C4A500A84433 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2730F961349C4A500A84433 /* ShortcutRecorder.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 93983B220DA43C4E007F53F3 /* ShortcutRecorder.app */;
+			remoteInfo = ShortcutRecorderFramework_Tester;
+		};
+		E2730FA51349C4A500A84433 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2730F961349C4A500A84433 /* ShortcutRecorder.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 342E00CF109CCBF5009AD8CA /* ShortcutRecorder.ibplugin */;
+			remoteInfo = "ShortcutRecorder.ibplugin - standalone";
+		};
+		E2730FA71349C4A500A84433 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2730F961349C4A500A84433 /* ShortcutRecorder.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 342E0104109CCC36009AD8CA /* ShortcutRecorder.framework */;
+			remoteInfo = "ShortcutRecorder.framework - for embedding in ibplugin";
+		};
+		E27311431349D6FB00A84433 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2730F961349C4A500A84433 /* ShortcutRecorder.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 342E0208109CCE71009AD8CA /* Build ShortcutRecorder.framework */;
+			remoteInfo = "Build ShortcutRecorder.framework";
+		};
+		E27311781349D86200A84433 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E27311741349D86200A84433 /* Blotter Preferences.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Blotter Preferences.preferencePane */;
+			remoteInfo = "Blotter Preferences";
+		};
+		E273117A1349D86C00A84433 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E27311741349D86200A84433 /* Blotter Preferences.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* Blotter Preferences */;
+			remoteInfo = "Blotter Preferences";
+		};
+		E27312311349EC9000A84433 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2730F961349C4A500A84433 /* ShortcutRecorder.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E273122E1349EC9000A84433 /* PTHotKey.framework */;
+			remoteInfo = PTHotKey;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		2840647F12833643000816FF /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -90,6 +151,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				E27313171349F0E200A84433 /* PTHotKey.framework in CopyFiles */,
+				E27311631349D81900A84433 /* ShortcutRecorder.framework in CopyFiles */,
 				284064E112833EC0000816FF /* YAJL.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -165,6 +228,10 @@
 		E271E505133762A300BF7F2B /* glass-hud-button-pressed-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-pressed-left.png"; sourceTree = "<group>"; };
 		E271E5B313377E6100BF7F2B /* blotter-status-bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blotter-status-bar.png"; path = "Resources/blotter-status-bar.png"; sourceTree = "<group>"; };
 		E271E5B413377E6100BF7F2B /* blotter-status-bar-active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blotter-status-bar-active.png"; path = "Resources/blotter-status-bar-active.png"; sourceTree = "<group>"; };
+		E2730F961349C4A500A84433 /* ShortcutRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShortcutRecorder.xcodeproj; path = ShortcutRecorder/ShortcutRecorder.xcodeproj; sourceTree = "<group>"; };
+		E27311741349D86200A84433 /* Blotter Preferences.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Blotter Preferences.xcodeproj"; path = "auxiliary/Blotter Preferences/Blotter Preferences.xcodeproj"; sourceTree = "<group>"; };
+		E27313C31349F41200A84433 /* PTHotKey+ShortcutRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PTHotKey+ShortcutRecorder.h"; path = "ShortcutRecorder/Demo/HotKey/PTHotKey+ShortcutRecorder.h"; sourceTree = "<group>"; };
+		E27313C41349F41200A84433 /* PTHotKey+ShortcutRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "PTHotKey+ShortcutRecorder.m"; path = "ShortcutRecorder/Demo/HotKey/PTHotKey+ShortcutRecorder.m"; sourceTree = "<group>"; };
 		E27936381324F05800BC5224 /* WLGlassHudWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudWindow.h; sourceTree = "<group>"; };
 		E27936391324F05800BC5224 /* WLGlassHudWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudWindow.m; sourceTree = "<group>"; };
 		E27936441324F6E200BC5224 /* WLGlassHudView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudView.h; sourceTree = "<group>"; };
@@ -176,27 +243,7 @@
 		E27937F213254D9400BC5224 /* glass-hud-content-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-content-bottom.png"; sourceTree = "<group>"; };
 		E27937F313254D9400BC5224 /* glass-hud-content-bottom-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-content-bottom-right.png"; sourceTree = "<group>"; };
 		E27937F413254D9400BC5224 /* glass-hud-content-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-content-bottom-left.png"; sourceTree = "<group>"; };
-		E2794F4E131A636E008AE1DA /* PTHotKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTHotKey.h; sourceTree = "<group>"; };
-		E2794F4F131A636E008AE1DA /* PTHotKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTHotKey.m; sourceTree = "<group>"; };
-		E2794F50131A636E008AE1DA /* PTHotKeyCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTHotKeyCenter.h; sourceTree = "<group>"; };
-		E2794F51131A636E008AE1DA /* PTHotKeyCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTHotKeyCenter.m; sourceTree = "<group>"; };
-		E2794F52131A636E008AE1DA /* PTKeyCodeTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTKeyCodeTranslator.h; sourceTree = "<group>"; };
-		E2794F53131A636E008AE1DA /* PTKeyCodeTranslator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTKeyCodeTranslator.m; sourceTree = "<group>"; };
-		E2794F54131A636E008AE1DA /* PTKeyCombo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTKeyCombo.h; sourceTree = "<group>"; };
-		E2794F55131A636E008AE1DA /* PTKeyCombo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTKeyCombo.m; sourceTree = "<group>"; };
-		E2795174131A9F0C008AE1DA /* PTHotKey+ShortcutRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PTHotKey+ShortcutRecorder.m"; sourceTree = "<group>"; };
-		E2795175131A9F0C008AE1DA /* PTHotKey+ShortcutRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PTHotKey+ShortcutRecorder.h"; sourceTree = "<group>"; };
 		E27951BA131AA060008AE1DA /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
-		E27951EC131AA0E1008AE1DA /* SRCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRCommon.h; sourceTree = "<group>"; };
-		E27951ED131AA0E1008AE1DA /* SRCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRCommon.m; sourceTree = "<group>"; };
-		E27951EE131AA0E1008AE1DA /* SRKeyCodeTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRKeyCodeTransformer.h; sourceTree = "<group>"; };
-		E27951EF131AA0E1008AE1DA /* SRKeyCodeTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRKeyCodeTransformer.m; sourceTree = "<group>"; };
-		E27951F0131AA0E1008AE1DA /* SRRecorderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRRecorderCell.h; sourceTree = "<group>"; };
-		E27951F1131AA0E1008AE1DA /* SRRecorderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRRecorderCell.m; sourceTree = "<group>"; };
-		E27951F2131AA0E1008AE1DA /* SRRecorderControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRRecorderControl.h; sourceTree = "<group>"; };
-		E27951F3131AA0E1008AE1DA /* SRRecorderControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRRecorderControl.m; sourceTree = "<group>"; };
-		E27951F4131AA0E1008AE1DA /* SRValidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRValidator.h; sourceTree = "<group>"; };
-		E27951F5131AA0E1008AE1DA /* SRValidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRValidator.m; sourceTree = "<group>"; };
 		E29DDC8812E9C7C900751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = Resources/ru.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		E29DDC8E12E9C7E000751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Resources/ru.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		E29DDC8F12E9C7E200751CFA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/MainMenu.strings; sourceTree = "<group>"; };
@@ -227,6 +274,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E27313181349F0EB00A84433 /* PTHotKey.framework in Frameworks */,
+				E27311471349D76700A84433 /* ShortcutRecorder.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				2840624D127E75FC000816FF /* WebKit.framework in Frameworks */,
 				284064D312833EBC000816FF /* YAJL.framework in Frameworks */,
@@ -241,9 +290,9 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E27313C31349F41200A84433 /* PTHotKey+ShortcutRecorder.h */,
+				E27313C41349F41200A84433 /* PTHotKey+ShortcutRecorder.m */,
 				E27936431324F6BD00BC5224 /* WLGlassHud */,
-				E27951EB131AA0E1008AE1DA /* ShortcutRecorder */,
-				E2794F4D131A636E008AE1DA /* HotKey */,
 				E23779D61312AD6000F46E7D /* WLClosableWindow.h */,
 				E23779D71312AD6000F46E7D /* WLClosableWindow.m */,
 				28F69D52129D854300D4BB97 /* BLCalendarFramer.h */,
@@ -297,6 +346,8 @@
 		29B97314FDCFA39411CA2CEA /* Deskboard */ = {
 			isa = PBXGroup;
 			children = (
+				E27311741349D86200A84433 /* Blotter Preferences.xcodeproj */,
+				E2730F961349C4A500A84433 /* ShortcutRecorder.xcodeproj */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -344,6 +395,27 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E2730F971349C4A500A84433 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E2730FA01349C4A500A84433 /* ShortcutRecorder.framework */,
+				E2730FA21349C4A500A84433 /* ShortcutRecorder.ibplugin */,
+				E2730FA41349C4A500A84433 /* ShortcutRecorder.app */,
+				E2730FA61349C4A500A84433 /* ShortcutRecorder.ibplugin */,
+				E2730FA81349C4A500A84433 /* ShortcutRecorder.framework */,
+				E27312321349EC9000A84433 /* PTHotKey.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E27311751349D86200A84433 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E27311791349D86200A84433 /* Blotter Preferences.preferencePane */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		E27936431324F6BD00BC5224 /* WLGlassHud */ = {
 			isa = PBXGroup;
 			children = (
@@ -359,42 +431,6 @@
 				E2FCE09C133F9264006E713F /* WLGlassHudDatePicker.m */,
 			);
 			name = WLGlassHud;
-			sourceTree = "<group>";
-		};
-		E2794F4D131A636E008AE1DA /* HotKey */ = {
-			isa = PBXGroup;
-			children = (
-				E2795174131A9F0C008AE1DA /* PTHotKey+ShortcutRecorder.m */,
-				E2795175131A9F0C008AE1DA /* PTHotKey+ShortcutRecorder.h */,
-				E2794F4E131A636E008AE1DA /* PTHotKey.h */,
-				E2794F4F131A636E008AE1DA /* PTHotKey.m */,
-				E2794F50131A636E008AE1DA /* PTHotKeyCenter.h */,
-				E2794F51131A636E008AE1DA /* PTHotKeyCenter.m */,
-				E2794F52131A636E008AE1DA /* PTKeyCodeTranslator.h */,
-				E2794F53131A636E008AE1DA /* PTKeyCodeTranslator.m */,
-				E2794F54131A636E008AE1DA /* PTKeyCombo.h */,
-				E2794F55131A636E008AE1DA /* PTKeyCombo.m */,
-			);
-			name = HotKey;
-			path = ShortcutRecorder/Demo/HotKey;
-			sourceTree = "<group>";
-		};
-		E27951EB131AA0E1008AE1DA /* ShortcutRecorder */ = {
-			isa = PBXGroup;
-			children = (
-				E27951EC131AA0E1008AE1DA /* SRCommon.h */,
-				E27951ED131AA0E1008AE1DA /* SRCommon.m */,
-				E27951EE131AA0E1008AE1DA /* SRKeyCodeTransformer.h */,
-				E27951EF131AA0E1008AE1DA /* SRKeyCodeTransformer.m */,
-				E27951F0131AA0E1008AE1DA /* SRRecorderCell.h */,
-				E27951F1131AA0E1008AE1DA /* SRRecorderCell.m */,
-				E27951F2131AA0E1008AE1DA /* SRRecorderControl.h */,
-				E27951F3131AA0E1008AE1DA /* SRRecorderControl.m */,
-				E27951F4131AA0E1008AE1DA /* SRValidator.h */,
-				E27951F5131AA0E1008AE1DA /* SRValidator.m */,
-			);
-			name = ShortcutRecorder;
-			path = ShortcutRecorder/Source;
 			sourceTree = "<group>";
 		};
 		E2F9E1D71322A4F4007598E2 /* glass-hud */ = {
@@ -449,6 +485,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				E27311441349D6FB00A84433 /* PBXTargetDependency */,
+				E273117B1349D86C00A84433 /* PBXTargetDependency */,
 			);
 			name = Blotter;
 			productInstallPath = "$(HOME)/Applications";
@@ -484,6 +522,16 @@
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* Deskboard */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = E27311751349D86200A84433 /* Products */;
+					ProjectRef = E27311741349D86200A84433 /* Blotter Preferences.xcodeproj */;
+				},
+				{
+					ProductGroup = E2730F971349C4A500A84433 /* Products */;
+					ProjectRef = E2730F961349C4A500A84433 /* ShortcutRecorder.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* Blotter */,
@@ -491,16 +539,69 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		E2730FA01349C4A500A84433 /* ShortcutRecorder.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ShortcutRecorder.framework;
+			remoteRef = E2730F9F1349C4A500A84433 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E2730FA21349C4A500A84433 /* ShortcutRecorder.ibplugin */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ShortcutRecorder.ibplugin;
+			remoteRef = E2730FA11349C4A500A84433 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E2730FA41349C4A500A84433 /* ShortcutRecorder.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ShortcutRecorder.app;
+			remoteRef = E2730FA31349C4A500A84433 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E2730FA61349C4A500A84433 /* ShortcutRecorder.ibplugin */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ShortcutRecorder.ibplugin;
+			remoteRef = E2730FA51349C4A500A84433 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E2730FA81349C4A500A84433 /* ShortcutRecorder.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ShortcutRecorder.framework;
+			remoteRef = E2730FA71349C4A500A84433 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E27311791349D86200A84433 /* Blotter Preferences.preferencePane */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Blotter Preferences.preferencePane";
+			remoteRef = E27311781349D86200A84433 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E27312321349EC9000A84433 /* PTHotKey.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			name = PTHotKey.framework;
+			path = ../../../../build/Debug/PTHotKey.framework;
+			remoteRef = E27312311349EC9000A84433 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		8D1107290486CEB800E47090 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E273117C1349D88100A84433 /* Blotter Preferences.preferencePane in Resources */,
 				E29DDC8712E9C7BF00751CFA /* MainMenu.xib in Resources */,
 				28F696811298B99800D4BB97 /* calendar in Resources */,
 				28F69A1B129C1CAA00D4BB97 /* Credits.rtf in Resources */,
 				28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */,
-				281BA56F129EF84D00114D3C /* Blotter Preferences.preferencePane in Resources */,
 				28153EDF12D78EBE00A239C4 /* Blotter-B8.icns in Resources */,
 				E29DDCB212E9D54C00751CFA /* Localizable.strings in Resources */,
 				E2596D611316B20400A8B15E /* NewEventWindow.xib in Resources */,
@@ -559,25 +660,29 @@
 				E23779EF1312AD6000F46E7D /* WLClosableWindow.m in Sources */,
 				E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */,
 				E29F38EE1319694C00A865D9 /* WLNewTaskWindowController.m in Sources */,
-				E2794F56131A636E008AE1DA /* PTHotKey.m in Sources */,
-				E2794F57131A636E008AE1DA /* PTHotKeyCenter.m in Sources */,
-				E2794F58131A636E008AE1DA /* PTKeyCodeTranslator.m in Sources */,
-				E2794F59131A636E008AE1DA /* PTKeyCombo.m in Sources */,
-				E2795176131A9F0C008AE1DA /* PTHotKey+ShortcutRecorder.m in Sources */,
-				E27951F6131AA0E1008AE1DA /* SRCommon.m in Sources */,
-				E27951F7131AA0E1008AE1DA /* SRKeyCodeTransformer.m in Sources */,
-				E27951F8131AA0E1008AE1DA /* SRRecorderCell.m in Sources */,
-				E27951F9131AA0E1008AE1DA /* SRRecorderControl.m in Sources */,
-				E27951FA131AA0E1008AE1DA /* SRValidator.m in Sources */,
 				E279363A1324F05800BC5224 /* WLGlassHudWindow.m in Sources */,
 				E27936461324F6E200BC5224 /* WLGlassHudView.m in Sources */,
 				E2670391132CA887003FBFC2 /* WLGlassHudButtonCell.m in Sources */,
 				E2701FA9133B563B0098CD79 /* WLGlassHudTextView.m in Sources */,
 				E2FCE09D133F9264006E713F /* WLGlassHudDatePicker.m in Sources */,
+				E27313C51349F41200A84433 /* PTHotKey+ShortcutRecorder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E27311441349D6FB00A84433 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Build ShortcutRecorder.framework";
+			targetProxy = E27311431349D6FB00A84433 /* PBXContainerItemProxy */;
+		};
+		E273117B1349D86C00A84433 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Blotter Preferences";
+			targetProxy = E273117A1349D86C00A84433 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		E29DDC8512E9C7BF00751CFA /* MainMenu.strings */ = {
@@ -633,6 +738,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/Frameworks\"",
+					"\"$(SRCROOT)/ShortcutRecorder/build/Release\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -656,6 +762,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/Frameworks\"",
+					"\"$(SRCROOT)/ShortcutRecorder/build/Release\"",
 				);
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -681,7 +788,10 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/ShortcutRecorder/Source";
+				HEADER_SEARCH_PATHS = (
+					"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers",
+					"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers",
+				);
 				IBC_OTHER_FLAGS = "";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
@@ -704,7 +814,10 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/ShortcutRecorder/Source";
+				HEADER_SEARCH_PATHS = (
+					"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers",
+					"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers",
+				);
 				IBC_OTHER_FLAGS = "";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PREBINDING = NO;
