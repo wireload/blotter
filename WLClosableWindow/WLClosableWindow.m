@@ -19,10 +19,16 @@
         && (flags & NSCommandKeyMask)
         && [theEvent keyCode] == kVK_ANSI_W)
     {
+        [self makeFirstResponder:nil];
         [self performClose:theEvent];
         return YES;
     }
     return [super performKeyEquivalent:theEvent];
+}
+
+- (void)close {
+    [self makeFirstResponder:nil];
+    [super close];
 }
 
 @end
