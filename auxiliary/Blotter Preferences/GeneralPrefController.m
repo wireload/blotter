@@ -74,19 +74,14 @@
 - (BOOL)shortcutRecorder:(SRRecorderControl *)aRecorder isKeyCode:(NSInteger)keyCode andFlagsTaken:(NSUInteger)flags reason:(NSString **)aReason
 {
     KeyCombo keyCombo = SRMakeKeyCombo(keyCode, flags);
-
-    if (aRecorder != newEventRecorderControl && SRKeyComboEqualToKeyCombo([newEventRecorderControl keyCombo], keyCombo))
+    if (SRKeyComboEqualToKeyCombo([newEventRecorderControl keyCombo], keyCombo) || SRKeyComboEqualToKeyCombo([newTaskRecorderControl keyCombo], keyCombo))
     {
-        *aReason = NSLocalizedString(@"it is already taken by New Event", @"Shortcut is taken alert");
+        *aReason = @"it's already used as a different Blotter shortcut. To use this shortcut, first remove or change the other shortcut";
         return YES;
     }
-
-    if (aRecorder != newTaskRecorderControl && SRKeyComboEqualToKeyCombo([newTaskRecorderControl keyCombo], keyCombo))
-    {
-        *aReason = NSLocalizedString(@"it is already taken by New Task", @"Shortcut is taken alert");
-        return YES;
+    else {
+        return NO;
     }
-    return NO;
 }
 
 @end
