@@ -40,49 +40,49 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = E27310351349CD2C00A84433 /* ShortcutRecorder.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 939837800DA42965007F53F3 /* ShortcutRecorder.framework */;
+			remoteGlobalIDString = 939837800DA42965007F53F3;
 			remoteInfo = "ShortcutRecorder.framework - with embedded ibplugin";
 		};
 		E27310401349CD2C00A84433 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E27310351349CD2C00A84433 /* ShortcutRecorder.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 939838A50DA4300F007F53F3 /* ShortcutRecorder.ibplugin */;
+			remoteGlobalIDString = 939838A50DA4300F007F53F3;
 			remoteInfo = "ShortcutRecorder.ibplugin - for embedding in framework";
 		};
 		E27310421349CD2C00A84433 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E27310351349CD2C00A84433 /* ShortcutRecorder.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 93983B220DA43C4E007F53F3 /* ShortcutRecorder.app */;
+			remoteGlobalIDString = 93983B220DA43C4E007F53F3;
 			remoteInfo = ShortcutRecorderFramework_Tester;
 		};
 		E27310441349CD2C00A84433 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E27310351349CD2C00A84433 /* ShortcutRecorder.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 342E00CF109CCBF5009AD8CA /* ShortcutRecorder.ibplugin */;
+			remoteGlobalIDString = 342E00CF109CCBF5009AD8CA;
 			remoteInfo = "ShortcutRecorder.ibplugin - standalone";
 		};
 		E27310461349CD2C00A84433 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E27310351349CD2C00A84433 /* ShortcutRecorder.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 342E0104109CCC36009AD8CA /* ShortcutRecorder.framework */;
+			remoteGlobalIDString = 342E0104109CCC36009AD8CA;
 			remoteInfo = "ShortcutRecorder.framework - for embedding in ibplugin";
 		};
 		E27311A11349D93C00A84433 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E27310351349CD2C00A84433 /* ShortcutRecorder.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 342E0208109CCE71009AD8CA /* Build ShortcutRecorder.framework */;
+			remoteGlobalIDString = 342E0208109CCE71009AD8CA;
 			remoteInfo = "Build ShortcutRecorder.framework";
 		};
 		E27312341349EC9000A84433 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E27310351349CD2C00A84433 /* ShortcutRecorder.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E273122E1349EC9000A84433 /* PTHotKey.framework */;
+			remoteGlobalIDString = E273122E1349EC9000A84433;
 			remoteInfo = PTHotKey;
 		};
 /* End PBXContainerItemProxy section */
@@ -411,8 +411,7 @@
 		E27312351349EC9000A84433 /* PTHotKey.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			name = PTHotKey.framework;
-			path = ../../../../build/Debug/PTHotKey.framework;
+			path = PTHotKey.framework;
 			remoteRef = E27312341349EC9000A84433 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
