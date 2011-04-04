@@ -1254,6 +1254,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
 						<bytes key="NSTransformStruct">AUFAAABCaAAAA</bytes>
+<<<<<<< HEAD
 					</object>
 					<object class="NSMutableDictionary">
 						<string key="NS.key.0">ToolTip</string>
@@ -1262,6 +1263,8 @@
 							<reference key="object" ref="189155685"/>
 							<string key="toolTip">If hidden, restart the app to return here</string>
 						</object>
+=======
+>>>>>>> e5077e5f3496380875d4fe6c04521365536021d3
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
