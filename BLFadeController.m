@@ -9,6 +9,13 @@
 #import "BLFadeController.h"
 
 
+@interface BLFadeController (/* Private */)
+
+- (void)createFadeOutTimer;
+
+@end
+
+
 @implementation BLFadeController
 
 @synthesize fadeView;

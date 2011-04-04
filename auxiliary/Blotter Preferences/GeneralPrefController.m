@@ -9,7 +9,7 @@
 #import "GeneralPrefController.h"
 #import "PositionPrefController.h"
 #import "CalendarsPrefController.h"
-#import "SRRecorderControl.h"
+#import <ShortcutRecorder/ShortcutRecorder.h>
 
 
 @implementation GeneralPrefController
@@ -71,7 +71,7 @@
 
 #pragma mark SRRecorderControlDelegate
 
-- (BOOL)shortcutRecorder:(SRRecorderControl *)aRecorder isKeyCode:(signed short)keyCode andFlagsTaken:(unsigned int)flags reason:(NSString **)aReason
+- (BOOL)shortcutRecorder:(SRRecorderControl *)aRecorder isKeyCode:(NSInteger)keyCode andFlagsTaken:(NSUInteger)flags reason:(NSString **)aReason
 {
     KeyCombo keyCombo = SRMakeKeyCombo(keyCode, flags);
 
