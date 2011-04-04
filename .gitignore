@@ -21,3 +21,4 @@ profile
 
 # Generated stuff.
 Resources/calendar/calendar-compiled.js
+auxiliary/build/
