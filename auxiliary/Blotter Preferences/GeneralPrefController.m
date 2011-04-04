@@ -84,4 +84,9 @@
     }
 }
 
+- (BOOL)shortcutRecorderShouldCheckMenu:(SRRecorderControl *)aRecorder
+{
+    return NO;
+}
+
 @end
