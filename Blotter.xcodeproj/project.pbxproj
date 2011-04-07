@@ -26,7 +26,6 @@
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		E23779EF1312AD6000F46E7D /* WLClosableWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E23779D71312AD6000F46E7D /* WLClosableWindow.m */; };
-		E2596D611316B20400A8B15E /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2596D601316B20400A8B15E /* NewEventWindow.xib */; };
 		E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */; };
 		E267035A132CA21F003FBFC2 /* glass-hud-button-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E2670357132CA21F003FBFC2 /* glass-hud-button-right.png */; };
 		E267035B132CA21F003FBFC2 /* glass-hud-button-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = E2670358132CA21F003FBFC2 /* glass-hud-button-middle.png */; };
@@ -65,8 +64,9 @@
 		E27951BB131AA060008AE1DA /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E27951BA131AA060008AE1DA /* Carbon.framework */; };
 		E29DDC8712E9C7BF00751CFA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29DDC8612E9C7BF00751CFA /* MainMenu.xib */; };
 		E29DDCB212E9D54C00751CFA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E29DDCB012E9D54C00751CFA /* Localizable.strings */; };
-		E29F38EB131968B200A865D9 /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29F38EA131968B200A865D9 /* NewTaskWindow.xib */; };
 		E29F38EE1319694C00A865D9 /* WLNewTaskWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E29F38ED1319694C00A865D9 /* WLNewTaskWindowController.m */; };
+		E2BADC96134DDE6100F65E14 /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2BADC95134DDE6100F65E14 /* NewEventWindow.xib */; };
+		E2BADC98134DDE6100F65E14 /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2BADC97134DDE6100F65E14 /* NewTaskWindow.xib */; };
 		E2DC7D3113071F7E0065CEAD /* WLFitWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E2DC7D3013071F7E0065CEAD /* WLFitWindow.m */; };
 		E2F9E1DF1322A4F4007598E2 /* glass-hud-border-bottom-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1D81322A4F4007598E2 /* glass-hud-border-bottom-left.png */; };
 		E2F9E1E01322A4F4007598E2 /* glass-hud-border-bottom-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1D91322A4F4007598E2 /* glass-hud-border-bottom-right.png */; };
@@ -166,7 +166,6 @@
 		256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeskboardAppDelegate.m; sourceTree = "<group>"; };
 		256AC3F00F4B6AF500CF3369 /* Deskboard_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deskboard_Prefix.pch; sourceTree = "<group>"; };
 		28153EDE12D78EBE00A239C4 /* Blotter-B8.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "Blotter-B8.icns"; path = "../blotter/Resources/Blotter-B8.icns"; sourceTree = SOURCE_ROOT; };
-		281BA565129EF84D00114D3C /* Blotter Preferences.preferencePane */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Blotter Preferences.preferencePane"; path = "auxiliary/Blotter Preferences/build/Release/Blotter Preferences.preferencePane"; sourceTree = "<group>"; };
 		284061CE127E6C4F000816FF /* DesktopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DesktopView.h; sourceTree = "<group>"; };
 		284061CF127E6C4F000816FF /* DesktopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DesktopView.m; sourceTree = "<group>"; wrapsLines = 1; };
 		2840624C127E75FC000816FF /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
@@ -203,7 +202,7 @@
 		8D1107320486CEB800E47090 /* Blotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E23779D61312AD6000F46E7D /* WLClosableWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WLClosableWindow.h; path = WLClosableWindow/WLClosableWindow.h; sourceTree = "<group>"; };
 		E23779D71312AD6000F46E7D /* WLClosableWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WLClosableWindow.m; path = WLClosableWindow/WLClosableWindow.m; sourceTree = "<group>"; };
-		E2596D601316B20400A8B15E /* NewEventWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewEventWindow.xib; path = Resources/NewEventWindow.xib; sourceTree = "<group>"; };
+		E2596D601316B20400A8B15E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
 		E2596D711316C8C100A8B15E /* WLNewEventWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNewEventWindowController.h; sourceTree = "<group>"; };
 		E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNewEventWindowController.m; sourceTree = "<group>"; };
 		E2670357132CA21F003FBFC2 /* glass-hud-button-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-right.png"; sourceTree = "<group>"; };
@@ -253,9 +252,33 @@
 		E29DDCB512E9D56B00751CFA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = Resources/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E29DDCB612E9D57500751CFA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E29DDCB712E9D57F00751CFA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E29F38EA131968B200A865D9 /* NewTaskWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewTaskWindow.xib; path = Resources/NewTaskWindow.xib; sourceTree = "<group>"; };
+		E29F38EA131968B200A865D9 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
 		E29F38EC1319694C00A865D9 /* WLNewTaskWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNewTaskWindowController.h; sourceTree = "<group>"; };
 		E29F38ED1319694C00A865D9 /* WLNewTaskWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNewTaskWindowController.m; sourceTree = "<group>"; };
+		E2BADC99134DDF6900F65E14 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = Resources/de.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
+		E2BADC9A134DDF6D00F65E14 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = Resources/es.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
+		E2BADC9B134DDF6F00F65E14 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = Resources/fr.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
+		E2BADC9C134DDF7300F65E14 /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = Resources/ko.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
+		E2BADC9D134DDF7500F65E14 /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = Resources/sv.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
+		E2BADC9E134DDF7800F65E14 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = Resources/ru.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
+		E2BADC9F134DDF8200F65E14 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = Resources/ru.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
+		E2BADCA0134DDF8400F65E14 /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = Resources/sv.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
+		E2BADCA1134DDF8600F65E14 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = Resources/de.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
+		E2BADCA2134DDF8800F65E14 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = Resources/fr.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
+		E2BADCA3134DDF8900F65E14 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = Resources/es.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
+		E2BADCA4134DDF8B00F65E14 /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = Resources/ko.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
+		E2BADCBD134DE28300F65E14 /* de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
+		E2BADCBE134DE28300F65E14 /* es */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
+		E2BADCBF134DE28300F65E14 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = Resources/fr.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
+		E2BADCC0134DE28300F65E14 /* ko */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = ko; path = Resources/ko.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
+		E2BADCC1134DE28300F65E14 /* sv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = sv; path = Resources/sv.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
+		E2BADCC2134DE28300F65E14 /* ru */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = ru; path = Resources/ru.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
+		E2BADCC4134DE28300F65E14 /* de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
+		E2BADCC5134DE28300F65E14 /* es */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
+		E2BADCC6134DE28300F65E14 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = Resources/fr.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
+		E2BADCC7134DE28300F65E14 /* ko */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = ko; path = Resources/ko.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
+		E2BADCC8134DE28300F65E14 /* sv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = sv; path = Resources/sv.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
+		E2BADCC9134DE28300F65E14 /* ru */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = ru; path = Resources/ru.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
 		E2DC7D2F13071F7E0065CEAD /* WLFitWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLFitWindow.h; sourceTree = "<group>"; };
 		E2DC7D3013071F7E0065CEAD /* WLFitWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLFitWindow.m; sourceTree = "<group>"; };
 		E2F9E1D81322A4F4007598E2 /* glass-hud-border-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-border-bottom-left.png"; sourceTree = "<group>"; };
@@ -369,20 +392,21 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E2BADCBC134DE28300F65E14 /* NewTaskWindow.strings */,
+				E2BADCC3134DE28300F65E14 /* NewEventWindow.strings */,
 				E271E5B313377E6100BF7F2B /* blotter-status-bar.png */,
 				E271E5B413377E6100BF7F2B /* blotter-status-bar-active.png */,
 				E2F9E1D71322A4F4007598E2 /* glass-hud */,
 				E29DDCB012E9D54C00751CFA /* Localizable.strings */,
 				28153EDE12D78EBE00A239C4 /* Blotter-B8.icns */,
-				281BA565129EF84D00114D3C /* Blotter Preferences.preferencePane */,
 				28F69A1A129C1CAA00D4BB97 /* Credits.rtf */,
 				28F6966B1298B99800D4BB97 /* calendar */,
 				8D1107310486CEB800E47090 /* Blotter-Info.plist */,
 				E29DDC8512E9C7BF00751CFA /* MainMenu.strings */,
 				E29DDC8612E9C7BF00751CFA /* MainMenu.xib */,
 				28F69CF4129CC12100D4BB97 /* Licenses.rtf */,
-				E2596D601316B20400A8B15E /* NewEventWindow.xib */,
-				E29F38EA131968B200A865D9 /* NewTaskWindow.xib */,
+				E2BADC95134DDE6100F65E14 /* NewEventWindow.xib */,
+				E2BADC97134DDE6100F65E14 /* NewTaskWindow.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -603,8 +627,8 @@
 				28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */,
 				28153EDF12D78EBE00A239C4 /* Blotter-B8.icns in Resources */,
 				E29DDCB212E9D54C00751CFA /* Localizable.strings in Resources */,
-				E2596D611316B20400A8B15E /* NewEventWindow.xib in Resources */,
-				E29F38EB131968B200A865D9 /* NewTaskWindow.xib in Resources */,
+				E2BADC96134DDE6100F65E14 /* NewEventWindow.xib in Resources */,
+				E2BADC98134DDE6100F65E14 /* NewTaskWindow.xib in Resources */,
 				E2F9E1DF1322A4F4007598E2 /* glass-hud-border-bottom-left.png in Resources */,
 				E2F9E1E01322A4F4007598E2 /* glass-hud-border-bottom-right.png in Resources */,
 				E2F9E1E11322A4F4007598E2 /* glass-hud-border-bottom.png in Resources */,
@@ -701,12 +725,12 @@
 			isa = PBXVariantGroup;
 			children = (
 				1DDD58150DA1D0A300B32029 /* English */,
+				28A09A9C1308F188005EA923 /* de */,
+				28A09A9E1308F18E005EA923 /* es */,
+				28A09A9D1308F18B005EA923 /* fr */,
+				28A09A9F1308F192005EA923 /* ko */,
 				E29DDC8812E9C7C900751CFA /* ru */,
 				28E96D7312EA3145000AF199 /* sv */,
-				28A09A9C1308F188005EA923 /* de */,
-				28A09A9D1308F18B005EA923 /* fr */,
-				28A09A9E1308F18E005EA923 /* es */,
-				28A09A9F1308F192005EA923 /* ko */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -714,15 +738,69 @@
 		E29DDCB012E9D54C00751CFA /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E29DDCB312E9D55500751CFA /* ru */,
-				E29DDCB512E9D56B00751CFA /* fr */,
-				E29DDCB612E9D57500751CFA /* es */,
-				E29DDCB712E9D57F00751CFA /* de */,
-				28E96D7512EA3145000AF199 /* sv */,
 				E267AADF12EDF7AE00EDB7B6 /* English */,
+				E29DDCB712E9D57F00751CFA /* de */,
+				E29DDCB612E9D57500751CFA /* es */,
+				E29DDCB512E9D56B00751CFA /* fr */,
 				28A09A5A1308E4A7005EA923 /* ko */,
+				E29DDCB312E9D55500751CFA /* ru */,
+				28E96D7512EA3145000AF199 /* sv */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		E2BADC95134DDE6100F65E14 /* NewEventWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E2596D601316B20400A8B15E /* English */,
+				E2BADC99134DDF6900F65E14 /* de */,
+				E2BADC9A134DDF6D00F65E14 /* es */,
+				E2BADC9B134DDF6F00F65E14 /* fr */,
+				E2BADC9C134DDF7300F65E14 /* ko */,
+				E2BADC9E134DDF7800F65E14 /* ru */,
+				E2BADC9D134DDF7500F65E14 /* sv */,
+			);
+			name = NewEventWindow.xib;
+			sourceTree = "<group>";
+		};
+		E2BADC97134DDE6100F65E14 /* NewTaskWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E29F38EA131968B200A865D9 /* English */,
+				E2BADCA1134DDF8600F65E14 /* de */,
+				E2BADCA3134DDF8900F65E14 /* es */,
+				E2BADCA2134DDF8800F65E14 /* fr */,
+				E2BADCA4134DDF8B00F65E14 /* ko */,
+				E2BADC9F134DDF8200F65E14 /* ru */,
+				E2BADCA0134DDF8400F65E14 /* sv */,
+			);
+			name = NewTaskWindow.xib;
+			sourceTree = "<group>";
+		};
+		E2BADCBC134DE28300F65E14 /* NewTaskWindow.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E2BADCBD134DE28300F65E14 /* de */,
+				E2BADCBE134DE28300F65E14 /* es */,
+				E2BADCBF134DE28300F65E14 /* fr */,
+				E2BADCC0134DE28300F65E14 /* ko */,
+				E2BADCC2134DE28300F65E14 /* ru */,
+				E2BADCC1134DE28300F65E14 /* sv */,
+			);
+			name = NewTaskWindow.strings;
+			sourceTree = "<group>";
+		};
+		E2BADCC3134DE28300F65E14 /* NewEventWindow.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E2BADCC4134DE28300F65E14 /* de */,
+				E2BADCC5134DE28300F65E14 /* es */,
+				E2BADCC6134DE28300F65E14 /* fr */,
+				E2BADCC7134DE28300F65E14 /* ko */,
+				E2BADCC9134DE28300F65E14 /* ru */,
+				E2BADCC8134DE28300F65E14 /* sv */,
+			);
+			name = NewEventWindow.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-from os.path import join, abspath, pardir, dirname, basename, splitext
+from os.path import join, abspath, pardir, dirname, basename, splitext, isfile
 from os import listdir
 from tempfile import mkdtemp
 from subprocess import check_call
@@ -36,6 +36,12 @@ def Xibs():
     xibs = [{'output': join(BLOTTER_DIR, "Resources"),
              'file': join(BLOTTER_DIR, "Resources", "English.lproj", "MainMenu.xib"),
              'old': join(BLOTTER_DIR, "Resources", "English.lproj", "MainMenu.old.xib")},
+            {'output': join(BLOTTER_DIR, "Resources"),
+             'file': join(BLOTTER_DIR, "Resources", "English.lproj", "NewEventWindow.xib"),
+             'old': join(BLOTTER_DIR, "Resources", "English.lproj", "NewEventWindow.old.xib")},
+            {'output': join(BLOTTER_DIR, "Resources"),
+             'file': join(BLOTTER_DIR, "Resources", "English.lproj", "NewTaskWindow.xib"),
+             'old': join(BLOTTER_DIR, "Resources", "English.lproj", "NewTaskWindow.old.xib")},
             {'output': BLOTTER_PREFS_DIR,
              'file': join(BLOTTER_PREFS_DIR, "English.lproj", "CalendarsPrefPaneView.xib"),
              'old': join(BLOTTER_PREFS_DIR, "English.lproj", "CalendarsPrefPaneView.old.xib")},
@@ -54,12 +60,16 @@ def Sources():
     output is the path to a root dir for all localizations,
     files is a list of paths to sources
     """
-    sources = [{'output': join(BLOTTER_DIR, "Resources"), 'files': [join(BLOTTER_DIR, "DesktopView.m")]},
-               {'output': BLOTTER_PREFS_DIR, 'files': [join(BLOTTER_PREFS_DIR, "GeneralPrefController.m"),
-                                                       join(BLOTTER_PREFS_DIR, "PositionPrefController.m"),
-                                                       join(BLOTTER_PREFS_DIR, "CalendarsPrefController.m"),
-                                                       join(BLOTTER_PREFS_DIR, "NSScreen+WLScreenName.m"),
-                                                       join(BLOTTER_PREFS_DIR, "WLScreensController.m")]}]
+    sources = [{'output': join(BLOTTER_DIR, "Resources"),
+                'files': [join(BLOTTER_DIR, "DesktopView.m"),
+                          join(BLOTTER_DIR, "WLNewEventWindowController.m"),
+                          join(BLOTTER_DIR, "WLNewTaskWindowController.m")]},
+               {'output': BLOTTER_PREFS_DIR,
+                'files': [join(BLOTTER_PREFS_DIR, "GeneralPrefController.m"),
+                          join(BLOTTER_PREFS_DIR, "PositionPrefController.m"),
+                          join(BLOTTER_PREFS_DIR, "CalendarsPrefController.m"),
+                          join(BLOTTER_PREFS_DIR, "NSScreen+WLScreenName.m"),
+                          join(BLOTTER_PREFS_DIR, "WLScreensController.m")]}]
     return sources
 
 def Langs():
@@ -94,7 +104,12 @@ def MergeStrings(src_path, dst_path):
             dst_file.write("\n".join([item['comment'], item['key'] + " = " + item['value'] + ";", "\n"]))
 
     src = open(src_path, 'r', 'utf-16')
-    dst = open(dst_path, 'r+', 'utf-16')
+    dst = None
+    if isfile(dst_path):
+        dst = open(dst_path, 'r+', 'utf-16')
+    else:
+        dst = open(dst_path, 'w+', 'utf-16')
+
     try:
         src_list = Parse(src)
         dst_list = Parse(dst)
@@ -132,6 +147,10 @@ def LocalizeXib(xib_path, old_xib_path, output_path, langs):
 
     name = basename(xib_path)
     old_name = basename(old_xib_path)
+
+    if not isfile(old_xib_path):
+        copy(xib_path, old_xib_path)
+
     for lang in langs:
         print lang
         l_dir_path = Lproj(lang, output_path)

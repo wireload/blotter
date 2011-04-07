@@ -26,6 +26,7 @@
 		E29DDD0C12E9DD1000751CFA /* GeneralPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29DDD0B12E9DD1000751CFA /* GeneralPrefPaneView.xib */; };
 		E29DDD0E12E9DD1000751CFA /* PositionPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29DDD0D12E9DD1000751CFA /* PositionPrefPaneView.xib */; };
 		E29DDD1012E9DD1000751CFA /* CalendarsPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29DDD0F12E9DD1000751CFA /* CalendarsPrefPaneView.xib */; };
+		E2BADDC0134DF2FB00F65E14 /* exclamation.png in Resources */ = {isa = PBXBuildFile; fileRef = E2BADDBF134DF2FB00F65E14 /* exclamation.png */; };
 		E2DC7DDD130810F00065CEAD /* WLScreensController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2DC7DDC130810F00065CEAD /* WLScreensController.m */; };
 		E2FE5ED112D74F5E00003E48 /* CalendarsPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FE5ED012D74F5E00003E48 /* CalendarsPrefController.m */; };
 		E2FE5EF712D75C7700003E48 /* ColorCheckboxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FE5EF612D75C7700003E48 /* ColorCheckboxCell.m */; };
@@ -161,6 +162,7 @@
 		E29DDD5C12E9DE9F00751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/CalendarsPrefPaneView.strings; sourceTree = "<group>"; };
 		E29DDD5D12E9DE9F00751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/GeneralPrefPaneView.strings; sourceTree = "<group>"; };
 		E29DDD5E12E9DE9F00751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/PositionPrefPaneView.strings; sourceTree = "<group>"; };
+		E2BADDBF134DF2FB00F65E14 /* exclamation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exclamation.png; sourceTree = "<group>"; };
 		E2DC7DDB130810F00065CEAD /* WLScreensController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLScreensController.h; sourceTree = "<group>"; };
 		E2DC7DDC130810F00065CEAD /* WLScreensController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLScreensController.m; sourceTree = "<group>"; };
 		E2FE5ECF12D74F5E00003E48 /* CalendarsPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarsPrefController.h; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E2BADDBF134DF2FB00F65E14 /* exclamation.png */,
 				E29DDD0B12E9DD1000751CFA /* GeneralPrefPaneView.xib */,
 				E29DDD0D12E9DD1000751CFA /* PositionPrefPaneView.xib */,
 				E29DDD0F12E9DD1000751CFA /* CalendarsPrefPaneView.xib */,
@@ -430,6 +433,7 @@
 				E2FE5F1312D760BA00003E48 /* chkbxCheck.png in Resources */,
 				E2FE5F6112D7734000003E48 /* chkbxColormask.png in Resources */,
 				E29DDD0412E9DCED00751CFA /* Localizable.strings in Resources */,
+				E2BADDC0134DF2FB00F65E14 /* exclamation.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
