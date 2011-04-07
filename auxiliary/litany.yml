@@ -24,6 +24,16 @@ strings:
     path:     "auxiliary/Blotter Preferences/%(lang)s.lproj/Localizable.strings"
     skip:     ["%.0f x %.0f", "%@, %@"]
   -
+    id:       'New Event'
+    comment:  'A window for creating a new calendar event.'
+    path:     "Resources/%(lang)s.lproj/NewEventWindow.strings"
+    skip:     ["103.title"]
+  -
+    id:       'New Task'
+    comment:  'A window for creating a new calendar task.'
+    path:     "Resources/%(lang)s.lproj/NewTaskWindow.strings"
+    skip:     ["815.title", "834.title"]
+  -
     id:   'main menu'
     path: "Resources/%(lang)s.lproj/MainMenu.strings"
     skip:     ['29.title']
