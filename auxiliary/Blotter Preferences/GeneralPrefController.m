@@ -76,7 +76,7 @@
     KeyCombo keyCombo = SRMakeKeyCombo(keyCode, flags);
     if (SRKeyComboEqualToKeyCombo([newEventRecorderControl keyCombo], keyCombo) || SRKeyComboEqualToKeyCombo([newTaskRecorderControl keyCombo], keyCombo))
     {
-        *aReason = @"it's already used as a different Blotter shortcut. To use this shortcut, first remove or change the other shortcut";
+        *aReason = NSLocalizedStringFromTableInBundle(@"it's already used as a different Blotter shortcut. To use this shortcut, first remove or change the other shortcut", nil, [NSBundle bundleForClass:[self class]], @"A reason to use other shortcut");;
         return YES;
     }
     else {
