@@ -168,7 +168,7 @@
 					<object class="SRRecorderControl" id="335876334">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">298</int>
-						<string key="NSFrame">{{128, 87}, {152, 22}}</string>
+						<string key="NSFrame">{{128, 87}, {273, 22}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="SRRecorderCell" key="NSCell" id="121929858">
@@ -188,7 +188,7 @@
 					<object class="SRRecorderControl" id="654507568">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">298</int>
-						<string key="NSFrame">{{128, 57}, {152, 22}}</string>
+						<string key="NSFrame">{{128, 57}, {273, 22}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="SRRecorderCell" key="NSCell" id="475977160">
@@ -834,11 +834,11 @@
 							<reference ref="654507568"/>
 							<reference ref="78208689"/>
 							<reference ref="107585228"/>
+							<reference ref="617490363"/>
+							<reference ref="467730652"/>
 							<reference ref="66188539"/>
 							<reference ref="671274566"/>
 							<reference ref="1067898468"/>
-							<reference ref="467730652"/>
-							<reference ref="617490363"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">General View</string>
@@ -1259,7 +1259,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABDAwAAwigAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABCugAAwigAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1281,7 +1281,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABBiAAAwhQAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABBkAAAwhQAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>WLRecorderControl</string>
