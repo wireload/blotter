@@ -11,6 +11,7 @@ strings:
     id:       'General Preferences'
     comment:  "Options shown on the General preferences page."
     path:     "auxiliary/Blotter Preferences/%(lang)s.lproj/GeneralPrefPaneView.strings"
+    skip:     ['82.title']
   -
     id:       'Position Preferences'
     path:     "auxiliary/Blotter Preferences/%(lang)s.lproj/PositionPrefPaneView.strings"
