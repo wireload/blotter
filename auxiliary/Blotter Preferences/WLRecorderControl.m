@@ -14,7 +14,6 @@
 
 - (BOOL)becomeFirstResponder
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
     BOOL isBecome = [super becomeFirstResponder];
     if (isBecome)
         [[PTHotKeyCenter sharedCenter] pause];
