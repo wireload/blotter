@@ -35,23 +35,21 @@
                              1.0,
                              YES);
     }
-
-    [self drawTitle:[self attributedTitle] withFrame:cellFrame inView:controlView];
+    // Title frame is the button frame without round parts and shadows.
+    NSRect titleFrame = NSInsetRect(cellFrame, 7, 2);
+    titleFrame.size.height -= 1;
+    [self drawTitle:[self attributedTitle] withFrame:titleFrame inView:controlView];
 }
 
 - (NSRect)drawTitle:(NSAttributedString *)title withFrame:(NSRect)frame inView:(NSView *)controlView
 {
     NSMutableAttributedString *whiteTitle = [title mutableCopy];
+    NSRange titleLength = NSMakeRange(0, [whiteTitle length]);
     [whiteTitle beginEditing];
-    [whiteTitle addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Lucida Grande" size:11] range:NSMakeRange(0, [whiteTitle length])];
-    [whiteTitle addAttribute:NSForegroundColorAttributeName value:[NSColor whiteColor] range:NSMakeRange(0, [whiteTitle length])];
+    [whiteTitle addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Lucida Grande" size:11] range:titleLength];
+    [whiteTitle addAttribute:NSForegroundColorAttributeName value:[NSColor whiteColor] range:titleLength];
     [whiteTitle endEditing];
-    NSRect titleRect = [whiteTitle boundingRectWithSize:frame.size options:NSStringDrawingUsesLineFragmentOrigin];
-    titleRect.origin.x += NSMidX(frame) - NSMidX(titleRect);
-    titleRect.origin.y -= NSMidY(frame) - NSMidY(titleRect);
-    [whiteTitle drawInRect:titleRect];
-    [whiteTitle release];
-    return titleRect;
+    return [super drawTitle:whiteTitle withFrame:frame inView:controlView];
 }
 
 @end
