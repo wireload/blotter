@@ -14,6 +14,7 @@
 
 - (BOOL)becomeFirstResponder
 {
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     BOOL isBecome = [super becomeFirstResponder];
     if (isBecome)
         [[PTHotKeyCenter sharedCenter] pause];
@@ -26,6 +27,13 @@
     if (isResigned)
         [[PTHotKeyCenter sharedCenter] resume];
     return isResigned;
+}
+
+- (BOOL)performKeyEquivalent:(NSEvent *)anEvent
+{
+    BOOL result = [super performKeyEquivalent:anEvent];
+    [self resignFirstResponder];
+    return result;
 }
 
 @end
