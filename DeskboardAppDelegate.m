@@ -23,6 +23,11 @@ extern NSString* const SRShortcutFlagsKey;
 extern NSString* const SRShortcutCharacters;
 extern NSString* const SRShortcutCharactersIgnoringModifiers;
 
+// TODO: Update if New Event/Task windows stop centering at first launch.
+// Cocoa uses these strings to store frames of the new event/task windows in user defaults.
+static NSString* const _WLNewEventWindowAutosaveName = @"NSWindow Frame NewEventWindow";
+static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWindow";
+
 
 @interface DeskboardAppDelegate (/* Private */)
 
@@ -175,6 +180,8 @@ extern NSString* const SRShortcutCharactersIgnoringModifiers;
 {
     WLNewEventWindowController *controller = [WLNewEventWindowController sharedWindowController];
     [controller reset];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:_WLNewEventWindowAutosaveName] == nil)
+        [[controller window] center];
     [controller showWindow:sender];
     [NSApp activateIgnoringOtherApps:YES];
 }
@@ -183,6 +190,8 @@ extern NSString* const SRShortcutCharactersIgnoringModifiers;
 {
     WLNewTaskWindowController *controller = [WLNewTaskWindowController sharedWindowController];
     [controller reset];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:_WLNewTaskWindowAutosaveName] == nil)
+        [[controller window] center];
     [controller showWindow:sender];
     [NSApp activateIgnoringOtherApps:YES];
 }
