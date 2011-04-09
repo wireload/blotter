@@ -31,7 +31,8 @@
 - (BOOL)performKeyEquivalent:(NSEvent *)anEvent
 {
     BOOL result = [super performKeyEquivalent:anEvent];
-    [self resignFirstResponder];
+    if (result)
+        [[self window] makeFirstResponder:nil];
     return result;
 }
 
