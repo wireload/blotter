@@ -967,7 +967,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABCuAAAwgwAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABC2AAAwgwAAA</bytes>
 					</object>
 					<string>WLGlassHudButtonCell</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
