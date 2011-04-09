@@ -343,7 +343,7 @@
 					<object class="NSTextField" id="671274566">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{251, 208}, {95, 17}}</string>
+						<string key="NSFrame">{{265, 208}, {95, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="305810239">
@@ -359,7 +359,7 @@
 					<object class="NSTextField" id="66188539">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{196, 204}, {50, 22}}</string>
+						<string key="NSFrame">{{210, 204}, {50, 22}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="98714313">
@@ -827,18 +827,18 @@
 							<reference ref="467730652"/>
 							<reference ref="107585228"/>
 							<reference ref="343803889"/>
-							<reference ref="66188539"/>
-							<reference ref="671274566"/>
 							<reference ref="942139524"/>
 							<reference ref="39277589"/>
 							<reference ref="189155685"/>
 							<reference ref="875333223"/>
 							<reference ref="1067898468"/>
 							<reference ref="617490363"/>
-							<reference ref="335876334"/>
-							<reference ref="654507568"/>
 							<reference ref="932265259"/>
 							<reference ref="389516795"/>
+							<reference ref="66188539"/>
+							<reference ref="671274566"/>
+							<reference ref="335876334"/>
+							<reference ref="654507568"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">General View</string>
@@ -1234,12 +1234,12 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABDPAAAw18AAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABDRAAAw2AAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABDcwAAw14AAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABDewAAw18AAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
