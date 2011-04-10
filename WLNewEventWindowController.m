@@ -124,7 +124,9 @@ static WLNewEventWindowController *_sharedInstance;
         newWindowFrame.size.height += heightDiff;
         newWindowFrame.origin.y -= heightDiff;
         [_locationViewContainer setAutoresizingMask:([_locationViewContainer autoresizingMask] | NSViewHeightSizable) ^ NSViewMaxYMargin];
+        [_titleView setAutoresizingMask:([_titleView autoresizingMask] ^ NSViewHeightSizable) | NSViewMinYMargin];
         [[self window] setFrame:newWindowFrame display:YES animate:YES];
+        [_titleView setAutoresizingMask:([_titleView autoresizingMask] | NSViewHeightSizable) ^ NSViewMinYMargin];
         [_locationViewContainer setAutoresizingMask:([_locationViewContainer autoresizingMask] ^ NSViewHeightSizable) | NSViewMaxYMargin];
     }];
     _locationView.postsSizeChangedNotifications = YES;
@@ -136,6 +138,7 @@ static WLNewEventWindowController *_sharedInstance;
 
 - (void)reset
 {
+    [[self window] makeFirstResponder:nil];
     [(NSTextView *)_titleView setString:NSLocalizedString(@"New Event", @"Default text for title field on the New Event panel")];
     [(NSTextView *)_locationView setString:@""];
     [_isAllDayButton setState:NSOffState];
