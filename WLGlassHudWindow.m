@@ -38,6 +38,7 @@ BOOL _WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int s
     {
         [self setOpaque:NO];
         [self setBackgroundColor:[NSColor clearColor]];
+        [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
     }
     return self;
 }
