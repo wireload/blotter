@@ -39,6 +39,14 @@
     NSRect titleFrame = NSInsetRect(cellFrame, 7, 2);
     titleFrame.size.height -= 1;
     [self drawTitle:[self attributedTitle] withFrame:titleFrame inView:controlView];
+    
+    if ([self showsFirstResponder])
+    {
+        [NSGraphicsContext saveGraphicsState];
+        NSSetFocusRingStyle(NSFocusRingOnly);
+        [[NSBezierPath bezierPathWithRoundedRect:cellFrame xRadius:7 yRadius:9] fill];
+        [NSGraphicsContext restoreGraphicsState];
+    }
 }
 
 - (NSRect)drawTitle:(NSAttributedString *)title withFrame:(NSRect)frame inView:(NSView *)controlView
