@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
-		<string key="IBDocument.SystemVersion">10J869</string>
+		<string key="IBDocument.SystemVersion">10J3210</string>
 		<string key="IBDocument.InterfaceBuilderVersion">851</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
@@ -168,7 +168,7 @@
 								<object class="NSTextField" id="350755557">
 									<reference key="NSNextResponder" ref="577727828"/>
 									<int key="NSvFlags">268</int>
-									<string key="NSFrame">{{28, 69}, {54, 14}}</string>
+									<string key="NSFrame">{{28, 72}, {54, 14}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="434397590">
@@ -206,7 +206,7 @@
 								<object class="NSPopUpButton" id="93078503">
 									<reference key="NSNextResponder" ref="577727828"/>
 									<int key="NSvFlags">266</int>
-									<string key="NSFrame">{{77, 63}, {173, 26}}</string>
+									<string key="NSFrame">{{77, 66}, {173, 26}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSPopUpButtonCell" key="NSCell" id="359745811">
