@@ -22,6 +22,7 @@
     IBOutlet WLGlassHudDatePicker *_startDatePicker;
     IBOutlet WLGlassHudDatePicker *_endDatePicker;
     NSDate *_datePickerValueBackup;
+    IBOutlet NSButton *_createButton;
 
     IBOutlet NSArrayController *_calendarsController;
     id _calendarsChangedObserver;

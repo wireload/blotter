@@ -92,6 +92,9 @@ static WLNewEventWindowController *_sharedInstance;
 
 - (void)windowDidLoad
 {
+    unichar keyEquiv = NSEnterCharacter;
+    NSString *equivString = [NSString stringWithCharacters:&keyEquiv length:1];
+    [_createButton setKeyEquivalent:equivString];
     [_startDatePicker setDelegate:self];
     [_endDatePicker setDelegate:self];
     [(NSTextView *)_titleView setDrawsBackground:NO];

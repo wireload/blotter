@@ -17,6 +17,7 @@
     IBOutlet NSButton *_isDueDate;
     IBOutlet NSDatePicker *_dueDatePicker;
     IBOutlet NSPopUpButton *_priorityPopUp;
+    IBOutlet NSButton *_createButton;
     
     IBOutlet NSArrayController *_calendarsController;
     id _calendarsChangedObserver;
