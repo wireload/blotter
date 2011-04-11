@@ -138,9 +138,11 @@ static WLNewEventWindowController *_sharedInstance;
 
 - (void)reset
 {
-    [[self window] makeFirstResponder:nil];
-    [(NSTextView *)_titleView setString:NSLocalizedString(@"New Event", @"Default text for title field on the New Event panel")];
+    // It is important to change string fo _locationView before _titleView, because resizing of _locationView is followed by resizing of _titleView and that
+    // will result in wrong frame of _titleView.
+    // FIXME: It is probably a bug and current implementation of resizing methods are wrong (Look up _titleViewObserver and _locationViewObserver) // :Ilya Kulakov:20110411
     [(NSTextView *)_locationView setString:@""];
+    [(NSTextView *)_titleView setString:NSLocalizedString(@"New Event", @"Default text for title field on the New Event panel")];
     [_isAllDayButton setState:NSOffState];
     [_startDatePicker setDateValue:[NSDate date]];
     [_endDatePicker setDateValue:[[_startDatePicker dateValue] dateByAddingTimeInterval:_WLDefaultTimeDiff]];
