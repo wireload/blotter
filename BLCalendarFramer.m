@@ -42,9 +42,9 @@ const NSSize BLNormalMinimumSize = {950, 750};
             size = NSMakeSize(frame.size.width - aMargin.width * 2, frame.size.height - aMargin.height * 2);
             break;
         default: {
-            CGFloat normalWidth = MAX(BLNormalMinimumSize.width, frame.size.width / 2);
-            CGFloat normalHeight = MAX(BLNormalMinimumSize.height, frame.size.height / 2);
-            size = NSMakeSize(normalWidth, MIN(normalHeight, frame.size.height - aMargin.height * 2));
+            CGFloat normalWidth = floor(MAX(BLNormalMinimumSize.width, frame.size.width / 2));
+            CGFloat normalHeight = floor(MAX(BLNormalMinimumSize.height, frame.size.height / 2));
+            size = NSMakeSize(normalWidth, floor(MIN(normalHeight, frame.size.height - aMargin.height * 2)));
             break;
         }
     }
