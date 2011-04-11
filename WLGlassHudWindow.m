@@ -117,6 +117,25 @@ BOOL _WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int s
 	return YES;
 }
 
+- (void)sendEvent:(NSEvent *)theEvent
+{
+    // Stop editing the current field when numpad enter is pressed. This way the key press
+    // can be picked up on as the 'commit' key equivalent instead of a new line in the text
+    // field.
+
+    // FIXME This is a hack for New Event and New Task - it doesn't properly belong
+    // in WLGlassHudWindow.
+    NSResponder *firstResponder = [self firstResponder];
+    if (([firstResponder isKindOfClass:[NSTextField class]] || [firstResponder isKindOfClass:[NSTextView class]])
+        && ([theEvent type] == NSKeyDown || [theEvent type] == NSKeyUp)
+        && ([theEvent keyCode] == kVK_ANSI_KeypadEnter))
+    {
+        [self makeFirstResponder:nil];
+    }
+
+    [super sendEvent:theEvent];
+}
+
 - (BOOL)performKeyEquivalent:(NSEvent *)theEvent
 {
     if (_WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_A))
@@ -163,6 +182,7 @@ BOOL _WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int s
         [[[self firstResponder] undoManager] redo];
         return YES;
     }
+
     return [super performKeyEquivalent:theEvent];
 }
 
