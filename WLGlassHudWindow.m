@@ -138,6 +138,13 @@ BOOL _WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int s
 
 - (BOOL)performKeyEquivalent:(NSEvent *)theEvent
 {
+    // Close
+    if (_WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_W))
+    {
+        [self orderOut:self];
+        return YES;
+    }
+    // Select All
     if (_WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_A))
     {
         [[self firstResponder] selectAll:self];
