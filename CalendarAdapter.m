@@ -12,6 +12,7 @@
 #import "CalendarAdapter.h"
 #import "NSDate-Utilities.h"
 #import "NSColor-Utilities.h"
+#import "NSDate+ISO8601.h"
 
 static void * volatile sharedInstance = nil;
 
@@ -89,14 +90,25 @@ static void * volatile sharedInstance = nil;
                                                  selector:@selector(calendarsChanged:)
                                                      name:CalCalendarsChangedNotification
                                                    object:[CalCalendarStore defaultCalendarStore]];
+
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(eventsChanged:)
                                                      name:CalEventsChangedExternallyNotification
                                                    object:[CalCalendarStore defaultCalendarStore]];
         [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(eventsChanged:)
+                                                     name:CalEventsChangedNotification
+                                                   object:[CalCalendarStore defaultCalendarStore]];
+
+        [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(tasksChanged:)
                                                      name:CalTasksChangedExternallyNotification
                                                    object:[CalCalendarStore defaultCalendarStore]];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(tasksChanged:)
+                                                     name:CalTasksChangedNotification
+                                                   object:[CalCalendarStore defaultCalendarStore]];
+
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(dateChanged)
                                                      name:NSSystemClockDidChangeNotification
