@@ -44,7 +44,6 @@ NSString* const WLSizeDiff = @"WLSizeDiff";
 @end
 
 
-
 @implementation WLGlassHudTextView
 @synthesize postsSizeChangedNotifications;
 
@@ -67,6 +66,17 @@ NSString* const WLSizeDiff = @"WLSizeDiff";
         [_textView release];
     }
     return self;
+}
+
+- (void)awakeFromNib
+{
+    [_textView setNextKeyView:[self nextKeyView]];
+    [self setNextKeyView:_textView];
+}
+
+- (BOOL)acceptsFirstResponder
+{
+    return NO;
 }
 
 - (void)dealloc

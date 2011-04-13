@@ -623,7 +623,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers\"",
-					"\"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers\"\n$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers",
+					"\"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers\"",
+					"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers",
 				);
 				IBC_OTHER_FLAGS = "--plugin $(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Resources/ShortcutRecorder.ibplugin";
 				MACH_O_TYPE = mh_bundle;
@@ -650,7 +651,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers\"",
-					"\"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers\"\n$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers",
+					"\"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers\"",
+					"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers",
 				);
 				IBC_OTHER_FLAGS = "--plugin $(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Resources/ShortcutRecorder.ibplugin";
 				INSTALL_PATH = "";
