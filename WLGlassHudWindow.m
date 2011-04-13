@@ -45,20 +45,25 @@ BOOL _WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int s
 
 - (BOOL)makeFirstResponder:(NSResponder *)responder
 {
+    NSLog(@"%@ makeFirstResponder: %@", self, responder);
     BOOL result = [super makeFirstResponder:responder];
     if (result
-        && ![responder isEqual:_lastControl]
-        && ([responder respondsToSelector:@selector(setDrawsBackground:)] || [responder respondsToSelector:@selector(setBezeled:)]))
+        && ![responder isEqual:_lastControl])
     {
         if ([_lastControl respondsToSelector:@selector(setDrawsBackground:)])
             [_lastControl setDrawsBackground:NO];
         if ([_lastControl respondsToSelector:@selector(setBezeled:)])
             [_lastControl setBezeled:NO];
-        _lastControl = responder;
-        if ([_lastControl respondsToSelector:@selector(setDrawsBackground:)])
-            [_lastControl setDrawsBackground:YES];
-        if ([_lastControl respondsToSelector:@selector(setBezeled:)])
-            [_lastControl setBezeled:YES];
+        _lastControl = nil;
+    
+        if ([responder respondsToSelector:@selector(setDrawsBackground:)] || [responder respondsToSelector:@selector(setBezeled:)])
+        {
+            _lastControl = responder;
+            if ([_lastControl respondsToSelector:@selector(setDrawsBackground:)])
+                [_lastControl setDrawsBackground:YES];
+            if ([_lastControl respondsToSelector:@selector(setBezeled:)])
+                [_lastControl setBezeled:YES];
+        }
     }
     return result;
 }
