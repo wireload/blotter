@@ -222,8 +222,8 @@ static void * volatile sharedInstance = nil;
         [jsonEvent setValue:jsonCalendar                                forKey:@"calendar"];
         [jsonEvent setValue:[event title]                               forKey:@"title"];
         [jsonEvent setValue:[event location]                            forKey:@"location"];
-        [jsonEvent setValue:[[event startDate] description]             forKey:@"startDate"];
-        [jsonEvent setValue:[[event endDate] description]               forKey:@"endDate"];
+        [jsonEvent setValue:[[event startDate] iso8601]                 forKey:@"startDate"];
+        [jsonEvent setValue:[[event endDate] iso8601]                   forKey:@"endDate"];
         [jsonEvent setValue:[NSNumber numberWithBool:[event isAllDay]]  forKey:@"isAllDay"];
 
         [r addObject:jsonEvent];

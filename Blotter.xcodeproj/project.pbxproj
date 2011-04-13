@@ -27,6 +27,7 @@
 		28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 28F69CF4129CC12100D4BB97 /* Licenses.rtf */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		E21DB6CD13560D19004084F7 /* NSDate+ISO8601.m in Sources */ = {isa = PBXBuildFile; fileRef = E21DB6CC13560D19004084F7 /* NSDate+ISO8601.m */; };
 		E23779EF1312AD6000F46E7D /* WLClosableWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E23779D71312AD6000F46E7D /* WLClosableWindow.m */; };
 		E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */; };
 		E267035A132CA21F003FBFC2 /* glass-hud-button-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E2670357132CA21F003FBFC2 /* glass-hud-button-right.png */; };
@@ -200,6 +201,8 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Blotter-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Blotter-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Blotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E21DB6CB13560D19004084F7 /* NSDate+ISO8601.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+ISO8601.h"; sourceTree = "<group>"; };
+		E21DB6CC13560D19004084F7 /* NSDate+ISO8601.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+ISO8601.m"; sourceTree = "<group>"; };
 		E23779D61312AD6000F46E7D /* WLClosableWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WLClosableWindow.h; path = WLClosableWindow/WLClosableWindow.h; sourceTree = "<group>"; };
 		E23779D71312AD6000F46E7D /* WLClosableWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WLClosableWindow.m; path = WLClosableWindow/WLClosableWindow.m; sourceTree = "<group>"; };
 		E2596D601316B20400A8B15E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
@@ -342,6 +345,8 @@
 				E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */,
 				E29F38EC1319694C00A865D9 /* WLNewTaskWindowController.h */,
 				E29F38ED1319694C00A865D9 /* WLNewTaskWindowController.m */,
+				E21DB6CB13560D19004084F7 /* NSDate+ISO8601.h */,
+				E21DB6CC13560D19004084F7 /* NSDate+ISO8601.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -689,6 +694,7 @@
 				E2701FA9133B563B0098CD79 /* WLGlassHudTextView.m in Sources */,
 				E2FCE09D133F9264006E713F /* WLGlassHudDatePicker.m in Sources */,
 				E27313C51349F41200A84433 /* PTHotKey+ShortcutRecorder.m in Sources */,
+				E21DB6CD13560D19004084F7 /* NSDate+ISO8601.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
