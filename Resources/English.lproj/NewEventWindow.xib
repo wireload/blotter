@@ -221,7 +221,7 @@
 								<object class="NSDatePicker" id="689527520">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">290</int>
-									<string key="NSFrame">{{84, 88}, {165, 27}}</string>
+									<string key="NSFrame">{{84, 89}, {165, 27}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSDatePickerCell" key="NSCell" id="246916745">
