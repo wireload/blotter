@@ -133,7 +133,7 @@ static WLNewEventWindowController *_sharedInstance;
 
     [_isAllDayButton addObserver:self forKeyPath:@"cell.state" options:NSKeyValueObservingOptionNew context:NULL];
 
-    [self reset];
+    [self reset];    
 }
 
 - (void)reset
