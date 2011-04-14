@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="4"/>
+			<integer value="251"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -42,7 +42,7 @@
 				<int key="NSWindowStyleMask">17</int>
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{400, 267}, {285, 230}}</string>
-				<int key="NSWTFlags">611849216</int>
+				<int key="NSWTFlags">611845120</int>
 				<string key="NSWindowTitle">New Event</string>
 				<string key="NSWindowClass">WLGlassHudWindow</string>
 				<nil key="NSViewClass"/>
@@ -67,7 +67,7 @@
 								<object class="NSTextField" id="722791319">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">292</int>
-									<string key="NSFrame">{{29, 135}, {54, 14}}</string>
+									<string key="NSFrame">{{29, 134}, {54, 14}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="173180381">
@@ -98,7 +98,7 @@
 								<object class="NSTextField" id="354528427">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">292</int>
-									<string key="NSFrame">{{29, 92}, {54, 14}}</string>
+									<string key="NSFrame">{{29, 90}, {54, 14}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="493038283">
@@ -114,7 +114,7 @@
 								<object class="NSTextField" id="939906521">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">292</int>
-									<string key="NSFrame">{{29, 113}, {54, 14}}</string>
+									<string key="NSFrame">{{29, 112}, {54, 14}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="381160257">
@@ -130,7 +130,7 @@
 								<object class="NSTextField" id="12582526">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">292</int>
-									<string key="NSFrame">{{29, 70}, {54, 14}}</string>
+									<string key="NSFrame">{{29, 66}, {54, 14}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="133278015">
@@ -175,7 +175,7 @@
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="413100244">
 										<int key="NSCellFlags">67239424</int>
-										<int key="NSCellFlags2">134250496</int>
+										<int key="NSCellFlags2">134217728</int>
 										<string key="NSContents">Create Event</string>
 										<reference key="NSSupport" ref="618754605"/>
 										<reference key="NSControlView" ref="1026362590"/>
@@ -190,7 +190,7 @@
 								<object class="NSButton" id="456489716">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">290</int>
-									<string key="NSFrame">{{84, 134}, {167, 18}}</string>
+									<string key="NSFrame">{{84, 133}, {167, 18}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="648425809">
@@ -218,20 +218,20 @@
 										<int key="NSPeriodicInterval">25</int>
 									</object>
 								</object>
-								<object class="NSDatePicker" id="689527520">
+								<object class="NSDatePicker" id="211563046">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">290</int>
-									<string key="NSFrame">{{84, 88}, {165, 27}}</string>
+									<string key="NSFrame">{{84, 109}, {165, 27}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<bool key="NSEnabled">YES</bool>
-									<object class="NSDatePickerCell" key="NSCell" id="246916745">
+									<object class="NSDatePickerCell" key="NSCell" id="877791295">
 										<int key="NSCellFlags">67239424</int>
 										<int key="NSCellFlags2">163840</int>
 										<object class="NSDate" key="NSContents">
 											<double key="NS.time">319219200</double>
 										</object>
 										<reference key="NSSupport" ref="26"/>
-										<reference key="NSControlView" ref="689527520"/>
+										<reference key="NSControlView" ref="211563046"/>
 										<double key="NSTimeInterval">0.0</double>
 										<int key="NSDatePickerElements">236</int>
 										<int key="NSDatePickerType">0</int>
@@ -254,33 +254,10 @@
 										</object>
 									</object>
 								</object>
-								<object class="NSDatePicker" id="211563046">
-									<reference key="NSNextResponder" ref="690297653"/>
-									<int key="NSvFlags">290</int>
-									<string key="NSFrame">{{84, 110}, {165, 27}}</string>
-									<reference key="NSSuperview" ref="690297653"/>
-									<bool key="NSEnabled">YES</bool>
-									<object class="NSDatePickerCell" key="NSCell" id="877791295">
-										<int key="NSCellFlags">67239424</int>
-										<int key="NSCellFlags2">163840</int>
-										<object class="NSDate" key="NSContents">
-											<double key="NS.time">319219200</double>
-										</object>
-										<reference key="NSSupport" ref="26"/>
-										<reference key="NSControlView" ref="211563046"/>
-										<double key="NSTimeInterval">0.0</double>
-										<int key="NSDatePickerElements">236</int>
-										<int key="NSDatePickerType">0</int>
-										<bool key="NSSuppressStepper">YES</bool>
-										<bool key="NSDrawsBackground">NO</bool>
-										<reference key="NSBackgroundColor" ref="3079439"/>
-										<reference key="NSTextColor" ref="467114369"/>
-									</object>
-								</object>
 								<object class="NSPopUpButton" id="408232026">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">290</int>
-									<string key="NSFrame">{{77, 64}, {173, 26}}</string>
+									<string key="NSFrame">{{77, 60}, {173, 26}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSPopUpButtonCell" key="NSCell" id="288218953">
@@ -332,6 +309,29 @@
 									<string key="NSFrame">{{83, 152}, {166, 20}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<string key="NSClassName">WLGlassHudTextView</string>
+								</object>
+								<object class="NSDatePicker" id="689527520">
+									<reference key="NSNextResponder" ref="690297653"/>
+									<int key="NSvFlags">290</int>
+									<string key="NSFrame">{{84, 86}, {165, 27}}</string>
+									<reference key="NSSuperview" ref="690297653"/>
+									<bool key="NSEnabled">YES</bool>
+									<object class="NSDatePickerCell" key="NSCell" id="246916745">
+										<int key="NSCellFlags">67239424</int>
+										<int key="NSCellFlags2">163840</int>
+										<object class="NSDate" key="NSContents">
+											<double key="NS.time">319219200</double>
+										</object>
+										<reference key="NSSupport" ref="26"/>
+										<reference key="NSControlView" ref="689527520"/>
+										<double key="NSTimeInterval">0.0</double>
+										<int key="NSDatePickerElements">236</int>
+										<int key="NSDatePickerType">0</int>
+										<bool key="NSSuppressStepper">YES</bool>
+										<bool key="NSDrawsBackground">NO</bool>
+										<reference key="NSBackgroundColor" ref="3079439"/>
+										<reference key="NSTextColor" ref="467114369"/>
+									</object>
 								</object>
 							</object>
 							<string key="NSFrameSize">{285, 174}</string>
@@ -1020,10 +1020,10 @@
 					<object class="NSAffineTransform">
 						<bytes key="NSTransformStruct">AQAAAABBoAAAA</bytes>
 					</object>
-					<string>{{807, 688}, {285, 230}}</string>
+					<string>{{697, 722}, {285, 230}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{807, 688}, {285, 230}}</string>
+					<string>{{697, 722}, {285, 230}}</string>
 					<boolean value="NO"/>
 					<boolean value="NO"/>
 					<boolean value="NO"/>
