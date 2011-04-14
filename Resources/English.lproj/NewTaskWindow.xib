@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="368"/>
+			<integer value="845"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -330,7 +330,7 @@
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSDatePickerCell" key="NSCell" id="373919904">
 										<int key="NSCellFlags">67239424</int>
-										<int key="NSCellFlags2">131072</int>
+										<int key="NSCellFlags2">163840</int>
 										<object class="NSCalendarDate" key="NSContents">
 											<double key="NS.time">-595929600</double>
 											<object class="NSTimeZone" key="NS.timezone">
