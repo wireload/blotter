@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
-		<string key="IBDocument.SystemVersion">10J3210</string>
+		<string key="IBDocument.SystemVersion">10J869</string>
 		<string key="IBDocument.InterfaceBuilderVersion">851</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
@@ -175,7 +175,7 @@
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="413100244">
 										<int key="NSCellFlags">67239424</int>
-										<int key="NSCellFlags2">134250496</int>
+										<int key="NSCellFlags2">134217728</int>
 										<string key="NSContents">Create Event</string>
 										<reference key="NSSupport" ref="618754605"/>
 										<reference key="NSControlView" ref="1026362590"/>
@@ -1002,10 +1002,10 @@
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform"/>
-					<string>{{74, 893}, {285, 230}}</string>
+					<string>{{921, 933}, {285, 230}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{74, 893}, {285, 230}}</string>
+					<string>{{921, 933}, {285, 230}}</string>
 					<boolean value="NO"/>
 					<boolean value="NO"/>
 					<boolean value="NO"/>
