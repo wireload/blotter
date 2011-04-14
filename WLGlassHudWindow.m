@@ -45,10 +45,8 @@ BOOL _WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int s
 
 - (BOOL)makeFirstResponder:(NSResponder *)responder
 {
-    BOOL result = [super makeFirstResponder:responder];
-    if (result
-        && ![responder isEqual:_lastControl]
-        && ([responder respondsToSelector:@selector(setDrawsBackground:)] || [responder respondsToSelector:@selector(setBezeled:)]))
+    BOOL isRespnderChanged = [super makeFirstResponder:responder];
+    if (isRespnderChanged)
     {
         if ([_lastControl respondsToSelector:@selector(setDrawsBackground:)])
             [_lastControl setDrawsBackground:NO];
@@ -60,7 +58,7 @@ BOOL _WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int s
         if ([_lastControl respondsToSelector:@selector(setBezeled:)])
             [_lastControl setBezeled:YES];
     }
-    return result;
+    return isRespnderChanged;
 }
 
 - (NSRect)contentRectForFrameRect:(NSRect)windowFrame
