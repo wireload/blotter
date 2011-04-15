@@ -47,7 +47,6 @@ BOOL _WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int s
 {
     BOOL isRespnderChanged = [super makeFirstResponder:responder];
     if (isRespnderChanged)
-    NSLog(@"%@ makeFirstResponder: %@", self, responder);
     if (isRespnderChanged)
     {
         if ([_lastControl respondsToSelector:@selector(setDrawsBackground:)])
