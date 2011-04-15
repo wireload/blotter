@@ -183,7 +183,7 @@
 		28B54DB31283BABF0037BF53 /* SS_PreferencePaneProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SS_PreferencePaneProtocol.h; path = libs/SS_PreferencePaneProtocol.h; sourceTree = "<group>"; };
 		28B54DB41283BABF0037BF53 /* SS_PrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SS_PrefsController.h; path = libs/SS_PrefsController.h; sourceTree = "<group>"; };
 		28B54DB51283BABF0037BF53 /* SS_PrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SS_PrefsController.m; path = libs/SS_PrefsController.m; sourceTree = "<group>"; };
-		28DB06DD13590F5500E34FC5 /* YAJL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YAJL.framework; sourceTree = "<group>"; };
+		28DB06DD13590F5500E34FC5 /* YAJL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YAJL.framework; path = ../blotter/Frameworks/YAJL.framework; sourceTree = "<group>"; };
 		28E96D7312EA3145000AF199 /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = Resources/sv.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		28E96D7412EA3145000AF199 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = Resources/sv.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		28E96D7512EA3145000AF199 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = Resources/sv.lproj/Localizable.strings; sourceTree = "<group>"; };
