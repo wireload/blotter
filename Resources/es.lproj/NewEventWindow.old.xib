@@ -146,7 +146,7 @@
 								<object class="NSButton" id="187184368">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">289</int>
-									<string key="NSFrame">{{110, 19}, {65, 18}}</string>
+									<string key="NSFrame">{{110, 17}, {65, 18}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="919854082">
@@ -170,7 +170,7 @@
 								<object class="NSButton" id="1026362590">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">289</int>
-									<string key="NSFrame">{{185, 19}, {90, 18}}</string>
+									<string key="NSFrame">{{185, 17}, {90, 18}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="413100244">
@@ -696,13 +696,13 @@
 							<reference ref="354528427"/>
 							<reference ref="939906521"/>
 							<reference ref="12582526"/>
-							<reference ref="1026362590"/>
 							<reference ref="456489716"/>
 							<reference ref="211563046"/>
 							<reference ref="619627054"/>
-							<reference ref="187184368"/>
 							<reference ref="689527520"/>
 							<reference ref="408232026"/>
+							<reference ref="1026362590"/>
+							<reference ref="187184368"/>
 						</object>
 						<reference key="parent" ref="675070131"/>
 					</object>
@@ -953,13 +953,13 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABDMwAAwgwAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABDLgAAwggAAA</bytes>
 					</object>
 					<string>WLGlassHudButtonCell</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABC2AAAwgwAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABC0AAAwggAAA</bytes>
 					</object>
 					<string>WLGlassHudButtonCell</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -998,10 +998,10 @@
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform"/>
-					<string>{{323, 629}, {292, 230}}</string>
+					<string>{{71, 631}, {292, 230}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{323, 629}, {292, 230}}</string>
+					<string>{{71, 631}, {292, 230}}</string>
 					<boolean value="NO"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>WLGlassHudDatePicker</string>
