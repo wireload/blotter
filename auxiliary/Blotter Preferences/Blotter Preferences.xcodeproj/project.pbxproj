@@ -615,8 +615,12 @@
 		1DEB913F08733D840010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = i386;
+				ARCHS = (
+					i386,
+					x86_64,
+				);
 				BUNDLE_LOADER = "";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -632,6 +636,7 @@
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 				SYMROOT = "$(SRCROOT)/../../build";
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -639,11 +644,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = (
-					x86_64,
 					i386,
+					x86_64,
 				);
 				BUNDLE_LOADER = "";
 				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -660,6 +666,7 @@
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 				SYMROOT = "$(SRCROOT)/../../build";
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
 		};

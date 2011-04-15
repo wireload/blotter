@@ -14,12 +14,11 @@
 		284061D0127E6C4F000816FF /* DesktopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 284061CF127E6C4F000816FF /* DesktopView.m */; };
 		2840624D127E75FC000816FF /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2840624C127E75FC000816FF /* WebKit.framework */; };
 		284063EC1283176F000816FF /* CalendarAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 284063EB1283176F000816FF /* CalendarAdapter.m */; };
-		284064D312833EBC000816FF /* YAJL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 284064D212833EBC000816FF /* YAJL.framework */; };
-		284064E112833EC0000816FF /* YAJL.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 284064D212833EBC000816FF /* YAJL.framework */; };
 		284064FC12834B98000816FF /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 284064FB12834B98000816FF /* CalendarStore.framework */; };
 		2840653812836E78000816FF /* NSColor-Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 2840653712836E78000816FF /* NSColor-Utilities.m */; };
 		2844DB2D129DA1BD006C5545 /* BLCalendarFramer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2844DB2C129DA1BD006C5545 /* BLCalendarFramer.m */; };
 		28B54DB61283BABF0037BF53 /* SS_PrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54DB51283BABF0037BF53 /* SS_PrefsController.m */; };
+		28DB06DE13590F5500E34FC5 /* YAJL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28DB06DD13590F5500E34FC5 /* YAJL.framework */; };
 		28F696811298B99800D4BB97 /* calendar in Resources */ = {isa = PBXBuildFile; fileRef = 28F6966B1298B99800D4BB97 /* calendar */; };
 		28F6975B129969E500D4BB97 /* NSDate-Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6975A129969E500D4BB97 /* NSDate-Utilities.m */; };
 		28F699E4129C0EBC00D4BB97 /* BLFadeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F699E3129C0EBC00D4BB97 /* BLFadeController.m */; };
@@ -154,7 +153,6 @@
 			files = (
 				E27313171349F0E200A84433 /* PTHotKey.framework in CopyFiles */,
 				E27311631349D81900A84433 /* ShortcutRecorder.framework in CopyFiles */,
-				284064E112833EC0000816FF /* YAJL.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,7 +170,6 @@
 		2840624C127E75FC000816FF /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		284063EA1283176F000816FF /* CalendarAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarAdapter.h; sourceTree = "<group>"; };
 		284063EB1283176F000816FF /* CalendarAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarAdapter.m; sourceTree = "<group>"; wrapsLines = 1; };
-		284064D212833EBC000816FF /* YAJL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YAJL.framework; path = Frameworks/YAJL.framework; sourceTree = "<group>"; };
 		284064FB12834B98000816FF /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = System/Library/Frameworks/CalendarStore.framework; sourceTree = SDKROOT; };
 		2840653612836E78000816FF /* NSColor-Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor-Utilities.h"; sourceTree = "<group>"; };
 		2840653712836E78000816FF /* NSColor-Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor-Utilities.m"; sourceTree = "<group>"; };
@@ -186,6 +183,7 @@
 		28B54DB31283BABF0037BF53 /* SS_PreferencePaneProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SS_PreferencePaneProtocol.h; path = libs/SS_PreferencePaneProtocol.h; sourceTree = "<group>"; };
 		28B54DB41283BABF0037BF53 /* SS_PrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SS_PrefsController.h; path = libs/SS_PrefsController.h; sourceTree = "<group>"; };
 		28B54DB51283BABF0037BF53 /* SS_PrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SS_PrefsController.m; path = libs/SS_PrefsController.m; sourceTree = "<group>"; };
+		28DB06DD13590F5500E34FC5 /* YAJL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YAJL.framework; sourceTree = "<group>"; };
 		28E96D7312EA3145000AF199 /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = Resources/sv.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		28E96D7412EA3145000AF199 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = Resources/sv.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		28E96D7512EA3145000AF199 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = Resources/sv.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -304,9 +302,9 @@
 				E27311471349D76700A84433 /* ShortcutRecorder.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				2840624D127E75FC000816FF /* WebKit.framework in Frameworks */,
-				284064D312833EBC000816FF /* YAJL.framework in Frameworks */,
 				284064FC12834B98000816FF /* CalendarStore.framework in Frameworks */,
 				E27951BB131AA060008AE1DA /* Carbon.framework in Frameworks */,
+				28DB06DE13590F5500E34FC5 /* YAJL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,7 +352,7 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				284064D212833EBC000816FF /* YAJL.framework */,
+				28DB06DD13590F5500E34FC5 /* YAJL.framework */,
 				2840624C127E75FC000816FF /* WebKit.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				284064FB12834B98000816FF /* CalendarStore.framework */,
@@ -880,6 +878,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -887,8 +886,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = (
-					x86_64,
 					i386,
+					x86_64,
 				);
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: WireLoad, LLC";
 				DEAD_CODE_STRIPPING = YES;
@@ -903,8 +902,10 @@
 				);
 				IBC_OTHER_FLAGS = "";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
 		};
