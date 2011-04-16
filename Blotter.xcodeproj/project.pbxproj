@@ -68,6 +68,7 @@
 		E29DDCB212E9D54C00751CFA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E29DDCB012E9D54C00751CFA /* Localizable.strings */; };
 		E29F38EE1319694C00A865D9 /* WLNewTaskWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E29F38ED1319694C00A865D9 /* WLNewTaskWindowController.m */; };
 		E2DC7D3113071F7E0065CEAD /* WLFitWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E2DC7D3013071F7E0065CEAD /* WLFitWindow.m */; };
+		E2F805D713595528004672DF /* YAJL.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 28DB06DD13590F5500E34FC5 /* YAJL.framework */; };
 		E2F9E1DF1322A4F4007598E2 /* glass-hud-border-bottom-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1D81322A4F4007598E2 /* glass-hud-border-bottom-left.png */; };
 		E2F9E1E01322A4F4007598E2 /* glass-hud-border-bottom-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1D91322A4F4007598E2 /* glass-hud-border-bottom-right.png */; };
 		E2F9E1E11322A4F4007598E2 /* glass-hud-border-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1DA1322A4F4007598E2 /* glass-hud-border-bottom.png */; };
@@ -151,6 +152,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				E2F805D713595528004672DF /* YAJL.framework in CopyFiles */,
 				E27313171349F0E200A84433 /* PTHotKey.framework in CopyFiles */,
 				E27311631349D81900A84433 /* ShortcutRecorder.framework in CopyFiles */,
 			);
@@ -819,7 +821,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/Frameworks\"",
-					"\"$(SRCROOT)/ShortcutRecorder/build/Release\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -843,7 +844,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/Frameworks\"",
-					"\"$(SRCROOT)/ShortcutRecorder/build/Release\"",
 				);
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

@@ -573,10 +573,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../ShortcutRecorder/build/Release\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -596,10 +593,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../ShortcutRecorder/build/Release\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Blotter Preferences_Prefix.pch";
@@ -630,7 +624,7 @@
 					"\"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers\"",
 					"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers",
 				);
-				IBC_OTHER_FLAGS = "--plugin $(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Resources/ShortcutRecorder.ibplugin";
+				IBC_OTHER_FLAGS = "--plugin $(SRCROOT)/../build/$(CONFIGURATION)/ShortcutRecorder.framework/Resources/ShortcutRecorder.ibplugin";
 				MACH_O_TYPE = mh_bundle;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
@@ -656,11 +650,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"\"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers\"",
-					"\"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers\"",
-					"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers",
+					"\"$(SRCROOT)/../build/$(CONFIGURATION)/PTHotKey.framework/Headers\"",
+					"\"$(SRCROOT)/../build/$(CONFIGURATION)/ShortcutRecorder.framework/Headers\"",
 				);
-				IBC_OTHER_FLAGS = "--plugin $(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Resources/ShortcutRecorder.ibplugin";
+				IBC_OTHER_FLAGS = "--plugin $(SRCROOT)/../build/$(CONFIGURATION)/ShortcutRecorder.framework/Resources/ShortcutRecorder.ibplugin";
 				INSTALL_PATH = "";
 				MACH_O_TYPE = mh_bundle;
 				PREBINDING = NO;
