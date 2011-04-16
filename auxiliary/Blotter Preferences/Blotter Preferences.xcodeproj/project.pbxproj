@@ -654,7 +654,7 @@
 					"\"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers\"",
 					"\"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers\"",
 				);
-				IBC_OTHER_FLAGS = "--plugin $(SRCROOT)/../build/$(CONFIGURATION)/ShortcutRecorder.framework/Resources/ShortcutRecorder.ibplugin";
+				IBC_OTHER_FLAGS = "--plugin $(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Resources/ShortcutRecorder.ibplugin";
 				INSTALL_PATH = "";
 				MACH_O_TYPE = mh_bundle;
 				PREBINDING = NO;
