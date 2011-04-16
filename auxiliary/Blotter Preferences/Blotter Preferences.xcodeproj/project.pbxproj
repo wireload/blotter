@@ -41,7 +41,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = E27310351349CD2C00A84433 /* ShortcutRecorder.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 342E00BA109CCBF5009AD8CA /* ShortcutRecorder.ibplugin - standalone */;
+			remoteGlobalIDString = 342E00BA109CCBF5009AD8CA;
 			remoteInfo = "ShortcutRecorder.ibplugin - standalone";
 		};
 		E273103E1349CD2C00A84433 /* PBXContainerItemProxy */ = {
@@ -629,7 +629,7 @@
 				IBC_OTHER_FLAGS = "--plugin \"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.ibplugin\"";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACH_O_TYPE = mh_bundle;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 				SYMROOT = "$(SRCROOT)/../../build";
@@ -660,6 +660,7 @@
 				INSTALL_PATH = "";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACH_O_TYPE = mh_bundle;
+				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 				SYMROOT = "$(SRCROOT)/../../build";
