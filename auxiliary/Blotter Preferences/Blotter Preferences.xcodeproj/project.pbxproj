@@ -137,7 +137,6 @@
 		E2730E341349BC1000A84433 /* WLRecorderControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLRecorderControl.h; sourceTree = "<group>"; };
 		E2730E351349BC1000A84433 /* WLRecorderControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLRecorderControl.m; sourceTree = "<group>"; };
 		E27310351349CD2C00A84433 /* ShortcutRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShortcutRecorder.xcodeproj; path = ../../ShortcutRecorder/ShortcutRecorder.xcodeproj; sourceTree = SOURCE_ROOT; };
-		E27310D51349D32600A84433 /* ShortcutRecorder.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ShortcutRecorder.framework; path = /Users/kent90/Documents/Projects/Wireload/blotter/ShortcutRecorder/build/Release/ShortcutRecorder.framework; sourceTree = "<absolute>"; };
 		E2794F9E131A6425008AE1DA /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		E2863F951305BEC4004CFC9D /* NSScreen+WLScreenName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSScreen+WLScreenName.h"; sourceTree = "<group>"; };
 		E2863F961305BEC4004CFC9D /* NSScreen+WLScreenName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSScreen+WLScreenName.m"; sourceTree = "<group>"; };
@@ -269,7 +268,6 @@
 				E2FE5FDC12D77D1F00003E48 /* CalendarStore.framework */,
 				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
 				E2794F9E131A6425008AE1DA /* Carbon.framework */,
-				E27310D51349D32600A84433 /* ShortcutRecorder.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -580,9 +578,11 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Blotter Preferences_Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				IBC_OTHER_FLAGS = "";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				PRODUCT_NAME = "Blotter Preferences";
 				WRAPPER_EXTENSION = preferencePane;
 			};
@@ -597,6 +597,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Blotter Preferences_Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				IBC_OTHER_FLAGS = "";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -617,14 +618,14 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers\"",
 					"\"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers\"",
-					"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers",
 				);
-				IBC_OTHER_FLAGS = "--plugin $(SRCROOT)/../build/$(CONFIGURATION)/ShortcutRecorder.framework/Resources/ShortcutRecorder.ibplugin";
+				IBC_OTHER_FLAGS = "--plugin $(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Resources/ShortcutRecorder.ibplugin";
 				MACH_O_TYPE = mh_bundle;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
@@ -650,8 +651,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../build/$(CONFIGURATION)/PTHotKey.framework/Headers\"",
-					"\"$(SRCROOT)/../build/$(CONFIGURATION)/ShortcutRecorder.framework/Headers\"",
+					"\"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers\"",
+					"\"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers\"",
 				);
 				IBC_OTHER_FLAGS = "--plugin $(SRCROOT)/../build/$(CONFIGURATION)/ShortcutRecorder.framework/Resources/ShortcutRecorder.ibplugin";
 				INSTALL_PATH = "";
