@@ -613,7 +613,7 @@
 					"\"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers\"",
 					"\"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers\"",
 				);
-				IBC_OTHER_FLAGS = "--plugin \"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Resources/ShortcutRecorder.ibplugin\"";
+				IBC_OTHER_FLAGS = "--plugin \"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.ibplugin\"";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACH_O_TYPE = mh_bundle;
 				ONLY_ACTIVE_ARCH = YES;
@@ -643,7 +643,7 @@
 					"\"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers\"",
 					"\"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers\"",
 				);
-				IBC_OTHER_FLAGS = "--plugin \"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Resources/ShortcutRecorder.ibplugin\"";
+				IBC_OTHER_FLAGS = "--plugin \"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.ibplugin\"";
 				INSTALL_PATH = "";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACH_O_TYPE = mh_bundle;
