@@ -815,16 +815,9 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/Frameworks\"",
-				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
@@ -838,14 +831,7 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/Frameworks\"",
-				);
-				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
 				INFOPLIST_FILE = "Blotter-Info.plist";
@@ -864,14 +850,18 @@
 				);
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: WireLoad, LLC";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Frameworks\"",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers",
-					"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers",
+					"\"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers\"",
+					"\"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers\"",
 				);
 				IBC_OTHER_FLAGS = "";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
@@ -892,13 +882,17 @@
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: WireLoad, LLC";
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Frameworks\"",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers",
-					"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers",
+					"\"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers\"",
+					"\"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers\"",
 				);
 				IBC_OTHER_FLAGS = "";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
