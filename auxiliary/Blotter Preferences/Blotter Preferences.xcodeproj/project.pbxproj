@@ -37,6 +37,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		E20364601359E83E0030B65B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E27310351349CD2C00A84433 /* ShortcutRecorder.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 342E00BA109CCBF5009AD8CA /* ShortcutRecorder.ibplugin - standalone */;
+			remoteInfo = "ShortcutRecorder.ibplugin - standalone";
+		};
 		E273103E1349CD2C00A84433 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E27310351349CD2C00A84433 /* ShortcutRecorder.xcodeproj */;
@@ -328,6 +335,7 @@
 			);
 			dependencies = (
 				E27311A21349D93C00A84433 /* PBXTargetDependency */,
+				E20364611359E83E0030B65B /* PBXTargetDependency */,
 			);
 			name = "Blotter Preferences";
 			productInstallPath = "$(HOME)/Library/Bundles";
@@ -460,6 +468,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		E20364611359E83E0030B65B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "ShortcutRecorder.ibplugin - standalone";
+			targetProxy = E20364601359E83E0030B65B /* PBXContainerItemProxy */;
+		};
 		E27311A21349D93C00A84433 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Build ShortcutRecorder.framework";
