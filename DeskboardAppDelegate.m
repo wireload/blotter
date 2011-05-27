@@ -141,6 +141,8 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     }
     [userDefaults addObserver:self forKeyPath:@"shortcutNewEvent" options:NSKeyValueObservingOptionNew context:NULL];
     [userDefaults addObserver:self forKeyPath:@"shortcutNewTask" options:NSKeyValueObservingOptionNew context:NULL];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillClose:) name:NSWindowWillCloseNotification object:nil];
 }
 
 /*!
@@ -292,7 +294,18 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (void)windowDidResize:(NSNotification *)notification
 {
-    [(DesktopView *)[blotterWindow contentView] refresh];
+    id window = [notification object];
+    if ([window isKindOfClass:[DesktopView class]])
+        [[window contentView] refresh];
+}
+
+- (void)windowWillClose:(NSNotification *)notification
+{
+    NSMutableArray *visibleWindows = [[NSApp windows] mutableCopy];
+    [visibleWindows removeObjectIdenticalTo:[notification object]];
+    [visibleWindows filterUsingPredicate:[NSPredicate predicateWithFormat:@"isVisible == YES"]];
+    if ([visibleWindows count] == 1) // If only desktop window is visible
+        [NSApp hide:self];
 }
 
 

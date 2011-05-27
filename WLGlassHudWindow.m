@@ -139,7 +139,7 @@ BOOL _WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int s
     // Close
     if (_WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_W))
     {
-        [self orderOut:self];
+        [self close:theEvent];
         return YES;
     }
     // Select All
@@ -189,6 +189,10 @@ BOOL _WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int s
     }
 
     return [super performKeyEquivalent:theEvent];
+}
+
+- (IBAction)close:(id)sender {
+    [super close];
 }
 
 @end

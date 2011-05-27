@@ -14,5 +14,9 @@
     id _lastControl;
 }
 
+/*!
+ Allows you to bind the close action in IB
+ */
+- (IBAction)close:(id)sender;
 
 @end
