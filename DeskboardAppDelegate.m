@@ -143,10 +143,17 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     [userDefaults addObserver:self forKeyPath:@"shortcutNewTask" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
+/*!
+* @discussion There are a few exclusion when this message should be ignored:
+* 1) User press the new event shortcut
+* 2) User press the new task shortcut
+ */
 - (void)applicationDidBecomeActive:(NSNotification *)aNotification
 {
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"ShowInMenuBar"])
+    if (!ignoreBecomeActiveNotification && ![[NSUserDefaults standardUserDefaults] boolForKey:@"ShowInMenuBar"]) {
         [self showPrefs:self];
+    }
+    ignoreBecomeActiveNotification = NO;
 }
 
 -(void)applicationDidChangeScreenParameters:(NSNotification *)aNotification
@@ -183,6 +190,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     if ([[NSUserDefaults standardUserDefaults] objectForKey:_WLNewEventWindowAutosaveName] == nil)
         [[controller window] center];
     [controller showWindow:sender];
+    ignoreBecomeActiveNotification = YES;
     [NSApp activateIgnoringOtherApps:YES];
 }
 
@@ -193,6 +201,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     if ([[NSUserDefaults standardUserDefaults] objectForKey:_WLNewTaskWindowAutosaveName] == nil)
         [[controller window] center];
     [controller showWindow:sender];
+    ignoreBecomeActiveNotification = YES;
     [NSApp activateIgnoringOtherApps:YES];
 }
 

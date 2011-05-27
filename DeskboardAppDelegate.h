@@ -24,6 +24,7 @@
     IBOutlet NSMenuItem *newTaskMenuItem;
     IBOutlet NSMenuItem *preferencesMenuItem;
     IBOutlet NSMenuItem *QuitMenuItem;
+    BOOL ignoreBecomeActiveNotification;
 
     SS_PrefsController *prefs;
 }
