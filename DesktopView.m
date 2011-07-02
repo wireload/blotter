@@ -70,6 +70,11 @@
                                                      name:NSCurrentLocaleDidChangeNotification
                                                    object:nil];
 
+        [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self
+                                                               selector:@selector(refresh)
+                                                                   name:NSWorkspaceDidWakeNotification
+                                                                 object:nil];
+
         fadeController = [[BLFadeController alloc] initWithView:self];
         [fadeController retain];
 
@@ -129,6 +134,7 @@
 
 - (void)refresh
 {
+    // NSLog(@"refresh");
     if (!initialHtmlLoaded)
         // refresh will be called automatically when html is loaded.
         return;
@@ -186,6 +192,7 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
     [dateFormatter release];
     [super dealloc];
 }
@@ -240,13 +247,13 @@
 }
 
 - (NSString *)_monthAndYearOfDateInMilliseconds:(NSNumber *)milliseconds {
-    NSString *format = [NSDateFormatter dateFormatFromTemplate:@"MMMMy" options:0 locale:[NSLocale currentLocale]];
+    NSString *format = [NSDateFormatter dateFormatFromTemplate:@"MMMMy" options:0 locale:[NSLocale autoupdatingCurrentLocale]];
     [dateFormatter setDateFormat:format];
     return [dateFormatter stringFromDate:[NSDate dateWithMillisecondsIntervalSince1970:[milliseconds unsignedLongLongValue]]];
 }
 
 - (NSString *)_weekdayOfDateInMilliseconds:(NSNumber *)milliseconds {
-    NSString *format = [NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:[NSLocale currentLocale]];
+    NSString *format = [NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:[NSLocale autoupdatingCurrentLocale]];
     [dateFormatter setDateFormat:format];
     return [dateFormatter stringFromDate:[NSDate dateWithMillisecondsIntervalSince1970:[milliseconds unsignedLongLongValue]]];
 }

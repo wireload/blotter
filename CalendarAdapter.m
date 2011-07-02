@@ -113,6 +113,11 @@ static void * volatile sharedInstance = nil;
                                                  selector:@selector(dateChanged)
                                                      name:NSSystemClockDidChangeNotification
                                                    object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(dateChanged)
+                                                     name:NSSystemTimeZoneDidChangeNotification
+                                                   object:nil];
+
         [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self
                                                                   forKeyPath:@"values.RollingCalendar"
                                                                      options:0
@@ -319,9 +324,9 @@ static void * volatile sharedInstance = nil;
     NSCalendar *gregorian = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
     NSDateFormatter *dateFormatter = [[NSDateFormatter new] autorelease];
     if ([defaults boolForKey:@"PerDayDate"])
-        [dateFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"eeedMMM" options:0 locale:[NSLocale currentLocale]]];
+        [dateFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"eeedMMM" options:0 locale:[NSLocale autoupdatingCurrentLocale]]];
     else
-        [dateFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:[NSLocale currentLocale]]];
+        [dateFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:[NSLocale autoupdatingCurrentLocale]]];
 
     for (int j = 0; j < 7; j++)
     {
