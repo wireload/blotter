@@ -28,6 +28,8 @@ extern NSString* const SRShortcutCharactersIgnoringModifiers;
 static NSString* const _WLNewEventWindowAutosaveName = @"NSWindow Frame NewEventWindow";
 static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWindow";
 
+static NSString* const _WLSpacesBundleIdentifier = @"com.apple.spaces";
+
 
 @interface DeskboardAppDelegate (/* Private */)
 
@@ -71,6 +73,46 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
         if ([userDefaults objectForKey:@"ShowInMenuBar"] == nil)
             [userDefaults setBool:YES forKey:@"ShowInMenuBar"];
+        
+        if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_6)
+        {
+            static const NSUInteger MaxAttempts = 5;
+            static const NSTimeInterval Wait = 0.5;
+            
+            NSUInteger attempt = 0;
+            while (attempt != MaxAttempts) {
+                if (!CFPreferencesAppSynchronize((CFStringRef)_WLSpacesBundleIdentifier))
+                {
+                    [NSThread sleepForTimeInterval:Wait];
+                    ++attempt;
+                }
+                else
+                {
+                    attempt = 0;
+                    break;
+                }
+            }
+            
+            while (attempt != MaxAttempts) {
+                NSDictionary *value = [(id)CFPreferencesCopyAppValue((CFStringRef)@"app-bindings", (CFStringRef)_WLSpacesBundleIdentifier) autorelease];
+                NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+                if (![[value objectForKey:bundleIdentifier] isEqual:@"AllSpaces"])
+                {
+                    NSMutableDictionary *newValue = [NSMutableDictionary dictionaryWithDictionary:value];
+                    [newValue setObject:@"AllSpaces" forKey:bundleIdentifier];
+                    CFPreferencesSetAppValue((CFStringRef)@"app-bindings", newValue, (CFStringRef)_WLSpacesBundleIdentifier);
+                    if (!CFPreferencesAppSynchronize((CFStringRef)_WLSpacesBundleIdentifier))
+                    {
+                        [NSThread sleepForTimeInterval:Wait];
+                        ++attempt;
+                    }
+                    else
+                        break;
+                }
+                else
+                    break;
+            }
+        }
     }
 }
 
