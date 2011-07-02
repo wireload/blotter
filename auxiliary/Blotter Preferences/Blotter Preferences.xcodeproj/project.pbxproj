@@ -69,14 +69,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = E27310351349CD2C00A84433 /* ShortcutRecorder.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = E273122D1349EC9000A84433 /* PTHotKey.framework */;
+			remoteGlobalIDString = E273122D1349EC9000A84433;
 			remoteInfo = PTHotKey.framework;
 		};
 		E294888E1361BA8A00FA83B8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E27310351349CD2C00A84433 /* ShortcutRecorder.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 9398377F0DA42965007F53F3 /* ShortcutRecorder.framework */;
+			remoteGlobalIDString = 9398377F0DA42965007F53F3;
 			remoteInfo = ShortcutRecorder.framework;
 		};
 /* End PBXContainerItemProxy section */
@@ -599,7 +599,7 @@
 				MACH_O_TYPE = mh_bundle;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 				SYMROOT = "$(SRCROOT)/../../build";
 				VALID_ARCHS = "i386 x86_64";
 			};
@@ -630,7 +630,7 @@
 				MACH_O_TYPE = mh_bundle;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 				SYMROOT = "$(SRCROOT)/../../build";
 				VALID_ARCHS = "i386 x86_64";
 			};
