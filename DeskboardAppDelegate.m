@@ -343,7 +343,7 @@ static NSString* const _WLSpacesBundleIdentifier = @"com.apple.spaces";
 
 - (void)windowWillClose:(NSNotification *)notification
 {
-    NSMutableArray *visibleWindows = [[NSApp windows] mutableCopy];
+    NSMutableArray *visibleWindows = [[[NSApp windows] mutableCopy] autorelease];
     [visibleWindows removeObjectIdenticalTo:[notification object]];
     [visibleWindows filterUsingPredicate:[NSPredicate predicateWithFormat:@"isVisible == YES"]];
     if ([visibleWindows count] == 1) // If only desktop window is visible

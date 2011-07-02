@@ -51,7 +51,7 @@
 
 - (NSRect)drawTitle:(NSAttributedString *)title withFrame:(NSRect)frame inView:(NSView *)controlView
 {
-    NSMutableAttributedString *whiteTitle = [title mutableCopy];
+    NSMutableAttributedString *whiteTitle = [[title mutableCopy] autorelease];
     NSRange titleLength = NSMakeRange(0, [whiteTitle length]);
     [whiteTitle beginEditing];
     [whiteTitle addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Lucida Grande" size:11] range:titleLength];
