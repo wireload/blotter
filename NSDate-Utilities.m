@@ -12,7 +12,8 @@
 @implementation NSDate (Utilities)
 
 - (id)JSON {
-    return [self description];
+    // From NSDate+ISO8601 category.
+    return [self iso8601];
 }
 
 + (id)dateWithMillisecondsIntervalSince1970:(NSTimeInterval)milliseconds
