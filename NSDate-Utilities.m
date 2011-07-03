@@ -13,6 +13,7 @@
 @implementation NSDate (Utilities)
 
 - (id)JSON {
+    // From NSDate+ISO8601 category.
     return [self iso8601];
 }
 
