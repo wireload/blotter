@@ -23,6 +23,8 @@ static NSDateFormatter *_dateFormatter = nil;
             if (_dateFormatter == nil)
             {
                 _dateFormatter = [[NSDateFormatter alloc] init];
+                NSLocale *enUSPOSIXLocale = [[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"] autorelease];
+                [_dateFormatter setLocale:enUSPOSIXLocale];
                 [_dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ssZ"];
             }
         }
@@ -41,6 +43,8 @@ static NSDateFormatter *_dateFormatter = nil;
         if (_dateFormatter == nil)
         {
             _dateFormatter = [[NSDateFormatter alloc] init];
+            NSLocale *enUSPOSIXLocale = [[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"] autorelease];
+            [_dateFormatter setLocale:enUSPOSIXLocale];
             [_dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ssZ"];
         }
     }

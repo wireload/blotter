@@ -7,12 +7,13 @@
 //
 
 #import "NSDate-Utilities.h"
+#import "NSDate+ISO8601.h"
 
 
 @implementation NSDate (Utilities)
 
 - (id)JSON {
-    return [self description];
+    return [self iso8601];
 }
 
 + (id)dateWithMillisecondsIntervalSince1970:(NSTimeInterval)milliseconds
