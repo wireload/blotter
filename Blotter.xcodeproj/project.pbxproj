@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		256AC3DA0F4B6AC300CF3369 /* DeskboardAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */; };
-		28153EDF12D78EBE00A239C4 /* Blotter-B8.icns in Resources */ = {isa = PBXBuildFile; fileRef = 28153EDE12D78EBE00A239C4 /* Blotter-B8.icns */; };
 		282FD238134FB2C5003E532E /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2BADC95134DDE6100F65E14 /* NewEventWindow.xib */; };
 		282FD239134FB2C5003E532E /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2BADC97134DDE6100F65E14 /* NewTaskWindow.xib */; };
 		284061D0127E6C4F000816FF /* DesktopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 284061CF127E6C4F000816FF /* DesktopView.m */; };
@@ -17,6 +16,7 @@
 		284064FC12834B98000816FF /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 284064FB12834B98000816FF /* CalendarStore.framework */; };
 		2840653812836E78000816FF /* NSColor-Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 2840653712836E78000816FF /* NSColor-Utilities.m */; };
 		2844DB2D129DA1BD006C5545 /* BLCalendarFramer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2844DB2C129DA1BD006C5545 /* BLCalendarFramer.m */; };
+		285B840913C0C6150042C813 /* Blotter-B9.icns in Resources */ = {isa = PBXBuildFile; fileRef = 285B840813C0C6150042C813 /* Blotter-B9.icns */; };
 		28B54DB61283BABF0037BF53 /* SS_PrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54DB51283BABF0037BF53 /* SS_PrefsController.m */; };
 		28DB06DE13590F5500E34FC5 /* YAJL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28DB06DD13590F5500E34FC5 /* YAJL.framework */; };
 		28F696811298B99800D4BB97 /* calendar in Resources */ = {isa = PBXBuildFile; fileRef = 28F6966B1298B99800D4BB97 /* calendar */; };
@@ -152,7 +152,6 @@
 		256AC3D80F4B6AC300CF3369 /* DeskboardAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeskboardAppDelegate.h; sourceTree = "<group>"; };
 		256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeskboardAppDelegate.m; sourceTree = "<group>"; };
 		256AC3F00F4B6AF500CF3369 /* Deskboard_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deskboard_Prefix.pch; sourceTree = "<group>"; };
-		28153EDE12D78EBE00A239C4 /* Blotter-B8.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "Blotter-B8.icns"; path = "../blotter/Resources/Blotter-B8.icns"; sourceTree = SOURCE_ROOT; };
 		284061CE127E6C4F000816FF /* DesktopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DesktopView.h; sourceTree = "<group>"; };
 		284061CF127E6C4F000816FF /* DesktopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DesktopView.m; sourceTree = "<group>"; wrapsLines = 1; };
 		2840624C127E75FC000816FF /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
@@ -162,6 +161,7 @@
 		2840653612836E78000816FF /* NSColor-Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor-Utilities.h"; sourceTree = "<group>"; };
 		2840653712836E78000816FF /* NSColor-Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor-Utilities.m"; sourceTree = "<group>"; };
 		2844DB2C129DA1BD006C5545 /* BLCalendarFramer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLCalendarFramer.m; sourceTree = "<group>"; };
+		285B840813C0C6150042C813 /* Blotter-B9.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Blotter-B9.icns"; sourceTree = "<group>"; };
 		28A09A591308E4A7005EA923 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = Resources/ko.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		28A09A5A1308E4A7005EA923 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = Resources/ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		28A09A9C1308F188005EA923 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = Resources/de.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -389,7 +389,7 @@
 				E271E5B413377E6100BF7F2B /* blotter-status-bar-active.png */,
 				E2F9E1D71322A4F4007598E2 /* glass-hud */,
 				E29DDCB012E9D54C00751CFA /* Localizable.strings */,
-				28153EDE12D78EBE00A239C4 /* Blotter-B8.icns */,
+				285B840813C0C6150042C813 /* Blotter-B9.icns */,
 				28F69A1A129C1CAA00D4BB97 /* Credits.rtf */,
 				28F6966B1298B99800D4BB97 /* calendar */,
 				8D1107310486CEB800E47090 /* Blotter-Info.plist */,
@@ -595,7 +595,6 @@
 				28F696811298B99800D4BB97 /* calendar in Resources */,
 				28F69A1B129C1CAA00D4BB97 /* Credits.rtf in Resources */,
 				28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */,
-				28153EDF12D78EBE00A239C4 /* Blotter-B8.icns in Resources */,
 				E29DDCB212E9D54C00751CFA /* Localizable.strings in Resources */,
 				E2F9E1DF1322A4F4007598E2 /* glass-hud-border-bottom-left.png in Resources */,
 				E2F9E1E01322A4F4007598E2 /* glass-hud-border-bottom-right.png in Resources */,
@@ -628,6 +627,7 @@
 				E27021A2133BA7610098CD79 /* glass-hud-textview-top-left.png in Resources */,
 				E27021A3133BA7610098CD79 /* glass-hud-textview-top-right.png in Resources */,
 				E27021A4133BA7610098CD79 /* glass-hud-textview-top.png in Resources */,
+				285B840913C0C6150042C813 /* Blotter-B9.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
