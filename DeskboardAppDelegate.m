@@ -250,7 +250,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         // Not -1 anymore because that causes Blotter to disappear underneath the
         // wallpaper under certain (rare) circumstances, like when Quiet activates.
         [blotterWindow setLevel:kCGDesktopWindowLevel];
-        [blotterWindow setWindowController:NSWindowCollectionBehaviorCanJoinAllSpaces];
+        [blotterWindow setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
         // Order back to get underneath the icons.
         [blotterWindow orderBack:NSApp];
     }
