@@ -126,7 +126,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 
 - (CATextLayer *)newTaskLayerAtIndex:(NSUInteger)anIndex
 {
-    CalTask *task = [dataSource taskAtIndex:anIndex];
+    CalTask *task = [dataSource tasksView:self taskAtIndex:anIndex];
     CATextLayer *taskLayer = [[CATextLayer layer] retain];
     taskLayer.string = task.title;
     taskLayer.foregroundColor = [[[task calendar] color] WL_CGColor];
@@ -149,7 +149,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 {
     _tasksLayer.sublayers = nil;
     [_tasksLayer setValue:[NSMutableArray array] forKey:_WLOrderedSublayersKey];
-    for (NSUInteger i=0, size=[dataSource numberOfTasks]; i<size; ++i)
+    for (NSUInteger i=0, size=[dataSource numberOfTasksInTasksView:self]; i<size; ++i)
     {
         [self insertTaskAtIndex:i];
     }
@@ -173,7 +173,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 
 - (void)updateTaskAtIndex:(NSUInteger)anIndex
 {
-    CalTask *task = [dataSource taskAtIndex:anIndex];
+    CalTask *task = [dataSource tasksView:self taskAtIndex:anIndex];
     CATextLayer *taskLayer = [[_tasksLayer valueForKey:_WLOrderedSublayersKey] objectAtIndex:anIndex];
     taskLayer.string = task.title;
     taskLayer.foregroundColor = [task.calendar.color WL_CGColor];

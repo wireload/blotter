@@ -149,12 +149,12 @@
 
 #pragma mark WLCalendarTasksViewDataSource
 
-- (NSUInteger)numberOfTasks
+- (NSUInteger)numberOfTasksInTasksView:(WLCalendarTasksView *)aTasksView
 {
     return [_tasks count];
 }
 
-- (CalTask *)taskAtIndex:(NSUInteger)anIndex
+- (CalTask *)tasksView:(WLCalendarTasksView *)aTasksView taskAtIndex:(NSUInteger)anIndex
 {
     return [_tasks objectAtIndex:anIndex];
 }

@@ -41,8 +41,8 @@
 
 @protocol WLCalendarTasksViewDataSource
 
-- (NSUInteger)numberOfTasks;
+- (NSUInteger)numberOfTasksInTasksView:(WLCalendarTasksView *)aTasksView;
 
-- (CalTask *)taskAtIndex:(NSUInteger)anIndex;
+- (CalTask *)tasksView:(WLCalendarTasksView *)aTasksView taskAtIndex:(NSUInteger)anIndex;
 
 @end
