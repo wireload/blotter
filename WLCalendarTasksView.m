@@ -61,7 +61,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     rootLayer.cornerRadius = 2.0f;
     rootLayer.masksToBounds = YES;
 #ifdef DEBUG_LAYERS
-    rootLayer.backgroundColor = [[NSColor blackColor] CGColor];
+    rootLayer.backgroundColor = [[NSColor blackColor] WL_CGColor];
 #endif
 
     CATextLayer *titleLayer = [CATextLayer layer];
@@ -82,7 +82,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
                             [NSNull null],  @"position",
                             [NSNull null],  @"bounds", nil]];
 #ifdef DEBUG_LAYERS
-    titleLayer.backgroundColor = [[NSColor greenColor] CGColor];
+    titleLayer.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif
     [rootLayer addSublayer:titleLayer];
 
@@ -114,7 +114,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
                              [NSNull null], @"bounds",
                              [NSNull null], @"sublayers", nil]];
 #ifdef DEBUG_LAYERS
-    _tasksLayer.backgroundColor = [[NSColor yellowColor] CGColor];
+    _tasksLayer.backgroundColor = [[NSColor yellowColor] WL_CGColor];
 #endif
     [rootLayer addSublayer:_tasksLayer];
 
@@ -129,7 +129,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     CalTask *task = [dataSource taskAtIndex:anIndex];
     CATextLayer *taskLayer = [[CATextLayer layer] retain];
     taskLayer.string = task.title;
-    taskLayer.foregroundColor = [[[task calendar] color] CGColor];
+    taskLayer.foregroundColor = [[[task calendar] color] WL_CGColor];
     taskLayer.name = task.uid;
     taskLayer.masksToBounds = YES;
     taskLayer.fontSize = 24.0f;
@@ -140,7 +140,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     [orderInAnimation setToValue:[NSNumber numberWithFloat:1.0]];
     [taskLayer setActions:[NSDictionary dictionaryWithObject:orderInAnimation forKey:kCAOnOrderIn]];
 #ifdef DEBUG_LAYERS
-    taskLayer.backgroundColor = [[NSColor redColor] CGColor];
+    taskLayer.backgroundColor = [[NSColor redColor] WL_CGColor];
 #endif
     return taskLayer;
 }
@@ -176,7 +176,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     CalTask *task = [dataSource taskAtIndex:anIndex];
     CATextLayer *taskLayer = [[_tasksLayer valueForKey:_WLOrderedSublayersKey] objectAtIndex:anIndex];
     taskLayer.string = task.title;
-    taskLayer.foregroundColor = [task.calendar.color CGColor];
+    taskLayer.foregroundColor = [task.calendar.color WL_CGColor];
     [_tasksLayer setNeedsLayout];
 }
 
