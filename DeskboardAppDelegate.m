@@ -16,6 +16,7 @@
 #import "SRCommon.h"
 #import "PTHotKeyCenter.h"
 #import "PTHotKey+ShortcutRecorder.h"
+#import "TestWindowController.h"
 
 
 extern NSString* const SRShortcutCodeKey;
@@ -143,6 +144,9 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     [userDefaults addObserver:self forKeyPath:@"shortcutNewTask" options:NSKeyValueObservingOptionNew context:NULL];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillClose:) name:NSWindowWillCloseNotification object:nil];
+
+
+    [[[TestWindowController alloc] initWithWindowNibName:@"TestWindow"] showWindow:self];
 }
 
 /*!
