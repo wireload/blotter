@@ -6,6 +6,7 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
+#import <objc/runtime.h>
 #import "CATextLayer+WLStringSize.h"
 
 
@@ -23,8 +24,8 @@
             fontName = [(id)CTFontCopyName(self.font, kCTFontFamilyNameKey) autorelease];
         else if (fontType == CGFontGetTypeID())
             fontName = [(id)CGFontCopyFullName((CGFontRef)self.font) autorelease];
-        else
-            fontName = self.font;
+        else if (object_getClass(self.font) == [NSFont class])
+            fontName = [(NSFont *)self.font fontName];
         NSFont *stringFont = [NSFont fontWithName:fontName size:self.fontSize];
         NSDictionary *attributes = [NSDictionary dictionaryWithObject:stringFont forKey:NSFontAttributeName];
         string = [[[NSAttributedString alloc] initWithString:self.string attributes:attributes] autorelease];
