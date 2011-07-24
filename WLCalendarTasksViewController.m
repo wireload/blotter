@@ -22,6 +22,12 @@
     [super dealloc];
 }
 
+- (void)loadView
+{
+    if ([self nibName] != nil)
+        [super loadView];
+}
+
 - (WLCalendarTasksView *)view
 {
     return (WLCalendarTasksView *)[super view];
@@ -29,10 +35,11 @@
 
 - (void)setView:(WLCalendarTasksView *)newView
 {
-    NSParameterAssert([newView isKindOfClass:[WLCalendarTasksView class]]);
+    [self view].dataSource = nil;
     [super setView:newView];
     newView.dataSource = self;
     [newView setupLayers];
+
 }
 
 - (void)setRepresentedObject:(id)aRepresentedObject
