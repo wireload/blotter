@@ -86,6 +86,9 @@ static NSString* const _WLEventsKey = @"events";
     [_nextDayTimer invalidate];
     [_representedDate release];
     [_columnsData release];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
+    [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:@"PerDayDate"];
     [super dealloc];
 }
 
