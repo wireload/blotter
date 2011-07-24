@@ -14,7 +14,7 @@
 @protocol WLCalendarTasksViewDataSource;
 
 
-@interface WLCalendarTasksView : NSView /*<CALayoutManager>*/ {
+@interface WLCalendarTasksView : NSView /*<CALayerDelegate, CALayoutManager>*/ {
     IBOutlet id<WLCalendarTasksViewDataSource> dataSource;
     CALayer *_tasksLayer;
 }

@@ -26,11 +26,6 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 @implementation WLCalendarTasksView
 @synthesize dataSource;
 
-- (void)awakeFromNib
-{
-    [self setupLayers];
-}
-
 - (void)dealloc
 {
     [super dealloc];
@@ -39,7 +34,6 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 - (void)viewWillStartLiveResize
 {
     [self layer].needsDisplayOnBoundsChange = NO;
-    [CATransaction setDisableActions:YES];
     [super viewWillStartLiveResize];
 }
 
@@ -48,7 +42,6 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     [super viewDidEndLiveResize];
     [self layer].needsDisplayOnBoundsChange = YES;
     [[self layer] setNeedsDisplay];
-    [CATransaction setDisableActions:NO];
 }
 
 - (void)setupLayers
@@ -66,7 +59,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 
     CATextLayer *titleLayer = [CATextLayer layer];
     titleLayer.name = _WLTitleLayerName;
-    titleLayer.string = @"To Do List";
+    titleLayer.string = @"To Do";
     [titleLayer addConstraint:[CAConstraint constraintWithAttribute:kCAConstraintMinX
                                                          relativeTo:@"superlayer"
                                                           attribute:kCAConstraintMinX]];
@@ -78,9 +71,9 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
                                                          relativeTo:@"superlayer"
                                                           attribute:kCAConstraintMaxY
                                                              offset:TitleTopMargin]];
-    [titleLayer setActions:[NSDictionary dictionaryWithObjectsAndKeys:
-                            [NSNull null],  @"position",
-                            [NSNull null],  @"bounds", nil]];
+    titleLayer.actions = [NSDictionary dictionaryWithObjectsAndKeys:
+                          [NSNull null],  @"position",
+                          [NSNull null],  @"bounds", nil];
 #ifdef DEBUG_LAYERS
     titleLayer.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif
@@ -109,10 +102,10 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
                                                           relativeTo:@"superlayer"
                                                            attribute:kCAConstraintMinY
                                                               offset:-YMargin]];
-    [_tasksLayer setActions:[NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNull null], @"position",
-                             [NSNull null], @"bounds",
-                             [NSNull null], @"sublayers", nil]];
+    _tasksLayer.actions = [NSDictionary dictionaryWithObjectsAndKeys:
+                           [NSNull null], @"position",
+                           [NSNull null], @"bounds",
+                           [NSNull null], @"sublayers", nil];
 #ifdef DEBUG_LAYERS
     _tasksLayer.backgroundColor = [[NSColor yellowColor] WL_CGColor];
 #endif
@@ -138,7 +131,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     CABasicAnimation *orderInAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
     [orderInAnimation setFromValue:[NSNumber numberWithFloat:0.0]];
     [orderInAnimation setToValue:[NSNumber numberWithFloat:1.0]];
-    [taskLayer setActions:[NSDictionary dictionaryWithObject:orderInAnimation forKey:kCAOnOrderIn]];
+    taskLayer.actions = [NSDictionary dictionaryWithObject:orderInAnimation forKey:kCAOnOrderIn];
 #ifdef DEBUG_LAYERS
     taskLayer.backgroundColor = [[NSColor redColor] WL_CGColor];
 #endif
@@ -147,6 +140,8 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 
 - (void)reloadData
 {
+    NSAssert(dataSource != nil, @"You MUST set dataSource");
+
     _tasksLayer.sublayers = nil;
     [_tasksLayer setValue:[NSMutableArray array] forKey:_WLOrderedSublayersKey];
     for (NSUInteger i=0, size=[dataSource numberOfTasksInTasksView:self]; i<size; ++i)
@@ -200,7 +195,6 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 #ifndef DEBUG_LAYERS
     NSRect layerBounds = NSRectFromCGRect(layer.bounds);
     NSSize layerSize = [self convertSizeToBase:layerBounds.size];
-    NSLog(@"%@", NSStringFromSize(layerSize));
     NSBitmapImageRep *backgroundImageRep = [[[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL
                                                                                     pixelsWide:layerSize.width
                                                                                     pixelsHigh:layerSize.height

@@ -31,7 +31,8 @@
 {
     NSParameterAssert([newView isKindOfClass:[WLCalendarTasksView class]]);
     [super setView:newView];
-    [newView setDataSource:self];
+    newView.dataSource = self;
+    [newView setupLayers];
 }
 
 - (void)setRepresentedObject:(id)aRepresentedObject
