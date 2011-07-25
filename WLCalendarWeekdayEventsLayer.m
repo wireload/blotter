@@ -54,7 +54,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     [super dealloc];
 }
 
-#define IS_LESS_OR_EQ_F(a, b) (BOOL)((a) < (b) || (fabsf((b) - (a)) < FLT_EPSILON))
+#define IS_LESS_OR_EQ_F(a, b) (BOOL)((a) <= (b) || (fabsf((b) - (a)) < FLT_EPSILON))
 
 #define IS_LESS_F(a, b) (BOOL)((a) < (b) && !(fabsf((b) - (a)) < FLT_EPSILON))
 
