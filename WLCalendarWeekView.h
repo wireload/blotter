@@ -15,14 +15,14 @@
 @protocol WLCalendarWeekViewDataSource;
 
 
-@interface WLCalendarWeekView : NSView {
+@interface WLCalendarWeekView : NSView /*<CALayerManager>*/ {
     IBOutlet NSObject<WLCalendarWeekViewDataSource> *dataSource;
     CGFloat allDayEventsHeight;
 
     CALayer *_rootLayer;
     CALayer *_timeRulerRootLayer;
     NSMutableArray *_weekdayRootLayers;
-    CGPoint _hourPoint;
+    CGFloat _hour;
 }
 
 @property (assign) NSObject<WLCalendarWeekViewDataSource> *dataSource;
@@ -30,8 +30,6 @@
 @property CGFloat allDayEventsHeight;
 
 - (void)setupLayers;
-
-- (void)layoutLayers;
 
 - (void)scrollHour:(CGFloat)aHour;
 
@@ -52,13 +50,11 @@
 
 - (void)_updateColumnAtIndex:(NSUInteger)anIndex;
 
+- (void)_scrollHourPoint:(CGPoint)aHourPoint;
+
 - (CALayer *)_setupTimeRulerLayer;
 
 - (CALayer *)_setupWeekdayLayer;
-
-- (NSArray *)_timeRulerScrollLayerConstraintsWithTopYMargin:(CGFloat)yMargin;
-
-- (NSArray *)_timeRulerLayerConstraints;
 
 - (NSArray *)_allDayEventsBackgroundLayerConstraints;
 
@@ -66,9 +62,9 @@
 
 - (NSArray *)_weekdayTitleLayerConstraints;
 
-- (NSArray *)_weekdayEventsLayerConstraints;
-
 - (NSArray *)_weekdayEventsScrollLayerConstraintsWithTopYMargin:(CGFloat)yMargin;
+
+- (void)_layoutTimerRulerRootlayer:(CALayer *)aRootLayer;
 
 - (void)_layoutWeekdayRootLayer:(CALayer *)aRootLayer;
 
