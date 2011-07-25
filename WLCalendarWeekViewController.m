@@ -476,7 +476,8 @@ static NSString* const _WLEventsKey = @"events";
 {
     NSCalendar *calendar = self._calendar;
     NSDateComponents *components = [calendar components:NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:aDate];
-    CGFloat result = ((CGFloat)[components hour] + (CGFloat)[components minute] / 60);
+    NSRange minutesRange = [calendar rangeOfUnit:NSMinuteCalendarUnit inUnit:NSHourCalendarUnit forDate:aDate];
+    CGFloat result = ((CGFloat)[components hour] + (CGFloat)[components minute] / minutesRange.length);
     return result;
 }
 
