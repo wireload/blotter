@@ -91,14 +91,14 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     if (self != nil)
     {
         allDayEventsHeight = 100.0f;
-        _weekdayLayers = [[NSMutableArray alloc] init];
+        _weekdayRootLayers = [[NSMutableArray alloc] init];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [_weekdayLayers release];
+    [_weekdayRootLayers release];
     [super dealloc];
 }
 
@@ -117,12 +117,12 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     WLCalendarTimeRulerLayer *timeRulerLayer = [_timeRulerRootLayer valueForKeyPath:@"timeRulerScroll.timeRuler"];
     [timeRulerLayer setHours:hours];
 
-    [_weekdayLayers removeAllObjects];
+    [_weekdayRootLayers removeAllObjects];
     NSUInteger numberOfColumns = [dataSource numberOfColumnsInWeekView:self];
     for (NSUInteger i=0; i<numberOfColumns; ++i)
     {
         CALayer *weekdayRootLayer = [self _setupWeekdayLayer];
-        [_weekdayLayers addObject:weekdayRootLayer];
+        [_weekdayRootLayers addObject:weekdayRootLayer];
         [rootLayer addSublayer:weekdayRootLayer];
     }
     [self updateColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, numberOfColumns)]];
@@ -170,31 +170,31 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     _timeRulerRootLayer.frame = CGRectMake(0.0f, 0.0f, timeRulerSize.width,
                                            bounds.size.height - self.allDayEventsHeight - _WLYMarginBetweenAllDayAndWeekdayEvents);
     [timeRulerLayer setValue:[NSNumber numberWithFloat:timeRulerSize.height] forKeyPath:@"frame.size.height"];
-    [_weekdayLayers enumerateObjectsUsingBlock:^(CALayer *weekdayLayer, NSUInteger idx, BOOL *stop)
+    [_weekdayRootLayers enumerateObjectsUsingBlock:^(CALayer *weekdayRootLayer, NSUInteger idx, BOOL *stop)
     {
-        [self _positionWeekdayRootLayer:weekdayLayer atIndex:idx];
-        [self _layoutWeekdayRootLayer:weekdayLayer];
+        [self _positionWeekdayRootLayer:weekdayRootLayer atIndex:idx];
+        [self _layoutWeekdayRootLayer:weekdayRootLayer];
     }];
 }
 
 - (void)scrollHour:(CGFloat)aHour
 {
-    [CATransaction begin];
     CAScrollLayer *timeRulerScrollLayer = [_timeRulerRootLayer valueForKeyPath:_WLTimeRulerScrollLayer];
     WLCalendarTimeRulerLayer *timeRulerLayer = [timeRulerScrollLayer valueForKeyPath:_WLTimeRulerLayer];
-    CGPoint hourPoint = [timeRulerScrollLayer convertPoint:[timeRulerLayer pointForHour:aHour] fromLayer:timeRulerLayer];
+    _hourPoint = [timeRulerScrollLayer convertPoint:[timeRulerLayer pointForHour:aHour] fromLayer:timeRulerLayer];
     // Center aHour whenever possible
-    CGPoint newOrigin = CGPointMake(0.0f, floorf(hourPoint.y - timeRulerScrollLayer.bounds.size.height / 2));
+    _hourPoint = CGPointMake(0.0f, floorf(_hourPoint.y - timeRulerScrollLayer.bounds.size.height / 2));
     CGFloat topLimit = 0.0f;
-    newOrigin.y = fmaxf(newOrigin.y, topLimit);
+    _hourPoint.y = fmaxf(_hourPoint.y, topLimit);
     CGFloat bottomLimit = CGRectGetMaxY(timeRulerLayer.bounds) - timeRulerScrollLayer.bounds.size.height;
-    newOrigin.y = fminf(newOrigin.y, bottomLimit);
-    [timeRulerScrollLayer scrollToPoint:newOrigin];
-
-    for (CALayer *weekdayLayers in _weekdayLayers)
+    _hourPoint.y = fminf(_hourPoint.y, bottomLimit);
+    
+    [CATransaction begin];
+    [timeRulerScrollLayer scrollToPoint:_hourPoint];
+    for (CALayer *weekdayRootLayer in _weekdayRootLayers)
     {
-        CAScrollLayer *scrollLayer = [weekdayLayers valueForKeyPath:@"weekdayEventsBackground.weekdayEventsScroll"];
-        [scrollLayer scrollToPoint:newOrigin];
+        CAScrollLayer *scrollLayer = [weekdayRootLayer valueForKeyPath:@"weekdayEventsBackground.weekdayEventsScroll"];
+        [scrollLayer scrollToPoint:_hourPoint];
     }
     [CATransaction commit];
 }
@@ -204,15 +204,17 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     CALayer *newWeekdayRootLayer = [self _setupWeekdayLayer];
     [CATransaction begin];
     [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
-    [[_weekdayLayers objectAtIndex:0] removeFromSuperlayer];
-    [_weekdayLayers removeObjectAtIndex:0];
-    [_weekdayLayers addObject:newWeekdayRootLayer];
+    [[_weekdayRootLayers objectAtIndex:0] removeFromSuperlayer];
+    
+    [CATransaction setDisableActions:YES];
+    [_weekdayRootLayers removeObjectAtIndex:0];
+    [_weekdayRootLayers addObject:newWeekdayRootLayer];
     [_rootLayer addSublayer:newWeekdayRootLayer];
-
-    [self updateColumnsAtIndexes:[NSIndexSet indexSetWithIndex:[_weekdayLayers count] - 1]];
-
-    [_weekdayLayers enumerateObjectsUsingBlock:^(CALayer *weekdayLayer, NSUInteger idx, BOOL *stop) {
-        [self _positionWeekdayRootLayer:weekdayLayer atIndex:idx];
+    [self updateColumnsAtIndexes:[NSIndexSet indexSetWithIndex:[_weekdayRootLayers count] - 1]];
+    
+    [CATransaction setDisableActions:NO];
+    [_weekdayRootLayers enumerateObjectsUsingBlock:^(CALayer *weekdayRootLayer, NSUInteger idx, BOOL *stop) {
+        [self _positionWeekdayRootLayer:weekdayRootLayer atIndex:idx];
     }];
     [self _layoutWeekdayRootLayer:newWeekdayRootLayer];
     // Animate positioning of just added layer.
@@ -222,6 +224,10 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     [positionAnimation setFromValue:[NSValue valueWithPoint:fromValue]];
     [positionAnimation setToValue:[NSValue valueWithPoint:NSPointFromCGPoint(newWeekdayRootLayer.position)]];
     [newWeekdayRootLayer addAnimation:positionAnimation forKey:@"position"];
+    
+    [CATransaction setDisableActions:YES];
+    CAScrollLayer *scrollLayer = [newWeekdayRootLayer valueForKeyPath:@"weekdayEventsBackground.weekdayEventsScroll"];
+    [scrollLayer scrollToPoint:_hourPoint];
     [CATransaction commit];
 }
 
@@ -230,27 +236,34 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     [CATransaction begin];
     [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
     NSUInteger numberOfColumns = [dataSource numberOfColumnsInWeekView:self];
-    for (CALayer *oldWeekdayRootLayer in _weekdayLayers)
+    for (CALayer *oldWeekdayRootLayer in _weekdayRootLayers)
         [oldWeekdayRootLayer removeFromSuperlayer];
-    [_weekdayLayers removeAllObjects];
-
+    
+    [CATransaction setDisableActions:YES];
+    [_weekdayRootLayers removeAllObjects];
     for (NSUInteger i=0; i<numberOfColumns; ++i)
     {
         CALayer *weekdayRootLayer = [self _setupWeekdayLayer];
-        [_weekdayLayers addObject:weekdayRootLayer];
+        [_weekdayRootLayers addObject:weekdayRootLayer];
         [_rootLayer addSublayer:weekdayRootLayer];
     }
     [self updateColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, numberOfColumns)]];
-    [_weekdayLayers enumerateObjectsUsingBlock:^(CALayer *weekdayLayer, NSUInteger idx, BOOL *stop) {
-        [self _positionWeekdayRootLayer:weekdayLayer atIndex:idx];
-        [self _layoutWeekdayRootLayer:weekdayLayer];
+    
+    [CATransaction setDisableActions:NO];
+    [_weekdayRootLayers enumerateObjectsUsingBlock:^(CALayer *weekdayRootLayer, NSUInteger idx, BOOL *stop) {
+        [self _positionWeekdayRootLayer:weekdayRootLayer atIndex:idx];
+        [self _layoutWeekdayRootLayer:weekdayRootLayer];
         CABasicAnimation *positionAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
-        NSPoint fromValue = NSMakePoint(weekdayLayer.position.x + _rootLayer.bounds.size.width,
-                                        weekdayLayer.position.y);
+        NSPoint fromValue = NSMakePoint(weekdayRootLayer.position.x + _rootLayer.bounds.size.width,
+                                        weekdayRootLayer.position.y);
         [positionAnimation setFromValue:[NSValue valueWithPoint:fromValue]];
-        [positionAnimation setToValue:[NSValue valueWithPoint:NSPointFromCGPoint(weekdayLayer.position)]];
-        [weekdayLayer addAnimation:positionAnimation forKey:@"position"];
-        [weekdayLayer addAnimation:positionAnimation forKey:@"position"];
+        [positionAnimation setToValue:[NSValue valueWithPoint:NSPointFromCGPoint(weekdayRootLayer.position)]];
+        [weekdayRootLayer addAnimation:positionAnimation forKey:@"position"];
+        [weekdayRootLayer addAnimation:positionAnimation forKey:@"position"];
+        [CATransaction setDisableActions:YES];
+        CAScrollLayer *scrollLayer = [weekdayRootLayer valueForKeyPath:@"weekdayEventsBackground.weekdayEventsScroll"];
+        [scrollLayer scrollToPoint:_hourPoint];
+        [CATransaction setDisableActions:NO];
     }];
     [CATransaction commit];
 }
@@ -313,7 +326,7 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     for (id event in allDayEvents)
         [weekdayEvents removeObjectIdenticalTo:event];
 
-    CALayer *weekdayRootLayer = [_weekdayLayers objectAtIndex:anIndex];
+    CALayer *weekdayRootLayer = [_weekdayRootLayers objectAtIndex:anIndex];
     WLCalendarWeekdayEventsLayer *weekdayLayer = [weekdayRootLayer
                                                   valueForKeyPath:@"weekdayEventsBackground.weekdayEventsScroll.weekdayEvents"];
     [weekdayLayer setEvents:[NSSet setWithArray:weekdayEvents]];
@@ -325,7 +338,7 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 
 - (void)_updateTitleOfColumnAtIndex:(NSUInteger)anIndex
 {
-    CALayer *weekdayRootLayer = [_weekdayLayers objectAtIndex:anIndex];
+    CALayer *weekdayRootLayer = [_weekdayRootLayers objectAtIndex:anIndex];
     CATextLayer *titleLayer = [weekdayRootLayer valueForKeyPath:@"weekdayEventsBackground.weekdayEventsTitle"];
     titleLayer.string = [dataSource weekView:self titleForColumnAtIndex:anIndex];
 }
@@ -611,8 +624,8 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     WLCalendarTimeRulerLayer *timeRulerLayer = [_timeRulerRootLayer valueForKeyPath:@"timeRulerScroll.timeRuler"];
     CGSize timeRulerSize = [timeRulerLayer preferredFrameSize];
 
-    CGFloat spaces = _WLXMarginBetweenColumns * [_weekdayLayers count];
-    CGFloat width = (self.bounds.size.width - timeRulerSize.width - spaces) / [_weekdayLayers count];
+    CGFloat spaces = _WLXMarginBetweenColumns * [_weekdayRootLayers count];
+    CGFloat width = (self.bounds.size.width - timeRulerSize.width - spaces) / [_weekdayRootLayers count];
     CGFloat x = timeRulerSize.width + _WLXMarginBetweenColumns + anIndex * (width + _WLXMarginBetweenColumns);
 
     aRootLayer.frame = CGRectMake(ceilf(x), 0.0f, width, bounds.size.height);

@@ -21,7 +21,8 @@
 
     CALayer *_rootLayer;
     CALayer *_timeRulerRootLayer;
-    NSMutableArray *_weekdayLayers;
+    NSMutableArray *_weekdayRootLayers;
+    CGPoint _hourPoint;
 }
 
 @property (assign) NSObject<WLCalendarWeekViewDataSource> *dataSource;
