@@ -613,6 +613,7 @@ static NSString* const _WLEventsKey = @"events";
         }
         [_columnsData setObject:columnData forKey:[NSNumber numberWithUnsignedInteger:idx]];
     }];
+    [components release];
 }
 
 - (NSString *)weekView:(WLCalendarWeekView *)aWeekView titleForColumnAtIndex:(NSUInteger)anIndex
