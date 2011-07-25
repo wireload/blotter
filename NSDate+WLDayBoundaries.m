@@ -11,7 +11,7 @@
 
 @implementation NSDate (WLDayBoundaries)
 
-- (NSDate *)upperBoundaryWithCalendar:(NSCalendar *)calendar
+- (NSDate *)WL_upperBoundaryWithCalendar:(NSCalendar *)calendar
 {
     static const NSUInteger Units = NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
     NSDateComponents *components = [calendar components:Units fromDate:self];
@@ -24,7 +24,7 @@
     return upperBoundary;
 }
 
-- (NSDate *)lowerBoundaryWithCalendar:(NSCalendar *)calendar
+- (NSDate *)WL_lowerBoundaryWithCalendar:(NSCalendar *)calendar
 {
     static const NSUInteger Units = NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
     NSDateComponents *components = [calendar components:Units fromDate:self];

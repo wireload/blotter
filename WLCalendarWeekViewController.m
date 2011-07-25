@@ -430,7 +430,7 @@ static NSString* const _WLEventsKey = @"events";
     NSCalendar *calendar = self._calendar;
 
     NSDate *nextDay = [calendar dateByAddingComponents:self._oneDayComponent toDate:self._representedDate options:0];
-    nextDay = [nextDay upperBoundaryWithCalendar:calendar];
+    nextDay = [nextDay WL_upperBoundaryWithCalendar:calendar];
     _nextDayTimer = [[NSTimer alloc] initWithFireDate:nextDay
                                              interval:0.0
                                                target:self
@@ -447,7 +447,7 @@ static NSString* const _WLEventsKey = @"events";
     NSCalendar *calendar = self._calendar;
 
     NSDate *nextWeek = [calendar dateByAddingComponents:self._oneWeekComponent toDate:self._firstWeekday options:0];
-    nextWeek = [nextWeek upperBoundaryWithCalendar:calendar];
+    nextWeek = [nextWeek WL_upperBoundaryWithCalendar:calendar];
     _nextWeekTimer = [[NSTimer alloc] initWithFireDate:nextWeek
                                               interval:0.0
                                                 target:self
@@ -527,10 +527,10 @@ static NSString* const _WLEventsKey = @"events";
     [components setHour:0];
     [components setDay:[anIndexSet firstIndex]];
     NSDate *startRangeDate = [calendar dateByAddingComponents:components toDate:firstDate options:0];
-    startRangeDate = [startRangeDate upperBoundaryWithCalendar:calendar];
+    startRangeDate = [startRangeDate WL_upperBoundaryWithCalendar:calendar];
     [components setDay:[anIndexSet lastIndex]];
     NSDate *endRangeDate = [calendar dateByAddingComponents:components toDate:firstDate options:0];
-    endRangeDate = [endRangeDate lowerBoundaryWithCalendar:calendar];
+    endRangeDate = [endRangeDate WL_lowerBoundaryWithCalendar:calendar];
 
     NSArray *events = nil;
     if (dataUnits & WLCalendarWeekViewEventsDataUnit)
@@ -556,8 +556,8 @@ static NSString* const _WLEventsKey = @"events";
 #ifdef DEBUG_PERFORMANCE
             NSLog(@"Prepare weekView events");
 #endif
-            NSDate *upperBound = [noon upperBoundaryWithCalendar:calendar];
-            NSDate *lowerBound = [upperBound lowerBoundaryWithCalendar:calendar];
+            NSDate *upperBound = [noon WL_upperBoundaryWithCalendar:calendar];
+            NSDate *lowerBound = [upperBound WL_lowerBoundaryWithCalendar:calendar];
             WLDateRange *dayRange = [WLDateRange dateRangeWithStartDate:upperBound endDate:lowerBound];
             [_columnDateRanges[idx] release];
             _columnDateRanges[idx] = [dayRange retain];
