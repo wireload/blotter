@@ -180,11 +180,11 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 
 - (void)nextDay
 {
-	[CATransaction begin];
-	[CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
+    [CATransaction begin];
+    [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
     CALayer *newWeekdayRootLayer = [self _setupWeekdayLayer];
 
-	[CATransaction setDisableActions:NO];
+    [CATransaction setDisableActions:NO];
     [[_weekdayRootLayers objectAtIndex:0] removeFromSuperlayer];
 
     [CATransaction setDisableActions:YES];
