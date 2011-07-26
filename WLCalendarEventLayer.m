@@ -46,7 +46,9 @@ const CGFloat _WLXPadding = 10.0f;
     self = [super init];
     if (self != nil)
     {
+        [CATransaction setDisableActions:YES];
         self.masksToBounds = YES;
+        [CATransaction setDisableActions:NO];
         _textLayer = [CATextLayer layer];
         _textLayer.wrapped = YES;
         _textLayer.truncationMode = kCATruncationEnd;

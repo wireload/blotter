@@ -463,7 +463,10 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     WLCalendarEventLayer *eventLayer = [WLCalendarEventLayer layer];
     eventLayer.name = [anEvent uid];
     eventLayer.string = [anEvent title];
+    [CATransaction setDisableActions:YES];
     eventLayer.needsDisplayOnBoundsChange = YES;
+    [CATransaction setDisableActions:NO];
+
     [eventLayer setValue:[anEvent startDate] forKey:_WLStartDateKey];
     [eventLayer setValue:[anEvent endDate] forKey:_WLEndDateKey];
 #ifdef DEBUG_LAYERS

@@ -138,7 +138,10 @@ static const CGFloat _WLTopMargin = 10.0f;
     WLCalendarEventLayer *eventLayer = [WLCalendarEventLayer layer];
     eventLayer.name = [anEvent uid];
     eventLayer.string = [anEvent title];
+    [CATransaction setDisableActions:YES];
     eventLayer.needsDisplayOnBoundsChange = YES;
+    [CATransaction setDisableActions:NO];
+
 #ifdef DEBUG_LAYERS
     eventLayer.contentsBackgroundOpacity = 0.0f;
     eventLayer.backgroundColor = [[(CalCalendar *)[anEvent calendar] color] WL_CGColor];
