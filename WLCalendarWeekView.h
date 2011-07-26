@@ -50,8 +50,6 @@
 
 - (void)_updateColumnAtIndex:(NSUInteger)anIndex;
 
-- (void)_scrollHourPoint:(CGPoint)aHourPoint;
-
 - (CALayer *)_setupTimeRulerLayer;
 
 - (CALayer *)_setupWeekdayLayer;

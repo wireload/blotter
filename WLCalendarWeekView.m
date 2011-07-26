@@ -180,9 +180,11 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 
 - (void)nextDay
 {
+	[CATransaction begin];
+	[CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
     CALayer *newWeekdayRootLayer = [self _setupWeekdayLayer];
-    [CATransaction begin];
-    [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
+
+	[CATransaction setDisableActions:NO];
     [[_weekdayRootLayers objectAtIndex:0] removeFromSuperlayer];
 
     [CATransaction setDisableActions:YES];
@@ -203,7 +205,6 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     [positionAnimation setFromValue:[NSValue valueWithPoint:fromValue]];
     [positionAnimation setToValue:[NSValue valueWithPoint:NSPointFromCGPoint(newWeekdayRootLayer.position)]];
     [newWeekdayRootLayer addAnimation:positionAnimation forKey:@"position"];
-
     [self scrollHour:_hour];
     [CATransaction commit];
 }
@@ -346,6 +347,7 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 
 - (CALayer *)_setupTimeRulerLayer
 {
+    [CATransaction setDisableActions:YES];
     WLCalendarTimeRulerLayer *timeRulerLayer = [WLCalendarTimeRulerLayer layer];
     timeRulerLayer.name = _WLTimeRulerLayer;
     timeRulerLayer.timeRuler = dataSource;
@@ -375,11 +377,13 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 #endif
     [backgroundLayer addSublayer:scrollLayer];
     [backgroundLayer setValue:scrollLayer forKey:scrollLayer.name];
+    [CATransaction setDisableActions:NO];
     return backgroundLayer;
 }
 
 - (CALayer *)_setupWeekdayLayer
 {
+    [CATransaction setDisableActions:YES];
     WLCalendarWeekdayEventsLayer *eventLayer = [WLCalendarWeekdayEventsLayer layer];
     eventLayer.name = _WLWeekdayEventsLayer;
     eventLayer.timeRuler = dataSource;
@@ -463,6 +467,7 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     [contentLayer addSublayer:eventsAllDayBackgroundLayer];
     [contentLayer setValue:eventsBackgroundLayer forKey:eventsBackgroundLayer.name];
     [contentLayer setValue:eventsAllDayBackgroundLayer forKey:eventsAllDayBackgroundLayer.name];
+    [CATransaction setDisableActions:NO];
     return contentLayer;
 }
 
