@@ -317,10 +317,10 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
                     if (IS_LESS_F(bottom - top, minimalHeight))
                         bottom = top + minimalHeight;
                     NSUInteger numberOfColumnsToSkip = [[eventLayer valueForKey:_WLNumberOfColumnsToSkipKey] unsignedIntegerValue];
-                    eventLayer.frame = CGRectMake(ceilf(CGRectGetMinX(self.bounds) + idx * (width + XSpaceBetweenEvents)),
-                                                  floorf(top),
-                                                  floorf(width + ((width + XSpaceBetweenEvents) * numberOfColumnsToSkip)),
-                                                  ceilf(bottom - top));
+                    eventLayer.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(self.bounds) + idx * (width + XSpaceBetweenEvents),
+                                                                top,
+                                                                width + ((width + XSpaceBetweenEvents) * numberOfColumnsToSkip),
+                                                                bottom - top));
                 }
             }];
         }

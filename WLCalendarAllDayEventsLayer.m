@@ -48,10 +48,7 @@ static const CGFloat _WLTopMargin = 10.0f;
             // "Hide" event
             offset = self.bounds.size.height + 1.0f;
         }
-        layer.frame = CGRectMake(CGRectGetMinX(self.bounds),
-                                 offset,
-                                 self.bounds.size.width,
-                                 height);
+        layer.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(self.bounds), offset, self.bounds.size.width, height));
         offset += height + _WLTopMargin;
     }
 }
