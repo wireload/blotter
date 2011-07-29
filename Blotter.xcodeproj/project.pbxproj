@@ -80,6 +80,7 @@
 		E29DDCB212E9D54C00751CFA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E29DDCB012E9D54C00751CFA /* Localizable.strings */; };
 		E29F38EE1319694C00A865D9 /* WLNewTaskWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E29F38ED1319694C00A865D9 /* WLNewTaskWindowController.m */; };
 		E2B16FDE13D57F52005F8973 /* WLCalendarTimeRulerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B16FDD13D57F52005F8973 /* WLCalendarTimeRulerLayer.m */; };
+		E2B223E813E16AF600890042 /* CoreText+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B223E713E16AF600890042 /* CoreText+Additions.m */; };
 		E2BA531A13C5A873005F0045 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2BA531913C5A873005F0045 /* QuartzCore.framework */; };
 		E2BA565E13C5E4C4005F0045 /* NSColor+CGColor.m in Sources */ = {isa = PBXBuildFile; fileRef = E2BA565D13C5E4C4005F0045 /* NSColor+CGColor.m */; };
 		E2BA585813C61E3C005F0045 /* CATextLayer+WLStringSize.m in Sources */ = {isa = PBXBuildFile; fileRef = E2BA585713C61E3C005F0045 /* CATextLayer+WLStringSize.m */; };
@@ -286,6 +287,8 @@
 		E29F38ED1319694C00A865D9 /* WLNewTaskWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNewTaskWindowController.m; sourceTree = "<group>"; };
 		E2B16FDC13D57F52005F8973 /* WLCalendarTimeRulerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTimeRulerLayer.h; sourceTree = "<group>"; };
 		E2B16FDD13D57F52005F8973 /* WLCalendarTimeRulerLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarTimeRulerLayer.m; sourceTree = "<group>"; };
+		E2B223E613E16AF600890042 /* CoreText+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreText+Additions.h"; sourceTree = "<group>"; };
+		E2B223E713E16AF600890042 /* CoreText+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CoreText+Additions.m"; sourceTree = "<group>"; };
 		E2BA531913C5A873005F0045 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E2BA565C13C5E4C4005F0045 /* NSColor+CGColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+CGColor.h"; sourceTree = "<group>"; };
 		E2BA565D13C5E4C4005F0045 /* NSColor+CGColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+CGColor.m"; sourceTree = "<group>"; };
@@ -400,6 +403,8 @@
 				E253574F13DC884D0010A2ED /* NSDate+WLDayBoundaries.m */,
 				E2535B8513DCA88B0010A2ED /* WLDateRange.h */,
 				E2535B8613DCA88B0010A2ED /* WLDateRange.m */,
+				E2B223E613E16AF600890042 /* CoreText+Additions.h */,
+				E2B223E713E16AF600890042 /* CoreText+Additions.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -766,6 +771,7 @@
 				E214582C13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m in Sources */,
 				E253575013DC884D0010A2ED /* NSDate+WLDayBoundaries.m in Sources */,
 				E2535B8713DCA88B0010A2ED /* WLDateRange.m in Sources */,
+				E2B223E813E16AF600890042 /* CoreText+Additions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

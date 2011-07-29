@@ -94,11 +94,10 @@ static const CGFloat _WLTopMargin = 10.0f;
 #else
         eventLayer.contentsBackgroundColor = [[(CalCalendar *)[anEvent calendar] color] WL_CGColor];
 #endif
-        if (![eventLayer.string isEqualToString:[anEvent title]])
-        {
-            eventLayer.string = [anEvent title];
-            [self setNeedsLayout];
-        }
+        NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:[anEvent title]];
+        eventLayer.string = attributedString;
+        [attributedString release];
+        [self setNeedsLayout];
     }
 }
 
@@ -137,7 +136,9 @@ static const CGFloat _WLTopMargin = 10.0f;
 {
     WLCalendarEventLayer *eventLayer = [WLCalendarEventLayer layer];
     eventLayer.name = [anEvent uid];
-    eventLayer.string = [anEvent title];
+    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:[anEvent title]];
+    eventLayer.string = attributedString;
+    [attributedString release];
     [CATransaction setDisableActions:YES];
     eventLayer.needsDisplayOnBoundsChange = YES;
     [CATransaction setDisableActions:NO];

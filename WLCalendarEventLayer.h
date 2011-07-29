@@ -10,22 +10,13 @@
 #import <QuartzCore/QuartzCore.h>
 #import "WLCalendarLayer.h"
 
-
+/*!
+ @classdesign One of superlayers must be flipped (that is, geometryFlipped is set to YES). 
+ */
 @interface WLCalendarEventLayer : WLCalendarLayer {
-    CATextLayer *_textLayer;
 }
 
-@property (copy) id string;
-
-@property CFTypeRef font;
-
-@property CGFloat fontSize;
-
-@property BOOL wrapped;
-
-@property CGFloat contentsBackgroundOpacity;
-
-@property CGColorRef contentsBackgroundColor;
+@property (copy) NSAttributedString *string;
 
 - (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth;
 

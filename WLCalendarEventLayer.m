@@ -9,6 +9,7 @@
 #import "WLCalendarEventLayer.h"
 #import "CATextLayer+WLStringSize.h"
 #import "NSColor+CGColor.h"
+#import "CoreText+Additions.h"
 
 
 const CGFloat _WLYPadding = 10.0f;
@@ -17,61 +18,21 @@ const CGFloat _WLXPadding = 10.0f;
 
 @implementation WLCalendarEventLayer
 @dynamic string;
-@dynamic font;
-@dynamic fontSize;
-@dynamic wrapped;
-@dynamic contentsBackgroundOpacity;
-@dynamic contentsBackgroundColor;
-
-+ (id)defaultValueForKey:(NSString *)aKey
-{
-    if ([aKey isEqualToString:@"contentBackgroundAlphaValue"])
-        return [NSNumber numberWithFloat:1.0f];
-    else if ([aKey isEqualToString:@"contentBackgroundColor"])
-        return [NSColor clearColor];
-    else
-        return [super defaultValueForKey:aKey];
-}
 
 + (BOOL)needsDisplayForKey:(NSString *)aKey
 {
-    if ([aKey isEqualToString:@"contentBackgroundAlphaValue"])
+    if ([aKey isEqualToString:@"string"])
         return YES;
     else
         return [super needsDisplayForKey:aKey];
 }
 
-- (id)init
-{
-    self = [super init];
-    if (self != nil)
-    {
-        [CATransaction setDisableActions:YES];
-        self.masksToBounds = YES;
-        [CATransaction setDisableActions:NO];
-        _textLayer = [CATextLayer layer];
-        _textLayer.wrapped = YES;
-        _textLayer.truncationMode = kCATruncationEnd;
-        //_textLayer.font = [NSFont userFontOfSize:12.0f];
-        _textLayer.fontSize = 12.0f;
-        _textLayer.shadowOpacity = 1.0f;
-        _textLayer.shadowOffset = CGSizeMake(0.0f, 1.0f);
-        _textLayer.shadowRadius = 1.0f;
-#ifdef DEBUG_LAYERS
-        _textLayer.backgroundColor = [[NSColor greenColor] WL_CGColor];
-#endif
-        [self addSublayer:_textLayer];
-    }
-    return self;
-}
-
 - (void)drawInContext:(CGContextRef)aContext
 {
-#ifndef DEBUG_LAYERS
     CGRect layerBounds = self.bounds;
 
     CGContextSaveGState(aContext);
-
+#ifndef DEBUG_LAYERS
     CGColorRef backgroundColor = CGColorCreateCopyWithAlpha(self.contentsBackgroundColor, self.contentsBackgroundOpacity);
     CGContextSetFillColorWithColor(aContext, backgroundColor);
     CGContextFillRect(aContext, layerBounds);
@@ -104,86 +65,161 @@ const CGFloat _WLXPadding = 10.0f;
     CGContextSetStrokeColorWithColor(aContext, lineColor);
     CGContextStrokePath(aContext);
     CGColorRelease(lineColor);
+#endif
+    // It's important to draw background before text to make antialiasing possible.
+    CGContextSaveGState(aContext);
+    CGRect stringBounds = CGRectInset(layerBounds, _WLXPadding / 2, _WLYPadding / 2);
+#ifdef DEBUG_LAYERS
+    CGContextSetFillColorWithColor(aContext, [[NSColor greenColor] WL_CGColor]);
+    CGContextFillRect(aContext, stringBounds);
+#endif
+    CGContextSetTextMatrix(aContext, CGAffineTransformIdentity);
+    CGContextTranslateCTM(aContext, 0.0f, layerBounds.size.height);
+    CGContextScaleCTM(aContext, 1.0f, -1.0f);
+    CGContextSetShouldSmoothFonts(aContext, YES);
+    CGContextSetAllowsFontSmoothing(aContext, YES);
+    CGContextSetShouldAntialias(aContext, YES);
+    CGContextSetAllowsAntialiasing(aContext, YES);
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self.string);
+    if (framesetter != NULL)
+    {
+        CGMutablePathRef framePath = CGPathCreateMutable();
+        CGPathAddRect(framePath, NULL, stringBounds);
+        CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
+        if (frame != NULL)
+        {
+            NSArray *lines = (NSArray *)CTFrameGetLines(frame);
+            NSUInteger numberOfLines = [lines count];
+            if (numberOfLines > 0)
+            {
+                __block CGPoint *lineOrigins = calloc(numberOfLines, sizeof(CGPoint));
+                CTFrameGetLineOrigins(frame, CFRangeMake(0, numberOfLines), lineOrigins);
+
+                CFRange frameRange = CTFrameGetVisibleStringRange(frame);
+                BOOL shouldTruncateLastLine = frameRange.location + frameRange.length < [self.string length];
+
+                [lines enumerateObjectsUsingBlock:^(id line, NSUInteger idx, BOOL *stop)
+                {
+                    CGPoint origin = lineOrigins[idx];
+                    CGContextSetTextPosition(aContext, stringBounds.origin.x + origin.x, stringBounds.origin.y + origin.y);
+
+                    if (idx != numberOfLines - 1 || !shouldTruncateLastLine)
+                        CTLineDraw((CTLineRef)line, aContext);
+                    else
+                    {
+                        CFRange lineRange = CTLineGetStringRange((CTLineRef)line);
+                        NSRange range = NSMakeRange(lineRange.location, lineRange.length);
+                        NSMutableAttributedString *truncatedString = [[NSMutableAttributedString alloc] initWithAttributedString:
+                                                                      [self.string attributedSubstringFromRange:range]];
+                        NSString *trimmedString = [[truncatedString string] stringByTrimmingCharactersInSet:
+                                                   [NSCharacterSet newlineCharacterSet]];
+                        [[truncatedString mutableString] setString:trimmedString];
+                        [[truncatedString mutableString] appendString:(NSString *)CFSTR("\u2026")];
+                        CTLineRef truncatedLine = CTLineCreateWithAttributedString((CFAttributedStringRef)truncatedString);
+                        [truncatedString release];
+                        if (truncatedLine != NULL)
+                        {
+                            static CTLineRef TruncationToken = NULL;
+                            if (TruncationToken == NULL)
+                            {
+                                CFStringRef token = CFSTR("\u2026");
+                                CFAttributedStringRef truncationString = CFAttributedStringCreate(NULL, token, NULL);
+                                TruncationToken = CTLineCreateWithAttributedString(truncationString);
+                                CFRelease(truncationString);
+                            }
+                            // In case when adding truncation symbol to the end of line make the line to not fit the bounds.
+                            CTLineRef truncatedTruncatedLine = CTLineCreateTruncatedLine(truncatedLine,
+                                                                                         stringBounds.size.width,
+                                                                                         kCTLineTruncationEnd,
+                                                                                         TruncationToken);
+                            if (truncatedTruncatedLine != NULL)
+                            {
+                                CTLineDraw(truncatedTruncatedLine, aContext);
+                                CFRelease(truncatedTruncatedLine);
+                            }
+                            else
+                                CTLineDraw(truncatedLine, aContext);
+                            CFRelease(truncatedLine);
+                        }
+                        else
+                            CTLineDraw((CTLineRef)line, aContext);
+                    }
+                }];
+
+                free(lineOrigins);
+            }
+            CFRelease(frame);
+        }
+        CFRelease(framePath);
+        CFRelease(framesetter);
+    }
+    CGContextRestoreGState(aContext);
 
     CGContextRestoreGState(aContext);
-#endif
-}
-
-- (void)layoutSublayers
-{
-    NSAssert(self.layoutManager == nil, @"You cannot use custom layout managers with this class");
-
-    CGRect layerBounds = self.bounds;
-    CGFloat maxHeight = MIN([_textLayer WL_maxStringHeightForWidth:layerBounds.size.width - _WLXPadding],
-                            layerBounds.size.height - _WLYPadding);
-    _textLayer.frame = CGRectMake(floorf(CGRectGetMinX(layerBounds) + _WLXPadding / 2),
-                                  ceilf(_WLYPadding / 2),
-                                  layerBounds.size.width - _WLXPadding,
-                                  maxHeight);
 }
 
 - (CGSize)preferredFrameSize
 {
     NSAssert(self.layoutManager == nil, @"You cannot use custom layout managers with this class");
 
-    CGSize preferredTextSize = [_textLayer preferredFrameSize];
-    return CGSizeMake(preferredTextSize.width + _WLXPadding, preferredTextSize.height + _WLYPadding);
-}
+    CGSize preferredFrameSize = CGSizeMake(0.0f, 0.0f);
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self.string);
+    if (framesetter != NULL)
+    {
+        CGMutablePathRef framePath = CGPathCreateMutable();
+        CGPathAddRect(framePath, NULL, CGRectMake(0.0f, 0.0f, 9999.0f, 9999.0f));
+        CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
+        if (frame != NULL)
+            preferredFrameSize = AB_CTFrameGetSize(frame);
+        CFRelease(framePath);
+        CFRelease(framesetter);
+    }
 
-- (id)string
-{
-    return _textLayer.string;
-}
-
-- (void)setString:(id)newString
-{
-    _textLayer.string = newString;
-    [self setNeedsLayout];
-}
-
-- (CFTypeRef)font
-{
-    return _textLayer.font;
-}
-
-- (void)setFont:(CFTypeRef)newFont
-{
-    _textLayer.font = newFont;
-}
-
-- (CGFloat)fontSize
-{
-    return _textLayer.fontSize;
-}
-
-- (void)setFontSize:(CGFloat)newFontSize
-{
-    _textLayer.fontSize = newFontSize;
-    [self setNeedsLayout];
-}
-
-- (BOOL)wrapped
-{
-    return _textLayer.wrapped;
-}
-
-- (void)setWrapped:(BOOL)newWrapped
-{
-    _textLayer.wrapped = newWrapped;
+    return CGSizeMake(preferredFrameSize.width + _WLXPadding, preferredFrameSize.height + _WLYPadding);
 }
 
 - (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth
 {
-    NSAssert(self.layoutManager == nil, @"You cannot use custom layout managers with this class");
-
-    CGFloat height = [_textLayer WL_maxStringHeightForWidth:aWidth + _WLXPadding];
-    return height + _WLXPadding;
+    CGSize preferredFrameSize = CGSizeMake(0.0f, 0.0f);
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self.string);
+    if (framesetter != NULL)
+    {
+        CGMutablePathRef framePath = CGPathCreateMutable();
+        CGPathAddRect(framePath, NULL, CGRectMake(0.0f, 0.0f, aWidth + _WLXPadding, 9999.0f));
+        CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
+        if (frame != NULL)
+            preferredFrameSize = AB_CTFrameGetSize(frame);
+        CFRelease(framePath);
+        CFRelease(framesetter);
+    }
+    return preferredFrameSize.height + _WLYPadding;
 }
 
 - (CGFloat)minimalHumanVisibleHeight
 {
-    // TODO: calculate height from current font size and y padding.
-    return 20.0f;
+    CGFloat minimalHeight = 0.0f;
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self.string);
+    if (framesetter != NULL)
+    {
+        CGMutablePathRef framePath = CGPathCreateMutable();
+        CGPathAddRect(framePath, NULL, CGRectMake(0.0f, 0.0f, self.bounds.size.width - _WLXPadding, 9999.0f));
+        CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
+        if (frame != NULL)
+        {
+            NSArray *lines = (NSArray *)CTFrameGetLines(frame);
+            if ([lines count] == 1)
+                minimalHeight = AB_CTFrameGetSize(frame).height;
+            else
+            {
+                CGPoint origins[2];
+                CTFrameGetLineOrigins(frame, CFRangeMake(0, 2), origins);
+                minimalHeight = origins[0].y - origins[1].y;
+            }
+        }
+        CFRelease(framePath);
+        CFRelease(framesetter);
+    }
+    return minimalHeight + _WLYPadding;
 }
 
 + (CGFloat)minimalHumanVisibleWidth
