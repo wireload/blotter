@@ -17,16 +17,7 @@
     NSMutableArray *_sortedEventLayers;
 }
 
-- (void)addEvent:(id)anEvent;
-
-- (void)updateEvent:(id)anEvent;
-
-- (void)removeEvent:(id)anEvent;
-
-/*!
- @discussion You are responsible to pass array of unique events.
- */
-- (void)setEvents:(NSArray *)events;
+@property (nonatomic, copy) NSArray *events;
 
 - (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth;
 
