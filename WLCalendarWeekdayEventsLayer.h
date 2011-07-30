@@ -16,23 +16,24 @@
 
 @interface WLCalendarWeekdayEventsLayer : CALayer {
     NSMutableArray *_sortedEventLayers;
-    NSMutableSet *_uids;
+    NSUInteger _cachedMaximumNumberOfColumns;
+    NSTreeNode *_eventsLayoutTreeRootNode;
+    BOOL _eventsChanged;
+
     id<WLCalendarTimeRuler> timeRuler;
 }
 
 @property (assign) id<WLCalendarTimeRuler> timeRuler;
 
-- (void)addEvent:(id)anEvent;
+@property (nonatomic, copy) NSSet *events;
 
-- (void)updateEvent:(id)anEvent;
-
-- (void)removeEvent:(id)anEvent;
-
-- (void)setEvents:(NSSet *)events;
+- (NSUInteger)maximumNumberOfColumns;
 
 
 - (WLCalendarEventLayer *)_setupEventLayerWithEvent:(id)anEvent;
 
 - (NSUInteger)_indexOfEventLayerForStartDate:(id)aStartDate;
+
+- (void)_buildEventsLayoutTree;
 
 @end
