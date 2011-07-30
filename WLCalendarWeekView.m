@@ -296,12 +296,12 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 
 - (void)layoutSublayersOfLayer:(CALayer *)layer
 {
-    if ([self inLiveResize])
-        [CATransaction setDisableActions:YES];
     NSParameterAssert([layer.name isEqualToString:_WLRootLayerName]);
 
+    // We don't cancel this change since we don't want CAConstraintLayoutManager animation.
+    if ([self inLiveResize])
+        [CATransaction setDisableActions:YES];
     [self _layoutTimerRulerRootlayer:_timeRulerRootLayer];
-
     [_weekdayRootLayers enumerateObjectsUsingBlock:^(CALayer *weekdayRootLayer, NSUInteger idx, BOOL *stop)
     {
         [self _positionWeekdayRootLayer:weekdayRootLayer atIndex:idx];
@@ -347,6 +347,7 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 
 - (CALayer *)_setupTimeRulerLayer
 {
+    [CATransaction begin];
     [CATransaction setDisableActions:YES];
     WLCalendarTimeRulerLayer *timeRulerLayer = [WLCalendarTimeRulerLayer layer];
     timeRulerLayer.name = _WLTimeRulerLayer;
@@ -377,12 +378,13 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 #endif
     [backgroundLayer addSublayer:scrollLayer];
     [backgroundLayer setValue:scrollLayer forKey:scrollLayer.name];
-    [CATransaction setDisableActions:NO];
+    [CATransaction commit];
     return backgroundLayer;
 }
 
 - (CALayer *)_setupWeekdayLayer
 {
+    [CATransaction begin];
     [CATransaction setDisableActions:YES];
     WLCalendarWeekdayEventsLayer *eventLayer = [WLCalendarWeekdayEventsLayer layer];
     eventLayer.name = _WLWeekdayEventsLayer;
@@ -467,7 +469,7 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     [contentLayer addSublayer:eventsAllDayBackgroundLayer];
     [contentLayer setValue:eventsBackgroundLayer forKey:eventsBackgroundLayer.name];
     [contentLayer setValue:eventsAllDayBackgroundLayer forKey:eventsAllDayBackgroundLayer.name];
-    [CATransaction setDisableActions:NO];
+    [CATransaction commit];
     return contentLayer;
 }
 
