@@ -14,14 +14,16 @@
  @classdesign One of superlayers must be flipped (that is, geometryFlipped is set to YES). 
  */
 @interface WLCalendarEventLayer : WLCalendarLayer {
+    CGFloat _cachedMinimalHeight;
+    BOOL _shouldUpdateMinimalHeightCache;
 }
 
 @property (copy) NSAttributedString *string;
 
++ (CGFloat)minimalHumanVisibleWidth;
+
 - (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth;
 
 - (CGFloat)minimalHumanVisibleHeight;
-
-+ (CGFloat)minimalHumanVisibleWidth;
 
 @end

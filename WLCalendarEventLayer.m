@@ -19,6 +19,69 @@ const CGFloat _WLXPadding = 10.0f;
 @implementation WLCalendarEventLayer
 @dynamic string;
 
++ (CGFloat)minimalHumanVisibleWidth
+{
+    return _WLXPadding + 30.0f;
+}
+
+- (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth
+{
+    CGSize preferredFrameSize = CGSizeMake(0.0f, 0.0f);
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self.string);
+    if (framesetter != NULL)
+    {
+        CGMutablePathRef framePath = CGPathCreateMutable();
+        CGPathAddRect(framePath, NULL, CGRectMake(0.0f, 0.0f, aWidth - _WLXPadding, 9999.0f));
+        CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
+        if (frame != NULL)
+        {
+            preferredFrameSize = AB_CTFrameGetSize(frame);
+            CFRelease(frame);
+        }
+        CFRelease(framePath);
+        CFRelease(framesetter);
+    }
+    return preferredFrameSize.height + _WLYPadding;
+}
+
+- (CGFloat)minimalHumanVisibleHeight
+{
+    if (!_shouldUpdateMinimalHeightCache)
+        return _cachedMinimalHeight;
+    else
+    {
+        _cachedMinimalHeight = 0.0f;
+        CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self.string);
+        if (framesetter != NULL)
+        {
+            CGMutablePathRef framePath = CGPathCreateMutable();
+            CGPathAddRect(framePath, NULL, CGRectMake(0.0f, 0.0f, self.bounds.size.width - _WLXPadding, 9999.0f));
+            CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
+            if (frame != NULL)
+            {
+                NSArray *lines = (NSArray *)CTFrameGetLines(frame);
+                if ([lines count] == 1)
+                    _cachedMinimalHeight = AB_CTFrameGetSize(frame).height;
+                else
+                {
+                    CGPoint origins[2];
+                    CTFrameGetLineOrigins(frame, CFRangeMake(0, 2), origins);
+                    _cachedMinimalHeight = origins[0].y - origins[1].y;
+                }
+                CFRelease(frame);
+            }
+            CFRelease(framePath);
+            CFRelease(framesetter);
+        }
+        _cachedMinimalHeight += _WLYPadding;
+        _shouldUpdateMinimalHeightCache = NO;
+        return _cachedMinimalHeight;
+    }
+}
+
+
+#pragma mark CALayer
+
 + (BOOL)needsDisplayForKey:(NSString *)aKey
 {
     if ([aKey isEqualToString:@"string"])
@@ -145,7 +208,6 @@ const CGFloat _WLXPadding = 10.0f;
                             CTLineDraw((CTLineRef)line, aContext);
                     }
                 }];
-
                 free(lineOrigins);
             }
             CFRelease(frame);
@@ -170,61 +232,25 @@ const CGFloat _WLXPadding = 10.0f;
         CGPathAddRect(framePath, NULL, CGRectMake(0.0f, 0.0f, 9999.0f, 9999.0f));
         CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
         if (frame != NULL)
-            preferredFrameSize = AB_CTFrameGetSize(frame);
-        CFRelease(framePath);
-        CFRelease(framesetter);
-    }
-
-    return CGSizeMake(preferredFrameSize.width + _WLXPadding, preferredFrameSize.height + _WLYPadding);
-}
-
-- (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth
-{
-    CGSize preferredFrameSize = CGSizeMake(0.0f, 0.0f);
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self.string);
-    if (framesetter != NULL)
-    {
-        CGMutablePathRef framePath = CGPathCreateMutable();
-        CGPathAddRect(framePath, NULL, CGRectMake(0.0f, 0.0f, aWidth + _WLXPadding, 9999.0f));
-        CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
-        if (frame != NULL)
-            preferredFrameSize = AB_CTFrameGetSize(frame);
-        CFRelease(framePath);
-        CFRelease(framesetter);
-    }
-    return preferredFrameSize.height + _WLYPadding;
-}
-
-- (CGFloat)minimalHumanVisibleHeight
-{
-    CGFloat minimalHeight = 0.0f;
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self.string);
-    if (framesetter != NULL)
-    {
-        CGMutablePathRef framePath = CGPathCreateMutable();
-        CGPathAddRect(framePath, NULL, CGRectMake(0.0f, 0.0f, self.bounds.size.width - _WLXPadding, 9999.0f));
-        CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
-        if (frame != NULL)
         {
-            NSArray *lines = (NSArray *)CTFrameGetLines(frame);
-            if ([lines count] == 1)
-                minimalHeight = AB_CTFrameGetSize(frame).height;
-            else
-            {
-                CGPoint origins[2];
-                CTFrameGetLineOrigins(frame, CFRangeMake(0, 2), origins);
-                minimalHeight = origins[0].y - origins[1].y;
-            }
+            preferredFrameSize = AB_CTFrameGetSize(frame);
+            CFRelease(frame);
         }
         CFRelease(framePath);
         CFRelease(framesetter);
     }
-    return minimalHeight + _WLYPadding;
+    return CGSizeMake(preferredFrameSize.width + _WLXPadding, preferredFrameSize.height + _WLYPadding);
 }
 
-+ (CGFloat)minimalHumanVisibleWidth
+
+#pragma mark NSObject
+
+- (void)didChangeValueForKey:(NSString *)aKey
 {
-    return _WLXPadding + 30.0f;
+    if ([aKey isEqualToString:@"string"])
+    {
+        _shouldUpdateMinimalHeightCache = YES;
+    }
 }
 
 @end
