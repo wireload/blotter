@@ -545,6 +545,10 @@ static NSString* const _WLEventsKey = @"events";
     }
     [components setDay:0];
     [components setHour:0];
+    NSDateFormatter *dateFormatter = self._dateFormatter;
+    [dateFormatter setCalendar:calendar];
+    [dateFormatter setLocale:[NSLocale currentLocale]];
+    [dateFormatter setDateFormat:self._columnTitleFormat];
     [anIndexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop)
     {
         [components setDay:idx];
@@ -604,10 +608,6 @@ static NSString* const _WLEventsKey = @"events";
 #ifdef DEBUG_PERFORMANCE
             NSLog(@"Prepare weekView title");
 #endif
-            NSDateFormatter *dateFormatter = self._dateFormatter;
-            [dateFormatter setCalendar:calendar];
-            [dateFormatter setLocale:[NSLocale currentLocale]];
-            [dateFormatter setDateFormat:self._columnTitleFormat];
             NSString *title = [dateFormatter stringFromDate:noon];
             [columnData setObject:title forKey:_WLTitleKey];
         }
