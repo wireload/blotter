@@ -68,24 +68,68 @@ typedef enum
 
 @property (nonatomic, retain) NSCalendar *_calendar;
 
+/*!
+ @abstract      Updates events affected columns. Columns are determined by dates of changed events.
+ @discussion    Called when either CalEventsChangedExternallyNotification or CalEventsChangedNotification is posted.
+ */
 - (void)_eventsChanged:(NSNotification *)aNotification;
 
+/*!
+ @abstract      Sets a timer to call _localeActuallyChanged.
+ @discussion    Called when NSCurrentLocaleDidChangeNotification is posted.
+ @see           _localeActuallyChanged
+ */
 - (void)_localeChanged:(NSNotification *)aNotification;
 
+/*!
+ @abstract      Reloads the view. Invalidates _firstWeekday, _columnTitleFormat, _calendar, _dateFormatter.
+ */
 - (void)_localeActuallyChanged;
 
+/*!
+ @abstract      Updates titles of affected columns. Invalidates _columnTitleFormat.
+ @discussion    Called when PerDayDate preference is changed.
+ */
 - (void)_perDayDatePreferenceChanged;
 
+/*!
+ @abstract      Updates view to display new day.
+ @discussion    Called by a timer scheduled by _scheduleNextDayTimer.
+ @see           _scheduleNextDayTimer
+ */
 - (void)_showNextDay;
 
+/*!
+ @abstract      Updates view to display new week.
+ @discussion    Called by a timer scheduled by _scheduleNextWeekTimer.
+ @see           _scheduleNextWeekTimer
+ */
 - (void)_showNextWeek;
 
+/*!
+ @abstract      Reloads the view. Invalidates _columnTitleFormat.
+ @discussion    Called when either NSSystemClockDidChangeNotification or NSSystemTimeZoneDidChangeNotification is posted.
+ */
 - (void)_clockChanged;
 
+/*!
+ @abstract      Schedules a repeated timer that causes the view to scroll to current hour.
+ @see           scrollToCurrentHour
+ */
 - (void)_scheduleScrollTimer;
 
+/*!
+ @abstract      Schedules a timer to update view when day ends.
+ @discussion    Invalidated and rescheduled every time when the view is reloaded.
+ @see           _showNextDay
+ */
 - (void)_scheduleNextDayTimer;
 
+/*!
+ @abstract      Schedules a timer to update view when week ends.
+ @discussion    Invalidated and rescheduled every time when the view is reloaded.
+ @see           _showNextWeek
+ */
 - (void)_scheduleNextWeekTimer;
 
 @end
