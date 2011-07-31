@@ -75,6 +75,7 @@ static NSString* const _WLEventsKey = @"events";
 
         _cache = [[NSCache alloc] init];
         [_cache setName:@"WLCalendarWeekViewController cache"];
+        _columnDateRanges = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -86,6 +87,7 @@ static NSString* const _WLEventsKey = @"events";
     [_nextDayTimer invalidate];
     [_representedDate release];
     [_columnsData release];
+    [_columnDateRanges release];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
     [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:@"PerDayDate"];
@@ -113,7 +115,7 @@ static NSString* const _WLEventsKey = @"events";
 {
     [self view].dataSource = nil;
     // Look at the -_localeChanged: method.
-    [[NSRunLoop currentRunLoop] cancelPerformSelector:@selector(setupLayers) target:[self view] argument:nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_localeActuallyChanged) object:nil];
     [super setView:newView];
     newView.dataSource = self;
     self._representedDate = [NSDate date];
@@ -129,7 +131,7 @@ static NSString* const _WLEventsKey = @"events";
 - (void)setRepresentedObject:(NSArray *)newRepresentedObject
 {
     // Look at the -_localeChanged: method.
-    [[NSRunLoop currentRunLoop] cancelPerformSelector:@selector(setupLayers) target:[self view] argument:nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_localeActuallyChanged) object:nil];
     [super setRepresentedObject:newRepresentedObject];
     [[self view] setupLayers];
 }
@@ -139,7 +141,7 @@ static NSString* const _WLEventsKey = @"events";
     if (newMode != mode)
     {
         // Look at the -_localeChanged: method.
-        [[NSRunLoop currentRunLoop] cancelPerformSelector:@selector(setupLayers) target:[self view] argument:nil];
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_localeActuallyChanged) object:nil];
         mode = newMode;
         [[self view] setupLayers];
     }
@@ -162,6 +164,41 @@ static NSString* const _WLEventsKey = @"events";
     [[self view] scrollHour:[self currenHour]];
 }
 
+- (NSDate *)firstDate
+{
+    NSCalendar *cal = self._calendar;
+    switch (mode) {
+        case WLCalendarWeekViewKeepsCurrentDateMode:
+        {
+            NSDate *today = [NSDate date];
+            NSDateComponents *todayNoonComponents = [cal components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
+                                                           fromDate:today];
+            NSRange hoursRange = [cal rangeOfUnit:NSHourCalendarUnit inUnit:NSDayCalendarUnit forDate:today];
+            [todayNoonComponents setHour:NSMaxRange(hoursRange) / 2];
+            return [cal dateFromComponents:todayNoonComponents];
+        }
+        case WLCalendarWeekViewKeepsCurrentWeekMode:
+            return self._firstWeekday;
+    }
+}
+
+- (NSArray *)eventsForColumnsAtIndexes:(NSIndexSet *)anIndexSet firstDate:(NSDate *)aFirstDate
+{
+#ifdef DEBUG_PERFORMANCE
+    NSLog(@"%@: %@", NSStringFromSelector(_cmd), anIndexSet);
+#endif
+    NSDateComponents *offset = [[NSDateComponents alloc] init];
+    NSCalendar *c = self._calendar;
+    [offset setDay:[anIndexSet firstIndex]];
+    NSDate *startDate = [[c dateByAddingComponents:offset toDate:aFirstDate options:0] WL_upperBoundaryWithCalendar:c];
+    [offset setDay:[anIndexSet lastIndex]];
+    NSDate *endDate = [[c dateByAddingComponents:offset toDate:aFirstDate options:0] WL_lowerBoundaryWithCalendar:c];
+    NSPredicate *p = [CalCalendarStore eventPredicateWithStartDate:startDate
+                                                           endDate:endDate
+                                                         calendars:[self representedObject]];
+    return [[CalCalendarStore defaultCalendarStore] eventsWithPredicate:p];
+}
+
 
 #pragma mark Private
 @dynamic _oneDayComponent;
@@ -174,19 +211,18 @@ static NSString* const _WLEventsKey = @"events";
 
 - (NSDateComponents *)_oneDayComponent
 {
-    NSDateComponents *oneDayComponent = [_cache objectForKey:_WLOneDayComponentCacheKey];
-    if (oneDayComponent == nil)
+    NSDateComponents *c = [_cache objectForKey:_WLOneDayComponentCacheKey];
+    if (c == nil)
     {
-        oneDayComponent = [[NSDateComponents alloc] init];
-        [oneDayComponent setDay:1];
-        [_cache setObject:oneDayComponent forKey:_WLOneDayComponentCacheKey];
-        [oneDayComponent release];
+        c = [[[NSDateComponents alloc] init] autorelease];
+        [c setDay:1];
+        [_cache setObject:c forKey:_WLOneDayComponentCacheKey];
     }
 #ifdef DEBUG_PERFORMANCE
     else
         NSLog(@"Reuse cache: %@", _WLOneDayComponentCacheKey);
 #endif
-    return oneDayComponent;
+    return c;
 }
 
 - (void)set_oneDayComponent:(NSDateComponents *)newComponents
@@ -200,10 +236,9 @@ static NSString* const _WLEventsKey = @"events";
     NSDateComponents *oneWeekComponent = [_cache objectForKey:_WLOneWeekComponentCacheKey];
     if (oneWeekComponent == nil)
     {
-        oneWeekComponent = [[NSDateComponents alloc] init];
+        oneWeekComponent = [[[NSDateComponents alloc] init] autorelease];
         [oneWeekComponent setWeek:1];
         [_cache setObject:oneWeekComponent forKey:_WLOneWeekComponentCacheKey];
-        [oneWeekComponent release];
     }
 #ifdef DEBUG_PERFORMANCE
     else
@@ -220,17 +255,16 @@ static NSString* const _WLEventsKey = @"events";
 
 - (NSDateFormatter *)_dateFormatter
 {
-    NSDateFormatter *dateFormatter = [_cache objectForKey:_WLDateFormatterCacheKey];
-    if (dateFormatter == nil) {
-        dateFormatter = [[NSDateFormatter alloc] init];
-        [_cache setObject:dateFormatter forKey:_WLDateFormatterCacheKey];
-        [dateFormatter release];
+    NSDateFormatter *f = [_cache objectForKey:_WLDateFormatterCacheKey];
+    if (f == nil) {
+        f = [[[NSDateFormatter alloc] init] autorelease];
+        [_cache setObject:f forKey:_WLDateFormatterCacheKey];
     }
 #ifdef DEBUG_PERFORMANCE
     else
         NSLog(@"Reuse cache: %@", _WLDateFormatterCacheKey);
 #endif
-    return dateFormatter;
+    return f;
 }
 
 - (void)set_dateFormatter:(NSDateFormatter *)newDateFormatter
@@ -244,13 +278,17 @@ static NSString* const _WLEventsKey = @"events";
     NSDate *firstWeekday = [_cache objectForKey:_WLFirstWeekdayCacheKey];
     if (firstWeekday == nil)
     {
-        NSCalendar *calendar = self._calendar;
-        NSUInteger units = NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit;
-        NSDateComponents *components = [calendar components:units fromDate:self._representedDate];
-        NSRange weekdaysRange = [calendar rangeOfUnit:NSDayCalendarUnit inUnit:NSWeekCalendarUnit forDate:self._representedDate];
-        [components setDay:weekdaysRange.location];
-        [components setHour:12];
-        firstWeekday = [calendar dateFromComponents:components];
+        static const NSUInteger Units = NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit;
+
+        NSCalendar *cal = self._calendar;
+        NSRange weekdaysRange = [cal rangeOfUnit:NSDayCalendarUnit inUnit:NSWeekCalendarUnit forDate:self._representedDate];
+        NSDateComponents *comp = [cal components:Units fromDate:self._representedDate];
+        [comp setDay:weekdaysRange.location];
+        firstWeekday = [cal dateFromComponents:comp];
+
+        NSRange hoursRange = [cal rangeOfUnit:NSHourCalendarUnit inUnit:NSDayCalendarUnit forDate:firstWeekday];
+        [comp setHour:NSMaxRange(hoursRange) / 2]; // noon
+        firstWeekday = [cal dateFromComponents:comp];
         [_cache setObject:firstWeekday forKey:_WLFirstWeekdayCacheKey];
     }
 #ifdef DEBUG_PERFORMANCE
@@ -268,20 +306,20 @@ static NSString* const _WLEventsKey = @"events";
 
 - (NSString *)_columnTitleFormat
 {
-    NSString *format = [_cache objectForKey:_WLColumnTitleFormatCacheKey];
-    if (format == nil)
+    NSString *f = [_cache objectForKey:_WLColumnTitleFormatCacheKey];
+    if (f == nil)
     {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"PerDayDate"])
-            format = [NSDateFormatter dateFormatFromTemplate:@"eeedMMM" options:0 locale:[NSLocale autoupdatingCurrentLocale]];
+            f = [NSDateFormatter dateFormatFromTemplate:@"eeedMMM" options:0 locale:[NSLocale autoupdatingCurrentLocale]];
         else
-            format = [NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:[NSLocale autoupdatingCurrentLocale]];
-        [_cache setObject:format forKey:_WLColumnTitleFormatCacheKey];
+            f = [NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:[NSLocale autoupdatingCurrentLocale]];
+        [_cache setObject:f forKey:_WLColumnTitleFormatCacheKey];
     }
 #ifdef DEBUG_PERFORMANCE
     else
         NSLog(@"Reuse cache: %@", _WLColumnTitleFormatCacheKey);
 #endif
-    return format;
+    return f;
 }
 
 - (void)set_columnTitleFormat:(NSString *)newFormat
@@ -292,17 +330,17 @@ static NSString* const _WLEventsKey = @"events";
 
 - (NSCalendar *)_calendar
 {
-    NSCalendar *calendar = [_cache objectForKey:_WLCalendarCacheKey];
-    if (calendar == nil)
+    NSCalendar *c = [_cache objectForKey:_WLCalendarCacheKey];
+    if (c == nil)
     {
-        calendar = [NSCalendar autoupdatingCurrentCalendar];
-        [_cache setObject:calendar forKey:_WLCalendarCacheKey];
+        c = [NSCalendar autoupdatingCurrentCalendar];
+        [_cache setObject:c forKey:_WLCalendarCacheKey];
     }
 #ifdef DEBUG_PERFORMANCE
     else
         NSLog(@"Reuse cache: %@", _WLCalendarCacheKey);
 #endif
-    return calendar;
+    return c;
 }
 
 - (void)set_calendar:(NSCalendar *)newCalendar
@@ -314,26 +352,29 @@ static NSString* const _WLEventsKey = @"events";
 - (void)_eventsChanged:(NSNotification *)aNotification
 {
     NSMutableIndexSet *affectedColumnsIndexes = [NSMutableIndexSet indexSet];
-    NSMutableArray *eventUIDs = [NSMutableArray array];
-    [eventUIDs addObjectsFromArray:[[aNotification userInfo] objectForKey:CalInsertedRecordsKey]];
-    [eventUIDs addObjectsFromArray:[[aNotification userInfo] objectForKey:CalUpdatedRecordsKey]];
-    [eventUIDs addObjectsFromArray:[[aNotification userInfo] objectForKey:CalDeletedRecordsKey]];
+    NSMutableArray *changedEventUIDs = [NSMutableArray array];
+    [changedEventUIDs addObjectsFromArray:[[aNotification userInfo] objectForKey:CalInsertedRecordsKey]];
+    [changedEventUIDs addObjectsFromArray:[[aNotification userInfo] objectForKey:CalUpdatedRecordsKey]];
+    [changedEventUIDs addObjectsFromArray:[[aNotification userInfo] objectForKey:CalDeletedRecordsKey]];
 
-    for (NSString *uid in eventUIDs)
+    NSUInteger numberOfColumns = [self numberOfColumnsInWeekView:[self view]];
+    for (NSString *uid in changedEventUIDs)
     {
-        if ([affectedColumnsIndexes count] == sizeof(_columnDateRanges)/sizeof(WLDateRange*))
+        if ([affectedColumnsIndexes count] == numberOfColumns)
             break;
-        CalEvent *event = [[CalCalendarStore defaultCalendarStore] eventWithUID:uid occurrence:nil];
-        // There are no start and end dates for deleted event.
-        if (event == nil)
+
+        CalEvent *changedEvent = [[CalCalendarStore defaultCalendarStore] eventWithUID:uid occurrence:nil];
+        // There are no start and end dates for a deleted event.
+        if (changedEvent == nil)
         {
-            affectedColumnsIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, sizeof(_columnDateRanges)/sizeof(WLDateRange*))];
+            affectedColumnsIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, numberOfColumns)];
             break;
         }
-        WLDateRange *eventRange = [WLDateRange dateRangeWithStartDate:event.startDate endDate:event.endDate];
-        for (NSUInteger i=0, size=sizeof(_columnDateRanges)/sizeof(WLDateRange*); i<size; ++i)
+
+        WLDateRange *eventRange = [WLDateRange dateRangeWithStartDate:changedEvent.startDate endDate:changedEvent.endDate];
+        for (NSUInteger i=0; i<numberOfColumns; ++i)
         {
-            if ([_columnDateRanges[i] intersectsRange:eventRange])
+            if ([[_columnDateRanges objectForKey:[NSNumber numberWithUnsignedInteger:i]] intersectsRange:eventRange])
                 [affectedColumnsIndexes addIndex:i];
         }
     }
@@ -347,18 +388,25 @@ static NSString* const _WLEventsKey = @"events";
 {
     // NSCurrentLocaleDidChangeNotification may be posted multiple times for 1 change (meaning user's change in the sys prefs).
     // Don't annoy the user with multiple updates.
-    [[NSRunLoop currentRunLoop] cancelPerformSelector:@selector(setupLayers) target:[self view] argument:nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_localeActuallyChanged) object:nil];
     static const NSTimeInterval AnyDelay = 1.0f;
+    [self performSelector:@selector(_localeActuallyChanged) withObject:nil afterDelay:AnyDelay];
+}
+
+- (void)_localeActuallyChanged
+{
+    NSLog(@"_localeActuallyChanged");
     self._firstWeekday = nil;
     self._columnTitleFormat = nil;
     self._calendar = nil;
-    [[self view] performSelector:@selector(setupLayers) withObject:nil afterDelay:AnyDelay];
+    self._dateFormatter = nil;
+    [[self view] setupLayers];
 }
 
 - (void)_clockChanged
 {
     // Look at the -_localeChanged: method.
-    [[NSRunLoop currentRunLoop] cancelPerformSelector:@selector(setupLayers) target:[self view] argument:nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_localeActuallyChanged) object:nil];
     self._firstWeekday = nil;
     self._representedDate = [NSDate date];
     [[self view] setupLayers];
@@ -474,32 +522,35 @@ static NSString* const _WLEventsKey = @"events";
 
 - (CGFloat)hourForDate:(NSDate *)aDate
 {
-    NSCalendar *calendar = self._calendar;
-    NSDateComponents *components = [calendar components:NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:aDate];
-    NSRange minutesRange = [calendar rangeOfUnit:NSMinuteCalendarUnit inUnit:NSHourCalendarUnit forDate:aDate];
-    CGFloat result = ((CGFloat)[components hour] + (CGFloat)[components minute] / minutesRange.length);
-    return result;
+    NSCalendar *cal = self._calendar;
+    NSDateComponents *comp = [cal components:NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:aDate];
+    NSRange minutesRange = [cal rangeOfUnit:NSMinuteCalendarUnit inUnit:NSHourCalendarUnit forDate:aDate];
+    return ((CGFloat)[comp hour] + (CGFloat)([comp minute] - minutesRange.location) / minutesRange.length);
 }
 
 - (NSString *)stringForHour:(NSUInteger)aHour
 {
-    NSCalendar *calendar = self._calendar;
-    NSDateComponents *components = [calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
-                                               fromDate:[NSDate dateWithTimeIntervalSinceReferenceDate:0.0f]];
-    [components setHour:aHour];
+    NSCalendar *cal = self._calendar;
+    NSDateComponents *justHourComponents = [cal components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
+                                    fromDate:[NSDate dateWithTimeIntervalSinceReferenceDate:0.0]];
+    [justHourComponents setHour:aHour];
 
-    NSDateFormatter *dateFormatter = self._dateFormatter;
-    [dateFormatter setCalendar:calendar];
-    [dateFormatter setLocale:[NSLocale currentLocale]];
-    [dateFormatter setDateStyle:NSDateFormatterNoStyle];
-    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-    return [dateFormatter stringFromDate:[calendar dateFromComponents:components]];
+    NSDateFormatter *f = self._dateFormatter;
+    [f setDateStyle:NSDateFormatterNoStyle];
+    [f setTimeStyle:NSDateFormatterShortStyle];
+    return [f stringFromDate:[cal dateFromComponents:justHourComponents]];
 }
 
 - (NSUInteger)numberOfColumnsInWeekView:(WLCalendarWeekView *)aWeekView
 {
-    // FIXME: some calendar may have more or less than 7 days per week.
-    return 7;
+    NSCalendar *cal = self._calendar;
+    if (mode == WLCalendarWeekViewKeepsCurrentWeekMode)
+    {
+        NSRange weekdaysRange = [cal rangeOfUnit:NSWeekdayCalendarUnit inUnit:NSWeekCalendarUnit forDate:self._representedDate];
+        return weekdaysRange.length;
+    }
+    else
+        return 7;
 }
 
 // -[CalCalendarStore eventsWithPredicate:] can take a relatively long time. This optimization allows us to call that method only once.
@@ -508,51 +559,22 @@ static NSString* const _WLEventsKey = @"events";
 #ifdef DEBUG_PERFORMANCE
     NSLog(@"%@", NSStringFromSelector(_cmd));
 #endif
-    NSCalendar *calendar = self._calendar;
+    NSCalendar *cal = self._calendar;
     _columnsData = [[NSMutableDictionary alloc] initWithCapacity:[anIndexSet count]];
-    NSDate *firstDate = nil;
-    if (mode == WLCalendarWeekViewKeepsCurrentDateMode)
-    {
-        firstDate = [NSDate date];
-        NSDateComponents *components = [calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
-                                                   fromDate:firstDate];
-        NSRange hoursRange = [calendar rangeOfUnit:NSHourCalendarUnit inUnit:NSDayCalendarUnit forDate:firstDate];
-        [components setHour:NSMaxRange(hoursRange) / 2]; // noon
-        firstDate = [calendar dateFromComponents:components];
-    }
-    else if (mode == WLCalendarWeekViewKeepsCurrentWeekMode)
-        firstDate = self._firstWeekday;
 
-    NSDateComponents *components = [[NSDateComponents alloc] init];
-    [components setHour:0];
-    [components setDay:[anIndexSet firstIndex]];
-    NSDate *startRangeDate = [calendar dateByAddingComponents:components toDate:firstDate options:0];
-    startRangeDate = [startRangeDate WL_upperBoundaryWithCalendar:calendar];
-    [components setDay:[anIndexSet lastIndex]];
-    NSDate *endRangeDate = [calendar dateByAddingComponents:components toDate:firstDate options:0];
-    endRangeDate = [endRangeDate WL_lowerBoundaryWithCalendar:calendar];
+    NSDate *firstDate = [self firstDate];
 
     NSArray *events = nil;
     if (dataUnits & WLCalendarWeekViewEventsDataUnit)
+        events = [self eventsForColumnsAtIndexes:anIndexSet firstDate:firstDate];
+
+    NSDateComponents *columnDateComponents = [[NSDateComponents alloc] init];
+    NSDateFormatter *titleFormatter = self._dateFormatter;
+    [titleFormatter setDateFormat:self._columnTitleFormat];
+    [anIndexSet enumerateIndexesUsingBlock:^(NSUInteger columnIdx, BOOL *stop)
     {
-#ifdef DEBUG_PERFORMANCE
-        NSLog(@"Take weekView events from CalCalendarStore");
-#endif
-        NSPredicate *eventsPredicate = [CalCalendarStore eventPredicateWithStartDate:startRangeDate
-                                                                             endDate:endRangeDate
-                                                                           calendars:[self representedObject]];
-        events = [[CalCalendarStore defaultCalendarStore] eventsWithPredicate:eventsPredicate];
-    }
-    [components setDay:0];
-    [components setHour:0];
-    NSDateFormatter *dateFormatter = self._dateFormatter;
-    [dateFormatter setCalendar:calendar];
-    [dateFormatter setLocale:[NSLocale currentLocale]];
-    [dateFormatter setDateFormat:self._columnTitleFormat];
-    [anIndexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop)
-    {
-        [components setDay:idx];
-        NSDate *noon = [calendar dateByAddingComponents:components toDate:firstDate options:0];
+        [columnDateComponents setDay:columnIdx];
+        NSDate *columnDate = [cal dateByAddingComponents:columnDateComponents toDate:firstDate options:0];
         NSMutableDictionary *columnData = [NSMutableDictionary dictionary];
 
         if (dataUnits & WLCalendarWeekViewEventsDataUnit)
@@ -560,27 +582,26 @@ static NSString* const _WLEventsKey = @"events";
 #ifdef DEBUG_PERFORMANCE
             NSLog(@"Prepare weekView events");
 #endif
-            NSDate *upperBound = [noon WL_upperBoundaryWithCalendar:calendar];
-            NSDate *lowerBound = [upperBound WL_lowerBoundaryWithCalendar:calendar];
-            WLDateRange *dayRange = [WLDateRange dateRangeWithStartDate:upperBound endDate:lowerBound];
-            [_columnDateRanges[idx] release];
-            _columnDateRanges[idx] = [dayRange retain];
-            NSMutableArray *dayEvents = [NSMutableArray array];
+            NSDate *upperBound = [columnDate WL_upperBoundaryWithCalendar:cal];
+            NSDate *lowerBound = [upperBound WL_lowerBoundaryWithCalendar:cal];
+            WLDateRange *columnDateRange = [WLDateRange dateRangeWithStartDate:upperBound endDate:lowerBound];
+            [_columnDateRanges setObject:columnDateRange forKey:[NSNumber numberWithUnsignedInteger:columnIdx]];
+            NSMutableArray *columnEvents = [NSMutableArray array];
             for (CalEvent *event in events)
             {
                 WLDateRange *eventRange = [WLDateRange dateRangeWithStartDate:event.startDate endDate:event.endDate];
                 WLPositionRelativeToRange position;
-                BOOL intresects = [dayRange intersectsRange:eventRange position:&position];
+                BOOL intresects = [columnDateRange intersectsRange:eventRange position:&position];
                 if (intresects)
                 {
                     if (position == WLWithinRange)
-                        [dayEvents addObject:event];
+                        [columnEvents addObject:event];
                     // If an event takes more than 1 day, divide it into multiple events for each column.
-                    else if (position == WLEarlierThanRange && [eventRange.endDate compare:dayRange.startDate] != NSOrderedSame)
+                    else if (position == WLEarlierThanRange && [eventRange.endDate compare:columnDateRange.startDate] != NSOrderedSame)
                     {
                         CalEvent *partEvent = [event copy];
                         partEvent.startDate = upperBound;
-                        [dayEvents addObject:partEvent];
+                        [columnEvents addObject:partEvent];
                         [partEvent release];
                     }
                     else if (position == WLOverlapsRange)
@@ -588,19 +609,19 @@ static NSString* const _WLEventsKey = @"events";
                         CalEvent *partEvent = [event copy];
                         partEvent.startDate = upperBound;
                         partEvent.endDate = lowerBound;
-                        [dayEvents addObject:partEvent];
+                        [columnEvents addObject:partEvent];
                         [partEvent release];
                     }
-                    else if (position == WLLaterThanRange && [dayRange.endDate compare:eventRange.startDate] != NSOrderedSame)
+                    else if (position == WLLaterThanRange && [columnDateRange.endDate compare:eventRange.startDate] != NSOrderedSame)
                     {
                         CalEvent *partEvent = [event copy];
                         partEvent.endDate = lowerBound;
-                        [dayEvents addObject:partEvent];
+                        [columnEvents addObject:partEvent];
                         [partEvent release];
                     }
                 }
             }
-            [columnData setObject:dayEvents forKey:_WLEventsKey];
+            [columnData setObject:columnEvents forKey:_WLEventsKey];
         }
 
         if (dataUnits & WLCalendarWeekViewTitleDataUnit)
@@ -608,12 +629,11 @@ static NSString* const _WLEventsKey = @"events";
 #ifdef DEBUG_PERFORMANCE
             NSLog(@"Prepare weekView title");
 #endif
-            NSString *title = [dateFormatter stringFromDate:noon];
-            [columnData setObject:title forKey:_WLTitleKey];
+            [columnData setObject:[titleFormatter stringFromDate:columnDate] forKey:_WLTitleKey];
         }
-        [_columnsData setObject:columnData forKey:[NSNumber numberWithUnsignedInteger:idx]];
+        [_columnsData setObject:columnData forKey:[NSNumber numberWithUnsignedInteger:columnIdx]];
     }];
-    [components release];
+    [columnDateComponents release];
 }
 
 - (NSString *)weekView:(WLCalendarWeekView *)aWeekView titleForColumnAtIndex:(NSUInteger)anIndex
@@ -651,3 +671,4 @@ static NSString* const _WLEventsKey = @"events";
 }
 
 @end
+

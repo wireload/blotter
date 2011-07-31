@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <CalendarStore/CalendarStore.h>
 #import "WLCalendarWeekView.h"
 
 
@@ -28,7 +29,7 @@ typedef enum
     NSTimer *_nextWeekTimer;
     NSDate *_representedDate;
     NSCache *_cache;
-    WLDateRange* _columnDateRanges[7]; // FIXME: see numberOfColumnsInWeekView:
+    NSMutableDictionary *_columnDateRanges;
 
     // Lifetime of this object is limited to
     // weekView:willAskForDataForColumnsAtIndexes: -> weekView:titleForColumnAtIndex: &
@@ -48,6 +49,10 @@ typedef enum
 
 - (void)scrollToCurrentHour;
 
+- (NSDate *)firstDate;
+
+- (NSArray *)eventsForColumnsAtIndexes:(NSIndexSet *)anIndexSet firstDate:(NSDate *)aFirstDate;
+
 
 @property (nonatomic, retain) NSDateComponents *_oneDayComponent;
 
@@ -66,6 +71,8 @@ typedef enum
 - (void)_eventsChanged:(NSNotification *)aNotification;
 
 - (void)_localeChanged:(NSNotification *)aNotification;
+
+- (void)_localeActuallyChanged;
 
 - (void)_perDayDatePreferenceChanged;
 
