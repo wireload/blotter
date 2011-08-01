@@ -31,6 +31,7 @@ static NSString* const _WLEventsKey = @"events";
 
 @implementation WLCalendarWeekViewController
 @synthesize mode;
+@synthesize titleFormat;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -67,12 +68,6 @@ static NSString* const _WLEventsKey = @"events";
                                                                selector:@selector(_clockChanged)
                                                                    name:NSWorkspaceDidWakeNotification
                                                                  object:nil];
-
-        [[NSUserDefaults standardUserDefaults] addObserver:self
-                                                forKeyPath:@"PerDayDate"
-                                                   options:NSKeyValueObservingOptionNew
-                                                   context:NULL];
-
         _cache = [[NSCache alloc] init];
         [_cache setName:@"WLCalendarWeekViewController cache"];
         _columnDateRanges = [[NSMutableDictionary alloc] init];
@@ -90,7 +85,6 @@ static NSString* const _WLEventsKey = @"events";
     [_columnDateRanges release];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
-    [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:@"PerDayDate"];
     [super dealloc];
 }
 
@@ -144,6 +138,17 @@ static NSString* const _WLEventsKey = @"events";
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_localeActuallyChanged) object:nil];
         mode = newMode;
         [[self view] setupLayers];
+    }
+}
+
+- (void)setTitleFormat:(WLCalendarWeekViewTitleFormat)newTitleFormat
+{
+    if (newTitleFormat != titleFormat)
+    {
+        titleFormat = newTitleFormat;
+        self._columnTitleFormat = nil;
+        NSUInteger numberOfColumns = [self numberOfColumnsInWeekView:[self view]];
+        [[self view] updateTitleOfColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, numberOfColumns)]];
     }
 }
 
@@ -309,7 +314,7 @@ static NSString* const _WLEventsKey = @"events";
     NSString *f = [_cache objectForKey:_WLColumnTitleFormatCacheKey];
     if (f == nil)
     {
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"PerDayDate"])
+        if (titleFormat == WLCalendarWeekViewWeekdayAndMonthdayTitleFormat)
             f = [NSDateFormatter dateFormatFromTemplate:@"eeedMMM" options:0 locale:[NSLocale autoupdatingCurrentLocale]];
         else
             f = [NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:[NSLocale autoupdatingCurrentLocale]];
@@ -410,13 +415,6 @@ static NSString* const _WLEventsKey = @"events";
     self._firstWeekday = nil;
     self._representedDate = [NSDate date];
     [[self view] setupLayers];
-}
-
-- (void)_perDayDatePreferenceChanged
-{
-    self._columnTitleFormat = nil;
-    NSUInteger numberOfColumns = [self numberOfColumnsInWeekView:[self view]];
-    [[self view] updateTitleOfColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, numberOfColumns)]];
 }
 
 - (void)_showNextDay

@@ -18,11 +18,19 @@ typedef enum
 } WLCalendarWeekViewMode;
 
 
+typedef enum
+{
+    WLCalendarWeekViewWeekdayTitleFormat,
+    WLCalendarWeekViewWeekdayAndMonthdayTitleFormat
+} WLCalendarWeekViewTitleFormat;
+
+
 @class WLDateRange;
 
 
 @interface WLCalendarWeekViewController : NSViewController <WLCalendarWeekViewDataSource> {
     WLCalendarWeekViewMode mode;
+    WLCalendarWeekViewTitleFormat titleFormat;
 
     NSTimer *_scrollTimer;
     NSTimer *_nextDayTimer;
@@ -38,6 +46,8 @@ typedef enum
 }
 
 @property (nonatomic) WLCalendarWeekViewMode mode;
+
+@property (nonatomic) WLCalendarWeekViewTitleFormat titleFormat;
 
 - (WLCalendarWeekView *)view;
 
@@ -85,12 +95,6 @@ typedef enum
  @abstract      Reloads the view. Invalidates _firstWeekday, _columnTitleFormat, _calendar, _dateFormatter.
  */
 - (void)_localeActuallyChanged;
-
-/*!
- @abstract      Updates titles of affected columns. Invalidates _columnTitleFormat.
- @discussion    Called when PerDayDate preference is changed.
- */
-- (void)_perDayDatePreferenceChanged;
 
 /*!
  @abstract      Updates view to display new day.
