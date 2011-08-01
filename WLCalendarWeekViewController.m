@@ -198,6 +198,7 @@ static NSString* const _WLEventsKey = @"events";
     NSDate *startDate = [[c dateByAddingComponents:offset toDate:aFirstDate options:0] WL_upperBoundaryWithCalendar:c];
     [offset setDay:[anIndexSet lastIndex]];
     NSDate *endDate = [[c dateByAddingComponents:offset toDate:aFirstDate options:0] WL_lowerBoundaryWithCalendar:c];
+    [offset release];
     NSPredicate *p = [CalCalendarStore eventPredicateWithStartDate:startDate
                                                            endDate:endDate
                                                          calendars:[self representedObject]];
