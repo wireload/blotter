@@ -78,11 +78,6 @@
     return (WLCalendarWindow *)[super window];
 }
 
-- (void)setWindow:(WLCalendarWindow *)newWindow
-{
-    [super setWindow:newWindow];
-}
-
 - (void)setWindowSize:(BLSize)newSize
 {
     if (newSize != windowSize)

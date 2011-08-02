@@ -9,9 +9,17 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface WLCalendarWindow : NSWindow /*<CALayerDelegate>*/ {
+/*!
+ @abstract      Borderless window that draws custom background.
+ @classdesign   You SHOULD use -init to initialize.
+ @ownership     WLCalendarWindowController
+ */
+@interface WLCalendarWindow : NSWindow {
 }
 
+/*!
+ @abstract Returns bounds in contentView's coordinates where subviews SHOULD be placed.
+ */
 - (NSRect)contentViewBounds;
 
 @end
