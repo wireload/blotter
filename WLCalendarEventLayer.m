@@ -80,25 +80,13 @@ const CGFloat _WLXPadding = 10.0f;
 }
 
 
-#pragma mark CALayer
+#pragma mark Private
 
-+ (BOOL)needsDisplayForKey:(NSString *)aKey
+- (void)_drawBackground:(CGContextRef)aContext
 {
-    if ([aKey isEqualToString:@"string"])
-        return YES;
-    else
-        return [super needsDisplayForKey:aKey];
-}
-
-- (void)drawInContext:(CGContextRef)aContext
-{
-    CGRect layerBounds = self.bounds;
-
-    CGContextSaveGState(aContext);
-#ifndef DEBUG_LAYERS
     CGColorRef backgroundColor = CGColorCreateCopyWithAlpha(self.contentsBackgroundColor, self.contentsBackgroundOpacity);
     CGContextSetFillColorWithColor(aContext, backgroundColor);
-    CGContextFillRect(aContext, layerBounds);
+    CGContextFillRect(aContext, self.bounds);
     CGColorRelease(backgroundColor);
 
     CGContextSaveGState(aContext);
@@ -113,109 +101,140 @@ const CGFloat _WLXPadding = 10.0f;
     CGContextSetBlendMode(aContext, kCGBlendModeOverlay);
     CGContextDrawLinearGradient(aContext,
                                 whiteToTransparent,
-                                layerBounds.origin,
-                                CGPointMake(CGRectGetMinX(layerBounds), CGRectGetMaxY(layerBounds)),
+                                self.bounds.origin,
+                                CGPointMake(CGRectGetMinX(self.bounds), CGRectGetMaxY(self.bounds)),
                                 kCGGradientDrawsBeforeStartLocation);
     CGGradientRelease(whiteToTransparent);
     CGContextRestoreGState(aContext);
 
     CGContextBeginPath(aContext);
-    CGContextMoveToPoint(aContext, layerBounds.origin.x, layerBounds.origin.y);
-    CGContextAddLineToPoint(aContext, CGRectGetMaxX(layerBounds), layerBounds.origin.y);
-    CGContextMoveToPoint(aContext, layerBounds.origin.x, CGRectGetMaxY(layerBounds));
-    CGContextAddLineToPoint(aContext, CGRectGetMaxX(layerBounds), CGRectGetMaxY(layerBounds));
+    CGContextMoveToPoint(aContext, self.bounds.origin.x, self.bounds.origin.y);
+    CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), self.bounds.origin.y);
+    CGContextMoveToPoint(aContext, self.bounds.origin.x, CGRectGetMaxY(self.bounds));
+    CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), CGRectGetMaxY(self.bounds));
     CGColorRef lineColor = CGColorCreateCopyWithAlpha([[NSColor whiteColor] WL_CGColor], self.contentsBackgroundOpacity);
     CGContextSetStrokeColorWithColor(aContext, lineColor);
     CGContextStrokePath(aContext);
     CGColorRelease(lineColor);
+}
+
+- (void)_drawString:(CGContextRef)aContext
+{
+    CGContextSaveGState(aContext);
+    CGRect stringBounds = CGRectInset(self.bounds, _WLXPadding / 2, _WLYPadding / 2);
+    CGRect markedArea = CGContextGetClipBoundingBox(aContext);
+    if (CGRectIntersectsRect(stringBounds, markedArea))
+    {
+#ifdef DEBUG_LAYERS
+        CGContextSetFillColorWithColor(aContext, [[NSColor greenColor] WL_CGColor]);
+        CGContextFillRect(aContext, stringBounds);
+#endif
+        CGContextSetTextMatrix(aContext, CGAffineTransformIdentity);
+        CGContextTranslateCTM(aContext, 0.0f, self.bounds.size.height);
+        CGContextScaleCTM(aContext, 1.0f, -1.0f);
+        CGContextSetShouldSmoothFonts(aContext, YES);
+        CGContextSetAllowsFontSmoothing(aContext, YES);
+        CGContextSetShouldAntialias(aContext, YES);
+        CGContextSetAllowsAntialiasing(aContext, YES);
+        CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self.string);
+        if (framesetter != NULL)
+        {
+            CGMutablePathRef framePath = CGPathCreateMutable();
+            CGPathAddRect(framePath, NULL, stringBounds);
+            CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
+            if (frame != NULL)
+            {
+                NSArray *lines = (NSArray *)CTFrameGetLines(frame);
+                NSUInteger numberOfLines = [lines count];
+                if (numberOfLines > 0)
+                {
+                    __block CGPoint *lineOrigins = calloc(numberOfLines, sizeof(CGPoint));
+                    CTFrameGetLineOrigins(frame, CFRangeMake(0, numberOfLines), lineOrigins);
+
+                    CFRange frameRange = CTFrameGetVisibleStringRange(frame);
+                    BOOL shouldTruncateLastLine = frameRange.location + frameRange.length < [self.string length];
+
+                    [lines enumerateObjectsUsingBlock:^(id line, NSUInteger idx, BOOL *stop)
+                     {
+                         CGPoint origin = lineOrigins[idx];
+                         CGContextSetTextPosition(aContext, stringBounds.origin.x + origin.x, stringBounds.origin.y + origin.y);
+
+                         if (idx != numberOfLines - 1 || !shouldTruncateLastLine)
+                             CTLineDraw((CTLineRef)line, aContext);
+                         else
+                         {
+                             CFRange lineRange = CTLineGetStringRange((CTLineRef)line);
+                             NSRange range = NSMakeRange(lineRange.location, lineRange.length);
+                             NSMutableAttributedString *truncatedString = [[NSMutableAttributedString alloc] initWithAttributedString:
+                                                                           [self.string attributedSubstringFromRange:range]];
+                             NSString *trimmedString = [[truncatedString string] stringByTrimmingCharactersInSet:
+                                                        [NSCharacterSet newlineCharacterSet]];
+                             [[truncatedString mutableString] setString:trimmedString];
+                             [[truncatedString mutableString] appendString:(NSString *)CFSTR("\u2026")];
+                             CTLineRef truncatedLine = CTLineCreateWithAttributedString((CFAttributedStringRef)truncatedString);
+                             [truncatedString release];
+                             if (truncatedLine != NULL)
+                             {
+                                 static CTLineRef TruncationToken = NULL;
+                                 if (TruncationToken == NULL)
+                                 {
+                                     CFStringRef token = CFSTR("\u2026");
+                                     CFAttributedStringRef truncationString = CFAttributedStringCreate(NULL, token, NULL);
+                                     TruncationToken = CTLineCreateWithAttributedString(truncationString);
+                                     CFRelease(truncationString);
+                                 }
+                                 // In case when adding truncation symbol to the end of line make the line to not fit the bounds.
+                                 CTLineRef truncatedTruncatedLine = CTLineCreateTruncatedLine(truncatedLine,
+                                                                                              stringBounds.size.width,
+                                                                                              kCTLineTruncationEnd,
+                                                                                              TruncationToken);
+                                 if (truncatedTruncatedLine != NULL)
+                                 {
+                                     CTLineDraw(truncatedTruncatedLine, aContext);
+                                     CFRelease(truncatedTruncatedLine);
+                                 }
+                                 else
+                                     CTLineDraw(truncatedLine, aContext);
+                                 CFRelease(truncatedLine);
+                             }
+                             else
+                                 CTLineDraw((CTLineRef)line, aContext);
+                         }
+                     }];
+                    free(lineOrigins);
+                }
+                CFRelease(frame);
+            }
+            CFRelease(framePath);
+            CFRelease(framesetter);
+        }
+    }
+#ifdef DEBUG_PERFORMANCE
+    else
+        NSLog(@"Avoid drawing string");
+#endif
+    CGContextRestoreGState(aContext);
+}
+
+
+#pragma mark CALayer
+
++ (BOOL)needsDisplayForKey:(NSString *)aKey
+{
+    if ([aKey isEqualToString:@"string"])
+        return YES;
+    else
+        return [super needsDisplayForKey:aKey];
+}
+
+- (void)drawInContext:(CGContextRef)aContext
+{
+    CGContextSaveGState(aContext);
+#ifndef DEBUG_LAYERS
+    [self _drawBackground:aContext];
 #endif
     // It's important to draw background before text to make antialiasing possible.
-    CGContextSaveGState(aContext);
-    CGRect stringBounds = CGRectInset(layerBounds, _WLXPadding / 2, _WLYPadding / 2);
-#ifdef DEBUG_LAYERS
-    CGContextSetFillColorWithColor(aContext, [[NSColor greenColor] WL_CGColor]);
-    CGContextFillRect(aContext, stringBounds);
-#endif
-    CGContextSetTextMatrix(aContext, CGAffineTransformIdentity);
-    CGContextTranslateCTM(aContext, 0.0f, layerBounds.size.height);
-    CGContextScaleCTM(aContext, 1.0f, -1.0f);
-    CGContextSetShouldSmoothFonts(aContext, YES);
-    CGContextSetAllowsFontSmoothing(aContext, YES);
-    CGContextSetShouldAntialias(aContext, YES);
-    CGContextSetAllowsAntialiasing(aContext, YES);
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self.string);
-    if (framesetter != NULL)
-    {
-        CGMutablePathRef framePath = CGPathCreateMutable();
-        CGPathAddRect(framePath, NULL, stringBounds);
-        CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
-        if (frame != NULL)
-        {
-            NSArray *lines = (NSArray *)CTFrameGetLines(frame);
-            NSUInteger numberOfLines = [lines count];
-            if (numberOfLines > 0)
-            {
-                __block CGPoint *lineOrigins = calloc(numberOfLines, sizeof(CGPoint));
-                CTFrameGetLineOrigins(frame, CFRangeMake(0, numberOfLines), lineOrigins);
-
-                CFRange frameRange = CTFrameGetVisibleStringRange(frame);
-                BOOL shouldTruncateLastLine = frameRange.location + frameRange.length < [self.string length];
-
-                [lines enumerateObjectsUsingBlock:^(id line, NSUInteger idx, BOOL *stop)
-                {
-                    CGPoint origin = lineOrigins[idx];
-                    CGContextSetTextPosition(aContext, stringBounds.origin.x + origin.x, stringBounds.origin.y + origin.y);
-
-                    if (idx != numberOfLines - 1 || !shouldTruncateLastLine)
-                        CTLineDraw((CTLineRef)line, aContext);
-                    else
-                    {
-                        CFRange lineRange = CTLineGetStringRange((CTLineRef)line);
-                        NSRange range = NSMakeRange(lineRange.location, lineRange.length);
-                        NSMutableAttributedString *truncatedString = [[NSMutableAttributedString alloc] initWithAttributedString:
-                                                                      [self.string attributedSubstringFromRange:range]];
-                        NSString *trimmedString = [[truncatedString string] stringByTrimmingCharactersInSet:
-                                                   [NSCharacterSet newlineCharacterSet]];
-                        [[truncatedString mutableString] setString:trimmedString];
-                        [[truncatedString mutableString] appendString:(NSString *)CFSTR("\u2026")];
-                        CTLineRef truncatedLine = CTLineCreateWithAttributedString((CFAttributedStringRef)truncatedString);
-                        [truncatedString release];
-                        if (truncatedLine != NULL)
-                        {
-                            static CTLineRef TruncationToken = NULL;
-                            if (TruncationToken == NULL)
-                            {
-                                CFStringRef token = CFSTR("\u2026");
-                                CFAttributedStringRef truncationString = CFAttributedStringCreate(NULL, token, NULL);
-                                TruncationToken = CTLineCreateWithAttributedString(truncationString);
-                                CFRelease(truncationString);
-                            }
-                            // In case when adding truncation symbol to the end of line make the line to not fit the bounds.
-                            CTLineRef truncatedTruncatedLine = CTLineCreateTruncatedLine(truncatedLine,
-                                                                                         stringBounds.size.width,
-                                                                                         kCTLineTruncationEnd,
-                                                                                         TruncationToken);
-                            if (truncatedTruncatedLine != NULL)
-                            {
-                                CTLineDraw(truncatedTruncatedLine, aContext);
-                                CFRelease(truncatedTruncatedLine);
-                            }
-                            else
-                                CTLineDraw(truncatedLine, aContext);
-                            CFRelease(truncatedLine);
-                        }
-                        else
-                            CTLineDraw((CTLineRef)line, aContext);
-                    }
-                }];
-                free(lineOrigins);
-            }
-            CFRelease(frame);
-        }
-        CFRelease(framePath);
-        CFRelease(framesetter);
-    }
-    CGContextRestoreGState(aContext);
+    [self _drawString:aContext];
 
     CGContextRestoreGState(aContext);
 }

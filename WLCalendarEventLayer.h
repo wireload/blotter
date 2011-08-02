@@ -26,4 +26,9 @@
 
 - (CGFloat)minimalHumanVisibleHeight;
 
+
+- (void)_drawBackground:(CGContextRef)aContext;
+
+- (void)_drawString:(CGContextRef)aContext;
+
 @end
