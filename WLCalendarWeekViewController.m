@@ -88,18 +88,6 @@ static NSString* const _WLEventsKey = @"events";
     [super dealloc];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if ([keyPath isEqualToString:@"PerDayDate"])
-        [self _perDayDatePreferenceChanged];
-}
-
-- (void)loadView
-{
-    if ([self nibName] != nil)
-        [super loadView];
-}
-
 - (WLCalendarWeekView *)view
 {
     return (WLCalendarWeekView *)[super view];
@@ -357,37 +345,11 @@ static NSString* const _WLEventsKey = @"events";
 
 - (void)_eventsChanged:(NSNotification *)aNotification
 {
-    NSMutableIndexSet *affectedColumnsIndexes = [NSMutableIndexSet indexSet];
-    NSMutableArray *changedEventUIDs = [NSMutableArray array];
-    [changedEventUIDs addObjectsFromArray:[[aNotification userInfo] objectForKey:CalInsertedRecordsKey]];
-    [changedEventUIDs addObjectsFromArray:[[aNotification userInfo] objectForKey:CalUpdatedRecordsKey]];
-    [changedEventUIDs addObjectsFromArray:[[aNotification userInfo] objectForKey:CalDeletedRecordsKey]];
-
-    NSUInteger numberOfColumns = [self numberOfColumnsInWeekView:[self view]];
-    for (NSString *uid in changedEventUIDs)
-    {
-        if ([affectedColumnsIndexes count] == numberOfColumns)
-            break;
-
-        CalEvent *changedEvent = [[CalCalendarStore defaultCalendarStore] eventWithUID:uid occurrence:nil];
-        // There are no start and end dates for a deleted event.
-        if (changedEvent == nil)
-        {
-            affectedColumnsIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, numberOfColumns)];
-            break;
-        }
-
-        WLDateRange *eventRange = [WLDateRange dateRangeWithStartDate:changedEvent.startDate endDate:changedEvent.endDate];
-        for (NSUInteger i=0; i<numberOfColumns; ++i)
-        {
-            if ([[_columnDateRanges objectForKey:[NSNumber numberWithUnsignedInteger:i]] intersectsRange:eventRange])
-                [affectedColumnsIndexes addIndex:i];
-        }
-    }
 #ifdef DEBUG_PERFORMANCE
-    NSLog(@"Update columns at indexes: %@", affectedColumnsIndexes);
+    NSLog(@"Update columns");
 #endif
-    [[self view] updateEventsOfColumnsAtIndexes:affectedColumnsIndexes];
+    NSUInteger numberOfColumns = [self numberOfColumnsInWeekView:[self view]];
+    [[self view] updateEventsOfColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, numberOfColumns)]];
 }
 
 - (void)_localeChanged:(NSNotification *)aNotification
@@ -667,6 +629,15 @@ static NSString* const _WLEventsKey = @"events";
     }
     [self _scheduleScrollTimer];
     [self scrollToCurrentHour];
+}
+
+
+#pragma mark NSView
+
+- (void)loadView
+{
+    if ([self nibName] != nil)
+        [super loadView];
 }
 
 @end

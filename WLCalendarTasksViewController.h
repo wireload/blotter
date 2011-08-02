@@ -20,13 +20,18 @@
 
 @property (nonatomic, copy) NSArray *sortDescriptors;
 
-- (void)reloadData;
-
 - (WLCalendarTasksView *)view;
 
+/*!
+ @discussion    You have to prepare controller (set its properties, representedObject) before calling this method.
+ */
 - (void)setView:(WLCalendarTasksView *)newView;
 
 
+- (void)_reloadData;
+
 - (void)_tasksChanged:(NSNotification *)aNotification;
+
+- (void)_preprocessTask:(CalTask *)aTask;
 
 @end

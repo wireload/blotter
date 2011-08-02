@@ -51,6 +51,9 @@ typedef enum
 
 - (WLCalendarWeekView *)view;
 
+/*!
+ @discussion    You have to prepare controller (set its properties, representedObject) before calling this method.
+ */
 - (void)setView:(WLCalendarWeekView *)newView;
 
 - (NSArray *)representedObject;

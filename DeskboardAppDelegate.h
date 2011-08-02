@@ -14,9 +14,12 @@
 #import "BLCalendarFramer.h"
 
 
+@class WLCalendarWindowController;
+
 @class WLFitWindow;
 
 @interface DeskboardAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate> {
+    WLCalendarWindowController *windowController;
     WLFitWindow *blotterWindow;
     NSStatusItem *statusItem;
     IBOutlet NSMenu *statusMenu;

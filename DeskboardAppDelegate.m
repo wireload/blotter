@@ -16,7 +16,8 @@
 #import "SRCommon.h"
 #import "PTHotKeyCenter.h"
 #import "PTHotKey+ShortcutRecorder.h"
-#import "TestWindowController.h"
+#import "WLCalendarWindow.h"
+#import "WLCalendarWindowController.h"
 
 
 extern NSString* const SRShortcutCodeKey;
@@ -78,6 +79,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 - (void)dealloc
 {
     [[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self];
+    [windowController release];
     [blotterWindow release];
     [prefs release];
     [super dealloc];
@@ -145,8 +147,22 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillClose:) name:NSWindowWillCloseNotification object:nil];
 
-
-    [[[TestWindowController alloc] initWithWindowNibName:@"TestWindow"] showWindow:self];
+    WLCalendarWindow *w = [[WLCalendarWindow alloc] init];
+    windowController = [[WLCalendarWindowController alloc] initWithWindow:w];
+    [w release];
+    [windowController bind:@"windowSize"
+                  toObject:[NSUserDefaultsController sharedUserDefaultsController]
+               withKeyPath:@"values.CalendarSize"
+                   options:nil];
+    [windowController bind:@"windowPosition"
+                  toObject:[NSUserDefaultsController sharedUserDefaultsController]
+               withKeyPath:@"values.CalendarPosition"
+                   options:nil];
+    [windowController bind:@"windowScreenIdentifier"
+                  toObject:[NSUserDefaultsController sharedUserDefaultsController]
+               withKeyPath:@"values.ScreenIdentifier"
+                   options:nil];
+    [windowController showWindow:self];
 }
 
 /*!

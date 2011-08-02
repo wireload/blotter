@@ -86,6 +86,8 @@
 		E2BA585813C61E3C005F0045 /* CATextLayer+WLStringSize.m in Sources */ = {isa = PBXBuildFile; fileRef = E2BA585713C61E3C005F0045 /* CATextLayer+WLStringSize.m */; };
 		E2C774C413D1C02A0067102F /* WLCalendarWeekdayEventsLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2C774C313D1C02A0067102F /* WLCalendarWeekdayEventsLayer.m */; };
 		E2DC7D3113071F7E0065CEAD /* WLFitWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E2DC7D3013071F7E0065CEAD /* WLFitWindow.m */; };
+		E2F112DD13E6E263001C2B7B /* WLCalendarWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F112DC13E6E263001C2B7B /* WLCalendarWindow.m */; };
+		E2F1133D13E70B4F001C2B7B /* WLCalendarWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F1133C13E70B4F001C2B7B /* WLCalendarWindowController.m */; };
 		E2F805D713595528004672DF /* YAJL.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 28DB06DD13590F5500E34FC5 /* YAJL.framework */; };
 		E2F9E1DF1322A4F4007598E2 /* glass-hud-border-bottom-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1D81322A4F4007598E2 /* glass-hud-border-bottom-left.png */; };
 		E2F9E1E01322A4F4007598E2 /* glass-hud-border-bottom-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1D91322A4F4007598E2 /* glass-hud-border-bottom-right.png */; };
@@ -323,6 +325,10 @@
 		E2C776E413D20A970067102F /* WLCalendarTimeRuler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTimeRuler.h; sourceTree = "<group>"; };
 		E2DC7D2F13071F7E0065CEAD /* WLFitWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLFitWindow.h; sourceTree = "<group>"; };
 		E2DC7D3013071F7E0065CEAD /* WLFitWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLFitWindow.m; sourceTree = "<group>"; };
+		E2F112DB13E6E263001C2B7B /* WLCalendarWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindow.h; sourceTree = "<group>"; };
+		E2F112DC13E6E263001C2B7B /* WLCalendarWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindow.m; sourceTree = "<group>"; };
+		E2F1133B13E70B4F001C2B7B /* WLCalendarWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowController.h; sourceTree = "<group>"; };
+		E2F1133C13E70B4F001C2B7B /* WLCalendarWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindowController.m; sourceTree = "<group>"; };
 		E2F9E1D81322A4F4007598E2 /* glass-hud-border-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-border-bottom-left.png"; sourceTree = "<group>"; };
 		E2F9E1D91322A4F4007598E2 /* glass-hud-border-bottom-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-border-bottom-right.png"; sourceTree = "<group>"; };
 		E2F9E1DA1322A4F4007598E2 /* glass-hud-border-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-border-bottom.png"; sourceTree = "<group>"; };
@@ -405,6 +411,8 @@
 				E2535B8613DCA88B0010A2ED /* WLDateRange.m */,
 				E2B223E613E16AF600890042 /* CoreText+Additions.h */,
 				E2B223E713E16AF600890042 /* CoreText+Additions.m */,
+				E2F1133B13E70B4F001C2B7B /* WLCalendarWindowController.h */,
+				E2F1133C13E70B4F001C2B7B /* WLCalendarWindowController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -503,6 +511,8 @@
 				E2B16FDD13D57F52005F8973 /* WLCalendarTimeRulerLayer.m */,
 				E214582A13D5AE7F00B21398 /* WLCalendarBackgroundLayer.h */,
 				E214582B13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m */,
+				E2F112DB13E6E263001C2B7B /* WLCalendarWindow.h */,
+				E2F112DC13E6E263001C2B7B /* WLCalendarWindow.m */,
 			);
 			name = WLCalendar;
 			sourceTree = "<group>";
@@ -772,6 +782,8 @@
 				E253575013DC884D0010A2ED /* NSDate+WLDayBoundaries.m in Sources */,
 				E2535B8713DCA88B0010A2ED /* WLDateRange.m in Sources */,
 				E2B223E813E16AF600890042 /* CoreText+Additions.m in Sources */,
+				E2F112DD13E6E263001C2B7B /* WLCalendarWindow.m in Sources */,
+				E2F1133D13E70B4F001C2B7B /* WLCalendarWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

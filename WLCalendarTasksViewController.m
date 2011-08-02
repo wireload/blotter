@@ -13,6 +13,24 @@
 @synthesize taskPredicate;
 @synthesize sortDescriptors;
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self != nil)
+    {
+        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+        [notificationCenter addObserver:self
+                               selector:@selector(_tasksChanged:)
+                                   name:CalTasksChangedExternallyNotification
+                                 object:[CalCalendarStore defaultCalendarStore]];
+        [notificationCenter addObserver:self
+                               selector:@selector(_tasksChanged:)
+                                   name:CalTasksChangedNotification
+                                 object:[CalCalendarStore defaultCalendarStore]];
+    }
+    return self;
+}
+
 - (void)dealloc
 {
     [taskPredicate release];
@@ -20,12 +38,6 @@
     [_tasks release];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
-}
-
-- (void)loadView
-{
-    if ([self nibName] != nil)
-        [super loadView];
 }
 
 - (WLCalendarTasksView *)view
@@ -38,25 +50,9 @@
     [self view].dataSource = nil;
     [super setView:newView];
     newView.dataSource = self;
+    [self _reloadData];
     [newView setupLayers];
 
-}
-
-- (void)setRepresentedObject:(id)aRepresentedObject
-{
-    [super setRepresentedObject:aRepresentedObject];
-    if ([aRepresentedObject isKindOfClass:[CalCalendarStore class]])
-    {
-        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-        [notificationCenter addObserver:self
-                               selector:@selector(_tasksChanged:)
-                                   name:CalTasksChangedExternallyNotification
-                                 object:aRepresentedObject];
-        [notificationCenter addObserver:self
-                               selector:@selector(_tasksChanged:)
-                                   name:CalTasksChangedNotification
-                                 object:aRepresentedObject];
-    }
 }
 
 - (void)setTaskPredicate:(NSPredicate *)newPredicate
@@ -65,6 +61,8 @@
     {
         [taskPredicate release];
         taskPredicate = [newPredicate retain];
+        if ([self view] != nil)
+            [self _reloadData];
     }
 }
 
@@ -74,18 +72,22 @@
     {
         [sortDescriptors release];
         sortDescriptors = [newDescriptors copy];
+        if ([self view] != nil)
+            [self _reloadData];
     }
 }
 
-- (void)reloadData
+
+#pragma mark Private
+
+- (void)_reloadData
 {
-    if ([self view] != nil && [self representedObject] != nil && taskPredicate != nil && [sortDescriptors count] > 0)
-    {
-        [_tasks release];
-        _tasks = [[[self representedObject] tasksWithPredicate:self.taskPredicate] mutableCopy];
-        [_tasks sortUsingDescriptors:self.sortDescriptors];
-        [[self view] reloadData];
-    }
+    [_tasks release];
+    _tasks = [[[CalCalendarStore defaultCalendarStore] tasksWithPredicate:self.taskPredicate] mutableCopy];
+    for (CalTask *task in _tasks)
+        [self _preprocessTask:task];
+    [_tasks sortUsingDescriptors:self.sortDescriptors];
+    [[self view] reloadData];
 }
 
 - (void)_tasksChanged:(NSNotification *)aNotification
@@ -107,7 +109,8 @@
     }
     for (NSString *taskUID in updatedTasks)
     {
-        CalTask *updatedTask = [[self representedObject] taskWithUID:taskUID];
+        CalTask *updatedTask = [[CalCalendarStore defaultCalendarStore] taskWithUID:taskUID];
+        [self _preprocessTask:updatedTask];
         NSUInteger oldIndex = [_tasks indexOfObjectPassingTest:^(id obj, NSUInteger idx, BOOL *stop) {
             return [[obj uid] isEqualToString:taskUID];
         }];
@@ -133,7 +136,8 @@
     }
     for (NSString *taskUID in insertedTasks)
     {
-        CalTask *newTask = [[self representedObject] taskWithUID:taskUID];
+        CalTask *newTask = [[CalCalendarStore defaultCalendarStore] taskWithUID:taskUID];
+        [self _preprocessTask:newTask];
         NSUInteger index = [_tasks indexOfObject:newTask
                                    inSortedRange:NSMakeRange(0, [_tasks count])
                                          options:NSBinarySearchingInsertionIndex | NSBinarySearchingFirstEqual
@@ -154,6 +158,15 @@
     [CATransaction commit];
 }
 
+- (void)_preprocessTask:(CalTask *)aTask;
+{
+    if (aTask.priority == CalPriorityNone)
+        aTask.priority = CalPriorityLow + 1;
+
+    if (aTask.dueDate == nil)
+        aTask.dueDate = [NSDate distantFuture];
+}
+
 
 #pragma mark WLCalendarTasksViewDataSource
 
@@ -165,6 +178,15 @@
 - (CalTask *)tasksView:(WLCalendarTasksView *)aTasksView taskAtIndex:(NSUInteger)anIndex
 {
     return [_tasks objectAtIndex:anIndex];
+}
+
+
+#pragma mark NSView
+
+- (void)loadView
+{
+    if ([self nibName] != nil)
+        [super loadView];
 }
 
 @end

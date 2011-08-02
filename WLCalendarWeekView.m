@@ -107,7 +107,6 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     [CATransaction setDisableActions:YES];
     CALayer *rootLayer = [CALayer layer];
     rootLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
-    rootLayer.needsDisplayOnBoundsChange = NO;
     rootLayer.name = _WLRootLayerName;
     rootLayer.masksToBounds = YES;
     rootLayer.layoutManager = self;
@@ -142,16 +141,14 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     else
     {
         contentLayer = [CALayer layer];
-        contentLayer.cornerRadius = 2.0f;
 #ifdef DEBUG_LAYERS
-        contentLayer.backgroundColor = [[NSColor blackColor] WL_CGColor];
+        contentLayer.backgroundColor = [[NSColor darkGrayColor] WL_CGColor];
 #endif
         [contentLayer addSublayer:rootLayer];
         [self setLayer:contentLayer];
         [self setWantsLayer:YES];
     }
     _rootLayer = rootLayer;
-    [_rootLayer layoutIfNeeded];
     [dataSource weekViewDidSetupLayers:self];
 }
 
