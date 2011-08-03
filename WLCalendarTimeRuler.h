@@ -11,10 +11,22 @@
 
 @protocol WLCalendarTimeRuler
 
-@property (assign, readonly) NSUInteger numberOfHours;
+/*!
+ @abstract Returns number of hours represented by a time ruler.
+ */
+- (NSUInteger)numberOfHours;
 
-@property (assign, readonly) CGFloat heightOfHour;
+/*!
+ @abstract Returns height of a hour.
+ */
+- (CGFloat)heightOfHour;
 
+/*!
+ @abstract      Converts a given date into hour. 
+ @discussion    You can use result to calculate offset for the time of given date.
+ Integral part represents hours, fractional part represents minutes: 13:45 -> 13.75
+ @result        Min value SHOULD be 0.0, max value SHOULD be [self numberOfHours] * [self heightOfHour].
+ */
 - (CGFloat)hourForDate:(NSDate *)aDate;
 
 @end
