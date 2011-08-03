@@ -13,6 +13,8 @@
 #import "WLCalendarBackgroundLayer.h"
 #import "WLCalendarWeekdayEventsLayer.h"
 #import "WLCalendarAllDayEventsLayer.h"
+#import "WLCalendarTimeIndicatorLayer.h"
+#import "WLCalendarTimeIndicatorLayer.h"
 
 
 // Must be unique!
@@ -65,10 +67,10 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
  |  | |  | |  |  |         | |         | | scroll  | | day     |
  |  | |  | |  |  |         | |         | |         | | events  |
  |b | |s | |t |  |         | |         | |         | |         |
- |a | |c | |i |  |         | |         | |         | |         |
- |c | |r | |m |  |         | |         | |         | |         |
- |k | |o | |e |  |         | |         | |         | |         |
- |g | |l | |  |  |         | |         | |         | |         |
+ |a | |c | |i |  |         | |         | |         | |         | +---------+
+ |c | |r | |m |  |         | |         | |         | |         | |time     |
+ |k | |o | |e |  |         | |         | |         | |         | |indicator|
+ |g | |l | |  |  |         | |         | |         | |         | +---------+
  |r | |l | |r |  |         | |         | |         | |         |
  |o | |  | |u |  |         | |         | |         | |         |
  |u | |  | |l |  |         | |         | |         | |         |
@@ -77,13 +79,14 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
  |  | |  | |  |  |         | |         | |         | |         |
  +--+ +--+ +--+  +---------+ +---------+ +---------+ +---------+
 
- <--depth-----+  <--depth--------------------------------------+
+ <--depth-----+  <--depth--------------------------------------------------+
  */
 
 
 @implementation WLCalendarWeekView
 @synthesize dataSource;
 @synthesize allDayEventsHeight;
+@synthesize showTimeIndicator;
 
 - (id)initWithFrame:(NSRect)aFrameRect
 {
@@ -111,8 +114,9 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     rootLayer.masksToBounds = YES;
     rootLayer.layoutManager = self;
 
-    NSMutableArray *hours = [NSMutableArray arrayWithCapacity:dataSource.numberOfHours];
-    for (NSUInteger i=0, numberOfHours=dataSource.numberOfHours; i<numberOfHours; ++i)
+    NSUInteger numberOfHours = [dataSource numberOfHours];
+    NSMutableArray *hours = [NSMutableArray arrayWithCapacity:numberOfHours];
+    for (NSUInteger i=0; i<numberOfHours; ++i)
         [hours addObject:[dataSource stringForHour:i]];
     _timeRulerRootLayer = [self _setupTimeRulerLayer];
     WLCalendarTimeRulerLayer *timeRulerLayer = [_timeRulerRootLayer valueForKeyPath:@"timeRulerScroll.timeRuler"];
@@ -128,7 +132,12 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     }
     [self updateColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, numberOfColumns)]];
     [rootLayer addSublayer:_timeRulerRootLayer];
-
+    
+    _timeIndicatorLayer = [WLCalendarTimeIndicatorLayer layer];
+    _timeIndicatorLayer.anchorPoint = CGPointMake(0.0f, 0.0f);
+    _timeIndicatorLayer.backgroundColor = [[NSColor whiteColor] WL_CGColor];
+    [rootLayer addSublayer:_timeIndicatorLayer];
+    
     CALayer *contentLayer = [self layer];
     if (contentLayer != nil)
     {
@@ -158,13 +167,14 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     CAScrollLayer *timeRulerScrollLayer = [_timeRulerRootLayer valueForKeyPath:_WLTimeRulerScrollLayer];
     WLCalendarTimeRulerLayer *timeRulerLayer = [timeRulerScrollLayer valueForKeyPath:_WLTimeRulerLayer];
     CGPoint hourPoint = [timeRulerScrollLayer convertPoint:[timeRulerLayer pointForHour:aHour] fromLayer:timeRulerLayer];
+
     // Center aHour whenever possible
     hourPoint = CGPointMake(0.0f, floorf(hourPoint.y - timeRulerScrollLayer.bounds.size.height / 2));
     CGFloat topLimit = 0.0f;
     hourPoint.y = fmaxf(hourPoint.y, topLimit);
     CGFloat bottomLimit = CGRectGetMaxY(timeRulerLayer.bounds) - timeRulerScrollLayer.bounds.size.height;
     hourPoint.y = fminf(hourPoint.y, bottomLimit);
-
+    
     [CATransaction begin];
     [timeRulerScrollLayer scrollToPoint:hourPoint];
     for (CALayer *weekdayRootLayer in _weekdayRootLayers)
@@ -173,6 +183,10 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
         [scrollLayer scrollToPoint:hourPoint];
     }
     [CATransaction commit];
+    
+    hourPoint = [timeRulerLayer pointForHour:aHour];
+    hourPoint = [_rootLayer convertPoint:hourPoint fromLayer:timeRulerLayer];
+    [_timeIndicatorLayer setValue:[NSNumber numberWithFloat:hourPoint.y] forKeyPath:@"position.y"];
 }
 
 - (void)nextDay
@@ -304,6 +318,7 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
         [self _positionWeekdayRootLayer:weekdayRootLayer atIndex:idx];
         [self _layoutWeekdayRootLayer:weekdayRootLayer];
     }];
+    _timeIndicatorLayer.frame = CGRectMake(_timeRulerRootLayer.frame.size.width, 0.0f, _rootLayer.frame.size.width - _timeRulerRootLayer.frame.size.width, 5.0f);
     [self scrollHour:_hour];
 }
 

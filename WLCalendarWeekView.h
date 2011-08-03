@@ -14,13 +14,17 @@
 
 @protocol WLCalendarWeekViewDataSource;
 
+@class WLCalendarTimeIndicatorLayer;
+
 
 @interface WLCalendarWeekView : NSView /*<CALayerManager>*/ {
     IBOutlet NSObject<WLCalendarWeekViewDataSource> *dataSource;
     CGFloat allDayEventsHeight;
+    BOOL showTimeIndicator;
 
     CALayer *_rootLayer;
     CALayer *_timeRulerRootLayer;
+    WLCalendarTimeIndicatorLayer *_timeIndicatorLayer;
     NSMutableArray *_weekdayRootLayers;
     CGFloat _hour;
 }
@@ -28,6 +32,8 @@
 @property (assign) NSObject<WLCalendarWeekViewDataSource> *dataSource;
 
 @property CGFloat allDayEventsHeight;
+
+@property (nonatomic) BOOL showTimeIndicator;
 
 - (void)setupLayers;
 

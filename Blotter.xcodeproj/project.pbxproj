@@ -97,6 +97,7 @@
 		E2F9E1E41322A4F4007598E2 /* glass-hud-border-top-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1DD1322A4F4007598E2 /* glass-hud-border-top-right.png */; };
 		E2F9E1E51322A4F4007598E2 /* glass-hud-border-top.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1DE1322A4F4007598E2 /* glass-hud-border-top.png */; };
 		E2FCE09D133F9264006E713F /* WLGlassHudDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FCE09C133F9264006E713F /* WLGlassHudDatePicker.m */; };
+		E2FCE09D133F9264006E7141 /* WLCalendarTimeIndicatorLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FCE09D133F9264006E7140 /* WLCalendarTimeIndicatorLayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -338,6 +339,8 @@
 		E2F9E1DE1322A4F4007598E2 /* glass-hud-border-top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-border-top.png"; sourceTree = "<group>"; };
 		E2FCE09B133F9264006E713F /* WLGlassHudDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudDatePicker.h; sourceTree = "<group>"; };
 		E2FCE09C133F9264006E713F /* WLGlassHudDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudDatePicker.m; sourceTree = "<group>"; };
+		E2FCE09D133F9264006E7140 /* WLCalendarTimeIndicatorLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarTimeIndicatorLayer.m; sourceTree = "<group>"; };
+		E2FCE09D133F9264006E7142 /* WLCalendarTimeIndicatorLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTimeIndicatorLayer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -494,6 +497,8 @@
 		E27196B713C5A19E008E5C43 /* WLCalendar */ = {
 			isa = PBXGroup;
 			children = (
+				E2FCE09D133F9264006E7142 /* WLCalendarTimeIndicatorLayer.h */,
+				E2FCE09D133F9264006E7140 /* WLCalendarTimeIndicatorLayer.m */,
 				E27196B913C5A1C3008E5C43 /* WLCalendarTasksView.h */,
 				E27196BA13C5A1C3008E5C43 /* WLCalendarTasksView.m */,
 				E278F19C13C9EA6700B327EB /* WLCalendarWeekView.h */,
@@ -784,6 +789,7 @@
 				E2B223E813E16AF600890042 /* CoreText+Additions.m in Sources */,
 				E2F112DD13E6E263001C2B7B /* WLCalendarWindow.m in Sources */,
 				E2F1133D13E70B4F001C2B7B /* WLCalendarWindowController.m in Sources */,
+				E2FCE09D133F9264006E7141 /* WLCalendarTimeIndicatorLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
