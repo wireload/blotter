@@ -13,6 +13,9 @@
 @implementation CATextLayer (WLStringSize)
 
 - (CGFloat)WL_maxStringHeightForWidth:(CGFloat)width {
+    if (self.string == nil)
+        return 0.0f;
+
     NSAttributedString *string = nil;
     if ([self.string isKindOfClass:[NSAttributedString class]])
         string = self.string;
