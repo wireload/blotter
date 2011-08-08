@@ -17,4 +17,9 @@
     NSRectFillUsingOperation(dirtyRect, NSCompositeSourceOver);
 }
 
+- (BOOL)isFlipped
+{
+    return YES;
+}
+
 @end
