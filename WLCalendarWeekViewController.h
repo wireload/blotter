@@ -117,7 +117,7 @@ typedef enum
  @abstract      Reloads the view. Invalidates _columnTitleFormat.
  @discussion    Called when either NSSystemClockDidChangeNotification or NSSystemTimeZoneDidChangeNotification is posted.
  */
-- (void)_clockChanged;
+- (void)_clockChanged:(NSNotification *)aNotification;
 
 /*!
  @abstract      Schedules a repeated timer that causes the view to scroll to current hour.

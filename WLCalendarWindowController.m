@@ -35,7 +35,13 @@
                                                    options:NSKeyValueObservingOptionNew
                                                    context:NULL];
 
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(_windowContentViewFrameDidChanged:)
+                                                     name:NSViewFrameDidChangeNotification
+                                                   object:[[self window] contentView]];
+
         NSView *contentView = [[self window] contentView];
+
         _weekViewController = [[WLCalendarWeekViewController alloc] initWithNibName:nil bundle:nil];
         [_weekViewController bind:@"titleFormat" toObject:[NSUserDefaults standardUserDefaults] withKeyPath:@"PerDayDate" options:nil];
         [_weekViewController bind:@"mode" toObject:[NSUserDefaults standardUserDefaults] withKeyPath:@"RollingCalendar" options:nil];
@@ -57,6 +63,7 @@
         [_tasksViewController setView:tasksView];
         [contentView addSubview:tasksView];
         [tasksView release];
+
     }
     return self;
 }
@@ -164,9 +171,12 @@
         screenFrame = [[screens objectAtIndex:0] visibleFrame];
 
     NSRect windowFrame = [BLCalendarFramer frameForPosition:windowPosition inFrame:screenFrame size:windowSize];
-    [[self window] setFrame:windowFrame display:NO];
+    [[self window] setFrame:windowFrame display:YES];
+}
+
+- (void)_windowContentViewFrameDidChanged:(NSNotification *)aNotification
+{
     [self _applyWindowSizeToViews];
-    [[self window] displayIfNeeded];
 }
 
 - (void)_applyWindowSizeToViews

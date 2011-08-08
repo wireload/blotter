@@ -10,6 +10,7 @@
 #import "WLCalendarAllDayEventsLayer.h"
 #import "WLCalendarEventLayer.h"
 #import "NSColor+CGColor.h"
+#import "CoreAnimation+WLCalendar.h"
 
 
 static NSString* const _WLCalendarKey = @"calendar";
@@ -26,21 +27,23 @@ static const CGFloat _WLTopMargin = 10.0f;
     self = [super init];
     if (self != nil)
     {
-        _sortedEventLayers = [[NSMutableArray alloc] init];
+        _sortedByUIDEventLayers = [[NSMutableArray alloc] init];
+        _icalSortedEventLayers = [[NSMutableArray alloc] init];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [_sortedEventLayers release];
+    [_icalSortedEventLayers release];
+    [_sortedByUIDEventLayers release];
     [super dealloc];
 }
 
 - (NSArray *)events
 {
-    NSMutableArray *events = [NSMutableArray arrayWithCapacity:[_sortedEventLayers count]];
-    for (WLCalendarEventLayer *eventLayer in _sortedEventLayers)
+    NSMutableArray *events = [NSMutableArray arrayWithCapacity:[_sortedByUIDEventLayers count]];
+    for (WLCalendarEventLayer *eventLayer in _sortedByUIDEventLayers)
     {
         NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:
                                eventLayer.name,             @"uid",
@@ -53,24 +56,39 @@ static const CGFloat _WLTopMargin = 10.0f;
 - (void)setEvents:(NSArray *)newEvents
 {
     [CATransaction begin];
-    [_sortedEventLayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
-    [_sortedEventLayers removeAllObjects];
+    [_icalSortedEventLayers removeAllObjects];
+    NSMutableArray *sublayersToRemove = [_sortedByUIDEventLayers mutableCopy];
     for (id event in newEvents)
     {
         BOOL isFound = NO;
-        [self _indexOfEventLayerForUID:[event uid] isFound:&isFound];
-        NSParameterAssert (isFound == NO);
-        CALayer *eventLayer = [self _setupEventLayerWithEvent:event];
-        [_sortedEventLayers addObject:eventLayer];
-        [self addSublayer:eventLayer];
+        NSUInteger layerIdx = [self _indexOfEventLayerWithUID:[event uid] isFound:&isFound];
+        if (isFound)
+        {
+            WLCalendarEventLayer *l = [_sortedByUIDEventLayers objectAtIndex:layerIdx];
+            [self _updateEventLayer:l withEvent:event];
+            [_icalSortedEventLayers addObject:l];
+            [sublayersToRemove removeObjectIdenticalTo:l];
+        }
+        else
+        {
+            WLCalendarEventLayer *l = [self _setupEventLayer];
+            [self _updateEventLayer:l withEvent:event];
+            [_sortedByUIDEventLayers insertObject:l atIndex:layerIdx];
+            [_icalSortedEventLayers addObject:l];
+            [self addSublayer:l];
+        }
     }
+    [sublayersToRemove makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+    for (WLCalendarEventLayer *l in sublayersToRemove)
+        [_sortedByUIDEventLayers removeObjectIdenticalTo:l];
+    [sublayersToRemove release];
     [CATransaction commit];
 }
 
 - (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth
 {
     CGFloat preferredHeight = 0.0f;
-    for (WLCalendarEventLayer *layer in _sortedEventLayers)
+    for (WLCalendarEventLayer *layer in _sortedByUIDEventLayers)
         preferredHeight += _WLTopMargin + [layer preferredHeightWithWidth:aWidth];
     return preferredHeight;
 }
@@ -78,43 +96,51 @@ static const CGFloat _WLTopMargin = 10.0f;
 
 #pragma mark Private
 
-- (NSUInteger)_indexOfEventLayerForUID:(NSString *)anUID isFound:(BOOL *)isFound
+- (NSUInteger)_indexOfEventLayerWithUID:(NSString *)anUID isFound:(BOOL *)outIsFound
 {
     __block BOOL found = NO;
-    NSArray *layerNames = [_sortedEventLayers valueForKey:@"name"];
+    NSArray *layerNames = [_sortedByUIDEventLayers valueForKey:@"name"];
     NSUInteger idx = [layerNames indexOfObject:anUID
-                                 inSortedRange:NSMakeRange(0, [_sortedEventLayers count])
+                                 inSortedRange:NSMakeRange(0, [_sortedByUIDEventLayers count])
                                        options:NSBinarySearchingInsertionIndex | NSBinarySearchingFirstEqual
                                usingComparator:^(id obj1, id obj2)
-                      {
-                          NSComparisonResult result = [obj1 compare:obj2];
-                          found = (result == NSOrderedSame);
-                          return result;
-                      }];
-    if (isFound != NULL)
-        *isFound = found;
+    {
+        NSComparisonResult result = [obj1 compare:obj2];
+        if (!found) // since we pass NSBinarySearchingInsertionIndex, block may be called even when object is actually found.
+            found = (result == NSOrderedSame);
+        return result;
+    }];
+    if (outIsFound != NULL)
+        *outIsFound = found;
     return idx;
 }
 
-- (WLCalendarEventLayer *)_setupEventLayerWithEvent:(id)anEvent
+- (WLCalendarEventLayer *)_setupEventLayer
 {
-    WLCalendarEventLayer *eventLayer = [WLCalendarEventLayer layer];
-    eventLayer.name = [anEvent uid];
-    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:[anEvent title]];
-    eventLayer.string = attributedString;
-    [attributedString release];
-    [CATransaction setDisableActions:YES];
-    eventLayer.needsDisplayOnBoundsChange = YES;
-    [CATransaction setDisableActions:NO];
-
-#ifdef DEBUG_LAYERS
-    eventLayer.contentsBackgroundOpacity = 0.0f;
-    eventLayer.backgroundColor = [[(CalCalendar *)[anEvent calendar] color] WL_CGColor];
-#else
-    eventLayer.contentsBackgroundColor = [[(CalCalendar *)[anEvent calendar] color] WL_CGColor];
-    eventLayer.contentsBackgroundOpacity = 0.6;
+    WLCalendarEventLayer *l = [WLCalendarEventLayer layer];
+    [CATransaction WL_performWithDisabledActions:^{
+        l.needsDisplayOnBoundsChange = YES;
+    }];
+#ifndef DEBUG_LAYERS
+    l.contentsBackgroundOpacity = 0.6;
 #endif
-    return eventLayer;
+    return l;
+}
+
+- (void)_updateEventLayer:(WLCalendarEventLayer *)aLayer withEvent:(id)anEvent
+{
+    aLayer.name = [anEvent uid];
+    NSDictionary *attr = [NSDictionary dictionaryWithObject:(id)[[NSColor whiteColor] WL_CGColor]
+                                                     forKey:(id)kCTForegroundColorAttributeName];
+    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:[anEvent title]
+                                                                           attributes:attr];
+    aLayer.string = attributedString;
+    [attributedString release];
+#ifdef DEBUG_LAYERS
+    aLayer.backgroundColor = [[(CalCalendar *)[anEvent calendar] color] WL_CGColor];
+#else
+    aLayer.contentsBackgroundColor = [[(CalCalendar *)[anEvent calendar] color] WL_CGColor];
+#endif
 }
 
 
@@ -122,11 +148,14 @@ static const CGFloat _WLTopMargin = 10.0f;
 
 - (void)layoutSublayers
 {
+#ifdef DEBUG_PERFORMANCE
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+#endif
     CGFloat maxHeight = self.bounds.size.height - _WLTopMargin;
     CGFloat offset = CGRectGetMinY(self.bounds) + _WLTopMargin;
     CGFloat lastVisibleOffset = offset;
     WLCalendarEventLayer *firstHiddenLayer = nil;
-    for (WLCalendarEventLayer *layer in _sortedEventLayers)
+    for (WLCalendarEventLayer *layer in _icalSortedEventLayers)
     {
         CGFloat height = MIN([layer preferredHeightWithWidth:self.bounds.size.width], maxHeight);
         if (offset + height > CGRectGetMaxY(self.bounds))
@@ -161,7 +190,7 @@ static const CGFloat _WLTopMargin = 10.0f;
 - (CGSize)preferredFrameSize
 {
     CGSize preferredSize = CGSizeMake(0.0f, 0.0f);
-    for (WLCalendarEventLayer *layer in _sortedEventLayers)
+    for (WLCalendarEventLayer *layer in _icalSortedEventLayers)
     {
         CGSize layerSize = [layer preferredFrameSize];
         preferredSize.width = MAX(preferredSize.width, layerSize.width);

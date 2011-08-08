@@ -14,8 +14,9 @@
 @class WLCalendarEventLayer;
 
 
-@interface WLCalendarWeekdayEventsLayer : CALayer {
-    NSMutableArray *_sortedEventLayers;
+@interface WLCalendarDayEventsLayer : CALayer {
+    NSMutableArray *_sortedByStartDateEventLayers;
+    NSMutableArray *_sortedByUIDEventLayers;
     NSUInteger _cachedMaximumNumberOfColumns;
     NSTreeNode *_eventsLayoutTreeRootNode;
     BOOL _eventsChanged;
@@ -30,9 +31,13 @@
 - (NSUInteger)maximumNumberOfColumns;
 
 
-- (WLCalendarEventLayer *)_setupEventLayerWithEvent:(id)anEvent;
+- (WLCalendarEventLayer *)_setupEventLayer;
 
-- (NSUInteger)_indexOfEventLayerForStartDate:(id)aStartDate;
+- (void)_updateEventLayer:(WLCalendarEventLayer *)aLayer withEvent:(id)anEvent;
+
+- (NSUInteger)_indexOfEventLayerWithStartDate:(NSDate *)aStartDate;
+
+- (NSUInteger)_indexOfEventLayerWithUID:(NSString *)anUID isFound:(BOOL *)outIsFound;
 
 - (void)_buildEventsLayoutTree;
 

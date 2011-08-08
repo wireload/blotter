@@ -8,6 +8,7 @@
 
 #import "WLCalendarTimeRulerLayer.h"
 #import "NSColor+CGColor.h"
+#import "CoreAnimation+WLCalendar.h"
 
 
 @implementation WLCalendarTimeRulerLayer
@@ -37,34 +38,6 @@
 {
     [_sortedTimeLayers release];
     [super dealloc];
-}
-
-- (CGSize)preferredFrameSize
-{
-    if ([_sortedTimeLayers count] == 0)
-        return CGSizeMake(0.0f, 0.0f);
-
-    CGSize preferredSize = CGSizeMake(0.0f, 0.0f);
-    for (CALayer *layer in _sortedTimeLayers)
-    {
-        preferredSize.width = fmaxf(preferredSize.width, [layer preferredFrameSize].width);
-    }
-    preferredSize.height = timeRuler.heightOfHour * [_sortedTimeLayers count] + [[_sortedTimeLayers objectAtIndex:0] preferredFrameSize].height / 2;
-    return preferredSize;
-}
-
-- (void)layoutSublayers
-{
-    NSAssert(self.layoutManager == nil, @"You cannot use custom layout managers with this class");
-
-    CGFloat heightOfHour = timeRuler.heightOfHour;
-    CGFloat yOffset = [self firstHourYPadding];
-    for (CATextLayer *timeLayer in _sortedTimeLayers)
-    {
-        CGSize size = [timeLayer preferredFrameSize];
-        timeLayer.frame = CGRectMake(0.0f, floorf(yOffset - size.height / 2), self.bounds.size.width, size.height);
-        yOffset += heightOfHour;
-    }
 }
 
 - (CGFloat)firstHourYPadding
@@ -99,16 +72,55 @@
 
 - (CATextLayer *)_setupTimeLayerWithString:(NSString *)aTime
 {
-    CATextLayer *timeLayer = [CATextLayer layer];
-    timeLayer.alignmentMode = kCAAlignmentRight;
-    timeLayer.fontSize = 14.0f;
-    timeLayer.string = aTime;
-    timeLayer.wrapped = NO;
-    timeLayer.truncationMode = kCATruncationNone;
+    CATextLayer *l = [CATextLayer layer];
+    [CATransaction WL_performWithDisabledActions:^{
+        l.alignmentMode = kCAAlignmentRight;
+        l.fontSize = 14.0f;
+        l.string = aTime;
+        l.wrapped = NO;
+        l.truncationMode = kCATruncationNone;
+        l.shadowOpacity = 1.0f;
+        l.shadowOffset = CGSizeMake(0.0f, 1.0f);
+        l.shadowRadius = 1.0f;
 #ifdef DEBUG_LAYERS
-    timeLayer.backgroundColor = [[NSColor blueColor] WL_CGColor];
+        l.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif
-    return timeLayer;
+    }];
+    return l;
+}
+
+
+#pragma mark CALayer
+
+- (CGSize)preferredFrameSize
+{
+    if ([_sortedTimeLayers count] == 0)
+        return CGSizeMake(0.0f, 0.0f);
+
+    CGSize preferredSize = CGSizeMake(0.0f, 0.0f);
+    for (CALayer *layer in _sortedTimeLayers)
+    {
+        preferredSize.width = fmaxf(preferredSize.width, [layer preferredFrameSize].width);
+    }
+    preferredSize.height = timeRuler.heightOfHour * [_sortedTimeLayers count] + [[_sortedTimeLayers objectAtIndex:0] preferredFrameSize].height / 2;
+    return preferredSize;
+}
+
+- (void)layoutSublayers
+{
+#ifdef DEBUG_PERFORMANCE
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+#endif
+    NSAssert(self.layoutManager == nil, @"You cannot use custom layout managers with this class");
+
+    CGFloat heightOfHour = timeRuler.heightOfHour;
+    CGFloat yOffset = [self firstHourYPadding];
+    for (CATextLayer *timeLayer in _sortedTimeLayers)
+    {
+        CGSize size = [timeLayer preferredFrameSize];
+        timeLayer.frame = CGRectMake(0.0f, floorf(yOffset - size.height / 2), self.bounds.size.width, size.height);
+        yOffset += heightOfHour;
+    }
 }
 
 @end

@@ -10,6 +10,11 @@
 #import <QuartzCore/QuartzCore.h>
 #import <CalendarStore/CalendarStore.h>
 #import "WLCalendarTimeRuler.h"
+#import "WLCalendarTimeRulerLayer.h"
+#import "WLCalendarBackgroundLayer.h"
+#import "WLCalendarDayEventsLayer.h"
+#import "WLCalendarAllDayEventsLayer.h"
+#import "WLCalendarTimeIndicatorLayer.h"
 
 
 @protocol WLCalendarWeekViewDataSource;
@@ -25,7 +30,7 @@
     CALayer *_rootLayer;
     CALayer *_timeRulerRootLayer;
     WLCalendarTimeIndicatorLayer *_timeIndicatorLayer;
-    NSMutableArray *_weekdayRootLayers;
+    NSMutableArray *_columnLayers;
     CGFloat _hour;
 }
 
@@ -35,7 +40,7 @@
 
 @property (nonatomic) BOOL showTimeIndicator;
 
-- (void)setupLayers;
+- (void)setupLayersAnimated:(BOOL)isAnimated;
 
 - (void)scrollHour:(CGFloat)aHour;
 
@@ -56,26 +61,49 @@
 
 - (void)_updateColumnAtIndex:(NSUInteger)anIndex;
 
-- (CALayer *)_setupTimeRulerLayer;
-
-- (CALayer *)_setupWeekdayLayer;
-
-- (NSArray *)_allDayEventsBackgroundLayerConstraints;
-
-- (NSArray *)_weekdayEventsBackgrounLayerConstraints;
-
-- (NSArray *)_weekdayTitleLayerConstraints;
-
-- (NSArray *)_weekdayEventsScrollLayerConstraintsWithTopYMargin:(CGFloat)yMargin;
-
 - (void)_layoutTimerRulerRootlayer:(CALayer *)aRootLayer;
 
-- (void)_layoutWeekdayRootLayer:(CALayer *)aRootLayer;
+- (void)_layoutColumnLayer:(CALayer *)aRootLayer;
 
-- (void)_positionWeekdayRootLayer:(CALayer *)aRootLayer atIndex:(NSUInteger)anIndex;
+- (void)_positionColumnLayer:(CALayer *)aRootLayer atIndex:(NSUInteger)anIndex;
 
 @end
 
+
+@interface WLCalendarWeekView (SetupLayers)
+
+- (CALayer *)setupRootLayer;
+
+
+- (CALayer *)setupTimeRulerRootLayer;
+
+- (WLCalendarBackgroundLayer *)setupTimeRulerBackgroundLayer;
+
+- (CAScrollLayer *)setupTimeRulerScrollLayer;
+
+- (WLCalendarTimeRulerLayer *)setupTimeRulerLayer;
+
+
+- (CALayer *)setupColumnLayer;
+
+- (CALayer *)setupColumnContentLayer;
+
+- (WLCalendarBackgroundLayer *)setupAllDayBackgroundLayer;
+
+- (WLCalendarAllDayEventsLayer *)setupAllDayLayer;
+
+- (WLCalendarDayEventsLayer *)setupDayLayer;
+
+- (CAScrollLayer *)setupDayScrollLayer;
+
+- (CATextLayer *)setupDayTitleLayer;
+
+- (WLCalendarBackgroundLayer *)setupDayBackgroundLayer;
+
+
+- (WLCalendarTimeIndicatorLayer *)setupTimeIndicatorLayer;
+
+@end
 
 enum
 {

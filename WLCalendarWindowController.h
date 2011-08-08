@@ -67,6 +67,8 @@
  */
 - (void)_updateFrame;
 
+- (void)_windowContentViewFrameDidChanged:(NSNotification *)aNotification;
+
 /*!
  @abstract Resizes subviews of the contentView of controller's window according to the windowSize property.
  */

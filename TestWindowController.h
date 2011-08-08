@@ -12,7 +12,7 @@
 #import "WLCalendarEventLayer.h"
 #import "NSColor+CGColor.h"
 #import "WLCalendarAllDayEventsLayer.h"
-#import "WLCalendarWeekdayEventsLayer.h"
+#import "WLCalendarDayEventsLayer.h"
 #import "WLCalendarTimeRulerLayer.h"
 
 

@@ -7,9 +7,10 @@
 //
 
 #import <CalendarStore/CalendarStore.h>
-#import "WLCalendarWeekdayEventsLayer.h"
+#import "WLCalendarDayEventsLayer.h"
 #import "WLCalendarEventLayer.h"
 #import "NSColor+CGColor.h"
+#import "CoreAnimation+WLCalendar.h"
 
 
 static NSString* const _WLStartDateKey = @"startDate";
@@ -28,7 +29,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 #define IS_LESS_F(a, b) (BOOL)((a) < (b) && !(fabsf((b) - (a)) < FLT_EPSILON))
 
 
-@implementation WLCalendarWeekdayEventsLayer
+@implementation WLCalendarDayEventsLayer
 @synthesize timeRuler;
 @dynamic events;
 
@@ -37,7 +38,8 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     self = [super init];
     if (self != nil)
     {
-        _sortedEventLayers = [[NSMutableArray alloc] init];
+        _sortedByUIDEventLayers = [[NSMutableArray alloc] init];
+        _sortedByStartDateEventLayers = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -54,24 +56,46 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 
 - (void)dealloc
 {
-    [_sortedEventLayers release];
+    [_sortedByStartDateEventLayers release];
+    [_sortedByUIDEventLayers release];
     [_eventsLayoutTreeRootNode release];
     [super dealloc];
 }
 
 - (void)setEvents:(NSSet *)newEvents
 {
-    [_sortedEventLayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
-    [_sortedEventLayers removeAllObjects];
-
-    for (id e in newEvents)
+    [CATransaction begin];
+    [_sortedByStartDateEventLayers removeAllObjects];
+    NSMutableArray *sublayersToRemove = [_sortedByUIDEventLayers mutableCopy];
+    for (id event in newEvents)
     {
-        NSUInteger idx = [self _indexOfEventLayerForStartDate:[e startDate]];
-        WLCalendarEventLayer *l = [self _setupEventLayerWithEvent:e];
-        [_sortedEventLayers insertObject:l atIndex:idx];
-        [self insertSublayer:l atIndex:idx];
-        _eventsChanged = YES;
+        BOOL isFound = NO;
+        NSUInteger idxByUID = [self _indexOfEventLayerWithUID:[event uid] isFound:&isFound];
+        WLCalendarEventLayer *layer = nil;
+        if (isFound)
+        {
+            layer = [_sortedByUIDEventLayers objectAtIndex:idxByUID];
+            [self _updateEventLayer:layer withEvent:event];
+            [sublayersToRemove removeObjectIdenticalTo:layer];
+        }
+        else
+        {
+            layer = [self _setupEventLayer];
+            [self _updateEventLayer:layer withEvent:event];
+            [_sortedByUIDEventLayers insertObject:layer atIndex:idxByUID];
+            [self addSublayer:layer];
+        }
+        
+        NSUInteger idxByStartDate = [self _indexOfEventLayerWithStartDate:[event startDate]];
+        [_sortedByStartDateEventLayers insertObject:layer atIndex:idxByStartDate];
+        layer.zPosition = idxByStartDate;
     }
+    [sublayersToRemove makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+    for (WLCalendarEventLayer *l in sublayersToRemove)
+        [_sortedByUIDEventLayers removeObjectIdenticalTo:l];
+    [sublayersToRemove release];
+    _eventsChanged = YES;
+    [CATransaction commit];
 }
 
 - (NSUInteger)maximumNumberOfColumns
@@ -84,45 +108,78 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 
 #pragma mark Private
 
-- (WLCalendarEventLayer *)_setupEventLayerWithEvent:(id)anEvent
+- (WLCalendarEventLayer *)_setupEventLayer
 {
-    [CATransaction setDisableActions:YES];
     WLCalendarEventLayer *l = [WLCalendarEventLayer layer];
+    [CATransaction WL_performWithDisabledActions:^{
+        l.needsDisplayOnBoundsChange = YES;
+    }];
     l.masksToBounds = YES;
-    l.name = [anEvent uid];
-    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:[anEvent title]];
-    l.string = attributedString;
-    [attributedString release];
-    [CATransaction setDisableActions:YES];
-    l.needsDisplayOnBoundsChange = YES;
-    [CATransaction setDisableActions:NO];
-
-    [l setValue:[anEvent startDate] forKey:_WLStartDateKey];
-    [l setValue:[anEvent endDate] forKey:_WLEndDateKey];
-#ifdef DEBUG_LAYERS
-    l.backgroundColor = [[(CalCalendar *)[anEvent calendar] color] WL_CGColor];
-#else
-    l.contentsBackgroundColor = [[(CalCalendar *)[anEvent calendar] color] WL_CGColor];
+#ifndef DEBUG_LAYERS
     l.contentsBackgroundOpacity = 0.6;
 #endif
-    [CATransaction setDisableActions:NO];
     return l;
 }
 
-- (NSUInteger)_indexOfEventLayerForStartDate:(id)aStartDate
+- (void)_updateEventLayer:(WLCalendarEventLayer *)aLayer withEvent:(id)anEvent
 {
-    NSArray *dates = [_sortedEventLayers valueForKey:_WLStartDateKey];
+    aLayer.name = [anEvent uid];
+    NSDictionary *attr = [NSDictionary dictionaryWithObject:(id)[[NSColor whiteColor] WL_CGColor]
+                                                     forKey:(id)kCTForegroundColorAttributeName];
+    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:[anEvent title]
+                                                                           attributes:attr];
+    aLayer.string = attributedString;
+    [attributedString release];
+    
+    [aLayer setValue:[anEvent startDate] forKey:_WLStartDateKey];
+    [aLayer setValue:[anEvent endDate] forKey:_WLEndDateKey];
+    [aLayer setValue:[NSNumber numberWithFloat:0.0f] forKey:_WLTopKey];
+    [aLayer setValue:[NSNumber numberWithFloat:0.0f] forKey:_WLBottomKey];    
+    [aLayer setValue:[NSNumber numberWithInt:0] forKey:_WLNumberOfColumnsToSkipKey];
+#ifdef DEBUG_LAYERS
+    aLayer.backgroundColor = [[(CalCalendar *)[anEvent calendar] color] WL_CGColor];
+#else
+    aLayer.contentsBackgroundColor = [[(CalCalendar *)[anEvent calendar] color] WL_CGColor];
+#endif
+}
+
+- (NSUInteger)_indexOfEventLayerWithStartDate:(NSDate *)aStartDate
+{
+    NSArray *dates = [_sortedByStartDateEventLayers valueForKey:_WLStartDateKey];
     NSUInteger i = [dates indexOfObject:aStartDate
-                          inSortedRange:NSMakeRange(0, [_sortedEventLayers count])
+                          inSortedRange:NSMakeRange(0, [_sortedByStartDateEventLayers count])
                                 options:NSBinarySearchingInsertionIndex | NSBinarySearchingFirstEqual
-                        usingComparator:^(NSDate *aDate, NSDate *bDate) {
-                            return [aDate compare:bDate];
-                        }];
+                        usingComparator:^(NSDate *aDate, NSDate *bDate)
+    {
+        return [aDate compare:bDate];
+    }];
     return i;
+}
+
+- (NSUInteger)_indexOfEventLayerWithUID:(NSString *)anUID isFound:(BOOL *)outIsFound
+{
+    __block BOOL found = NO;
+    NSArray *layerNames = [_sortedByUIDEventLayers valueForKey:@"name"];
+    NSUInteger idx = [layerNames indexOfObject:anUID
+                                 inSortedRange:NSMakeRange(0, [_sortedByUIDEventLayers count])
+                                       options:NSBinarySearchingInsertionIndex | NSBinarySearchingFirstEqual
+                               usingComparator:^(NSString *obj1, NSString *obj2)
+                      {
+                          NSComparisonResult result = [obj1 compare:obj2];
+                          if (!found) // since we pass NSBinarySearchingInsertionIndex, block may be called even when object is actually found.
+                              found = (result == NSOrderedSame);                  
+                          return result;
+                      }];
+    if (outIsFound != NULL)
+        *outIsFound = found;
+    return idx;
 }
 
 - (void)_buildEventsLayoutTree
 {
+#ifdef DEBUG_PERFORMANCE
+    NSLog(@"%@", NSStringFromSelector(_cmd));
+#endif
     [_eventsLayoutTreeRootNode release];
     _eventsLayoutTreeRootNode = [[NSTreeNode alloc] initWithRepresentedObject:self];
 
@@ -161,7 +218,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
         __block NSTreeNode *rowNode = nil;
         __block CGFloat rowTop = 0.0f;
         __block CGFloat rowBottom = 0.0f;
-        [_sortedEventLayers enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger idx, BOOL *stop)
+        [_sortedByStartDateEventLayers enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger idx, BOOL *stop)
         {
             CGFloat layerTop = [timeRuler hourForDate:[l valueForKey:_WLStartDateKey]] * timeRuler.heightOfHour;
             CGFloat layerBottom = [timeRuler hourForDate:[l valueForKey:_WLEndDateKey]] * timeRuler.heightOfHour;
@@ -379,15 +436,18 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 
 - (void)layoutSublayers
 {
+#ifdef DEBUG_PERFORMANCE
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+#endif
     NSAssert(self.layoutManager == nil, @"You cannot use custom layout managers with this class");
 
-    if ([_sortedEventLayers count] == 0)
+    if ([_sortedByStartDateEventLayers count] == 0)
         return;
 
     if (_eventsChanged || _cachedMaximumNumberOfColumns != [self maximumNumberOfColumns])
     {
-        _cachedMaximumNumberOfColumns = [self maximumNumberOfColumns];
         _eventsChanged = NO;
+        _cachedMaximumNumberOfColumns = [self maximumNumberOfColumns];
         [self _buildEventsLayoutTree];
     }
 
@@ -428,7 +488,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 - (CGSize)preferredFrameSize
 {
     CGSize s = CGSizeMake(0.0f, 0.0f);
-    for (WLCalendarEventLayer *l in _sortedEventLayers)
+    for (WLCalendarEventLayer *l in _sortedByStartDateEventLayers)
     {
         CGSize ls = [l preferredFrameSize];
         s.width = MAX(s.width, ls.width);
@@ -440,8 +500,14 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 #ifdef DEBUG_LAYERS
 - (void)drawInContext:(CGContextRef)aContext
 {
+#ifdef DEBUG_PERFORMANCE
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+#endif
     // Draw line for each hour.
     CGContextSaveGState(aContext);
+    CGContextSetFillColorWithColor(aContext, [[NSColor clearColor] WL_CGColor]);
+    CGContextFillRect(aContext, CGContextGetClipBoundingBox(aContext));
+    
     CGContextBeginPath(aContext);
     CGFloat hourHeight = timeRuler.heightOfHour;
     for (NSUInteger i=0, numberOfHours=timeRuler.numberOfHours; i<numberOfHours; ++i)

@@ -9,6 +9,7 @@
 #import "WLCalendarTasksView.h"
 #import "NSColor+CGColor.h"
 #import "CATextLayer+WLStringSize.h"
+#import "CoreAnimation+WLCalendar.h"
 
 
 static NSString* const _WLRootLayerName = @"root";
@@ -31,25 +32,15 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     [super dealloc];
 }
 
-- (void)viewWillStartLiveResize
-{
-    [self layer].needsDisplayOnBoundsChange = NO;
-    [super viewWillStartLiveResize];
-}
-
-- (void)viewDidEndLiveResize
-{
-    [super viewDidEndLiveResize];
-    [self layer].needsDisplayOnBoundsChange = YES;
-    [[self layer] setNeedsDisplay];
-}
-
 - (void)setupLayers
 {
+    [CATransaction begin];
     CALayer *rootLayer = [CALayer layer];
     rootLayer.delegate = self;
     rootLayer.name = _WLRootLayerName;
-    rootLayer.needsDisplayOnBoundsChange = YES;
+    [CATransaction WL_performWithDisabledActions:^{
+        rootLayer.needsDisplayOnBoundsChange = YES;
+    }];
     rootLayer.layoutManager = [CAConstraintLayoutManager layoutManager];
     rootLayer.cornerRadius = 2.0f;
     rootLayer.masksToBounds = YES;
@@ -115,27 +106,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 
     [self setLayer:rootLayer];
     [self setWantsLayer:YES];
-}
-
-- (CATextLayer *)newTaskLayerAtIndex:(NSUInteger)anIndex
-{
-    CalTask *task = [dataSource tasksView:self taskAtIndex:anIndex];
-    CATextLayer *taskLayer = [[CATextLayer layer] retain];
-    taskLayer.string = task.title;
-    taskLayer.foregroundColor = [[[task calendar] color] WL_CGColor];
-    taskLayer.name = task.uid;
-    taskLayer.masksToBounds = YES;
-    taskLayer.fontSize = 24.0f;
-    taskLayer.wrapped = YES;
-    taskLayer.truncationMode = kCATruncationEnd;
-    CABasicAnimation *orderInAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-    [orderInAnimation setFromValue:[NSNumber numberWithFloat:0.0]];
-    [orderInAnimation setToValue:[NSNumber numberWithFloat:1.0]];
-    taskLayer.actions = [NSDictionary dictionaryWithObject:orderInAnimation forKey:kCAOnOrderIn];
-#ifdef DEBUG_LAYERS
-    taskLayer.backgroundColor = [[NSColor redColor] WL_CGColor];
-#endif
-    return taskLayer;
+    [CATransaction commit];
 }
 
 - (void)reloadData
@@ -152,10 +123,9 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 
 - (void)insertTaskAtIndex:(NSUInteger)anIndex
 {
-    CATextLayer *taskLayer = [self newTaskLayerAtIndex:anIndex];
+    CATextLayer *taskLayer = [self _setupTaskLayerAtIndex:anIndex];
     [_tasksLayer addSublayer:taskLayer];
     [[_tasksLayer valueForKey:_WLOrderedSublayersKey] insertObject:taskLayer atIndex:anIndex];
-    [taskLayer release];
 }
 
 - (void)removeTaskAtIndex:(NSUInteger)anIndex
@@ -187,10 +157,37 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 }
 
 
+#pragma mark Private
+
+- (CATextLayer *)_setupTaskLayerAtIndex:(NSUInteger)anIndex
+{
+    CalTask *task = [dataSource tasksView:self taskAtIndex:anIndex];
+    CATextLayer *taskLayer = [CATextLayer layer];
+    taskLayer.string = task.title;
+    taskLayer.foregroundColor = [[[task calendar] color] WL_CGColor];
+    taskLayer.name = task.uid;
+    taskLayer.masksToBounds = YES;
+    taskLayer.fontSize = 24.0f;
+    taskLayer.wrapped = YES;
+    taskLayer.truncationMode = kCATruncationEnd;
+    CABasicAnimation *orderInAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    [orderInAnimation setFromValue:[NSNumber numberWithFloat:0.0]];
+    [orderInAnimation setToValue:[NSNumber numberWithFloat:1.0]];
+    taskLayer.actions = [NSDictionary dictionaryWithObject:orderInAnimation forKey:kCAOnOrderIn];
+#ifdef DEBUG_LAYERS
+    taskLayer.backgroundColor = [[NSColor greenColor] WL_CGColor];
+#endif
+    return taskLayer;
+}
+
+
 #pragma mark CALayerDelegate
 
 - (void)displayLayer:(CALayer *)layer
 {
+#ifdef DEBUG_PERFORMANCE
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+#endif
     NSParameterAssert([layer.name isEqualToString:_WLRootLayerName]);
 #ifndef DEBUG_LAYERS
     NSRect layerBounds = NSRectFromCGRect(layer.bounds);
@@ -224,6 +221,9 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 
 - (void)layoutSublayersOfLayer:(CATextLayer *)layer
 {
+#ifdef DEBUG_PERFORMANCE
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+#endif
     NSParameterAssert([layer.name isEqualToString:_WLTasksLayerName]);
     CGSize layerSize = layer.bounds.size;
     CGFloat top = layerSize.height;

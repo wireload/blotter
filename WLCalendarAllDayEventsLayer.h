@@ -14,7 +14,8 @@
 
 
 @interface WLCalendarAllDayEventsLayer : CALayer {
-    NSMutableArray *_sortedEventLayers;
+    NSMutableArray *_sortedByUIDEventLayers;
+    NSMutableArray *_icalSortedEventLayers;
 }
 
 @property (nonatomic, copy) NSArray *events;
@@ -22,8 +23,10 @@
 - (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth;
 
 
-- (WLCalendarEventLayer *)_setupEventLayerWithEvent:(id)anEvent;
+- (WLCalendarEventLayer *)_setupEventLayer;
 
-- (NSUInteger)_indexOfEventLayerForUID:(NSString *)anUID isFound:(BOOL *)isFound;
+- (void)_updateEventLayer:(WLCalendarEventLayer *)aLayer withEvent:(id)anEvent;
+
+- (NSUInteger)_indexOfEventLayerWithUID:(NSString *)anUID isFound:(BOOL *)outIsFound;
 
 @end

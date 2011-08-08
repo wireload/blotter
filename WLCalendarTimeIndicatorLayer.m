@@ -26,14 +26,18 @@
     if ([aKey isEqualToString:@"color"])
         return YES;
     else
-        return [super needsDisplayForKey:aKey]; 
+        return [super needsDisplayForKey:aKey];
 }
 
 - (void)drawInContext:(CGContextRef)aContext
 {
+#ifdef DEBUG_PERFORMANCE
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+#endif
     CGContextSaveGState(aContext);
-    static const CGFloat lengths[] = {10.0f, 2.0f};
-    CGContextSetLineDash(aContext, 0, lengths, sizeof(lengths) / sizeof(float));
+    static const CGFloat lengths[] = {10.0f, 10.0f};
+    CGContextSetLineDash(aContext, 0, lengths, sizeof(lengths) / sizeof(CGFloat));
+    CGContextSetLineWidth(aContext, self.bounds.size.height);
     CGContextMoveToPoint(aContext, CGRectGetMinX(self.bounds), CGRectGetMidY(self.bounds));
     CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), CGRectGetMidY(self.bounds));
     CGContextSetStrokeColorWithColor(aContext, self.color);

@@ -13,14 +13,14 @@
 
 - (void)drawInContext:(CGContextRef)aContext
 {
-#ifndef DEBUG_LAYERS
-    CGRect layerBounds = self.bounds;
-
+#ifdef DEBUG_PERFORMANCE
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+#endif
     CGContextSaveGState(aContext);
 
     CGColorRef backgroundColor = CGColorCreateCopyWithAlpha(self.contentsBackgroundColor, self.contentsBackgroundOpacity);
     CGContextSetFillColorWithColor(aContext, backgroundColor);
-    CGContextFillRect(aContext, layerBounds);
+    CGContextFillRect(aContext, self.bounds);
     CGColorRelease(backgroundColor);
 
     CGContextSaveGState(aContext);
@@ -35,14 +35,14 @@
     CGContextSetBlendMode(aContext, kCGBlendModeOverlay);
     CGContextDrawLinearGradient(aContext,
                                 transparentToWhite,
-                                layerBounds.origin,
-                                CGPointMake(CGRectGetMinX(layerBounds), CGRectGetMaxY(layerBounds)),
+                                self.bounds.origin,
+                                CGPointMake(CGRectGetMinX(self.bounds), CGRectGetMaxY(self.bounds)),
                                 kCGGradientDrawsBeforeStartLocation);
     CGGradientRelease(transparentToWhite);
     CGContextRestoreGState(aContext);
 
     CGContextRestoreGState(aContext);
-#endif
+
 }
 
 @end

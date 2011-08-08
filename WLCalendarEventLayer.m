@@ -144,7 +144,7 @@ const CGFloat _WLXPadding = 10.0f;
             CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
             if (frame != NULL)
             {
-                NSArray *lines = (NSArray *)CTFrameGetLines(frame);
+                __block NSArray *lines = (NSArray *)CTFrameGetLines(frame);
                 NSUInteger numberOfLines = [lines count];
                 if (numberOfLines > 0)
                 {
@@ -155,7 +155,7 @@ const CGFloat _WLXPadding = 10.0f;
                     BOOL shouldTruncateLastLine = frameRange.location + frameRange.length < [self.string length];
 
                     [lines enumerateObjectsUsingBlock:^(id line, NSUInteger idx, BOOL *stop)
-                     {
+                    {
                          CGPoint origin = lineOrigins[idx];
                          CGContextSetTextPosition(aContext, stringBounds.origin.x + origin.x, stringBounds.origin.y + origin.y);
 
@@ -175,19 +175,20 @@ const CGFloat _WLXPadding = 10.0f;
                              [truncatedString release];
                              if (truncatedLine != NULL)
                              {
-                                 static CTLineRef TruncationToken = NULL;
-                                 if (TruncationToken == NULL)
-                                 {
-                                     CFStringRef token = CFSTR("\u2026");
-                                     CFAttributedStringRef truncationString = CFAttributedStringCreate(NULL, token, NULL);
-                                     TruncationToken = CTLineCreateWithAttributedString(truncationString);
-                                     CFRelease(truncationString);
-                                 }
+                                 CTLineRef truncationToken = NULL;
+                                 CFStringRef token = CFSTR("\u2026");
+                                 CFDictionaryRef tokenAttributes = (CFDictionaryRef)[self.string attributesAtIndex:0 effectiveRange:NULL];
+                                 CFAttributedStringRef truncationString = CFAttributedStringCreate(NULL,
+                                                                                                   token,
+                                                                                                   tokenAttributes);
+                                 truncationToken = CTLineCreateWithAttributedString(truncationString);
+                                 CFRelease(truncationString);
                                  // In case when adding truncation symbol to the end of line make the line to not fit the bounds.
                                  CTLineRef truncatedTruncatedLine = CTLineCreateTruncatedLine(truncatedLine,
                                                                                               stringBounds.size.width,
                                                                                               kCTLineTruncationEnd,
-                                                                                              TruncationToken);
+                                                                                              truncationToken);
+                                 CFRelease(truncationToken);
                                  if (truncatedTruncatedLine != NULL)
                                  {
                                      CTLineDraw(truncatedTruncatedLine, aContext);
@@ -229,6 +230,9 @@ const CGFloat _WLXPadding = 10.0f;
 
 - (void)drawInContext:(CGContextRef)aContext
 {
+#ifdef DEBUG_PERFORMANCE
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+#endif
     CGContextSaveGState(aContext);
 #ifndef DEBUG_LAYERS
     [self _drawBackground:aContext];

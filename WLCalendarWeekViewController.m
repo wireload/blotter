@@ -50,12 +50,12 @@ static NSString* const _WLEventsKey = @"events";
                                  object:[CalCalendarStore defaultCalendarStore]];
 
         [notificationCenter addObserver:self
-                               selector:@selector(_clockChanged)
+                               selector:@selector(_clockChanged:)
                                    name:NSSystemClockDidChangeNotification
                                  object:nil];
 
         [notificationCenter addObserver:self
-                               selector:@selector(_clockChanged)
+                               selector:@selector(_clockChanged:)
                                    name:NSSystemTimeZoneDidChangeNotification
                                  object:nil];
 
@@ -95,14 +95,22 @@ static NSString* const _WLEventsKey = @"events";
 
 - (void)setView:(WLCalendarWeekView *)newView
 {
-    [self view].dataSource = nil;
+    WLCalendarWeekView *oldView = [self view];
+    oldView.dataSource = nil;
     // Look at the -_localeChanged: method.
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_localeActuallyChanged) object:nil];
+    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
+    {
+        // Look at the -_clockChanged: method.
+        [NSObject cancelPreviousPerformRequestsWithTarget:oldView
+                                                 selector:@selector(setupLayersAnimated:)
+                                                   object:[NSNumber numberWithBool:YES]];
+    }
     [super setView:newView];
     newView.dataSource = self;
     self._representedDate = [NSDate date];
     self._firstWeekday = nil;
-    [newView setupLayers];
+    [newView setupLayersAnimated:NO];
 }
 
 - (NSArray *)representedObject
@@ -115,7 +123,7 @@ static NSString* const _WLEventsKey = @"events";
     // Look at the -_localeChanged: method.
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_localeActuallyChanged) object:nil];
     [super setRepresentedObject:newRepresentedObject];
-    [[self view] setupLayers];
+    [[self view] setupLayersAnimated:YES];
 }
 
 - (void)setMode:(WLCalendarWeekViewMode)newMode
@@ -125,7 +133,7 @@ static NSString* const _WLEventsKey = @"events";
         // Look at the -_localeChanged: method.
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_localeActuallyChanged) object:nil];
         mode = newMode;
-        [[self view] setupLayers];
+        [[self view] setupLayersAnimated:YES];
     }
 }
 
@@ -363,21 +371,29 @@ static NSString* const _WLEventsKey = @"events";
 
 - (void)_localeActuallyChanged
 {
-    NSLog(@"_localeActuallyChanged");
     self._firstWeekday = nil;
     self._columnTitleFormat = nil;
     self._calendar = nil;
     self._dateFormatter = nil;
-    [[self view] setupLayers];
+    [[self view] setupLayersAnimated:YES];
 }
 
-- (void)_clockChanged
+- (void)_clockChanged:(NSNotification *)aNotification
 {
     // Look at the -_localeChanged: method.
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_localeActuallyChanged) object:nil];
     self._firstWeekday = nil;
     self._representedDate = [NSDate date];
-    [[self view] setupLayers];
+    // http://groups.google.com/group/cocoa-unbound/browse_thread/thread/46fe3433cfef6a97#
+    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
+    {
+        [NSObject cancelPreviousPerformRequestsWithTarget:[self view]
+                                                 selector:@selector(setupLayersAnimated:)
+                                                   object:[NSNumber numberWithBool:YES]];
+        [[self view] performSelector:@selector(setupLayersAnimated:) withObject:[NSNumber numberWithBool:YES] afterDelay:0.5];
+    }
+    else
+        [[self view] setupLayersAnimated:YES];
 }
 
 - (void)_showNextDay
@@ -386,15 +402,17 @@ static NSString* const _WLEventsKey = @"events";
     NSDate *now = [NSDate date];
     NSDateComponents *nowComponents = [calendar components:NSMonthCalendarUnit | NSDayCalendarUnit fromDate:now];
     NSDateComponents *representedComponents = [calendar components:NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self._representedDate];
-    // This method is typically called by the timer which fire date is set to 1 second of the first day after _representedDate.
-    // see _scheduleNextDayTimer
     // Though accuracy of NSTimer is documented as 50-100ms, we must ensure that day is actually changed.
     if ([nowComponents day] != [representedComponents day] || [nowComponents month] != [representedComponents month])
     {
         self._representedDate = now;
         self._firstWeekday = nil;
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:^{
+            [self scrollToCurrentHour];
+        }];
         [[self view] nextDay];
-        [self scrollToCurrentHour];
+        [CATransaction commit];
         [self _scheduleNextDayTimer];
     }
     else
@@ -407,8 +425,6 @@ static NSString* const _WLEventsKey = @"events";
     NSDate *now = [NSDate date];
     NSDateComponents *nowComponents = [calendar components:NSMonthCalendarUnit | NSWeekCalendarUnit fromDate:now];
     NSDateComponents *representedComponents = [calendar components:NSMonthCalendarUnit | NSWeekCalendarUnit fromDate:self._representedDate];
-    // This method is typically called by the timer which fire date is set to 1 second of the first day after _representedDate.
-    // see _scheduleNextDayTimer
     // Though accuracy of NSTimer is documented as 50-100ms, we must ensure that week is actually changed.
     if ([nowComponents week] != [representedComponents week] || [nowComponents month] != [representedComponents month])
     {
@@ -419,7 +435,7 @@ static NSString* const _WLEventsKey = @"events";
         [self _scheduleNextWeekTimer];
     }
     else
-        [self performSelector:@selector(_showNextDay) withObject:nil afterDelay:0.1];
+        [self performSelector:@selector(_showNextWeek) withObject:nil afterDelay:0.1];
 }
 
 - (void)_scheduleScrollTimer

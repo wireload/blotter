@@ -23,8 +23,6 @@
 
 - (void)setupLayers;
 
-- (CATextLayer *)newTaskLayerAtIndex:(NSUInteger)anIndex;
-
 - (void)reloadData;
 
 
@@ -35,6 +33,9 @@
 - (void)updateTaskAtIndex:(NSUInteger)anIndex;
 
 - (void)moveTaskAtIndex:(NSUInteger)oldIndex toIndex:(NSUInteger)newIndex;
+
+
+- (CATextLayer *)_setupTaskLayerAtIndex:(NSUInteger)anIndex;
 
 @end
 
