@@ -22,7 +22,7 @@ static NSString* const _WLTimeRulerScrollLayerName = @"timeRulerScroll";
 
 static NSString* const _WLTimeRulerLayerName = @"timeRuler";
 
-static NSString* const _WLColumnContentLayerName = @"weekdayEventsContent";
+static NSString* const _WLColumnLayerName = @"weekdayEventsContent";
 
 static NSString *const _WLAllDayBackgroundLayerName = @"weekdayEventsAllDayBackground";
 
@@ -72,6 +72,7 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     [CATransaction begin];
     [CATransaction setDisableActions:!isAnimated];
     [CATransaction setCompletionBlock:^{
+        [CATransaction setDisableActions:!isAnimated];
         [dataSource weekViewDidSetupLayers:self];
     }];
 
@@ -105,7 +106,7 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     {
         for (NSUInteger i=0, size=numberOfColumns-currentNumberOfColumns; i<size; ++i)
         {
-            CALayer *column = [self setupColumnLayer];
+            CALayer *column = [self setupColumnRootLayer];
             [_columnLayers addObject:column];
             [_rootLayer insertSublayer:column below:_timeIndicatorLayer];
         }
@@ -121,10 +122,9 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     }
     [self updateColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, numberOfColumns)]];
 
-    CALayer *viewLayer = [self layer];
-    if (viewLayer == nil)
+    if ([_rootLayer superlayer] == nil)
     {
-        viewLayer = [CALayer layer];
+        CALayer *viewLayer = [CALayer layer];
         viewLayer.needsDisplayOnBoundsChange = YES;
 #ifdef DEBUG_LAYERS
         viewLayer.backgroundColor = [[NSColor darkGrayColor] WL_CGColor];
@@ -136,7 +136,7 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     [CATransaction commit];
 }
 
-- (void)scrollHour:(CGFloat)aHour
+- (void)scrollHour:(CGFloat)aHour animated:(BOOL)isAnimated
 {
     _hour = aHour;
     CAScrollLayer *timeRulerScrollLayer = [_timeRulerRootLayer valueForKeyPath:_WLTimeRulerScrollLayerName];
@@ -144,6 +144,7 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     CGPoint hourPoint = [timeRulerLayer pointForHour:_hour];
 
     [CATransaction begin];
+    [CATransaction setDisableActions:!isAnimated];
     CGPoint newScrollPoint = [timeRulerScrollLayer convertPoint:hourPoint fromLayer:timeRulerLayer];
 
     // Center _hour whenever possible
@@ -164,14 +165,14 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     [CATransaction commit];
 }
 
-- (void)nextDay
+- (void)showNextDay
 {
     if ([_columnLayers count] == 0)
         return;
     [CATransaction begin];
     [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
     [CATransaction setDisableActions:YES];
-    CALayer *newColumn = [self setupColumnLayer];
+    CALayer *newColumn = [self setupColumnRootLayer];
 
     [CATransaction setDisableActions:NO];
     [[_columnLayers objectAtIndex:0] removeFromSuperlayer];
@@ -197,8 +198,10 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     [CATransaction commit];
 }
 
-- (void)nextWeek
+- (void)showNextWeek
 {
+    if ([_columnLayers count] == 0)
+        return;
     [CATransaction begin];
     [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
     NSUInteger numberOfColumns = [dataSource numberOfColumnsInWeekView:self];
@@ -209,7 +212,7 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     [_columnLayers removeAllObjects];
     for (NSUInteger i=0; i<numberOfColumns; ++i)
     {
-        CALayer *column = [self setupColumnLayer];
+        CALayer *column = [self setupColumnRootLayer];
         [_columnLayers addObject:column];
         [_rootLayer insertSublayer:column below:_timeIndicatorLayer];
     }
@@ -226,11 +229,7 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
         [positionAnimation setToValue:[NSValue valueWithPoint:NSPointFromCGPoint(column.position)]];
         [column addAnimation:positionAnimation forKey:@"position"];
     }];
-    [self scrollHour:_hour];
     [CATransaction commit];
-#ifdef DEBUG_PERFORMANCE
-    NSLog(@"next week animation did start");
-#endif
 }
 
 - (void)updateEventsOfColumnsAtIndexes:(NSIndexSet *)anIndexSet
@@ -307,7 +306,7 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
                                            0.0f,
                                            _rootLayer.frame.size.width - _timeRulerRootLayer.frame.size.width,
                                            1.0f);
-    [self scrollHour:_hour];
+    [self scrollHour:_hour animated:![CATransaction disableActions]];
 }
 
 
@@ -337,11 +336,25 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     title.string = [dataSource weekView:self titleForColumnAtIndex:anIndex];
 }
 
+- (void)_updateColorOfColumnAtIndex:(NSUInteger)anIndex
+{
+    if ([dataSource respondsToSelector:@selector(weekView:colorForColumnAtIndex:)])
+    {
+        CALayer *column = [_columnLayers objectAtIndex:anIndex];
+        WLCalendarBackgroundLayer *dayBackground = [column valueForKey:_WLDayBackgroundLayerName];
+        WLCalendarBackgroundLayer *allDayBackground = [column valueForKey:_WLAllDayBackgroundLayerName];
+        CGColorRef c = [dataSource weekView:self colorForColumnAtIndex:anIndex];
+        dayBackground.contentsBackgroundColor = c;
+        allDayBackground.contentsBackgroundColor = c;
+    }
+}
+
 - (void)_updateColumnAtIndex:(NSUInteger)anIndex
 {
     [CATransaction begin];
     [self _updateEventsOfColumnAtIndex:anIndex];
     [self _updateTitleOfColumnAtIndex:anIndex];
+    [self _updateColorOfColumnAtIndex:anIndex];
     [CATransaction commit];
 }
 
@@ -589,15 +602,15 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 <--depth----------------------------------------
 */
 
-- (CALayer *)setupColumnLayer
+- (CALayer *)setupColumnRootLayer
 {
-    __block CALayer *content = [self setupColumnContentLayer];
+    __block CALayer *root = [self setupColumnLayer];
     [CATransaction WL_performWithDisabledActions:^{
-        content.layoutManager = [CAConstraintLayoutManager layoutManager];
+        root.layoutManager = [CAConstraintLayoutManager layoutManager];
 
         WLCalendarBackgroundLayer *allDayBackground = [self setupAllDayBackgroundLayer];
-        [content addSublayer:allDayBackground];
-        [content setValue:allDayBackground forKey:allDayBackground.name];
+        [root addSublayer:allDayBackground];
+        [root setValue:allDayBackground forKey:allDayBackground.name];
 
         WLCalendarAllDayEventsLayer *allDay = [self setupAllDayLayer];
         allDay.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
@@ -616,8 +629,8 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
                                                                 relativeTo:_WLAllDayBackgroundLayerName
                                                                  attribute:kCAConstraintMinY
                                                                     offset:_WLYMarginBetweenAllDayAndWeekdayEvents]];
-        [content addSublayer:dayBackground];
-        [content setValue:dayBackground forKey:dayBackground.name];
+        [root addSublayer:dayBackground];
+        [root setValue:dayBackground forKey:dayBackground.name];
 
         CATextLayer *title = [self setupDayTitleLayer];
         [dayBackground addSublayer:title];
@@ -632,14 +645,14 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
         [scroll addSublayer:day];
         [scroll setValue:day forKey:day.name];
     }];
-    return content;
+    return root;
 }
 
-- (CALayer *)setupColumnContentLayer
+- (CALayer *)setupColumnLayer
 {
     __block CALayer *l = [CALayer layer];
     [CATransaction WL_performWithDisabledActions:^{
-        l.name = _WLColumnContentLayerName;
+        l.name = _WLColumnLayerName;
         l.masksToBounds = YES;
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor redColor] WL_CGColor];
@@ -725,9 +738,9 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     [CATransaction WL_performWithDisabledActions:^{
         l.name = _WLDayBackgroundLayerName;
         l.needsDisplayOnBoundsChange = YES;
-        l.contentsBackgroundColor = [[NSColor colorWithCalibratedRed:54.0f / 255.0f
-                                                               green:54.0f / 255.0f
-                                                                blue:54.0f / 255.0f
+        l.contentsBackgroundColor = [[NSColor colorWithCalibratedRed:101.0f / 255.0f
+                                                               green:161.0f / 255.0f
+                                                                blue:165.0f / 255.0f
                                                                alpha:1.0f] WL_CGColor];
         l.contentsBackgroundOpacity = 0.3f;
 #ifdef DEBUG_LAYERS

@@ -42,7 +42,7 @@
 
 - (void)setupLayersAnimated:(BOOL)isAnimated;
 
-- (void)scrollHour:(CGFloat)aHour;
+- (void)scrollHour:(CGFloat)aHour animated:(BOOL)isAnimated;
 
 - (void)updateEventsOfColumnsAtIndexes:(NSIndexSet *)anIndexSet;
 
@@ -50,14 +50,16 @@
 
 - (void)updateColumnsAtIndexes:(NSIndexSet *)anIndexSet;
 
-- (void)nextDay;
+- (void)showNextDay;
 
-- (void)nextWeek;
+- (void)showNextWeek;
 
 
 - (void)_updateEventsOfColumnAtIndex:(NSUInteger)anIndex;
 
 - (void)_updateTitleOfColumnAtIndex:(NSUInteger)anIndex;
+
+- (void)_updateColorOfColumnAtIndex:(NSUInteger)anIndex;
 
 - (void)_updateColumnAtIndex:(NSUInteger)anIndex;
 
@@ -84,9 +86,9 @@
 - (WLCalendarTimeRulerLayer *)setupTimeRulerLayer;
 
 
-- (CALayer *)setupColumnLayer;
+- (CALayer *)setupColumnRootLayer;
 
-- (CALayer *)setupColumnContentLayer;
+- (CALayer *)setupColumnLayer;
 
 - (WLCalendarBackgroundLayer *)setupAllDayBackgroundLayer;
 
@@ -128,5 +130,7 @@ enum
 - (void)weekView:(WLCalendarWeekView *)aWeekView willAskForData:(NSUInteger)dataUnits forColumnsAtIndexes:(NSIndexSet *)anIndexSet;
 
 - (void)weekViewDidAskForData:(WLCalendarWeekView *)aWeekView;
+
+- (CGColorRef)weekView:(WLCalendarWeekView *)aWeekView colorForColumnAtIndex:(NSUInteger)anIndex;
 
 @end

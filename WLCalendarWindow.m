@@ -44,7 +44,6 @@
     return NSInsetRect([[self contentView] bounds], borderWidth, borderWidth);
 }
 
-
 #pragma mark NSWindow
 
 - (BOOL)canBecomeKeyWindow

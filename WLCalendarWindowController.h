@@ -2,38 +2,55 @@
 //  WLCalendarWindowController.h
 //  Blotter
 //
-//  Created by Илья Кулаков on 01.08.11.
+//  Created by Ilya Kulakov on 01.08.11.
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
 #import "WLCalendarWindow.h"
-#import "WLCalendarWeekViewController.h"
-#import "WLCalendarTasksViewController.h"
 #import "BLCalendarFramer.h"
+#import "BLFadeController.h"
+
+
+@class WLCalendarWeekViewController;
+@class WLCalendarTasksViewController;
+@class WLCalendarDateViewController;
 
 
 /*!
  @abstract      This class is responsible for sizing and placing its window according to user settings.
- @classdesign   This class is designed to be created in code. You MUST use -showWindow: method to place controller's window on screen.
- You MUST call this method only once.
+ It observes various system notifications to update its subcontrollers appropriately.
  @performance   You SHOULD prepare the controller and its window before you call -showWindow:
  @dependency    Depends on the following user defaults settings: DisplayAllCalendars, Calendars,
  PerDayDate, RollingCalendar.
- @dependency    Observes NSApplicationDidChangeScreenParametersNotification.
+ @dependency    Observes NSApplicationDidChangeScreenParametersNotification, NSSystemClockDidChangeNotification,
+ NSSystemTimeZoneDidChangeNotification, NSCurrentLocaleDidChangeNotification
+ @dependency    Observes NSViewFrameDidChangeNotification posteb by contentView of its window.
  @coclass       WLCalendarWindow The class of controller's window.
  @helper        BLCalendarFramer
+ @helper        BLFadeController
  */
-@interface WLCalendarWindowController : NSWindowController <NSWindowDelegate> {
+@interface WLCalendarWindowController : NSObject <NSWindowDelegate> {
+    WLCalendarWindow *window;
     BLSize windowSize;
     BLPosition windowPosition;
     NSNumber *windowScreenIdentifier;
+    BLFadeController *fadeController;
 
     WLCalendarWeekViewController *_weekViewController;
     WLCalendarTasksViewController *_tasksViewController;
+    WLCalendarDateViewController *_dateViewController;
 
+    NSTimer *_nextDayTimer;
+    NSCache *_cache;
     BOOL _isWindowShowed;
+    struct {
+        unsigned int updateCalendar:1;
+        unsigned int updateDate:1;
+    } _updateFlags;
 }
+
+@property (readonly) WLCalendarWindow *window;
 
 /*!
  @abstract Specifies the type of size.
@@ -52,14 +69,14 @@
  */
 @property (nonatomic, copy) NSNumber *windowScreenIdentifier;
 
-- (id)initWithWindow:(WLCalendarWindow *)aWindow;
-
-- (WLCalendarWindow *)window;
+@property (readonly) BLFadeController *fadeController;
 
 /*!
  @abstract  Returns array of CalCalendar objects depending on DisplayAllCalendars and Calendars preferences.
  */
 - (NSArray *)calendarsToDisplay;
+
+- (IBAction)showWindow:(id)aSender;
 
 
 /*!
@@ -79,5 +96,33 @@
 - (void)_applyNormalSizeToViews;
 
 - (void)_applyFullSizeToViews;
+
+/*!
+ @abstract      Sets a timer to call _updateViews.
+ @discussion    Called when NSCurrentLocaleDidChangeNotification is posted.
+ */
+- (void)_localeChanged:(NSNotification *)aNotification;
+
+/*!
+ @abstract      Reloads the view. Invalidates _columnTitleFormat.
+ @discussion    Called when either NSSystemClockDidChangeNotification or NSSystemTimeZoneDidChangeNotification is posted.
+ */
+- (void)_clockChanged:(NSNotification *)aNotification;
+
+- (void)_updateViews;
+
+/*!
+ @abstract      Schedules a timer to update view when day ends.
+ @discussion    Invalidated and rescheduled every time when the view is reloaded.
+ @see           _showNextDay
+ */
+- (void)_scheduleNextDayTimer;
+
+/*!
+ @abstract      Updates view to display new day.
+ @discussion    Called by a timer scheduled by _scheduleNextDayTimer.
+ @see           _scheduleNextDayTimer
+ */
+- (void)_showNextDay;
 
 @end

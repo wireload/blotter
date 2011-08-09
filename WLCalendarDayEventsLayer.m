@@ -85,7 +85,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
             [_sortedByUIDEventLayers insertObject:layer atIndex:idxByUID];
             [self addSublayer:layer];
         }
-        
+
         NSUInteger idxByStartDate = [self _indexOfEventLayerWithStartDate:[event startDate]];
         [_sortedByStartDateEventLayers insertObject:layer atIndex:idxByStartDate];
         layer.zPosition = idxByStartDate;
@@ -130,11 +130,11 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
                                                                            attributes:attr];
     aLayer.string = attributedString;
     [attributedString release];
-    
+
     [aLayer setValue:[anEvent startDate] forKey:_WLStartDateKey];
     [aLayer setValue:[anEvent endDate] forKey:_WLEndDateKey];
     [aLayer setValue:[NSNumber numberWithFloat:0.0f] forKey:_WLTopKey];
-    [aLayer setValue:[NSNumber numberWithFloat:0.0f] forKey:_WLBottomKey];    
+    [aLayer setValue:[NSNumber numberWithFloat:0.0f] forKey:_WLBottomKey];
     [aLayer setValue:[NSNumber numberWithInt:0] forKey:_WLNumberOfColumnsToSkipKey];
 #ifdef DEBUG_LAYERS
     aLayer.backgroundColor = [[(CalCalendar *)[anEvent calendar] color] WL_CGColor];
@@ -167,7 +167,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
                       {
                           NSComparisonResult result = [obj1 compare:obj2];
                           if (!found) // since we pass NSBinarySearchingInsertionIndex, block may be called even when object is actually found.
-                              found = (result == NSOrderedSame);                  
+                              found = (result == NSOrderedSame);
                           return result;
                       }];
     if (outIsFound != NULL)
@@ -507,7 +507,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     CGContextSaveGState(aContext);
     CGContextSetFillColorWithColor(aContext, [[NSColor clearColor] WL_CGColor]);
     CGContextFillRect(aContext, CGContextGetClipBoundingBox(aContext));
-    
+
     CGContextBeginPath(aContext);
     CGFloat hourHeight = timeRuler.heightOfHour;
     for (NSUInteger i=0, numberOfHours=timeRuler.numberOfHours; i<numberOfHours; ++i)

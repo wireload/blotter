@@ -130,12 +130,12 @@
 
 - (IBAction)nextDay:(id)sender
 {
-    [weekView nextDay];
+    [weekView showNextDay];
 }
 
 - (IBAction)nextWeek:(id)sender
 {
-    [weekView nextWeek];
+    [weekView showNextWeek];
 }
 
 @end

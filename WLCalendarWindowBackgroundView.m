@@ -7,19 +7,26 @@
 //
 
 #import "WLCalendarWindowBackgroundView.h"
+#import "NSColor+CGColor.h"
 
 
 @implementation WLCalendarWindowBackgroundView
 
-- (void)drawRect:(NSRect)dirtyRect
+- (id)initWithFrame:(NSRect)aFrameRect
 {
-    [[NSColor clearColor] setFill];
-    NSRectFillUsingOperation(dirtyRect, NSCompositeSourceOver);
-}
-
-- (BOOL)isFlipped
-{
-    return YES;
+    self = [super initWithFrame:aFrameRect];
+    if (self != nil)
+    {
+        [self setAutoresizesSubviews:NO];
+        CALayer *layer = [CALayer layer];
+        layer.backgroundColor = [[[NSColor blackColor] colorWithAlphaComponent:0.2] WL_CGColor];
+        layer.borderColor = [[NSColor blackColor] WL_CGColor];
+        layer.borderWidth = 10.0f;
+        layer.cornerRadius = 10.0f;
+        [self setLayer:layer];
+        [self setWantsLayer:YES];
+    }
+    return self;
 }
 
 @end

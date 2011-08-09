@@ -46,24 +46,12 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 
-        if ([userDefaults objectForKey:@"DisplayAllCalendars"] == nil)
-            // Enabled by default
-            [userDefaults setObject:[NSNumber numberWithInteger:1] forKey:@"DisplayAllCalendars"];
-
-        NSArray *calendars = [userDefaults arrayForKey:@"Calendars"];
-        if (calendars == nil)
-            [userDefaults setObject:[NSArray array] forKey:@"Calendars"];
-
-        if ([userDefaults objectForKey:@"CalendarSize"] == nil)
+        if ([[userDefaults stringForKey:@"CalendarSize"] isEqualToString:@"Narrow"])
+            [userDefaults setInteger:BLNarrowSize forKey:@"CalendarSize"];
+        else if ([[userDefaults stringForKey:@"CalendarSize"] isEqualToString:@"Normal"])
             [userDefaults setInteger:BLNormalSize forKey:@"CalendarSize"];
-        else {
-            if ([[userDefaults stringForKey:@"CalendarSize"] isEqualToString:@"Narrow"])
-                [userDefaults setInteger:BLNarrowSize forKey:@"CalendarSize"];
-            else if ([[userDefaults stringForKey:@"CalendarSize"] isEqualToString:@"Normal"])
-                [userDefaults setInteger:BLNormalSize forKey:@"CalendarSize"];
-            else if ([[userDefaults stringForKey:@"CalendarSize"] isEqualToString:@"Full"])
-                [userDefaults setInteger:BLFullSize forKey:@"CalendarSize"];
-        }
+        else if ([[userDefaults stringForKey:@"CalendarSize"] isEqualToString:@"Full"])
+            [userDefaults setInteger:BLFullSize forKey:@"CalendarSize"];
 
         if ([userDefaults objectForKey:@"ScreenIdentifier"] == nil)
         {
@@ -71,8 +59,9 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
             [userDefaults setObject:mainScreenID forKey:@"ScreenIdentifier"];
         }
 
-        if ([userDefaults objectForKey:@"ShowInMenuBar"] == nil)
-            [userDefaults setBool:YES forKey:@"ShowInMenuBar"];
+        NSURL *defaultsURL = [[NSBundle mainBundle] URLForResource:@"defaults" withExtension:@"plist"];
+        NSDictionary *defaults = [NSDictionary dictionaryWithContentsOfURL:defaultsURL];
+        [userDefaults registerDefaults:defaults];
     }
 }
 
@@ -147,9 +136,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillClose:) name:NSWindowWillCloseNotification object:nil];
 
-    WLCalendarWindow *w = [[WLCalendarWindow alloc] init];
-    windowController = [[WLCalendarWindowController alloc] initWithWindow:w];
-    [w release];
+    windowController = [[WLCalendarWindowController alloc] init];
     [windowController bind:@"windowSize"
                   toObject:[NSUserDefaultsController sharedUserDefaultsController]
                withKeyPath:@"values.CalendarSize"
@@ -368,8 +355,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (void)menuWillOpen:(NSMenu *)menu
 {
-    BLFadeController *fadeController = [(DesktopView *)[blotterWindow contentView] fadeController];
-    [fadeController fadeIn];
+    [[windowController fadeController] fadeIn];
 }
 
 @end

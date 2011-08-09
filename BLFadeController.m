@@ -20,17 +20,6 @@
 
 @synthesize fadeView;
 
-+ (void)initialize
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary *viewDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
-                                  @"NO", @"AutoFade",
-                                  @"60", @"AutoFadeSeconds",
-                                  nil];
-
-    [defaults registerDefaults:viewDefaults];
-}
-
 - (id)initWithView:(NSView *)aView
 {
     if (self = [super init])
