@@ -79,9 +79,9 @@
         l.string = aTime;
         l.wrapped = NO;
         l.truncationMode = kCATruncationNone;
-        l.shadowOpacity = 1.0f;
-        l.shadowOffset = CGSizeMake(0.0f, 1.0f);
-        l.shadowRadius = 1.0f;
+//        l.shadowOpacity = 1.0f;
+//        l.shadowOffset = CGSizeMake(0.0f, 1.0f);
+//        l.shadowRadius = 1.0f;
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif
@@ -94,6 +94,9 @@
 
 - (CGSize)preferredFrameSize
 {
+#ifdef DEBUG_PERFORMANCE
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+#endif
     if ([_sortedTimeLayers count] == 0)
         return CGSizeMake(0.0f, 0.0f);
 

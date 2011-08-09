@@ -723,9 +723,9 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     l.truncationMode = kCATruncationNone;
     l.alignmentMode = kCAAlignmentCenter;
     l.fontSize = 14.0f;
-    l.shadowOpacity = 1.0f;
-    l.shadowOffset = CGSizeMake(0.0f, -1.0f);
-    l.shadowRadius = 1.0f;
+//    l.shadowOpacity = 1.0f;
+//    l.shadowOffset = CGSizeMake(0.0f, -1.0f);
+//    l.shadowRadius = 1.0f;
 #ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif
