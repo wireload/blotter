@@ -36,7 +36,7 @@
 
 - (CATextLayer *)_setupMonthAndYearLayer;
 
-- (CATextLayer *)_setupWeedayLayer;
+- (CATextLayer *)_setupWeekdayLayer;
 
 - (void)_setFontSize:(BLSize)newFontSize;
 

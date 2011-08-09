@@ -27,7 +27,7 @@
     [root addSublayer:_monthDayLayer];
     _monthAndYearLayer = [self _setupMonthAndYearLayer];
     [root addSublayer:_monthAndYearLayer];
-    _weekdayLayer = [self _setupWeedayLayer];
+    _weekdayLayer = [self _setupWeekdayLayer];
     [root addSublayer:_weekdayLayer];
     [self setLayer:root];
     [self setWantsLayer:YES];
@@ -112,7 +112,7 @@
     return l;
 }
 
-- (CATextLayer *)_setupWeedayLayer
+- (CATextLayer *)_setupWeekdayLayer
 {
     CATextLayer *l = [CATextLayer layer];
     [CATransaction WL_performWithDisabledActions:^{
