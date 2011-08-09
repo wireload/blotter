@@ -225,6 +225,8 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     NSLog(@"%s", __PRETTY_FUNCTION__);
 #endif
     NSParameterAssert([layer.name isEqualToString:_WLTasksLayerName]);
+
+    [CATransaction setDisableActions:YES];
     CGSize layerSize = layer.bounds.size;
     CGFloat top = layerSize.height;
     static const CGFloat TopMargin = 20.0f;

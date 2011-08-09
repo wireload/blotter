@@ -296,6 +296,7 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 #endif
     NSParameterAssert([layer.name isEqualToString:_WLRootLayerName]);
 
+    [CATransaction setDisableActions:YES];
     [self _layoutTimerRulerRootlayer:_timeRulerRootLayer];
     [_columnLayers enumerateObjectsUsingBlock:^(CALayer *column, NSUInteger idx, BOOL *stop)
     {
