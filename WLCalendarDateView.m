@@ -131,10 +131,6 @@
     [CATransaction WL_performWithDisabledActions:^{
         switch (fontSize) {
             case BLNarrowSize:
-                _monthDayLayer.fontSize = 36.0f;
-                _monthAndYearLayer.fontSize = 12.0f;
-                _weekdayLayer.fontSize = 12.0f;
-                break;
             case BLNormalSize:
             case BLFullSize:
                 _monthDayLayer.fontSize = 144.0f;
