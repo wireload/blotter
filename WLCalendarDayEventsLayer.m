@@ -181,7 +181,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     NSLog(@"%@", NSStringFromSelector(_cmd));
 #endif
     [_eventsLayoutTreeRootNode release];
-    _eventsLayoutTreeRootNode = [[NSTreeNode alloc] initWithRepresentedObject:self];
+    _eventsLayoutTreeRootNode = [[NSTreeNode alloc] initWithRepresentedObject:nil];
 
     /* Input:
      +-----+
