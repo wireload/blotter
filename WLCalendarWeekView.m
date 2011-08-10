@@ -145,6 +145,9 @@ static const NSTimeInterval _WLNextWeekAnimationInterval = 5.0;
         [self setLayer:viewLayer];
         [self setWantsLayer:YES];
     }
+    else
+        [_rootLayer setNeedsLayout];
+
     [CATransaction commit];
 }
 
