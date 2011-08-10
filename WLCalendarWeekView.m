@@ -371,11 +371,11 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 
 - (void)_updateColumnAtIndex:(NSUInteger)anIndex
 {
-    [CATransaction begin];
     [self _updateEventsOfColumnAtIndex:anIndex];
     [self _updateTitleOfColumnAtIndex:anIndex];
-    [self _updateColorOfColumnAtIndex:anIndex];
-    [CATransaction commit];
+    [CATransaction WL_performWithDisabledActions:^{
+        [self _updateColorOfColumnAtIndex:anIndex];
+    }];
 }
 
 - (void)_layoutTimerRulerRootlayer:(CALayer *)aRootLayer
