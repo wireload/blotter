@@ -257,7 +257,6 @@
 
     WLCalendarDateView *dateView = [_dateViewController view];
     [dateView setFrame:NSMakeRect(NSMinX(contentBounds), NSMaxY([tasksView frame]), contentBounds.size.width, 210.0f)];
-    dateView.fontSize = BLNarrowSize;
 
     WLCalendarWeekView *weekView = [_weekViewController view];
     [weekView stopAnimations];
@@ -276,7 +275,6 @@
 
     WLCalendarDateView *dateView = [_dateViewController view];
     [dateView setFrame:NSMakeRect(NSMinX(contentBounds), NSMaxY([tasksView frame]), 250.0f, 210.0f)];
-    dateView.fontSize = BLNormalSize;
 
     WLCalendarWeekView *weekView = [_weekViewController view];
     [weekView stopAnimations];
@@ -299,7 +297,6 @@
 
     WLCalendarDateView *dateView = [_dateViewController view];
     [dateView setFrame:NSMakeRect(NSMinX(contentBounds), NSMaxY([tasksView frame]), 250.0f, 210.0f)];
-    dateView.fontSize = BLNormalSize;
 
     WLCalendarWeekView *weekView = [_weekViewController view];
     [weekView stopAnimations];

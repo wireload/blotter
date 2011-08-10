@@ -11,15 +11,11 @@
 #import "BLCalendarFramer.h"
 
 
-@interface WLCalendarDateView : NSView {
-    BLSize fontSize;
-
+@interface WLCalendarDateView : NSView /*<CALayoutManager>*/{
     CATextLayer *_monthDayLayer;
     CATextLayer *_monthAndYearLayer;
     CATextLayer *_weekdayLayer;
 }
-
-@property (nonatomic) BLSize fontSize;
 
 @property (nonatomic, copy) NSString *monthDay;
 
@@ -37,7 +33,5 @@
 - (CATextLayer *)_setupMonthAndYearLayer;
 
 - (CATextLayer *)_setupWeekdayLayer;
-
-- (void)_setFontSize:(BLSize)newFontSize;
 
 @end

@@ -7,13 +7,11 @@
 //
 
 #import "WLCalendarDateView.h"
-#import "CATextLayer+WLStringSize.h"
 #import "CoreAnimation+WLCalendar.h"
 #import "NSColor+CGColor.h"
 
 
 @implementation WLCalendarDateView
-@synthesize fontSize;
 @dynamic monthDay;
 @dynamic monthAndYear;
 @dynamic weekday;
@@ -23,6 +21,7 @@
     [CATransaction begin];
     [CATransaction setDisableActions:!isAnimated];
     CALayer *root = [self _setupRootLayer];
+    root.layoutManager = self;
     _monthDayLayer = [self _setupMonthDayLayer];
     [root addSublayer:_monthDayLayer];
     _monthAndYearLayer = [self _setupMonthAndYearLayer];
@@ -31,14 +30,7 @@
     [root addSublayer:_weekdayLayer];
     [self setLayer:root];
     [self setWantsLayer:YES];
-    [self _setFontSize:fontSize];
     [CATransaction commit];
-}
-
-- (void)setFontSize:(BLSize)newFontSize
-{
-    if (fontSize != newFontSize)
-        [self _setFontSize:newFontSize];
 }
 
 - (NSString *)monthDay
@@ -72,6 +64,21 @@
 }
 
 
+#pragma mark CALayoutManager
+
+- (void)layoutSublayersOfLayer:(CALayer *)aLayer
+{
+    static const CGFloat YPaddingBetweenLayers = 5.0f;
+
+    CGFloat w = aLayer.bounds.size.width;
+    _monthDayLayer.frame = CGRectIntegral(CGRectMake(0.0f, 0.0f, w, 130.0f));
+
+    _monthAndYearLayer.frame = CGRectIntegral(CGRectMake(0.0f, CGRectGetMaxY(_monthDayLayer.frame) + YPaddingBetweenLayers, w, 24.0f));
+
+    _weekdayLayer.frame = CGRectIntegral(CGRectMake(0.0f, CGRectGetMaxY(_monthAndYearLayer.frame) + YPaddingBetweenLayers, w, 24.0f));
+}
+
+
 #pragma mark Private
 
 - (CALayer *)_setupRootLayer
@@ -92,6 +99,7 @@
     [CATransaction WL_performWithDisabledActions:^{
         l.foregroundColor = [[NSColor whiteColor] WL_CGColor];
         l.alignmentMode = kCAAlignmentCenter;
+        l.fontSize = 144.0f;
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif
@@ -105,6 +113,7 @@
     [CATransaction WL_performWithDisabledActions:^{
         l.foregroundColor = [[NSColor whiteColor] WL_CGColor];
         l.alignmentMode = kCAAlignmentCenter;
+        l.fontSize = 24.0f;
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif
@@ -118,39 +127,12 @@
     [CATransaction WL_performWithDisabledActions:^{
         l.foregroundColor = [[NSColor whiteColor] WL_CGColor];
         l.alignmentMode = kCAAlignmentCenter;
+        l.fontSize = 24.0f;
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif
     }];
     return l;
-}
-
-- (void)_setFontSize:(BLSize)newFontSize
-{
-    fontSize = newFontSize;
-    [CATransaction WL_performWithDisabledActions:^{
-        switch (fontSize) {
-            case BLNarrowSize:
-            case BLNormalSize:
-            case BLFullSize:
-                _monthDayLayer.fontSize = 144.0f;
-                _monthAndYearLayer.fontSize = 24.0f;
-                _weekdayLayer.fontSize = 24.0f;
-                break;
-        }
-
-        static const CGFloat YPaddingBetweenLayers = 5.0f;
-
-        CGFloat w = [self layer].bounds.size.width;
-        CGFloat h = [_monthDayLayer WL_maxStringHeightForWidth:w];
-        _monthDayLayer.frame = CGRectIntegral(CGRectMake(0.0f, 0.0f, w, h));
-
-        h = [_monthAndYearLayer WL_maxStringHeightForWidth:w];
-        _monthAndYearLayer.frame = CGRectIntegral(CGRectMake(0.0f, CGRectGetMaxY(_monthDayLayer.frame) + YPaddingBetweenLayers, w, h));
-
-        h = [_weekdayLayer WL_maxStringHeightForWidth:w];
-        _weekdayLayer.frame = CGRectIntegral(CGRectMake(0.0f, CGRectGetMaxY(_monthAndYearLayer.frame) + YPaddingBetweenLayers, w, h));
-    }];
 }
 
 @end
