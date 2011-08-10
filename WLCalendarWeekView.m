@@ -82,17 +82,6 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
         _rootLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
     }
 
-    if (_timeRulerRootLayer == nil)
-    {
-        _timeRulerRootLayer = [self setupTimeRulerRootLayer];
-        [_rootLayer addSublayer:_timeRulerRootLayer];
-    }
-    NSUInteger numberOfHours = [dataSource numberOfHours];
-    NSMutableArray *h = [NSMutableArray arrayWithCapacity:numberOfHours];
-    for (NSUInteger i=0; i<numberOfHours; ++i)
-        [h addObject:[dataSource stringForHour:i]];
-    [[_timeRulerRootLayer valueForKeyPath:@"timeRulerScroll.timeRuler"] setHours:h];
-
     if (_timeIndicatorLayer == nil)
     {
         _timeIndicatorLayer = [self setupTimeIndicatorLayer];
@@ -121,6 +110,13 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
         }
     }
     [self updateColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, numberOfColumns)]];
+
+    if (_timeRulerRootLayer == nil)
+    {
+        _timeRulerRootLayer = [self setupTimeRulerRootLayer];
+        [_rootLayer addSublayer:_timeRulerRootLayer];
+    }
+    [self _updateTimeRuler];
 
     if ([_rootLayer superlayer] == nil)
     {
@@ -312,6 +308,15 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 
 
 #pragma mark Private
+
+- (void)_updateTimeRuler
+{
+    NSUInteger numberOfHours = [dataSource numberOfHours];
+    NSMutableArray *h = [NSMutableArray arrayWithCapacity:numberOfHours];
+    for (NSUInteger i=0; i<numberOfHours; ++i)
+        [h addObject:[dataSource stringForHour:i]];
+    [[_timeRulerRootLayer valueForKeyPath:@"timeRulerScroll.timeRuler"] setHours:h];
+}
 
 - (void)_updateEventsOfColumnAtIndex:(NSUInteger)anIndex
 {

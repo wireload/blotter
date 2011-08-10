@@ -63,6 +63,8 @@
 
 - (void)_updateColumnAtIndex:(NSUInteger)anIndex;
 
+- (void)_updateTimeRuler;
+
 - (void)_layoutTimerRulerRootlayer:(CALayer *)aRootLayer;
 
 - (void)_layoutColumnLayer:(CALayer *)aRootLayer;
