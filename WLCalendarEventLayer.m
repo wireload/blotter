@@ -206,16 +206,16 @@ const CGFloat _WLXPadding = 10.0f;
                              NSString *trimmedString = [[truncatedString string] stringByTrimmingCharactersInSet:
                                                         [NSCharacterSet newlineCharacterSet]];
                              [[truncatedString mutableString] setString:trimmedString];
-                             [[truncatedString mutableString] appendString:(NSString *)CFSTR("\u2026")];
+                             static const CFStringRef Token = CFSTR("\u2026");
+                             [[truncatedString mutableString] appendString:(NSString *)Token];
                              CTLineRef truncatedLine = CTLineCreateWithAttributedString((CFAttributedStringRef)truncatedString);
                              [truncatedString release];
                              if (truncatedLine != NULL)
                              {
                                  CTLineRef truncationToken = NULL;
-                                 CFStringRef token = CFSTR("\u2026");
                                  CFDictionaryRef tokenAttributes = (CFDictionaryRef)[self.string attributesAtIndex:0 effectiveRange:NULL];
                                  CFAttributedStringRef truncationString = CFAttributedStringCreate(NULL,
-                                                                                                   token,
+                                                                                                   Token,
                                                                                                    tokenAttributes);
                                  truncationToken = CTLineCreateWithAttributedString(truncationString);
                                  CFRelease(truncationString);
