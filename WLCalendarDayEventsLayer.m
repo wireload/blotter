@@ -243,7 +243,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
                 [[rowNode representedObject] addObject:l];
             }
         }];
-        if ([[rowNode representedObject] count])
+        if ([(NSArray *)[rowNode representedObject] count])
             [[_eventsLayoutTreeRootNode mutableChildNodes] addObject:rowNode];
         [rowNode release];
     }
@@ -283,7 +283,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     // Step 2: Divide elements of each row into columns, where each element doesn't intersect all other elements of the column.
     {
         [[_eventsLayoutTreeRootNode childNodes] enumerateObjectsWithOptions:NSEnumerationConcurrent
-                                                                 usingBlock:^(NSTreeNode *rowNode, NSUInteger idx, BOOL *stop)
+                                                                 usingBlock:^(NSTreeNode *rowNode, NSUInteger rowIdx, BOOL *stopRow)
         {
             __block NSMutableArray *row = [rowNode representedObject];
             while ([row count] > 0 && [[rowNode childNodes] count] < _cachedMaximumNumberOfColumns)
@@ -297,7 +297,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
                 {
                     __block CGFloat columnBottom = [[topLayer valueForKey:_WLBottomKey] floatValue];
                     NSMutableIndexSet *placedLayers = [NSMutableIndexSet indexSet];
-                    [row enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger idx, BOOL *stop)
+                    [row enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger layerIdx, BOOL *stopLayer)
                     {
                         CGFloat layerTop = [[l valueForKey:_WLTopKey] floatValue];
                         CGFloat layerBottom = [[l valueForKey:_WLBottomKey] floatValue];
@@ -305,7 +305,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
                         {
                             [column addObject:l];
                             columnBottom = layerBottom;
-                            [placedLayers addIndex:idx];
+                            [placedLayers addIndex:layerIdx];
                         }
                     }];
                     [row removeObjectsAtIndexes:placedLayers];
@@ -316,9 +316,9 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 
             // It's possible that not all objects are distributed among columns because of maximumNumberOfColumns.
             // Distribute them among available columns.
-            [row enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger idx, BOOL *stop)
+            [row enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger layerIdx, BOOL *stopLayer)
             {
-                NSTreeNode *columnNode = [[rowNode childNodes] objectAtIndex:idx % _cachedMaximumNumberOfColumns];
+                NSTreeNode *columnNode = [[rowNode childNodes] objectAtIndex:layerIdx % _cachedMaximumNumberOfColumns];
                 NSMutableArray *column = [columnNode representedObject];
                 [column addObject:l];
             }];
@@ -366,7 +366,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
         for (NSTreeNode *rowNode in rowNodes)
         {
             __block NSArray *columnNodes = [rowNode childNodes];
-            [columnNodes enumerateObjectsUsingBlock:^(NSTreeNode *columnNode, NSUInteger columnIdx, BOOL *stop)
+            [columnNodes enumerateObjectsUsingBlock:^(NSTreeNode *columnNode, NSUInteger columnIdx, BOOL *stopColumn)
             {
                 NSArray *events = [columnNode representedObject];
                 for (WLCalendarEventLayer *left in events)
@@ -377,10 +377,10 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
                     __block NSUInteger numberOfColumnsToSkip = 0;
                     [columnNodes enumerateObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:rightColumns]
                                                    options:0
-                                                usingBlock:^(NSTreeNode *rc, NSUInteger idx, BOOL *stop)
+                                                usingBlock:^(NSTreeNode *rightColumnNode, NSUInteger rightColumnIdx, BOOL *stopRightColumn)
                     {
                         BOOL doesIntersectRightColumn = NO;
-                        for (WLCalendarEventLayer *right in [rc representedObject])
+                        for (WLCalendarEventLayer *right in [rightColumnNode representedObject])
                         {
                             CGFloat rightTop = [[right valueForKey:_WLTopKey] floatValue];
                             CGFloat rightBottom = [[right valueForKey:_WLBottomKey] floatValue];
@@ -395,7 +395,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
                         if (!doesIntersectRightColumn)
                             ++numberOfColumnsToSkip;
                         else
-                            *stop = YES;
+                            *stopRightColumn = YES;
                      }];
                     [left setValue:[NSNumber numberWithUnsignedInteger:numberOfColumnsToSkip] forKey:_WLNumberOfColumnsToSkipKey];
                 }

@@ -37,8 +37,8 @@
 
 - (IBAction)newTask:(id)sender;
 
-- (void)showOnScreen:(NSScreen *)screen;
-
-- (void)show;
+//- (void)showOnScreen:(NSScreen *)screen;
+//
+//- (void)show;
 
 @end
