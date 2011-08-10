@@ -146,6 +146,9 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 
 - (void)scrollHour:(CGFloat)aHour animated:(BOOL)isAnimated
 {
+#ifdef DEBUG_PERFORMANCE
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+#endif
     _hour = aHour;
     CAScrollLayer *timeRulerScrollLayer = [_timeRulerRootLayer valueForKeyPath:_WLTimeRulerScrollLayerName];
     WLCalendarTimeRulerLayer *timeRulerLayer = [timeRulerScrollLayer valueForKeyPath:_WLTimeRulerLayerName];
@@ -378,6 +381,9 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 
 - (void)_layoutTimerRulerRootlayer:(CALayer *)aRootLayer
 {
+#ifdef DEBUG_PERFORMANCE
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+#endif
     CAScrollLayer *timeRulerScrollLayer = [aRootLayer valueForKeyPath:_WLTimeRulerScrollLayerName];
     WLCalendarTimeRulerLayer *timeRulerLayer = [timeRulerScrollLayer valueForKeyPath:_WLTimeRulerLayerName];
     CGSize timeRulerSize = [timeRulerLayer preferredFrameSize];
