@@ -392,79 +392,38 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 
 - (void)_layoutColumnLayer:(CALayer *)aRootLayer
 {
+#ifdef DEBUG_PERFORMANCE
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+#endif
     WLCalendarTimeRulerLayer *timeRuler = [_timeRulerRootLayer valueForKeyPath:@"timeRulerScroll.timeRuler"];
     CGSize timeRulerSize = [timeRuler preferredFrameSize];
 
     CALayer *allDayBackground = [aRootLayer valueForKeyPath:_WLAllDayBackgroundLayerName];
-    NSMutableArray *constraints = [NSMutableArray array];
-    [constraints addObject:[CAConstraint constraintWithAttribute:kCAConstraintMinX
-                                                      relativeTo:@"superlayer"
-                                                       attribute:kCAConstraintMinX]];
-    [constraints addObject:[CAConstraint constraintWithAttribute:kCAConstraintWidth
-                                                      relativeTo:@"superlayer"
-                                                       attribute:kCAConstraintWidth]];
-    [constraints addObject:[CAConstraint constraintWithAttribute:kCAConstraintMaxY
-                                                      relativeTo:@"superlayer"
-                                                       attribute:kCAConstraintMaxY]];
-    [constraints addObject:[CAConstraint constraintWithAttribute:kCAConstraintMinY
-                                                      relativeTo:@"superlayer"
-                                                       attribute:kCAConstraintMaxY
-                                                          offset:-allDayEventsHeight]];
-    allDayBackground.constraints = constraints;
+    allDayBackground.frame = CGRectIntegral(CGRectMake(aRootLayer.bounds.origin.x,
+                                                       aRootLayer.bounds.origin.y,
+                                                       aRootLayer.bounds.size.width,
+                                                       allDayEventsHeight));
 
     CALayer *dayBackground = [aRootLayer valueForKeyPath:_WLDayBackgroundLayerName];
-    constraints = [NSMutableArray array];
-    [constraints addObject:[CAConstraint constraintWithAttribute:kCAConstraintMinX
-                                                      relativeTo:@"superlayer"
-                                                       attribute:kCAConstraintMinX]];
-    [constraints addObject:[CAConstraint constraintWithAttribute:kCAConstraintWidth
-                                                      relativeTo:@"superlayer"
-                                                       attribute:kCAConstraintWidth]];
-    [constraints addObject:[CAConstraint constraintWithAttribute:kCAConstraintMaxY
-                                                      relativeTo:_WLAllDayBackgroundLayerName
-                                                       attribute:kCAConstraintMinY
-                                                          offset:-_WLYMarginBetweenAllDayAndWeekdayEvents]];
-    [constraints addObject:[CAConstraint constraintWithAttribute:kCAConstraintMinY
-                                                      relativeTo:@"superlayer"
-                                                       attribute:kCAConstraintMinY]];
-    dayBackground.constraints = constraints;
+    dayBackground.frame = CGRectIntegral(CGRectMake(aRootLayer.bounds.origin.x,
+                                                    CGRectGetMaxY(allDayBackground.frame) + _WLYMarginBetweenAllDayAndWeekdayEvents,
+                                                    aRootLayer.bounds.size.width,
+                                                    aRootLayer.bounds.size.height - CGRectGetMaxY(allDayBackground.frame) - _WLYMarginBetweenAllDayAndWeekdayEvents));
+
+    CATextLayer *title = [dayBackground valueForKeyPath:_WLTitleLayerName];
+    title.frame = CGRectIntegral(CGRectMake(dayBackground.bounds.origin.x,
+                                            dayBackground.bounds.origin.y,
+                                            dayBackground.bounds.size.width,
+                                            _WLWeekdayEventsTitleLayerHeight));
 
     CAScrollLayer *dayScroll = [dayBackground valueForKeyPath:_WLDayScrollLayerName];
-    constraints = [NSMutableArray array];
-    [constraints addObject:[CAConstraint constraintWithAttribute:kCAConstraintMinX
-                                                      relativeTo:@"superlayer"
-                                                       attribute:kCAConstraintMinX]];
-    [constraints addObject:[CAConstraint constraintWithAttribute:kCAConstraintWidth
-                                                      relativeTo:@"superlayer"
-                                                       attribute:kCAConstraintWidth]];
-    [constraints addObject:[CAConstraint constraintWithAttribute:kCAConstraintMaxY
-                                                      relativeTo:_WLTitleLayerName
-                                                       attribute:kCAConstraintMinY
-                                                          offset:-[timeRuler firstHourYPadding]]];
-    [constraints addObject:[CAConstraint constraintWithAttribute:kCAConstraintMinY
-                                                      relativeTo:@"superlayer"
-                                                       attribute:kCAConstraintMinY]];
-    dayScroll.constraints = constraints;
+    dayScroll.frame = CGRectIntegral(CGRectMake(dayBackground.bounds.origin.x,
+                                                CGRectGetMaxY(title.bounds) + [timeRuler firstHourYPadding],
+                                                dayBackground.bounds.size.width,
+                                                dayBackground.bounds.size.height - CGRectGetMaxY(title.bounds) - [timeRuler firstHourYPadding]));
 
     WLCalendarDayEventsLayer *day = [dayBackground valueForKeyPath:@"weekdayEventsScroll.weekdayEvents"];
     [day setValue:[NSNumber numberWithFloat:timeRulerSize.height] forKeyPath:@"frame.size.height"];
-
-    CATextLayer *title = [dayBackground valueForKeyPath:_WLTitleLayerName];
-    constraints = [NSMutableArray array];
-    [constraints addObject:[CAConstraint constraintWithAttribute:kCAConstraintMinX
-                                                      relativeTo:@"superlayer"
-                                                       attribute:kCAConstraintMinX]];
-    [constraints addObject:[CAConstraint constraintWithAttribute:kCAConstraintWidth
-                                                      relativeTo:@"superlayer"
-                                                       attribute:kCAConstraintWidth]];
-    [constraints addObject:[CAConstraint constraintWithAttribute:kCAConstraintMaxY
-                                                      relativeTo:@"superlayer"
-                                                       attribute:kCAConstraintMaxY]];
-    [constraints addObject:[CAConstraint constraintWithAttribute:kCAConstraintMinY
-                                                      relativeTo:@"superlayer"
-                                                       attribute:kCAConstraintMaxY
-                                                          offset:-_WLWeekdayEventsTitleLayerHeight]];
-    title.constraints = constraints;
 }
 
 - (void)_positionColumnLayer:(CALayer *)aRootLayer atIndex:(NSUInteger)anIndex
@@ -478,7 +437,7 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     CGFloat width = (self.bounds.size.width - timeRulerSize.width - spaces) / [_columnLayers count];
     CGFloat x = timeRulerSize.width + _WLXMarginBetweenColumns + anIndex * (width + _WLXMarginBetweenColumns);
 
-    aRootLayer.frame = CGRectMake(ceilf(x), 0.0f, width, bounds.size.height);
+    aRootLayer.frame = CGRectIntegral(CGRectMake(x, 0.0f, width, bounds.size.height));
 }
 
 @end
@@ -624,8 +583,6 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 {
     __block CALayer *root = [self setupColumnLayer];
     [CATransaction WL_performWithDisabledActions:^{
-        root.layoutManager = [CAConstraintLayoutManager layoutManager];
-
         WLCalendarBackgroundLayer *allDayBackground = [self setupAllDayBackgroundLayer];
         [root addSublayer:allDayBackground];
         [root setValue:allDayBackground forKey:allDayBackground.name];
@@ -636,17 +593,6 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
         [allDayBackground setValue:allDay forKey:allDay.name];
 
         WLCalendarBackgroundLayer *dayBackground = [self setupDayBackgroundLayer];
-        dayBackground.layoutManager = [CAConstraintLayoutManager layoutManager];
-        [dayBackground addConstraint:[CAConstraint constraintWithAttribute:kCAConstraintMinX
-                                                                relativeTo:@"superlayer"
-                                                                 attribute:kCAConstraintMinX]];
-        [dayBackground addConstraint:[CAConstraint constraintWithAttribute:kCAConstraintWidth
-                                                                relativeTo:@"superlayer"
-                                                                 attribute:kCAConstraintWidth]];
-        [dayBackground addConstraint:[CAConstraint constraintWithAttribute:kCAConstraintMaxY
-                                                                relativeTo:_WLAllDayBackgroundLayerName
-                                                                 attribute:kCAConstraintMinY
-                                                                    offset:_WLYMarginBetweenAllDayAndWeekdayEvents]];
         [root addSublayer:dayBackground];
         [root setValue:dayBackground forKey:dayBackground.name];
 
@@ -670,6 +616,7 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 {
     __block CALayer *l = [CALayer layer];
     [CATransaction WL_performWithDisabledActions:^{
+        l.geometryFlipped = YES;
         l.name = _WLColumnLayerName;
         l.masksToBounds = YES;
 #ifdef DEBUG_LAYERS
@@ -703,7 +650,6 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     __block WLCalendarAllDayEventsLayer *l = [WLCalendarAllDayEventsLayer layer];
     [CATransaction WL_performWithDisabledActions:^{
         l.name = _WLAllDayLayerName;
-        l.geometryFlipped = YES;
     }];
     return l;
 }
@@ -712,7 +658,9 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 {
     __block WLCalendarDayEventsLayer *l = [WLCalendarDayEventsLayer layer];
     [CATransaction WL_performWithDisabledActions:^{
+#ifdef DEBUG_LAYERS
         l.needsDisplayOnBoundsChange = YES;
+#endif
         l.name = _WLDayLayerName;
         l.timeRuler = dataSource;
     }];
@@ -724,9 +672,8 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     __block CAScrollLayer *l = [CAScrollLayer layer];
     [CATransaction WL_performWithDisabledActions:^{
         l.name = _WLDayScrollLayerName;
-        l.geometryFlipped = YES;
 #ifdef DEBUG_LAYERS
-        l.backgroundColor = [[NSColor orangeColor] WL_CGColor];
+        l.backgroundColor = [[NSColor purpleColor] WL_CGColor];
 #endif
     }];
     return l;
