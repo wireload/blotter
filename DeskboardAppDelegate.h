@@ -20,13 +20,12 @@
 
 @interface DeskboardAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate> {
     WLCalendarWindowController *windowController;
-    WLFitWindow *blotterWindow;
+//    WLFitWindow *blotterWindow;
     NSStatusItem *statusItem;
     IBOutlet NSMenu *statusMenu;
     IBOutlet NSMenuItem *newEventMenuItem;
     IBOutlet NSMenuItem *newTaskMenuItem;
     IBOutlet NSMenuItem *preferencesMenuItem;
-    IBOutlet NSMenuItem *QuitMenuItem;
     BOOL ignoreBecomeActiveNotification;
 
     SS_PrefsController *prefs;
