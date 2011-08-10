@@ -103,7 +103,7 @@ static const CGFloat _WLTopMargin = 10.0f;
     NSUInteger idx = [layerNames indexOfObject:anUID
                                  inSortedRange:NSMakeRange(0, [_sortedByUIDEventLayers count])
                                        options:NSBinarySearchingInsertionIndex | NSBinarySearchingFirstEqual
-                               usingComparator:^(id obj1, id obj2)
+                               usingComparator:^(NSString *obj1, NSString *obj2)
     {
         NSComparisonResult result = [obj1 compare:obj2];
         if (!found) // since we pass NSBinarySearchingInsertionIndex, block may be called even when object is actually found.

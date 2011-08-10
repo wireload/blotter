@@ -186,7 +186,9 @@ const CGFloat _WLXPadding = 10.0f;
                     CTFrameGetLineOrigins(frame, CFRangeMake(0, numberOfLines), lineOrigins);
 
                     CFRange frameRange = CTFrameGetVisibleStringRange(frame);
-                    BOOL shouldTruncateLastLine = frameRange.location + frameRange.length < [self.string length];
+                    CFIndex stringLength = [self.string length];
+                    NSParameterAssert((NSUInteger)stringLength == [self.string length]);
+                    BOOL shouldTruncateLastLine = (frameRange.location + frameRange.length) < stringLength;
 
                     [lines enumerateObjectsUsingBlock:^(id line, NSUInteger idx, BOOL *stop)
                     {

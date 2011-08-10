@@ -101,7 +101,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 - (NSUInteger)maximumNumberOfColumns
 {
     NSUInteger n = self.bounds.size.width / [WLCalendarEventLayer minimalHumanVisibleWidth];
-    n = MAX(n, 1); // at least 1 column
+    n = MAX(n, (NSUInteger)1); // at least 1 column
     return n;
 }
 
@@ -318,7 +318,8 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
             // Distribute them among available columns.
             [row enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger idx, BOOL *stop)
             {
-                NSMutableArray *column = [[[rowNode childNodes] objectAtIndex:idx % _cachedMaximumNumberOfColumns] representedObject];
+                NSTreeNode *columnNode = [[rowNode childNodes] objectAtIndex:idx % _cachedMaximumNumberOfColumns];
+                NSMutableArray *column = [columnNode representedObject];
                 [column addObject:l];
             }];
         }];

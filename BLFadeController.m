@@ -26,14 +26,15 @@
     {
         [self setFadeView:aView];
 
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(applicationDidBecomeActive:)
-                                                     name:NSApplicationDidBecomeActiveNotification
-                                                   object:NSApp];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(applicationDidResignActive:)
-                                                     name:NSApplicationDidResignActiveNotification
-                                                   object:NSApp];
+        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+        [notificationCenter addObserver:self
+                               selector:@selector(applicationDidBecomeActive:)
+                                   name:NSApplicationDidBecomeActiveNotification
+                                 object:NSApp];
+        [notificationCenter addObserver:self
+                               selector:@selector(applicationDidResignActive:)
+                                   name:NSApplicationDidResignActiveNotification
+                                 object:NSApp];
 
         [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self
                                                                   forKeyPath:@"values.AutoFade"

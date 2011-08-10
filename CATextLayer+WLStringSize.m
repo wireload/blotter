@@ -37,6 +37,8 @@
     CTTypesetterRef typesetter = CTTypesetterCreateWithAttributedString((CFAttributedStringRef)string);
 
     CFIndex offset = 0, length;
+    CFIndex stringLength = [string length];
+    NSParameterAssert((NSUInteger)stringLength == [string length]);
     CGFloat y = 0;
     do {
         length = CTTypesetterSuggestLineBreak(typesetter, offset, width);
@@ -49,7 +51,7 @@
 
         offset += length;
         y += ascent + descent + leading;
-    } while (offset < [string length]);
+    } while (offset < stringLength);
 
     CFRelease(typesetter);
 
