@@ -30,7 +30,7 @@
     CALayer *_rootLayer;
     CALayer *_timeRulerRootLayer;
     WLCalendarTimeIndicatorLayer *_timeIndicatorLayer;
-    NSMutableArray *_columnLayers;
+    __block NSMutableArray *_columnLayers;
     CGFloat _hour;
 }
 
@@ -53,6 +53,10 @@
 - (void)showNextDay;
 
 - (void)showNextWeek;
+
+- (void)showNextDays:(NSUInteger)aNumberOfDays;
+
+- (void)stopAnimations;
 
 
 - (void)_updateEventsOfColumnAtIndex:(NSUInteger)anIndex;

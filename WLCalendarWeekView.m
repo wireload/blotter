@@ -44,6 +44,11 @@ static const CGFloat _WLXMarginBetweenColumns = 10.0f;
 static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 
 
+static const NSTimeInterval _WLNextDayAnimationInterval = 2.0;
+
+static const NSTimeInterval _WLNextWeekAnimationInterval = 5.0;
+
+
 @implementation WLCalendarWeekView
 
 - (id)initWithFrame:(NSRect)aFrameRect
@@ -175,73 +180,6 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     [CATransaction commit];
 }
 
-- (void)showNextDay
-{
-    if ([_columnLayers count] == 0)
-        return;
-    [CATransaction begin];
-    [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
-    [CATransaction setDisableActions:YES];
-    CALayer *newColumn = [self setupColumnRootLayer];
-
-    [CATransaction setDisableActions:NO];
-    [[_columnLayers objectAtIndex:0] removeFromSuperlayer];
-
-    [CATransaction setDisableActions:YES];
-    [_columnLayers removeObjectAtIndex:0];
-    [_columnLayers addObject:newColumn];
-    [_rootLayer insertSublayer:newColumn below:_timeIndicatorLayer];
-    [self updateColumnsAtIndexes:[NSIndexSet indexSetWithIndex:[_columnLayers count] - 1]];
-    [self _layoutColumnLayer:newColumn];
-
-    [CATransaction setDisableActions:NO];
-    [_columnLayers enumerateObjectsUsingBlock:^(CALayer *column, NSUInteger columnIdx, BOOL *stop) {
-        [self _positionColumnLayer:column atIndex:columnIdx];
-    }];
-
-    CABasicAnimation *positionAnimation = [newColumn actionForKey:@"position"];
-    NSPoint fromValue = NSMakePoint(newColumn.position.x + newColumn.frame.size.width + _WLXMarginBetweenColumns,
-                                    newColumn.position.y);
-    [positionAnimation setFromValue:[NSValue valueWithPoint:fromValue]];
-    [positionAnimation setToValue:[NSValue valueWithPoint:NSPointFromCGPoint(newColumn.position)]];
-    [newColumn addAnimation:positionAnimation forKey:@"position"];
-    [CATransaction commit];
-}
-
-- (void)showNextWeek
-{
-    if ([_columnLayers count] == 0)
-        return;
-    [CATransaction begin];
-    [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
-    NSUInteger numberOfColumns = [dataSource numberOfColumnsInWeekView:self];
-    for (CALayer *oldWeekdayRootLayer in _columnLayers)
-        [oldWeekdayRootLayer removeFromSuperlayer];
-
-    [CATransaction setDisableActions:YES];
-    [_columnLayers removeAllObjects];
-    for (NSUInteger i=0; i<numberOfColumns; ++i)
-    {
-        CALayer *column = [self setupColumnRootLayer];
-        [_columnLayers addObject:column];
-        [_rootLayer insertSublayer:column below:_timeIndicatorLayer];
-    }
-    [self updateColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, numberOfColumns)]];
-
-    [CATransaction setDisableActions:NO];
-    [_columnLayers enumerateObjectsUsingBlock:^(CALayer *column, NSUInteger idx, BOOL *stop) {
-        [self _positionColumnLayer:column atIndex:idx];
-        [self _layoutColumnLayer:column];
-        CABasicAnimation *positionAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
-        NSPoint fromValue = NSMakePoint(column.position.x + _rootLayer.bounds.size.width,
-                                        column.position.y);
-        [positionAnimation setFromValue:[NSValue valueWithPoint:fromValue]];
-        [positionAnimation setToValue:[NSValue valueWithPoint:NSPointFromCGPoint(column.position)]];
-        [column addAnimation:positionAnimation forKey:@"position"];
-    }];
-    [CATransaction commit];
-}
-
 - (void)updateEventsOfColumnsAtIndexes:(NSIndexSet *)anIndexSet
 {
     if ([dataSource respondsToSelector:@selector(weekView:willAskForData:forColumnsAtIndexes:)])
@@ -283,17 +221,78 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
          forColumnsAtIndexes:anIndexSet];
     }
     [anIndexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop)
-    {
-        [self _updateColumnAtIndex:idx];
-    }];
+     {
+         [self _updateColumnAtIndex:idx];
+     }];
     if ([dataSource respondsToSelector:@selector(weekViewDidAskForData:)])
         [dataSource weekViewDidAskForData:self];
 }
 
-- (void)setShowTimeIndicator:(BOOL)newShowTimeIndicator
+- (void)showNextDay
 {
-    showTimeIndicator = newShowTimeIndicator;
-    _timeIndicatorLayer.hidden = !showTimeIndicator;
+    [self showNextDays:1];
+}
+
+- (void)showNextWeek
+{
+    [self showNextDays:[dataSource numberOfColumnsInWeekView:self]];
+}
+
+- (void)showNextDays:(NSUInteger)aNumberOfDays
+{
+    if ([_columnLayers count] > 0)
+    {
+        [CATransaction begin];
+        [CATransaction setAnimationDuration:10];
+        [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
+
+        [CATransaction setDisableActions:YES];
+        NSArray *old = [_columnLayers subarrayWithRange:NSMakeRange(0, MIN(aNumberOfDays, [_columnLayers count]))];
+        [CATransaction setCompletionBlock:^{
+            [CATransaction setDisableActions:YES];
+            [old makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+        }];
+        [_columnLayers removeObjectsInRange:NSMakeRange(0, [old count])];
+        for (NSUInteger i=0; i<aNumberOfDays; ++i)
+        {
+            CALayer *c = [self setupColumnRootLayer];
+            [_columnLayers addObject:c];
+            [_rootLayer insertSublayer:c below:_timeIndicatorLayer];
+        }
+        NSIndexSet *newColumnIndexes = [NSIndexSet indexSetWithIndexesInRange:
+                                        NSMakeRange([_columnLayers count] - aNumberOfDays, aNumberOfDays)];
+        [self updateColumnsAtIndexes:newColumnIndexes];
+
+        [_columnLayers enumerateObjectsUsingBlock:^(CALayer *c, NSUInteger idx, BOOL *stop)
+        {
+            [CATransaction setDisableActions:YES];
+            [self _positionColumnLayer:c atIndex:idx];
+            [CATransaction setDisableActions:NO];
+            CABasicAnimation *positionAnimation = [CABasicAnimation animationWithKeyPath:@"position.x"];
+            [positionAnimation setFromValue:
+             [NSNumber numberWithFloat:c.position.x + MIN(aNumberOfDays, [old count]) * (c.bounds.size.width + _WLXMarginBetweenColumns)]];
+            [positionAnimation setToValue:[NSNumber numberWithFloat:c.position.x]];
+            [c addAnimation:positionAnimation forKey:@"position.x"];
+        }];
+
+        [CATransaction setDisableActions:NO];
+        NSUInteger numberOfOldColumns = [old count];
+        [old enumerateObjectsUsingBlock:^(CALayer *c, NSUInteger idx, BOOL *stop)
+        {
+            [c setValue:[NSNumber numberWithFloat:c.position.x - numberOfOldColumns * (c.bounds.size.width + _WLXMarginBetweenColumns)]
+             forKeyPath:@"position.x"];
+            c.opacity = 0.0f;
+        }];
+        [CATransaction commit];
+    }
+    else
+        [self setupLayersAnimated:![CATransaction disableActions]];
+}
+
+- (void)stopAnimations
+{
+    for (CALayer *s in _rootLayer.sublayers)
+        [s removeAllAnimations];
 }
 
 
