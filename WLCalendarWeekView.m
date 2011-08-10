@@ -133,7 +133,6 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     if ([_rootLayer superlayer] == nil)
     {
         CALayer *viewLayer = [CALayer layer];
-        viewLayer.needsDisplayOnBoundsChange = YES;
 #ifdef DEBUG_LAYERS
         viewLayer.backgroundColor = [[NSColor darkGrayColor] WL_CGColor];
 #endif
@@ -512,6 +511,7 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     [CATransaction WL_performWithDisabledActions:^{
         l.name = _WLTimeRulerBackgroundLayerName;
         l.masksToBounds = YES;
+        l.needsDisplayOnBoundsChange = YES;
         l.contentsBackgroundColor = [[NSColor colorWithCalibratedRed:101.0f / 255.0f
                                                                green:161.0f / 255.0f
                                                                 blue:165.0f / 255.0f
@@ -542,7 +542,6 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 {
     __block WLCalendarTimeRulerLayer *l = [WLCalendarTimeRulerLayer layer];
     [CATransaction WL_performWithDisabledActions:^{
-        l.needsDisplayOnBoundsChange = YES;
         l.name = _WLTimeRulerLayerName;
         l.timeRuler = dataSource;
     }];
@@ -688,7 +687,6 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 - (CATextLayer *)setupDayTitleLayer
 {
     CATextLayer *l = [CATextLayer layer];
-    l.needsDisplayOnBoundsChange = YES;
     l.name = _WLTitleLayerName;
     l.wrapped = NO;
     l.truncationMode = kCATruncationNone;
