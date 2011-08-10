@@ -45,9 +45,6 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 
 
 @implementation WLCalendarWeekView
-@synthesize dataSource;
-@synthesize allDayEventsHeight;
-@synthesize showTimeIndicator;
 
 - (id)initWithFrame:(NSRect)aFrameRect
 {
@@ -66,6 +63,21 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     [_columnLayers release];
     [super dealloc];
 }
+
+
+#pragma mark Properties
+@synthesize dataSource;
+@synthesize allDayEventsHeight;
+@synthesize showTimeIndicator;
+
+- (void)setShowTimeIndicator:(BOOL)newShowTimeIndicator
+{
+    showTimeIndicator = newShowTimeIndicator;
+    _timeIndicatorLayer.hidden = !showTimeIndicator;
+}
+
+
+#pragma mark Methods
 
 - (void)setupLayersAnimated:(BOOL)isAnimated
 {
