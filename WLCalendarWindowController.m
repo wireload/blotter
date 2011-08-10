@@ -24,10 +24,6 @@
         [window setDelegate:self];
 
         NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-        [notificationCenter addObserver:self
-                               selector:@selector(_updateFrame)
-                                   name:NSApplicationDidChangeScreenParametersNotification
-                                 object:nil];
 
         [notificationCenter addObserver:self
                                selector:@selector(_clockChanged:)
@@ -201,6 +197,16 @@
 }
 
 
+#pragma mark NSWindowDelegate
+
+- (void) windowDidChangeScreen:(NSNotification *)aNotification
+{
+    [self _updateFrame];
+    [_weekViewController updateViewAnimated:NO];
+    [_dateViewController updateViewAnimated:NO];
+}
+
+
 #pragma mark Private
 
 - (void)_updateFrame
@@ -248,15 +254,20 @@
 - (void)_applyNarrowSizeToViews
 {
     NSRect contentBounds = [window contentViewBounds];
+    NSView *contentView = [window contentView];
 
     WLCalendarTasksView *tasksView = [_tasksViewController view];
-    [tasksView setFrame:NSMakeRect(NSMinX(contentBounds),
-                                   NSMinY(contentBounds),
-                                   contentBounds.size.width,
-                                   contentBounds.size.height - 210.0f)];
+    NSRect tasksViewFrame = NSMakeRect(NSMinX(contentBounds),
+                                       NSMinY(contentBounds),
+                                       contentBounds.size.width,
+                                       contentBounds.size.height - 210.0f);
+    tasksViewFrame = [contentView centerScanRect:tasksViewFrame];
+    [tasksView setFrame:tasksViewFrame];
 
     WLCalendarDateView *dateView = [_dateViewController view];
-    [dateView setFrame:NSMakeRect(NSMinX(contentBounds), NSMaxY([tasksView frame]), contentBounds.size.width, 210.0f)];
+    NSRect dateViewFrame = NSMakeRect(NSMinX(contentBounds), NSMaxY([tasksView frame]), contentBounds.size.width, 210.0f);
+    dateViewFrame = [contentView centerScanRect:dateViewFrame];
+    [dateView setFrame:dateViewFrame];
 
     WLCalendarWeekView *weekView = [_weekViewController view];
     [weekView stopAnimations];
@@ -266,44 +277,58 @@
 - (void)_applyNormalSizeToViews
 {
     NSRect contentBounds = [window contentViewBounds];
+    NSView *contentView = [window contentView];
 
     WLCalendarTasksView *tasksView = [_tasksViewController view];
-    [tasksView setFrame:NSMakeRect(NSMinX(contentBounds),
-                                   NSMinY(contentBounds),
-                                   250.0f,
-                                   contentBounds.size.height - 210.0f)];
+    NSRect tasksViewFrame = NSMakeRect(NSMinX(contentBounds),
+                                       NSMinY(contentBounds),
+                                       250.0f,
+                                       contentBounds.size.height - 210.0f);
+    tasksViewFrame = [contentView centerScanRect:tasksViewFrame];
+    [tasksView setFrame:tasksViewFrame];
 
     WLCalendarDateView *dateView = [_dateViewController view];
-    [dateView setFrame:NSMakeRect(NSMinX(contentBounds), NSMaxY([tasksView frame]), 250.0f, 210.0f)];
+    NSRect dateViewFrame = NSMakeRect(NSMinX(contentBounds), NSMaxY([tasksView frame]), 250.0f, 210.0f);
+    dateViewFrame = [contentView centerScanRect:dateViewFrame];
+    [dateView setFrame:dateViewFrame];
 
     WLCalendarWeekView *weekView = [_weekViewController view];
     [weekView stopAnimations];
-    [weekView setFrame:NSMakeRect(NSMaxX([tasksView frame]) + 10.0f,
-                                  NSMinY(contentBounds),
-                                  contentBounds.size.width - [tasksView frame].size.width,
-                                  contentBounds.size.height)];
+    NSRect weekViewFrame = NSMakeRect(NSMaxX([tasksView frame]) + 10.0f,
+                                      NSMinY(contentBounds),
+                                      contentBounds.size.width - [tasksView frame].size.width,
+                                      contentBounds.size.height);
+    weekViewFrame = [contentView centerScanRect:weekViewFrame];
+    [weekView setFrame:weekViewFrame];
     [weekView setHidden:NO];
 }
 
 - (void)_applyFullSizeToViews
 {
     NSRect contentBounds = [window contentViewBounds];
+    NSView *contentView = [window contentView];
 
     WLCalendarTasksView *tasksView = [_tasksViewController view];
-    [tasksView setFrame:NSMakeRect(NSMinX(contentBounds),
-                                   NSMinY(contentBounds),
-                                   250.0f,
-                                   contentBounds.size.height - 210.0f)];
+    NSRect tasksViewFrame = NSMakeRect(NSMinX(contentBounds),
+                                       NSMinY(contentBounds),
+                                       250.0f,
+                                       contentBounds.size.height - 210.0f);
+    tasksViewFrame = [contentView centerScanRect:tasksViewFrame];
+    [tasksView setFrame:tasksViewFrame];
 
     WLCalendarDateView *dateView = [_dateViewController view];
-    [dateView setFrame:NSMakeRect(NSMinX(contentBounds), NSMaxY([tasksView frame]), 250.0f, 210.0f)];
+    NSRect dateViewFrame = NSMakeRect(NSMinX(contentBounds), NSMaxY([tasksView frame]), 250.0f, 210.0f);
+    dateViewFrame = [contentView centerScanRect:dateViewFrame];
+    [dateView setFrame:dateViewFrame];
 
     WLCalendarWeekView *weekView = [_weekViewController view];
     [weekView stopAnimations];
-    [weekView setFrame:NSMakeRect(NSMaxX([tasksView frame]) + 10.0f,
-                                  NSMinY(contentBounds),
-                                  contentBounds.size.width - [tasksView frame].size.width,
-                                  contentBounds.size.height)];
+    NSRect weekViewFrame = NSMakeRect(NSMaxX([tasksView frame]) + 10.0f,
+                                      NSMinY(contentBounds),
+                                      contentBounds.size.width - [tasksView frame].size.width,
+                                      contentBounds.size.height);
+    weekViewFrame = [contentView centerScanRect:weekViewFrame];
+    [weekView setFrame:weekViewFrame];
     [weekView setHidden:NO];
 }
 
