@@ -44,10 +44,6 @@
     NSTimer *_nextDayTimer;
     NSCache *_cache;
     BOOL _isWindowShowed;
-    struct {
-        unsigned int updateCalendar:1;
-        unsigned int updateDate:1;
-    } _updateFlags;
 }
 
 @property (readonly) WLCalendarWindow *window;
@@ -98,18 +94,21 @@
 - (void)_applyFullSizeToViews;
 
 /*!
- @abstract      Sets a timer to call _updateViews.
+ @abstract      Sets a timer to call _updateCalendar.
  @discussion    Called when NSCurrentLocaleDidChangeNotification is posted.
+ @see           _updateCalendars
  */
 - (void)_localeChanged:(NSNotification *)aNotification;
 
+- (void)_updateCalendar;
+
 /*!
- @abstract      Reloads the view. Invalidates _columnTitleFormat.
+ @abstract      Updates dates of subcontrollers.
  @discussion    Called when either NSSystemClockDidChangeNotification or NSSystemTimeZoneDidChangeNotification is posted.
  */
 - (void)_clockChanged:(NSNotification *)aNotification;
 
-- (void)_updateViews;
+- (void)_updateClock;
 
 /*!
  @abstract      Schedules a timer to update view when day ends.
