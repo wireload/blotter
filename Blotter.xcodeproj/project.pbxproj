@@ -514,12 +514,16 @@
 		E27196B713C5A19E008E5C43 /* WLCalendar */ = {
 			isa = PBXGroup;
 			children = (
-				E2FCE09D133F9264006E7142 /* WLCalendarTimeIndicatorLayer.h */,
-				E2FCE09D133F9264006E7140 /* WLCalendarTimeIndicatorLayer.m */,
 				E27196B913C5A1C3008E5C43 /* WLCalendarTasksView.h */,
 				E27196BA13C5A1C3008E5C43 /* WLCalendarTasksView.m */,
 				E278F19C13C9EA6700B327EB /* WLCalendarWeekView.h */,
 				E278F19D13C9EA6700B327EB /* WLCalendarWeekView.m */,
+				E2A701EB13EFE4C500A4BF3A /* WLCalendarDateView.h */,
+				E2A701EC13EFE4C500A4BF3A /* WLCalendarDateView.m */,
+				E292D7DE13E9DCEA00433262 /* WLCalendarWindowBackgroundView.h */,
+				E292D7DF13E9DCEA00433262 /* WLCalendarWindowBackgroundView.m */,
+				E2FCE09D133F9264006E7142 /* WLCalendarTimeIndicatorLayer.h */,
+				E2FCE09D133F9264006E7140 /* WLCalendarTimeIndicatorLayer.m */,
 				E27DE06813CF18B1003E8E9A /* WLCalendarAllDayEventsLayer.h */,
 				E27DE06913CF18B1003E8E9A /* WLCalendarAllDayEventsLayer.m */,
 				E27DE07413D03E19003E8E9A /* WLCalendarEventLayer.h */,
@@ -535,12 +539,8 @@
 				E214582B13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m */,
 				E2F112DB13E6E263001C2B7B /* WLCalendarWindow.h */,
 				E2F112DC13E6E263001C2B7B /* WLCalendarWindow.m */,
-				E292D7DE13E9DCEA00433262 /* WLCalendarWindowBackgroundView.h */,
-				E292D7DF13E9DCEA00433262 /* WLCalendarWindowBackgroundView.m */,
 				E221B3A113EC5C2F00F9B392 /* CoreAnimation+WLCalendar.h */,
 				E221B3A213EC5C2F00F9B392 /* CoreAnimation+WLCalendar.m */,
-				E2A701EB13EFE4C500A4BF3A /* WLCalendarDateView.h */,
-				E2A701EC13EFE4C500A4BF3A /* WLCalendarDateView.m */,
 			);
 			name = WLCalendar;
 			sourceTree = "<group>";
@@ -1022,6 +1022,10 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers\"",
