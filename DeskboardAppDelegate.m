@@ -315,7 +315,9 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 {
     NSMutableArray *visibleWindows = [[[NSApp windows] mutableCopy] autorelease];
     [visibleWindows removeObjectIdenticalTo:[notification object]];
-    [visibleWindows filterUsingPredicate:[NSPredicate predicateWithFormat:@"isVisible == YES"]];
+    [visibleWindows filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSWindow *w, NSDictionary *bindings) {
+        return [w isVisible] && ![[w className] hasPrefix:@"NSStatusBarWindow"];
+    }]];
     if ([visibleWindows count] == 1) // If only desktop window is visible
         [NSApp hide:self];
 }
