@@ -14,6 +14,8 @@
 @interface WLCalendarTimeRulerLayer : CALayer {
     NSMutableArray *_sortedTimeLayers;
     id<WLCalendarTimeRuler> timeRuler;
+    BOOL _hoursChanged;
+    CGSize _cachedPreferredFrameSize;
 }
 
 @property (assign) id<WLCalendarTimeRuler> timeRuler;

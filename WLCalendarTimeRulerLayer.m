@@ -59,6 +59,7 @@
         [self addSublayer:timeLayer];
         [_sortedTimeLayers addObject:timeLayer];
     }
+    _hoursChanged = YES;
     [CATransaction commit];
 }
 
@@ -94,19 +95,23 @@
 
 - (CGSize)preferredFrameSize
 {
-#ifdef DEBUG_PERFORMANCE
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-#endif
     if ([_sortedTimeLayers count] == 0)
-        return CGSizeMake(0.0f, 0.0f);
+        return CGSizeZero;
 
-    CGSize preferredSize = CGSizeMake(0.0f, 0.0f);
-    for (CALayer *layer in _sortedTimeLayers)
+    if (_hoursChanged)
     {
-        preferredSize.width = fmaxf(preferredSize.width, [layer preferredFrameSize].width);
+#ifdef DEBUG_PERFORMANCE
+        NSLog(@"%s", __PRETTY_FUNCTION__);
+#endif
+        _cachedPreferredFrameSize = CGSizeZero;
+        for (CALayer *l in _sortedTimeLayers)
+        {
+            _cachedPreferredFrameSize.width = fmaxf(_cachedPreferredFrameSize.width, [l preferredFrameSize].width);
+        }
+        _cachedPreferredFrameSize.height = timeRuler.heightOfHour * [_sortedTimeLayers count] + [self firstHourYPadding];
+        _hoursChanged = NO;
     }
-    preferredSize.height = timeRuler.heightOfHour * [_sortedTimeLayers count] + [[_sortedTimeLayers objectAtIndex:0] preferredFrameSize].height / 2;
-    return preferredSize;
+    return _cachedPreferredFrameSize;
 }
 
 - (void)layoutSublayers
