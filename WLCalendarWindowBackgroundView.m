@@ -17,7 +17,6 @@
     self = [super initWithFrame:aFrameRect];
     if (self != nil)
     {
-        [self setAutoresizesSubviews:NO];
         CALayer *layer = [CALayer layer];
         layer.backgroundColor = [[[NSColor blackColor] colorWithAlphaComponent:0.2] WL_CGColor];
         layer.borderColor = [[NSColor blackColor] WL_CGColor];

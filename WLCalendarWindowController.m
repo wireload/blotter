@@ -71,7 +71,8 @@
         _weekViewController.calcalendars = [self calendarsToDisplay];
         _weekViewController.calendar = [NSCalendar autoupdatingCurrentCalendar];
         _weekViewController.date = [NSDate date];
-        [contentView addSubview:[_weekViewController view]];
+        [_weekViewController.view setAutoresizingMask:NSViewHeightSizable | NSViewWidthSizable];
+        [contentView addSubview:_weekViewController.view];
 
         _tasksViewController = [[WLCalendarTasksViewController alloc] initWithNibName:nil bundle:nil];
         _tasksViewController.taskPredicate = [CalCalendarStore taskPredicateWithUncompletedTasks:[self calendarsToDisplay]];
@@ -82,6 +83,7 @@
                                     [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:NO selector:@selector(localizedStandardCompare:)], nil];
         _tasksViewController.sortDescriptors = sortDescriptors;
         WLCalendarTasksView *tasksView = [[WLCalendarTasksView alloc] initWithFrame:NSZeroRect];
+        [tasksView setAutoresizingMask:NSViewHeightSizable];
         [_tasksViewController setView:tasksView];
         [contentView addSubview:tasksView];
         [tasksView release];
@@ -89,6 +91,7 @@
         _dateViewController = [[WLCalendarDateViewController alloc] init];
         _dateViewController.calendar = [NSCalendar autoupdatingCurrentCalendar];
         _dateViewController.date = [NSDate date];
+        [_dateViewController.view setAutoresizingMask:NSViewNotSizable];
         [contentView addSubview:_dateViewController.view];
 
         _cache = [[NSCache alloc] init];
