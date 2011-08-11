@@ -113,11 +113,11 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     WLCalendarEventLayer *l = [WLCalendarEventLayer layer];
     [CATransaction WL_performWithDisabledActions:^{
         l.needsDisplayOnBoundsChange = YES;
-    }];
-    l.masksToBounds = YES;
+		l.masksToBounds = YES;
 #ifndef DEBUG_LAYERS
-    l.contentsBackgroundOpacity = 0.6;
+		l.contentsBackgroundOpacity = 0.6;
 #endif
+    }];
     return l;
 }
 
