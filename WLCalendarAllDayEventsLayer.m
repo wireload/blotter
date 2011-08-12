@@ -162,12 +162,16 @@ static const CGFloat _WLTopMargin = 10.0f;
         {
             lastVisibleOffset = offset;
             firstHiddenLayer = layer;
-            layer.hidden = YES;
+			[CATransaction WL_performWithDisabledActions:^{
+				layer.hidden = YES;
+			}];
         }
         else
         {
             layer.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(self.bounds), offset, self.bounds.size.width, height));
-            layer.hidden = NO;
+			[CATransaction WL_performWithDisabledActions:^{
+				layer.hidden = NO;
+			}];
         }
         offset += height + _WLTopMargin;
     }
@@ -182,7 +186,9 @@ static const CGFloat _WLTopMargin = 10.0f;
                                                                lastVisibleOffset,
                                                                self.bounds.size.width,
                                                                CGRectGetMaxY(self.bounds) - lastVisibleOffset));
-            firstHiddenLayer.hidden = NO;
+            [CATransaction WL_performWithDisabledActions:^{
+				firstHiddenLayer.hidden = NO;
+			}];
         }
     }
 }
