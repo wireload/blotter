@@ -301,6 +301,11 @@ const CGFloat _WLXPadding = 10.0f;
     return CGSizeMake(preferredFrameSize.width + _WLXPadding, preferredFrameSize.height + _WLYPadding);
 }
 
+- (BOOL)contentsAreFlipped
+{
+    return YES;
+}
+
 
 #pragma mark NSObject
 
