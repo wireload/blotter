@@ -114,6 +114,8 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     [CATransaction WL_performWithDisabledActions:^{
         l.needsDisplayOnBoundsChange = YES;
 		l.masksToBounds = YES;
+        l.contentsGravity = kCAGravityBottom;
+        l.anchorPoint = CGPointMake(0.0f, 0.0f);
 #ifndef DEBUG_LAYERS
 		l.contentsBackgroundOpacity = 0.6;
 #endif
