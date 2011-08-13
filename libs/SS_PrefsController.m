@@ -160,7 +160,7 @@
     }
     
     // Create prefs window
-    unsigned int styleMask = (NSClosableWindowMask | NSResizableWindowMask);
+    unsigned int styleMask = (NSClosableWindowMask | NSResizableWindowMask | NSTitledWindowMask);
     if (usesTexturedWindow) {
         styleMask = (styleMask | NSTexturedBackgroundWindowMask);
     }
