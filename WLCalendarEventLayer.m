@@ -315,6 +315,7 @@ const CGFloat _WLXPadding = 10.0f;
     {
         _shouldUpdateMinimalHeightCache = YES;
     }
+    [super didChangeValueForKey:aKey];
 }
 
 @end
