@@ -14,8 +14,8 @@
 @interface WLCalendarTimeRulerLayer : CALayer {
     NSMutableArray *_sortedTimeLayers;
     id<WLCalendarTimeRuler> timeRuler;
-    BOOL _hoursChanged;
-    CGSize _cachedPreferredFrameSize;
+    BOOL _shouldUpdatePreferredFrameWidthCache;
+    CGFloat _cachedPreferredFrameWidth;
 }
 
 @property (assign) id<WLCalendarTimeRuler> timeRuler;
@@ -25,6 +25,9 @@
 - (CGFloat)firstHourYPadding;
 
 - (CGPoint)pointForHour:(CGFloat)aHour;
+
+- (CGFloat)preferredFrameWidth;
+
 
 - (CATextLayer *)_setupTimeLayerWithString:(NSString *)aTime;
 

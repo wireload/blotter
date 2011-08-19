@@ -59,13 +59,28 @@
         [self addSublayer:timeLayer];
         [_sortedTimeLayers addObject:timeLayer];
     }
-    _hoursChanged = YES;
     [CATransaction commit];
+    _shouldUpdatePreferredFrameWidthCache = YES;
 }
 
 - (CGPoint)pointForHour:(CGFloat)aHour
 {
     return CGPointMake(0.0f, [self firstHourYPadding] + aHour * timeRuler.heightOfHour);
+}
+
+- (CGFloat)preferredFrameWidth
+{
+    if ([_sortedTimeLayers count] == 0)
+        return 0.0f;
+
+    if (_shouldUpdatePreferredFrameWidthCache)
+    {
+        _cachedPreferredFrameWidth = 0.0f;
+        for (CALayer *l in _sortedTimeLayers)
+            _cachedPreferredFrameWidth = MAX(_cachedPreferredFrameWidth, [l preferredFrameSize].width);
+        _shouldUpdatePreferredFrameWidthCache = NO;
+    }
+    return _cachedPreferredFrameWidth;
 }
 
 
@@ -98,20 +113,8 @@
     if ([_sortedTimeLayers count] == 0)
         return CGSizeZero;
 
-    if (_hoursChanged)
-    {
-#ifdef DEBUG_PERFORMANCE
-        NSLog(@"%s", __PRETTY_FUNCTION__);
-#endif
-        _cachedPreferredFrameSize = CGSizeZero;
-        for (CALayer *l in _sortedTimeLayers)
-        {
-            _cachedPreferredFrameSize.width = fmaxf(_cachedPreferredFrameSize.width, [l preferredFrameSize].width);
-        }
-        _cachedPreferredFrameSize.height = timeRuler.heightOfHour * [_sortedTimeLayers count] + [self firstHourYPadding];
-        _hoursChanged = NO;
-    }
-    return _cachedPreferredFrameSize;
+    CGFloat h = timeRuler.heightOfHour * [_sortedTimeLayers count] + [self firstHourYPadding];
+    return CGSizeMake([self preferredFrameWidth], h);
 }
 
 - (void)layoutSublayers
