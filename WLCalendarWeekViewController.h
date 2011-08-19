@@ -72,6 +72,10 @@ typedef enum
 
 - (void)scrollToCurrentHour;
 
+- (NSUInteger)currentDay;
+
+- (void)highlightCurrentDayIfNeeded;
+
 - (NSDate *)firstColumnDate;
 
 - (NSArray *)eventsForColumnsAtIndexes:(NSIndexSet *)anIndexSet firstDate:(NSDate *)aFirstDate;
@@ -82,7 +86,7 @@ typedef enum
 @property (nonatomic, retain) NSString *_columnTitleFormat;
 
 /*!
- @abstract      Updates events affected columns. Columns are determined by dates of changed events.
+ @abstract      Updates events of affected columns which are determined by dates of changed events.
  @discussion    Called when either CalEventsChangedExternallyNotification or CalEventsChangedNotification is posted.
  */
 - (void)_eventsChanged:(NSNotification *)aNotification;

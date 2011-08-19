@@ -36,6 +36,7 @@ typedef struct
     BOOL fitDayEvents;
     CGFloat minimumHeightOfHour;
     CGFloat maximumHeightOfHour;
+    NSUInteger indexOfHighlightedColumn;
 
     CALayer *_rootLayer;
     CALayer *_timeRulerRootLayer;
@@ -67,6 +68,8 @@ typedef struct
  @discussion Default value is 100.0f.
  */
 @property CGFloat maximumHeightOfHour;
+
+@property (nonatomic) NSUInteger indexOfHighlightedColumn;
 
 - (void)setupLayersAnimated:(BOOL)isAnimated;
 

@@ -50,6 +50,7 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
     self = [super initWithFrame:aFrameRect];
     if (self != nil)
     {
+        indexOfHighlightedColumn = NSNotFound;
         minimumHeightOfAllDayEventsPartOfColumn = 100.0f;
         _columnLayers = [[NSMutableArray alloc] init];
         showTimeIndicator = YES;
@@ -73,6 +74,20 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 @synthesize fitDayEvents;
 @synthesize minimumHeightOfHour;
 @synthesize maximumHeightOfHour;
+@synthesize indexOfHighlightedColumn;
+
+- (void)setIndexOfHighlightedColumn:(NSUInteger)newIndexOfHighlightedColumn
+{
+    indexOfHighlightedColumn = newIndexOfHighlightedColumn;
+    [_columnLayers enumerateObjectsUsingBlock:^(CALayer *l, NSUInteger idx, BOOL *stop) {
+        if (indexOfHighlightedColumn == NSNotFound)
+            l.opacity = 1.0f;
+        else if (indexOfHighlightedColumn == idx)
+            l.opacity = 1.0f;
+        else
+            l.opacity = 0.5f;
+    }];
+}
 
 - (void)setShowTimeIndicator:(BOOL)newShowTimeIndicator
 {
@@ -142,6 +157,8 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
         [viewLayer addSublayer:_rootLayer];
         [self setLayer:viewLayer];
         [self setWantsLayer:YES];
+        if (indexOfHighlightedColumn != NSNotFound)
+            self.indexOfHighlightedColumn = indexOfHighlightedColumn;
     }
     else
         [_rootLayer setNeedsLayout];
@@ -252,7 +269,7 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
 
 - (void)showNextDays:(NSUInteger)aNumberOfDays
 {
-    if ([_columnLayers count] > 0)
+    if ([self wantsLayer] && [_columnLayers count] > 0)
     {
         [CATransaction begin];
         [CATransaction setAnimationDuration:5];
@@ -298,8 +315,6 @@ static const CGFloat _WLWeekdayEventsTitleLayerHeight = 25.0f;
         [self eventsDidUpdated];
         [CATransaction commit];
     }
-    else
-        [self setupLayersAnimated:![CATransaction disableActions]];
 }
 
 - (void)stopAnimations

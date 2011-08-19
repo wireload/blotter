@@ -162,10 +162,12 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
             [view updateTitleOfColumnsAtIndexes:columnIndexes];
         else if (_updateFlags.updateEvents)
             [view updateEventsOfColumnsAtIndexes:columnIndexes];
+        [self highlightCurrentDayIfNeeded];
         [CATransaction commit];
     }
     else
     {
+        [self highlightCurrentDayIfNeeded];
         [view setupLayersAnimated:isAnimated];
         [self _scheduleScrollTimer];
     }
@@ -179,6 +181,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 {
     [CATransaction begin];
     [view showNextDay];
+    [self highlightCurrentDayIfNeeded];
     [_scrollTimer fire];
     [CATransaction commit];
 }
@@ -187,6 +190,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 {
     [CATransaction begin];
     [view showNextWeek];
+    [self highlightCurrentDayIfNeeded];
     [_scrollTimer fire];
     [CATransaction commit];
 }
@@ -207,6 +211,22 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 - (void)scrollToCurrentHour
 {
     [[self view] scrollHour:[self currentHour] animated:![CATransaction disableActions]];
+}
+
+- (NSUInteger)currentDay
+{
+    NSParameterAssert(calendar != nil);
+
+    NSDateComponents *components = [calendar components:NSDayCalendarUnit fromDate:[self firstColumnDate] toDate:self.date options:0];
+    return [components day];
+}
+
+- (void)highlightCurrentDayIfNeeded
+{
+    if (self.mode == WLCalendarWeekViewWeekMode)
+        view.indexOfHighlightedColumn = [self currentDay];
+    else
+        view.indexOfHighlightedColumn = NSNotFound;
 }
 
 - (NSDate *)firstColumnDate
