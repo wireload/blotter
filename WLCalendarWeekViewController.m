@@ -37,6 +37,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     {
         view = [[WLCalendarWeekView alloc] init];
         view.dataSource = self;
+        view.fitDayEvents = YES;
         highlightWeekends = YES;
         NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
         [notificationCenter addObserver:self
@@ -259,7 +260,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 
 #pragma mark WLCalendarWeekViewDataSource
 
-- (NSUInteger)numberOfHours
+- (NSUInteger)numberOfHoursInWeekView:(WLCalendarWeekView *)aWeekView
 {
     NSParameterAssert(calendar != nil);
 
@@ -267,12 +268,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     return hoursRange.length;
 }
 
-- (CGFloat)heightOfHour
-{
-    return 50.0f;
-}
-
-- (CGFloat)hourForDate:(NSDate *)aDate
+- (CGFloat)weekView:(WLCalendarWeekView *)aWeekView convertDateToHour:(NSDate *)aDate
 {
     NSParameterAssert(calendar != nil);
 

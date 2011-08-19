@@ -522,6 +522,8 @@
 				E2A701EC13EFE4C500A4BF3A /* WLCalendarDateView.m */,
 				E292D7DE13E9DCEA00433262 /* WLCalendarWindowBackgroundView.h */,
 				E292D7DF13E9DCEA00433262 /* WLCalendarWindowBackgroundView.m */,
+				E2F112DB13E6E263001C2B7B /* WLCalendarWindow.h */,
+				E2F112DC13E6E263001C2B7B /* WLCalendarWindow.m */,
 				E2FCE09D133F9264006E7142 /* WLCalendarTimeIndicatorLayer.h */,
 				E2FCE09D133F9264006E7140 /* WLCalendarTimeIndicatorLayer.m */,
 				E27DE06813CF18B1003E8E9A /* WLCalendarAllDayEventsLayer.h */,
@@ -537,8 +539,6 @@
 				E2B16FDD13D57F52005F8973 /* WLCalendarTimeRulerLayer.m */,
 				E214582A13D5AE7F00B21398 /* WLCalendarBackgroundLayer.h */,
 				E214582B13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m */,
-				E2F112DB13E6E263001C2B7B /* WLCalendarWindow.h */,
-				E2F112DC13E6E263001C2B7B /* WLCalendarWindow.m */,
 				E221B3A113EC5C2F00F9B392 /* CoreAnimation+WLCalendar.h */,
 				E221B3A213EC5C2F00F9B392 /* CoreAnimation+WLCalendar.m */,
 			);
@@ -985,7 +985,6 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					DEBUG_PERFORMANCE,
 					DEBUG_LAYERS,
 					DEBUG,
 				);
@@ -998,6 +997,7 @@
 				);
 				IBC_OTHER_FLAGS = "";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				SDKROOT = macosx;
@@ -1037,6 +1037,7 @@
 				);
 				IBC_OTHER_FLAGS = "";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				SDKROOT = macosx;

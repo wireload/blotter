@@ -22,10 +22,20 @@
 @class WLCalendarTimeIndicatorLayer;
 
 
-@interface WLCalendarWeekView : NSView /*<CALayerManager>*/ {
+typedef struct
+{
+    CGFloat startHour;
+    CGFloat endHour;
+} WLHourRange;
+
+
+@interface WLCalendarWeekView : NSView <WLCalendarTimeRuler/*, CALayerManager*/> {
     IBOutlet NSObject<WLCalendarWeekViewDataSource> *dataSource;
-    CGFloat allDayEventsHeight;
+    CGFloat minimumHeightOfAllDayEventsPartOfColumn;
     BOOL showTimeIndicator;
+    BOOL fitDayEvents;
+    CGFloat minimumHeightOfHour;
+    CGFloat maximumHeightOfHour;
 
     CALayer *_rootLayer;
     CALayer *_timeRulerRootLayer;
@@ -36,9 +46,27 @@
 
 @property (assign) NSObject<WLCalendarWeekViewDataSource> *dataSource;
 
-@property CGFloat allDayEventsHeight;
+/*!
+ @discussion Default value is 100.0f.
+ */
+@property CGFloat minimumHeightOfAllDayEventsPartOfColumn;
 
 @property (nonatomic) BOOL showTimeIndicator;
+
+/*!
+ @discussion Default value is NO.
+ */
+@property BOOL fitDayEvents;
+
+/*!
+ @discussion Default value is 20.0f.
+ */
+@property CGFloat minimumHeightOfHour;
+
+/*!
+ @discussion Default value is 100.0f.
+ */
+@property CGFloat maximumHeightOfHour;
 
 - (void)setupLayersAnimated:(BOOL)isAnimated;
 
@@ -58,6 +86,10 @@
 
 - (void)stopAnimations;
 
+- (WLHourRange)eventsHourRange;
+
+- (void)eventsDidUpdated;
+
 
 - (void)_updateEventsOfColumnAtIndex:(NSUInteger)anIndex;
 
@@ -69,11 +101,15 @@
 
 - (void)_updateTimeRuler;
 
-- (void)_layoutTimerRulerRootlayer:(CALayer *)aRootLayer;
+- (void)_layoutTimeRulerRootLayer:(CALayer *)aRootLayer;
 
-- (void)_layoutColumnLayer:(CALayer *)aRootLayer;
+- (void)_layoutTimeRulerLayer:(WLCalendarTimeRulerLayer *)aTimeRulerLayer;
 
-- (void)_positionColumnLayer:(CALayer *)aRootLayer atIndex:(NSUInteger)anIndex;
+- (void)_layoutColumnLayer:(CALayer *)aColumnLayer;
+
+- (void)_layoutDayLayer:(WLCalendarDayEventsLayer *)aDayLayer;
+
+- (void)_positionColumnLayer:(CALayer *)aColumnLayer atIndex:(NSUInteger)anIndex;
 
 @end
 
@@ -143,7 +179,8 @@ enum
     WLCalendarWeekViewEventsDataUnit = 1 << 1
 };
 
-@protocol WLCalendarWeekViewDataSource<WLCalendarTimeRuler>
+
+@protocol WLCalendarWeekViewDataSource
 
 - (NSString *)stringForHour:(NSUInteger)aHour;
 
@@ -154,6 +191,16 @@ enum
 - (NSArray *)weekView:(WLCalendarWeekView *)aWeekView eventsForColumnAtIndex:(NSUInteger)anIndex;
 
 - (void)weekViewDidSetupLayers:(WLCalendarWeekView *)aWeekView;
+
+/*!
+ @see -[WLCalendarTimeRuler hourForDate:].
+ */
+- (CGFloat)weekView:(WLCalendarWeekView *)aWeekView convertDateToHour:(NSDate *)aDate;
+
+/*!
+ @see -[WLCalendarTimeRuler numberOfHours].
+ */
+- (NSUInteger)numberOfHoursInWeekView:(WLCalendarWeekView *)aWeekView;
 
 @optional
 
