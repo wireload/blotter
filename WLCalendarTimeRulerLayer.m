@@ -77,7 +77,7 @@
     {
         _cachedPreferredFrameWidth = 0.0f;
         for (CALayer *l in _sortedTimeLayers)
-            _cachedPreferredFrameWidth = MAX(_cachedPreferredFrameWidth, [l preferredFrameSize].width);
+            _cachedPreferredFrameWidth = fmaxf(_cachedPreferredFrameWidth, [l preferredFrameSize].width);
         _shouldUpdatePreferredFrameWidthCache = NO;
     }
     return _cachedPreferredFrameWidth;
