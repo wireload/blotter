@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 #import "WLCalendarTimeRuler.h"
+#import "WLDateRange.h"
 
 
 @class WLCalendarEventLayer;
@@ -29,6 +30,8 @@
 @property (nonatomic, copy) NSSet *events;
 
 - (NSUInteger)maximumNumberOfColumns;
+
+- (WLDateRange *)eventsDateRange;
 
 
 - (WLCalendarEventLayer *)_setupEventLayer;

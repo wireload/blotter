@@ -106,6 +106,19 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 }
 
 
+- (WLDateRange *)eventsDateRange
+{
+    if ([_sortedByStartDateEventLayers count] == 0)
+        return nil;
+
+    NSDate *start = [[_sortedByStartDateEventLayers objectAtIndex:0] valueForKey:_WLStartDateKey];
+    NSDate *end = nil;
+    for (NSEvent *e in _sortedByStartDateEventLayers)
+        end = [[e valueForKey:_WLEndDateKey] laterDate:end];
+    return [WLDateRange dateRangeWithStartDate:start endDate:end];
+}
+
+
 #pragma mark Private
 
 - (WLCalendarEventLayer *)_setupEventLayer
