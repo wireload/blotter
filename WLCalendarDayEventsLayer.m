@@ -515,8 +515,9 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     CGFloat hourHeight = timeRuler.heightOfHour;
     for (NSUInteger i=0, numberOfHours=timeRuler.numberOfHours; i<numberOfHours; ++i)
     {
-        CGContextMoveToPoint(aContext, self.bounds.origin.x, CGRectGetMaxY(self.bounds) - hourHeight * i);
-        CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), CGRectGetMaxY(self.bounds) - hourHeight * i);
+        CGFloat y = self.bounds.origin.y + hourHeight * i;
+        CGContextMoveToPoint(aContext, self.bounds.origin.x, y);
+        CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), y);
     }
     CGColorRef lineColor = [[NSColor blackColor] WL_CGColor];
     CGContextSetStrokeColorWithColor(aContext, lineColor);
