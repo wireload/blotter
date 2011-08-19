@@ -148,9 +148,6 @@ static const CGFloat _WLTopMargin = 10.0f;
 
 - (void)layoutSublayers
 {
-#ifdef DEBUG_PERFORMANCE
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-#endif
     CGFloat maxHeight = self.bounds.size.height - _WLTopMargin;
     CGFloat offset = CGRectGetMinY(self.bounds) + _WLTopMargin;
     CGFloat lastVisibleOffset = offset;
