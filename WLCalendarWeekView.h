@@ -113,6 +113,30 @@
 
 @end
 
+
+@interface CALayer (WLCalendarWeekView)
+
+- (WLCalendarBackgroundLayer *)WL_allDayBackgroundLayer;
+
+- (WLCalendarAllDayEventsLayer *)WL_allDayLayer;
+
+
+- (WLCalendarBackgroundLayer *)WL_dayBackgroundLayer;
+
+- (CAScrollLayer *)WL_dayScrollLayer;
+
+- (WLCalendarDayEventsLayer *)WL_dayLayer;
+
+- (CATextLayer *)WL_titleLayer;
+
+
+- (CAScrollLayer *)WL_timeRulerScrollLayer;
+
+- (WLCalendarTimeRulerLayer *)WL_timeRulerLayer;
+
+@end
+
+
 enum
 {
     WLCalendarWeekViewTitleDataUnit = 1 << 0,
