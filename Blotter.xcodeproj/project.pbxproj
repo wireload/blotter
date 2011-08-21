@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -30,6 +30,7 @@
 		E214582C13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E214582B13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m */; };
 		E21DB6CD13560D19004084F7 /* NSDate+ISO8601.m in Sources */ = {isa = PBXBuildFile; fileRef = E21DB6CC13560D19004084F7 /* NSDate+ISO8601.m */; };
 		E221B3A313EC5C2F00F9B392 /* CoreAnimation+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = E221B3A213EC5C2F00F9B392 /* CoreAnimation+WLCalendar.m */; };
+		E22C78AB13FFCD9F00EE44C0 /* NSColor+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */; };
 		E23779EF1312AD6000F46E7D /* WLClosableWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E23779D71312AD6000F46E7D /* WLClosableWindow.m */; };
 		E253575013DC884D0010A2ED /* NSDate+WLDayBoundaries.m in Sources */ = {isa = PBXBuildFile; fileRef = E253574F13DC884D0010A2ED /* NSDate+WLDayBoundaries.m */; };
 		E2535B8713DCA88B0010A2ED /* WLDateRange.m in Sources */ = {isa = PBXBuildFile; fileRef = E2535B8613DCA88B0010A2ED /* WLDateRange.m */; };
@@ -175,7 +176,7 @@
 
 /* Begin PBXFileReference section */
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		1DDD58150DA1D0A300B32029 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		256AC3D80F4B6AC300CF3369 /* DeskboardAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeskboardAppDelegate.h; sourceTree = "<group>"; };
 		256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeskboardAppDelegate.m; sourceTree = "<group>"; };
 		256AC3F00F4B6AF500CF3369 /* Deskboard_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deskboard_Prefix.pch; sourceTree = "<group>"; };
@@ -189,19 +190,19 @@
 		2840653712836E78000816FF /* NSColor-Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor-Utilities.m"; sourceTree = "<group>"; };
 		2844DB2C129DA1BD006C5545 /* BLCalendarFramer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLCalendarFramer.m; sourceTree = "<group>"; };
 		285B840813C0C6150042C813 /* Blotter-B9.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Blotter-B9.icns"; sourceTree = "<group>"; };
-		28A09A591308E4A7005EA923 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = Resources/ko.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		28A09A5A1308E4A7005EA923 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = Resources/ko.lproj/Localizable.strings; sourceTree = "<group>"; };
-		28A09A9C1308F188005EA923 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = Resources/de.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		28A09A9D1308F18B005EA923 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = Resources/fr.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		28A09A9E1308F18E005EA923 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = Resources/es.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		28A09A9F1308F192005EA923 /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = Resources/ko.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		28A09A591308E4A7005EA923 /* MainMenu.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = MainMenu.strings; path = Resources/ko.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		28A09A5A1308E4A7005EA923 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		28A09A9C1308F188005EA923 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/de.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		28A09A9D1308F18B005EA923 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/fr.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		28A09A9E1308F18E005EA923 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/es.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		28A09A9F1308F192005EA923 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/ko.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		28B54DB31283BABF0037BF53 /* SS_PreferencePaneProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SS_PreferencePaneProtocol.h; path = libs/SS_PreferencePaneProtocol.h; sourceTree = "<group>"; };
 		28B54DB41283BABF0037BF53 /* SS_PrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SS_PrefsController.h; path = libs/SS_PrefsController.h; sourceTree = "<group>"; };
 		28B54DB51283BABF0037BF53 /* SS_PrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SS_PrefsController.m; path = libs/SS_PrefsController.m; sourceTree = "<group>"; };
 		28DB06DD13590F5500E34FC5 /* YAJL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YAJL.framework; path = ../blotter/Frameworks/YAJL.framework; sourceTree = "<group>"; };
-		28E96D7312EA3145000AF199 /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = Resources/sv.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		28E96D7412EA3145000AF199 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = Resources/sv.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		28E96D7512EA3145000AF199 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = Resources/sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		28E96D7312EA3145000AF199 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/sv.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		28E96D7412EA3145000AF199 /* MainMenu.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = MainMenu.strings; path = Resources/sv.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		28E96D7512EA3145000AF199 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		28F6966B1298B99800D4BB97 /* calendar */ = {isa = PBXFileReference; lastKnownFileType = folder; name = calendar; path = Resources/calendar; sourceTree = "<group>"; };
 		28F69759129969E500D4BB97 /* NSDate-Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate-Utilities.h"; sourceTree = "<group>"; };
 		28F6975A129969E500D4BB97 /* NSDate-Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate-Utilities.m"; sourceTree = "<group>"; };
@@ -214,7 +215,7 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Blotter-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Blotter-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Blotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E214525113FF9550009FEEB8 /* WLCalendarController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = WLCalendarController.h; sourceTree = "<group>"; };
+		E214525113FF9550009FEEB8 /* WLCalendarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarController.h; sourceTree = "<group>"; };
 		E214525213FF9550009FEEB8 /* WLCalendarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarController.m; sourceTree = "<group>"; };
 		E214582A13D5AE7F00B21398 /* WLCalendarBackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarBackgroundLayer.h; sourceTree = "<group>"; };
 		E214582B13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarBackgroundLayer.m; sourceTree = "<group>"; };
@@ -222,13 +223,15 @@
 		E21DB6CC13560D19004084F7 /* NSDate+ISO8601.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+ISO8601.m"; sourceTree = "<group>"; };
 		E221B3A113EC5C2F00F9B392 /* CoreAnimation+WLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreAnimation+WLCalendar.h"; sourceTree = "<group>"; };
 		E221B3A213EC5C2F00F9B392 /* CoreAnimation+WLCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CoreAnimation+WLCalendar.m"; sourceTree = "<group>"; };
+		E22C78A913FFCD9F00EE44C0 /* NSColor+WLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+WLCalendar.h"; sourceTree = "<group>"; };
+		E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+WLCalendar.m"; sourceTree = "<group>"; };
 		E23779D61312AD6000F46E7D /* WLClosableWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WLClosableWindow.h; path = WLClosableWindow/WLClosableWindow.h; sourceTree = "<group>"; };
 		E23779D71312AD6000F46E7D /* WLClosableWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WLClosableWindow.m; path = WLClosableWindow/WLClosableWindow.m; sourceTree = "<group>"; };
 		E253574E13DC884D0010A2ED /* NSDate+WLDayBoundaries.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+WLDayBoundaries.h"; sourceTree = "<group>"; };
 		E253574F13DC884D0010A2ED /* NSDate+WLDayBoundaries.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+WLDayBoundaries.m"; sourceTree = "<group>"; };
 		E2535B8513DCA88B0010A2ED /* WLDateRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDateRange.h; sourceTree = "<group>"; };
 		E2535B8613DCA88B0010A2ED /* WLDateRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDateRange.m; sourceTree = "<group>"; };
-		E2596D601316B20400A8B15E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
+		E2596D601316B20400A8B15E /* NewEventWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewEventWindow.xib; path = Resources/English.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
 		E2596D711316C8C100A8B15E /* WLNewEventWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNewEventWindowController.h; sourceTree = "<group>"; };
 		E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNewEventWindowController.m; sourceTree = "<group>"; };
 		E2670357132CA21F003FBFC2 /* glass-hud-button-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-right.png"; sourceTree = "<group>"; };
@@ -236,7 +239,7 @@
 		E2670359132CA21F003FBFC2 /* glass-hud-button-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-left.png"; sourceTree = "<group>"; };
 		E267038F132CA887003FBFC2 /* WLGlassHudButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudButtonCell.h; sourceTree = "<group>"; };
 		E2670390132CA887003FBFC2 /* WLGlassHudButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudButtonCell.m; sourceTree = "<group>"; };
-		E267AADF12EDF7AE00EDB7B6 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = Resources/English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E267AADF12EDF7AE00EDB7B6 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E2701FA7133B563B0098CD79 /* WLGlassHudTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudTextView.h; sourceTree = "<group>"; };
 		E2701FA8133B563B0098CD79 /* WLGlassHudTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudTextView.m; sourceTree = "<group>"; };
 		E2702193133BA7610098CD79 /* glass-hud-textview-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-textview-bottom-left.png"; sourceTree = "<group>"; };
@@ -289,16 +292,16 @@
 		E28C418C13F081A1005789DD /* defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = defaults.plist; sourceTree = "<group>"; };
 		E292D7DE13E9DCEA00433262 /* WLCalendarWindowBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowBackgroundView.h; sourceTree = "<group>"; };
 		E292D7DF13E9DCEA00433262 /* WLCalendarWindowBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindowBackgroundView.m; sourceTree = "<group>"; };
-		E29DDC8812E9C7C900751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = Resources/ru.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		E29DDC8E12E9C7E000751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Resources/ru.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		E29DDC8F12E9C7E200751CFA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		E29DDC9012E9C7E300751CFA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = Resources/fr.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		E29DDC9112E9C7E600751CFA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		E29DDCB312E9D55500751CFA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Resources/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E29DDCB512E9D56B00751CFA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = Resources/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E29DDCB612E9D57500751CFA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E29DDCB712E9D57F00751CFA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E29F38EA131968B200A865D9 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
+		E29DDC8812E9C7C900751CFA /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/ru.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		E29DDC8E12E9C7E000751CFA /* MainMenu.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = MainMenu.strings; path = Resources/ru.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		E29DDC8F12E9C7E200751CFA /* MainMenu.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = MainMenu.strings; path = Resources/de.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		E29DDC9012E9C7E300751CFA /* MainMenu.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = MainMenu.strings; path = Resources/fr.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		E29DDC9112E9C7E600751CFA /* MainMenu.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = MainMenu.strings; path = Resources/es.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		E29DDCB312E9D55500751CFA /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E29DDCB512E9D56B00751CFA /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E29DDCB612E9D57500751CFA /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E29DDCB712E9D57F00751CFA /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E29F38EA131968B200A865D9 /* NewTaskWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewTaskWindow.xib; path = Resources/English.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
 		E29F38EC1319694C00A865D9 /* WLNewTaskWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNewTaskWindowController.h; sourceTree = "<group>"; };
 		E29F38ED1319694C00A865D9 /* WLNewTaskWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNewTaskWindowController.m; sourceTree = "<group>"; };
 		E2A701EB13EFE4C500A4BF3A /* WLCalendarDateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarDateView.h; sourceTree = "<group>"; };
@@ -314,30 +317,30 @@
 		E2BA565D13C5E4C4005F0045 /* NSColor+CGColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+CGColor.m"; sourceTree = "<group>"; };
 		E2BA585613C61E3C005F0045 /* CATextLayer+WLStringSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CATextLayer+WLStringSize.h"; sourceTree = "<group>"; };
 		E2BA585713C61E3C005F0045 /* CATextLayer+WLStringSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CATextLayer+WLStringSize.m"; sourceTree = "<group>"; };
-		E2BADC99134DDF6900F65E14 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = Resources/de.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
-		E2BADC9A134DDF6D00F65E14 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = Resources/es.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
-		E2BADC9B134DDF6F00F65E14 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = Resources/fr.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
-		E2BADC9C134DDF7300F65E14 /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = Resources/ko.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
-		E2BADC9D134DDF7500F65E14 /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = Resources/sv.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
-		E2BADC9E134DDF7800F65E14 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = Resources/ru.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
-		E2BADC9F134DDF8200F65E14 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = Resources/ru.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
-		E2BADCA0134DDF8400F65E14 /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = Resources/sv.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
-		E2BADCA1134DDF8600F65E14 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = Resources/de.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
-		E2BADCA2134DDF8800F65E14 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = Resources/fr.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
-		E2BADCA3134DDF8900F65E14 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = Resources/es.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
-		E2BADCA4134DDF8B00F65E14 /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = Resources/ko.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
-		E2BADCBD134DE28300F65E14 /* de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
-		E2BADCBE134DE28300F65E14 /* es */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
-		E2BADCBF134DE28300F65E14 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = Resources/fr.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
-		E2BADCC0134DE28300F65E14 /* ko */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = ko; path = Resources/ko.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
-		E2BADCC1134DE28300F65E14 /* sv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = sv; path = Resources/sv.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
-		E2BADCC2134DE28300F65E14 /* ru */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = ru; path = Resources/ru.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
-		E2BADCC4134DE28300F65E14 /* de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
-		E2BADCC5134DE28300F65E14 /* es */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
-		E2BADCC6134DE28300F65E14 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = Resources/fr.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
-		E2BADCC7134DE28300F65E14 /* ko */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = ko; path = Resources/ko.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
-		E2BADCC8134DE28300F65E14 /* sv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = sv; path = Resources/sv.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
-		E2BADCC9134DE28300F65E14 /* ru */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = ru; path = Resources/ru.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
+		E2BADC99134DDF6900F65E14 /* NewEventWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewEventWindow.xib; path = Resources/de.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
+		E2BADC9A134DDF6D00F65E14 /* NewEventWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewEventWindow.xib; path = Resources/es.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
+		E2BADC9B134DDF6F00F65E14 /* NewEventWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewEventWindow.xib; path = Resources/fr.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
+		E2BADC9C134DDF7300F65E14 /* NewEventWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewEventWindow.xib; path = Resources/ko.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
+		E2BADC9D134DDF7500F65E14 /* NewEventWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewEventWindow.xib; path = Resources/sv.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
+		E2BADC9E134DDF7800F65E14 /* NewEventWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewEventWindow.xib; path = Resources/ru.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
+		E2BADC9F134DDF8200F65E14 /* NewTaskWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewTaskWindow.xib; path = Resources/ru.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
+		E2BADCA0134DDF8400F65E14 /* NewTaskWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewTaskWindow.xib; path = Resources/sv.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
+		E2BADCA1134DDF8600F65E14 /* NewTaskWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewTaskWindow.xib; path = Resources/de.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
+		E2BADCA2134DDF8800F65E14 /* NewTaskWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewTaskWindow.xib; path = Resources/fr.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
+		E2BADCA3134DDF8900F65E14 /* NewTaskWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewTaskWindow.xib; path = Resources/es.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
+		E2BADCA4134DDF8B00F65E14 /* NewTaskWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewTaskWindow.xib; path = Resources/ko.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
+		E2BADCBD134DE28300F65E14 /* NewTaskWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewTaskWindow.strings; path = Resources/de.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
+		E2BADCBE134DE28300F65E14 /* NewTaskWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewTaskWindow.strings; path = Resources/es.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
+		E2BADCBF134DE28300F65E14 /* NewTaskWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewTaskWindow.strings; path = Resources/fr.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
+		E2BADCC0134DE28300F65E14 /* NewTaskWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewTaskWindow.strings; path = Resources/ko.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
+		E2BADCC1134DE28300F65E14 /* NewTaskWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewTaskWindow.strings; path = Resources/sv.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
+		E2BADCC2134DE28300F65E14 /* NewTaskWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewTaskWindow.strings; path = Resources/ru.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
+		E2BADCC4134DE28300F65E14 /* NewEventWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewEventWindow.strings; path = Resources/de.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
+		E2BADCC5134DE28300F65E14 /* NewEventWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewEventWindow.strings; path = Resources/es.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
+		E2BADCC6134DE28300F65E14 /* NewEventWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewEventWindow.strings; path = Resources/fr.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
+		E2BADCC7134DE28300F65E14 /* NewEventWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewEventWindow.strings; path = Resources/ko.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
+		E2BADCC8134DE28300F65E14 /* NewEventWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewEventWindow.strings; path = Resources/sv.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
+		E2BADCC9134DE28300F65E14 /* NewEventWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewEventWindow.strings; path = Resources/ru.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
 		E2C774C213D1C02A0067102F /* WLCalendarDayEventsLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarDayEventsLayer.h; sourceTree = "<group>"; };
 		E2C774C313D1C02A0067102F /* WLCalendarDayEventsLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarDayEventsLayer.m; sourceTree = "<group>"; };
 		E2C776E413D20A970067102F /* WLCalendarTimeRuler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTimeRuler.h; sourceTree = "<group>"; };
@@ -435,6 +438,8 @@
 				E2F1133C13E70B4F001C2B7B /* WLCalendarWindowController.m */,
 				E2A7085C13F0427800A4BF3A /* WLCalendarDateViewController.h */,
 				E2A7085D13F0427800A4BF3A /* WLCalendarDateViewController.m */,
+				E214525113FF9550009FEEB8 /* WLCalendarController.h */,
+				E214525213FF9550009FEEB8 /* WLCalendarController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -544,8 +549,8 @@
 				E214582B13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m */,
 				E221B3A113EC5C2F00F9B392 /* CoreAnimation+WLCalendar.h */,
 				E221B3A213EC5C2F00F9B392 /* CoreAnimation+WLCalendar.m */,
-				E214525113FF9550009FEEB8 /* WLCalendarController.h */,
-				E214525213FF9550009FEEB8 /* WLCalendarController.m */,
+				E22C78A913FFCD9F00EE44C0 /* NSColor+WLCalendar.h */,
+				E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */,
 			);
 			name = WLCalendar;
 			sourceTree = "<group>";
@@ -653,10 +658,11 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0410;
 				ORGANIZATIONNAME = WireLoad;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Blotter" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -824,6 +830,7 @@
 				E2A701ED13EFE4C500A4BF3A /* WLCalendarDateView.m in Sources */,
 				E2A7085E13F0427800A4BF3A /* WLCalendarDateViewController.m in Sources */,
 				E214525313FF9550009FEEB8 /* WLCalendarController.m in Sources */,
+				E22C78AB13FFCD9F00EE44C0 /* NSColor+WLCalendar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -851,12 +858,12 @@
 		E29DDC8512E9C7BF00751CFA /* MainMenu.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E29DDC8E12E9C7E000751CFA /* ru */,
-				E29DDC8F12E9C7E200751CFA /* de */,
-				E29DDC9012E9C7E300751CFA /* fr */,
-				E29DDC9112E9C7E600751CFA /* es */,
-				28E96D7412EA3145000AF199 /* sv */,
-				28A09A591308E4A7005EA923 /* ko */,
+				E29DDC8E12E9C7E000751CFA /* MainMenu.strings */,
+				E29DDC8F12E9C7E200751CFA /* MainMenu.strings */,
+				E29DDC9012E9C7E300751CFA /* MainMenu.strings */,
+				E29DDC9112E9C7E600751CFA /* MainMenu.strings */,
+				28E96D7412EA3145000AF199 /* MainMenu.strings */,
+				28A09A591308E4A7005EA923 /* MainMenu.strings */,
 			);
 			name = MainMenu.strings;
 			sourceTree = "<group>";
@@ -864,13 +871,13 @@
 		E29DDC8612E9C7BF00751CFA /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				1DDD58150DA1D0A300B32029 /* English */,
-				28A09A9C1308F188005EA923 /* de */,
-				28A09A9E1308F18E005EA923 /* es */,
-				28A09A9D1308F18B005EA923 /* fr */,
-				28A09A9F1308F192005EA923 /* ko */,
-				E29DDC8812E9C7C900751CFA /* ru */,
-				28E96D7312EA3145000AF199 /* sv */,
+				1DDD58150DA1D0A300B32029 /* MainMenu.xib */,
+				28A09A9C1308F188005EA923 /* MainMenu.xib */,
+				28A09A9E1308F18E005EA923 /* MainMenu.xib */,
+				28A09A9D1308F18B005EA923 /* MainMenu.xib */,
+				28A09A9F1308F192005EA923 /* MainMenu.xib */,
+				E29DDC8812E9C7C900751CFA /* MainMenu.xib */,
+				28E96D7312EA3145000AF199 /* MainMenu.xib */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -878,13 +885,13 @@
 		E29DDCB012E9D54C00751CFA /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E267AADF12EDF7AE00EDB7B6 /* English */,
-				E29DDCB712E9D57F00751CFA /* de */,
-				E29DDCB612E9D57500751CFA /* es */,
-				E29DDCB512E9D56B00751CFA /* fr */,
-				28A09A5A1308E4A7005EA923 /* ko */,
-				E29DDCB312E9D55500751CFA /* ru */,
-				28E96D7512EA3145000AF199 /* sv */,
+				E267AADF12EDF7AE00EDB7B6 /* Localizable.strings */,
+				E29DDCB712E9D57F00751CFA /* Localizable.strings */,
+				E29DDCB612E9D57500751CFA /* Localizable.strings */,
+				E29DDCB512E9D56B00751CFA /* Localizable.strings */,
+				28A09A5A1308E4A7005EA923 /* Localizable.strings */,
+				E29DDCB312E9D55500751CFA /* Localizable.strings */,
+				28E96D7512EA3145000AF199 /* Localizable.strings */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -892,13 +899,13 @@
 		E2BADC95134DDE6100F65E14 /* NewEventWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E2596D601316B20400A8B15E /* English */,
-				E2BADC99134DDF6900F65E14 /* de */,
-				E2BADC9A134DDF6D00F65E14 /* es */,
-				E2BADC9B134DDF6F00F65E14 /* fr */,
-				E2BADC9C134DDF7300F65E14 /* ko */,
-				E2BADC9E134DDF7800F65E14 /* ru */,
-				E2BADC9D134DDF7500F65E14 /* sv */,
+				E2596D601316B20400A8B15E /* NewEventWindow.xib */,
+				E2BADC99134DDF6900F65E14 /* NewEventWindow.xib */,
+				E2BADC9A134DDF6D00F65E14 /* NewEventWindow.xib */,
+				E2BADC9B134DDF6F00F65E14 /* NewEventWindow.xib */,
+				E2BADC9C134DDF7300F65E14 /* NewEventWindow.xib */,
+				E2BADC9E134DDF7800F65E14 /* NewEventWindow.xib */,
+				E2BADC9D134DDF7500F65E14 /* NewEventWindow.xib */,
 			);
 			name = NewEventWindow.xib;
 			sourceTree = "<group>";
@@ -906,13 +913,13 @@
 		E2BADC97134DDE6100F65E14 /* NewTaskWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E29F38EA131968B200A865D9 /* English */,
-				E2BADCA1134DDF8600F65E14 /* de */,
-				E2BADCA3134DDF8900F65E14 /* es */,
-				E2BADCA2134DDF8800F65E14 /* fr */,
-				E2BADCA4134DDF8B00F65E14 /* ko */,
-				E2BADC9F134DDF8200F65E14 /* ru */,
-				E2BADCA0134DDF8400F65E14 /* sv */,
+				E29F38EA131968B200A865D9 /* NewTaskWindow.xib */,
+				E2BADCA1134DDF8600F65E14 /* NewTaskWindow.xib */,
+				E2BADCA3134DDF8900F65E14 /* NewTaskWindow.xib */,
+				E2BADCA2134DDF8800F65E14 /* NewTaskWindow.xib */,
+				E2BADCA4134DDF8B00F65E14 /* NewTaskWindow.xib */,
+				E2BADC9F134DDF8200F65E14 /* NewTaskWindow.xib */,
+				E2BADCA0134DDF8400F65E14 /* NewTaskWindow.xib */,
 			);
 			name = NewTaskWindow.xib;
 			sourceTree = "<group>";
@@ -920,12 +927,12 @@
 		E2BADCBC134DE28300F65E14 /* NewTaskWindow.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E2BADCBD134DE28300F65E14 /* de */,
-				E2BADCBE134DE28300F65E14 /* es */,
-				E2BADCBF134DE28300F65E14 /* fr */,
-				E2BADCC0134DE28300F65E14 /* ko */,
-				E2BADCC2134DE28300F65E14 /* ru */,
-				E2BADCC1134DE28300F65E14 /* sv */,
+				E2BADCBD134DE28300F65E14 /* NewTaskWindow.strings */,
+				E2BADCBE134DE28300F65E14 /* NewTaskWindow.strings */,
+				E2BADCBF134DE28300F65E14 /* NewTaskWindow.strings */,
+				E2BADCC0134DE28300F65E14 /* NewTaskWindow.strings */,
+				E2BADCC2134DE28300F65E14 /* NewTaskWindow.strings */,
+				E2BADCC1134DE28300F65E14 /* NewTaskWindow.strings */,
 			);
 			name = NewTaskWindow.strings;
 			sourceTree = "<group>";
@@ -933,12 +940,12 @@
 		E2BADCC3134DE28300F65E14 /* NewEventWindow.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E2BADCC4134DE28300F65E14 /* de */,
-				E2BADCC5134DE28300F65E14 /* es */,
-				E2BADCC6134DE28300F65E14 /* fr */,
-				E2BADCC7134DE28300F65E14 /* ko */,
-				E2BADCC9134DE28300F65E14 /* ru */,
-				E2BADCC8134DE28300F65E14 /* sv */,
+				E2BADCC4134DE28300F65E14 /* NewEventWindow.strings */,
+				E2BADCC5134DE28300F65E14 /* NewEventWindow.strings */,
+				E2BADCC6134DE28300F65E14 /* NewEventWindow.strings */,
+				E2BADCC7134DE28300F65E14 /* NewEventWindow.strings */,
+				E2BADCC9134DE28300F65E14 /* NewEventWindow.strings */,
+				E2BADCC8134DE28300F65E14 /* NewEventWindow.strings */,
 			);
 			name = NewEventWindow.strings;
 			sourceTree = "<group>";
@@ -951,7 +958,6 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
@@ -1005,7 +1011,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
-				PREBINDING = NO;
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64";
 			};
@@ -1045,7 +1050,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
-				PREBINDING = NO;
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64";
 			};
