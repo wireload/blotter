@@ -35,7 +35,7 @@
     NSLog(@"%s", __PRETTY_FUNCTION__);
 #endif
     CGContextSaveGState(aContext);
-    static const CGFloat lengths[] = {10.0f, 10.0f};
+    static const CGFloat lengths[] = {1.0f, 2.0f};
     CGContextSetLineDash(aContext, 0, lengths, sizeof(lengths) / sizeof(CGFloat));
     CGContextSetLineWidth(aContext, self.bounds.size.height);
     CGContextMoveToPoint(aContext, CGRectGetMinX(self.bounds), CGRectGetMidY(self.bounds));
