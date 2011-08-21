@@ -31,6 +31,9 @@
 
 - (NSUInteger)maximumNumberOfColumns;
 
+/*!
+ @result nil if there are no events.
+ */
 - (WLDateRange *)eventsDateRange;
 
 
