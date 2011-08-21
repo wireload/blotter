@@ -111,7 +111,7 @@
     if ([_sortedTimeLayers count] == 0)
         return CGSizeZero;
 
-    CGFloat h = timeRuler.heightOfHour * [_sortedTimeLayers count] + [self firstHourYPadding];
+    CGFloat h = floorf(timeRuler.heightOfHour * [_sortedTimeLayers count] + [self firstHourYPadding]);
     return CGSizeMake([self preferredFrameWidth], h);
 }
 
