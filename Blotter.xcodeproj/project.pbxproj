@@ -50,8 +50,6 @@
 		E27021A3133BA7610098CD79 /* glass-hud-textview-top-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E270219A133BA7610098CD79 /* glass-hud-textview-top-right.png */; };
 		E27021A4133BA7610098CD79 /* glass-hud-textview-top.png in Resources */ = {isa = PBXBuildFile; fileRef = E270219B133BA7610098CD79 /* glass-hud-textview-top.png */; };
 		E27196BB13C5A1C3008E5C43 /* WLCalendarTasksView.m in Sources */ = {isa = PBXBuildFile; fileRef = E27196BA13C5A1C3008E5C43 /* WLCalendarTasksView.m */; };
-		E27196D713C5A7AC008E5C43 /* TestWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E27196D413C5A7AC008E5C43 /* TestWindow.xib */; };
-		E27196D813C5A7AC008E5C43 /* TestWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E27196D613C5A7AC008E5C43 /* TestWindowController.m */; };
 		E271E506133762A300BF7F2B /* glass-hud-button-pressed-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E271E503133762A300BF7F2B /* glass-hud-button-pressed-right.png */; };
 		E271E507133762A300BF7F2B /* glass-hud-button-pressed-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = E271E504133762A300BF7F2B /* glass-hud-button-pressed-middle.png */; };
 		E271E508133762A300BF7F2B /* glass-hud-button-pressed-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E271E505133762A300BF7F2B /* glass-hud-button-pressed-left.png */; };
@@ -192,7 +190,7 @@
 		2844DB2C129DA1BD006C5545 /* BLCalendarFramer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLCalendarFramer.m; sourceTree = "<group>"; };
 		285B840813C0C6150042C813 /* Blotter-B9.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Blotter-B9.icns"; sourceTree = "<group>"; };
 		28A09A591308E4A7005EA923 /* MainMenu.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = MainMenu.strings; path = Resources/ko.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		28A09A5A1308E4A7005EA923 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		28A09A5A1308E4A7005EA923 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		28A09A9C1308F188005EA923 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/de.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		28A09A9D1308F18B005EA923 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/fr.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		28A09A9E1308F18E005EA923 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/es.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -203,7 +201,7 @@
 		28DB06DD13590F5500E34FC5 /* YAJL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YAJL.framework; path = ../blotter/Frameworks/YAJL.framework; sourceTree = "<group>"; };
 		28E96D7312EA3145000AF199 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/sv.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		28E96D7412EA3145000AF199 /* MainMenu.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = MainMenu.strings; path = Resources/sv.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		28E96D7512EA3145000AF199 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		28E96D7512EA3145000AF199 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		28F6966B1298B99800D4BB97 /* calendar */ = {isa = PBXFileReference; lastKnownFileType = folder; name = calendar; path = Resources/calendar; sourceTree = "<group>"; };
 		28F69759129969E500D4BB97 /* NSDate-Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate-Utilities.h"; sourceTree = "<group>"; };
 		28F6975A129969E500D4BB97 /* NSDate-Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate-Utilities.m"; sourceTree = "<group>"; };
@@ -240,7 +238,7 @@
 		E2670359132CA21F003FBFC2 /* glass-hud-button-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-left.png"; sourceTree = "<group>"; };
 		E267038F132CA887003FBFC2 /* WLGlassHudButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudButtonCell.h; sourceTree = "<group>"; };
 		E2670390132CA887003FBFC2 /* WLGlassHudButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudButtonCell.m; sourceTree = "<group>"; };
-		E267AADF12EDF7AE00EDB7B6 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E267AADF12EDF7AE00EDB7B6 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E2701FA7133B563B0098CD79 /* WLGlassHudTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudTextView.h; sourceTree = "<group>"; };
 		E2701FA8133B563B0098CD79 /* WLGlassHudTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudTextView.m; sourceTree = "<group>"; };
 		E2702193133BA7610098CD79 /* glass-hud-textview-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-textview-bottom-left.png"; sourceTree = "<group>"; };
@@ -254,9 +252,6 @@
 		E270219B133BA7610098CD79 /* glass-hud-textview-top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-textview-top.png"; sourceTree = "<group>"; };
 		E27196B913C5A1C3008E5C43 /* WLCalendarTasksView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTasksView.h; sourceTree = "<group>"; };
 		E27196BA13C5A1C3008E5C43 /* WLCalendarTasksView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarTasksView.m; sourceTree = "<group>"; };
-		E27196D413C5A7AC008E5C43 /* TestWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TestWindow.xib; sourceTree = "<group>"; };
-		E27196D513C5A7AC008E5C43 /* TestWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestWindowController.h; sourceTree = "<group>"; };
-		E27196D613C5A7AC008E5C43 /* TestWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestWindowController.m; sourceTree = "<group>"; };
 		E271E503133762A300BF7F2B /* glass-hud-button-pressed-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-pressed-right.png"; sourceTree = "<group>"; };
 		E271E504133762A300BF7F2B /* glass-hud-button-pressed-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-pressed-middle.png"; sourceTree = "<group>"; };
 		E271E505133762A300BF7F2B /* glass-hud-button-pressed-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-pressed-left.png"; sourceTree = "<group>"; };
@@ -300,10 +295,10 @@
 		E29DDC8F12E9C7E200751CFA /* MainMenu.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = MainMenu.strings; path = Resources/de.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		E29DDC9012E9C7E300751CFA /* MainMenu.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = MainMenu.strings; path = Resources/fr.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		E29DDC9112E9C7E600751CFA /* MainMenu.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = MainMenu.strings; path = Resources/es.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		E29DDCB312E9D55500751CFA /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E29DDCB512E9D56B00751CFA /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E29DDCB612E9D57500751CFA /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/es.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E29DDCB712E9D57F00751CFA /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E29DDCB312E9D55500751CFA /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E29DDCB512E9D56B00751CFA /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E29DDCB612E9D57500751CFA /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E29DDCB712E9D57F00751CFA /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E29F38EA131968B200A865D9 /* NewTaskWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewTaskWindow.xib; path = Resources/English.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
 		E29F38EC1319694C00A865D9 /* WLNewTaskWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNewTaskWindowController.h; sourceTree = "<group>"; };
 		E29F38ED1319694C00A865D9 /* WLNewTaskWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNewTaskWindowController.m; sourceTree = "<group>"; };
@@ -424,9 +419,6 @@
 				E2BA585713C61E3C005F0045 /* CATextLayer+WLStringSize.m */,
 				E2BA565C13C5E4C4005F0045 /* NSColor+CGColor.h */,
 				E2BA565D13C5E4C4005F0045 /* NSColor+CGColor.m */,
-				E27196D413C5A7AC008E5C43 /* TestWindow.xib */,
-				E27196D513C5A7AC008E5C43 /* TestWindowController.h */,
-				E27196D613C5A7AC008E5C43 /* TestWindowController.m */,
 				E278ECF213C8B73D00B327EB /* WLCalendarTasksViewController.h */,
 				E278ECF313C8B73D00B327EB /* WLCalendarTasksViewController.m */,
 				E27433BC13CB3E1B00F531B6 /* WLCalendarWeekViewController.h */,
@@ -779,7 +771,6 @@
 				E27021A3133BA7610098CD79 /* glass-hud-textview-top-right.png in Resources */,
 				E27021A4133BA7610098CD79 /* glass-hud-textview-top.png in Resources */,
 				285B840913C0C6150042C813 /* Blotter-B9.icns in Resources */,
-				E27196D713C5A7AC008E5C43 /* TestWindow.xib in Resources */,
 				E28C418D13F081A1005789DD /* defaults.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -812,7 +803,6 @@
 				E27313C51349F41200A84433 /* PTHotKey+ShortcutRecorder.m in Sources */,
 				E21DB6CD13560D19004084F7 /* NSDate+ISO8601.m in Sources */,
 				E27196BB13C5A1C3008E5C43 /* WLCalendarTasksView.m in Sources */,
-				E27196D813C5A7AC008E5C43 /* TestWindowController.m in Sources */,
 				E2BA565E13C5E4C4005F0045 /* NSColor+CGColor.m in Sources */,
 				E2BA585813C61E3C005F0045 /* CATextLayer+WLStringSize.m in Sources */,
 				E278ECF413C8B73D00B327EB /* WLCalendarTasksViewController.m in Sources */,
@@ -1046,7 +1036,7 @@
 				GCC_WARN_PEDANTIC = NO;
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
-				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				GCC_WARN_STRICT_SELECTOR_MATCH = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers\"",

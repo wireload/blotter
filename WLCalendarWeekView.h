@@ -215,8 +215,6 @@ enum
 
 @protocol WLCalendarWeekViewDataSource
 
-- (NSString *)stringForHour:(NSUInteger)aHour;
-
 - (NSUInteger)numberOfColumnsInWeekView:(WLCalendarWeekView *)aWeekView;
 
 - (NSString *)weekView:(WLCalendarWeekView *)aWeekView titleForColumnAtIndex:(NSUInteger)anIndex;

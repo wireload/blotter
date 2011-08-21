@@ -26,8 +26,6 @@
 - (void)setupLayersAnimated:(BOOL)isAnimated;
 
 
-- (CALayer *)_setupRootLayer;
-
 - (CATextLayer *)_setupMonthDayLayer;
 
 - (CATextLayer *)_setupMonthAndYearLayer;
