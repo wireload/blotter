@@ -11,6 +11,7 @@
 #import "WLDateRange.h"
 #import "NSColor+WLCalendar.h"
 #import "NSColor+CGColor.h"
+#import "NSCalendar+WLWeekend.h"
 
 
 static NSString* const _WLDateFormatterCacheKey = @"dateFormatter";
@@ -273,59 +274,59 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     [titleFormatter setCalendar:calendar];
     [titleFormatter setDateFormat:self._columnTitleFormat];
     [anIndexSet enumerateIndexesUsingBlock:^(NSUInteger columnIdx, BOOL *stop)
-     {
-         [columnDateComponents setDay:columnIdx];
-         NSDate *columnDate = [calendar dateByAddingComponents:columnDateComponents toDate:firstDate options:0];
-         NSMutableDictionary *columnData = [NSMutableDictionary dictionary];
+    {
+        [columnDateComponents setDay:columnIdx];
+        NSDate *columnDate = [calendar dateByAddingComponents:columnDateComponents toDate:firstDate options:0];
+        NSMutableDictionary *columnData = [NSMutableDictionary dictionary];
+        NSDate *upperBound = [columnDate WL_upperBoundaryWithCalendar:calendar];
+        NSDate *lowerBound = [upperBound WL_lowerBoundaryWithCalendar:calendar];
+        WLDateRange *columnDateRange = [WLDateRange dateRangeWithStartDate:upperBound endDate:lowerBound];
+        [_columnDateRanges setObject:columnDateRange forKey:[NSNumber numberWithUnsignedInteger:columnIdx]];
 
-         if (dataUnits & WLCalendarWeekViewEventsDataUnit)
-         {
-             NSDate *upperBound = [columnDate WL_upperBoundaryWithCalendar:calendar];
-             NSDate *lowerBound = [upperBound WL_lowerBoundaryWithCalendar:calendar];
-             WLDateRange *columnDateRange = [WLDateRange dateRangeWithStartDate:upperBound endDate:lowerBound];
-             [_columnDateRanges setObject:columnDateRange forKey:[NSNumber numberWithUnsignedInteger:columnIdx]];
-             NSMutableArray *columnEvents = [NSMutableArray array];
-             for (CalEvent *event in events)
-             {
-                 WLDateRange *eventRange = [WLDateRange dateRangeWithStartDate:event.startDate endDate:event.endDate];
-                 WLPositionRelativeToRange position;
-                 BOOL intresects = [columnDateRange intersectsRange:eventRange position:&position];
-                 if (intresects)
-                 {
-                     if (position == WLWithinRange)
-                         [columnEvents addObject:event];
-                     // If an event takes more than 1 day, divide it into multiple events for each column.
-                     else if (position == WLEarlierThanRange && [eventRange.endDate compare:columnDateRange.startDate] != NSOrderedSame)
-                     {
-                         CalEvent *partEvent = [event copy];
-                         partEvent.startDate = upperBound;
-                         [columnEvents addObject:partEvent];
-                         [partEvent release];
-                     }
-                     else if (position == WLOverlapsRange)
-                     {
-                         CalEvent *partEvent = [event copy];
-                         partEvent.startDate = upperBound;
-                         partEvent.endDate = lowerBound;
-                         [columnEvents addObject:partEvent];
-                         [partEvent release];
-                     }
-                     else if (position == WLLaterThanRange && [columnDateRange.endDate compare:eventRange.startDate] != NSOrderedSame)
-                     {
-                         CalEvent *partEvent = [event copy];
-                         partEvent.endDate = lowerBound;
-                         [columnEvents addObject:partEvent];
-                         [partEvent release];
-                     }
-                 }
-             }
-             [columnData setObject:columnEvents forKey:_WLEventsKey];
-         }
+        if (dataUnits & WLCalendarWeekViewEventsDataUnit)
+        {
+            NSMutableArray *columnEvents = [NSMutableArray array];
+            for (CalEvent *event in events)
+            {
+                WLDateRange *eventRange = [WLDateRange dateRangeWithStartDate:event.startDate endDate:event.endDate];
+                WLPositionRelativeToRange position;
+                BOOL intresects = [columnDateRange intersectsRange:eventRange position:&position];
+                if (intresects)
+                {
+                    if (position == WLWithinRange)
+                        [columnEvents addObject:event];
+                            // If an event takes more than 1 day, divide it into multiple events for each column.
+                    else if (position == WLEarlierThanRange && [eventRange.endDate compare:columnDateRange.startDate] != NSOrderedSame)
+                    {
+                        CalEvent *partEvent = [event copy];
+                        partEvent.startDate = upperBound;
+                        [columnEvents addObject:partEvent];
+                        [partEvent release];
+                    }
+                    else if (position == WLOverlapsRange)
+                    {
+                        CalEvent *partEvent = [event copy];
+                        partEvent.startDate = upperBound;
+                        partEvent.endDate = lowerBound;
+                        [columnEvents addObject:partEvent];
+                        [partEvent release];
+                    }
+                    else if (position == WLLaterThanRange && [columnDateRange.endDate compare:eventRange.startDate] != NSOrderedSame)
+                    {
+                        CalEvent *partEvent = [event copy];
+                        partEvent.endDate = lowerBound;
+                        [columnEvents addObject:partEvent];
+                        [partEvent release];
+                    }
+                }
+            }
+            [columnData setObject:columnEvents forKey:_WLEventsKey];
+        }
 
-         if (dataUnits & WLCalendarWeekViewTitleDataUnit)
-             [columnData setObject:[titleFormatter stringFromDate:columnDate] forKey:_WLTitleKey];
-         [_columnsData setObject:columnData forKey:[NSNumber numberWithUnsignedInteger:columnIdx]];
-     }];
+        if (dataUnits & WLCalendarWeekViewTitleDataUnit)
+            [columnData setObject:[titleFormatter stringFromDate:columnDate] forKey:_WLTitleKey];
+        [_columnsData setObject:columnData forKey:[NSNumber numberWithUnsignedInteger:columnIdx]];
+    }];
     [columnDateComponents release];
 }
 
@@ -352,21 +353,13 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 - (CGColorRef)weekView:(WLCalendarWeekView *)aWeekView colorForColumnAtIndex:(NSUInteger)anIndex
 {
     BOOL isWeekend = NO;
-    NSCalendar *calendar = [[self representedObject] calendar];
     if (highlightWeekends)
     {
-        // heuristics: typically last 2 days of week are weekend.
-        if (mode == WLCalendarWeekViewWeekMode)
-        {
-            NSRange weekdaysRange = [calendar rangeOfUnit:NSWeekdayCalendarUnit inUnit:NSWeekCalendarUnit forDate:[[self representedObject] date]];
-            isWeekend = (anIndex == NSMaxRange(weekdaysRange) - 2 || anIndex == NSMaxRange(weekdaysRange) - 3);
-        }
-        else
-        {
-            NSDateComponents *c = [calendar components:NSWeekdayCalendarUnit fromDate:[self firstColumnDate]];
-            NSInteger columnWeekday = ([c weekday] + anIndex - [calendar firstWeekday]) %  _WLNumberOfDaysInWeek;
-            isWeekend = (columnWeekday == _WLNumberOfDaysInWeek - 1 || columnWeekday == _WLNumberOfDaysInWeek - 2);
-        }
+        NSCalendar *calendar = [[self representedObject] calendar];
+        NSDate *columnDate = [(WLDateRange *)[_columnDateRanges objectForKey:[NSNumber numberWithUnsignedInteger:anIndex]] startDate];
+        NSParameterAssert(columnDate != nil);
+        NSDateComponents *c = [calendar components:NSWeekdayCalendarUnit fromDate:columnDate];
+        isWeekend = [calendar isWeekend:(NSUInteger)[c weekday]];
     }
 
     if (isWeekend)

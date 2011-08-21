@@ -81,6 +81,7 @@
 		E27DE46E13D0B3EC003E8E9A /* WLCalendarLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E27DE46D13D0B3EC003E8E9A /* WLCalendarLayer.m */; };
 		E28C418D13F081A1005789DD /* defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = E28C418C13F081A1005789DD /* defaults.plist */; };
 		E292D7E013E9DCEA00433262 /* WLCalendarWindowBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = E292D7DF13E9DCEA00433262 /* WLCalendarWindowBackgroundView.m */; };
+		E2948D941401484B007122BC /* NSCalendar+WLWeekend.m in Sources */ = {isa = PBXBuildFile; fileRef = E2948D931401484B007122BC /* NSCalendar+WLWeekend.m */; };
 		E29DDC8712E9C7BF00751CFA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29DDC8612E9C7BF00751CFA /* MainMenu.xib */; };
 		E29DDCB212E9D54C00751CFA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E29DDCB012E9D54C00751CFA /* Localizable.strings */; };
 		E29F38EE1319694C00A865D9 /* WLNewTaskWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E29F38ED1319694C00A865D9 /* WLNewTaskWindowController.m */; };
@@ -292,6 +293,8 @@
 		E28C418C13F081A1005789DD /* defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = defaults.plist; sourceTree = "<group>"; };
 		E292D7DE13E9DCEA00433262 /* WLCalendarWindowBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowBackgroundView.h; sourceTree = "<group>"; };
 		E292D7DF13E9DCEA00433262 /* WLCalendarWindowBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindowBackgroundView.m; sourceTree = "<group>"; };
+		E2948D921401484B007122BC /* NSCalendar+WLWeekend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCalendar+WLWeekend.h"; sourceTree = "<group>"; };
+		E2948D931401484B007122BC /* NSCalendar+WLWeekend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+WLWeekend.m"; sourceTree = "<group>"; };
 		E29DDC8812E9C7C900751CFA /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/ru.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		E29DDC8E12E9C7E000751CFA /* MainMenu.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = MainMenu.strings; path = Resources/ru.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		E29DDC8F12E9C7E200751CFA /* MainMenu.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = MainMenu.strings; path = Resources/de.lproj/MainMenu.strings; sourceTree = "<group>"; };
@@ -440,6 +443,8 @@
 				E2A7085D13F0427800A4BF3A /* WLCalendarDateViewController.m */,
 				E214525113FF9550009FEEB8 /* WLCalendarController.h */,
 				E214525213FF9550009FEEB8 /* WLCalendarController.m */,
+				E2948D921401484B007122BC /* NSCalendar+WLWeekend.h */,
+				E2948D931401484B007122BC /* NSCalendar+WLWeekend.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -831,6 +836,7 @@
 				E2A7085E13F0427800A4BF3A /* WLCalendarDateViewController.m in Sources */,
 				E214525313FF9550009FEEB8 /* WLCalendarController.m in Sources */,
 				E22C78AB13FFCD9F00EE44C0 /* NSColor+WLCalendar.m in Sources */,
+				E2948D941401484B007122BC /* NSCalendar+WLWeekend.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
