@@ -35,6 +35,11 @@
                   name:NSSystemTimeZoneDidChangeNotification
                 object:nil];
 
+        [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self
+                                                               selector:@selector(_clockDidChange:)
+                                                                   name:NSWorkspaceDidWakeNotification
+                                                                 object:nil];
+
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         [userDefaults addObserver:self
                        forKeyPath:@"Calendars"
@@ -44,21 +49,24 @@
                        forKeyPath:@"DisplayAllCalendars"
                           options:NSKeyValueObservingOptionNew
                           context:NULL];
+        [self _scheduleMinuteTimer];
+        [self _scheduleNextDayTimer];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults removeObserver:self forKeyPath:@"Calendars"];
-    [userDefaults removeObserver:self forKeyPath:@"DisplayAllCalendars"];
     [calendar release];
     [date release];
     [calCalendars release];
     [_minuteTimer invalidate];
     [_nextDayTimer invalidate];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults removeObserver:self forKeyPath:@"Calendars"];
+    [userDefaults removeObserver:self forKeyPath:@"DisplayAllCalendars"];
     [super dealloc];
 }
 
@@ -126,8 +134,17 @@
 
 - (void)_nextDay
 {
-    [self _updateDate];
-    [self _scheduleNextDayTimer];
+    NSDate *now = [NSDate date];
+    NSDateComponents *nowComponents = [self.calendar components:NSWeekCalendarUnit | NSDayCalendarUnit fromDate:now];
+    NSDateComponents *representedComponents = [calendar components:NSWeekCalendarUnit | NSDayCalendarUnit fromDate:self.date];
+    // Though accuracy of NSTimer is documented as 50-100ms, we must ensure day is actually changed.
+    if ([nowComponents day] != [representedComponents day] || [nowComponents week] != [representedComponents week])
+    {
+        [self _updateDate];
+        [self _scheduleNextDayTimer];
+    }
+    else
+        [self performSelector:@selector(_showNextDay) withObject:nil afterDelay:0.1];
 }
 
 - (void)_clockDidChange:(NSNotification *)aNotification
@@ -135,16 +152,23 @@
     // http://groups.google.com/group/cocoa-unbound/browse_thread/thread/46fe3433cfef6a97#
     if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
     {
-        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_updateDate) object:nil];
-        [self performSelector:@selector(_updateDate) withObject:nil afterDelay:0.5];
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_updateClock) object:nil];
+        [self performSelector:@selector(_updateClock) withObject:nil afterDelay:0.5];
     }
     else
-        [self _updateDate];
+        [self _updateClock];
 }
 
 - (void)_timeZoneDidChange:(NSNotification *)aNotification
 {
     [self _updateCalendar];
+    [self _scheduleNextDayTimer];
+}
+
+- (void)_updateClock
+{
+    [self _updateDate];
+    [self _scheduleNextDayTimer];
 }
 
 - (NSArray *)_calendarsToDisplay

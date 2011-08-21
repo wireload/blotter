@@ -42,6 +42,8 @@
 
 - (void)_timeZoneDidChange:(NSNotification *)aNotification;
 
+- (void)_updateClock;
+
 - (NSArray *)_calendarsToDisplay;
 
 @end

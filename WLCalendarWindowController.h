@@ -10,6 +10,7 @@
 #import "WLCalendarWindow.h"
 #import "BLCalendarFramer.h"
 #import "BLFadeController.h"
+#import "WLCalendarController.h"
 
 
 @class WLCalendarWeekViewController;
@@ -40,8 +41,8 @@
     WLCalendarWeekViewController *_weekViewController;
     WLCalendarTasksViewController *_tasksViewController;
     WLCalendarDateViewController *_dateViewController;
+    WLCalendarController *_calendarController;
 
-    NSTimer *_nextDayTimer;
     NSCache *_cache;
     BOOL _isWindowShowed;
 }
@@ -92,36 +93,5 @@
 - (void)_applyNormalSizeToViews;
 
 - (void)_applyFullSizeToViews;
-
-/*!
- @abstract      Sets a timer to call _updateCalendar.
- @discussion    Called when NSCurrentLocaleDidChangeNotification is posted.
- @see           _updateCalendars
- */
-- (void)_localeChanged:(NSNotification *)aNotification;
-
-- (void)_updateCalendar;
-
-/*!
- @abstract      Updates dates of subcontrollers.
- @discussion    Called when either NSSystemClockDidChangeNotification or NSSystemTimeZoneDidChangeNotification is posted.
- */
-- (void)_clockChanged:(NSNotification *)aNotification;
-
-- (void)_updateClock;
-
-/*!
- @abstract      Schedules a timer to update view when day ends.
- @discussion    Invalidated and rescheduled every time when the view is reloaded.
- @see           _showNextDay
- */
-- (void)_scheduleNextDayTimer;
-
-/*!
- @abstract      Updates view to display new day.
- @discussion    Called by a timer scheduled by _scheduleNextDayTimer.
- @see           _scheduleNextDayTimer
- */
-- (void)_showNextDay;
 
 @end

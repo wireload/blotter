@@ -11,6 +11,7 @@
 #import "WLCalendarTasksViewController.h"
 #import "WLCalendarDateViewController.h"
 #import "NSDate+WLDayBoundaries.h"
+#import "CoreAnimation+WLCalendar.h"
 
 
 @implementation WLCalendarWindowController
@@ -23,56 +24,18 @@
         window = [[WLCalendarWindow alloc] init];
         [window setDelegate:self];
 
-        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-
-        [notificationCenter addObserver:self
-                               selector:@selector(_clockChanged:)
-                                   name:NSSystemClockDidChangeNotification
-                                 object:nil];
-
-        [notificationCenter addObserver:self
-                               selector:@selector(_clockChanged:)
-                                   name:NSSystemTimeZoneDidChangeNotification
-                                 object:nil];
-
-        [notificationCenter addObserver:self
-                               selector:@selector(_localeChanged:)
-                                   name:NSCurrentLocaleDidChangeNotification
-                                 object:nil];
-
-        [notificationCenter addObserver:self
-                               selector:@selector(_windowContentViewFrameDidChanged:)
-                                   name:NSViewFrameDidChangeNotification
-                                 object:[window contentView]];
-
-        [[NSUserDefaults standardUserDefaults] addObserver:self
-                                                forKeyPath:@"Calendars"
-                                                   options:NSKeyValueObservingOptionNew
-                                                   context:NULL];
-
-        [[NSUserDefaults standardUserDefaults] addObserver:self
-                                                forKeyPath:@"DisplayAllCalendars"
-                                                   options:NSKeyValueObservingOptionNew
-                                                   context:NULL];
-
-        [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self
-                                                               selector:@selector(_clockChanged)
-                                                                   name:NSWorkspaceDidWakeNotification
-                                                                 object:nil];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
         NSView *contentView = [window contentView];
 
+        _calendarController = [[WLCalendarController alloc] init];
+
         _weekViewController = [[WLCalendarWeekViewController alloc] init];
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults addObserver:self forKeyPath:@"PerDayDate" options:NSKeyValueObservingOptionNew context:NULL];
-        [defaults addObserver:self forKeyPath:@"RollingCalendar" options:NSKeyValueObservingOptionNew context:NULL];
-        _weekViewController.titleFormat = [defaults integerForKey:@"PerDayDate"];
-        _weekViewController.mode = [defaults integerForKey:@"RollingCalendar"];
-        _weekViewController.calcalendars = [self calendarsToDisplay];
-        _weekViewController.calendar = [NSCalendar autoupdatingCurrentCalendar];
-        _weekViewController.date = [NSDate date];
-        [_weekViewController.view setAutoresizingMask:NSViewHeightSizable | NSViewWidthSizable];
-        [contentView addSubview:_weekViewController.view];
+        [_weekViewController setRepresentedObject:_calendarController];
+        [_weekViewController bind:@"mode" toObject:defaults withKeyPath:@"RollingCalendar" options:nil];
+        [_weekViewController bind:@"titleFormat" toObject:defaults withKeyPath:@"PerDayDate" options:nil];
+        _weekViewController.highlightWeekends = YES;
+        [contentView addSubview:[_weekViewController view]];
 
         _tasksViewController = [[WLCalendarTasksViewController alloc] initWithNibName:nil bundle:nil];
         _tasksViewController.taskPredicate = [CalCalendarStore taskPredicateWithUncompletedTasks:[self calendarsToDisplay]];
@@ -83,7 +46,6 @@
                                     [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:NO selector:@selector(localizedStandardCompare:)], nil];
         _tasksViewController.sortDescriptors = sortDescriptors;
         WLCalendarTasksView *tasksView = [[WLCalendarTasksView alloc] initWithFrame:NSZeroRect];
-        [tasksView setAutoresizingMask:NSViewHeightSizable];
         [_tasksViewController setView:tasksView];
         [contentView addSubview:tasksView];
         [tasksView release];
@@ -91,7 +53,6 @@
         _dateViewController = [[WLCalendarDateViewController alloc] init];
         _dateViewController.calendar = [NSCalendar autoupdatingCurrentCalendar];
         _dateViewController.date = [NSDate date];
-        [_dateViewController.view setAutoresizingMask:NSViewNotSizable];
         [contentView addSubview:_dateViewController.view];
 
         _cache = [[NSCache alloc] init];
@@ -106,18 +67,14 @@
     [window setDelegate:nil];
     [window release];
     [windowScreenIdentifier release];
+    [fadeController release];
 
     [_weekViewController release];
     [_tasksViewController release];
     [_dateViewController release];
     [_cache release];
-    [fadeController release];
+    [_calendarController release];
 
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObserver:self forKeyPath:@"Calendars"];
-    [defaults removeObserver:self forKeyPath:@"DisplayAllCalendars"];
-    [defaults removeObserver:self forKeyPath:@"PerDayDate"];
-    [defaults removeObserver:self forKeyPath:@"RollingCalendar"];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
@@ -190,11 +147,9 @@
 {
     if (!_isWindowShowed)
     {
-        [_weekViewController updateViewAnimated:NO];
         [_dateViewController updateViewAnimated:NO];
         [self _updateFrame];
         [window orderBack:aSender];
-        [self _scheduleNextDayTimer];
         _isWindowShowed = YES;
     }
 }
@@ -205,7 +160,6 @@
 - (void) windowDidChangeScreen:(NSNotification *)aNotification
 {
     [self _updateFrame];
-    [_weekViewController updateViewAnimated:NO];
     [_dateViewController updateViewAnimated:NO];
 }
 

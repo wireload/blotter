@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <CalendarStore/CalendarStore.h>
 #import "WLCalendarWeekView.h"
+#import "WLCalendarController.h"
 
 
 typedef enum
@@ -25,48 +26,25 @@ typedef enum
 } WLCalendarWeekViewTitleFormat;
 
 
-@interface WLCalendarWeekViewController : NSObject <WLCalendarWeekViewDataSource> {
-    WLCalendarWeekView *view;
+@interface WLCalendarWeekViewController : NSViewController <WLCalendarWeekViewDataSource> {
     WLCalendarWeekViewMode mode;
     WLCalendarWeekViewTitleFormat titleFormat;
-    NSDate *date;
-    NSArray *calcalendars;
-    NSCalendar *calendar;
     BOOL highlightWeekends;
 
-    NSTimer *_scrollTimer;
+    BOOL isViewLoaded;
     NSCache *_cache;
     NSMutableDictionary *_columnDateRanges;
     // Lifetime of this object is limited to
     // weekView:willAskForDataForColumnsAtIndexes: -> weekView:titleForColumnAtIndex: &
     //                                                weekView:eventsForColumnAtIndex: -> weekViewDidAskForData:
     NSMutableDictionary *_columnsData;
-    struct {
-        unsigned int updateTitles:1;
-        unsigned int updateEvents:1;
-        unsigned int reload:1;
-    } _updateFlags;
 }
-
-@property (readonly) WLCalendarWeekView *view;
 
 @property (nonatomic) WLCalendarWeekViewMode mode;
 
 @property (nonatomic) WLCalendarWeekViewTitleFormat titleFormat;
 
-@property (nonatomic, copy) NSDate *date;
-
-@property (nonatomic, copy) NSArray *calcalendars;
-
-@property (nonatomic, retain) NSCalendar *calendar;
-
 @property (nonatomic) BOOL highlightWeekends;
-
-- (void)updateViewAnimated:(BOOL)isAnimated;
-
-- (void)showNextDayAndScroll;
-
-- (void)showNextWeekAndScroll;
 
 - (CGFloat)currentHour;
 
@@ -80,6 +58,10 @@ typedef enum
 
 - (NSArray *)eventsForColumnsAtIndexes:(NSIndexSet *)anIndexSet firstDate:(NSDate *)aFirstDate;
 
+- (WLCalendarWeekView *)view;
+
+- (WLCalendarController *)representedObject;
+
 
 @property (nonatomic, retain) NSDateFormatter *_dateFormatter;
 
@@ -89,12 +71,6 @@ typedef enum
  @abstract      Updates events of affected columns which are determined by dates of changed events.
  @discussion    Called when either CalEventsChangedExternallyNotification or CalEventsChangedNotification is posted.
  */
-- (void)_eventsChanged:(NSNotification *)aNotification;
-
-/*!
- @abstract      Schedules a repeated timer that causes the view to scroll to current hour.
- @see           scrollToCurrentHour
- */
-- (void)_scheduleScrollTimer;
+- (void)_eventsDidChange:(NSNotification *)aNotification;
 
 @end

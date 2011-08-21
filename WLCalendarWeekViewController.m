@@ -9,6 +9,7 @@
 #import "WLCalendarWeekViewController.h"
 #import "NSDate+WLDayBoundaries.h"
 #import "WLDateRange.h"
+#import "NSColor+WLCalendar.h"
 #import "NSColor+CGColor.h"
 
 
@@ -35,19 +36,15 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     self = [super init];
     if (self != nil)
     {
-        view = [[WLCalendarWeekView alloc] init];
-        view.dataSource = self;
-        view.fitDayEvents = YES;
-        highlightWeekends = YES;
-        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-        [notificationCenter addObserver:self
-                               selector:@selector(_eventsChanged:)
-                                   name:CalEventsChangedExternallyNotification
-                                 object:[CalCalendarStore defaultCalendarStore]];
-        [notificationCenter addObserver:self
-                               selector:@selector(_eventsChanged:)
-                                   name:CalEventsChangedNotification
-                                 object:[CalCalendarStore defaultCalendarStore]];
+        NSNotificationCenter *n = [NSNotificationCenter defaultCenter];
+        [n addObserver:self
+              selector:@selector(_eventsDidChange:)
+                  name:CalEventsChangedExternallyNotification
+                object:[CalCalendarStore defaultCalendarStore]];
+        [n addObserver:self
+              selector:@selector(_eventsDidChange:)
+                  name:CalEventsChangedNotification
+                object:[CalCalendarStore defaultCalendarStore]];
 
         _cache = [[NSCache alloc] init];
         [_cache setName:@"WLCalendarWeekViewController cache"];
@@ -58,148 +55,73 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 
 - (void)dealloc
 {
-    [view release];
-    [date release];
-    [calcalendars release];
-    [calendar release];
-
     [_cache release];
-    [_scrollTimer invalidate];
     [_columnsData release];
     [_columnDateRanges release];
-
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
     [super dealloc];
 }
 
 
 #pragma mark Properties
-@synthesize view;
 @synthesize mode;
 @synthesize titleFormat;
-@synthesize date;
-@synthesize calcalendars;
-@synthesize calendar;
 @synthesize highlightWeekends;
 
 - (void)setMode:(WLCalendarWeekViewMode)newMode
 {
-    if (newMode != mode)
+    NSParameterAssert([self representedObject] != nil);
+
+    mode = newMode;
+    if (isViewLoaded)
     {
-        _updateFlags.reload = YES;
-        mode = newMode;
+        [[self view] reloadDataAnimated:YES];
+        [self highlightCurrentDayIfNeeded];
     }
 }
 
 - (void)setTitleFormat:(WLCalendarWeekViewTitleFormat)newFormat
 {
-    if (newFormat != titleFormat)
-    {
-        _updateFlags.updateTitles = YES;
-        self._columnTitleFormat = nil;
-        titleFormat = newFormat;
-    }
-}
+    NSParameterAssert([self representedObject] != nil);
 
-- (void)setDate:(NSDate *)newDate
-{
-    if (![newDate isEqual:date])
-    {
-        _updateFlags.reload = YES;
-        [newDate retain];
-        [date release];
-        date = newDate;
-    }
-}
-
-- (void)setCalcalendars:(NSArray *)newCalendars
-{
-    if (newCalendars != calcalendars)
-    {
-        _updateFlags.updateEvents = YES;
-        [calcalendars release];
-        calcalendars = [newCalendars copy];
-    }
-}
-
-- (void)setCalendar:(NSCalendar *)newCalendar
-{
-    if (newCalendar != calendar) {
-        _updateFlags.reload = YES;
-        [newCalendar retain];
-        [calendar release];
-        calendar = newCalendar;
-    }
+    self._columnTitleFormat = nil;
+    titleFormat = newFormat;
+    if (isViewLoaded)
+        [[self view] updateTitleOfColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [self numberOfColumnsInWeekView:[self view]])]];
 }
 
 - (void)setHighlightWeekends:(BOOL)newHighlight
 {
-    if (newHighlight != highlightWeekends)
-    {
-        _updateFlags.reload = YES;
-        highlightWeekends = newHighlight;
-    }
+    NSParameterAssert([self representedObject] != nil);
+
+    highlightWeekends = newHighlight;
+    if (isViewLoaded)
+        [[self view] updateColorOfColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [self numberOfColumnsInWeekView:[self view]])]];
 }
 
 
 #pragma mark Methods
 
-- (void)updateViewAnimated:(BOOL)isAnimated
-{
-    NSParameterAssert(date != nil);
-    NSParameterAssert(calcalendars != nil);
-    NSParameterAssert(calendar != nil);
-
-    if ([view wantsLayer] && !_updateFlags.reload)
-    {
-        [CATransaction begin];
-        [CATransaction setDisableActions:!isAnimated];
-        NSIndexSet *columnIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [self numberOfColumnsInWeekView:view])];
-        if (_updateFlags.updateTitles && _updateFlags.updateEvents)
-            [view updateColumnsAtIndexes:columnIndexes];
-        else if (_updateFlags.updateTitles)
-            [view updateTitleOfColumnsAtIndexes:columnIndexes];
-        else if (_updateFlags.updateEvents)
-            [view updateEventsOfColumnsAtIndexes:columnIndexes];
-        [self highlightCurrentDayIfNeeded];
-        [CATransaction commit];
-    }
-    else
-    {
-        [self highlightCurrentDayIfNeeded];
-        [view setupLayersAnimated:isAnimated];
-        [self _scheduleScrollTimer];
-    }
-
-    _updateFlags.reload = NO;
-    _updateFlags.updateTitles = NO;
-    _updateFlags.updateEvents = NO;
-}
-
 - (void)showNextDayAndScroll
 {
-    [CATransaction begin];
-    [view showNextDay];
+    [[self view] showNextDay];
     [self highlightCurrentDayIfNeeded];
-    [_scrollTimer fire];
-    [CATransaction commit];
+    [self scrollToCurrentHour];
 }
 
 - (void)showNextWeekAndScroll
 {
-    [CATransaction begin];
-    [view showNextWeek];
+    [[self view] showNextWeek];
     [self highlightCurrentDayIfNeeded];
-    [_scrollTimer fire];
-    [CATransaction commit];
+    [self scrollToCurrentHour];
 }
 
 - (CGFloat)currentHour
 {
-    NSParameterAssert(calendar != nil);
+    NSParameterAssert([self representedObject] != nil);
 
-    NSDate *now = [NSDate date];
+    NSDate *now = [[self representedObject] date];
+    NSCalendar *calendar = [[self representedObject] calendar];
     NSDateComponents *components = [calendar components:NSHourCalendarUnit | NSMinuteCalendarUnit
                                                fromDate:now];
     CGFloat hour = [components hour];
@@ -215,34 +137,40 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 
 - (NSUInteger)currentDay
 {
-    NSParameterAssert(calendar != nil);
+    NSParameterAssert([self representedObject] != nil);
 
-    NSDateComponents *components = [calendar components:NSDayCalendarUnit fromDate:[self firstColumnDate] toDate:self.date options:0];
-    return [components day];
+    if (self.mode == WLCalendarWeekViewDayMode)
+        return 0;
+    else
+    {
+        NSCalendar *calendar = [[self representedObject] calendar];
+        NSDateComponents *firstColumnDateComponents = [calendar components:NSDayCalendarUnit fromDate:[self firstColumnDate]];
+        NSDateComponents *todayComponents = [calendar components:NSDayCalendarUnit fromDate:[[self representedObject] date]];
+        return [todayComponents day] - [firstColumnDateComponents day];
+    }
 }
 
 - (void)highlightCurrentDayIfNeeded
 {
     if (self.mode == WLCalendarWeekViewWeekMode)
-        view.indexOfHighlightedColumn = [self currentDay];
+        [[self view] setIndexOfHighlightedColumn:[self currentDay]];
     else
-        view.indexOfHighlightedColumn = NSNotFound;
+        [[self view] setIndexOfHighlightedColumn:NSNotFound];
 }
 
 - (NSDate *)firstColumnDate
 {
-    NSParameterAssert(date != nil);
-    NSParameterAssert(calendar != nil);
+    NSParameterAssert([self representedObject] != nil);
 
+    NSCalendar *calendar = [[self representedObject] calendar];
+    NSDate *date = [[self representedObject] date];
     switch (mode) {
         case WLCalendarWeekViewDayMode:
         {
-            NSDate *today = [NSDate date];
-            NSDateComponents *todayNoonComponents = [calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
-                                                                fromDate:today];
-            NSRange hoursRange = [calendar rangeOfUnit:NSHourCalendarUnit inUnit:NSDayCalendarUnit forDate:today];
-            [todayNoonComponents setHour:NSMaxRange(hoursRange) / 2];
-            return [calendar dateFromComponents:todayNoonComponents];
+            NSDateComponents *dateNoonComponents = [calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:date];
+            NSRange hoursRange = [calendar rangeOfUnit:NSHourCalendarUnit inUnit:NSDayCalendarUnit forDate:date];
+            [dateNoonComponents setHour:NSMaxRange(hoursRange) / 2];
+            return [calendar dateFromComponents:dateNoonComponents];
         }
         case WLCalendarWeekViewWeekMode:
         {
@@ -260,11 +188,10 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 
 - (NSArray *)eventsForColumnsAtIndexes:(NSIndexSet *)anIndexSet firstDate:(NSDate *)aFirstDate
 {
-    NSParameterAssert(calendar != nil);
+    NSParameterAssert([self representedObject] != nil);
 
-#ifdef DEBUG_PERFORMANCE
-    NSLog(@"%@: %@", NSStringFromSelector(_cmd), anIndexSet);
-#endif
+    NSCalendar *calendar = [[self representedObject] calendar];
+    NSArray *calCalendars = [[self representedObject] calCalendars];
     NSDateComponents *offset = [[NSDateComponents alloc] init];
     [offset setDay:[anIndexSet firstIndex]];
     NSDate *startDate = [[calendar dateByAddingComponents:offset toDate:aFirstDate options:0] WL_upperBoundaryWithCalendar:calendar];
@@ -273,7 +200,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     [offset release];
     NSPredicate *p = [CalCalendarStore eventPredicateWithStartDate:startDate
                                                            endDate:endDate
-                                                         calendars:calcalendars];
+                                                         calendars:calCalendars];
     return [[CalCalendarStore defaultCalendarStore] eventsWithPredicate:p];
 }
 
@@ -282,25 +209,27 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 
 - (NSUInteger)numberOfHoursInWeekView:(WLCalendarWeekView *)aWeekView
 {
-    NSParameterAssert(calendar != nil);
+    NSParameterAssert([self representedObject] != nil);
 
-    NSRange hoursRange = [calendar maximumRangeOfUnit:NSHourCalendarUnit];
+    NSRange hoursRange = [[[self representedObject] calendar] maximumRangeOfUnit:NSHourCalendarUnit];
     return hoursRange.length;
 }
 
 - (CGFloat)weekView:(WLCalendarWeekView *)aWeekView convertDateToHour:(NSDate *)aDate
 {
-    NSParameterAssert(calendar != nil);
+    NSParameterAssert([self representedObject] != nil);
 
-    NSDateComponents *comp = [calendar components:NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:aDate];
+    NSCalendar *calendar = [[self representedObject] calendar];
+    NSDateComponents *c = [calendar components:NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:aDate];
     NSRange minutesRange = [calendar rangeOfUnit:NSMinuteCalendarUnit inUnit:NSHourCalendarUnit forDate:aDate];
-    return ((CGFloat)[comp hour] + (CGFloat)([comp minute] - minutesRange.location) / minutesRange.length);
+    return ((CGFloat)[c hour] + (CGFloat)([c minute] - minutesRange.location) / minutesRange.length);
 }
 
-- (NSString *)stringForHour:(NSUInteger)aHour
+- (NSString *)weekView:(WLCalendarWeekView *)aWeekView stringForHour:(NSUInteger)aHour;
 {
-    NSParameterAssert(calendar != nil);
+    NSParameterAssert([self representedObject] != nil);
 
+    NSCalendar *calendar = [[self representedObject] calendar];
     NSDateComponents *hourComponents = [calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
                                                    fromDate:[NSDate dateWithTimeIntervalSinceReferenceDate:0.0]];
     [hourComponents setHour:aHour];
@@ -314,9 +243,10 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 
 - (NSUInteger)numberOfColumnsInWeekView:(WLCalendarWeekView *)aWeekView
 {
-    NSParameterAssert(calendar != nil);
-    NSParameterAssert(date != nil);
+    NSParameterAssert([self representedObject] != nil);
 
+    NSCalendar *calendar = [[self representedObject] calendar];
+    NSDate *date = [[self representedObject] date];
     if (mode == WLCalendarWeekViewWeekMode)
     {
         NSRange weekdaysRange = [calendar rangeOfUnit:NSWeekdayCalendarUnit inUnit:NSWeekCalendarUnit forDate:date];
@@ -329,11 +259,6 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 // -[CalCalendarStore eventsWithPredicate:] can take a relatively long time. This optimization allows us to call that method only once.
 - (void)weekView:(WLCalendarWeekView *)aWeekView willAskForData:(NSUInteger)dataUnits forColumnsAtIndexes:(NSIndexSet *)anIndexSet
 {
-    NSParameterAssert(calendar != nil);
-
-#ifdef DEBUG_PERFORMANCE
-    NSLog(@"%@", NSStringFromSelector(_cmd));
-#endif
     _columnsData = [[NSMutableDictionary alloc] initWithCapacity:[anIndexSet count]];
 
     NSDate *firstDate = [self firstColumnDate];
@@ -344,6 +269,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 
     NSDateComponents *columnDateComponents = [[NSDateComponents alloc] init];
     NSDateFormatter *titleFormatter = self._dateFormatter;
+    NSCalendar *calendar = [[self representedObject] calendar];
     [titleFormatter setCalendar:calendar];
     [titleFormatter setDateFormat:self._columnTitleFormat];
     [anIndexSet enumerateIndexesUsingBlock:^(NSUInteger columnIdx, BOOL *stop)
@@ -354,9 +280,6 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 
          if (dataUnits & WLCalendarWeekViewEventsDataUnit)
          {
-#ifdef DEBUG_PERFORMANCE
-             NSLog(@"Prepare weekView events");
-#endif
              NSDate *upperBound = [columnDate WL_upperBoundaryWithCalendar:calendar];
              NSDate *lowerBound = [upperBound WL_lowerBoundaryWithCalendar:calendar];
              WLDateRange *columnDateRange = [WLDateRange dateRangeWithStartDate:upperBound endDate:lowerBound];
@@ -400,12 +323,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
          }
 
          if (dataUnits & WLCalendarWeekViewTitleDataUnit)
-         {
-#ifdef DEBUG_PERFORMANCE
-             NSLog(@"Prepare weekView title");
-#endif
              [columnData setObject:[titleFormatter stringFromDate:columnDate] forKey:_WLTitleKey];
-         }
          [_columnsData setObject:columnData forKey:[NSNumber numberWithUnsignedInteger:columnIdx]];
      }];
     [columnDateComponents release];
@@ -413,11 +331,15 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 
 - (NSString *)weekView:(WLCalendarWeekView *)aWeekView titleForColumnAtIndex:(NSUInteger)anIndex
 {
+    NSParameterAssert(_columnsData != nil);
+
     return [(NSDictionary *)[_columnsData objectForKey:[NSNumber numberWithUnsignedInteger:anIndex]] objectForKey:_WLTitleKey];
 }
 
 - (NSArray *)weekView:(WLCalendarWeekView *)aWeekView eventsForColumnAtIndex:(NSUInteger)anIndex
 {
+    NSParameterAssert(_columnsData != nil);
+
     return [(NSDictionary *)[_columnsData objectForKey:[NSNumber numberWithUnsignedInteger:anIndex]] objectForKey:_WLEventsKey];
 }
 
@@ -427,20 +349,16 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     _columnsData = nil;
 }
 
-- (void)weekViewDidSetupLayers:(WLCalendarWeekView *)aWeekView
-{
-    [view scrollHour:[self currentHour] animated:![CATransaction disableActions]];
-}
-
 - (CGColorRef)weekView:(WLCalendarWeekView *)aWeekView colorForColumnAtIndex:(NSUInteger)anIndex
 {
     BOOL isWeekend = NO;
+    NSCalendar *calendar = [[self representedObject] calendar];
     if (highlightWeekends)
     {
-        // heuristics: typically last 2 days of a week are weekends.
+        // heuristics: typically last 2 days of week are weekend.
         if (mode == WLCalendarWeekViewWeekMode)
         {
-            NSRange weekdaysRange = [calendar rangeOfUnit:NSWeekdayCalendarUnit inUnit:NSWeekCalendarUnit forDate:date];
+            NSRange weekdaysRange = [calendar rangeOfUnit:NSWeekdayCalendarUnit inUnit:NSWeekCalendarUnit forDate:[[self representedObject] date]];
             isWeekend = (anIndex == NSMaxRange(weekdaysRange) - 2 || anIndex == NSMaxRange(weekdaysRange) - 3);
         }
         else
@@ -452,14 +370,9 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     }
 
     if (isWeekend)
-       return [[NSColor redColor] WL_CGColor];
+        return [[NSColor WL_weekendColor] WL_CGColor];
     else
-    {
-        return [[NSColor colorWithCalibratedRed:101.0f / 255.0f
-                                          green:161.0f / 255.0f
-                                           blue:165.0f / 255.0f
-                                          alpha:1.0f] WL_CGColor];
-    }
+        return [[NSColor WL_columnColor] WL_CGColor];
 }
 
 
@@ -474,10 +387,6 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
         f = [[[NSDateFormatter alloc] init] autorelease];
         [_cache setObject:f forKey:_WLDateFormatterCacheKey];
     }
-#ifdef DEBUG_PERFORMANCE
-    else
-        NSLog(@"Reuse cache: %@", _WLDateFormatterCacheKey);
-#endif
     return f;
 }
 
@@ -498,10 +407,6 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
             f = [NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:[NSLocale autoupdatingCurrentLocale]];
         [_cache setObject:f forKey:_WLColumnTitleFormatCacheKey];
     }
-#ifdef DEBUG_PERFORMANCE
-    else
-        NSLog(@"Reuse cache: %@", _WLColumnTitleFormatCacheKey);
-#endif
     return f;
 }
 
@@ -511,26 +416,96 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     [_cache removeObjectForKey:_WLColumnTitleFormatCacheKey];
 }
 
-- (void)_eventsChanged:(NSNotification *)aNotification
+- (void)_eventsDidChange:(NSNotification *)aNotification
 {
-#ifdef DEBUG_PERFORMANCE
-    NSLog(@"Update columns");
-#endif
+    NSArray *insertedEvents = [[aNotification userInfo] objectForKey:CalInsertedRecordsKey];
+    NSArray *deletedEvents = [[aNotification userInfo] objectForKey:CalDeletedRecordsKey];
+    NSArray *updatedEvents = [[aNotification userInfo] objectForKey:CalUpdatedRecordsKey];
+    NSMutableIndexSet *columnIndexes = [NSMutableIndexSet indexSet];
     NSUInteger numberOfColumns = [self numberOfColumnsInWeekView:[self view]];
-    [[self view] updateEventsOfColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, numberOfColumns)]];
+    if ([updatedEvents count] == 0 && deletedEvents == 0)
+    {
+        for (NSString *uid in insertedEvents)
+        {
+            CalEvent *e = [[CalCalendarStore defaultCalendarStore] eventWithUID:uid occurrence:nil];
+            for (NSNumber *idx in _columnDateRanges)
+            {
+                if ([[_columnDateRanges objectForKey:idx] intersectsRange:[WLDateRange dateRangeWithStartDate:e.startDate endDate:e.endDate]])
+                    [columnIndexes addIndex:[idx unsignedIntegerValue]];
+            }
+            if ([columnIndexes containsIndexesInRange:NSMakeRange(0, numberOfColumns)])
+                break;
+        }
+    }
+    else
+    {
+        // Unfortunately, we don't know where events may be deleted or moved from.
+        [columnIndexes addIndexesInRange:NSMakeRange(0, numberOfColumns)];
+    }
+    [[self view] updateEventsOfColumnsAtIndexes:columnIndexes];
 }
 
-- (void)_scheduleScrollTimer
-{
-    NSParameterAssert(calendar != nil);
 
-    [_scrollTimer invalidate];
-    NSRange minutesRange = [calendar maximumRangeOfUnit:NSMinuteCalendarUnit];
-    _scrollTimer = [NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)minutesRange.length
-                                                    target:self
-                                                  selector:@selector(scrollToCurrentHour)
-                                                  userInfo:nil
-                                                   repeats:YES];
+#pragma mark NSViewController
+
+- (void)loadView
+{
+    WLCalendarWeekView *v = [[WLCalendarWeekView alloc] init];
+    v.dataSource = self;
+    v.fitDayEvents = YES;
+    [v scrollHour:[self currentHour] animated:NO];
+    [v createLayers];
+    if (self.mode == WLCalendarWeekViewWeekMode)
+            v.indexOfHighlightedColumn = [self currentDay];
+    [self setView:v];
+    [v release];
+    [self addObserver:self forKeyPath:@"representedObject.date" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:NULL];
+    [self addObserver:self forKeyPath:@"representedObject.calendar" options:NSKeyValueObservingOptionNew context:NULL];
+    [self addObserver:self forKeyPath:@"representedObject.calCalendars" options:NSKeyValueObservingOptionNew context:NULL];
+    isViewLoaded = YES;
+}
+
+- (WLCalendarWeekView *)view
+{
+    return (WLCalendarWeekView *)[super view];
+}
+
+- (WLCalendarController *)representedObject
+{
+    return (WLCalendarController *)[super representedObject];
+}
+
+
+#pragma mark NSObject
+
+- (void)observeValueForKeyPath:(NSString *)aKeyPath ofObject:(id)anObject change:(NSDictionary *)aChange context:(void *)aContext
+{
+    if ([aKeyPath isEqual:@"representedObject.calendar"] || [aKeyPath isEqual:@"representedObject.calCalendars"])
+        [[self view] reloadDataAnimated:YES];
+    else if ([aKeyPath isEqual:@"representedObject.date"])
+    {
+        NSDate *old = [aChange objectForKey:NSKeyValueChangeOldKey];
+        NSDate *new = [aChange objectForKey:NSKeyValueChangeNewKey];
+        if ([new compare:old] == NSOrderedAscending)
+        {
+            [[self view] reloadDataAnimated:YES];
+            [self scrollToCurrentHour];
+        }
+        else
+        {
+            NSCalendar *calendar = [[self representedObject] calendar];
+            NSDateComponents *oldComponents = [calendar components:NSWeekCalendarUnit | NSDayCalendarUnit fromDate:old];
+            NSDateComponents *newComponents = [calendar components:NSWeekCalendarUnit | NSDayCalendarUnit fromDate:new];
+            if (self.mode == WLCalendarWeekViewWeekMode && [oldComponents week] != [newComponents week])
+                [self showNextWeekAndScroll];
+            else if (self.mode == WLCalendarWeekViewDayMode && [oldComponents day] != [newComponents day])
+                [self showNextDayAndScroll];
+            else
+                [self scrollToCurrentHour];
+        }
+    }
+    else
+        [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];
 }
 
 @end
