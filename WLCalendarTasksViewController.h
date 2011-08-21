@@ -8,29 +8,22 @@
 
 #import <Cocoa/Cocoa.h>
 #import "WLCalendarTasksView.h"
+#import "WLCalendarController.h"
 
 
 @interface WLCalendarTasksViewController : NSViewController <WLCalendarTasksViewDataSource> {
-    NSPredicate *taskPredicate;
     NSArray *sortDescriptors;
     NSMutableArray *_tasks;
+    BOOL _isViewLoaded;
 }
-
-@property (nonatomic, retain) NSPredicate *taskPredicate;
 
 @property (nonatomic, copy) NSArray *sortDescriptors;
 
 - (WLCalendarTasksView *)view;
 
-/*!
- @discussion    You have to prepare controller (set its properties, representedObject) before calling this method.
- */
-- (void)setView:(WLCalendarTasksView *)newView;
+- (void)updateView;
 
-
-- (void)_reloadData;
-
-- (void)_tasksChanged:(NSNotification *)aNotification;
+- (void)_tasksDidChange:(NSNotification *)aNotification;
 
 - (void)_preprocessTask:(CalTask *)aTask;
 

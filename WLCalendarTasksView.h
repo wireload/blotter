@@ -21,10 +21,9 @@
 
 @property (nonatomic, assign) id<WLCalendarTasksViewDataSource> dataSource;
 
-- (void)setupLayers;
+- (void)createLayers;
 
-- (void)reloadData;
-
+- (void)reloadDataAnimated:(BOOL)isAnimated;
 
 - (void)insertTaskAtIndex:(NSUInteger)anIndex;
 

@@ -38,21 +38,18 @@
         [contentView addSubview:[_weekViewController view]];
 
         _tasksViewController = [[WLCalendarTasksViewController alloc] initWithNibName:nil bundle:nil];
-        _tasksViewController.taskPredicate = [CalCalendarStore taskPredicateWithUncompletedTasks:[self calendarsToDisplay]];
+        [_tasksViewController setRepresentedObject:_calendarController];
         NSArray *sortDescriptors = [NSArray arrayWithObjects:
                                     [NSSortDescriptor sortDescriptorWithKey:@"dueDate" ascending:YES],
                                     [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:YES],
                                     [NSSortDescriptor sortDescriptorWithKey:@"calendar.title" ascending:YES selector:@selector(localizedStandardCompare:)],
                                     [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:NO selector:@selector(localizedStandardCompare:)], nil];
         _tasksViewController.sortDescriptors = sortDescriptors;
-        WLCalendarTasksView *tasksView = [[WLCalendarTasksView alloc] initWithFrame:NSZeroRect];
-        [_tasksViewController setView:tasksView];
-        [contentView addSubview:tasksView];
-        [tasksView release];
+        [contentView addSubview:[_tasksViewController view]];
 
         _dateViewController = [[WLCalendarDateViewController alloc] init];
         [_dateViewController setRepresentedObject:_calendarController];
-        [contentView addSubview:_dateViewController.view];
+        [contentView addSubview:[_dateViewController view]];
 
         _cache = [[NSCache alloc] init];
 

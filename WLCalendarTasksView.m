@@ -32,7 +32,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     [super dealloc];
 }
 
-- (void)setupLayers
+- (void)createLayers
 {
     [CATransaction begin];
     CALayer *rootLayer = [CALayer layer];
@@ -102,23 +102,24 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 #endif
     [rootLayer addSublayer:_tasksLayer];
 
-    [self reloadData];
+    [self reloadDataAnimated:NO];
 
     [self setLayer:rootLayer];
     [self setWantsLayer:YES];
     [CATransaction commit];
 }
 
-- (void)reloadData
+- (void)reloadDataAnimated:(BOOL)isAnimated
 {
     NSAssert(dataSource != nil, @"You MUST set dataSource");
 
+    [CATransaction begin];
+    [CATransaction setDisableActions:!isAnimated];
     _tasksLayer.sublayers = nil;
     [_tasksLayer setValue:[NSMutableArray array] forKey:_WLOrderedSublayersKey];
     for (NSUInteger i=0, size=[dataSource numberOfTasksInTasksView:self]; i<size; ++i)
-    {
         [self insertTaskAtIndex:i];
-    }
+    [CATransaction commit];
 }
 
 - (void)insertTaskAtIndex:(NSUInteger)anIndex
@@ -185,9 +186,6 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 
 - (void)displayLayer:(CALayer *)layer
 {
-#ifdef DEBUG_PERFORMANCE
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-#endif
     NSParameterAssert([layer.name isEqualToString:_WLRootLayerName]);
 #ifndef DEBUG_LAYERS
     NSRect layerBounds = NSRectFromCGRect(layer.bounds);
@@ -221,12 +219,8 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 
 - (void)layoutSublayersOfLayer:(CATextLayer *)layer
 {
-#ifdef DEBUG_PERFORMANCE
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-#endif
     NSParameterAssert([layer.name isEqualToString:_WLTasksLayerName]);
 
-    [CATransaction setDisableActions:YES];
     CGSize layerSize = layer.bounds.size;
     CGFloat top = layerSize.height;
     static const CGFloat TopMargin = 20.0f;

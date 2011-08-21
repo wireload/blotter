@@ -10,87 +10,47 @@
 
 
 @implementation WLCalendarTasksViewController
-@synthesize taskPredicate;
-@synthesize sortDescriptors;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self != nil)
-    {
-        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-        [notificationCenter addObserver:self
-                               selector:@selector(_tasksChanged:)
-                                   name:CalTasksChangedExternallyNotification
-                                 object:[CalCalendarStore defaultCalendarStore]];
-        [notificationCenter addObserver:self
-                               selector:@selector(_tasksChanged:)
-                                   name:CalTasksChangedNotification
-                                 object:[CalCalendarStore defaultCalendarStore]];
-    }
-    return self;
-}
 
 - (void)dealloc
 {
-    [taskPredicate release];
     [sortDescriptors release];
     [_tasks release];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
 
-- (WLCalendarTasksView *)view
-{
-    return (WLCalendarTasksView *)[super view];
-}
 
-- (void)setView:(WLCalendarTasksView *)newView
-{
-    [self view].dataSource = nil;
-    [super setView:newView];
-    newView.dataSource = self;
-    [self _reloadData];
-    [newView setupLayers];
-
-}
-
-- (void)setTaskPredicate:(NSPredicate *)newPredicate
-{
-    if (![newPredicate isEqual:taskPredicate])
-    {
-        [taskPredicate release];
-        taskPredicate = [newPredicate retain];
-        if ([self view] != nil)
-            [self _reloadData];
-    }
-}
+#pragma mark Properties
+@synthesize sortDescriptors;
 
 - (void)setSortDescriptors:(NSArray *)newDescriptors
 {
-    if (![newDescriptors isEqual:sortDescriptors])
-    {
-        [sortDescriptors release];
-        sortDescriptors = [newDescriptors copy];
-        if ([self view] != nil)
-            [self _reloadData];
-    }
+    [sortDescriptors release];
+    sortDescriptors = [newDescriptors copy];
+    if (_isViewLoaded)
+        [self updateView];
+}
+
+
+#pragma mark Methods
+
+- (void)updateView
+{
+    NSParameterAssert([sortDescriptors count] > 0);
+
+    [_tasks release];
+    NSPredicate *p = [CalCalendarStore taskPredicateWithCalendars:[[self representedObject] calCalendars]];
+    _tasks = [[[CalCalendarStore defaultCalendarStore] tasksWithPredicate:p] mutableCopy];
+    for (CalTask *task in _tasks)
+        [self _preprocessTask:task];
+    [_tasks sortUsingDescriptors:self.sortDescriptors];
+    [[self view] reloadDataAnimated:YES];
 }
 
 
 #pragma mark Private
 
-- (void)_reloadData
-{
-    [_tasks release];
-    _tasks = [[[CalCalendarStore defaultCalendarStore] tasksWithPredicate:self.taskPredicate] mutableCopy];
-    for (CalTask *task in _tasks)
-        [self _preprocessTask:task];
-    [_tasks sortUsingDescriptors:self.sortDescriptors];
-    [[self view] reloadData];
-}
-
-- (void)_tasksChanged:(NSNotification *)aNotification
+- (void)_tasksDidChange:(NSNotification *)aNotification
 {
     NSParameterAssert([sortDescriptors count] > 0);
 
@@ -185,8 +145,43 @@
 
 - (void)loadView
 {
-    if ([self nibName] != nil)
-        [super loadView];
+    WLCalendarTasksView *v = [[WLCalendarTasksView alloc] initWithFrame:NSZeroRect];
+    [self setView:v];
+    v.dataSource = self;
+    [v createLayers];
+    [v release];
+    [self updateView];
+    [self addObserver:self forKeyPath:@"representedObject.calCalendars" options:NSKeyValueObservingOptionNew context:NULL];
+    NSNotificationCenter *n = [NSNotificationCenter defaultCenter];
+    [n addObserver:self
+          selector:@selector(_tasksDidChange:)
+              name:CalTasksChangedExternallyNotification
+            object:[CalCalendarStore defaultCalendarStore]];
+    [n addObserver:self
+          selector:@selector(_tasksDidChange:)
+              name:CalTasksChangedNotification
+            object:[CalCalendarStore defaultCalendarStore]];
+    _isViewLoaded = YES;
 }
 
+- (WLCalendarTasksView *)view
+{
+    return (WLCalendarTasksView *)[super view];
+}
+
+- (WLCalendarController *)representedObject
+{
+    return (WLCalendarController *)[super representedObject];
+}
+
+
+#pragma mark NSObject
+
+- (void)observeValueForKeyPath:(NSString *)aKeyPath ofObject:(id)anObject change:(NSDictionary *)aChange context:(void *)aContext
+{
+    if ([aKeyPath hasPrefix:@"representedObject"])
+        [self updateView];
+    else
+        [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];
+}
 @end
