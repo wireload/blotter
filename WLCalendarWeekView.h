@@ -28,6 +28,10 @@ typedef struct
     CGFloat endHour;
 } WLHourRange;
 
+static const WLHourRange WLHourRangeZero = {0.0f, 0.0f};
+
+BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r);
+
 
 @interface WLCalendarWeekView : NSView <WLCalendarTimeRuler/*, CALayerManager*/> {
     IBOutlet NSObject<WLCalendarWeekViewDataSource> *dataSource;
@@ -40,7 +44,7 @@ typedef struct
 
     CALayer *_rootLayer;
     CALayer *_timeRulerRootLayer;
-    WLCalendarTimeIndicatorLayer *_timeIndicatorLayer;
+    CALayer *_timeIndicatorRootLayer;
     __block NSMutableArray *_columnLayers;
     CGFloat _hour;
 }
@@ -57,7 +61,7 @@ typedef struct
 /*!
  @discussion Default value is NO.
  */
-@property BOOL fitDayEvents;
+@property (nonatomic) BOOL fitDayEvents;
 
 /*!
  @discussion Default value is 20.0f.
@@ -71,13 +75,17 @@ typedef struct
 
 @property (nonatomic) NSUInteger indexOfHighlightedColumn;
 
-- (void)setupLayersAnimated:(BOOL)isAnimated;
+- (void)createLayers;
+
+- (void)reloadDataAnimated:(BOOL)isAnimated;
 
 - (void)scrollHour:(CGFloat)aHour animated:(BOOL)isAnimated;
 
 - (void)updateEventsOfColumnsAtIndexes:(NSIndexSet *)anIndexSet;
 
 - (void)updateTitleOfColumnsAtIndexes:(NSIndexSet *)anIndexSet;
+
+- (void)updateColorOfColumnsAtIndexes:(NSIndexSet *)anIndexSet;
 
 - (void)updateColumnsAtIndexes:(NSIndexSet *)anIndexSet;
 
@@ -91,8 +99,16 @@ typedef struct
 
 - (WLHourRange)eventsHourRange;
 
-- (void)eventsDidUpdated;
+- (void)heightOfHourMayHaveChanged;
 
+
+- (void)_updateEventsOfColumnsAtIndexes:(NSIndexSet *)anIndexSet;
+
+- (void)_updateTitleOfColumnsAtIndexes:(NSIndexSet *)anIndexSet;
+
+- (void)_updateColorOfColumnsAtIndexes:(NSIndexSet *)anIndexSet;
+
+- (void)_updateColumnsAtIndexes:(NSIndexSet *)anIndexSet;
 
 - (void)_updateEventsOfColumnAtIndex:(NSUInteger)anIndex;
 
@@ -108,11 +124,19 @@ typedef struct
 
 - (void)_layoutTimeRulerLayer:(WLCalendarTimeRulerLayer *)aTimeRulerLayer;
 
-- (void)_layoutColumnLayer:(CALayer *)aColumnLayer;
+- (void)_layoutSublayersOfColumnLayer:(CALayer *)aColumnLayer;
 
 - (void)_layoutDayLayer:(WLCalendarDayEventsLayer *)aDayLayer;
 
-- (void)_positionColumnLayer:(CALayer *)aColumnLayer atIndex:(NSUInteger)anIndex;
+- (void)_layoutTimeIndicatorRootLayer:(CALayer *)aTimeIndicatorLayer;
+
+- (void)_layoutColumnLayer:(CALayer *)aColumnLayer atIndex:(NSUInteger)anIndex;
+
+- (void)_layoutTimeIndicatorLayer:(WLCalendarTimeIndicatorLayer *)aTimeIndicatorLayer;
+
+- (void)_focusOnDayEvents;
+
+- (void)_focusOnHour;
 
 @end
 
@@ -148,6 +172,8 @@ typedef struct
 - (WLCalendarBackgroundLayer *)setupDayBackgroundLayer;
 
 
+- (CALayer *)setupTimeIndicatorRootLayer;
+
 - (WLCalendarTimeIndicatorLayer *)setupTimeIndicatorLayer;
 
 @end
@@ -173,13 +199,17 @@ typedef struct
 
 - (WLCalendarTimeRulerLayer *)WL_timeRulerLayer;
 
+
+- (WLCalendarTimeIndicatorLayer *)WL_timeIndicatorLayer;
+
 @end
 
 
 enum
 {
     WLCalendarWeekViewTitleDataUnit = 1 << 0,
-    WLCalendarWeekViewEventsDataUnit = 1 << 1
+    WLCalendarWeekViewEventsDataUnit = 1 << 1,
+    WLCalendarWeekViewColorDataUnit = 1 << 2
 };
 
 
@@ -193,7 +223,7 @@ enum
 
 - (NSArray *)weekView:(WLCalendarWeekView *)aWeekView eventsForColumnAtIndex:(NSUInteger)anIndex;
 
-- (void)weekViewDidSetupLayers:(WLCalendarWeekView *)aWeekView;
+- (CGColorRef)weekView:(WLCalendarWeekView *)aWeekView colorForColumnAtIndex:(NSUInteger)anIndex;
 
 /*!
  @see -[WLCalendarTimeRuler hourForDate:].
@@ -205,12 +235,12 @@ enum
  */
 - (NSUInteger)numberOfHoursInWeekView:(WLCalendarWeekView *)aWeekView;
 
+- (NSString *)weekView:(WLCalendarWeekView *)aWeekView stringForHour:(NSUInteger)aHour;
+
 @optional
 
 - (void)weekView:(WLCalendarWeekView *)aWeekView willAskForData:(NSUInteger)dataUnits forColumnsAtIndexes:(NSIndexSet *)anIndexSet;
 
 - (void)weekViewDidAskForData:(WLCalendarWeekView *)aWeekView;
-
-- (CGColorRef)weekView:(WLCalendarWeekView *)aWeekView colorForColumnAtIndex:(NSUInteger)anIndex;
 
 @end
