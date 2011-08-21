@@ -37,16 +37,6 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     self = [super init];
     if (self != nil)
     {
-        NSNotificationCenter *n = [NSNotificationCenter defaultCenter];
-        [n addObserver:self
-              selector:@selector(_eventsDidChange:)
-                  name:CalEventsChangedExternallyNotification
-                object:[CalCalendarStore defaultCalendarStore]];
-        [n addObserver:self
-              selector:@selector(_eventsDidChange:)
-                  name:CalEventsChangedNotification
-                object:[CalCalendarStore defaultCalendarStore]];
-
         _cache = [[NSCache alloc] init];
         [_cache setName:@"WLCalendarWeekViewController cache"];
         _columnDateRanges = [[NSMutableDictionary alloc] init];
@@ -455,6 +445,15 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     [self addObserver:self forKeyPath:@"representedObject.date" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:NULL];
     [self addObserver:self forKeyPath:@"representedObject.calendar" options:NSKeyValueObservingOptionNew context:NULL];
     [self addObserver:self forKeyPath:@"representedObject.calCalendars" options:NSKeyValueObservingOptionNew context:NULL];
+    NSNotificationCenter *n = [NSNotificationCenter defaultCenter];
+    [n addObserver:self
+          selector:@selector(_eventsDidChange:)
+              name:CalEventsChangedExternallyNotification
+            object:[CalCalendarStore defaultCalendarStore]];
+    [n addObserver:self
+          selector:@selector(_eventsDidChange:)
+              name:CalEventsChangedNotification
+            object:[CalCalendarStore defaultCalendarStore]];
     isViewLoaded = YES;
 }
 
