@@ -204,7 +204,7 @@ const CGFloat _WLXPadding = 10.0f;
                              NSMutableAttributedString *truncatedString = [[NSMutableAttributedString alloc] initWithAttributedString:
                                                                            [self.string attributedSubstringFromRange:range]];
                              NSString *trimmedString = [[truncatedString string] stringByTrimmingCharactersInSet:
-                                                        [NSCharacterSet newlineCharacterSet]];
+                                                        [NSCharacterSet whitespaceAndNewlineCharacterSet]];
                              [[truncatedString mutableString] setString:trimmedString];
                              static const CFStringRef Token = CFSTR("\u2026");
                              [[truncatedString mutableString] appendString:(NSString *)Token];
