@@ -444,13 +444,13 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 - (void)loadView
 {
     WLCalendarWeekView *v = [[WLCalendarWeekView alloc] init];
+    [self setView:v];
     v.dataSource = self;
     v.fitDayEvents = YES;
     [v scrollHour:[self currentHour] animated:NO];
     [v createLayers];
     if (self.mode == WLCalendarWeekViewWeekMode)
-            v.indexOfHighlightedColumn = [self currentDay];
-    [self setView:v];
+        v.indexOfHighlightedColumn = [self currentDay];
     [v release];
     [self addObserver:self forKeyPath:@"representedObject.date" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:NULL];
     [self addObserver:self forKeyPath:@"representedObject.calendar" options:NSKeyValueObservingOptionNew context:NULL];
