@@ -51,8 +51,7 @@
         [tasksView release];
 
         _dateViewController = [[WLCalendarDateViewController alloc] init];
-        _dateViewController.calendar = [NSCalendar autoupdatingCurrentCalendar];
-        _dateViewController.date = [NSDate date];
+        [_dateViewController setRepresentedObject:_calendarController];
         [contentView addSubview:_dateViewController.view];
 
         _cache = [[NSCache alloc] init];
@@ -147,7 +146,6 @@
 {
     if (!_isWindowShowed)
     {
-        [_dateViewController updateViewAnimated:NO];
         [self _updateFrame];
         [window orderBack:aSender];
         _isWindowShowed = YES;
@@ -160,7 +158,6 @@
 - (void) windowDidChangeScreen:(NSNotification *)aNotification
 {
     [self _updateFrame];
-    [_dateViewController updateViewAnimated:NO];
 }
 
 

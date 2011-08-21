@@ -16,10 +16,8 @@
 @dynamic monthAndYear;
 @dynamic weekday;
 
-- (void)setupLayersAnimated:(BOOL)isAnimated
+- (void)createLayers
 {
-    [CATransaction begin];
-    [CATransaction setDisableActions:!isAnimated];
     [self setWantsLayer:YES];
     CALayer *root = [self layer];
     _monthDayLayer = [self _setupMonthDayLayer];
@@ -28,7 +26,6 @@
     [root addSublayer:_monthAndYearLayer];
     _weekdayLayer = [self _setupWeekdayLayer];
     [root addSublayer:_weekdayLayer];
-    [CATransaction commit];
 }
 
 - (NSString *)monthDay
@@ -38,6 +35,7 @@
 
 - (void)setMonthDay:(NSString *)newMonthDay
 {
+    NSAssert([self wantsLayer], @"You MUST call -createLayers before.");
     _monthDayLayer.string = newMonthDay;
 }
 
@@ -48,6 +46,7 @@
 
 - (void)setMonthAndYear:(NSString *)newMonthAndYear
 {
+    NSAssert([self wantsLayer], @"You MUST call -createLayers before.");
     _monthAndYearLayer.string = newMonthAndYear;
 }
 
@@ -58,6 +57,7 @@
 
 - (void)setWeekday:(NSString *)newWeekday
 {
+    NSAssert([self wantsLayer], @"You MUST call -createLayers before.");
     _weekdayLayer.string = newWeekday;
 }
 

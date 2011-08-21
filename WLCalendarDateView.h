@@ -23,7 +23,7 @@
 
 @property (nonatomic, copy) NSString *weekday;
 
-- (void)setupLayersAnimated:(BOOL)isAnimated;
+- (void)createLayers;
 
 
 - (CATextLayer *)_setupMonthDayLayer;

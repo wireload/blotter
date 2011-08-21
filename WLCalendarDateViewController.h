@@ -8,23 +8,18 @@
 
 #import <Cocoa/Cocoa.h>
 #import "WLCalendarDateView.h"
+#import "WLCalendarController.h"
 
 
-@interface WLCalendarDateViewController : NSObject {
-    WLCalendarDateView *view;
-    NSCalendar *calendar;
-    NSDate *date;
-
+@interface WLCalendarDateViewController : NSViewController {
     NSCache *_cache;
 }
 
-@property (readonly) WLCalendarDateView *view;
+- (WLCalendarDateView *)view;
 
-@property (retain) NSCalendar *calendar;
+- (WLCalendarController *)representedObject;
 
-@property (copy) NSDate *date;
-
-- (void)updateViewAnimated:(BOOL)isAnimated;
+- (void)updateView;
 
 
 @property (nonatomic, retain) NSDateFormatter *_dateFormatter;
