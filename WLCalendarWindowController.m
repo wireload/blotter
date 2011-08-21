@@ -190,12 +190,12 @@
 {
     if (!_isWindowShowed)
     {
-        _isWindowShowed = YES;
         [_weekViewController updateViewAnimated:NO];
         [_dateViewController updateViewAnimated:NO];
         [self _updateFrame];
         [window orderBack:aSender];
         [self _scheduleNextDayTimer];
+        _isWindowShowed = YES;
     }
 }
 
@@ -230,12 +230,13 @@
         screenFrame = [[screens objectAtIndex:0] visibleFrame];
 
     NSRect windowFrame = [BLCalendarFramer frameForPosition:windowPosition inFrame:screenFrame size:windowSize];
-    [window setFrame:windowFrame display:YES];
-}
-
-- (void)_windowContentViewFrameDidChanged:(NSNotification *)aNotification
-{
+    NSDisableScreenUpdates();
+    [window setFrame:windowFrame display:NO];
+    if (!_isWindowShowed)
+        [self _placeViews];
     [self _applyWindowSizeToViews];
+    [window displayIfNeeded];
+    NSEnableScreenUpdates();
 }
 
 - (void)_applyWindowSizeToViews
@@ -254,196 +255,51 @@
     }
 }
 
-- (void)_applyNarrowSizeToViews
+- (void)_placeViews
 {
     NSRect contentBounds = [window contentViewBounds];
     NSView *contentView = [window contentView];
 
-    WLCalendarTasksView *tasksView = [_tasksViewController view];
-    NSRect tasksViewFrame = NSMakeRect(NSMinX(contentBounds),
-                                       NSMinY(contentBounds),
-                                       contentBounds.size.width,
-                                       contentBounds.size.height - 210.0f);
-    tasksViewFrame = [contentView centerScanRect:tasksViewFrame];
-    [tasksView setFrame:tasksViewFrame];
-
     WLCalendarDateView *dateView = [_dateViewController view];
-    NSRect dateViewFrame = NSMakeRect(NSMinX(contentBounds), NSMaxY([tasksView frame]), contentBounds.size.width, 210.0f);
+    NSRect dateViewFrame = NSMakeRect(NSMinX(contentBounds), NSMinY(contentBounds), 250.0f, 210.0f);
     dateViewFrame = [contentView centerScanRect:dateViewFrame];
     [dateView setFrame:dateViewFrame];
 
+    WLCalendarTasksView *tasksView = [_tasksViewController view];
+    NSRect tasksViewFrame = NSMakeRect(NSMinX(contentBounds),
+            NSMaxY([dateView frame]),
+            [dateView frame].size.width,
+            contentBounds.size.height - [dateView frame].size.height);
+    tasksViewFrame = [contentView centerScanRect:tasksViewFrame];
+    [tasksView setFrame:tasksViewFrame];
+    [tasksView setAutoresizingMask:NSViewHeightSizable];
+
     WLCalendarWeekView *weekView = [_weekViewController view];
-    [weekView stopAnimations];
+    NSRect weekViewFrame = NSMakeRect(NSMaxX([tasksView frame]) + 10.0f,
+            NSMinY(contentBounds),
+            contentBounds.size.width - [tasksView frame].size.width,
+            contentBounds.size.height);
+    weekViewFrame = [contentView centerScanRect:weekViewFrame];
+    [weekView setFrame:weekViewFrame];
+    [weekView setAutoresizingMask:NSViewHeightSizable | NSViewWidthSizable];
+}
+
+- (void)_applyNarrowSizeToViews
+{
+    WLCalendarWeekView *weekView = [_weekViewController view];
     [weekView setHidden:YES];
 }
 
 - (void)_applyNormalSizeToViews
 {
-    NSRect contentBounds = [window contentViewBounds];
-    NSView *contentView = [window contentView];
-
-    WLCalendarTasksView *tasksView = [_tasksViewController view];
-    NSRect tasksViewFrame = NSMakeRect(NSMinX(contentBounds),
-                                       NSMinY(contentBounds),
-                                       250.0f,
-                                       contentBounds.size.height - 210.0f);
-    tasksViewFrame = [contentView centerScanRect:tasksViewFrame];
-    [tasksView setFrame:tasksViewFrame];
-
-    WLCalendarDateView *dateView = [_dateViewController view];
-    NSRect dateViewFrame = NSMakeRect(NSMinX(contentBounds), NSMaxY([tasksView frame]), 250.0f, 210.0f);
-    dateViewFrame = [contentView centerScanRect:dateViewFrame];
-    [dateView setFrame:dateViewFrame];
-
     WLCalendarWeekView *weekView = [_weekViewController view];
-    [weekView stopAnimations];
-    NSRect weekViewFrame = NSMakeRect(NSMaxX([tasksView frame]) + 10.0f,
-                                      NSMinY(contentBounds),
-                                      contentBounds.size.width - [tasksView frame].size.width,
-                                      contentBounds.size.height);
-    weekViewFrame = [contentView centerScanRect:weekViewFrame];
-    [weekView setFrame:weekViewFrame];
     [weekView setHidden:NO];
 }
 
 - (void)_applyFullSizeToViews
 {
-    NSRect contentBounds = [window contentViewBounds];
-    NSView *contentView = [window contentView];
-
-    WLCalendarTasksView *tasksView = [_tasksViewController view];
-    NSRect tasksViewFrame = NSMakeRect(NSMinX(contentBounds),
-                                       NSMinY(contentBounds),
-                                       250.0f,
-                                       contentBounds.size.height - 210.0f);
-    tasksViewFrame = [contentView centerScanRect:tasksViewFrame];
-    [tasksView setFrame:tasksViewFrame];
-
-    WLCalendarDateView *dateView = [_dateViewController view];
-    NSRect dateViewFrame = NSMakeRect(NSMinX(contentBounds), NSMaxY([tasksView frame]), 250.0f, 210.0f);
-    dateViewFrame = [contentView centerScanRect:dateViewFrame];
-    [dateView setFrame:dateViewFrame];
-
     WLCalendarWeekView *weekView = [_weekViewController view];
-    [weekView stopAnimations];
-    NSRect weekViewFrame = NSMakeRect(NSMaxX([tasksView frame]) + 10.0f,
-                                      NSMinY(contentBounds),
-                                      contentBounds.size.width - [tasksView frame].size.width,
-                                      contentBounds.size.height);
-    weekViewFrame = [contentView centerScanRect:weekViewFrame];
-    [weekView setFrame:weekViewFrame];
     [weekView setHidden:NO];
-}
-
-- (void)_localeChanged:(NSNotification *)aNotification
-{
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_updateCalendar) object:nil];
-    // NSCurrentLocaleDidChangeNotification may be posted multiple times for 1 change (meaning user's change in the sys prefs).
-    // Don't annoy the user with multiple updates.
-    static const NSTimeInterval AnyDelay = 1.0f;
-    [self performSelector:@selector(_updateCalendar) withObject:nil afterDelay:AnyDelay];
-}
-
-- (void)_updateCalendar
-{
-    NSCalendar *c = [NSCalendar autoupdatingCurrentCalendar];
-    _weekViewController.calendar = c;
-    _dateViewController.calendar = c;
-    [_weekViewController updateViewAnimated:YES];
-    [_dateViewController updateViewAnimated:YES];
-}
-
-- (void)_clockChanged:(NSNotification *)aNotification
-{
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_updateClock) object:nil];
-    [self _scheduleNextDayTimer];
-    // http://groups.google.com/group/cocoa-unbound/browse_thread/thread/46fe3433cfef6a97#
-    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-        [self performSelector:@selector(_updateClock) withObject:nil afterDelay:0.5];
-    else
-        [self _updateClock];
-}
-
-- (void)_updateClock
-{
-    _weekViewController.date = [NSDate date];
-    _dateViewController.date = [NSDate date];
-    [_weekViewController updateViewAnimated:YES];
-    [_dateViewController updateViewAnimated:YES];
-}
-
-- (void)_scheduleNextDayTimer
-{
-    [_nextDayTimer invalidate];
-    NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
-
-    NSDateComponents *oneDayComponents = [[NSDateComponents alloc] init];
-    [oneDayComponents setDay:1];
-    NSDate *nextDay = [calendar dateByAddingComponents:oneDayComponents toDate:[NSDate date] options:0];
-    [oneDayComponents release];
-    nextDay = [nextDay WL_upperBoundaryWithCalendar:calendar];
-    _nextDayTimer = [[NSTimer alloc] initWithFireDate:nextDay
-                                             interval:0.0
-                                               target:self
-                                             selector:@selector(_showNextDay)
-                                             userInfo:nil
-                                              repeats:NO];
-    [[NSRunLoop currentRunLoop] addTimer:_nextDayTimer forMode:NSDefaultRunLoopMode];
-    [_nextDayTimer release];
-}
-
-- (void)_showNextDay
-{
-    NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
-    NSDate *now = [NSDate date];
-    NSDateComponents *nowComponents = [calendar components:NSMonthCalendarUnit | NSDayCalendarUnit fromDate:now];
-    NSDateComponents *representedComponents = [calendar components:NSMonthCalendarUnit | NSWeekCalendarUnit | NSDayCalendarUnit
-                                                          fromDate:_weekViewController.date];
-    // Though accuracy of NSTimer is documented as 50-100ms, we must ensure that day is actually changed.
-    if ([nowComponents day] != [representedComponents day] || [nowComponents month] != [representedComponents month])
-    {
-        _weekViewController.date = now;
-        _dateViewController.date = now;
-        [CATransaction begin];
-        if (_weekViewController.mode == WLCalendarWeekViewWeekMode && [nowComponents week] != [representedComponents week])
-            [_weekViewController showNextWeekAndScroll];
-        else
-            [_weekViewController showNextDayAndScroll];
-        [_dateViewController updateViewAnimated:YES];
-        [CATransaction commit];
-        [self _scheduleNextDayTimer];
-    }
-    else
-        [self performSelector:@selector(_showNextDay) withObject:nil afterDelay:0.1];
-}
-
-
-#pragma mark NSObject
-
-- (void)observeValueForKeyPath:(NSString *)aKeyPath
-                      ofObject:(id)anObject
-                        change:(NSDictionary *)aChange
-                       context:(void *)aContext
-{
-    if ([aKeyPath isEqualToString:@"DisplayAllCalendars"] || [aKeyPath isEqualToString:@"Calendars"])
-    {
-        NSArray *c = [self calendarsToDisplay];
-        _weekViewController.calcalendars = c;
-        _tasksViewController.taskPredicate = [CalCalendarStore taskPredicateWithCalendars:c];
-        [_weekViewController updateViewAnimated:YES];
-    }
-    else if ([aKeyPath isEqualToString:@"RollingCalendar"])
-    {
-        _weekViewController.mode = [[aChange objectForKey:NSKeyValueChangeNewKey] integerValue];
-        [_weekViewController updateViewAnimated:YES];
-    }
-    else if ([aKeyPath isEqualToString:@"PerDayDate"])
-    {
-        _weekViewController.titleFormat = [[aChange objectForKey:NSKeyValueChangeNewKey] integerValue];
-        [_weekViewController updateViewAnimated:YES];
-    }
-    else
-        [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];
 }
 
 @end
