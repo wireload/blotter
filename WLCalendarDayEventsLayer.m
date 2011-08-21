@@ -64,7 +64,6 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 
 - (void)setEvents:(NSSet *)newEvents
 {
-    [CATransaction begin];
     [_sortedByStartDateEventLayers removeAllObjects];
     NSMutableArray *sublayersToRemove = [_sortedByUIDEventLayers mutableCopy];
     for (id event in newEvents)
@@ -95,7 +94,6 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
         [_sortedByUIDEventLayers removeObjectIdenticalTo:l];
     [sublayersToRemove release];
     _eventsChanged = YES;
-    [CATransaction commit];
 }
 
 - (NSUInteger)maximumNumberOfColumns

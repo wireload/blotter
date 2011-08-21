@@ -55,7 +55,6 @@ static const CGFloat _WLTopMargin = 10.0f;
 
 - (void)setEvents:(NSArray *)newEvents
 {
-    [CATransaction begin];
     [_icalSortedEventLayers removeAllObjects];
     NSMutableArray *sublayersToRemove = [_sortedByUIDEventLayers mutableCopy];
     for (id event in newEvents)
@@ -82,7 +81,6 @@ static const CGFloat _WLTopMargin = 10.0f;
     for (WLCalendarEventLayer *l in sublayersToRemove)
         [_sortedByUIDEventLayers removeObjectIdenticalTo:l];
     [sublayersToRemove release];
-    [CATransaction commit];
 }
 
 - (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth

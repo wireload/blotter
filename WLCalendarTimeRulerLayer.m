@@ -50,7 +50,6 @@
 
 - (void)setHours:(NSArray *)hours
 {
-    [CATransaction begin];
     [_sortedTimeLayers removeAllObjects];
     self.sublayers = nil;
     for (NSString *hour in hours)
@@ -59,7 +58,6 @@
         [self addSublayer:timeLayer];
         [_sortedTimeLayers addObject:timeLayer];
     }
-    [CATransaction commit];
     _shouldUpdatePreferredFrameWidthCache = YES;
 }
 
