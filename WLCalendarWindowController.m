@@ -179,12 +179,17 @@
 
     NSRect windowFrame = [BLCalendarFramer frameForPosition:windowPosition inFrame:screenFrame size:windowSize];
     NSDisableScreenUpdates();
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    [CATransaction setCompletionBlock:^(void) {
+        [window displayIfNeeded];
+        NSEnableScreenUpdates();
+    }];
     [window setFrame:windowFrame display:NO];
     if (!_isWindowShowed)
         [self _placeViews];
     [self _applyWindowSizeToViews];
-    [window displayIfNeeded];
-    NSEnableScreenUpdates();
+    [CATransaction commit];
 }
 
 - (void)_applyWindowSizeToViews
