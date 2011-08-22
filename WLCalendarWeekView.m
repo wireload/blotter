@@ -9,6 +9,7 @@
 #import "WLCalendarWeekView.h"
 #import "NSColor+CGColor.h"
 #import "CoreAnimation+WLCalendar.h"
+#import "WLSoftEdgeLayer.h"
 
 
 // Must be unique!
@@ -204,8 +205,11 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 
 - (void)updateEventsOfColumnsAtIndexes:(NSIndexSet *)anIndexSet
 {
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:10.0];
     [self _updateEventsOfColumnsAtIndexes:anIndexSet];
     [self heightOfHourMayHaveChanged];
+    [CATransaction commit];
 }
 
 - (void)updateTitleOfColumnsAtIndexes:(NSIndexSet *)anIndexSet
@@ -610,8 +614,12 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     newScrollPoint.y = floorf(fminf(fmaxf(newScrollPoint.y, topLimit), bottomLimit));
 
     [timeRulerLayer scrollPoint:newScrollPoint];
+    timeRulerScrollLayer.mask.frame = timeRulerScrollLayer.bounds;
     for (CALayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])
+    {
         [l scrollPoint:newScrollPoint];
+        l.superlayer.mask.frame = l.superlayer.bounds;
+    }
 }
 
 - (void)_focusOnHour
@@ -628,8 +636,12 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     newScrollPoint.y = floorf(fminf(fmaxf(newScrollPoint.y, topLimit), bottomLimit));
 
     [timeRulerLayer scrollPoint:newScrollPoint];
+    timeRulerScrollLayer.mask.frame = timeRulerScrollLayer.bounds;
     for (CALayer *l in [_columnLayers valueForKey:@"WL_dayScrollLayer"])
+    {
         [l scrollPoint:newScrollPoint];
+        l.superlayer.mask.frame = l.superlayer.bounds;
+    }
 }
 
 
@@ -723,6 +735,8 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
         l.name = _WLTimeRulerScrollLayerName;
         l.scrollMode = kCAScrollVertically;
         l.geometryFlipped = YES;
+        WLSoftEdgeLayer *m = [WLSoftEdgeLayer layer];
+        l.mask = m;
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor orangeColor] WL_CGColor];
 #endif
@@ -865,6 +879,8 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     __block CAScrollLayer *l = [CAScrollLayer layer];
     [CATransaction WL_performWithDisabledActions:^{
         l.name = _WLDayScrollLayerName;
+        WLSoftEdgeLayer *m = [WLSoftEdgeLayer layer];
+        l.mask = m;
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor purpleColor] WL_CGColor];
 #endif
