@@ -222,6 +222,7 @@
 		E214582B13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarBackgroundLayer.m; sourceTree = "<group>"; };
 		E21A5F431403D2A4000B6634 /* WLCalendarTaskLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTaskLayer.h; sourceTree = "<group>"; };
 		E21A5F441403D2A4000B6634 /* WLCalendarTaskLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarTaskLayer.m; sourceTree = "<group>"; };
+		E21A5F491403FBEF000B6634 /* WLMargin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLMargin.h; sourceTree = "<group>"; };
 		E21DB6CB13560D19004084F7 /* NSDate+ISO8601.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+ISO8601.h"; sourceTree = "<group>"; };
 		E21DB6CC13560D19004084F7 /* NSDate+ISO8601.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+ISO8601.m"; sourceTree = "<group>"; };
 		E221B3A113EC5C2F00F9B392 /* CoreAnimation+WLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreAnimation+WLCalendar.h"; sourceTree = "<group>"; };
@@ -445,6 +446,7 @@
 				E2948D931401484B007122BC /* NSCalendar+WLWeekend.m */,
 				E2E64B4C1402483500912A92 /* WLSoftEdgeLayer.h */,
 				E2E64B4D1402483500912A92 /* WLSoftEdgeLayer.m */,
+				E21A5F491403FBEF000B6634 /* WLMargin.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";

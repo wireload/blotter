@@ -10,6 +10,7 @@
 #import "NSColor+CGColor.h"
 #import "CATextLayer+WLStringSize.h"
 #import "CoreAnimation+WLCalendar.h"
+#import "NSColor+WLCalendar.h"
 
 
 static NSString* const _WLRootLayerName = @"root";
@@ -38,6 +39,8 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     CALayer *rootLayer = [CALayer layer];
     rootLayer.delegate = self;
     rootLayer.name = _WLRootLayerName;
+    rootLayer.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
+    [rootLayer.compositingFilter setDefaults];
     [CATransaction WL_performWithDisabledActions:^{
         rootLayer.needsDisplayOnBoundsChange = YES;
     }];
@@ -199,7 +202,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     NSGraphicsContext *context = [NSGraphicsContext graphicsContextWithBitmapImageRep:backgroundImageRep];
     [NSGraphicsContext saveGraphicsState];
     [NSGraphicsContext setCurrentContext:context];
-    [[NSColor colorWithCalibratedRed:101.0f/255.0f green:161.0f/255.0f blue:165.0f/255.0f alpha:0.13f] set];
+    [[NSColor WL_tasksColor] set];
     NSRectFill(NSMakeRect(0, 0, layerBounds.size.width, layerBounds.size.height));
     NSColor *startingColor = [NSColor clearColor];
     NSColor *endingColor = [NSColor colorWithCalibratedRed:1.0f green:1.0f blue:1.0f alpha:0.15f];

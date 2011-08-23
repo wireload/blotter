@@ -36,6 +36,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r);
 @interface WLCalendarWeekView : NSView <WLCalendarTimeRuler/*, CALayerManager*/> {
     IBOutlet NSObject<WLCalendarWeekViewDataSource> *dataSource;
     CGFloat minimumHeightOfAllDayEventsPartOfColumn;
+    CGFloat minimumHeightOfColumnTitle;
     BOOL showTimeIndicator;
     BOOL fitDayEvents;
     CGFloat minimumHeightOfHour;
@@ -52,9 +53,14 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r);
 @property (assign) NSObject<WLCalendarWeekViewDataSource> *dataSource;
 
 /*!
- @discussion Default value is 100.0f.
+ @discussion Default value is 114.0f.
  */
 @property CGFloat minimumHeightOfAllDayEventsPartOfColumn;
+
+/*!
+ @discussion Default value is 25.0f.
+ */
+@property CGFloat minimumHeightOfColumnTitle;
 
 @property (nonatomic) BOOL showTimeIndicator;
 
