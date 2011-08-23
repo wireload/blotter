@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 #import <CalendarStore/CalendarStore.h>
+#import "WLCalendarTaskLayer.h"
 
 
 @protocol WLCalendarTasksViewDataSource;
@@ -34,7 +35,7 @@
 - (void)moveTaskAtIndex:(NSUInteger)oldIndex toIndex:(NSUInteger)newIndex;
 
 
-- (CATextLayer *)_setupTaskLayerAtIndex:(NSUInteger)anIndex;
+- (WLCalendarTaskLayer *)_setupTaskLayerAtIndex:(NSUInteger)anIndex;
 
 @end
 

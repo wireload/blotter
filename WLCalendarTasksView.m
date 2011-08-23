@@ -51,17 +51,19 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     CATextLayer *titleLayer = [CATextLayer layer];
     titleLayer.name = _WLTitleLayerName;
     titleLayer.string = @"To Do";
+    titleLayer.fontSize = 26.0f;
+    titleLayer.font = [NSFont fontWithName:@"Helvetica" size:26.0f];
     [titleLayer addConstraint:[CAConstraint constraintWithAttribute:kCAConstraintMinX
                                                          relativeTo:@"superlayer"
-                                                          attribute:kCAConstraintMinX]];
+                                                          attribute:kCAConstraintMinX
+                                                             offset:14.0f]];
     [titleLayer addConstraint:[CAConstraint constraintWithAttribute:kCAConstraintWidth
                                                          relativeTo:@"superlayer"
                                                           attribute:kCAConstraintWidth]];
-    static const CGFloat TitleTopMargin = -5.0f;
     [titleLayer addConstraint:[CAConstraint constraintWithAttribute:kCAConstraintMaxY
                                                          relativeTo:@"superlayer"
                                                           attribute:kCAConstraintMaxY
-                                                             offset:TitleTopMargin]];
+                                                             offset:-16.0f]];
     titleLayer.actions = [NSDictionary dictionaryWithObjectsAndKeys:
                           [NSNull null],  @"position",
                           [NSNull null],  @"bounds", nil];
@@ -75,24 +77,22 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     _tasksLayer.name = _WLTasksLayerName;
     _tasksLayer.layoutManager = self;
     _tasksLayer.masksToBounds = YES;
-    static const CGFloat XMargin = 10.0f;
     [_tasksLayer addConstraint:[CAConstraint constraintWithAttribute:kCAConstraintMinX
                                                           relativeTo:@"superlayer"
                                                            attribute:kCAConstraintMinX
-                                                              offset:XMargin]];
+                                                              offset:14.0f]];
     [_tasksLayer addConstraint:[CAConstraint constraintWithAttribute:kCAConstraintMaxX
                                                           relativeTo:@"superlayer"
                                                            attribute:kCAConstraintMaxX
-                                                              offset:-XMargin]];
-    static const CGFloat YMargin = -15.0f;
+                                                              offset:-14]];
     [_tasksLayer addConstraint:[CAConstraint constraintWithAttribute:kCAConstraintMaxY
                                                           relativeTo:_WLTitleLayerName
                                                            attribute:kCAConstraintMinY
-                                                              offset:YMargin]];
+                                                              offset:-15.0f]];
     [_tasksLayer addConstraint:[CAConstraint constraintWithAttribute:kCAConstraintMinY
                                                           relativeTo:@"superlayer"
                                                            attribute:kCAConstraintMinY
-                                                              offset:-YMargin]];
+                                                              offset:15.0f]];
     _tasksLayer.actions = [NSDictionary dictionaryWithObjectsAndKeys:
                            [NSNull null], @"position",
                            [NSNull null], @"bounds",
@@ -124,7 +124,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 
 - (void)insertTaskAtIndex:(NSUInteger)anIndex
 {
-    CATextLayer *taskLayer = [self _setupTaskLayerAtIndex:anIndex];
+    WLCalendarTaskLayer *taskLayer = [self _setupTaskLayerAtIndex:anIndex];
     [_tasksLayer addSublayer:taskLayer];
     [[_tasksLayer valueForKey:_WLOrderedSublayersKey] insertObject:taskLayer atIndex:anIndex];
 }
@@ -132,7 +132,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 - (void)removeTaskAtIndex:(NSUInteger)anIndex
 {
     NSMutableArray *orderedTaskLayers = [_tasksLayer valueForKey:_WLOrderedSublayersKey];
-    CATextLayer *taskLayer = [orderedTaskLayers objectAtIndex:anIndex];
+    WLCalendarTaskLayer *taskLayer = [orderedTaskLayers objectAtIndex:anIndex];
     [orderedTaskLayers removeObjectAtIndex:anIndex];
     [taskLayer removeFromSuperlayer];
 }
@@ -140,9 +140,9 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 - (void)updateTaskAtIndex:(NSUInteger)anIndex
 {
     CalTask *task = [dataSource tasksView:self taskAtIndex:anIndex];
-    CATextLayer *taskLayer = [[_tasksLayer valueForKey:_WLOrderedSublayersKey] objectAtIndex:anIndex];
+    WLCalendarTaskLayer *taskLayer = [[_tasksLayer valueForKey:_WLOrderedSublayersKey] objectAtIndex:anIndex];
     taskLayer.string = task.title;
-    taskLayer.foregroundColor = [task.calendar.color WL_CGColor];
+    taskLayer.markColor = [[[task calendar] color] WL_CGColor];
     [_tasksLayer setNeedsLayout];
 }
 
@@ -160,23 +160,19 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 
 #pragma mark Private
 
-- (CATextLayer *)_setupTaskLayerAtIndex:(NSUInteger)anIndex
+- (WLCalendarTaskLayer *)_setupTaskLayerAtIndex:(NSUInteger)anIndex
 {
     CalTask *task = [dataSource tasksView:self taskAtIndex:anIndex];
-    CATextLayer *taskLayer = [CATextLayer layer];
-    taskLayer.string = task.title;
-    taskLayer.foregroundColor = [[[task calendar] color] WL_CGColor];
+    WLCalendarTaskLayer *taskLayer = [WLCalendarTaskLayer layer];
     taskLayer.name = task.uid;
-    taskLayer.masksToBounds = YES;
-    taskLayer.fontSize = 24.0f;
-    taskLayer.wrapped = YES;
-    taskLayer.truncationMode = kCATruncationEnd;
+    taskLayer.string = task.title;
+    taskLayer.markColor = [[[task calendar] color] WL_CGColor];
     CABasicAnimation *orderInAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
     [orderInAnimation setFromValue:[NSNumber numberWithFloat:0.0]];
     [orderInAnimation setToValue:[NSNumber numberWithFloat:1.0]];
     taskLayer.actions = [NSDictionary dictionaryWithObject:orderInAnimation forKey:kCAOnOrderIn];
 #ifdef DEBUG_LAYERS
-    taskLayer.backgroundColor = [[NSColor greenColor] WL_CGColor];
+    taskLayer.backgroundColor = [[NSColor orangeColor] WL_CGColor];
 #endif
     return taskLayer;
 }
@@ -217,7 +213,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 
 #pragma mark CALayoutManager
 
-- (void)layoutSublayersOfLayer:(CATextLayer *)layer
+- (void)layoutSublayersOfLayer:(CALayer *)layer
 {
     NSParameterAssert([layer.name isEqualToString:_WLTasksLayerName]);
 
@@ -225,9 +221,9 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     CGFloat top = layerSize.height;
     static const CGFloat TopMargin = 20.0f;
     static const CGFloat MaxHeight = 120.0f;
-    for (CATextLayer *taskLayer in [layer valueForKey:_WLOrderedSublayersKey])
+    for (WLCalendarTaskLayer *taskLayer in [layer valueForKey:_WLOrderedSublayersKey])
     {
-        CGFloat preferredHeight = MIN([taskLayer WL_maxStringHeightForWidth:layerSize.width], MaxHeight);
+        CGFloat preferredHeight = fminf([taskLayer maxHeightForWidth:layerSize.width], MaxHeight);
         taskLayer.frame = CGRectMake(0.0f, top - preferredHeight, layerSize.width, preferredHeight);
         top -= preferredHeight + TopMargin;
     }
