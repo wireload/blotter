@@ -15,4 +15,6 @@
 
 + (NSColor *)WL_columnColor;
 
++ (NSColor *)WL_tasksColor;
+
 @end

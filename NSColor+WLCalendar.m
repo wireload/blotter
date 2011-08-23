@@ -24,4 +24,12 @@
                                      alpha:1.0f];
 }
 
++ (NSColor *)WL_tasksColor
+{
+    return [NSColor colorWithCalibratedRed:101.0f / 255.0f
+                                     green:161.0f / 255.0f
+                                      blue:165.0f / 255.0f
+                                     alpha:0.15f];
+}
+
 @end
