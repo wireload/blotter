@@ -39,7 +39,7 @@
     NSParameterAssert([sortDescriptors count] > 0);
 
     [_tasks release];
-    NSPredicate *p = [CalCalendarStore taskPredicateWithCalendars:[[self representedObject] calCalendars]];
+    NSPredicate *p = [CalCalendarStore taskPredicateWithUncompletedTasks:[[self representedObject] calCalendars]];
     _tasks = [[[CalCalendarStore defaultCalendarStore] tasksWithPredicate:p] mutableCopy];
     for (CalTask *task in _tasks)
         [self _preprocessTask:task];
