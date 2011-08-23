@@ -69,9 +69,9 @@
     static const CGFloat YPaddingBetweenLayers = 5.0f;
 
     CGFloat w = aLayer.bounds.size.width;
-    _monthDayLayer.frame = CGRectIntegral(CGRectMake(0.0f, NSMaxY([self bounds]) - 130.0f, w, 130.0f));
-    _monthAndYearLayer.frame = CGRectIntegral(CGRectMake(0.0f, CGRectGetMinY(_monthDayLayer.frame) - YPaddingBetweenLayers - 24.0f, w, 24.0f));
-    _weekdayLayer.frame = CGRectIntegral(CGRectMake(0.0f, CGRectGetMinY(_monthAndYearLayer.frame) - YPaddingBetweenLayers - 24.0f, w, 24.0f));
+    _monthDayLayer.frame = CGRectIntegral(CGRectMake(0.0f, NSMaxY([self bounds]) - 170.0f, w, 170.0f));
+    _monthAndYearLayer.frame = CGRectIntegral(CGRectMake(0.0f, CGRectGetMinY(_monthDayLayer.frame) - YPaddingBetweenLayers - 26.0f, w, 26.0f));
+    _weekdayLayer.frame = CGRectIntegral(CGRectMake(0.0f, CGRectGetMinY(_monthAndYearLayer.frame) - YPaddingBetweenLayers - 26.0f, w, 26.0f));
 }
 
 
@@ -83,7 +83,8 @@
     [CATransaction WL_performWithDisabledActions:^{
         l.foregroundColor = [[NSColor whiteColor] WL_CGColor];
         l.alignmentMode = kCAAlignmentCenter;
-        l.fontSize = 144.0f;
+        l.fontSize = 200.0f;
+        l.font = [NSFont fontWithName:@"Helvetica" size:200.0f];
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif
@@ -97,7 +98,8 @@
     [CATransaction WL_performWithDisabledActions:^{
         l.foregroundColor = [[NSColor whiteColor] WL_CGColor];
         l.alignmentMode = kCAAlignmentCenter;
-        l.fontSize = 24.0f;
+        l.fontSize = 26.0f;
+        l.font = [NSFont fontWithName:@"Helvetica" size:26.0f];
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif
@@ -111,7 +113,8 @@
     [CATransaction WL_performWithDisabledActions:^{
         l.foregroundColor = [[NSColor whiteColor] WL_CGColor];
         l.alignmentMode = kCAAlignmentCenter;
-        l.fontSize = 24.0f;
+        l.fontSize = 26.0f;
+        l.font = [NSFont fontWithName:@"Helvetica" size:26.0f];
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif
@@ -120,7 +123,7 @@
 }
 
 
-#pragma mark
+#pragma mark NSView
 
 - (BOOL)isFlipped
 {
