@@ -19,7 +19,7 @@
     {
         CALayer *layer = [CALayer layer];
         layer.backgroundColor = [[[NSColor blackColor] colorWithAlphaComponent:0.2] WL_CGColor];
-        layer.borderColor = [[NSColor blackColor] WL_CGColor];
+        layer.borderColor = [[[NSColor blackColor] colorWithAlphaComponent:0.5f] WL_CGColor];
         layer.borderWidth = 10.0f;
         layer.cornerRadius = 10.0f;
         [self setLayer:layer];
