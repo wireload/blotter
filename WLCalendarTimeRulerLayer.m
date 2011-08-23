@@ -89,7 +89,7 @@
     CATextLayer *l = [CATextLayer layer];
     [CATransaction WL_performWithDisabledActions:^{
         l.alignmentMode = kCAAlignmentRight;
-        l.fontSize = 14.0f;
+        l.fontSize = 11.0f;
         l.string = aTime;
         l.wrapped = NO;
         l.truncationMode = kCATruncationNone;
