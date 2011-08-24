@@ -137,8 +137,11 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 - (void)_updateEventLayer:(WLCalendarEventLayer *)aLayer withEvent:(id)anEvent
 {
     aLayer.name = [anEvent uid];
-    NSDictionary *attr = [NSDictionary dictionaryWithObject:(id)[[NSColor whiteColor] WL_CGColor]
-                                                     forKey:(id)kCTForegroundColorAttributeName];
+    CTFontRef font = CTFontCreateWithName(CFSTR("Helvetica Neue"), 10.0f, nil);
+    NSDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:
+                          (id)[[NSColor whiteColor] WL_CGColor],    (id)kCTForegroundColorAttributeName,
+                          (id)font,                                 (id)kCTFontAttributeName, nil];
+    CFRelease(font);
     NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:[anEvent title]
                                                                            attributes:attr];
     aLayer.string = attributedString;

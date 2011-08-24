@@ -9,6 +9,7 @@
 #import "WLCalendarTimeRulerLayer.h"
 #import "NSColor+CGColor.h"
 #import "CoreAnimation+WLCalendar.h"
+#import "NSColor+WLCalendar.h"
 
 
 @implementation WLCalendarTimeRulerLayer
@@ -89,13 +90,15 @@
     CATextLayer *l = [CATextLayer layer];
     [CATransaction WL_performWithDisabledActions:^{
         l.alignmentMode = kCAAlignmentRight;
-        l.fontSize = 11.0f;
+        l.fontSize = 9.0f;
+        l.font = [NSFont fontWithName:@"Helvetica" size:9.0f];
         l.string = aTime;
         l.wrapped = NO;
         l.truncationMode = kCATruncationNone;
-//        l.shadowOpacity = 1.0f;
-//        l.shadowOffset = CGSizeMake(0.0f, 1.0f);
-//        l.shadowRadius = 1.0f;
+        l.shadowOpacity = 1.0f;
+        l.shadowOffset = CGSizeMake(0.0f, 1.0f);
+        l.shadowRadius = 0.0f;
+        l.shadowColor = [[NSColor WL_timelineShadowColor] WL_CGColor];
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif

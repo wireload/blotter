@@ -10,6 +10,7 @@
 #import "CATextLayer+WLStringSize.h"
 #import "NSColor+CGColor.h"
 #import "CoreText+Additions.h"
+#import "NSColor+WLCalendar.h"
 
 
 const CGFloat _WLYPadding = 10.0f;
@@ -170,6 +171,7 @@ const CGFloat _WLXPadding = 10.0f;
         CGContextSetAllowsFontSmoothing(aContext, YES);
         CGContextSetShouldAntialias(aContext, YES);
         CGContextSetAllowsAntialiasing(aContext, YES);
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0f), 0.0f, [[NSColor WL_eventShadowColor] WL_CGColor]);
         CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self.string);
         if (framesetter != NULL)
         {

@@ -56,6 +56,10 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     titleLayer.string = @"To Do";
     titleLayer.fontSize = 26.0f;
     titleLayer.font = [NSFont fontWithName:@"Helvetica" size:26.0f];
+    titleLayer.shadowColor = [[NSColor WL_tasksShadowColor] WL_CGColor];
+    titleLayer.shadowOffset = CGSizeMake(0.0f, -1.0f);
+    titleLayer.shadowOpacity = 1.0f;
+    titleLayer.shadowRadius = 0.0f;
     [titleLayer addConstraint:[CAConstraint constraintWithAttribute:kCAConstraintMinX
                                                          relativeTo:@"superlayer"
                                                           attribute:kCAConstraintMinX
@@ -183,34 +187,53 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 
 #pragma mark CALayerDelegate
 
-- (void)displayLayer:(CALayer *)layer
+- (void)drawLayer:(CALayer *)aLayer inContext:(CGContextRef)aContext
 {
-    NSParameterAssert([layer.name isEqualToString:_WLRootLayerName]);
-#ifndef DEBUG_LAYERS
-    NSRect layerBounds = NSRectFromCGRect(layer.bounds);
-    NSSize layerSize = [self convertSizeToBase:layerBounds.size];
-    NSBitmapImageRep *backgroundImageRep = [[[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL
-                                                                                    pixelsWide:layerSize.width
-                                                                                    pixelsHigh:layerSize.height
-                                                                                 bitsPerSample:8
-                                                                               samplesPerPixel:4
-                                                                                      hasAlpha:YES
-                                                                                      isPlanar:NO
-                                                                                colorSpaceName:NSCalibratedRGBColorSpace
-                                                                                   bytesPerRow:0
-                                                                                  bitsPerPixel:0] autorelease];
-    NSGraphicsContext *context = [NSGraphicsContext graphicsContextWithBitmapImageRep:backgroundImageRep];
+    NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:NO];
+    [c setImageInterpolation:NSImageInterpolationHigh];
     [NSGraphicsContext saveGraphicsState];
-    [NSGraphicsContext setCurrentContext:context];
-    [[NSColor WL_tasksColor] set];
-    NSRectFill(NSMakeRect(0, 0, layerBounds.size.width, layerBounds.size.height));
-    NSColor *startingColor = [NSColor clearColor];
-    NSColor *endingColor = [NSColor colorWithCalibratedRed:1.0f green:1.0f blue:1.0f alpha:0.15f];
-    NSGradient *transparentGradient = [[[NSGradient alloc] initWithStartingColor:startingColor endingColor:endingColor] autorelease];
-    [transparentGradient drawInRect:layerBounds angle:90];
+    [NSGraphicsContext setCurrentContext:c];
+
+    NSSize bottomBorderSize = NSMakeSize(aLayer.bounds.size.width, [[NSImage imageNamed:@"info-bottom"] size].height);
+    NSSize topBorderSize = NSMakeSize(aLayer.bounds.size.width, [[NSImage imageNamed:@"info-top"] size].height);
+    NSSize middleBorderSize = NSMakeSize(aLayer.bounds.size.width, aLayer.bounds.size.height - bottomBorderSize.height - topBorderSize.height);
+
+    NSRect dirtyRect = NSRectFromCGRect(CGContextGetClipBoundingBox(aContext));
+
+    NSRect bottomBorderFrame = NSMakeRect(0.0, 0.0, bottomBorderSize.width, bottomBorderSize.height);
+    if (NSIntersectsRect(bottomBorderFrame, dirtyRect))
+    {
+        NSDrawThreePartImage(bottomBorderFrame,
+                             [NSImage imageNamed:@"info-bottom-left"],
+                             [NSImage imageNamed:@"info-bottom"],
+                             [NSImage imageNamed:@"info-bottom-right"],
+                             NO,
+                             NSCompositeSourceOver,
+                             1.0,
+                             NO);
+    }
+
+
+    NSRect middleBorderFrame = NSMakeRect(0.0, NSMaxY(bottomBorderFrame), middleBorderSize.width, middleBorderSize.height);
+    if (NSIntersectsRect(middleBorderFrame, dirtyRect))
+    {
+        [[NSImage imageNamed:@"info-box"] drawInRect:middleBorderFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0f];
+    }
+
+    NSRect topBorderFrame = NSMakeRect(0.0, NSMaxY(middleBorderFrame), topBorderSize.width, topBorderSize.height);
+    if (NSIntersectsRect(topBorderFrame, topBorderFrame))
+    {
+        NSDrawThreePartImage(topBorderFrame,
+                             [NSImage imageNamed:@"info-top-left"],
+                             [NSImage imageNamed:@"info-top"],
+                             [NSImage imageNamed:@"info-top-right"],
+                             NO,
+                             NSCompositeSourceOver,
+                             1.0,
+                             NO);
+    }
+
     [NSGraphicsContext restoreGraphicsState];
-    layer.contents = (id)[backgroundImageRep CGImage];
-#endif
 }
 
 

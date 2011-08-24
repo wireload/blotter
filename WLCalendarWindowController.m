@@ -216,7 +216,7 @@
     WLCalendarDateView *dateView = [_dateViewController view];
     NSRect dateViewFrame = NSMakeRect(NSMinX(contentBounds) + 19.0f,
             NSMinY(contentBounds) + 8.0f,
-            221.0f,
+            222.0f,
             252.0f);
     dateViewFrame = [contentView centerScanRect:dateViewFrame];
     [dateView setFrame:dateViewFrame];

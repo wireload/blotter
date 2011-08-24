@@ -15,6 +15,7 @@
 #import "WLCalendarDayEventsLayer.h"
 #import "WLCalendarAllDayEventsLayer.h"
 #import "WLCalendarTimeIndicatorLayer.h"
+#import "WLBlockLayer.h"
 
 
 @protocol WLCalendarWeekViewDataSource;
@@ -154,7 +155,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r);
 
 - (CALayer *)setupTimeRulerRootLayer;
 
-- (WLCalendarBackgroundLayer *)setupTimeRulerBackgroundLayer;
+- (WLBlockLayer *)setupTimeRulerBackgroundLayer;
 
 - (CAScrollLayer *)setupTimeRulerScrollLayer;
 
@@ -165,7 +166,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r);
 
 - (CALayer *)setupColumnLayer;
 
-- (WLCalendarBackgroundLayer *)setupAllDayBackgroundLayer;
+- (WLBlockLayer *)setupAllDayBackgroundLayer;
 
 - (WLCalendarAllDayEventsLayer *)setupAllDayLayer;
 
@@ -175,7 +176,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r);
 
 - (CATextLayer *)setupDayTitleLayer;
 
-- (WLCalendarBackgroundLayer *)setupDayBackgroundLayer;
+- (WLBlockLayer *)setupDayBackgroundLayer;
 
 
 - (CALayer *)setupTimeIndicatorRootLayer;
@@ -192,7 +193,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r);
 - (WLCalendarAllDayEventsLayer *)WL_allDayLayer;
 
 
-- (WLCalendarBackgroundLayer *)WL_dayBackgroundLayer;
+- (WLBlockLayer *)WL_dayBackgroundLayer;
 
 - (CAScrollLayer *)WL_dayScrollLayer;
 

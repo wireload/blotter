@@ -143,10 +143,10 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 
 - (void)highlightCurrentDayIfNeeded
 {
-    if (self.mode == WLCalendarWeekViewWeekMode)
-        [[self view] setIndexOfHighlightedColumn:[self currentDay]];
-    else
-        [[self view] setIndexOfHighlightedColumn:NSNotFound];
+//    if (self.mode == WLCalendarWeekViewWeekMode)
+//        [[self view] setIndexOfHighlightedColumn:[self currentDay]];
+//    else
+//        [[self view] setIndexOfHighlightedColumn:NSNotFound];
 }
 
 - (NSDate *)firstColumnDate
@@ -439,8 +439,8 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     v.fitDayEvents = YES;
     [v scrollHour:[self currentHour] animated:NO];
     [v createLayers];
-    if (self.mode == WLCalendarWeekViewWeekMode)
-        v.indexOfHighlightedColumn = [self currentDay];
+//    if (self.mode == WLCalendarWeekViewWeekMode)
+//        v.indexOfHighlightedColumn = [self currentDay];
     [v release];
     [self addObserver:self forKeyPath:@"representedObject.date" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:NULL];
     [self addObserver:self forKeyPath:@"representedObject.calendar" options:NSKeyValueObservingOptionNew context:NULL];

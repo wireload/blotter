@@ -32,4 +32,44 @@
                                      alpha:0.15f];
 }
 
++ (NSColor *)WL_tasksShadowColor
+{
+    return [NSColor colorWithCalibratedRed:47.0f / 255.0f
+                                     green:47.0f / 255.0f
+                                      blue:47.0f / 255.0f
+                                     alpha:0.3f];
+}
+
++ (NSColor *)WL_dateShadowColor
+{
+    return [NSColor colorWithCalibratedRed:47.0f / 255.0f
+                                     green:47.0f / 255.0f
+                                      blue:47.0f / 255.0f
+                                     alpha:0.1f];
+}
+
++ (NSColor *)WL_timelineShadowColor
+{
+    return [NSColor colorWithCalibratedRed:51.0f / 255.0f
+                                     green:51.0f / 255.0f
+                                      blue:51.0f / 255.0f
+                                     alpha:1.0f];
+}
+
++ (NSColor *)WL_columnTitleShadowColor
+{
+    return [NSColor colorWithCalibratedRed:51.0f / 255.0f
+                                     green:51.0f / 255.0f
+                                      blue:51.0f / 255.0f
+                                     alpha:1.0f];
+}
+
++ (NSColor *)WL_eventShadowColor
+{
+    return [NSColor colorWithCalibratedRed:47.0f / 255.0f
+                                     green:47.0f / 255.0f
+                                      blue:47.0f / 255.0f
+                                     alpha:0.3f];
+}
+
 @end

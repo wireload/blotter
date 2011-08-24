@@ -17,4 +17,14 @@
 
 + (NSColor *)WL_tasksColor;
 
++ (NSColor *)WL_tasksShadowColor;
+
++ (NSColor *)WL_dateShadowColor;
+
++ (NSColor *)WL_timelineShadowColor;
+
++ (NSColor *)WL_columnTitleShadowColor;
+
++ (NSColor *)WL_eventShadowColor;
+
 @end

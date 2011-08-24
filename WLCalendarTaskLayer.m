@@ -9,6 +9,7 @@
 #import "WLCalendarTaskLayer.h"
 #import "NSColor+CGColor.h"
 #import "CATextLayer+WLStringSize.h"
+#import "NSColor+WLCalendar.h"
 
 
 static NSString* const _WLMarkLayerName = @"mark";
@@ -44,6 +45,10 @@ static const CGFloat _WLMarkTailIndent = 6.0f;
         text.foregroundColor = (CGColorRef)[[self class] defaultValueForKey:@"markColor"];
         text.fontSize = [[[self class] defaultValueForKey:@"fontSize"] floatValue];
         text.font = [[self class] defaultValueForKey:@"font"];
+        text.shadowColor = [[NSColor WL_tasksShadowColor] WL_CGColor];
+        text.shadowOffset = CGSizeMake(0.0f, -1.0f);
+        text.shadowOpacity = 1.0f;
+        text.shadowRadius = 0.0f;
 #ifdef DEBUG_LAYERS
         text.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif

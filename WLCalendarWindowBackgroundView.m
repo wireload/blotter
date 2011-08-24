@@ -17,15 +17,45 @@
     self = [super initWithFrame:aFrameRect];
     if (self != nil)
     {
-        CALayer *layer = [CALayer layer];
-        layer.backgroundColor = [[[NSColor blackColor] colorWithAlphaComponent:0.25] WL_CGColor];
-        layer.borderColor = [[[NSColor blackColor] colorWithAlphaComponent:0.45f] WL_CGColor];
-        layer.borderWidth = 10.0f;
-        layer.cornerRadius = 10.0f;
-        [self setLayer:layer];
         [self setWantsLayer:YES];
     }
     return self;
+}
+
+
+#pragma mark NSView
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+    NSDrawThreePartImage(NSMakeRect(0.0f, 0.0f, [self bounds].size.width, 13.0f),
+                         [NSImage imageNamed:@"calendar-background-top-left"],
+                         [NSImage imageNamed:@"calendar-background-top"],
+                         [NSImage imageNamed:@"calendar-background-top-right"],
+                         NO,
+                         NSCompositeSourceOver,
+                         1.0f,
+                         YES);
+    NSDrawThreePartImage(NSMakeRect(0.0f, 13.0f, [self bounds].size.width, 69.0f),
+                         [NSImage imageNamed:@"calendar-background-right-gradient"],
+                         [NSImage imageNamed:@"calendar-background-center"],
+                         [NSImage imageNamed:@"calendar-background-left-gradient"],
+                         NO,
+                         NSCompositeSourceOver,
+                         1.0f,
+                         YES);
+    NSDrawNinePartImage(NSMakeRect(0.0f, 82.0f, [self bounds].size.width, [self bounds].size.height - 82.0f),
+                        [NSImage imageNamed:@"calendar-background-left"],
+                        [NSImage imageNamed:@"calendar-background-center"],
+                        [NSImage imageNamed:@"calendar-background-right"],
+                        [NSImage imageNamed:@"calendar-background-left"],
+                        [NSImage imageNamed:@"calendar-background-center"],
+                        [NSImage imageNamed:@"calendar-background-right"],
+                        [NSImage imageNamed:@"calendar-background-bottom-left"],
+                        [NSImage imageNamed:@"calendar-background-bottom"],
+                        [NSImage imageNamed:@"calendar-background-bottom-right"],
+                        NSCompositeSourceOver,
+                        1.0f,
+                        YES);
 }
 
 - (BOOL)isFlipped

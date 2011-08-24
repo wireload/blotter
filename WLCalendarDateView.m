@@ -9,6 +9,7 @@
 #import "WLCalendarDateView.h"
 #import "CoreAnimation+WLCalendar.h"
 #import "NSColor+CGColor.h"
+#import "NSColor+WLCalendar.h"
 
 
 @implementation WLCalendarDateView
@@ -85,6 +86,10 @@
         l.alignmentMode = kCAAlignmentCenter;
         l.fontSize = 200.0f;
         l.font = [NSFont fontWithName:@"Helvetica" size:200.0f];
+        l.shadowColor = [[NSColor WL_dateShadowColor] WL_CGColor];
+        l.shadowOffset = CGSizeMake(0.0f, -1.0f);
+        l.shadowOpacity = 1.0f;
+        l.shadowRadius = 0.0f;
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif
@@ -100,6 +105,10 @@
         l.alignmentMode = kCAAlignmentCenter;
         l.fontSize = 26.0f;
         l.font = [NSFont fontWithName:@"Helvetica" size:26.0f];
+        l.shadowColor = [[NSColor WL_dateShadowColor] WL_CGColor];
+        l.shadowOffset = CGSizeMake(0.0f, -1.0f);
+        l.shadowOpacity = 1.0f;
+        l.shadowRadius = 0.0f;
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif
@@ -115,6 +124,10 @@
         l.alignmentMode = kCAAlignmentCenter;
         l.fontSize = 26.0f;
         l.font = [NSFont fontWithName:@"Helvetica" size:26.0f];
+        l.shadowColor = [[NSColor WL_dateShadowColor] WL_CGColor];
+        l.shadowOffset = CGSizeMake(0.0f, -1.0f);
+        l.shadowOpacity = 1.0f;
+        l.shadowRadius = 0.0f;
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif
