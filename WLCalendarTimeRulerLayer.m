@@ -55,7 +55,7 @@
     self.sublayers = nil;
     for (NSString *hour in hours)
     {
-        CATextLayer *timeLayer = [self _setupTimeLayerWithString:hour];
+        WLCalendarTextLayer *timeLayer = [self _setupTimeLayerWithString:hour];
         [self addSublayer:timeLayer];
         [_sortedTimeLayers addObject:timeLayer];
     }
@@ -85,20 +85,14 @@
 
 #pragma mark Private
 
-- (CATextLayer *)_setupTimeLayerWithString:(NSString *)aTime
+- (WLCalendarTextLayer *)_setupTimeLayerWithString:(NSString *)aTime
 {
-    CATextLayer *l = [CATextLayer layer];
+    WLCalendarTextLayer *l = [WLCalendarTextLayer layer];
     [CATransaction WL_performWithDisabledActions:^{
-        l.alignmentMode = kCAAlignmentRight;
-        l.fontSize = 9.0f;
-        l.font = [NSFont fontWithName:@"Helvetica" size:9.0f];
         l.string = aTime;
-        l.wrapped = NO;
-        l.truncationMode = kCATruncationNone;
-        l.shadowOpacity = 1.0f;
-        l.shadowOffset = CGSizeMake(0.0f, 1.0f);
-        l.shadowRadius = 0.0f;
-        l.shadowColor = [[NSColor WL_timelineShadowColor] WL_CGColor];
+        l.stringShadowColor = [[NSColor WL_timelineShadowColor] WL_CGColor];
+        l.font = (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica"), 9.0f, nil) autorelease];
+        l.needsDisplayOnBoundsChange = YES;
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif

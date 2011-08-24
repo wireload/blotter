@@ -300,7 +300,7 @@ const CGFloat _WLXPadding = 10.0f;
         CFRelease(framePath);
         CFRelease(framesetter);
     }
-    return CGSizeMake(preferredFrameSize.width + _WLXPadding, preferredFrameSize.height + _WLYPadding);
+    return CGSizeMake(ceilf(preferredFrameSize.width + _WLXPadding), ceilf(preferredFrameSize.height + _WLYPadding));
 }
 
 - (BOOL)contentsAreFlipped

@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 #import "WLCalendarTimeRuler.h"
+#import "WLCalendarTextLayer.h"
 
 
 @interface WLCalendarTimeRulerLayer : CALayer {
@@ -29,6 +30,6 @@
 - (CGFloat)preferredFrameWidth;
 
 
-- (CATextLayer *)_setupTimeLayerWithString:(NSString *)aTime;
+- (WLCalendarTextLayer *)_setupTimeLayerWithString:(NSString *)aTime;
 
 @end
