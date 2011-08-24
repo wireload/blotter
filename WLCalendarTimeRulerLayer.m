@@ -124,7 +124,7 @@
     for (CATextLayer *timeLayer in _sortedTimeLayers)
     {
         CGSize size = [timeLayer preferredFrameSize];
-        timeLayer.frame = CGRectMake(0.0f, floorf(yOffset - size.height / 2), self.bounds.size.width, size.height);
+        timeLayer.frame = CGRectIntegral(CGRectMake(0.0f, yOffset - size.height / 2, self.bounds.size.width, size.height));
         yOffset += heightOfHour;
     }
 }
