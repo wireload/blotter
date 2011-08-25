@@ -200,6 +200,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     NSSize middleBorderSize = NSMakeSize(aLayer.bounds.size.width, aLayer.bounds.size.height - bottomBorderSize.height - topBorderSize.height);
 
     NSRect dirtyRect = NSRectFromCGRect(CGContextGetClipBoundingBox(aContext));
+    static CGFloat AlphaFraction = 0.5f;
 
     NSRect bottomBorderFrame = NSMakeRect(0.0, 0.0, bottomBorderSize.width, bottomBorderSize.height);
     if (NSIntersectsRect(bottomBorderFrame, dirtyRect))
@@ -210,7 +211,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
                              [NSImage imageNamed:@"info-bottom-right"],
                              NO,
                              NSCompositeSourceOver,
-                             1.0,
+                             AlphaFraction,
                              NO);
     }
 
@@ -218,7 +219,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     NSRect middleBorderFrame = NSMakeRect(0.0, NSMaxY(bottomBorderFrame), middleBorderSize.width, middleBorderSize.height);
     if (NSIntersectsRect(middleBorderFrame, dirtyRect))
     {
-        [[NSImage imageNamed:@"info-box"] drawInRect:middleBorderFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0f];
+        [[NSImage imageNamed:@"info-box"] drawInRect:middleBorderFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:AlphaFraction];
     }
 
     NSRect topBorderFrame = NSMakeRect(0.0, NSMaxY(middleBorderFrame), topBorderSize.width, topBorderSize.height);
@@ -230,7 +231,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
                              [NSImage imageNamed:@"info-top-right"],
                              NO,
                              NSCompositeSourceOver,
-                             1.0,
+                             AlphaFraction,
                              NO);
     }
 

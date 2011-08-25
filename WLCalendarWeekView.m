@@ -731,6 +731,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
         l.masksToBounds = YES;
         l.needsDisplayOnBoundsChange = YES;
         l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
+#ifndef DEBUG_LAYERS
         l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
             NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:NO];
             [c setImageInterpolation:NSImageInterpolationHigh];
@@ -742,6 +743,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
             NSSize middleBorderSize = NSMakeSize(aLayer.bounds.size.width, aLayer.bounds.size.height - bottomBorderSize.height - topBorderSize.height);
 
             NSRect dirtyRect = NSRectFromCGRect(aDirtyRect);
+            static CGFloat AlphaFraction = 0.5f;
 
             NSRect bottomBorderFrame = NSMakeRect(0.0, 0.0, bottomBorderSize.width, bottomBorderSize.height);
             if (NSIntersectsRect(bottomBorderFrame, dirtyRect))
@@ -752,7 +754,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
                                      [NSImage imageNamed:@"timeruler-bottom-right"],
                                      NO,
                                      NSCompositeSourceOver,
-                                     1.0,
+                                     AlphaFraction,
                                      NO);
             }
 
@@ -762,19 +764,19 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
                 [[NSImage imageNamed:@"timeruler-middle-left"] drawInRect:NSMakeRect(0.0f, middleBorderFrame.origin.y, 1.0f, middleBorderFrame.size.height)
                                                            fromRect:NSZeroRect
                                                           operation:NSCompositeSourceOver
-                                                           fraction:1.0f
+                                                           fraction:AlphaFraction
                                                      respectFlipped:YES
                                                               hints:nil];
                 [[NSImage imageNamed:@"timeruler-middle"] drawInRect:NSMakeRect(1.0f, middleBorderFrame.origin.y, middleBorderFrame.size.width - 2.0f, middleBorderFrame.size.height)
                                                       fromRect:NSZeroRect
                                                      operation:NSCompositeSourceOver
-                                                      fraction:1.0f
+                                                      fraction:AlphaFraction
                                                 respectFlipped:YES
                                                          hints:nil];
                 [[NSImage imageNamed:@"timeruler-middle-right"] drawInRect:NSMakeRect(middleBorderFrame.size.width - 1.0f, middleBorderFrame.origin.y, 1.0f, middleBorderFrame.size.height)
                                                             fromRect:NSZeroRect
                                                            operation:NSCompositeSourceOver
-                                                            fraction:1.0f
+                                                            fraction:AlphaFraction
                                                       respectFlipped:YES
                                                                hints:nil];
             }
@@ -788,12 +790,12 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
                                      [NSImage imageNamed:@"timeruler-top-right"],
                                      NO,
                                      NSCompositeSourceOver,
-                                     1.0,
+                                     AlphaFraction,
                                      NO);
             }
             [NSGraphicsContext restoreGraphicsState];
         };
-#ifdef DEBUG_LAYERS
+#elif
         l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
 #endif
     }];
@@ -808,8 +810,8 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
         l.scrollMode = kCAScrollVertically;
         l.geometryFlipped = YES;
         l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
-        WLSoftEdgeLayer *m = [WLSoftEdgeLayer layer];
-        l.mask = m;
+//        WLSoftEdgeLayer *m = [WLSoftEdgeLayer layer];
+//        l.mask = m;
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor orangeColor] WL_CGColor];
 #endif
@@ -919,6 +921,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
         l.name = _WLAllDayBackgroundLayerName;
         l.needsDisplayOnBoundsChange = YES;
         l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
+#ifndef DEBUG_LAYERS
         l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
             NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:NO];
             [c setImageInterpolation:NSImageInterpolationHigh];
@@ -930,6 +933,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
             NSSize middleBorderSize = NSMakeSize(aLayer.bounds.size.width, aLayer.bounds.size.height - bottomBorderSize.height - topBorderSize.height);
 
             NSRect dirtyRect = NSRectFromCGRect(aDirtyRect);
+            static CGFloat AlphaFraction = 0.5f;
 
             NSRect topBorderFrame = NSMakeRect(0.0, 0.0, topBorderSize.width, topBorderSize.height);
             if (NSIntersectsRect(topBorderFrame, topBorderFrame))
@@ -940,7 +944,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
                                      [NSImage imageNamed:@"allday-top-right"],
                                      NO,
                                      NSCompositeSourceOver,
-                                     1.0,
+                                     AlphaFraction,
                                      YES);
             }
 
@@ -953,7 +957,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
                                      [NSImage imageNamed:@"allday-middle-right"],
                                      NO,
                                      NSCompositeSourceOver,
-                                     1.0,
+                                     AlphaFraction,
                                      YES);
             }
 
@@ -966,13 +970,13 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
                                      [NSImage imageNamed:@"allday-bottom-right"],
                                      NO,
                                      NSCompositeSourceOver,
-                                     1.0,
+                                     AlphaFraction,
                                      YES);
             }
 
             [NSGraphicsContext restoreGraphicsState];
         };
-#ifdef DEBUG_LAYERS
+#elif
         l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
 #endif
     }];
@@ -1046,6 +1050,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
         l.name = _WLDayBackgroundLayerName;
         l.needsDisplayOnBoundsChange = YES;
         l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
+#ifndef DEBUG_LAYERS
         l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
             NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:YES];
             [c setImageInterpolation:NSImageInterpolationHigh];
@@ -1058,6 +1063,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 
             NSRect dirtyRect = NSRectFromCGRect(aDirtyRect);
 
+            static CGFloat AlphaFraction = 0.5f;
             NSRect topBorderFrame = NSMakeRect(0.0, 0.0, topBorderSize.width, topBorderSize.height);
             if (NSIntersectsRect(topBorderFrame, topBorderFrame))
             {
@@ -1067,7 +1073,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
                                      [NSImage imageNamed:@"day-top-right"],
                                      NO,
                                      NSCompositeSourceOver,
-                                     1.0,
+                                     AlphaFraction,
                                      YES);
             }
 
@@ -1077,19 +1083,19 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
                 [[NSImage imageNamed:@"day-middle-left"] drawInRect:NSMakeRect(0.0f, middleBorderFrame.origin.y, 1.0f, middleBorderFrame.size.height)
                                                            fromRect:NSZeroRect
                                                           operation:NSCompositeSourceOver
-                                                           fraction:1.0f
+                                                           fraction:AlphaFraction
                                                      respectFlipped:YES
                                                               hints:nil];
                 [[NSImage imageNamed:@"day-middle"] drawInRect:NSMakeRect(1.0f, middleBorderFrame.origin.y, middleBorderFrame.size.width - 2.0f, middleBorderFrame.size.height)
                                                       fromRect:NSZeroRect
                                                      operation:NSCompositeSourceOver
-                                                      fraction:1.0f
+                                                      fraction:AlphaFraction
                                                 respectFlipped:YES
                                                          hints:nil];
                 [[NSImage imageNamed:@"day-middle-right"] drawInRect:NSMakeRect(middleBorderFrame.size.width - 1.0f, middleBorderFrame.origin.y, 1.0f, middleBorderFrame.size.height)
                                                             fromRect:NSZeroRect
                                                            operation:NSCompositeSourceOver
-                                                            fraction:1.0f
+                                                            fraction:AlphaFraction
                                                       respectFlipped:YES
                                                                hints:nil];
             }
@@ -1103,12 +1109,12 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
                                      [NSImage imageNamed:@"day-bottom-right"],
                                      NO,
                                      NSCompositeSourceOver,
-                                     1.0,
+                                     AlphaFraction,
                                      YES);
             }
             [NSGraphicsContext restoreGraphicsState];
         };
-#ifdef DEBUG_LAYERS
+#elif
         l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
 #endif
     }];
