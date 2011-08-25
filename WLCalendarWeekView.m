@@ -318,7 +318,11 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
         }
     }
     if (areThereEvents)
+    {
+        r.startHour = floorf(r.startHour);
+        r.endHour = ceilf(r.endHour);
         return r;
+    }
     else
         return WLHourRangeZero;
 }
@@ -617,8 +621,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     CGFloat m = r.startHour + (r.endHour - r.startHour) / 2;
     CGPoint newScrollPoint = [timeRulerLayer pointForHour:m];
 
-    // Center _hour whenever possible
-    CGFloat visibleHeight = timeRulerScrollLayer.bounds.size.height;
+    CGFloat visibleHeight = timeRulerScrollLayer.bounds.size.height + [timeRulerLayer firstHourYPadding];
     newScrollPoint = CGPointMake(0.0f, floorf(newScrollPoint.y - visibleHeight / 2));
     CGFloat topLimit = CGRectGetMinY(timeRulerLayer.bounds);
     CGFloat bottomLimit = CGRectGetMaxY(timeRulerLayer.bounds) - visibleHeight;
