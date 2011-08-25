@@ -84,6 +84,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     _tasksLayer.name = _WLTasksLayerName;
     _tasksLayer.layoutManager = self;
     _tasksLayer.masksToBounds = YES;
+    _tasksLayer.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
     [_tasksLayer addConstraint:[CAConstraint constraintWithAttribute:kCAConstraintMinX
                                                           relativeTo:@"superlayer"
                                                            attribute:kCAConstraintMinX

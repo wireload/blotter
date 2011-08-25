@@ -68,28 +68,27 @@
 - (void)layoutSublayersOfLayer:(CALayer *)aLayer
 {
     static const CGFloat YPaddingBetweenLayers = 5.0f;
-
     CGFloat w = aLayer.bounds.size.width;
-    _monthDayLayer.frame = CGRectIntegral(CGRectMake(0.0f, NSMaxY([self bounds]) - 170.0f, w, 170.0f));
-    _monthAndYearLayer.frame = CGRectIntegral(CGRectMake(0.0f, CGRectGetMinY(_monthDayLayer.frame) - YPaddingBetweenLayers - 26.0f, w, 26.0f));
-    _weekdayLayer.frame = CGRectIntegral(CGRectMake(0.0f, CGRectGetMinY(_monthAndYearLayer.frame) - YPaddingBetweenLayers - 26.0f, w, 26.0f));
+    CGSize preferredSize = [_monthDayLayer preferredFrameSize];
+    _monthDayLayer.frame = CGRectIntegral(CGRectMake(0.0f, 0.0f, w, 170));
+    preferredSize = [_monthAndYearLayer preferredFrameSize];
+    _monthAndYearLayer.frame = CGRectIntegral(CGRectMake(0.0f, CGRectGetMaxY(_monthDayLayer.frame) + YPaddingBetweenLayers, w, preferredSize.height));
+    preferredSize = [_monthAndYearLayer preferredFrameSize];
+    _weekdayLayer.frame = CGRectIntegral(CGRectMake(0.0f, CGRectGetMaxY(_monthAndYearLayer.frame) + YPaddingBetweenLayers, w, preferredSize.height));
 }
 
 
 #pragma mark Private
 
-- (CATextLayer *)_setupMonthDayLayer
+- (WLCalendarTextLayer *)_setupMonthDayLayer
 {
-    CATextLayer *l = [CATextLayer layer];
+    WLCalendarTextLayer *l = [WLCalendarTextLayer layer];
     [CATransaction WL_performWithDisabledActions:^{
         l.foregroundColor = [[NSColor whiteColor] WL_CGColor];
         l.alignmentMode = kCAAlignmentCenter;
-        l.fontSize = 200.0f;
-        l.font = [NSFont fontWithName:@"Helvetica" size:200.0f];
-        l.shadowColor = [[NSColor WL_dateShadowColor] WL_CGColor];
-        l.shadowOffset = CGSizeMake(0.0f, -1.0f);
-        l.shadowOpacity = 1.0f;
-        l.shadowRadius = 0.0f;
+        l.font =  (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica"), 200.0f, nil) autorelease];
+        l.stringShadowColor = [[NSColor WL_dateShadowColor] WL_CGColor];
+        l.needsDisplayOnBoundsChange = YES;
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif
@@ -97,18 +96,15 @@
     return l;
 }
 
-- (CATextLayer *)_setupMonthAndYearLayer
+- (WLCalendarTextLayer *)_setupMonthAndYearLayer
 {
-    CATextLayer *l = [CATextLayer layer];
+    WLCalendarTextLayer *l = [WLCalendarTextLayer layer];
     [CATransaction WL_performWithDisabledActions:^{
         l.foregroundColor = [[NSColor whiteColor] WL_CGColor];
         l.alignmentMode = kCAAlignmentCenter;
-        l.fontSize = 26.0f;
-        l.font = [NSFont fontWithName:@"Helvetica" size:26.0f];
-        l.shadowColor = [[NSColor WL_dateShadowColor] WL_CGColor];
-        l.shadowOffset = CGSizeMake(0.0f, -1.0f);
-        l.shadowOpacity = 1.0f;
-        l.shadowRadius = 0.0f;
+        l.font = (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica"), 26.0f, nil) autorelease];
+        l.stringShadowColor = [[NSColor WL_dateShadowColor] WL_CGColor];
+        l.needsDisplayOnBoundsChange = YES;
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif
@@ -116,18 +112,15 @@
     return l;
 }
 
-- (CATextLayer *)_setupWeekdayLayer
+- (WLCalendarTextLayer *)_setupWeekdayLayer
 {
-    CATextLayer *l = [CATextLayer layer];
+    WLCalendarTextLayer *l = [WLCalendarTextLayer layer];
     [CATransaction WL_performWithDisabledActions:^{
         l.foregroundColor = [[NSColor whiteColor] WL_CGColor];
         l.alignmentMode = kCAAlignmentCenter;
-        l.fontSize = 26.0f;
-        l.font = [NSFont fontWithName:@"Helvetica" size:26.0f];
-        l.shadowColor = [[NSColor WL_dateShadowColor] WL_CGColor];
-        l.shadowOffset = CGSizeMake(0.0f, -1.0f);
-        l.shadowOpacity = 1.0f;
-        l.shadowRadius = 0.0f;
+        l.font = (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica"), 26.0f, nil) autorelease];
+        l.stringShadowColor = [[NSColor WL_dateShadowColor] WL_CGColor];
+        l.needsDisplayOnBoundsChange = YES;
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif
@@ -141,6 +134,19 @@
 - (BOOL)isFlipped
 {
     return YES;
+}
+
+- (CALayer *)makeBackingLayer
+{
+    CALayer *l = [super makeBackingLayer];
+    [CATransaction WL_performWithDisabledActions:^{
+        l.delegate = self;
+        l.geometryFlipped = YES;
+#ifdef DEBUG_LAYERS
+        l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
+#endif
+    }];
+    return l;
 }
 
 @end

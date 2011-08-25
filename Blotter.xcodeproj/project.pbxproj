@@ -125,6 +125,7 @@
 		E282E0B714045EC10007C401 /* info-bottom-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E282E0AE14045EC10007C401 /* info-bottom-left.png */; };
 		E282E0B814045EC10007C401 /* info-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = E282E0AF14045EC10007C401 /* info-bottom.png */; };
 		E282E0B914045EC10007C401 /* info-bottom-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E282E0B014045EC10007C401 /* info-bottom-right.png */; };
+		E286C00314068703008C0CDB /* NSFont+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = E286C00214068703008C0CDB /* NSFont+WLCalendar.m */; };
 		E28C418D13F081A1005789DD /* defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = E28C418C13F081A1005789DD /* defaults.plist */; };
 		E292D7E013E9DCEA00433262 /* WLCalendarWindowBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = E292D7DF13E9DCEA00433262 /* WLCalendarWindowBackgroundView.m */; };
 		E2948D941401484B007122BC /* NSCalendar+WLWeekend.m in Sources */ = {isa = PBXBuildFile; fileRef = E2948D931401484B007122BC /* NSCalendar+WLWeekend.m */; };
@@ -386,6 +387,8 @@
 		E282E0AE14045EC10007C401 /* info-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-bottom-left.png"; sourceTree = "<group>"; };
 		E282E0AF14045EC10007C401 /* info-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-bottom.png"; sourceTree = "<group>"; };
 		E282E0B014045EC10007C401 /* info-bottom-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-bottom-right.png"; sourceTree = "<group>"; };
+		E286C00114068703008C0CDB /* NSFont+WLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFont+WLCalendar.h"; sourceTree = "<group>"; };
+		E286C00214068703008C0CDB /* NSFont+WLCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFont+WLCalendar.m"; sourceTree = "<group>"; };
 		E28C418C13F081A1005789DD /* defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = defaults.plist; sourceTree = "<group>"; };
 		E292D7DE13E9DCEA00433262 /* WLCalendarWindowBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowBackgroundView.h; sourceTree = "<group>"; };
 		E292D7DF13E9DCEA00433262 /* WLCalendarWindowBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindowBackgroundView.m; sourceTree = "<group>"; };
@@ -489,6 +492,7 @@
 				E27196B713C5A19E008E5C43 /* WLCalendar */,
 				E27936431324F6BD00BC5224 /* WLGlassHud */,
 				E27313C31349F41200A84433 /* PTHotKey+ShortcutRecorder.h */,
+				E23779D61312AD6000F46E7D /* WLClosableWindow.h */,
 				E27313C41349F41200A84433 /* PTHotKey+ShortcutRecorder.m */,
 				E23779D71312AD6000F46E7D /* WLClosableWindow.m */,
 				28F69D52129D854300D4BB97 /* BLCalendarFramer.h */,
@@ -678,7 +682,8 @@
 				E221B3A213EC5C2F00F9B392 /* CoreAnimation+WLCalendar.m */,
 				E22C78A913FFCD9F00EE44C0 /* NSColor+WLCalendar.h */,
 				E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */,
-				E23779D61312AD6000F46E7D /* WLClosableWindow.h */,
+				E286C00114068703008C0CDB /* NSFont+WLCalendar.h */,
+				E286C00214068703008C0CDB /* NSFont+WLCalendar.m */,
 			);
 			name = WLCalendar;
 			sourceTree = "<group>";
@@ -1082,6 +1087,7 @@
 				E21A5F451403D2A4000B6634 /* WLCalendarTaskLayer.m in Sources */,
 				E282E06C14043FAF0007C401 /* WLBlockLayer.m in Sources */,
 				E2678AD114050FCF00ABB89B /* WLCalendarTextLayer.m in Sources */,
+				E286C00314068703008C0CDB /* NSFont+WLCalendar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

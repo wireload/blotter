@@ -90,6 +90,7 @@
     WLCalendarTextLayer *l = [WLCalendarTextLayer layer];
     [CATransaction WL_performWithDisabledActions:^{
         l.string = aTime;
+        l.alignmentMode = kCAAlignmentRight;
         l.stringShadowColor = [[NSColor WL_timelineShadowColor] WL_CGColor];
         l.font = (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica"), 9.0f, nil) autorelease];
         l.needsDisplayOnBoundsChange = YES;

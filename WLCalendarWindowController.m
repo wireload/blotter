@@ -144,6 +144,7 @@
     if (!_isWindowShowed)
     {
         [self _updateFrame];
+        [self _placeViews];
         [window orderBack:aSender];
         _isWindowShowed = YES;
     }
@@ -162,9 +163,6 @@
 
 - (void)_updateFrame
 {
-#ifdef DEBUG_PERFORMANCE
-    NSLog(@"%@", NSStringFromSelector(_cmd));
-#endif
     NSArray *screens = [NSScreen screens];
     NSUInteger selectedScreenIdx = [screens indexOfObjectPassingTest:^(NSScreen *screen, NSUInteger idx, BOOL *stop)
     {
@@ -186,8 +184,6 @@
         NSEnableScreenUpdates();
     }];
     [window setFrame:windowFrame display:NO];
-    if (!_isWindowShowed)
-        [self _placeViews];
     [self _applyWindowSizeToViews];
     [CATransaction commit];
 }
@@ -231,9 +227,9 @@
     [tasksView setAutoresizingMask:NSViewHeightSizable];
 
     WLCalendarWeekView *weekView = [_weekViewController view];
-    NSRect weekViewFrame = NSMakeRect(NSMaxX(tasksViewFrame) + 17.0f,
+    NSRect weekViewFrame = NSMakeRect(NSMaxX(dateViewFrame) + 17.0f,
             NSMinY(dateViewFrame),
-            contentBounds.size.width - (NSMaxX(tasksViewFrame) - NSMinX(contentBounds)) - 17.0f - 6.0f,
+            contentBounds.size.width - (NSMaxX(dateViewFrame) - NSMinX(contentBounds)) - 17.0f - 6.0f,
             contentBounds.size.height - (NSMinY(dateViewFrame) - NSMinY(contentBounds)) - 8.0f);
     weekViewFrame = [contentView centerScanRect:weekViewFrame];
     [weekView setFrame:weekViewFrame];

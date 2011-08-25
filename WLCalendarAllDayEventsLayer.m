@@ -117,11 +117,12 @@ static const CGFloat _WLTopMargin = 10.0f;
 {
     WLCalendarEventLayer *l = [WLCalendarEventLayer layer];
     [CATransaction WL_performWithDisabledActions:^{
+        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
         l.needsDisplayOnBoundsChange = YES;
-    }];
 #ifndef DEBUG_LAYERS
-    l.contentsBackgroundOpacity = 0.15;
+        l.contentsBackgroundOpacity = 0.2;
 #endif
+    }];
     return l;
 }
 

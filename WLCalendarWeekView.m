@@ -12,6 +12,7 @@
 #import "WLSoftEdgeLayer.h"
 #import "WLMargin.h"
 #import "NSColor+WLCalendar.h"
+#import "NSFont+WLCalendar.h"
 
 
 // Must be unique!
@@ -103,13 +104,13 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     indexOfHighlightedColumn = newIndexOfHighlightedColumn;
     if ([self wantsLayer])
     {
-        [_columnLayers enumerateObjectsUsingBlock:^(CALayer *l, NSUInteger idx, BOOL *stop) {
+        [[_columnLayers valueForKey:@"WL_titleLayer"] enumerateObjectsUsingBlock:^(CATextLayer *l, NSUInteger idx, BOOL *stop) {
             if (indexOfHighlightedColumn == NSNotFound)
-                l.opacity = 1.0f;
+                l.font = [NSFont WL_columnTitleFont];
             else if (indexOfHighlightedColumn == idx)
-                l.opacity = 1.0f;
+                l.font = [NSFont WL_columnBoldTitleFont];
             else
-                l.opacity = 0.5f;
+                l.font = [NSFont WL_columnTitleFont];
         }];
     }
 }
@@ -729,6 +730,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
         l.name = _WLTimeRulerBackgroundLayerName;
         l.masksToBounds = YES;
         l.needsDisplayOnBoundsChange = YES;
+        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
         l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
             NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:NO];
             [c setImageInterpolation:NSImageInterpolationHigh];
@@ -805,6 +807,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
         l.name = _WLTimeRulerScrollLayerName;
         l.scrollMode = kCAScrollVertically;
         l.geometryFlipped = YES;
+        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
         WLSoftEdgeLayer *m = [WLSoftEdgeLayer layer];
         l.mask = m;
 #ifdef DEBUG_LAYERS
@@ -819,6 +822,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     __block WLCalendarTimeRulerLayer *l = [WLCalendarTimeRulerLayer layer];
     [CATransaction WL_performWithDisabledActions:^{
         l.name = _WLTimeRulerLayerName;
+        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
         l.timeRuler = self;
     }];
     return l;
@@ -900,6 +904,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
         l.geometryFlipped = YES;
         l.name = _WLColumnLayerName;
         l.masksToBounds = YES;
+        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor redColor] WL_CGColor];
 #endif
@@ -913,6 +918,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     [CATransaction WL_performWithDisabledActions:^{
         l.name = _WLAllDayBackgroundLayerName;
         l.needsDisplayOnBoundsChange = YES;
+        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
         l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
             NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:NO];
             [c setImageInterpolation:NSImageInterpolationHigh];
@@ -977,6 +983,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 {
     __block WLCalendarAllDayEventsLayer *l = [WLCalendarAllDayEventsLayer layer];
     [CATransaction WL_performWithDisabledActions:^{
+        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
         l.name = _WLAllDayLayerName;
     }];
     return l;
@@ -986,11 +993,12 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 {
     __block WLCalendarDayEventsLayer *l = [WLCalendarDayEventsLayer layer];
     [CATransaction WL_performWithDisabledActions:^{
+        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
+        l.name = _WLDayLayerName;
+        l.timeRuler = self;
 #ifdef DEBUG_LAYERS
         l.needsDisplayOnBoundsChange = YES;
 #endif
-        l.name = _WLDayLayerName;
-        l.timeRuler = self;
     }];
     return l;
 }
@@ -1000,6 +1008,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     __block CAScrollLayer *l = [CAScrollLayer layer];
     [CATransaction WL_performWithDisabledActions:^{
         l.name = _WLDayScrollLayerName;
+        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
 //        WLSoftEdgeLayer *m = [WLSoftEdgeLayer layer];
 //        l.mask = m;
 #ifdef DEBUG_LAYERS
@@ -1012,15 +1021,18 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 - (CATextLayer *)setupDayTitleLayer
 {
     CATextLayer *l = [CATextLayer layer];
-    l.name = _WLTitleLayerName;
-    l.wrapped = NO;
-    l.truncationMode = kCATruncationNone;
-    l.alignmentMode = kCAAlignmentCenter;
-    l.fontSize = 11.0f;
-    l.shadowOpacity = 1.0f;
-    l.shadowOffset = CGSizeMake(0.0f, 1.0f);
-    l.shadowRadius = 0.0f;
-    l.shadowColor = [[NSColor WL_columnTitleShadowColor] WL_CGColor];
+    [CATransaction WL_performWithDisabledActions:^(void) {
+        l.name = _WLTitleLayerName;
+        l.alignmentMode = kCAAlignmentCenter;
+        l.font = [NSFont WL_columnTitleFont];
+        l.fontSize = 11.0f;
+        l.shadowOpacity = 1.0f;
+        l.shadowColor = [[NSColor WL_columnTitleShadowColor] WL_CGColor];
+        l.shadowRadius = 0.0f;
+        l.shadowOffset = CGSizeMake(0.0f, 1.0f);
+        l.needsDisplayOnBoundsChange = YES;
+        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
+    }];
 #ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif
@@ -1033,6 +1045,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     [CATransaction WL_performWithDisabledActions:^{
         l.name = _WLDayBackgroundLayerName;
         l.needsDisplayOnBoundsChange = YES;
+        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
         l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
             NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:YES];
             [c setImageInterpolation:NSImageInterpolationHigh];
@@ -1126,6 +1139,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     [CATransaction WL_performWithDisabledActions:^(void) {
         l.name = _WLTimeIndicatorRootLayerName;
         l.masksToBounds = YES;
+        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor magentaColor] WL_CGColor];
         l.opacity = 0.3f;
@@ -1146,6 +1160,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
         l.name = _WLTimeIndicatorLayerName;
         l.anchorPoint = CGPointMake(0.0f, 0.5f);
         l.needsDisplayOnBoundsChange = YES;
+        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor whiteColor] WL_CGColor];
 #endif
@@ -1185,7 +1200,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     return [[self WL_dayScrollLayer] valueForKey:_WLDayLayerName];
 }
 
-- (CATextLayer *)WL_titleLayer
+- (WLCalendarTextLayer *)WL_titleLayer
 {
     return [[self WL_dayBackgroundLayer] valueForKey:_WLTitleLayerName];
 }

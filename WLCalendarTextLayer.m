@@ -32,17 +32,34 @@
 @dynamic stringShadowOffset;
 @dynamic stringShadowColor;
 @dynamic stringShadowRadius;
+@dynamic alignmentMode;
 
 
 #pragma mark Private
 
 - (NSAttributedString *)_attributedString
 {
+    CTTextAlignment a;
+    if ([self.alignmentMode isEqualToString:kCAAlignmentCenter])
+        a = kCTCenterTextAlignment;
+    else if ([self.alignmentMode isEqualToString:kCAAlignmentLeft])
+        a = kCTLeftTextAlignment;
+    else if ([self.alignmentMode isEqualToString:kCAAlignmentRight])
+        a = kCTRightTextAlignment;
+    else if ([self.alignmentMode isEqualToString:kCAAlignmentJustified])
+        a = kCTJustifiedTextAlignment;
+    else if ([self.alignmentMode isEqualToString:kCAAlignmentNatural])
+        a = kCTNaturalTextAlignment;
+    CTParagraphStyleSetting alignmentSetting = {.spec = kCTParagraphStyleSpecifierAlignment, .valueSize = sizeof(CTTextAlignment), .value = &a};
+    CTParagraphStyleRef p = CTParagraphStyleCreate(&alignmentSetting, 1);
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 (id)self.font,              (id)kCTFontAttributeName,
-                                (id)self.foregroundColor,   (id)kCTForegroundColorAttributeName, nil];
+                                (id)self.foregroundColor,   (id)kCTForegroundColorAttributeName,
+                                (id)p,                      (id)kCTParagraphStyleAttributeName, nil];
+    CFRelease(p);
     return [[[NSAttributedString alloc] initWithString:self.string attributes:attributes] autorelease];
 }
+
 
 #pragma mark CALayer;
 
@@ -50,10 +67,12 @@
 {
     if ([aKey isEqualToString:@"foregroundColor"])
         return (id)[[NSColor whiteColor] WL_CGColor];
-    if ([aKey isEqualToString:@"stringShadowOffset"])
+    else if ([aKey isEqualToString:@"stringShadowOffset"])
         return [NSValue valueWithSize:NSMakeSize(0.0f, 1.0f)];
     else if ([aKey isEqualToString:@"stringShadowRadius"])
         return [NSNumber numberWithFloat:0.0f];
+    else if ([aKey isEqualToString:@"alignmentMode"])
+        return kCAAlignmentNatural;
     else
         return [super defaultValueForKey:aKey];
 }
@@ -72,6 +91,8 @@
         return YES;
     else if ([aKey isEqualToString:@"foregroundColor"])
         return YES;
+    else if ([aKey isEqualToString:@"alignmentMode"])
+        return YES;
     else
         return [super needsDisplayForKey:aKey];
 }
@@ -82,9 +103,7 @@
     CGRect dirtyRect = CGContextGetClipBoundingBox(aContext);
     if (CGRectIntersectsRect(self.bounds, dirtyRect))
     {
-        CGContextSetTextMatrix(aContext, CGAffineTransformIdentity);
-        CGContextTranslateCTM(aContext, 0.0f, self.bounds.size.height);
-        CGContextScaleCTM(aContext, 1.0f, -1.0f);
+        CGContextSetTextMatrix(aContext, CGAffineTransformMakeScale(1.0f, -1.0f));
         CGContextSetShouldAntialias(aContext, YES);
         CGContextSetAllowsAntialiasing(aContext, YES);
         CGContextSetShadowWithColor(aContext, self.stringShadowOffset, self.stringShadowRadius, self.stringShadowColor);
@@ -92,11 +111,26 @@
         if (framesetter != NULL)
         {
             CGMutablePathRef framePath = CGPathCreateMutable();
-            CGPathAddRect(framePath, NULL, self.bounds);
+            CGPathAddRect(framePath, NULL, CGRectMake(0.0f, 0.0f, self.bounds.size.width, 9999.0f));
             CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
             if (frame != NULL)
             {
-                CTFrameDraw(frame, aContext);
+                __block NSArray *lines = (NSArray *)CTFrameGetLines(frame);
+                NSUInteger numberOfLines = [lines count];
+                if (numberOfLines > 0)
+                {
+                    __block CGPoint *lineOrigins = calloc(numberOfLines, sizeof(CGPoint));
+                    CTFrameGetLineOrigins(frame, CFRangeMake(0, numberOfLines), lineOrigins);
+
+                    [lines enumerateObjectsUsingBlock:^(id line, NSUInteger idx, BOOL *stop)
+                    {
+                        CGPoint origin = lineOrigins[idx];
+                        CGContextSetTextPosition(aContext, floorf(self.bounds.origin.x + origin.x), floorf(self.bounds.origin.y + CTLineGetImageBounds((CTLineRef)line, aContext).size.height));
+                        CTLineDraw((CTLineRef)line, aContext);
+                        *stop = YES;
+                    }];
+                    free(lineOrigins);
+                }
                 CFRelease(frame);
             }
             CFRelease(framePath);
@@ -120,12 +154,18 @@
         if (frame != NULL)
         {
             preferredFrameSize = AB_CTFrameGetSize(frame);
+            preferredFrameSize.height = AB_CTFrameGetHeight(frame);
             CFRelease(frame);
         }
         CFRelease(framePath);
         CFRelease(framesetter);
     }
     return CGSizeMake(ceilf(preferredFrameSize.width), ceilf(preferredFrameSize.height)) ;
+}
+
+- (BOOL)contentsAreFlipped
+{
+    return YES;
 }
 
 @end

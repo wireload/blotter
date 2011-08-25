@@ -127,8 +127,9 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 		l.masksToBounds = YES;
         l.contentsGravity = kCAGravityBottom;
         l.anchorPoint = CGPointMake(0.0f, 0.0f);
+        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
 #ifndef DEBUG_LAYERS
-		l.contentsBackgroundOpacity = 0.15;
+		l.contentsBackgroundOpacity = 0.3f;
 #endif
     }];
     return l;
@@ -450,9 +451,6 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 
 - (void)layoutSublayers
 {
-#ifdef DEBUG_PERFORMANCE
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-#endif
     NSAssert(self.layoutManager == nil, @"You cannot use custom layout managers with this class");
 
     if ([_sortedByStartDateEventLayers count] == 0)
@@ -514,9 +512,6 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 #ifdef DEBUG_LAYERS
 - (void)drawInContext:(CGContextRef)aContext
 {
-#ifdef DEBUG_PERFORMANCE
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-#endif
     // Draw line for each hour.
     CGContextSaveGState(aContext);
     CGContextSetFillColorWithColor(aContext, [[NSColor clearColor] WL_CGColor]);

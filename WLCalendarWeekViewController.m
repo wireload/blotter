@@ -143,10 +143,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 
 - (void)highlightCurrentDayIfNeeded
 {
-//    if (self.mode == WLCalendarWeekViewWeekMode)
-//        [[self view] setIndexOfHighlightedColumn:[self currentDay]];
-//    else
-//        [[self view] setIndexOfHighlightedColumn:NSNotFound];
+    [[self view] setIndexOfHighlightedColumn:[self currentDay]];
 }
 
 - (NSDate *)firstColumnDate
@@ -439,8 +436,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     v.fitDayEvents = YES;
     [v scrollHour:[self currentHour] animated:NO];
     [v createLayers];
-//    if (self.mode == WLCalendarWeekViewWeekMode)
-//        v.indexOfHighlightedColumn = [self currentDay];
+    v.indexOfHighlightedColumn = [self currentDay];
     [v release];
     [self addObserver:self forKeyPath:@"representedObject.date" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:NULL];
     [self addObserver:self forKeyPath:@"representedObject.calendar" options:NSKeyValueObservingOptionNew context:NULL];
@@ -473,7 +469,10 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 - (void)observeValueForKeyPath:(NSString *)aKeyPath ofObject:(id)anObject change:(NSDictionary *)aChange context:(void *)aContext
 {
     if ([aKeyPath isEqual:@"representedObject.calendar"] || [aKeyPath isEqual:@"representedObject.calCalendars"])
+    {
         [[self view] reloadDataAnimated:YES];
+        [self highlightCurrentDayIfNeeded];
+    }
     else if ([aKeyPath isEqual:@"representedObject.date"])
     {
         NSDate *old = [aChange objectForKey:NSKeyValueChangeOldKey];
@@ -495,6 +494,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
             else
                 [self scrollToCurrentHour];
         }
+        [self highlightCurrentDayIfNeeded];
     }
     else
         [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];

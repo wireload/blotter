@@ -9,6 +9,9 @@
 #import <QuartzCore/QuartzCore.h>
 
 
+/*!
+ @discussion Draws only first line.
+ */
 @interface WLCalendarTextLayer : CALayer
 
 @property (copy) NSString *string;
@@ -22,6 +25,8 @@
 @property CGColorRef stringShadowColor;
 
 @property CGFloat stringShadowRadius;
+
+@property (copy) NSString *alignmentMode;
 
 
 - (NSAttributedString *)_attributedString;
