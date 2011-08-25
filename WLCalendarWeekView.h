@@ -174,8 +174,6 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r);
 
 - (CAScrollLayer *)setupDayScrollLayer;
 
-- (CATextLayer *)setupDayTitleLayer;
-
 - (WLBlockLayer *)setupDayBackgroundLayer;
 
 
@@ -198,8 +196,6 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r);
 - (CAScrollLayer *)WL_dayScrollLayer;
 
 - (WLCalendarDayEventsLayer *)WL_dayLayer;
-
-- (CATextLayer *)WL_titleLayer;
 
 
 - (CAScrollLayer *)WL_timeRulerScrollLayer;

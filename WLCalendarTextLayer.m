@@ -154,7 +154,6 @@
         if (frame != NULL)
         {
             preferredFrameSize = AB_CTFrameGetSize(frame);
-            preferredFrameSize.height = AB_CTFrameGetHeight(frame);
             CFRelease(frame);
         }
         CFRelease(framePath);

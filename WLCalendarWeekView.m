@@ -33,8 +33,6 @@ static NSString* const _WLDayBackgroundLayerName = @"weekdayEventsBackground";
 
 static NSString* const _WLAllDayLayerName = @"weekdayEventsAllDay";
 
-static NSString* const _WLTitleLayerName = @"weekdayEventsTitle";
-
 static NSString* const _WLDayScrollLayerName = @"weekdayEventsScroll";
 
 static NSString* const _WLDayLayerName = @"weekdayEvents";
@@ -53,6 +51,11 @@ WLMargin _WLColumnMargin = {.topLeft = {.x = 3.0f, .y = 0.0f}, .bottomRight = {.
 WLMargin _WLColumnDayMargin = {.topLeft = {.x = 0.0f, .y = 10.0f}, .bottomRight = {.x = 0.0f, .y = 0.0f}};
 
 WLMargin _WLTimeRulerScrollMargin = {.topLeft = {.x = 5.0f, .y = 0.0f}, .bottomRight = {.x = 5.0f, .y = 0.0f}};
+
+
+static NSString* const _WLDayBackgroundColorLayerTitleKey = @"title";
+
+static NSString* const _WLDayBackgroundColorLayerShouldHighlightTitleKey = @"highlight";
 
 
 BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
@@ -104,13 +107,9 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     indexOfHighlightedColumn = newIndexOfHighlightedColumn;
     if ([self wantsLayer])
     {
-        [[_columnLayers valueForKey:@"WL_titleLayer"] enumerateObjectsUsingBlock:^(CATextLayer *l, NSUInteger idx, BOOL *stop) {
-            if (indexOfHighlightedColumn == NSNotFound)
-                l.font = [NSFont WL_columnTitleFont];
-            else if (indexOfHighlightedColumn == idx)
-                l.font = [NSFont WL_columnBoldTitleFont];
-            else
-                l.font = [NSFont WL_columnTitleFont];
+        [[_columnLayers valueForKey:@"WL_dayBackgroundLayer"] enumerateObjectsUsingBlock:^(CALayer *l, NSUInteger idx, BOOL *stop) {
+            [l setValue:[NSNumber numberWithBool:(idx == indexOfHighlightedColumn)] forKey:_WLDayBackgroundColorLayerShouldHighlightTitleKey];
+            [l setNeedsDisplay];
         }];
     }
 }
@@ -480,9 +479,9 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 {
     NSAssert([self wantsLayer], @"You MUST call -createLayers before.");
 
-    CALayer *column = [_columnLayers objectAtIndex:anIndex];
-    CATextLayer *title = [column WL_titleLayer];
-    title.string = [dataSource weekView:self titleForColumnAtIndex:anIndex];
+    CALayer *l = [[_columnLayers objectAtIndex:anIndex] WL_dayBackgroundLayer];
+    [l setValue:[dataSource weekView:self titleForColumnAtIndex:anIndex] forKey:_WLDayBackgroundColorLayerTitleKey];
+    [l setNeedsDisplay];
 }
 
 - (void)_updateColorOfColumnAtIndex:(NSUInteger)anIndex
@@ -569,18 +568,13 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
                                                     aColumnLayer.bounds.size.width,
                                                     aColumnLayer.bounds.size.height - CGRectGetMaxY(allDayBackground.frame) - _WLYMarginBetweenAllDayAndWeekdayEvents));
 
-    CATextLayer *title = [aColumnLayer WL_titleLayer];
-    title.frame = CGRectIntegral(CGRectMake(dayBackground.bounds.origin.x,
-                                            dayBackground.bounds.origin.y + _WLColumnTitleMargin.topLeft.y,
-                                            dayBackground.bounds.size.width,
-                                            minimumHeightOfColumnTitle));
-
     CAScrollLayer *dayScroll = [aColumnLayer WL_dayScrollLayer];
     WLCalendarTimeRulerLayer *timeRuler = [_timeRulerRootLayer WL_timeRulerLayer];
+    CGFloat y = dayBackground.bounds.origin.y + _WLColumnTitleMargin.topLeft.y + minimumHeightOfColumnTitle + [timeRuler firstHourYPadding];
     dayScroll.frame = CGRectIntegral(CGRectInset(CGRectMake(dayBackground.bounds.origin.x,
-                                                            CGRectGetMaxY(title.bounds) + [timeRuler firstHourYPadding],
+                                                            y,
                                                             dayBackground.bounds.size.width,
-                                                            dayBackground.bounds.size.height - CGRectGetMaxY(title.bounds) - [timeRuler firstHourYPadding]), 1.0f, 0.0f));
+                                                            dayBackground.bounds.size.height - y), 1.0f, 0.0f));
 }
 
 - (void)_layoutDayLayer:(WLCalendarDayEventsLayer *)aDayLayer
@@ -798,7 +792,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
             }
             [NSGraphicsContext restoreGraphicsState];
         };
-#elif
+#else
         l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
 #endif
     }];
@@ -885,10 +879,6 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
         WLBlockLayer *dayBackground = [self setupDayBackgroundLayer];
         [root addSublayer:dayBackground];
         [root setValue:dayBackground forKey:dayBackground.name];
-
-        CATextLayer *title = [self setupDayTitleLayer];
-        [dayBackground addSublayer:title];
-        [dayBackground setValue:title forKey:title.name];
 
         CAScrollLayer *scroll = [self setupDayScrollLayer];
         [dayBackground addSublayer:scroll];
@@ -979,7 +969,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 
             [NSGraphicsContext restoreGraphicsState];
         };
-#elif
+#else
         l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
 #endif
     }];
@@ -1025,27 +1015,6 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     return l;
 }
 
-- (CATextLayer *)setupDayTitleLayer
-{
-    CATextLayer *l = [CATextLayer layer];
-    [CATransaction WL_performWithDisabledActions:^(void) {
-        l.name = _WLTitleLayerName;
-        l.alignmentMode = kCAAlignmentCenter;
-        l.font = [NSFont WL_columnTitleFont];
-        l.fontSize = 11.0f;
-        l.shadowOpacity = 1.0f;
-        l.shadowColor = [[NSColor WL_columnTitleShadowColor] WL_CGColor];
-        l.shadowRadius = 0.0f;
-        l.shadowOffset = CGSizeMake(0.0f, 1.0f);
-        l.needsDisplayOnBoundsChange = YES;
-        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
-    }];
-#ifdef DEBUG_LAYERS
-    l.backgroundColor = [[NSColor greenColor] WL_CGColor];
-#endif
-    return l;
-}
-
 - (WLBlockLayer *)setupDayBackgroundLayer
 {
     __block WLBlockLayer *l = [WLBlockLayer layer];
@@ -1054,9 +1023,25 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
         l.needsDisplayOnBoundsChange = YES;
         l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
 #ifndef DEBUG_LAYERS
+        NSMutableParagraphStyle *p = [[NSMutableParagraphStyle alloc] init];
+        [p setAlignment:NSCenterTextAlignment];
+        NSShadow *s = [[NSShadow alloc] init];
+        [s setShadowBlurRadius:0.0f];
+        [s setShadowColor:[NSColor WL_columnTitleShadowColor]];
+        [s setShadowOffset:NSMakeSize(0.0f, 1.0f)];
+        NSDictionary *titleAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         (id)[NSFont WL_columnTitleFont],               NSFontAttributeName,
+                                         p,                                             NSParagraphStyleAttributeName,
+                                         [NSColor whiteColor],                          NSForegroundColorAttributeName,
+                                         s,                                             NSShadowAttributeName, nil];
+        NSMutableDictionary *boldTitleAttributes = [titleAttributes mutableCopy];
+        [boldTitleAttributes setObject:(id)[NSFont WL_columnBoldTitleFont] forKey:NSFontAttributeName];
+        [s release];
+        [p release];
         l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
             NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:YES];
             [c setImageInterpolation:NSImageInterpolationHigh];
+            [c setShouldAntialias:YES];
             [NSGraphicsContext saveGraphicsState];
             [NSGraphicsContext setCurrentContext:c];
 
@@ -1115,9 +1100,18 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
                                      AlphaFraction,
                                      YES);
             }
+
+            NSString *dayName = [aLayer valueForKey:_WLDayBackgroundColorLayerTitleKey];
+            if ([[aLayer valueForKey:_WLDayBackgroundColorLayerShouldHighlightTitleKey] boolValue])
+                [dayName drawInRect:NSMakeRect(_WLColumnTitleMargin.topLeft.x, _WLColumnTitleMargin.topLeft.y, aLayer.bounds.size.width, minimumHeightOfColumnTitle) withAttributes:boldTitleAttributes];
+
+            else
+                [dayName drawInRect:NSMakeRect(_WLColumnTitleMargin.topLeft.x, _WLColumnTitleMargin.topLeft.y, aLayer.bounds.size.width, minimumHeightOfColumnTitle) withAttributes:titleAttributes];
+
             [NSGraphicsContext restoreGraphicsState];
         };
-#elif
+        [boldTitleAttributes release];
+#else
         l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
 #endif
     }];
@@ -1207,11 +1201,6 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 - (WLCalendarDayEventsLayer *)WL_dayLayer
 {
     return [[self WL_dayScrollLayer] valueForKey:_WLDayLayerName];
-}
-
-- (WLCalendarTextLayer *)WL_titleLayer
-{
-    return [[self WL_dayBackgroundLayer] valueForKey:_WLTitleLayerName];
 }
 
 - (CAScrollLayer *)WL_timeRulerScrollLayer
