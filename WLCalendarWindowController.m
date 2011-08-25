@@ -210,8 +210,8 @@
     NSView *contentView = [window contentView];
 
     WLCalendarDateView *dateView = [_dateViewController view];
-    NSRect dateViewFrame = NSMakeRect(NSMinX(contentBounds) + 19.0f,
-            NSMinY(contentBounds) + 8.0f,
+    NSRect dateViewFrame = NSMakeRect(NSMinX(contentBounds) + 10.0f,
+            NSMinY(contentBounds) + 10.0f,
             255.0f,
             252.0f);
     dateViewFrame = [contentView centerScanRect:dateViewFrame];
@@ -221,7 +221,7 @@
     NSRect tasksViewFrame = NSMakeRect(NSMinX(dateViewFrame),
             NSMaxY(dateViewFrame),
             dateViewFrame.size.width,
-            contentBounds.size.height - (NSMaxY(dateViewFrame) - NSMinY(contentBounds)) - 8.0f);
+            contentBounds.size.height - (NSMaxY(dateViewFrame) - NSMinY(contentBounds)) - 10.0f);
     tasksViewFrame = [contentView centerScanRect:tasksViewFrame];
     [tasksView setFrame:tasksViewFrame];
     [tasksView setAutoresizingMask:NSViewHeightSizable];
@@ -229,8 +229,8 @@
     WLCalendarWeekView *weekView = [_weekViewController view];
     NSRect weekViewFrame = NSMakeRect(NSMaxX(dateViewFrame) + 17.0f,
             NSMinY(dateViewFrame),
-            contentBounds.size.width - (NSMaxX(dateViewFrame) - NSMinX(contentBounds)) - 17.0f - 6.0f,
-            contentBounds.size.height - (NSMinY(dateViewFrame) - NSMinY(contentBounds)) - 8.0f);
+            contentBounds.size.width - (NSMaxX(dateViewFrame) - NSMinX(contentBounds)) - 17.0f - 10.0f,
+            contentBounds.size.height - (NSMinY(dateViewFrame) - NSMinY(contentBounds)) - 10.0f);
     weekViewFrame = [contentView centerScanRect:weekViewFrame];
     [weekView setFrame:weekViewFrame];
     [weekView setAutoresizingMask:NSViewHeightSizable | NSViewWidthSizable];
