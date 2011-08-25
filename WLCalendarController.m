@@ -144,7 +144,7 @@
         [self _scheduleNextDayTimer];
     }
     else
-        [self performSelector:@selector(_showNextDay) withObject:nil afterDelay:0.1];
+        [self performSelector:@selector(_nextDay) withObject:nil afterDelay:0.1];
 }
 
 - (void)_clockDidChange:(NSNotification *)aNotification
