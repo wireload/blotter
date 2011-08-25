@@ -87,7 +87,10 @@ const CGFloat _WLXPadding = 10.0f;
 {
     CGColorRef backgroundColor = CGColorCreateCopyWithAlpha(self.contentsBackgroundColor, self.contentsBackgroundOpacity);
     CGContextSetFillColorWithColor(aContext, backgroundColor);
-    CGContextFillRect(aContext, self.bounds);
+    if (self.cornerRadius == 0.0f)
+        CGContextFillRect(aContext, CGRectMake(self.bounds.origin.x, self.bounds.origin.y + 1.0f, self.bounds.size.width, self.bounds.size.height - 2.0f) );
+    else
+        CGContextFillRect(aContext, CGRectMake(self.bounds.origin.x + 1.0f, self.bounds.origin.y + 1.0f, self.bounds.size.width - 2.0f, self.bounds.size.height - 2.0f) );
     CGColorRelease(backgroundColor);
 
     CGContextSaveGState(aContext);
@@ -102,8 +105,8 @@ const CGFloat _WLXPadding = 10.0f;
     CGContextSetBlendMode(aContext, kCGBlendModeOverlay);
     CGContextDrawLinearGradient(aContext,
                                 whiteToTransparent,
-                                self.bounds.origin,
-                                CGPointMake(CGRectGetMinX(self.bounds), CGRectGetMaxY(self.bounds)),
+                                CGPointMake(self.bounds.origin.x, self.bounds.origin.y + 1.0f),
+                                CGPointMake(CGRectGetMinX(self.bounds), CGRectGetMaxY(self.bounds) - 1.0f),
                                 kCGGradientDrawsBeforeStartLocation);
     CGGradientRelease(whiteToTransparent);
     CGContextRestoreGState(aContext);
