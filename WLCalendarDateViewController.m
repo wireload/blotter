@@ -77,7 +77,6 @@ static NSString* const _WLDateFormatterCacheKey = @"dateFormatter";
 {
     WLCalendarDateView *v = [[WLCalendarDateView alloc] init];
     [self setView:v];
-    [v createLayers];
     [v release];
     [self updateView];
     [self addObserver:self forKeyPath:@"representedObject.date" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:NULL];

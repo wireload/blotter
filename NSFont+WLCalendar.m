@@ -21,4 +21,19 @@
     return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica BOLD"), 11.0f, NULL) autorelease];
 }
 
++ (NSFont *)WL_dateViewMonthDayFont
+{
+    return [NSFont fontWithName:@"Helvetica" size:200];
+}
+
++ (NSFont *)WL_dateViewMonthAndYearFont
+{
+    return [NSFont fontWithName:@"Helvetica" size:26.0f];
+}
+
++ (NSFont *)WL_dateViewWeekdayFont
+{
+    return [self WL_dateViewMonthAndYearFont];
+}
+
 @end

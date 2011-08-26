@@ -15,4 +15,11 @@
 
 + (CTFontRef)WL_columnBoldTitleFont;
 
+
++ (NSFont *)WL_dateViewMonthDayFont;
+
++ (NSFont *)WL_dateViewMonthAndYearFont;
+
++ (NSFont *)WL_dateViewWeekdayFont;
+
 @end

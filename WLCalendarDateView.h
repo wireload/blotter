@@ -7,14 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <QuartzCore/QuartzCore.h>
-#import "WLCalendarTextLayer.h"
 
 
-@interface WLCalendarDateView : NSView /*<CALayoutManager>*/{
-    WLCalendarTextLayer *_monthDayLayer;
-    WLCalendarTextLayer *_monthAndYearLayer;
-    WLCalendarTextLayer *_weekdayLayer;
+@interface WLCalendarDateView : NSView {
+    NSString *monthDay;
+    NSString *monthAndYear;
+    NSString *weekday;
 }
 
 @property (nonatomic, copy) NSString *monthDay;
@@ -22,14 +20,5 @@
 @property (nonatomic, copy) NSString *monthAndYear;
 
 @property (nonatomic, copy) NSString *weekday;
-
-- (void)createLayers;
-
-
-- (WLCalendarTextLayer *)_setupMonthDayLayer;
-
-- (WLCalendarTextLayer *)_setupMonthAndYearLayer;
-
-- (WLCalendarTextLayer *)_setupWeekdayLayer;
 
 @end

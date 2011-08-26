@@ -72,4 +72,14 @@
                                      alpha:0.3f];
 }
 
++ (NSColor *)WL_dateViewBackgroundColor
+{
+    return [NSColor colorWithPatternImage:[NSImage imageNamed:@"calendar-background-center"]];
+}
+
++ (NSColor *)WL_dateViewTextColor
+{
+    return [NSColor whiteColor];
+}
+
 @end

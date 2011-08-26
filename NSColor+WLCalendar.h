@@ -27,4 +27,9 @@
 
 + (NSColor *)WL_eventShadowColor;
 
+
++ (NSColor *)WL_dateViewBackgroundColor;
+
++ (NSColor *)WL_dateViewTextColor;
+
 @end

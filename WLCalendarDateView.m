@@ -10,123 +10,18 @@
 #import "CoreAnimation+WLCalendar.h"
 #import "NSColor+CGColor.h"
 #import "NSColor+WLCalendar.h"
+#import "NSFont+WLCalendar.h"
 
 
 @implementation WLCalendarDateView
-@dynamic monthDay;
-@dynamic monthAndYear;
-@dynamic weekday;
 
-- (void)createLayers
-{
-    [self setWantsLayer:YES];
-    CALayer *root = [self layer];
-    _monthDayLayer = [self _setupMonthDayLayer];
-    [root addSublayer:_monthDayLayer];
-    _monthAndYearLayer = [self _setupMonthAndYearLayer];
-    [root addSublayer:_monthAndYearLayer];
-    _weekdayLayer = [self _setupWeekdayLayer];
-    [root addSublayer:_weekdayLayer];
-}
-
-- (NSString *)monthDay
-{
-    return _monthDayLayer.string;
-}
-
-- (void)setMonthDay:(NSString *)newMonthDay
-{
-    NSAssert([self wantsLayer], @"You MUST call -createLayers before.");
-    _monthDayLayer.string = newMonthDay;
-}
-
-- (NSString *)monthAndYear
-{
-    return _monthAndYearLayer.string;
-}
-
-- (void)setMonthAndYear:(NSString *)newMonthAndYear
-{
-    NSAssert([self wantsLayer], @"You MUST call -createLayers before.");
-    _monthAndYearLayer.string = newMonthAndYear;
-}
-
-- (NSString *)weekday
-{
-    return _weekdayLayer.string;
-}
-
-- (void)setWeekday:(NSString *)newWeekday
-{
-    NSAssert([self wantsLayer], @"You MUST call -createLayers before.");
-    _weekdayLayer.string = newWeekday;
-}
+#pragma mark Properties
+@synthesize monthDay;
+@synthesize monthAndYear;
+@synthesize weekday;
 
 
-#pragma mark CALayoutManager
-
-- (void)layoutSublayersOfLayer:(CALayer *)aLayer
-{
-    static const CGFloat YPaddingBetweenLayers = 5.0f;
-    CGFloat w = aLayer.bounds.size.width;
-    CGSize preferredSize = [_monthDayLayer preferredFrameSize];
-    _monthDayLayer.frame = CGRectIntegral(CGRectMake(0.0f, 0.0f, w, 170));
-    preferredSize = [_monthAndYearLayer preferredFrameSize];
-    _monthAndYearLayer.frame = CGRectIntegral(CGRectMake(0.0f, CGRectGetMaxY(_monthDayLayer.frame) + YPaddingBetweenLayers, w, preferredSize.height));
-    preferredSize = [_monthAndYearLayer preferredFrameSize];
-    _weekdayLayer.frame = CGRectIntegral(CGRectMake(0.0f, CGRectGetMaxY(_monthAndYearLayer.frame) + YPaddingBetweenLayers, w, preferredSize.height));
-}
-
-
-#pragma mark Private
-
-- (WLCalendarTextLayer *)_setupMonthDayLayer
-{
-    WLCalendarTextLayer *l = [WLCalendarTextLayer layer];
-    [CATransaction WL_performWithDisabledActions:^{
-        l.foregroundColor = [[NSColor whiteColor] WL_CGColor];
-        l.alignmentMode = kCAAlignmentCenter;
-        l.font =  (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica"), 200.0f, nil) autorelease];
-        l.stringShadowColor = [[NSColor WL_dateShadowColor] WL_CGColor];
-        l.needsDisplayOnBoundsChange = YES;
-#ifdef DEBUG_LAYERS
-        l.backgroundColor = [[NSColor greenColor] WL_CGColor];
-#endif
-    }];
-    return l;
-}
-
-- (WLCalendarTextLayer *)_setupMonthAndYearLayer
-{
-    WLCalendarTextLayer *l = [WLCalendarTextLayer layer];
-    [CATransaction WL_performWithDisabledActions:^{
-        l.foregroundColor = [[NSColor whiteColor] WL_CGColor];
-        l.alignmentMode = kCAAlignmentCenter;
-        l.font = (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica"), 26.0f, nil) autorelease];
-        l.stringShadowColor = [[NSColor WL_dateShadowColor] WL_CGColor];
-        l.needsDisplayOnBoundsChange = YES;
-#ifdef DEBUG_LAYERS
-        l.backgroundColor = [[NSColor greenColor] WL_CGColor];
-#endif
-    }];
-    return l;
-}
-
-- (WLCalendarTextLayer *)_setupWeekdayLayer
-{
-    WLCalendarTextLayer *l = [WLCalendarTextLayer layer];
-    [CATransaction WL_performWithDisabledActions:^{
-        l.foregroundColor = [[NSColor whiteColor] WL_CGColor];
-        l.alignmentMode = kCAAlignmentCenter;
-        l.font = (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica"), 26.0f, nil) autorelease];
-        l.stringShadowColor = [[NSColor WL_dateShadowColor] WL_CGColor];
-        l.needsDisplayOnBoundsChange = YES;
-#ifdef DEBUG_LAYERS
-        l.backgroundColor = [[NSColor greenColor] WL_CGColor];
-#endif
-    }];
-    return l;
-}
+#pragma mark Methods
 
 
 #pragma mark NSView
@@ -136,17 +31,54 @@
     return YES;
 }
 
-- (CALayer *)makeBackingLayer
+- (void)drawRect:(NSRect)aDirtyRect
 {
-    CALayer *l = [super makeBackingLayer];
-    [CATransaction WL_performWithDisabledActions:^{
-        l.delegate = self;
-        l.geometryFlipped = YES;
+    NSRect bounds = [self bounds];
+
+    NSShadow *s = [[NSShadow alloc] init];
+    [s setShadowColor:[NSColor WL_dateShadowColor]];
+    [s setShadowBlurRadius:0.0f];
+    [s setShadowOffset:NSMakeSize(0.0f, 1.0f)];
+    NSMutableParagraphStyle *p = [[NSMutableParagraphStyle alloc] init];
+    [p setAlignment:NSCenterTextAlignment];
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       [NSFont WL_dateViewMonthDayFont],    NSFontAttributeName,
+                                       [NSColor WL_dateViewTextColor],      NSForegroundColorAttributeName,
+                                       s,                                   NSShadowAttributeName,
+                                       p,                                   NSParagraphStyleAttributeName, nil];
+    [p release];
+    [s release];
+    NSRect monthDayRect = NSMakeRect(bounds.origin.x, bounds.origin.y - 50, bounds.size.width, 200.0f);
+    if (NSIntersectsRect(monthDayRect, aDirtyRect))
+    {
 #ifdef DEBUG_LAYERS
-        l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
+        [[NSColor greenColor] set];
+        NSRectFill(monthDayRect);
 #endif
-    }];
-    return l;
+        [self.monthDay drawInRect:monthDayRect withAttributes:attributes];
+    }
+
+    NSRect monthAndYearRect = NSMakeRect(bounds.origin.x, NSMaxY(monthDayRect) + 20.0f, bounds.size.width, 35.0f);
+    if (NSIntersectsRect(monthAndYearRect, aDirtyRect))
+    {
+#ifdef DEBUG_LAYERS
+        [[NSColor greenColor] set];
+        NSRectFill(monthAndYearRect);
+#endif
+        [attributes setObject:[NSFont WL_dateViewMonthAndYearFont] forKey:NSFontAttributeName];
+        [self.monthAndYear drawInRect:monthAndYearRect withAttributes:attributes];
+    }
+
+    NSRect weekdayRect = NSMakeRect(bounds.origin.x, NSMaxY(monthAndYearRect), bounds.size.width, 35.0f);
+    if (NSIntersectsRect(weekdayRect, aDirtyRect))
+    {
+#ifdef DEBUG_LAYERS
+        [[NSColor greenColor] set];
+        NSRectFill(weekdayRect);
+#endif
+        [attributes setObject:[NSFont WL_dateViewWeekdayFont] forKey:NSFontAttributeName];
+        [self.weekday drawInRect:weekdayRect withAttributes:attributes];
+    }
 }
 
 @end
