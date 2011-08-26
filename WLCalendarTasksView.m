@@ -36,20 +36,8 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 - (void)createLayers
 {
     [CATransaction begin];
-    CALayer *rootLayer = [CALayer layer];
-    rootLayer.delegate = self;
-    rootLayer.name = _WLRootLayerName;
-    rootLayer.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
-    [rootLayer.compositingFilter setDefaults];
-    [CATransaction WL_performWithDisabledActions:^{
-        rootLayer.needsDisplayOnBoundsChange = YES;
-    }];
-    rootLayer.layoutManager = [CAConstraintLayoutManager layoutManager];
-    rootLayer.cornerRadius = 2.0f;
-    rootLayer.masksToBounds = YES;
-#ifdef DEBUG_LAYERS
-    rootLayer.backgroundColor = [[NSColor blackColor] WL_CGColor];
-#endif
+    [self setWantsLayer:YES];
+    CALayer *rootLayer = [self layer];
 
     CATextLayer *titleLayer = [CATextLayer layer];
     titleLayer.name = _WLTitleLayerName;
@@ -111,9 +99,6 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     [rootLayer addSublayer:_tasksLayer];
 
     [self reloadDataAnimated:NO];
-
-    [self setLayer:rootLayer];
-    [self setWantsLayer:YES];
     [CATransaction commit];
 }
 
@@ -163,6 +148,27 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     [orderedTaskLayers removeObjectAtIndex:oldIndex];
     [orderedTaskLayers insertObject:movable atIndex:newIndex];
     [_tasksLayer setNeedsLayout];
+}
+
+
+#pragma mark NSView
+
+- (CALayer *)makeBackingLayer
+{
+    CALayer *l = [super makeBackingLayer];
+    [CATransaction WL_performWithDisabledActions:^{
+        l.needsDisplayOnBoundsChange = YES;
+        l.layoutManager = [CAConstraintLayoutManager layoutManager];
+        l.cornerRadius = 2.0f;
+        l.masksToBounds = YES;
+        l.name = _WLRootLayerName;
+        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
+        [l.compositingFilter setDefaults];
+#ifdef DEBUG_LAYERS
+        l.backgroundColor = [[NSColor blackColor] WL_CGColor];
+#endif
+    }];
+    return l;
 }
 
 
