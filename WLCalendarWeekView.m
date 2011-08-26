@@ -139,10 +139,8 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 {
     NSParameterAssert(![self wantsLayer]);
 
-    _rootLayer = [self setupRootLayer];
-    _rootLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
-    _rootLayer.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
-    [_rootLayer.compositingFilter setDefaults];
+    [self setWantsLayer:YES];
+    _rootLayer = [self layer];
 
     _timeIndicatorRootLayer = [self setupTimeIndicatorRootLayer];
     _timeIndicatorRootLayer.hidden = !showTimeIndicator;
@@ -158,9 +156,6 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 
     _timeRulerRootLayer = [self setupTimeRulerRootLayer];
     [_rootLayer addSublayer:_timeRulerRootLayer];
-
-    [self setLayer:_rootLayer];
-    [self setWantsLayer:YES];
 
     [self _updateTimeRuler];
     [self _updateColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, numberOfColumns)]];
@@ -661,24 +656,23 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     [super setFrameSize:newSize];
 }
 
+- (CALayer *)makeBackingLayer
+{
+    CALayer *l = [super makeBackingLayer];
+    [CATransaction WL_performWithDisabledActions:^{
+        l.name = _WLRootLayerName;
+        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
+        [l.compositingFilter setDefaults];
+    }];
+    return l;
+}
+
 @end
 
 
 #pragma mark -
 
 @implementation WLCalendarWeekView (SetupLayers)
-
-- (CALayer *)setupRootLayer
-{
-    __block CALayer *l = [CALayer layer];
-    [CATransaction WL_performWithDisabledActions:^{
-        l.name = _WLRootLayerName;
-        l.masksToBounds = YES;
-        l.layoutManager = self;
-    }];
-    return l;
-}
-
 
 #pragma mark Time Ruler
 
