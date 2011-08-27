@@ -32,4 +32,7 @@
 
 + (NSColor *)WL_dateViewTextColor;
 
+
++ (NSColor *)WL_infoViewTitleColor;
+
 @end

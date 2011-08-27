@@ -82,4 +82,9 @@
     return [NSColor whiteColor];
 }
 
++ (NSColor *)WL_infoViewTitleColor
+{
+    return [NSColor whiteColor];
+}
+
 @end

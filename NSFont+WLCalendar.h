@@ -22,4 +22,7 @@
 
 + (NSFont *)WL_dateViewWeekdayFont;
 
+
++ (NSFont *)WL_infoViewTitleFont;
+
 @end

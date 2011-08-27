@@ -36,4 +36,9 @@
     return [self WL_dateViewMonthAndYearFont];
 }
 
++ (NSFont *)WL_infoViewTitleFont
+{
+    return [NSFont fontWithName:@"Helvetica" size:26.0f];
+}
+
 @end
