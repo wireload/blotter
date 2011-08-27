@@ -21,7 +21,7 @@
     else if ([aKey isEqualToString:@"contentsBackgroundColor"])
         return [CABasicAnimation animationWithKeyPath:@"contentsBackgroundColor"];
     else
-        return [super defaultValueForKey:aKey];
+        return [super defaultActionForKey:aKey];
 }
 
 + (id)defaultValueForKey:(NSString *)aKey
