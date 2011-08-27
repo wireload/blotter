@@ -43,6 +43,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r);
     CGFloat minimumHeightOfHour;
     CGFloat maximumHeightOfHour;
     NSUInteger indexOfHighlightedColumn;
+    BOOL showTitle;
 
     CALayer *_rootLayer;
     CALayer *_timeRulerRootLayer;
@@ -81,6 +82,11 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r);
 @property CGFloat maximumHeightOfHour;
 
 @property (nonatomic) NSUInteger indexOfHighlightedColumn;
+
+/*!
+ @discussion Default value is YES.
+ */
+@property (nonatomic) BOOL showTitle;
 
 - (void)createLayers;
 
