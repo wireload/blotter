@@ -17,7 +17,6 @@
 
 @interface WLCalendarTasksView : NSView /*<CALayerDelegate, CALayoutManager>*/ {
     IBOutlet id<WLCalendarTasksViewDataSource> dataSource;
-    CALayer *_tasksLayer;
 }
 
 @property (nonatomic, assign) id<WLCalendarTasksViewDataSource> dataSource;

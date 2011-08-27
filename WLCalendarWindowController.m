@@ -12,6 +12,7 @@
 #import "WLCalendarDateViewController.h"
 #import "NSDate+WLDayBoundaries.h"
 #import "CoreAnimation+WLCalendar.h"
+#import "WLCalendarBoxView.h"
 
 
 @implementation WLCalendarWindowController
@@ -23,6 +24,11 @@
     {
         window = [[WLCalendarWindow alloc] init];
         [window setDelegate:self];
+
+        [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:window
+                                                               selector:@selector(display)
+                                                                   name:NSWorkspaceActiveSpaceDidChangeNotification
+                                                                 object:nil];
 
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
@@ -45,7 +51,6 @@
                                     [NSSortDescriptor sortDescriptorWithKey:@"calendar.title" ascending:YES selector:@selector(localizedStandardCompare:)],
                                     [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:NO selector:@selector(localizedStandardCompare:)], nil];
         _tasksViewController.sortDescriptors = sortDescriptors;
-        [contentView addSubview:[_tasksViewController view]];
 
         _dateViewController = [[WLCalendarDateViewController alloc] init];
         [_dateViewController setRepresentedObject:_calendarController];
@@ -64,6 +69,7 @@
     [window release];
     [windowScreenIdentifier release];
     [fadeController release];
+    [_tasksViewBox release];
 
     [_weekViewController release];
     [_tasksViewController release];
@@ -72,6 +78,9 @@
     [_calendarController release];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
+
     [super dealloc];
 }
 
@@ -153,7 +162,7 @@
 
 #pragma mark NSWindowDelegate
 
-- (void) windowDidChangeScreen:(NSNotification *)aNotification
+- (void)windowDidChangeScreen:(NSNotification *)aNotification
 {
     [self _updateFrame];
 }
@@ -217,14 +226,22 @@
     dateViewFrame = [contentView centerScanRect:dateViewFrame];
     [dateView setFrame:dateViewFrame];
 
-    WLCalendarTasksView *tasksView = [_tasksViewController view];
     NSRect tasksViewFrame = NSMakeRect(NSMinX(dateViewFrame),
-            NSMaxY(dateViewFrame),
-            dateViewFrame.size.width,
-            contentBounds.size.height - (NSMaxY(dateViewFrame) - NSMinY(contentBounds)) - 10.0f);
+                                       NSMaxY(dateViewFrame),
+                                       dateViewFrame.size.width,
+                                       contentBounds.size.height - (NSMaxY(dateViewFrame) - NSMinY(contentBounds)) - 10.0f);
     tasksViewFrame = [contentView centerScanRect:tasksViewFrame];
-    [tasksView setFrame:tasksViewFrame];
-    [tasksView setAutoresizingMask:NSViewHeightSizable];
+    if (_tasksViewBox == nil)
+    {
+        _tasksViewBox = [[WLCalendarBoxView alloc] initWithFrame:tasksViewFrame];
+        _tasksViewBox.title = NSLocalizedString(@"To Do", @"Header of To Do items list");
+        [_tasksViewBox setAutoresizingMask:NSViewHeightSizable];
+        [_tasksViewBox setContentView:[_tasksViewController view]];
+        [[window contentView] addSubview:_tasksViewBox];
+        [_tasksViewBox release];
+    }
+    else
+        [_tasksViewBox setFrame:tasksViewFrame];
 
     WLCalendarWeekView *weekView = [_weekViewController view];
     NSRect weekViewFrame = NSMakeRect(NSMaxX(dateViewFrame) + 17.0f,

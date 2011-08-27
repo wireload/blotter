@@ -16,6 +16,7 @@
 @class WLCalendarWeekViewController;
 @class WLCalendarTasksViewController;
 @class WLCalendarDateViewController;
+@class WLCalendarBoxView;
 
 
 /*!
@@ -42,6 +43,7 @@
     WLCalendarTasksViewController *_tasksViewController;
     WLCalendarDateViewController *_dateViewController;
     WLCalendarController *_calendarController;
+    WLCalendarBoxView *_tasksViewBox;
 
     NSCache *_cache;
     BOOL _isWindowShowed;
