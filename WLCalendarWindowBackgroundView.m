@@ -17,7 +17,6 @@
     self = [super initWithFrame:aFrameRect];
     if (self != nil)
     {
-        [self setWantsLayer:YES];
     }
     return self;
 }
