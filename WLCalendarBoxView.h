@@ -8,6 +8,22 @@
 
 #import <Cocoa/Cocoa.h>
 
+
+/*
+   +-----------------------+
+   | Title                 |
+   |                       |
+   +-----------------------+
+   |                       |
+   +-----------------------+
+   | Content               |
+   |                       |
+   |                       |
+   |                       |
+   |                       |
+   +-----------------------+
+*/
+
 @interface WLCalendarBoxView : NSView {
     NSString *title;
     NSView *contentView;
