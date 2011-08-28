@@ -40,10 +40,12 @@
     BLFadeController *fadeController;
 
     WLCalendarWeekViewController *_weekViewController;
+    WLCalendarWeekViewController *_rightNowViewController;
     WLCalendarTasksViewController *_tasksViewController;
     WLCalendarDateViewController *_dateViewController;
     WLCalendarController *_calendarController;
     WLCalendarBoxView *_tasksViewBox;
+    WLCalendarBoxView *_rightNowViewBox;
 
     NSCache *_cache;
     BOOL _isWindowShowed;
@@ -85,6 +87,11 @@
 
 - (void)_placeViews;
 
+@end
+
+
+@interface WLCalendarWindowController (Layout)
+
 /*!
  @abstract Resizes subviews of the contentView of controller's window according to the windowSize property.
  */
@@ -95,5 +102,15 @@
 - (void)_applyNormalSizeToViews;
 
 - (void)_applyFullSizeToViews;
+
+- (CGFloat)heightOfTasksAndRightNow;
+
+- (NSRect)dateRect;
+
+- (NSRect)tasksRect;
+
+- (NSRect)rightNowRect;
+
+- (NSRect)weekRect;
 
 @end

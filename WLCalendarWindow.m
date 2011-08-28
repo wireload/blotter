@@ -40,8 +40,7 @@
 
 - (NSRect)contentViewBounds
 {
-    CGFloat borderWidth = [[self contentView] layer].borderWidth;
-    return NSInsetRect([[self contentView] bounds], 10.0, 10.0f);
+    return NSInsetRect([[self contentView] bounds], 20.0, 20.0f);
 }
 
 #pragma mark NSWindow

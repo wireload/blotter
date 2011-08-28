@@ -32,8 +32,6 @@
 
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-        NSView *contentView = [window contentView];
-
         _calendarController = [[WLCalendarController alloc] init];
 
         _weekViewController = [[WLCalendarWeekViewController alloc] init];
@@ -41,7 +39,10 @@
         [_weekViewController bind:@"mode" toObject:defaults withKeyPath:@"RollingCalendar" options:nil];
         [_weekViewController bind:@"titleFormat" toObject:defaults withKeyPath:@"PerDayDate" options:nil];
         _weekViewController.highlightWeekends = YES;
-        [contentView addSubview:[_weekViewController view]];
+
+        _rightNowViewController = [[WLCalendarWeekViewController alloc] init];
+        [_rightNowViewController setRepresentedObject:_calendarController];
+        _rightNowViewController.mode = WLCalendarWeekViewRightNowMode;
 
         _tasksViewController = [[WLCalendarTasksViewController alloc] initWithNibName:nil bundle:nil];
         [_tasksViewController setRepresentedObject:_calendarController];
@@ -54,11 +55,10 @@
 
         _dateViewController = [[WLCalendarDateViewController alloc] init];
         [_dateViewController setRepresentedObject:_calendarController];
-        [contentView addSubview:[_dateViewController view]];
 
         _cache = [[NSCache alloc] init];
 
-        fadeController = [[BLFadeController alloc] initWithView:contentView];
+        fadeController = [[BLFadeController alloc] initWithView:[window contentView]];
     }
     return self;
 }
@@ -69,13 +69,15 @@
     [window release];
     [windowScreenIdentifier release];
     [fadeController release];
-    [_tasksViewBox release];
 
     [_weekViewController release];
+    [_rightNowViewController release];
     [_tasksViewController release];
     [_dateViewController release];
     [_cache release];
     [_calendarController release];
+    [_tasksViewBox release];
+    [_rightNowViewBox release];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
@@ -126,34 +128,12 @@
 
 #pragma mark Methods
 
-- (NSArray *)calendarsToDisplay
-{
-    BOOL displayAllCalendars = [[NSUserDefaults standardUserDefaults] boolForKey:@"DisplayAllCalendars"];
-    if (displayAllCalendars)
-        return [[CalCalendarStore defaultCalendarStore] calendars];
-    else
-    {
-        NSArray *userCalendars = [[NSUserDefaults standardUserDefaults] arrayForKey:@"Calendars"];
-        NSMutableArray *calendars = [NSMutableArray arrayWithCapacity:[userCalendars count]];
-        for (NSDictionary *userCalendar in userCalendars)
-        {
-            if ([[userCalendar objectForKey:@"check"] boolValue])
-            {
-                CalCalendar *calendar = [[CalCalendarStore defaultCalendarStore] calendarWithUID:[userCalendar objectForKey:@"uid"]];
-                if (calendar != nil)
-                    [calendars addObject:calendar];
-            }
-        }
-        return calendars;
-    }
-}
-
 - (IBAction)showWindow:(id)aSender
 {
     if (!_isWindowShowed)
     {
-        [self _updateFrame];
         [self _placeViews];
+        [self _updateFrame];
         [window orderBack:aSender];
         _isWindowShowed = YES;
     }
@@ -197,6 +177,42 @@
     [CATransaction commit];
 }
 
+- (void)_placeViews
+{
+    NSView *contentView = [window contentView];
+
+    [contentView addSubview:[_dateViewController view]];
+
+    _tasksViewBox = [[WLCalendarBoxView alloc] initWithFrame:NSZeroRect];
+    _tasksViewBox.title = NSLocalizedString(@"To Do", @"Header of To Do items list");
+    _tasksViewBox.contentView = [_tasksViewController view];
+    [contentView addSubview:_tasksViewBox];
+    [_tasksViewBox release];
+
+    _rightNowViewBox = [[WLCalendarBoxView alloc] initWithFrame:NSZeroRect];
+    _rightNowViewBox.title = NSLocalizedString(@"Right Now", @"Header of Right Now items list");
+    _rightNowViewBox.contentView = [_rightNowViewController view];
+    [contentView addSubview:_rightNowViewBox];
+    [_rightNowViewBox release];
+
+    WLCalendarWeekView *weekView = [_weekViewController view];
+    [weekView setAutoresizingMask:NSViewHeightSizable | NSViewWidthSizable];
+    [contentView addSubview:weekView];
+}
+
+@end
+
+
+@implementation  WLCalendarWindowController (Layout)
+
+static const CGFloat _WLYMarginBetweenTasksAndRightNow = 10.0f;
+
+static const CGFloat _WLWidthOfDateTasksAndRightNow = 255.0f;
+
+static const CGFloat _WLHeightOfDateView = 252.0f;
+
+static const CGFloat _WLXMarginBetweenInfoAndWeek = 17.0f;
+
 - (void)_applyWindowSizeToViews
 {
     switch (windowSize)
@@ -213,62 +229,72 @@
     }
 }
 
-- (void)_placeViews
-{
-    NSRect contentBounds = [window contentViewBounds];
-    NSView *contentView = [window contentView];
-
-    WLCalendarDateView *dateView = [_dateViewController view];
-    NSRect dateViewFrame = NSMakeRect(NSMinX(contentBounds) + 10.0f,
-            NSMinY(contentBounds) + 10.0f,
-            255.0f,
-            252.0f);
-    dateViewFrame = [contentView centerScanRect:dateViewFrame];
-    [dateView setFrame:dateViewFrame];
-
-    NSRect tasksViewFrame = NSMakeRect(NSMinX(dateViewFrame),
-                                       NSMaxY(dateViewFrame),
-                                       dateViewFrame.size.width,
-                                       contentBounds.size.height - (NSMaxY(dateViewFrame) - NSMinY(contentBounds)) - 10.0f);
-    tasksViewFrame = [contentView centerScanRect:tasksViewFrame];
-    if (_tasksViewBox == nil)
-    {
-        _tasksViewBox = [[WLCalendarBoxView alloc] initWithFrame:tasksViewFrame];
-        _tasksViewBox.title = NSLocalizedString(@"To Do", @"Header of To Do items list");
-        [_tasksViewBox setAutoresizingMask:NSViewHeightSizable];
-        [_tasksViewBox setContentView:[_tasksViewController view]];
-        [[window contentView] addSubview:_tasksViewBox];
-        [_tasksViewBox release];
-    }
-    else
-        [_tasksViewBox setFrame:tasksViewFrame];
-
-    WLCalendarWeekView *weekView = [_weekViewController view];
-    NSRect weekViewFrame = NSMakeRect(NSMaxX(dateViewFrame) + 17.0f,
-            NSMinY(dateViewFrame),
-            contentBounds.size.width - (NSMaxX(dateViewFrame) - NSMinX(contentBounds)) - 17.0f - 10.0f,
-            contentBounds.size.height - (NSMinY(dateViewFrame) - NSMinY(contentBounds)) - 10.0f);
-    weekViewFrame = [contentView centerScanRect:weekViewFrame];
-    [weekView setFrame:weekViewFrame];
-    [weekView setAutoresizingMask:NSViewHeightSizable | NSViewWidthSizable];
-}
-
 - (void)_applyNarrowSizeToViews
 {
-    WLCalendarWeekView *weekView = [_weekViewController view];
-    [weekView setHidden:YES];
+    [[_dateViewController view] setFrame:[self dateRect]];
+    [_tasksViewBox setFrame:[self tasksRect]];
+    [_rightNowViewBox setFrame:[self rightNowRect]];
+    [[_weekViewController view] setFrame:[self weekRect]];
+    [[_weekViewController view] setHidden:YES];
 }
 
 - (void)_applyNormalSizeToViews
 {
-    WLCalendarWeekView *weekView = [_weekViewController view];
-    [weekView setHidden:NO];
+    [[_dateViewController view] setFrame:[self dateRect]];
+    [_tasksViewBox setFrame:[self tasksRect]];
+    [_rightNowViewBox setFrame:[self rightNowRect]];
+    [[_weekViewController view] setFrame:[self weekRect]];
+    [[_weekViewController view] setHidden:NO];
 }
 
 - (void)_applyFullSizeToViews
 {
-    WLCalendarWeekView *weekView = [_weekViewController view];
-    [weekView setHidden:NO];
+    [[_dateViewController view] setFrame:[self dateRect]];
+    [_tasksViewBox setFrame:[self tasksRect]];
+    [_rightNowViewBox setFrame:[self rightNowRect]];
+    [[_weekViewController view] setFrame:[self weekRect]];
+    [[_weekViewController view] setHidden:NO];
+}
+
+- (CGFloat)heightOfTasksAndRightNow
+{
+    return (NSHeight([window contentViewBounds]) - _WLYMarginBetweenTasksAndRightNow - NSHeight([self dateRect])) / 2.0f;
+}
+
+- (NSRect)dateRect
+{
+    NSRect bounds = [window contentViewBounds];
+    return [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
+                                                           NSMinY(bounds),
+                                                           _WLWidthOfDateTasksAndRightNow,
+                                                           _WLHeightOfDateView)];
+}
+
+- (NSRect)tasksRect
+{
+    NSRect bounds = [window contentViewBounds];
+    return [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
+                                                           NSMaxY([self dateRect]),
+                                                           _WLWidthOfDateTasksAndRightNow,
+                                                           [self heightOfTasksAndRightNow])];
+}
+
+- (NSRect)rightNowRect
+{
+    NSRect bounds = [window contentViewBounds];
+    return [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
+                                                           NSMaxY([self tasksRect]) + _WLYMarginBetweenTasksAndRightNow,
+                                                           _WLWidthOfDateTasksAndRightNow,
+                                                           [self heightOfTasksAndRightNow])];
+}
+
+- (NSRect)weekRect
+{
+    NSRect bounds = [window contentViewBounds];
+    return [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds) + _WLWidthOfDateTasksAndRightNow + _WLXMarginBetweenInfoAndWeek,
+                                                           NSMinY(bounds),
+                                                           NSWidth(bounds) - _WLWidthOfDateTasksAndRightNow - _WLXMarginBetweenInfoAndWeek,
+                                                           NSHeight(bounds))];
 }
 
 @end
