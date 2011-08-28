@@ -24,7 +24,7 @@
 
 - (void)setContentView:(NSView *)newContentView
 {
-    [newContentView setFrame:[self _contentViewRect]];
+    [newContentView setFrame:[self _contentFrame]];
     [newContentView setAutoresizingMask:NSViewHeightSizable];
     if (contentView != nil)
         [self replaceSubview:contentView with:newContentView];
@@ -53,13 +53,13 @@
     return attributes;
 }
 
-- (NSRect)_contentViewRect
+- (NSRect)_contentFrame
 {
     NSRect bounds = [self bounds];
     return NSMakeRect(NSMinX(bounds) + 14.0f,
-                      NSMinY(bounds) + 17.0f + 30.0f + 15.0f,
+                      NSMinY(bounds) + 17.0f + 35.0f + 15.0f,
                       NSWidth(bounds) - 14.0f - 14.0f,
-                      NSHeight(bounds) - 17.0f - 30.0f - 15.0f - 17.0f);
+                      NSHeight(bounds) - 17.0f - 35.0f - 15.0f - 17.0f);
 }
 
 
@@ -106,7 +106,7 @@
                              YES);
     }
     
-    NSRect titleRect = NSMakeRect(NSMinX(bounds) + 14.0f, NSMinY(bounds) + 17.0f, NSWidth(bounds) - 14.0f, 30.0f);
+    NSRect titleRect = NSMakeRect(NSMinX(bounds) + 14.0f, NSMinY(bounds) + 17.0f, NSWidth(bounds) - 14.0f, 35.0f);
     if (NSIntersectsRect(titleRect, dirtyRect))
         [title drawInRect:titleRect withAttributes:[self _titleAttributes]];
 }

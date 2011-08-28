@@ -20,8 +20,6 @@
 
 - (NSDictionary *)_titleAttributes;
 
-- (NSRect)_titleRect;
-
-- (NSRect)_contentViewRect;
+- (NSRect)_contentFrame;
 
 @end
