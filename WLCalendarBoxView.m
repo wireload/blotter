@@ -116,4 +116,10 @@
     return YES;
 }
 
+- (void)setFrame:(NSRect)newFrameRect
+{
+    [super setFrame:newFrameRect];
+    [self.contentView setFrame:[self _contentFrame]];
+}
+
 @end
