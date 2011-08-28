@@ -106,9 +106,9 @@
                              YES);
     }
     
-    NSRect titleRect = NSMakeRect(NSMinX(bounds) + 14.0f, NSMinY(bounds) + 17.0f, NSWidth(bounds) - 14.0f, 35.0f);
-    if (NSIntersectsRect(titleRect, dirtyRect))
-        [title drawInRect:titleRect withAttributes:[self _titleAttributes]];
+    NSRect titleFrame = NSMakeRect(NSMinX(bounds) + 14.0f, NSMinY(bounds) + 17.0f, NSWidth(bounds) - 14.0f, 35.0f);
+    if (NSIntersectsRect(titleFrame, dirtyRect))
+        [self.title drawInRect:titleFrame withAttributes:[self _titleAttributes]];
 }
 
 - (BOOL)isFlipped
