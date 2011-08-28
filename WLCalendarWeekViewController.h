@@ -15,7 +15,8 @@
 typedef enum
 {
     WLCalendarWeekViewWeekMode,
-    WLCalendarWeekViewDayMode
+    WLCalendarWeekViewDayMode,
+    WLCalendarWeekViewRightNowMode
 } WLCalendarWeekViewMode;
 
 

@@ -66,7 +66,13 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     mode = newMode;
     if (isViewLoaded)
     {
-        [[self view] reloadDataAnimated:YES];
+        WLCalendarWeekView *v = [self view];
+        if (mode == WLCalendarWeekViewRightNowMode)
+        {
+            v.showTitle = NO;
+            v.fitDayEvents = NO;
+        }
+        [v reloadDataAnimated:YES];
         [self highlightCurrentDayIfNeeded];
     }
 }
@@ -130,7 +136,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 {
     NSParameterAssert([self representedObject] != nil);
 
-    if (self.mode == WLCalendarWeekViewDayMode)
+    if (self.mode == WLCalendarWeekViewDayMode || self.mode == WLCalendarWeekViewRightNowMode)
         return 0;
     else
     {
@@ -143,7 +149,8 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 
 - (void)highlightCurrentDayIfNeeded
 {
-    [[self view] setIndexOfHighlightedColumn:[self currentDay]];
+    if (self.mode != WLCalendarWeekViewRightNowMode)
+        [[self view] setIndexOfHighlightedColumn:[self currentDay]];
 }
 
 - (NSDate *)firstColumnDate
@@ -154,6 +161,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     NSDate *date = [[self representedObject] date];
     switch (mode) {
         case WLCalendarWeekViewDayMode:
+        case WLCalendarWeekViewRightNowMode:
         {
             NSDateComponents *dateNoonComponents = [calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:date];
             NSRange hoursRange = [calendar rangeOfUnit:NSHourCalendarUnit inUnit:NSDayCalendarUnit forDate:date];
@@ -235,13 +243,15 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 
     NSCalendar *calendar = [[self representedObject] calendar];
     NSDate *date = [[self representedObject] date];
-    if (mode == WLCalendarWeekViewWeekMode)
+    if (self.mode == WLCalendarWeekViewWeekMode)
     {
         NSRange weekdaysRange = [calendar rangeOfUnit:NSWeekdayCalendarUnit inUnit:NSWeekCalendarUnit forDate:date];
         return weekdaysRange.length;
     }
-    else
+    else if (self.mode == WLCalendarWeekViewDayMode)
         return _WLNumberOfDaysInWeek;
+    else if (self.mode == WLCalendarWeekViewRightNowMode)
+        return 1;
 }
 
 // -[CalCalendarStore eventsWithPredicate:] can take a relatively long time. This optimization allows us to call that method only once.
@@ -433,7 +443,13 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     WLCalendarWeekView *v = [[WLCalendarWeekView alloc] init];
     [self setView:v];
     v.dataSource = self;
-    v.fitDayEvents = YES;
+    if (self.mode == WLCalendarWeekViewRightNowMode)
+    {
+        v.fitDayEvents = NO;
+        v.showTitle = NO;
+    }
+    else
+        v.fitDayEvents = YES;
     [v scrollHour:[self currentHour] animated:NO];
     [v createLayers];
     v.indexOfHighlightedColumn = [self currentDay];
