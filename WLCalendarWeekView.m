@@ -365,8 +365,18 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     {
         WLHourRange r = [self eventsHourRange];
         // Make sure that the first and last hour labels are fit.
-        // Subtract [[_timeRulerRootLayer WL_timeRulerLayer] hourLabelYPadding] to fit the last hour label.
-        return ([self dayScrollFrame].size.height - [[_timeRulerRootLayer WL_timeRulerLayer] hourLabelYPadding]) / (ceilf(r.endHour) - floorf(r.startHour));
+        CGFloat endHour = ceilf(r.endHour);
+        CGFloat numberOfHours = [self numberOfHours];
+        if (fabsf(endHour - numberOfHours) > FLT_EPSILON)
+        {
+            // Subtract [[_timeRulerRootLayer WL_timeRulerLayer] hourLabelYPadding] to fit the last hour label.
+            return ([self dayScrollFrame].size.height - [[_timeRulerRootLayer WL_timeRulerLayer] hourLabelYPadding]) / (endHour - floorf(r.startHour));
+        }
+        else
+        {
+            // If the end hour is the last hour, there is no need to substract since there is no label for the last hour.
+            return ([self dayScrollFrame].size.height) / (endHour - floorf(r.startHour));
+        }
     }
     else
         return 40.0f;
