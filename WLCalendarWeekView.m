@@ -535,7 +535,6 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     }
 
     WLCalendarTimeRulerLayer *timeRuler = [_timeRulerRootLayer WL_timeRulerLayer];
-    CAScrollLayer *timeRulerScroll = [_timeRulerRootLayer WL_timeRulerScrollLayer];
     CGPoint scrollPoint = [timeRuler pointForHour:floorf(r.startHour)];
     scrollPoint.y -= [timeRuler hourLabelYPadding];
     for (WLCalendarDayEventsLayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])

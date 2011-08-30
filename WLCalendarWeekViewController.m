@@ -244,15 +244,17 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 
     NSCalendar *calendar = [[self representedObject] calendar];
     NSDate *date = [[self representedObject] date];
-    if (self.mode == WLCalendarWeekViewWeekMode)
-    {
-        NSRange weekdaysRange = [calendar rangeOfUnit:NSWeekdayCalendarUnit inUnit:NSWeekCalendarUnit forDate:date];
-        return weekdaysRange.length;
+    switch (self.mode) {
+        case WLCalendarWeekViewWeekMode:
+        {
+            NSRange weekdaysRange = [calendar rangeOfUnit:NSWeekdayCalendarUnit inUnit:NSWeekCalendarUnit forDate:date];
+            return weekdaysRange.length;
+        }
+        case WLCalendarWeekViewDayMode:
+            return _WLNumberOfDaysInWeek;
+        case WLCalendarWeekViewRightNowMode:
+            return 1;
     }
-    else if (self.mode == WLCalendarWeekViewDayMode)
-        return _WLNumberOfDaysInWeek;
-    else if (self.mode == WLCalendarWeekViewRightNowMode)
-        return 1;
 }
 
 // -[CalCalendarStore eventsWithPredicate:] can take a relatively long time. This optimization allows us to call that method only once.

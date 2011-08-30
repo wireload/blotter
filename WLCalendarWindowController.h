@@ -72,11 +72,6 @@
 
 @property (readonly) BLFadeController *fadeController;
 
-/*!
- @abstract  Returns array of CalCalendar objects depending on DisplayAllCalendars and Calendars preferences.
- */
-- (NSArray *)calendarsToDisplay;
-
 - (IBAction)showWindow:(id)aSender;
 
 
