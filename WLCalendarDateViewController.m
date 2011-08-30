@@ -48,6 +48,7 @@ static NSString* const _WLDateFormatterCacheKey = @"dateFormatter";
 
     [f setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:currentLocale]];
     view.weekday = [f stringFromDate:date];
+    [view setNeedsDisplay:YES];
 }
 
 
