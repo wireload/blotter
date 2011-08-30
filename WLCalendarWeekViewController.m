@@ -71,6 +71,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
         {
             v.showTitle = NO;
             v.fitDayEvents = NO;
+            v.showAllDayEvents = NO;
         }
         [v reloadDataAnimated:YES];
         [self highlightCurrentDayIfNeeded];
@@ -447,6 +448,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     {
         v.fitDayEvents = NO;
         v.showTitle = NO;
+        v.showAllDayEvents = NO;
     }
     else
         v.fitDayEvents = YES;

@@ -30,7 +30,7 @@
     self = [super initWithLayer:aLayer];
     if (self != nil)
     {
-        timeRuler = [aLayer timeRuler];
+        self.timeRuler = [aLayer timeRuler];
     }
     return self;
 }
@@ -41,7 +41,7 @@
     [super dealloc];
 }
 
-- (CGFloat)firstHourYPadding
+- (CGFloat)hourLabelYPadding
 {
     if ([_sortedTimeLayers count] > 0)
         return [[_sortedTimeLayers objectAtIndex:0] preferredFrameSize].height / 2;
@@ -64,7 +64,7 @@
 
 - (CGPoint)pointForHour:(CGFloat)aHour
 {
-    return CGPointMake(0.0f, [self firstHourYPadding] + aHour * timeRuler.heightOfHour);
+    return CGPointMake(0.0f, floorf([self hourLabelYPadding] + aHour * timeRuler.heightOfHour));
 }
 
 - (CGFloat)preferredFrameWidth
@@ -109,7 +109,7 @@
     if ([_sortedTimeLayers count] == 0)
         return CGSizeZero;
 
-    CGFloat h = floorf(timeRuler.heightOfHour * [_sortedTimeLayers count] + [self firstHourYPadding]);
+    CGFloat h = floorf(timeRuler.heightOfHour * [_sortedTimeLayers count] + [self hourLabelYPadding]);
     return CGSizeMake([self preferredFrameWidth], h);
 }
 
@@ -121,12 +121,12 @@
     NSAssert(self.layoutManager == nil, @"You cannot use custom layout managers with this class");
 
     CGFloat heightOfHour = timeRuler.heightOfHour;
-    CGFloat yOffset = [self firstHourYPadding];
+    CGFloat hourPosition = [self hourLabelYPadding];
     for (CATextLayer *timeLayer in _sortedTimeLayers)
     {
         CGSize size = [timeLayer preferredFrameSize];
-        timeLayer.frame = CGRectIntegral(CGRectMake(0.0f, yOffset - size.height / 2, self.bounds.size.width, size.height));
-        yOffset += heightOfHour;
+        timeLayer.frame = CGRectIntegral(CGRectMake(0.0f, hourPosition - size.height / 2, self.bounds.size.width, size.height));
+        hourPosition += heightOfHour;
     }
 }
 

@@ -23,12 +23,15 @@
 
 - (void)setHours:(NSArray *)hours;
 
-- (CGFloat)firstHourYPadding;
-
 - (CGPoint)pointForHour:(CGFloat)aHour;
 
 - (CGFloat)preferredFrameWidth;
 
+/*!
+ @abstract      Returns half of the maximum height of hour label. 
+ @discussion    You may use this value to make sure that hour label is visible.
+ */
+- (CGFloat)hourLabelYPadding;
 
 - (WLCalendarTextLayer *)_setupTimeLayerWithString:(NSString *)aTime;
 

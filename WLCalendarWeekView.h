@@ -31,6 +31,8 @@ typedef struct
 
 static const WLHourRange WLHourRangeZero = {0.0f, 0.0f};
 
+static const WLHourRange WLHourRangeInvalid = {CGFLOAT_MAX, 0.0f};
+
 BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r);
 
 
@@ -40,9 +42,8 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r);
     CGFloat minimumHeightOfColumnTitle;
     BOOL showTimeIndicator;
     BOOL fitDayEvents;
-    CGFloat minimumHeightOfHour;
-    CGFloat maximumHeightOfHour;
     NSUInteger indexOfHighlightedColumn;
+    BOOL showAllDayEvents;
     BOOL showTitle;
 
     CALayer *_rootLayer;
@@ -71,17 +72,12 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r);
  */
 @property (nonatomic) BOOL fitDayEvents;
 
-/*!
- @discussion Default value is 20.0f.
- */
-@property CGFloat minimumHeightOfHour;
-
-/*!
- @discussion Default value is 100.0f.
- */
-@property CGFloat maximumHeightOfHour;
-
 @property (nonatomic) NSUInteger indexOfHighlightedColumn;
+
+/*!
+ @discussion Default value is YES.
+ */
+@property (nonatomic) BOOL showAllDayEvents;
 
 /*!
  @discussion Default value is YES.
@@ -133,20 +129,6 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r);
 
 - (void)_updateTimeRuler;
 
-- (void)_layoutTimeRulerRootLayer:(CALayer *)aRootLayer;
-
-- (void)_layoutTimeRulerLayer:(WLCalendarTimeRulerLayer *)aTimeRulerLayer;
-
-- (void)_layoutSublayersOfColumnLayer:(CALayer *)aColumnLayer;
-
-- (void)_layoutDayLayer:(WLCalendarDayEventsLayer *)aDayLayer;
-
-- (void)_layoutTimeIndicatorRootLayer:(CALayer *)aTimeIndicatorLayer;
-
-- (void)_layoutColumnLayer:(CALayer *)aColumnLayer atIndex:(NSUInteger)anIndex;
-
-- (void)_layoutTimeIndicatorLayer:(WLCalendarTimeIndicatorLayer *)aTimeIndicatorLayer;
-
 - (void)_focusOnDayEvents;
 
 - (void)_focusOnHour;
@@ -154,10 +136,50 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r);
 @end
 
 
+@interface WLCalendarWeekView (Layout)
+
+- (CGFloat)timeRulerWidth;
+
+- (CGFloat)timeRulerRootWidth;
+
+- (CGRect)timeRulerRootFrame;
+
+- (CGFloat)timerRulerScrollHeight;
+
+- (CGRect)timeRulerScrollFrame;
+
+- (void)layoutTimeRulerRoot;
+
+- (void)layoutTimeRulerLayer:(WLCalendarTimeRulerLayer *)aTimeRulerLayer;
+
+
+- (CGFloat)columnWidth;
+
+- (CGRect)columnFrameAtIndex:(NSInteger)anIndex;
+
+- (CGRect)allDayBackgroundFrame;
+
+- (CGRect)dayBackgroundFrame;
+
+- (CGRect)dayScrollFrame;
+
+- (NSRect)columnTitleFrame;
+
+- (void)layoutColumnLayers;
+
+- (void)layoutColumnLayer:(CALayer *)aColumnLayer atIndex:(NSInteger)anIndex;
+
+- (void)layoutDayLayer:(WLCalendarDayEventsLayer *)aDayLayer;
+
+
+- (void)layoutTimeIndicatorRootLayer;
+
+- (void)layoutTimeIndicatorLayer;
+
+@end
+
+
 @interface WLCalendarWeekView (SetupLayers)
-
-- (CALayer *)setupRootLayer;
-
 
 - (CALayer *)setupTimeRulerRootLayer;
 
