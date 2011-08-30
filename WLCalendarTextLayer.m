@@ -103,7 +103,9 @@
     CGRect dirtyRect = CGContextGetClipBoundingBox(aContext);
     if (CGRectIntersectsRect(self.bounds, dirtyRect))
     {
-        CGContextSetTextMatrix(aContext, CGAffineTransformMakeScale(1.0f, -1.0f));
+        CGContextSetTextMatrix(aContext, CGAffineTransformIdentity);
+        CGContextTranslateCTM(aContext, 0.0f, self.bounds.size.height);
+        CGContextScaleCTM(aContext, 1.0f, -1.0f);
         CGContextSetShouldAntialias(aContext, YES);
         CGContextSetAllowsAntialiasing(aContext, YES);
         CGContextSetShadowWithColor(aContext, self.stringShadowOffset, self.stringShadowRadius, self.stringShadowColor);
@@ -111,26 +113,11 @@
         if (framesetter != NULL)
         {
             CGMutablePathRef framePath = CGPathCreateMutable();
-            CGPathAddRect(framePath, NULL, CGRectMake(0.0f, 0.0f, self.bounds.size.width, 9999.0f));
+            CGPathAddRect(framePath, NULL, CGRectMake(0.0f, 0.0f, self.bounds.size.width, self.bounds.size.height));
             CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
             if (frame != NULL)
             {
-                __block NSArray *lines = (NSArray *)CTFrameGetLines(frame);
-                NSUInteger numberOfLines = [lines count];
-                if (numberOfLines > 0)
-                {
-                    __block CGPoint *lineOrigins = calloc(numberOfLines, sizeof(CGPoint));
-                    CTFrameGetLineOrigins(frame, CFRangeMake(0, numberOfLines), lineOrigins);
-
-                    [lines enumerateObjectsUsingBlock:^(id line, NSUInteger idx, BOOL *stop)
-                    {
-                        CGPoint origin = lineOrigins[idx];
-                        CGContextSetTextPosition(aContext, floorf(self.bounds.origin.x + origin.x), floorf(self.bounds.origin.y + CTLineGetImageBounds((CTLineRef)line, aContext).size.height));
-                        CTLineDraw((CTLineRef)line, aContext);
-                        *stop = YES;
-                    }];
-                    free(lineOrigins);
-                }
+                CTFrameDraw(frame, aContext);
                 CFRelease(frame);
             }
             CFRelease(framePath);
