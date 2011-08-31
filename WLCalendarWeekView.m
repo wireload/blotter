@@ -549,19 +549,19 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     CGPoint newScrollPoint = [timeRulerLayer pointForHour:_hour];
 
     // Center _hour whenever possible
-    CGFloat visibleHeight = timeRulerScrollLayer.bounds.size.height + [timeRulerLayer hourLabelYPadding];
+    CGFloat visibleHeight = timeRulerScrollLayer.bounds.size.height;
     newScrollPoint = CGPointMake(0.0f, floorf(newScrollPoint.y - visibleHeight / 2));
     CGFloat topLimit = CGRectGetMinY(timeRulerLayer.bounds);
     CGFloat bottomLimit = CGRectGetMaxY(timeRulerLayer.bounds) - visibleHeight;
     newScrollPoint.y = floorf(fminf(fmaxf(newScrollPoint.y, topLimit), bottomLimit));
 
+    newScrollPoint.y -= [timeRulerLayer hourLabelYPadding];
     for (CALayer *l in [_columnLayers valueForKey:@"WL_dayScrollLayer"])
     {
         [l scrollPoint:newScrollPoint];
         l.superlayer.mask.frame = l.superlayer.bounds;
     }
     timeRulerScrollLayer.mask.frame = timeRulerScrollLayer.bounds;
-    newScrollPoint.y -= [timeRulerLayer hourLabelYPadding];
     [timeRulerLayer scrollPoint:newScrollPoint];
 }
 
