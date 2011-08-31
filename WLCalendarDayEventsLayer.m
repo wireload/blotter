@@ -487,7 +487,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
                 l.frame = CGRectMake(ceilf(CGRectGetMinX(self.bounds) + columnIdx * (columnWidth + XSpaceBetweenEvents)),
                                      floorf(t),
                                      floorf(columnWidth + (columnWidth + XSpaceBetweenEvents) * numberOfColumnsToSkip),
-                                     ceilf(b - t));
+                                     floorf(b - t));
                 if (shouldRoundCorners)
                     l.cornerRadius = CornerRadius;
                 else
