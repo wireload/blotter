@@ -13,7 +13,6 @@
 
 
 @implementation WLCalendarTimeRulerLayer
-@synthesize timeRuler;
 
 - (id)init
 {
@@ -40,6 +39,14 @@
     [_sortedTimeLayers release];
     [super dealloc];
 }
+
+
+#pragma mark Properties
+@synthesize timeRuler;
+@synthesize shouldHideHalfVisibleHourLabels;
+
+
+#pragma mark Methods
 
 - (CGFloat)hourLabelYPadding
 {
@@ -122,10 +129,17 @@
 
     CGFloat heightOfHour = timeRuler.heightOfHour;
     CGFloat hourPosition = [self hourLabelYPadding];
-    for (CATextLayer *timeLayer in _sortedTimeLayers)
+    for (CATextLayer *hourLabel in _sortedTimeLayers)
     {
-        CGSize size = [timeLayer preferredFrameSize];
-        timeLayer.frame = CGRectIntegral(CGRectMake(0.0f, hourPosition - size.height / 2, self.bounds.size.width, size.height));
+        CGSize size = [hourLabel preferredFrameSize];
+        hourLabel.frame = CGRectIntegral(CGRectMake(0.0f, hourPosition - size.height / 2, self.bounds.size.width, size.height));
+        if (shouldHideHalfVisibleHourLabels)
+        {
+            if (CGRectGetMaxY(self.visibleRect) < CGRectGetMaxY(hourLabel.frame))
+                hourLabel.hidden = YES;
+            else
+                hourLabel.hidden = NO;
+        }
         hourPosition += heightOfHour;
     }
 }

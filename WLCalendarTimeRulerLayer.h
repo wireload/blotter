@@ -17,9 +17,12 @@
     id<WLCalendarTimeRuler> timeRuler;
     BOOL _shouldUpdatePreferredFrameWidthCache;
     CGFloat _cachedPreferredFrameWidth;
+    BOOL shouldHideHalfVisibleHourLabels;
 }
 
 @property (assign) id<WLCalendarTimeRuler> timeRuler;
+
+@property BOOL shouldHideHalfVisibleHourLabels;
 
 - (void)setHours:(NSArray *)hours;
 
