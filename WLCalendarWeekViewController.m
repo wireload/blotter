@@ -142,9 +142,9 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     else
     {
         NSCalendar *calendar = [[self representedObject] calendar];
-        NSDateComponents *firstColumnDateComponents = [calendar components:NSDayCalendarUnit fromDate:[self firstColumnDate]];
-        NSDateComponents *todayComponents = [calendar components:NSDayCalendarUnit fromDate:[[self representedObject] date]];
-        return [todayComponents day] - [firstColumnDateComponents day];
+        NSDateComponents *firstColumnDateComponents = [calendar components:NSWeekdayCalendarUnit fromDate:[self firstColumnDate]];
+        NSDateComponents *todayComponents = [calendar components:NSWeekdayCalendarUnit fromDate:[[self representedObject] date]];
+        return [todayComponents weekday] - [firstColumnDateComponents weekday];
     }
 }
 
@@ -171,12 +171,11 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
         }
         case WLCalendarWeekViewWeekMode:
         {
-            NSDateComponents *firstWeekdayComponents = [calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit
-                                                              fromDate:date];
-            NSRange weekdaysRange = [calendar rangeOfUnit:NSDayCalendarUnit inUnit:NSWeekCalendarUnit forDate:date];
-            [firstWeekdayComponents setDay:weekdaysRange.location];
-            NSDate *firstWeekday = [calendar dateFromComponents:firstWeekdayComponents];
+            NSDate *firstWeekday = nil;
+            [calendar rangeOfUnit:NSWeekCalendarUnit startDate:&firstWeekday interval:NULL forDate:date];
             NSRange hoursRange = [calendar rangeOfUnit:NSHourCalendarUnit inUnit:NSDayCalendarUnit forDate:firstWeekday];
+            NSDateComponents *firstWeekdayComponents = [calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
+                                                                   fromDate:firstWeekday];
             [firstWeekdayComponents setHour:NSMaxRange(hoursRange) / 2];
             return [calendar dateFromComponents:firstWeekdayComponents];
         }
