@@ -68,6 +68,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
         showTimeIndicator = YES;
         showTitle = YES;
         showAllDayEvents = YES;
+        rangeOfAlwaysVisibleHours = (WLHourRange){.startHour = 9.0f, .endHour = 17.0f};
     }
     return self;
 }
@@ -88,6 +89,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 @synthesize indexOfHighlightedColumn;
 @synthesize showAllDayEvents;
 @synthesize showTitle;
+@synthesize rangeOfAlwaysVisibleHours;
 
 - (void)setIndexOfHighlightedColumn:(NSUInteger)newIndexOfHighlightedColumn
 {
@@ -139,6 +141,13 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     showTitle = newShowTitle;
     if ([self wantsLayer])
         [_rootLayer setNeedsLayout];
+}
+
+- (void)setRangeOfAlwaysVisibleHours:(WLHourRange)newHourRange
+{
+    rangeOfAlwaysVisibleHours = newHourRange;
+    if ([self wantsLayer] && self.fitDayEvents)
+        [self heightOfHourMayHaveChanged];
 }
 
 
@@ -306,10 +315,9 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     [[_timeIndicatorRootLayer WL_timeIndicatorLayer] removeAllAnimations];
 }
 
-- (WLHourRange)eventsHourRange
+- (WLHourRange)rangeOfVisibleHours
 {
-    WLHourRange r = WLHourRangeInvalid;
-    BOOL areThereEvents = NO;
+    WLHourRange r = self.rangeOfAlwaysVisibleHours;
     for (WLCalendarDayEventsLayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])
     {
         WLDateRange *columnRange = [l eventsDateRange];
@@ -317,13 +325,9 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
         {
             r.startHour = fminf(r.startHour, [self hourForDate:columnRange.startDate]);
             r.endHour = fmaxf(r.endHour, [self hourForDate:columnRange.endDate]);
-            areThereEvents = YES;
         }
     }
-    if (areThereEvents)
-        return r;
-    else
-        return WLHourRangeZero;
+    return r;
 }
 
 - (void)heightOfHourMayHaveChanged
@@ -371,7 +375,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 
     if (self.fitDayEvents)
     {
-        WLHourRange r = [self eventsHourRange];
+        WLHourRange r = [self rangeOfVisibleHours];
         CGFloat endHour = ceilf(r.endHour);
         return ([self dayScrollFrame].size.height) / (endHour - floorf(r.startHour));
     }
@@ -524,7 +528,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 
 - (void)_focusOnDayEvents
 {
-    WLHourRange r = [self eventsHourRange];
+    WLHourRange r = [self rangeOfVisibleHours];
     if (WLHourRangeEqualToHourRange(r, WLHourRangeZero))
     {
         [self _focusOnHour]; // No events to focus. Better focus on current hour rather than 0:00.

@@ -45,6 +45,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r);
     NSUInteger indexOfHighlightedColumn;
     BOOL showAllDayEvents;
     BOOL showTitle;
+    WLHourRange rangeOfAlwaysVisibleHours;
 
     CALayer *_rootLayer;
     CALayer *_timeRulerRootLayer;
@@ -84,6 +85,11 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r);
  */
 @property (nonatomic) BOOL showTitle;
 
+/*!
+ @discussion Default value is [09:00, 17:00].
+ */
+@property (nonatomic) WLHourRange rangeOfAlwaysVisibleHours;
+
 - (void)createLayers;
 
 - (void)reloadDataAnimated:(BOOL)isAnimated;
@@ -106,7 +112,10 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r);
 
 - (void)stopAnimations;
 
-- (WLHourRange)eventsHourRange;
+/*!
+ @see rangeOfAlwaysVisibleHours
+ */
+- (WLHourRange)rangeOfVisibleHours;
 
 - (void)heightOfHourMayHaveChanged;
 
