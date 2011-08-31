@@ -16,5 +16,7 @@
 	<array/>
 	<key>DisplayAllCalendars</key>
 	<true/>
+	<key>RollingCalendar</key>
+	<false/>
 </dict>
 </plist>
