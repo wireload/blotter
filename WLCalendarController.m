@@ -142,7 +142,6 @@
 
 - (void)_updateDate
 {
-    NSLog(@"_updateDate");
     self.date = [NSDate date];
 }
 
