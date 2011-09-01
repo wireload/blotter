@@ -13,22 +13,22 @@
 
 + (CTFontRef)WL_columnTitleFont
 {
-    return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica"), 11.0f, NULL) autorelease];
+    return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica Neue"), 11.0f, NULL) autorelease];
 }
 
 + (CTFontRef)WL_columnBoldTitleFont
 {
-    return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica BOLD"), 11.0f, NULL) autorelease];
+    return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica Neue BOLD"), 11.0f, NULL) autorelease];
 }
 
 + (NSFont *)WL_dateViewMonthDayFont
 {
-    return [NSFont fontWithName:@"Helvetica" size:200];
+    return [NSFont fontWithName:@"Helvetica Neue" size:200];
 }
 
 + (NSFont *)WL_dateViewMonthAndYearFont
 {
-    return [NSFont fontWithName:@"Helvetica" size:26.0f];
+    return [NSFont fontWithName:@"Helvetica Neue" size:26.0f];
 }
 
 + (NSFont *)WL_dateViewWeekdayFont
@@ -38,7 +38,7 @@
 
 + (NSFont *)WL_infoViewTitleFont
 {
-    return [NSFont fontWithName:@"Helvetica" size:26.0f];
+    return [NSFont fontWithName:@"Helvetica Neue Light" size:26.0f];
 }
 
 @end
