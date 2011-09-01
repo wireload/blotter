@@ -27,6 +27,7 @@
 @interface WLCalendarBoxView : NSView {
     NSString *title;
     NSView *contentView;
+    BOOL showSoftTopAndBottomEdges;
 }
 
 @property (copy) NSString *title;
