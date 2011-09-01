@@ -35,14 +35,20 @@
     NSLog(@"%s", __PRETTY_FUNCTION__);
 #endif
     CGContextSaveGState(aContext);
-    static const CGFloat lengths[] = {1.0f, 2.0f};
-    CGContextSetLineDash(aContext, 0, lengths, sizeof(lengths) / sizeof(CGFloat));
-    CGContextSetLineWidth(aContext, self.bounds.size.height);
-    CGContextMoveToPoint(aContext, CGRectGetMinX(self.bounds), CGRectGetMidY(self.bounds));
-    CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), CGRectGetMidY(self.bounds));
+    
+    CGContextSetShadow(aContext, CGSizeMake(0.0f,  -1.0f), 5);
+    
+    CGContextSetLineWidth(aContext, 1.0f);
+    CGContextMoveToPoint(aContext, CGRectGetMinX(self.bounds), CGRectGetMaxY(self.bounds));
+    CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), CGRectGetMaxY(self.bounds));
     CGContextSetStrokeColorWithColor(aContext, self.color);
     CGContextStrokePath(aContext);
     CGContextRestoreGState(aContext);
+}
+
+- (CGSize)preferredFrameSize
+{
+    return CGSizeMake(self.frame.size.width, 2.0f);
 }
 
 @end
