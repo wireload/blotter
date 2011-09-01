@@ -61,6 +61,8 @@ static NSString* const _WLBottomEdgeLayerKey = @"bottom";
 {
     if ([aKey isEqual:@"edgeHeight"])
         return [NSNumber numberWithFloat:25.0f];
+    else if ([aKey isEqual:@"geometryFlipped"])
+        return [NSNumber numberWithBool:YES];
     else
         return [super defaultValueForKey:aKey];
 }
