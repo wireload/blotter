@@ -190,6 +190,9 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r);
 
 @interface WLCalendarWeekView (SetupLayers)
 
+- (CALayer *)setupRootLayer;
+
+
 - (CALayer *)setupTimeRulerRootLayer;
 
 - (WLBlockLayer *)setupTimeRulerBackgroundLayer;

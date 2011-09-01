@@ -157,8 +157,9 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 {
     NSParameterAssert(![self wantsLayer]);
 
+    _rootLayer = [self setupRootLayer];
+    [self setLayer:_rootLayer];
     [self setWantsLayer:YES];
-    _rootLayer = [self layer];
 
     _timeIndicatorRootLayer = [self setupTimeIndicatorRootLayer];
     _timeIndicatorRootLayer.hidden = !showTimeIndicator;
@@ -348,9 +349,9 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 
 #pragma mark CALayoutManager
 
-- (void)layoutSublayersOfLayer:(CALayer *)layer
+- (void)layoutSublayersOfLayer:(CALayer *)aLayer
 {
-    NSParameterAssert([layer.name isEqualToString:_WLRootLayerName]);
+    NSParameterAssert([aLayer.name isEqualToString:_WLRootLayerName]);
 
     [CATransaction WL_performWithDisabledActions:^(void) {
         [self layoutTimeRulerRoot];
@@ -578,17 +579,6 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     [super setFrameSize:newSize];
 }
 
-- (CALayer *)makeBackingLayer
-{
-    CALayer *l = [super makeBackingLayer];
-    [CATransaction WL_performWithDisabledActions:^{
-        l.name = _WLRootLayerName;
-        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
-        [l.compositingFilter setDefaults];
-    }];
-    return l;
-}
-
 @end
 
 
@@ -790,6 +780,15 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
 #pragma mark -
 
 @implementation WLCalendarWeekView (SetupLayers)
+
+- (CALayer *)setupRootLayer
+{
+    CALayer *l = [CALayer layer];
+    l.name = _WLRootLayerName;
+    l.layoutManager = self;
+    return l;
+}
+
 
 #pragma mark Time Ruler
 
