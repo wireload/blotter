@@ -28,7 +28,7 @@
 
 + (NSFont *)WL_dateViewMonthAndYearFont
 {
-    return [NSFont fontWithName:@"Helvetica Neue" size:26.0f];
+    return [NSFont fontWithName:@"Helvetica Neue Light" size:26.0f];
 }
 
 + (NSFont *)WL_dateViewWeekdayFont
