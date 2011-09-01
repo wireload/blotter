@@ -99,7 +99,7 @@
         l.string = aTime;
         l.alignmentMode = kCAAlignmentRight;
         l.stringShadowColor = [[NSColor WL_timelineShadowColor] WL_CGColor];
-        l.font = (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica"), 9.0f, nil) autorelease];
+        l.font = (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica Neue Light"), 10.0f, nil) autorelease];
         l.needsDisplayOnBoundsChange = YES;
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor greenColor] WL_CGColor];
@@ -132,7 +132,7 @@
     for (CATextLayer *hourLabel in _sortedTimeLayers)
     {
         CGSize size = [hourLabel preferredFrameSize];
-        hourLabel.frame = CGRectIntegral(CGRectMake(0.0f, hourPosition - size.height / 2, self.bounds.size.width, size.height));
+        hourLabel.frame = CGRectIntegral(CGRectMake(0.0f, floorf(hourPosition - size.height / 2.0), size.width, size.height));
         if (shouldHideHalfVisibleHourLabels)
         {
             if (CGRectGetMaxY(self.visibleRect) < CGRectGetMaxY(hourLabel.frame))

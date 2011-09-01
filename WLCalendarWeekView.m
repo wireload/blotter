@@ -539,10 +539,12 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     WLCalendarTimeRulerLayer *timeRuler = [_timeRulerRootLayer WL_timeRulerLayer];
     CGPoint scrollPoint = [timeRuler pointForHour:floorf(r.startHour)];
     scrollPoint.y -= [timeRuler hourLabelYPadding];
+    scrollPoint.x = floorf(scrollPoint.x);
+    scrollPoint.y = floorf(scrollPoint.y);
     for (WLCalendarDayEventsLayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])
     {
         [l scrollPoint:scrollPoint];
-        l.superlayer.mask.frame = l.superlayer.bounds;
+        l.superlayer.mask.frame = CGRectIntegral(l.superlayer.bounds);
     }
     [timeRuler scrollPoint:scrollPoint];
 }
@@ -555,18 +557,20 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 
     // Center _hour whenever possible
     CGFloat visibleHeight = timeRulerScrollLayer.bounds.size.height;
-    newScrollPoint = CGPointMake(0.0f, floorf(newScrollPoint.y - visibleHeight / 2));
+    newScrollPoint = CGPointMake(0.0f, floorf(newScrollPoint.y - visibleHeight / 2.0));
     CGFloat topLimit = CGRectGetMinY(timeRulerLayer.bounds);
     CGFloat bottomLimit = CGRectGetMaxY(timeRulerLayer.bounds) - visibleHeight;
     newScrollPoint.y = floorf(fminf(fmaxf(newScrollPoint.y, topLimit), bottomLimit));
 
     newScrollPoint.y -= [timeRulerLayer hourLabelYPadding];
+    newScrollPoint.x = floorf(newScrollPoint.x);
+    newScrollPoint.y = floorf(newScrollPoint.y);
     for (CALayer *l in [_columnLayers valueForKey:@"WL_dayScrollLayer"])
     {
         [l scrollPoint:newScrollPoint];
-        l.superlayer.mask.frame = l.superlayer.bounds;
+        l.superlayer.mask.frame = CGRectIntegral(l.superlayer.bounds);
     }
-    timeRulerScrollLayer.mask.frame = timeRulerScrollLayer.bounds;
+    timeRulerScrollLayer.mask.frame = CGRectIntegral(timeRulerScrollLayer.bounds);
     [timeRulerLayer scrollPoint:newScrollPoint];
 }
 
