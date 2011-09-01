@@ -49,6 +49,7 @@
                        forKeyPath:@"DisplayAllCalendars"
                           options:NSKeyValueObservingOptionNew
                           context:NULL];
+        [self _updateDate];
         [self _scheduleMinuteTimer];
         [self _scheduleNextDayTimer];
     }
@@ -94,6 +95,7 @@
 - (void)_updateCalendar
 {
     self.calendar = [NSCalendar autoupdatingCurrentCalendar];
+    [self _updateDate];
     [self _scheduleNextDayTimer];
     [self _scheduleMinuteTimer];
 }
@@ -101,12 +103,23 @@
 - (void)_scheduleMinuteTimer
 {
     [_minuteTimer invalidate];
-    NSRange minutesRange = [calendar maximumRangeOfUnit:NSSecondCalendarUnit];
-    _minuteTimer = [NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)minutesRange.length
-                                                    target:self
-                                                  selector:@selector(_updateDate)
-                                                  userInfo:nil
-                                                   repeats:YES];
+    NSRange secondsRange = [self.calendar maximumRangeOfUnit:NSSecondCalendarUnit];
+    NSDateComponents *oneMinuteComponent = [[NSDateComponents alloc] init];
+    [oneMinuteComponent setMinute:1];
+    NSDateComponents *nextMinuteDateComponents = [self.calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit |
+        NSHourCalendarUnit | NSMinuteCalendarUnit
+                                                                  fromDate:self.date];
+    NSDate *nextMinuteDate = [self.calendar dateFromComponents:nextMinuteDateComponents];
+    nextMinuteDate = [self.calendar dateByAddingComponents:oneMinuteComponent toDate:nextMinuteDate options:0];
+    [oneMinuteComponent release];
+    _minuteTimer = [[NSTimer alloc] initWithFireDate:nextMinuteDate
+                                            interval:(NSTimeInterval)secondsRange.length
+                                              target:self
+                                            selector:@selector(_updateDate)
+                                            userInfo:nil
+                                             repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:_minuteTimer forMode:NSDefaultRunLoopMode];
+    [_minuteTimer release];
 }
 
 - (void)_scheduleNextDayTimer
@@ -129,6 +142,7 @@
 
 - (void)_updateDate
 {
+    NSLog(@"_updateDate");
     self.date = [NSDate date];
 }
 
