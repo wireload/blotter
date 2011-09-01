@@ -762,7 +762,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     CGRect timeRulerRootFrame = [self timeRulerRootFrame];
     _timeIndicatorRootLayer.frame = CGRectIntegral(CGRectMake(timeRulerRootFrame.size.width,
                                                               timeRulerRootFrame.origin.y,
-                                                              _rootLayer.bounds.size.width - _timeRulerRootLayer.frame.size.width,
+                                                              _rootLayer.bounds.size.width - _timeRulerRootLayer.frame.size.width - _WLXMarginBetweenTimeRulerAndColumns,
                                                               [self dayScrollFrame].size.height));
 }
 
@@ -1262,7 +1262,8 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
         l.opacity = 0.3f;
 #endif
         WLCalendarTimeIndicatorLayer *timeIndicator = [self setupTimeIndicatorLayer];
-        timeIndicator.frame = CGRectMake(0.0f, 0.0f, 0.0f, 2.0f);
+        CGSize preferredTimeIndicatorSize = [timeIndicator preferredFrameSize]; 
+        timeIndicator.frame = CGRectMake(0.0f, 0.0f, preferredTimeIndicatorSize.width, preferredTimeIndicatorSize.height);
         timeIndicator.autoresizingMask = kCALayerWidthSizable;
         [l addSublayer:timeIndicator];
         [l setValue:timeIndicator forKey:timeIndicator.name];
@@ -1275,8 +1276,9 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     __block WLCalendarTimeIndicatorLayer *l = [WLCalendarTimeIndicatorLayer layer];
     [CATransaction WL_performWithDisabledActions:^{
         l.name = _WLTimeIndicatorLayerName;
-        l.anchorPoint = CGPointMake(0.0f, 0.5f);
+        l.anchorPoint = CGPointMake(0.0f, 1.0f);
         l.needsDisplayOnBoundsChange = YES;
+        l.color = [[NSColor whiteColor] WL_CGColor];
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor whiteColor] WL_CGColor];
 #endif
