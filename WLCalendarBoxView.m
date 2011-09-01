@@ -134,7 +134,7 @@
 {
     [super setFrame:newFrameRect];
     [self.contentView setFrame:[self _contentFrame]];
-    [self.contentView layer].mask.frame = [self.contentView bounds]; 
+    [self.contentView layer].mask.frame = NSRectToCGRect([self.contentView bounds]); 
 }
 
 @end
