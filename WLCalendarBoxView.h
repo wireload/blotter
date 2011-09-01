@@ -33,6 +33,8 @@
 
 @property (nonatomic, retain) NSView *contentView;
 
+@property (nonatomic) BOOL showSoftTopAndBottomEdges;
+
 
 - (NSDictionary *)_titleAttributes;
 

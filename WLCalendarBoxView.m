@@ -9,6 +9,7 @@
 #import "WLCalendarBoxView.h"
 #import "NSFont+WLCalendar.h"
 #import "NSColor+WLCalendar.h"
+#import "WLSoftEdgeLayer.h"
 
 
 @implementation WLCalendarBoxView
@@ -16,6 +17,7 @@
 #pragma mark Properties
 @synthesize title;
 @dynamic contentView;
+@synthesize showSoftTopAndBottomEdges;
 
 - (NSView *)contentView
 {
@@ -31,6 +33,18 @@
     else
         [self addSubview:newContentView];
     contentView = newContentView;
+    self.showSoftTopAndBottomEdges = showSoftTopAndBottomEdges;
+}
+
+- (void)setShowSoftTopAndBottomEdges:(BOOL)newShowSoftTopAndBottomEdges
+{
+    showSoftTopAndBottomEdges = newShowSoftTopAndBottomEdges;
+    if (![self.contentView wantsLayer])
+        return;
+    else if (showSoftTopAndBottomEdges)
+        [self.contentView layer].mask = [WLSoftEdgeLayer layer];
+    else
+        [self.contentView layer].mask = nil;
 }
 
 
@@ -120,6 +134,7 @@
 {
     [super setFrame:newFrameRect];
     [self.contentView setFrame:[self _contentFrame]];
+    [self.contentView layer].mask.frame = [self.contentView bounds]; 
 }
 
 @end
