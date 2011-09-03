@@ -51,7 +51,7 @@ typedef enum
 
 - (void)scrollToCurrentHour;
 
-- (NSUInteger)currentDay;
+- (NSUInteger)indexOfColumnForCurrentDay;
 
 - (void)highlightCurrentDayIfNeeded;
 

@@ -139,7 +139,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     [[self view] scrollHour:[self currentHour] animated:![CATransaction disableActions]];
 }
 
-- (NSUInteger)currentDay
+- (NSUInteger)indexOfColumnForCurrentDay
 {
     NSParameterAssert([self representedObject] != nil);
 
@@ -150,14 +150,31 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
         NSCalendar *calendar = [[self representedObject] calendar];
         NSDateComponents *firstColumnDateComponents = [calendar components:NSWeekdayCalendarUnit fromDate:[self firstColumnDate]];
         NSDateComponents *todayComponents = [calendar components:NSWeekdayCalendarUnit fromDate:[[self representedObject] date]];
-        return [todayComponents weekday] - [firstColumnDateComponents weekday];
+        /*
+         Map weekday indexes into column indexes
+         Calendar: gregorian
+         First weekday: Tuesday
+         Number of days in a week: 7
+         0  3   Tuesday
+         1  4   Wednesday
+         2  5   Thursday
+         3  6   Friday
+         4  7   Saturday
+         5  1   Sunday
+         6  2   Monday
+
+         Today is Saturday:
+         (7 + (7 - 3)) % 7 = 4
+         */
+        NSRange weekdaysRange = [calendar rangeOfUnit:NSWeekdayCalendarUnit inUnit:NSWeekCalendarUnit forDate:[[self representedObject] date]];
+        return (weekdaysRange.length + [todayComponents weekday] - [firstColumnDateComponents weekday]) % weekdaysRange.length;
     }
 }
 
 - (void)highlightCurrentDayIfNeeded
 {
     if (self.mode != WLCalendarWeekViewRightNowMode)
-        [[self view] setIndexOfHighlightedColumn:[self currentDay]];
+        [[self view] setIndexOfHighlightedColumn:[self indexOfColumnForCurrentDay]];
 }
 
 - (NSDate *)firstColumnDate
@@ -461,7 +478,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
         v.fitDayEvents = YES;
     [v scrollHour:[self currentHour] animated:NO];
     [v createLayers];
-    v.indexOfHighlightedColumn = [self currentDay];
+    v.indexOfHighlightedColumn = [self indexOfColumnForCurrentDay];
     [v release];
     [self addObserver:self forKeyPath:@"representedObject.date" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:NULL];
     [self addObserver:self forKeyPath:@"representedObject.calendar" options:NSKeyValueObservingOptionNew context:NULL];
