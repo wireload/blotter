@@ -213,9 +213,9 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     NSArray *calCalendars = [[self representedObject] calCalendars];
     NSDateComponents *offset = [[NSDateComponents alloc] init];
     [offset setDay:[anIndexSet firstIndex]];
-    NSDate *startDate = [[calendar dateByAddingComponents:offset toDate:aFirstDate options:0] WL_upperBoundaryWithCalendar:calendar];
+    NSDate *startDate = [[calendar dateByAddingComponents:offset toDate:aFirstDate options:0] WL_startOfDay:calendar];
     [offset setDay:[anIndexSet lastIndex]];
-    NSDate *endDate = [[calendar dateByAddingComponents:offset toDate:aFirstDate options:0] WL_lowerBoundaryWithCalendar:calendar];
+    NSDate *endDate = [[calendar dateByAddingComponents:offset toDate:aFirstDate options:0] WL_endOfDay:calendar];
     [offset release];
     NSPredicate *p = [CalCalendarStore eventPredicateWithStartDate:startDate
                                                            endDate:endDate
@@ -300,8 +300,8 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
         [columnDateComponents setDay:columnIdx];
         NSDate *columnDate = [calendar dateByAddingComponents:columnDateComponents toDate:firstDate options:0];
         NSMutableDictionary *columnData = [NSMutableDictionary dictionary];
-        NSDate *upperBound = [columnDate WL_upperBoundaryWithCalendar:calendar];
-        NSDate *lowerBound = [upperBound WL_lowerBoundaryWithCalendar:calendar];
+        NSDate *upperBound = [columnDate WL_startOfDay:calendar];
+        NSDate *lowerBound = [upperBound WL_endOfDay:calendar];
         WLDateRange *columnDateRange = [WLDateRange dateRangeWithStartDate:upperBound endDate:lowerBound];
         [_columnDateRanges setObject:columnDateRange forKey:[NSNumber numberWithUnsignedInteger:columnIdx]];
 

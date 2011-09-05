@@ -11,30 +11,19 @@
 
 @implementation NSDate (WLDayBoundaries)
 
-- (NSDate *)WL_upperBoundaryWithCalendar:(NSCalendar *)calendar
+- (NSDate *)WL_startOfDay:(NSCalendar *)aCalendar
 {
-    static const NSUInteger Units = NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
-    NSDateComponents *components = [calendar components:Units fromDate:self];
-    NSRange hoursRange = [calendar rangeOfUnit:NSHourCalendarUnit inUnit:NSDayCalendarUnit forDate:self];
-    [components setHour:hoursRange.location];
-    NSDate *upperBoundary = [calendar dateFromComponents:components];
-    NSRange minutesRange = [calendar rangeOfUnit:NSMinuteCalendarUnit inUnit:NSHourCalendarUnit forDate:upperBoundary];
-    [components setMinute:minutesRange.location];
-    upperBoundary = [calendar dateFromComponents:components];
-    return upperBoundary;
+    NSDate *startDate = nil;
+    [aCalendar rangeOfUnit:NSDayCalendarUnit startDate:&startDate interval:NULL forDate:self];
+    return startDate;
 }
 
-- (NSDate *)WL_lowerBoundaryWithCalendar:(NSCalendar *)calendar
+- (NSDate *)WL_endOfDay:(NSCalendar *)aCalendar
 {
-    static const NSUInteger Units = NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
-    NSDateComponents *components = [calendar components:Units fromDate:self];
-    NSRange hoursRange = [calendar rangeOfUnit:NSHourCalendarUnit inUnit:NSDayCalendarUnit forDate:self];
-    [components setHour:NSMaxRange(hoursRange) - 1];
-    NSDate *lowerBoundary = [calendar dateFromComponents:components];
-    NSRange minutesRange = [calendar rangeOfUnit:NSMinuteCalendarUnit inUnit:NSHourCalendarUnit forDate:lowerBoundary];
-    [components setMinute:NSMaxRange(minutesRange) - 1];
-    lowerBoundary = [calendar dateFromComponents:components];
-    return lowerBoundary;
+    NSDate *startDate = nil;
+    NSTimeInterval interval = 0.0;
+    [aCalendar rangeOfUnit:NSDayCalendarUnit startDate:&startDate interval:&interval forDate:self];
+    return [startDate dateByAddingTimeInterval:interval - 1.0];
 }
 
 @end

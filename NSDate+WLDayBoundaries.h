@@ -11,8 +11,8 @@
 
 @interface NSDate (WLDayBoundaries)
 
-- (NSDate *)WL_upperBoundaryWithCalendar:(NSCalendar *)calendar;
+- (NSDate *)WL_startOfDay:(NSCalendar *)aCalendar;
 
-- (NSDate *)WL_lowerBoundaryWithCalendar:(NSCalendar *)calendar;
+- (NSDate *)WL_endOfDay:(NSCalendar *)aCalendar;
 
 @end
