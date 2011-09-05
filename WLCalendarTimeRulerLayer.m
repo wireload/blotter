@@ -132,7 +132,7 @@
     for (CATextLayer *hourLabel in _sortedTimeLayers)
     {
         CGSize size = [hourLabel preferredFrameSize];
-        hourLabel.frame = CGRectIntegral(CGRectMake(0.0f, floorf(hourPosition - size.height / 2.0), size.width, size.height));
+        hourLabel.frame = CGRectIntegral(CGRectMake(0.0f, hourPosition - size.height / 2.0, self.bounds.size.width, size.height));
         if (shouldHideHalfVisibleHourLabels)
         {
             if (CGRectGetMaxY(self.visibleRect) < CGRectGetMaxY(hourLabel.frame))
