@@ -108,6 +108,8 @@
         CGContextScaleCTM(aContext, 1.0f, -1.0f);
         CGContextSetShouldAntialias(aContext, YES);
         CGContextSetAllowsAntialiasing(aContext, YES);
+        CGContextSetAllowsFontSubpixelQuantization(aContext, NO);
+        CGContextSetAllowsFontSmoothing(aContext, NO);
         CGContextSetShadowWithColor(aContext, self.stringShadowOffset, self.stringShadowRadius, self.stringShadowColor);
         CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)[self _attributedString]);
         if (framesetter != NULL)
