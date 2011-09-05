@@ -15,7 +15,7 @@
     NSDate *date;
     NSArray *calCalendars;
 
-    NSTimer *_minuteTimer;
+    NSTimer *_nextMinuteTimer;
     NSTimer *_nextDayTimer;
 }
 
@@ -30,7 +30,7 @@
 
 - (void)_updateCalendar;
 
-- (void)_scheduleMinuteTimer;
+- (void)_scheduleNextMinuteTimer;
 
 - (void)_scheduleNextDayTimer;
 

@@ -50,7 +50,7 @@
                           options:NSKeyValueObservingOptionNew
                           context:NULL];
         [self _updateDate];
-        [self _scheduleMinuteTimer];
+        [self _scheduleNextMinuteTimer];
         [self _scheduleNextDayTimer];
     }
     return self;
@@ -61,7 +61,7 @@
     [calendar release];
     [date release];
     [calCalendars release];
-    [_minuteTimer invalidate];
+    [_nextMinuteTimer invalidate];
     [_nextDayTimer invalidate];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
@@ -97,12 +97,12 @@
     self.calendar = [NSCalendar autoupdatingCurrentCalendar];
     [self _updateDate];
     [self _scheduleNextDayTimer];
-    [self _scheduleMinuteTimer];
+    [self _scheduleNextMinuteTimer];
 }
 
-- (void)_scheduleMinuteTimer
+- (void)_scheduleNextMinuteTimer
 {
-    [_minuteTimer invalidate];
+    [_nextMinuteTimer invalidate];
     NSRange secondsRange = [self.calendar maximumRangeOfUnit:NSSecondCalendarUnit];
     NSDateComponents *oneMinuteComponent = [[NSDateComponents alloc] init];
     [oneMinuteComponent setMinute:1];
@@ -112,30 +112,28 @@
     NSDate *nextMinuteDate = [self.calendar dateFromComponents:nextMinuteDateComponents];
     nextMinuteDate = [self.calendar dateByAddingComponents:oneMinuteComponent toDate:nextMinuteDate options:0];
     [oneMinuteComponent release];
-    _minuteTimer = [[NSTimer alloc] initWithFireDate:nextMinuteDate
-                                            interval:(NSTimeInterval)secondsRange.length
-                                              target:self
-                                            selector:@selector(_updateDate)
-                                            userInfo:nil
-                                             repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:_minuteTimer forMode:NSDefaultRunLoopMode];
-    [_minuteTimer release];
+    _nextMinuteTimer = [[NSTimer alloc] initWithFireDate:nextMinuteDate
+                                                interval:(NSTimeInterval)secondsRange.length
+                                                  target:self
+                                                selector:@selector(_updateDate)
+                                                userInfo:nil
+                                                 repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:_nextMinuteTimer forMode:NSDefaultRunLoopMode];
+    [_nextMinuteTimer release];
 }
 
 - (void)_scheduleNextDayTimer
 {
     [_nextDayTimer invalidate];
-    NSDateComponents *oneDayComponents = [[NSDateComponents alloc] init];
-    [oneDayComponents setDay:1];
-    NSDate *nextDay = [self.calendar dateByAddingComponents:oneDayComponents toDate:self.date options:0];
-    [oneDayComponents release];
-    nextDay = [nextDay WL_upperBoundaryWithCalendar:calendar];
-    _nextDayTimer = [[NSTimer alloc] initWithFireDate:nextDay
-                                         interval:0.0
-                                           target:self
-                                         selector:@selector(_nextDay)
-                                         userInfo:nil
-                                          repeats:NO];
+    NSDate *startDate = nil;
+    NSTimeInterval interval = 0.0;
+    [self.calendar rangeOfUnit:NSDayCalendarUnit startDate:&startDate interval:&interval forDate:self.date];
+    _nextDayTimer = [[NSTimer alloc] initWithFireDate:[startDate dateByAddingTimeInterval:interval]
+                                             interval:0.0
+                                               target:self
+                                             selector:@selector(_nextDay)
+                                             userInfo:nil
+                                              repeats:NO];
     [[NSRunLoop currentRunLoop] addTimer:_nextDayTimer forMode:NSDefaultRunLoopMode];
     [_nextDayTimer release];
 }
