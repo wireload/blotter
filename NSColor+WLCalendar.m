@@ -56,6 +56,22 @@
                                      alpha:1.0f];
 }
 
++ (NSColor *)WL_timelineLineColor
+{
+    return [NSColor colorWithCalibratedRed:242.0f / 255.0f
+                                     green:242.0f / 255.0f
+                                      blue:242.0f / 255.0f
+                                     alpha:0.75f];    
+}
+
++ (NSColor *)WL_timelineLineShadowColor
+{
+    return [NSColor colorWithCalibratedRed:0.0f / 255.0f
+                                     green:0.0f / 255.0f
+                                      blue:0.0f / 255.0f
+                                     alpha:0.25f];    
+}
+
 + (NSColor *)WL_columnTitleShadowColor
 {
     return [NSColor colorWithCalibratedRed:51.0f / 255.0f

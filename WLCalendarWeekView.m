@@ -1282,7 +1282,6 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
         l.name = _WLTimeIndicatorLayerName;
         l.anchorPoint = CGPointMake(0.0f, 1.0f);
         l.needsDisplayOnBoundsChange = YES;
-        l.color = [[NSColor whiteColor] WL_CGColor];
 #ifdef DEBUG_LAYERS
         l.backgroundColor = [[NSColor whiteColor] WL_CGColor];
 #endif

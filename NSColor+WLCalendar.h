@@ -23,6 +23,10 @@
 
 + (NSColor *)WL_timelineShadowColor;
 
++ (NSColor *)WL_timelineLineColor;
+
++ (NSColor *)WL_timelineLineShadowColor;
+
 + (NSColor *)WL_columnTitleShadowColor;
 
 + (NSColor *)WL_eventShadowColor;

@@ -8,6 +8,7 @@
 
 #import "WLCalendarTimeIndicatorLayer.h"
 #import "NSColor+CGColor.h"
+#import "NSColor+WLCalendar.h"
 
 
 @implementation WLCalendarTimeIndicatorLayer
@@ -16,7 +17,7 @@
 + (id)defaultValueForKey:(NSString *)aKey
 {
     if ([aKey isEqualToString:@"color"])
-        return (id)[[NSColor blackColor] WL_CGColor];
+        return (id) [[NSColor WL_timelineLineColor] WL_CGColor];
     else
         return [super defaultValueForKey:aKey];
 }
@@ -36,11 +37,14 @@
 #endif
     CGContextSaveGState(aContext);
     
-    CGContextSetShadow(aContext, CGSizeMake(0.0f,  -1.0f), 5);
-    
+    CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f,  -1.0f), 0, [[NSColor WL_timelineLineShadowColor] WL_CGColor]);
+
+    static const CGFloat lengths[] = { 3.0f, 3.0f };
+    CGContextSetLineDash(aContext, 0, lengths, sizeof(lengths) / sizeof(CGFloat));
     CGContextSetLineWidth(aContext, 1.0f);
-    CGContextMoveToPoint(aContext, CGRectGetMinX(self.bounds), CGRectGetMaxY(self.bounds));
-    CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), CGRectGetMaxY(self.bounds));
+    CGContextSetAllowsAntialiasing(aContext, NO);
+    CGContextMoveToPoint(aContext, CGRectGetMinX(self.bounds), CGRectGetMaxY(self.bounds) - 1.0);
+    CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), CGRectGetMaxY(self.bounds) - 1.0);
     CGContextSetStrokeColorWithColor(aContext, self.color);
     CGContextStrokePath(aContext);
     CGContextRestoreGState(aContext);
