@@ -7,7 +7,21 @@
 //
 
 #import "WLCalendarWindow.h"
-#import "WLCalendarWindowBackgroundView.h"
+#import "WLCalendarWindowFrameView.h"
+
+
+@interface _WLFlippedView : NSView
+@end
+
+
+@implementation _WLFlippedView
+
+- (BOOL)isFlipped
+{
+    return YES;
+}
+
+@end
 
 
 @implementation WLCalendarWindow
@@ -30,20 +44,23 @@
         [self setCanHide:NO];
         [self setDisplaysWhenScreenProfileChanges:YES];
         [self useOptimizedDrawing:YES];
-        WLCalendarWindowBackgroundView *backgroundView = [[WLCalendarWindowBackgroundView alloc] init];
-        [backgroundView setPostsFrameChangedNotifications:YES];
-        [self setContentView:backgroundView];
-        [backgroundView release];
+        [self setContentView:[[[_WLFlippedView alloc] init] autorelease]];
     }
     return self;
 }
 
-- (NSRect)contentViewBounds
-{
-    return NSInsetRect([[self contentView] bounds], 20.0, 20.0f);
-}
 
 #pragma mark NSWindow
+
++ (NSRect)frameRectForContentRect:(NSRect)windowContentRect styleMask:(NSUInteger)windowStyle
+{
+	return NSInsetRect(windowContentRect, [WLCalendarWindowFrameView borderWidth] + 10.0f, [WLCalendarWindowFrameView borderWidth] + 10.0f);
+}
+
+- (NSRect)contentRectForFrameRect:(NSRect)windowFrame
+{
+	return NSInsetRect(windowFrame, [WLCalendarWindowFrameView borderWidth] + 10.0f, [WLCalendarWindowFrameView borderWidth] + 10.0f);
+}
 
 - (BOOL)canBecomeKeyWindow
 {
@@ -53,6 +70,33 @@
 - (BOOL)canBecomeMainWindow
 {
     return NO;
+}
+
+- (void)setContentView:(NSView *)aView
+{
+    if (![_realContentView isEqualTo:aView])
+    {
+        NSRect bounds = [self frame];
+        bounds.origin = NSZeroPoint;
+
+        WLCalendarWindowFrameView *frameView = [super contentView];
+        if (frameView == nil)
+        {
+            frameView = [[[WLCalendarWindowFrameView alloc] initWithFrame:bounds] autorelease];
+            [super setContentView:frameView];
+        }
+
+        [_realContentView removeFromSuperview];
+        _realContentView = aView;
+        [_realContentView setFrame:[self contentRectForFrameRect:bounds]];
+        [_realContentView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+        [frameView addSubview:_realContentView];
+    }
+}
+
+- (id)contentView
+{
+    return _realContentView;
 }
 
 @end

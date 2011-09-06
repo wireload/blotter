@@ -12,15 +12,13 @@
 
 /*!
  @abstract      Borderless window that draws custom background.
+ @discussion    Default contentView is flipped.
  @classdesign   You SHOULD use -init to initialize.
+ @coclass       WLCalendarWindowFrameView
  @ownership     WLCalendarWindowController
  */
 @interface WLCalendarWindow : NSWindow {
+    NSView *_realContentView;
 }
-
-/*!
- @abstract Returns bounds in contentView's coordinates where subviews SHOULD be placed.
- */
-- (NSRect)contentViewBounds;
 
 @end

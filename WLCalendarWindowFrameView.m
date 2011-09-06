@@ -6,19 +6,17 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
-#import "WLCalendarWindowBackgroundView.h"
+#import "WLCalendarWindowFrameView.h"
 #import "NSColor+CGColor.h"
 
 
-@implementation WLCalendarWindowBackgroundView
+@implementation WLCalendarWindowFrameView
 
-- (id)initWithFrame:(NSRect)aFrameRect
+#pragma mark Methods
+
++ (CGFloat)borderWidth
 {
-    self = [super initWithFrame:aFrameRect];
-    if (self != nil)
-    {
-    }
-    return self;
+    return 10.0f;
 }
 
 

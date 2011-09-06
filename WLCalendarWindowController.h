@@ -27,7 +27,6 @@
  PerDayDate, RollingCalendar.
  @dependency    Observes NSApplicationDidChangeScreenParametersNotification, NSSystemClockDidChangeNotification,
  NSSystemTimeZoneDidChangeNotification, NSCurrentLocaleDidChangeNotification
- @dependency    Observes NSViewFrameDidChangeNotification posteb by contentView of its window.
  @coclass       WLCalendarWindow The class of controller's window.
  @helper        BLCalendarFramer
  @helper        BLFadeController
@@ -100,12 +99,12 @@
 
 - (CGFloat)heightOfTasksAndRightNow;
 
-- (NSRect)dateRect;
+- (NSRect)dateViewFrame;
 
-- (NSRect)tasksRect;
+- (NSRect)tasksViewFrame;
 
-- (NSRect)rightNowRect;
+- (NSRect)rightNowViewFrame;
 
-- (NSRect)weekRect;
+- (NSRect)weekViewFrame;
 
 @end

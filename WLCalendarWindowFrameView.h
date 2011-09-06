@@ -9,6 +9,8 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface WLCalendarWindowBackgroundView : NSView
+@interface WLCalendarWindowFrameView : NSView
+
++ (CGFloat)borderWidth;
 
 @end

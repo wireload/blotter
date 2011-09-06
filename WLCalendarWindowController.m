@@ -232,66 +232,66 @@ static const CGFloat _WLXMarginBetweenInfoAndWeek = 17.0f;
 
 - (void)_applyNarrowSizeToViews
 {
-    [[_dateViewController view] setFrame:[self dateRect]];
-    [_tasksViewBox setFrame:[self tasksRect]];
-    [_rightNowViewBox setFrame:[self rightNowRect]];
-    [[_weekViewController view] setFrame:[self weekRect]];
+    [[_dateViewController view] setFrame:[self dateViewFrame]];
+    [_tasksViewBox setFrame:[self tasksViewFrame]];
+    [_rightNowViewBox setFrame:[self rightNowViewFrame]];
+    [[_weekViewController view] setFrame:[self weekViewFrame]];
     [[_weekViewController view] setHidden:YES];
 }
 
 - (void)_applyNormalSizeToViews
 {
-    [[_dateViewController view] setFrame:[self dateRect]];
-    [_tasksViewBox setFrame:[self tasksRect]];
-    [_rightNowViewBox setFrame:[self rightNowRect]];
-    [[_weekViewController view] setFrame:[self weekRect]];
+    [[_dateViewController view] setFrame:[self dateViewFrame]];
+    [_tasksViewBox setFrame:[self tasksViewFrame]];
+    [_rightNowViewBox setFrame:[self rightNowViewFrame]];
+    [[_weekViewController view] setFrame:[self weekViewFrame]];
     [[_weekViewController view] setHidden:NO];
 }
 
 - (void)_applyFullSizeToViews
 {
-    [[_dateViewController view] setFrame:[self dateRect]];
-    [_tasksViewBox setFrame:[self tasksRect]];
-    [_rightNowViewBox setFrame:[self rightNowRect]];
-    [[_weekViewController view] setFrame:[self weekRect]];
+    [[_dateViewController view] setFrame:[self dateViewFrame]];
+    [_tasksViewBox setFrame:[self tasksViewFrame]];
+    [_rightNowViewBox setFrame:[self rightNowViewFrame]];
+    [[_weekViewController view] setFrame:[self weekViewFrame]];
     [[_weekViewController view] setHidden:NO];
 }
 
 - (CGFloat)heightOfTasksAndRightNow
 {
-    return (NSHeight([window contentViewBounds]) - _WLYMarginBetweenTasksAndRightNow - NSHeight([self dateRect])) / 2.0f;
+    return (NSHeight([[window contentView] bounds]) - _WLYMarginBetweenTasksAndRightNow - NSHeight([self dateViewFrame])) / 2.0f;
 }
 
-- (NSRect)dateRect
+- (NSRect)dateViewFrame
 {
-    NSRect bounds = [window contentViewBounds];
+    NSRect bounds = [[window contentView] bounds];
     return [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
                                                            NSMinY(bounds),
                                                            _WLWidthOfDateTasksAndRightNow,
                                                            _WLHeightOfDateView)];
 }
 
-- (NSRect)tasksRect
+- (NSRect)tasksViewFrame
 {
-    NSRect bounds = [window contentViewBounds];
+    NSRect bounds = [[window contentView] bounds];
     return [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
-                                                           NSMaxY([self dateRect]),
+                                                           NSMaxY([self dateViewFrame]),
                                                            _WLWidthOfDateTasksAndRightNow,
                                                            [self heightOfTasksAndRightNow])];
 }
 
-- (NSRect)rightNowRect
+- (NSRect)rightNowViewFrame
 {
-    NSRect bounds = [window contentViewBounds];
+    NSRect bounds = [[window contentView] bounds];
     return [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
-                                                           NSMaxY([self tasksRect]) + _WLYMarginBetweenTasksAndRightNow,
+                                                           NSMaxY([self tasksViewFrame]) + _WLYMarginBetweenTasksAndRightNow,
                                                            _WLWidthOfDateTasksAndRightNow,
                                                            [self heightOfTasksAndRightNow])];
 }
 
-- (NSRect)weekRect
+- (NSRect)weekViewFrame
 {
-    NSRect bounds = [window contentViewBounds];
+    NSRect bounds = [[window contentView] bounds];
     return [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds) + _WLWidthOfDateTasksAndRightNow + _WLXMarginBetweenInfoAndWeek,
                                                            NSMinY(bounds),
                                                            NSWidth(bounds) - _WLWidthOfDateTasksAndRightNow - _WLXMarginBetweenInfoAndWeek,
