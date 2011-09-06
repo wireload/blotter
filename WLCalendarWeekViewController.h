@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <CalendarStore/CalendarStore.h>
+#import "WLDateRange.h"
 #import "WLCalendarWeekView.h"
 #import "WLCalendarController.h"
 
@@ -34,7 +35,6 @@ typedef enum
 
     BOOL isViewLoaded;
     NSCache *_cache;
-    NSMutableDictionary *_columnDateRanges;
     // Lifetime of this object is limited to
     // weekView:willAskForDataForColumnsAtIndexes: -> weekView:titleForColumnAtIndex: &
     //                                                weekView:eventsForColumnAtIndex: -> weekViewDidAskForData:
@@ -62,6 +62,8 @@ typedef enum
 - (WLCalendarWeekView *)view;
 
 - (WLCalendarController *)representedObject;
+
+- (WLDateRange *)dateRangeForColumnAtIndex:(NSUInteger)anIndex;
 
 
 @property (nonatomic, retain) NSDateFormatter *_dateFormatter;

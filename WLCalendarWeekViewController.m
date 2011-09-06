@@ -8,7 +8,6 @@
 
 #import "WLCalendarWeekViewController.h"
 #import "NSDate+WLDayBoundaries.h"
-#import "WLDateRange.h"
 #import "NSColor+WLCalendar.h"
 #import "NSColor+CGColor.h"
 #import "NSCalendar+WLWeekend.h"
@@ -39,7 +38,6 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     {
         _cache = [[NSCache alloc] init];
         [_cache setName:@"WLCalendarWeekViewController cache"];
-        _columnDateRanges = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -48,7 +46,6 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 {
     [_cache release];
     [_columnsData release];
-    [_columnDateRanges release];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
@@ -205,6 +202,19 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     }
 }
 
+- (WLDateRange *)dateRangeForColumnAtIndex:(NSUInteger)anIndex
+{
+    NSDateComponents *columnDateComponents = [[NSDateComponents alloc] init];
+    [columnDateComponents setDay:anIndex];
+    NSDate *firstColumnDate = [self firstColumnDate];
+    NSCalendar *calendar = [[self representedObject] calendar];
+    NSDate *columnDate = [calendar dateByAddingComponents:columnDateComponents toDate:firstColumnDate options:0];
+    [columnDateComponents release];
+    NSDate *upperBound = [columnDate WL_startOfDay:calendar];
+    NSDate *lowerBound = [upperBound WL_endOfDay:calendar];
+    return [WLDateRange dateRangeWithStartDate:upperBound endDate:lowerBound];
+}
+
 - (NSArray *)eventsForColumnsAtIndexes:(NSIndexSet *)anIndexSet firstDate:(NSDate *)aFirstDate
 {
     NSParameterAssert([self representedObject] != nil);
@@ -290,20 +300,14 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     if (dataUnits & WLCalendarWeekViewEventsDataUnit)
         events = [self eventsForColumnsAtIndexes:anIndexSet firstDate:firstDate];
 
-    NSDateComponents *columnDateComponents = [[NSDateComponents alloc] init];
     NSDateFormatter *titleFormatter = self._dateFormatter;
     NSCalendar *calendar = [[self representedObject] calendar];
     [titleFormatter setCalendar:calendar];
     [titleFormatter setDateFormat:self._columnTitleFormat];
     [anIndexSet enumerateIndexesUsingBlock:^(NSUInteger columnIdx, BOOL *stop)
     {
-        [columnDateComponents setDay:columnIdx];
-        NSDate *columnDate = [calendar dateByAddingComponents:columnDateComponents toDate:firstDate options:0];
+        WLDateRange *columnDateRange = [self dateRangeForColumnAtIndex:columnIdx];
         NSMutableDictionary *columnData = [NSMutableDictionary dictionary];
-        NSDate *upperBound = [columnDate WL_startOfDay:calendar];
-        NSDate *lowerBound = [upperBound WL_endOfDay:calendar];
-        WLDateRange *columnDateRange = [WLDateRange dateRangeWithStartDate:upperBound endDate:lowerBound];
-        [_columnDateRanges setObject:columnDateRange forKey:[NSNumber numberWithUnsignedInteger:columnIdx]];
 
         if (dataUnits & WLCalendarWeekViewEventsDataUnit)
         {
@@ -321,22 +325,22 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
                     else if (position == WLEarlierThanRange && [eventRange.endDate compare:columnDateRange.startDate] != NSOrderedSame)
                     {
                         CalEvent *partEvent = [event copy];
-                        partEvent.startDate = upperBound;
+                        partEvent.startDate = columnDateRange.startDate;
                         [columnEvents addObject:partEvent];
                         [partEvent release];
                     }
                     else if (position == WLOverlapsRange)
                     {
                         CalEvent *partEvent = [event copy];
-                        partEvent.startDate = upperBound;
-                        partEvent.endDate = lowerBound;
+                        partEvent.startDate = columnDateRange.startDate;
+                        partEvent.endDate = columnDateRange.endDate;
                         [columnEvents addObject:partEvent];
                         [partEvent release];
                     }
                     else if (position == WLLaterThanRange && [columnDateRange.endDate compare:eventRange.startDate] != NSOrderedSame)
                     {
                         CalEvent *partEvent = [event copy];
-                        partEvent.endDate = lowerBound;
+                        partEvent.endDate = columnDateRange.endDate;
                         [columnEvents addObject:partEvent];
                         [partEvent release];
                     }
@@ -346,10 +350,9 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
         }
 
         if (dataUnits & WLCalendarWeekViewTitleDataUnit)
-            [columnData setObject:[titleFormatter stringFromDate:columnDate] forKey:_WLTitleKey];
+            [columnData setObject:[titleFormatter stringFromDate:columnDateRange.startDate] forKey:_WLTitleKey];
         [_columnsData setObject:columnData forKey:[NSNumber numberWithUnsignedInteger:columnIdx]];
     }];
-    [columnDateComponents release];
 }
 
 - (NSString *)weekView:(WLCalendarWeekView *)aWeekView titleForColumnAtIndex:(NSUInteger)anIndex
@@ -378,7 +381,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     if (highlightWeekends)
     {
         NSCalendar *calendar = [[self representedObject] calendar];
-        NSDate *columnDate = [(WLDateRange *)[_columnDateRanges objectForKey:[NSNumber numberWithUnsignedInteger:anIndex]] startDate];
+        NSDate *columnDate = [[self dateRangeForColumnAtIndex:anIndex] startDate];
         NSParameterAssert(columnDate != nil);
         NSDateComponents *c = [calendar components:NSWeekdayCalendarUnit fromDate:columnDate];
         isWeekend = [calendar isWeekend:(NSUInteger)[c weekday]];
@@ -443,11 +446,16 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
         for (NSString *uid in insertedEvents)
         {
             CalEvent *e = [[CalCalendarStore defaultCalendarStore] eventWithUID:uid occurrence:nil];
-            for (NSNumber *idx in _columnDateRanges)
+            // Find column for the event.
+            for (NSUInteger i=0; i<numberOfColumns; ++i)
             {
-                if ([[_columnDateRanges objectForKey:idx] intersectsRange:[WLDateRange dateRangeWithStartDate:e.startDate endDate:e.endDate]])
-                    [columnIndexes addIndex:[idx unsignedIntegerValue]];
+                if ([[self dateRangeForColumnAtIndex:i] intersectsRange:[WLDateRange dateRangeWithStartDate:e.startDate endDate:e.endDate]])
+                {
+                    [columnIndexes addIndex:i];
+                    break;
+                }
             }
+            // All columns are marked to update so there is no need to continue.
             if ([columnIndexes containsIndexesInRange:NSMakeRange(0, numberOfColumns)])
                 break;
         }
