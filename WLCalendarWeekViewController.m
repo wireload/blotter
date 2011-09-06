@@ -46,6 +46,9 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 {
     [_cache release];
     [_columnsData release];
+    [self removeObserver:self forKeyPath:@"representedObject.date"];
+    [self removeObserver:self forKeyPath:@"representedObject.calendar"];
+    [self removeObserver:self forKeyPath:@"representedObject.calCalendars"];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
