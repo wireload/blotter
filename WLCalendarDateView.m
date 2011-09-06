@@ -48,7 +48,7 @@
                                        p,                                   NSParagraphStyleAttributeName, nil];
     [p release];
     [s release];
-    NSRect monthDayRect = NSMakeRect(bounds.origin.x, bounds.origin.y - 50, bounds.size.width, 200.0f);
+    NSRect monthDayRect = NSMakeRect(bounds.origin.x, bounds.origin.y - 40, bounds.size.width, 200.0f);
     if (NSIntersectsRect(monthDayRect, aDirtyRect))
     {
 #ifdef DEBUG_LAYERS
@@ -58,7 +58,7 @@
         [self.monthDay drawInRect:monthDayRect withAttributes:attributes];
     }
 
-    NSRect monthAndYearRect = NSMakeRect(bounds.origin.x, NSMaxY(monthDayRect) + 20.0f, bounds.size.width, 35.0f);
+    NSRect monthAndYearRect = NSMakeRect(bounds.origin.x, NSMaxY(monthDayRect) + 10.0f, bounds.size.width, 35.0f);
     if (NSIntersectsRect(monthAndYearRect, aDirtyRect))
     {
 #ifdef DEBUG_LAYERS
