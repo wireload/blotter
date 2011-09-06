@@ -88,7 +88,7 @@
     NSSize topSize = NSMakeSize(bounds.size.width, [[NSImage imageNamed:@"info-top"] size].height);
     NSSize middleSize = NSMakeSize(bounds.size.width, bounds.size.height - bottomSize.height - topSize.height);
     
-    static const CGFloat AlphaFraction = 0.5f;
+    static const CGFloat AlphaFraction = 1.0f;
 
     NSRect topFrame = NSMakeRect(NSMinX(bounds), NSMinY(bounds), topSize.width, topSize.height);
     if (NSIntersectsRect(topFrame, topFrame))

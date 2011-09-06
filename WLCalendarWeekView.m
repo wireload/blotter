@@ -1043,7 +1043,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
             NSSize middleBorderSize = NSMakeSize(aLayer.bounds.size.width, aLayer.bounds.size.height - bottomBorderSize.height - topBorderSize.height);
 
             NSRect dirtyRect = NSRectFromCGRect(aDirtyRect);
-            static CGFloat AlphaFraction = 0.5f;
+            static CGFloat AlphaFraction = 1.0f;
 
             NSRect topBorderFrame = NSMakeRect(0.0, 0.0, topBorderSize.width, topBorderSize.height);
             if (NSIntersectsRect(topBorderFrame, topBorderFrame))
@@ -1170,7 +1170,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
 
             NSRect dirtyRect = NSRectFromCGRect(aDirtyRect);
 
-            static CGFloat AlphaFraction = 0.5f;
+            static CGFloat AlphaFraction = 1.0f;
             NSRect topBorderFrame = NSMakeRect(0.0, 0.0, topBorderSize.width, topBorderSize.height);
             if (NSIntersectsRect(topBorderFrame, topBorderFrame))
             {
