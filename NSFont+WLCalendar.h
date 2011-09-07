@@ -25,4 +25,9 @@
 
 + (NSFont *)WL_infoViewTitleFont;
 
+
++ (CTFontRef)WL_eventTitleFont;
+
++ (CTFontRef)WL_eventLocationFont;
+
 @end

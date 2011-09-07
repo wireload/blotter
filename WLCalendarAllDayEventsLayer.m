@@ -11,6 +11,7 @@
 #import "WLCalendarEventLayer.h"
 #import "NSColor+CGColor.h"
 #import "CoreAnimation+WLCalendar.h"
+#import "NSFont+WLCalendar.h"
 
 
 static NSString* const _WLCalendarKey = @"calendar";
@@ -47,7 +48,7 @@ static const CGFloat _WLTopMargin = 10.0f;
     {
         NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:
                                eventLayer.name,             @"uid",
-                               [eventLayer.string string],  @"title", nil];
+                               [eventLayer.title string],  @"title", nil];
         [events addObject:event];
     }
     return events;
@@ -126,18 +127,22 @@ static const CGFloat _WLTopMargin = 10.0f;
     return l;
 }
 
-- (void)_updateEventLayer:(WLCalendarEventLayer *)aLayer withEvent:(id)anEvent
+- (void)_updateEventLayer:(WLCalendarEventLayer *)aLayer withEvent:(CalEvent *)anEvent
 {
     aLayer.name = [anEvent uid];
-    CTFontRef font = CTFontCreateWithName(CFSTR("Helvetica Neue"), 10.0f, nil);
-    NSDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:
-                          (id)[[NSColor whiteColor] WL_CGColor],    (id)kCTForegroundColorAttributeName,
-                          (id)font,                                 (id)kCTFontAttributeName, nil];
-    CFRelease(font);
-    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:[anEvent title]
-                                                                           attributes:attr];
-    aLayer.string = attributedString;
-    [attributedString release];
+    NSMutableDictionary *attr = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                 (id)[[NSColor whiteColor] WL_CGColor], (id)kCTForegroundColorAttributeName,
+                                 (id)[NSFont WL_eventTitleFont],            (id)kCTFontAttributeName,
+                                 nil];
+    if ([[anEvent title] length])
+        aLayer.title = [[[NSAttributedString alloc] initWithString:[anEvent title] attributes:attr] autorelease];
+
+
+    if ([[anEvent location] length])
+    {
+        [attr setObject:(id)[NSFont WL_eventLocationFont] forKey:(id)kCTFontAttributeName];
+        aLayer.location = [[[NSAttributedString alloc] initWithString:[anEvent location] attributes:attr] autorelease];
+    }
 #ifdef DEBUG_LAYERS
     aLayer.backgroundColor = [[(CalCalendar *)[anEvent calendar] color] WL_CGColor];
 #else

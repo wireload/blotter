@@ -11,6 +11,7 @@
 #import "WLCalendarEventLayer.h"
 #import "NSColor+CGColor.h"
 #import "CoreAnimation+WLCalendar.h"
+#import "NSFont+WLCalendar.h"
 
 
 static NSString* const _WLStartDateKey = @"startDate";
@@ -138,24 +139,18 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 - (void)_updateEventLayer:(WLCalendarEventLayer *)aLayer withEvent:(CalEvent *)anEvent
 {
     aLayer.name = [anEvent uid];
-    CTFontRef font = CTFontCreateWithName(CFSTR("Helvetica Neue"), 10.0f, nil);
-    NSDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:
-                          (id)[[NSColor whiteColor] WL_CGColor],    (id)kCTForegroundColorAttributeName,
-                          (id)font,                                 (id)kCTFontAttributeName, nil];
-    CFRelease(font);
+    NSMutableDictionary *attr = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                 (id)[[NSColor whiteColor] WL_CGColor], (id)kCTForegroundColorAttributeName,
+                                 (id)[NSFont WL_eventTitleFont],        (id)kCTFontAttributeName,
+                                 nil];
+    if ([[anEvent title] length])
+        aLayer.title = [[[NSAttributedString alloc] initWithString:[anEvent title] attributes:attr] autorelease];
 
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[anEvent title]
-                                                                           attributes:attr];
     if ([[anEvent location] length])
     {
-        [attributedString appendAttributedString:[[[NSAttributedString alloc] initWithString:@"\n" attributes:attr] autorelease]];
-        NSMutableAttributedString *locationString = [[[NSMutableAttributedString alloc] initWithString:(NSString *)[anEvent location] attributes:attr] autorelease];
-        [locationString applyFontTraits:NSItalicFontMask range:NSMakeRange(0, [locationString length])];        
-        [attributedString appendAttributedString:locationString];
+        aLayer.location = [[[NSAttributedString alloc] initWithString:[anEvent location] attributes:attr] autorelease];
+        [attr setObject:(id)[NSFont WL_eventLocationFont] forKey:(id)kCTFontAttributeName];
     }
-    
-    aLayer.string = attributedString;
-    [attributedString release];
 
     [aLayer setValue:[anEvent startDate] forKey:_WLStartDateKey];
     [aLayer setValue:[anEvent endDate] forKey:_WLEndDateKey];

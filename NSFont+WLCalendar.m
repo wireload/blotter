@@ -41,4 +41,14 @@
     return [NSFont fontWithName:@"Helvetica Neue Light" size:26.0f];
 }
 
++ (CTFontRef)WL_eventTitleFont
+{
+    return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica Neue"), 10.0f, nil) autorelease];
+}
+
++ (CTFontRef)WL_eventLocationFont
+{
+    return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica Neue Italic"), 10.0f, nil) autorelease];
+}
+
 @end
