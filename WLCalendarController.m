@@ -61,8 +61,15 @@
     [calendar release];
     [date release];
     [calCalendars release];
+
     [_nextMinuteTimer invalidate];
+    [_nextMinuteTimer release];
+    _nextMinuteTimer = nil;
+
     [_nextDayTimer invalidate];
+    [_nextDayTimer release];
+    _nextDayTimer = nil;
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -103,6 +110,9 @@
 - (void)_scheduleNextMinuteTimer
 {
     [_nextMinuteTimer invalidate];
+    [_nextMinuteTimer release];
+    _nextMinuteTimer = nil;
+    
     NSRange secondsRange = [self.calendar maximumRangeOfUnit:NSSecondCalendarUnit];
     NSDateComponents *oneMinuteComponent = [[NSDateComponents alloc] init];
     [oneMinuteComponent setMinute:1];
@@ -119,12 +129,16 @@
                                                 userInfo:nil
                                                  repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:_nextMinuteTimer forMode:NSDefaultRunLoopMode];
-    [_nextMinuteTimer release];
+    // We retain _nextMinuteTimer so we can safely invalidate it if necessary.
 }
 
 - (void)_scheduleNextDayTimer
 {
+    // Discard the previous timer.
     [_nextDayTimer invalidate];
+    [_nextDayTimer release];
+    _nextDayTimer = nil;
+    
     NSDate *startDate = nil;
     NSTimeInterval interval = 0.0;
     [self.calendar rangeOfUnit:NSDayCalendarUnit startDate:&startDate interval:&interval forDate:self.date];
@@ -135,7 +149,7 @@
                                              userInfo:nil
                                               repeats:NO];
     [[NSRunLoop currentRunLoop] addTimer:_nextDayTimer forMode:NSDefaultRunLoopMode];
-    [_nextDayTimer release];
+    // We retain _nextDayTimer so we can safely invalidate it if necessary.
 }
 
 - (void)_updateDate
