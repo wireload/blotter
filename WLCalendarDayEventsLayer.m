@@ -135,7 +135,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     return l;
 }
 
-- (void)_updateEventLayer:(WLCalendarEventLayer *)aLayer withEvent:(id)anEvent
+- (void)_updateEventLayer:(WLCalendarEventLayer *)aLayer withEvent:(CalEvent *)anEvent
 {
     aLayer.name = [anEvent uid];
     CTFontRef font = CTFontCreateWithName(CFSTR("Helvetica Neue"), 10.0f, nil);
@@ -143,8 +143,17 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
                           (id)[[NSColor whiteColor] WL_CGColor],    (id)kCTForegroundColorAttributeName,
                           (id)font,                                 (id)kCTFontAttributeName, nil];
     CFRelease(font);
-    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:[anEvent title]
+
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[anEvent title]
                                                                            attributes:attr];
+    if ([[anEvent location] length])
+    {
+        [attributedString appendAttributedString:[[[NSAttributedString alloc] initWithString:@"\n" attributes:attr] autorelease]];
+        NSMutableAttributedString *locationString = [[[NSMutableAttributedString alloc] initWithString:(NSString *)[anEvent location] attributes:attr] autorelease];
+        [locationString applyFontTraits:NSItalicFontMask range:NSMakeRange(0, [locationString length])];        
+        [attributedString appendAttributedString:locationString];
+    }
+    
     aLayer.string = attributedString;
     [attributedString release];
 
