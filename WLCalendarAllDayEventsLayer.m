@@ -136,6 +136,8 @@ static const CGFloat _WLTopMargin = 10.0f;
                                  nil];
     if ([[anEvent title] length])
         aLayer.title = [[[NSAttributedString alloc] initWithString:[anEvent title] attributes:attr] autorelease];
+    else
+        aLayer.title = nil;
 
 
     if ([[anEvent location] length])
@@ -143,6 +145,8 @@ static const CGFloat _WLTopMargin = 10.0f;
         [attr setObject:(id)[NSFont WL_eventLocationFont] forKey:(id)kCTFontAttributeName];
         aLayer.location = [[[NSAttributedString alloc] initWithString:[anEvent location] attributes:attr] autorelease];
     }
+    else
+        aLayer.location = nil;
 #ifdef DEBUG_LAYERS
     aLayer.backgroundColor = [[(CalCalendar *)[anEvent calendar] color] WL_CGColor];
 #else

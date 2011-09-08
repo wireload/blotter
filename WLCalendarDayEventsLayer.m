@@ -145,12 +145,16 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
                                  nil];
     if ([[anEvent title] length])
         aLayer.title = [[[NSAttributedString alloc] initWithString:[anEvent title] attributes:attr] autorelease];
+    else
+        aLayer.title = nil;
 
     if ([[anEvent location] length])
     {
-        aLayer.location = [[[NSAttributedString alloc] initWithString:[anEvent location] attributes:attr] autorelease];
         [attr setObject:(id)[NSFont WL_eventLocationFont] forKey:(id)kCTFontAttributeName];
+        aLayer.location = [[[NSAttributedString alloc] initWithString:[anEvent location] attributes:attr] autorelease];
     }
+    else
+        aLayer.location = nil;
 
     [aLayer setValue:[anEvent startDate] forKey:_WLStartDateKey];
     [aLayer setValue:[anEvent endDate] forKey:_WLEndDateKey];
