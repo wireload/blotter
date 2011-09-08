@@ -42,8 +42,9 @@ const CGFloat _WLXPadding = 10.0f;
         return _cachedMinimalHeight;
     else
     {
+        NSAttributedString *visibleString = [self.title length] > 0 ? self.title : self.location;
         _cachedMinimalHeight = 0.0f;
-        CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self.title);
+        CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)visibleString);
         if (framesetter != NULL)
         {
             CGMutablePathRef framePath = CGPathCreateMutable();
@@ -407,7 +408,7 @@ const CGFloat _WLXPadding = 10.0f;
 
 - (void)didChangeValueForKey:(NSString *)aKey
 {
-    if ([aKey isEqualToString:@"title"])
+    if ([aKey isEqualToString:@"title"] || [aKey isEqualToString:@"location"])
         _shouldUpdateMinimalHeightCache = YES;
     [super didChangeValueForKey:aKey];
 }
