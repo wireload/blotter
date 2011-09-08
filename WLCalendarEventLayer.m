@@ -174,18 +174,18 @@ const CGFloat _WLXPadding = 10.0f;
         if (preferredTitleHeight < titleAndLocationFrame.size.height)
         {
             CGFloat titleHeight = fminf(preferredTitleHeight, titleAndLocationFrame.size.height);
-            CGRect titleFrame = CGRectMake(titleAndLocationFrame.origin.x,
-                                           self.bounds.size.height - titleAndLocationFrame.origin.y - titleHeight,
-                                           titleAndLocationFrame.size.width,
-                                           titleHeight);
+            CGRect titleFrame = CGRectIntegral(CGRectMake(titleAndLocationFrame.origin.x,
+                                                          self.bounds.size.height - titleAndLocationFrame.origin.y - titleHeight,
+                                                          titleAndLocationFrame.size.width,
+                                                          titleHeight));
             [self _drawString:self.title inContext:aContext rect:titleFrame];
 
             CGFloat locationHeight = fminf([self _preferredLocationHeightWithWidth:self.bounds.size.width],
                                            titleAndLocationFrame.size.height - titleHeight);
-            CGRect locationFrame = CGRectMake(titleAndLocationFrame.origin.x,
-                                              CGRectGetMinY(titleFrame) - locationHeight,
-                                              titleAndLocationFrame.size.width,
-                                              locationHeight);
+            CGRect locationFrame = CGRectIntegral(CGRectMake(titleAndLocationFrame.origin.x,
+                                                             CGRectGetMinY(titleFrame) - locationHeight,
+                                                             titleAndLocationFrame.size.width,
+                                                             locationHeight));
             [self _drawString:self.location inContext:aContext rect:locationFrame];
         }
         else
