@@ -48,7 +48,7 @@
 
 + (CTFontRef)WL_eventLocationFont
 {
-    return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica Neue Italic"), 10.0f, nil) autorelease];
+    return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("HelveticaNeue-Italic"), 10.0f, nil) autorelease];
 }
 
 @end
