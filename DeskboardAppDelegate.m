@@ -186,7 +186,9 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         // Set which panes are included, and their order.
         [prefs setPanesOrder:[NSArray arrayWithObjects:NSLocalizedStringFromTableInBundle(@"General", nil, [prefs bundle], nil),
                               NSLocalizedStringFromTableInBundle(@"Positioning", nil, [prefs bundle], nil),
-                              NSLocalizedStringFromTableInBundle(@"Calendars", nil, [prefs bundle], nil), nil]];
+                              NSLocalizedStringFromTableInBundle(@"Calendars", nil, [prefs bundle], nil),
+                              NSLocalizedStringFromTableInBundle(@"Layout", nil, [prefs bundle], nil),
+                              nil]];
         [prefs createPreferencesWindow];
         [[prefs preferencesWindow] setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
     }

@@ -18,5 +18,15 @@
 	<true/>
 	<key>RollingCalendar</key>
 	<false/>
+	<key>DateViewHeight</key>
+	<real>0.35</real>
+	<key>TasksViewHeight</key>
+	<real>0.5</real>
+	<key>AllDayViewHeight</key>
+	<real>0.15</real>
+	<key>InfoViewsWidth</key>
+	<real>0.2</real>
+	<key>PerDayDate</key>
+	<false/>
 </dict>
 </plist>

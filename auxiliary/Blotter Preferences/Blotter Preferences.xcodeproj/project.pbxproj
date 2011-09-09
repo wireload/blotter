@@ -16,6 +16,14 @@
 		28F69A55129C5EA100D4BB97 /* Recreated-Aqua.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 28F69A54129C5EA100D4BB97 /* Recreated-Aqua.jpg */; };
 		28F69B53129C82E800D4BB97 /* BLPositionerControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69B52129C82E800D4BB97 /* BLPositionerControlCell.m */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		E21BC9C814161EF700A91662 /* LayoutPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E21BC9C714161EF700A91662 /* LayoutPrefPaneView.xib */; };
+		E21BC9D1141625E700A91662 /* LayoutPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = E21BC9D0141625E700A91662 /* LayoutPrefController.m */; };
+		E21BC9D61416374A00A91662 /* WLLayoutRootView.m in Sources */ = {isa = PBXBuildFile; fileRef = E21BC9D51416374A00A91662 /* WLLayoutRootView.m */; };
+		E21BC9D9141638C500A91662 /* WLLayoutDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = E21BC9D8141638C500A91662 /* WLLayoutDateView.m */; };
+		E21BC9DC1416391700A91662 /* WLLayoutTasksView.m in Sources */ = {isa = PBXBuildFile; fileRef = E21BC9DB1416391700A91662 /* WLLayoutTasksView.m */; };
+		E21BC9E51416396200A91662 /* WLLayoutRightNowView.m in Sources */ = {isa = PBXBuildFile; fileRef = E21BC9E41416396100A91662 /* WLLayoutRightNowView.m */; };
+		E21BC9E81416397D00A91662 /* WLLayoutAllDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = E21BC9E71416397D00A91662 /* WLLayoutAllDayView.m */; };
+		E21BC9EC1416399800A91662 /* WLLayoutDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = E21BC9EB1416399800A91662 /* WLLayoutDayView.m */; };
 		E2730E361349BC1000A84433 /* WLRecorderControl.m in Sources */ = {isa = PBXBuildFile; fileRef = E2730E351349BC1000A84433 /* WLRecorderControl.m */; };
 		E27312DD1349EEA800A84433 /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E273103F1349CD2C00A84433 /* ShortcutRecorder.framework */; };
 		E27312E01349EEAB00A84433 /* PTHotKey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E27312351349EC9000A84433 /* PTHotKey.framework */; };
@@ -127,6 +135,21 @@
 		32DBCF630370AF2F00C91783 /* Blotter Preferences_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Blotter Preferences_Prefix.pch"; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Blotter Preferences.preferencePane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Blotter Preferences.preferencePane"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E21BC9C714161EF700A91662 /* LayoutPrefPaneView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LayoutPrefPaneView.xib; sourceTree = "<group>"; };
+		E21BC9CF141625E700A91662 /* LayoutPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayoutPrefController.h; sourceTree = "<group>"; };
+		E21BC9D0141625E700A91662 /* LayoutPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayoutPrefController.m; sourceTree = "<group>"; };
+		E21BC9D41416374A00A91662 /* WLLayoutRootView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutRootView.h; sourceTree = "<group>"; };
+		E21BC9D51416374A00A91662 /* WLLayoutRootView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutRootView.m; sourceTree = "<group>"; };
+		E21BC9D7141638C500A91662 /* WLLayoutDateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutDateView.h; sourceTree = "<group>"; };
+		E21BC9D8141638C500A91662 /* WLLayoutDateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutDateView.m; sourceTree = "<group>"; };
+		E21BC9DA1416391700A91662 /* WLLayoutTasksView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutTasksView.h; sourceTree = "<group>"; };
+		E21BC9DB1416391700A91662 /* WLLayoutTasksView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutTasksView.m; sourceTree = "<group>"; };
+		E21BC9E31416396100A91662 /* WLLayoutRightNowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutRightNowView.h; sourceTree = "<group>"; };
+		E21BC9E41416396100A91662 /* WLLayoutRightNowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutRightNowView.m; sourceTree = "<group>"; };
+		E21BC9E61416397D00A91662 /* WLLayoutAllDayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutAllDayView.h; sourceTree = "<group>"; };
+		E21BC9E71416397D00A91662 /* WLLayoutAllDayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutAllDayView.m; sourceTree = "<group>"; };
+		E21BC9EA1416399800A91662 /* WLLayoutDayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutDayView.h; sourceTree = "<group>"; };
+		E21BC9EB1416399800A91662 /* WLLayoutDayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutDayView.m; sourceTree = "<group>"; };
 		E2730E341349BC1000A84433 /* WLRecorderControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLRecorderControl.h; sourceTree = "<group>"; };
 		E2730E351349BC1000A84433 /* WLRecorderControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLRecorderControl.m; sourceTree = "<group>"; };
 		E27310351349CD2C00A84433 /* ShortcutRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShortcutRecorder.xcodeproj; path = ../../ShortcutRecorder/ShortcutRecorder.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -214,6 +237,7 @@
 				E29DDD0B12E9DD1000751CFA /* GeneralPrefPaneView.xib */,
 				E29DDD0D12E9DD1000751CFA /* PositionPrefPaneView.xib */,
 				E29DDD0F12E9DD1000751CFA /* CalendarsPrefPaneView.xib */,
+				E21BC9C714161EF700A91662 /* LayoutPrefPaneView.xib */,
 				E29DDD4A12E9DE6C00751CFA /* CalendarsPrefPaneView.strings */,
 				E29DDD4C12E9DE6C00751CFA /* GeneralPrefPaneView.strings */,
 				E29DDD4E12E9DE6C00751CFA /* PositionPrefPaneView.strings */,
@@ -227,21 +251,17 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E21BC9D3141635AD00A91662 /* Layout Pref Pane Views */,
+				E21BC9D2141625F200A91662 /* Pref Controllers */,
 				E2FE5F1612D760E000003E48 /* ColorCheckboxCell */,
 				28F69D55129D854F00D4BB97 /* BLCalendarFramer.h */,
 				2844DB25129DA197006C5545 /* BLCalendarFramer.m */,
 				28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */,
 				28F6993C129B723900D4BB97 /* LaunchAtLoginController.h */,
-				28B54D5C12839B8D0037BF53 /* GeneralPrefController.h */,
-				28B54D5D12839B8D0037BF53 /* GeneralPrefController.m */,
-				28B54D781283AEEE0037BF53 /* PositionPrefController.h */,
-				28B54D791283AEEE0037BF53 /* PositionPrefController.m */,
 				28F69A27129C587F00D4BB97 /* BLPositionerControl.h */,
 				28F69A28129C587F00D4BB97 /* BLPositionerControl.m */,
 				28F69B51129C82E800D4BB97 /* BLPositionerControlCell.h */,
 				28F69B52129C82E800D4BB97 /* BLPositionerControlCell.m */,
-				E2FE5ECF12D74F5E00003E48 /* CalendarsPrefController.h */,
-				E2FE5ED012D74F5E00003E48 /* CalendarsPrefController.m */,
 				283A5EE41306CDA2006B916A /* WLCountGreaterThanOneTransformer.h */,
 				283A5EE51306CDA2006B916A /* WLCountGreaterThanOneTransformer.m */,
 				E2DC7DDB130810F00065CEAD /* WLScreensController.h */,
@@ -279,6 +299,40 @@
 				32DBCF630370AF2F00C91783 /* Blotter Preferences_Prefix.pch */,
 			);
 			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		E21BC9D2141625F200A91662 /* Pref Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				28B54D5C12839B8D0037BF53 /* GeneralPrefController.h */,
+				28B54D5D12839B8D0037BF53 /* GeneralPrefController.m */,
+				28B54D781283AEEE0037BF53 /* PositionPrefController.h */,
+				28B54D791283AEEE0037BF53 /* PositionPrefController.m */,
+				E2FE5ECF12D74F5E00003E48 /* CalendarsPrefController.h */,
+				E2FE5ED012D74F5E00003E48 /* CalendarsPrefController.m */,
+				E21BC9CF141625E700A91662 /* LayoutPrefController.h */,
+				E21BC9D0141625E700A91662 /* LayoutPrefController.m */,
+			);
+			name = "Pref Controllers";
+			sourceTree = "<group>";
+		};
+		E21BC9D3141635AD00A91662 /* Layout Pref Pane Views */ = {
+			isa = PBXGroup;
+			children = (
+				E21BC9D41416374A00A91662 /* WLLayoutRootView.h */,
+				E21BC9D51416374A00A91662 /* WLLayoutRootView.m */,
+				E21BC9D7141638C500A91662 /* WLLayoutDateView.h */,
+				E21BC9D8141638C500A91662 /* WLLayoutDateView.m */,
+				E21BC9DA1416391700A91662 /* WLLayoutTasksView.h */,
+				E21BC9DB1416391700A91662 /* WLLayoutTasksView.m */,
+				E21BC9E31416396100A91662 /* WLLayoutRightNowView.h */,
+				E21BC9E41416396100A91662 /* WLLayoutRightNowView.m */,
+				E21BC9E61416397D00A91662 /* WLLayoutAllDayView.h */,
+				E21BC9E71416397D00A91662 /* WLLayoutAllDayView.m */,
+				E21BC9EA1416399800A91662 /* WLLayoutDayView.h */,
+				E21BC9EB1416399800A91662 /* WLLayoutDayView.m */,
+			);
+			name = "Layout Pref Pane Views";
 			sourceTree = "<group>";
 		};
 		E27310361349CD2C00A84433 /* Products */ = {
@@ -406,6 +460,7 @@
 				E2FE5F6112D7734000003E48 /* chkbxColormask.png in Resources */,
 				E29DDD0412E9DCED00751CFA /* Localizable.strings in Resources */,
 				E2BADDC0134DF2FB00F65E14 /* exclamation.png in Resources */,
+				E21BC9C814161EF700A91662 /* LayoutPrefPaneView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,6 +483,13 @@
 				283A5EE61306CDA2006B916A /* WLCountGreaterThanOneTransformer.m in Sources */,
 				E2DC7DDD130810F00065CEAD /* WLScreensController.m in Sources */,
 				E2730E361349BC1000A84433 /* WLRecorderControl.m in Sources */,
+				E21BC9D1141625E700A91662 /* LayoutPrefController.m in Sources */,
+				E21BC9D61416374A00A91662 /* WLLayoutRootView.m in Sources */,
+				E21BC9D9141638C500A91662 /* WLLayoutDateView.m in Sources */,
+				E21BC9DC1416391700A91662 /* WLLayoutTasksView.m in Sources */,
+				E21BC9E51416396200A91662 /* WLLayoutRightNowView.m in Sources */,
+				E21BC9E81416397D00A91662 /* WLLayoutAllDayView.m in Sources */,
+				E21BC9EC1416399800A91662 /* WLLayoutDayView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

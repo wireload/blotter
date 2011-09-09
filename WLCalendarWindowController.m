@@ -80,7 +80,11 @@
     [_rightNowViewBox release];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObserver:self forKeyPath:@"InfoViewsWidth"];
+    [defaults removeObserver:self forKeyPath:@"DateViewHeight"];
+    [defaults removeObserver:self forKeyPath:@"TasksViewHeight"];
+    [defaults removeObserver:self forKeyPath:@"AllDayViewHeight"];
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
 
     [super dealloc];
@@ -135,6 +139,11 @@
         [self _placeViews];
         [self _updateFrame];
         [window orderBack:aSender];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults addObserver:self forKeyPath:@"InfoViewsWidth" options:NSKeyValueObservingOptionNew context:NULL];
+        [defaults addObserver:self forKeyPath:@"DateViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
+        [defaults addObserver:self forKeyPath:@"TasksViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
+        [defaults addObserver:self forKeyPath:@"AllDayViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
         _isWindowShowed = YES;
     }
 }
@@ -201,6 +210,15 @@
     [contentView addSubview:weekView];
 }
 
+
+#pragma mark NSObject
+
+- (void)observeValueForKeyPath:(NSString *)aKeyPath ofObject:(id)anObject change:(NSDictionary *)aChange context:(void *)aContext
+{
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_updateFrame) object:nil];
+    [self performSelector:@selector(_updateFrame) withObject:nil afterDelay:0.0];
+}
+
 @end
 
 
@@ -242,9 +260,13 @@ static const CGFloat _WLXMarginBetweenInfoAndWeek = 17.0f;
 - (void)_applyNormalSizeToViews
 {
     [[_dateViewController view] setFrame:[self dateViewFrame]];
+    CGFloat a = [[[NSUserDefaults standardUserDefaults] objectForKey:@"TasksViewHeight"] floatValue];
+    CGFloat f = (1.0f - [[[NSUserDefaults standardUserDefaults] objectForKey:@"TasksViewHeight"] floatValue]);
     [_tasksViewBox setFrame:[self tasksViewFrame]];
     [_rightNowViewBox setFrame:[self rightNowViewFrame]];
-    [[_weekViewController view] setFrame:[self weekViewFrame]];
+    NSRect weekViewFrame = [self weekViewFrame];
+    [_weekViewController view].heightOfAllDayPartOfColumn = weekViewFrame.size.height * [[[NSUserDefaults standardUserDefaults] objectForKey:@"AllDayViewHeight"] floatValue];
+    [[_weekViewController view] setFrame:weekViewFrame];
     [[_weekViewController view] setHidden:NO];
 }
 
@@ -253,22 +275,25 @@ static const CGFloat _WLXMarginBetweenInfoAndWeek = 17.0f;
     [[_dateViewController view] setFrame:[self dateViewFrame]];
     [_tasksViewBox setFrame:[self tasksViewFrame]];
     [_rightNowViewBox setFrame:[self rightNowViewFrame]];
-    [[_weekViewController view] setFrame:[self weekViewFrame]];
+    NSRect weekViewFrame = [self weekViewFrame];
+    [_weekViewController view].heightOfAllDayPartOfColumn = weekViewFrame.size.height * [[[NSUserDefaults standardUserDefaults] objectForKey:@"AllDayViewHeight"] floatValue];
+    [[_weekViewController view] setFrame:weekViewFrame];
     [[_weekViewController view] setHidden:NO];
 }
 
 - (CGFloat)heightOfTasksAndRightNow
 {
-    return (NSHeight([[window contentView] bounds]) - _WLYMarginBetweenTasksAndRightNow - NSHeight([self dateViewFrame])) / 2.0f;
+    return (NSHeight([[window contentView] bounds]) - _WLYMarginBetweenTasksAndRightNow - NSHeight([self dateViewFrame]));
 }
 
 - (NSRect)dateViewFrame
 {
     NSRect bounds = [[window contentView] bounds];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     return [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
                                                            NSMinY(bounds),
-                                                           _WLWidthOfDateTasksAndRightNow,
-                                                           _WLHeightOfDateView)];
+                                                           NSWidth(bounds) * [[defaults objectForKey:@"InfoViewsWidth"] floatValue],
+                                                           NSHeight(bounds) * [[defaults objectForKey:@"DateViewHeight"] floatValue])];
 }
 
 - (NSRect)tasksViewFrame
@@ -276,8 +301,8 @@ static const CGFloat _WLXMarginBetweenInfoAndWeek = 17.0f;
     NSRect bounds = [[window contentView] bounds];
     return [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
                                                            NSMaxY([self dateViewFrame]),
-                                                           _WLWidthOfDateTasksAndRightNow,
-                                                           [self heightOfTasksAndRightNow])];
+                                                           NSWidth(bounds) * [[[NSUserDefaults standardUserDefaults] objectForKey:@"InfoViewsWidth"] floatValue],
+                                                           [self heightOfTasksAndRightNow] * [[[NSUserDefaults standardUserDefaults] objectForKey:@"TasksViewHeight"] floatValue])];
 }
 
 - (NSRect)rightNowViewFrame
@@ -285,16 +310,17 @@ static const CGFloat _WLXMarginBetweenInfoAndWeek = 17.0f;
     NSRect bounds = [[window contentView] bounds];
     return [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
                                                            NSMaxY([self tasksViewFrame]) + _WLYMarginBetweenTasksAndRightNow,
-                                                           _WLWidthOfDateTasksAndRightNow,
-                                                           [self heightOfTasksAndRightNow])];
+                                                           NSWidth(bounds) * [[[NSUserDefaults standardUserDefaults] objectForKey:@"InfoViewsWidth"] floatValue],
+                                                           [self heightOfTasksAndRightNow] * (1.0f - [[[NSUserDefaults standardUserDefaults] objectForKey:@"TasksViewHeight"] floatValue]))];
 }
 
 - (NSRect)weekViewFrame
 {
     NSRect bounds = [[window contentView] bounds];
-    return [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds) + _WLWidthOfDateTasksAndRightNow + _WLXMarginBetweenInfoAndWeek,
+    CGFloat width = NSWidth(bounds) * (1.0f - [[[NSUserDefaults standardUserDefaults] objectForKey:@"InfoViewsWidth"] floatValue]) - _WLXMarginBetweenInfoAndWeek;
+    return [[window contentView] centerScanRect:NSMakeRect(NSMaxX(bounds) - width,
                                                            NSMinY(bounds),
-                                                           NSWidth(bounds) - _WLWidthOfDateTasksAndRightNow - _WLXMarginBetweenInfoAndWeek,
+                                                           width,
                                                            NSHeight(bounds))];
 }
 

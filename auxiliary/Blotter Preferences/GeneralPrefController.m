@@ -6,10 +6,11 @@
 //  Copyright 2010 SlevenBits. All rights reserved.
 //
 
+#import <ShortcutRecorder/ShortcutRecorder.h>
 #import "GeneralPrefController.h"
 #import "PositionPrefController.h"
 #import "CalendarsPrefController.h"
-#import <ShortcutRecorder/ShortcutRecorder.h>
+#import "LayoutPrefController.h"
 
 
 @implementation GeneralPrefController
@@ -24,7 +25,11 @@
 
 + (NSArray *)preferencePanes
 {
-    return [NSArray arrayWithObjects:[[[GeneralPrefController alloc] init] autorelease], [[[PositionPrefController alloc] init] autorelease], [[[CalendarsPrefController alloc] init] autorelease], nil];
+    return [NSArray arrayWithObjects:[[[GeneralPrefController alloc] init] autorelease],
+            [[[PositionPrefController alloc] init] autorelease],
+            [[[CalendarsPrefController alloc] init] autorelease],
+            [[[LayoutPrefController alloc] init] autorelease],
+            nil];
 }
 
 - (NSView *)paneView

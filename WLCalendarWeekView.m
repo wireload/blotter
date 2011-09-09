@@ -62,7 +62,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     if (self != nil)
     {
         indexOfHighlightedColumn = NSNotFound;
-        minimumHeightOfAllDayEventsPartOfColumn = 114.0f;
+        heightOfAllDayPartOfColumn = 114.0f;
         minimumHeightOfColumnTitle = 25.0f;
         _columnLayers = [[NSMutableArray alloc] init];
         showTimeIndicator = YES;
@@ -82,7 +82,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 
 #pragma mark Properties
 @synthesize dataSource;
-@synthesize minimumHeightOfAllDayEventsPartOfColumn;
+@synthesize heightOfAllDayPartOfColumn;
 @synthesize minimumHeightOfColumnTitle;
 @synthesize showTimeIndicator;
 @synthesize fitDayEvents;
@@ -580,6 +580,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 - (void)setFrameSize:(NSSize)newSize
 {
     [self stopAnimations];
+    [_rootLayer setNeedsLayout];
     [super setFrameSize:newSize];
 }
 
@@ -612,7 +613,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndTimeRulerRoot = 5.0f;
 {
     CGFloat allDayHeightAndMargin = 0.0f;
     if (self.showAllDayEvents)
-    allDayHeightAndMargin = self.minimumHeightOfAllDayEventsPartOfColumn + _WLYMarginBetweenAllDayAndDayPartsOfColumn;
+    allDayHeightAndMargin = self.heightOfAllDayPartOfColumn + _WLYMarginBetweenAllDayAndDayPartsOfColumn;
     return CGRectIntegral(CGRectMake(0.0f,
                                      0.0f,
                                      [self timeRulerRootWidth],
@@ -683,7 +684,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
         return CGRectIntegral(CGRectMake(0.0f,
                                          0.0f,
                                          [self columnWidth],
-                                         self.minimumHeightOfAllDayEventsPartOfColumn));
+                                         self.heightOfAllDayPartOfColumn));
     }
     else
         return CGRectZero;
@@ -693,7 +694,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
 {
     CGFloat allDayHeightAndMargin = 0.0f;
     if (self.showAllDayEvents)
-        allDayHeightAndMargin = self.minimumHeightOfAllDayEventsPartOfColumn + _WLYMarginBetweenAllDayAndDayPartsOfColumn;
+        allDayHeightAndMargin = self.heightOfAllDayPartOfColumn + _WLYMarginBetweenAllDayAndDayPartsOfColumn;
     return CGRectIntegral(CGRectMake(0.0f, 
                                      allDayHeightAndMargin,
                                      [self columnWidth],
@@ -1013,7 +1014,6 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     [CATransaction WL_performWithDisabledActions:^{
         l.geometryFlipped = YES;
         l.name = _WLColumnLayerName;
-        l.masksToBounds = YES;
         l.anchorPoint = CGPointMake(0.0f, 0.0f);
         l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
         [l.compositingFilter setDefaults];
@@ -1031,6 +1031,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
         l.name = _WLAllDayBackgroundLayerName;
         l.needsDisplayOnBoundsChange = YES;
         l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
+        l.masksToBounds = YES;
 #ifndef DEBUG_LAYERS
         l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
             NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:NO];
@@ -1140,6 +1141,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
         l.name = _WLDayBackgroundLayerName;
         l.needsDisplayOnBoundsChange = YES;
         l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
+        l.masksToBounds = YES;
 #ifndef DEBUG_LAYERS
         NSMutableParagraphStyle *p = [[NSMutableParagraphStyle alloc] init];
         [p setAlignment:NSCenterTextAlignment];
