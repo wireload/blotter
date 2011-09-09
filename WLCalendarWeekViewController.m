@@ -544,6 +544,8 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
                 [self showNextWeekAndScroll];
             else if (self.mode == WLCalendarWeekViewDayMode && [oldComponents day] != [newComponents day])
                 [self showNextDayAndScroll];
+            else if (self.mode == WLCalendarWeekViewRightNowMode && [oldComponents day] != [newComponents day])
+                [self showNextDayAndScroll];
             else
                 [self scrollToCurrentHour];
         }
