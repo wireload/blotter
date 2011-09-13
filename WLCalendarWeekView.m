@@ -595,7 +595,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 
 static const CGFloat _WLYMarginBetweenTitleAndColumn = 5.0f;
 
-static const CGFloat _WLYMarginBetweenAllDayAndDayPartsOfColumn = 3.0f;
+static const CGFloat _WLYMarginBetweenAllDayAndDayPartsOfColumn = 8.0f;
 
 static const CGFloat _WLXMarginBetweenTimeRulerAndTimeRulerRoot = 5.0f;
 
