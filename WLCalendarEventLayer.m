@@ -13,7 +13,7 @@
 #import "NSColor+WLCalendar.h"
 
 
-const CGFloat _WLYPadding = 10.0f;
+const CGFloat _WLYPadding = 6.0f;
 const CGFloat _WLXPadding = 10.0f;
 
 
