@@ -121,7 +121,10 @@
 
 - (CGFloat)splitView:(NSSplitView *)aSplitView constrainSplitPosition:(CGFloat)aProposedPosition ofSubviewAt:(NSInteger)aDividerIndex
 {
-    return roundf(aProposedPosition / 10.0f) * 10.0f;
+    if ([NSEvent modifierFlags] & NSAlternateKeyMask)
+        return roundf(aProposedPosition / 10.0f) * 10.0f;
+    else
+        return aProposedPosition;
 }
 
 @end
