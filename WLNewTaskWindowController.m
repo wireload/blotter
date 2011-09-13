@@ -11,21 +11,55 @@
 #import "WLGlassHudTextView.h"
 
 
-@interface WLNewTaskWindowController (/* Private */)
-@property (copy) NSArray *calendars;
-
-@end
-
-
 static WLNewTaskWindowController *_sharedInstance;
 
 @implementation WLNewTaskWindowController
-@synthesize calendars;
 
-+ (BOOL)canCreateTask
+- (id)initWithWindow:(NSWindow *)window
 {
-    return [[[CalCalendarStore defaultCalendarStore] calendars] count];
+    if (self = [super initWithWindow:window])
+    {
+    }
+    return self;
 }
+
+- (void)dealloc
+{
+    if (_titleViewObserver != nil)
+        [[NSNotificationCenter defaultCenter] removeObserver:_titleViewObserver];
+    [calendarController release];
+    [super dealloc];
+}
+
+
+#pragma mark Properties
+@synthesize calendarController;
+@dynamic selectedCalCalendarIndex;
+
+- (void)setSelectedCalCalendarIndex:(NSUInteger)newSelectedCalCalendarIndex
+{
+    [[NSUserDefaults standardUserDefaults] setObject:[[self.calendarController.calCalendars objectAtIndex:newSelectedCalCalendarIndex] uid] forKey:@"uidOfLastSelectedCalendarInTasks"];
+}
+
+- (NSUInteger)selectedCalCalendarIndex
+{
+    NSUInteger selectedCalCalendarIndex = NSNotFound;
+    NSString *lastSelectedCalendar = [[NSUserDefaults standardUserDefaults] objectForKey:@"uidOfLastSelectedCalendarInTasks"];
+    if (lastSelectedCalendar != nil)
+    {
+        selectedCalCalendarIndex = [self.calendarController.calCalendars indexOfObjectPassingTest:^BOOL(CalCalendar *calCalendar, NSUInteger idx, BOOL *stop) {
+            return [calCalendar.uid isEqualToString:lastSelectedCalendar];
+        }];
+        if (selectedCalCalendarIndex == NSNotFound)
+            selectedCalCalendarIndex = 0;
+    }
+    else
+        selectedCalCalendarIndex = 0;
+    return selectedCalCalendarIndex;
+}
+
+
+#pragma mark Methods
 
 + (id)sharedWindowController
 {
@@ -33,35 +67,48 @@ static WLNewTaskWindowController *_sharedInstance;
     {
         if (_sharedInstance == nil) {
             _sharedInstance = [[self alloc] initWithWindowNibName:@"NewTaskWindow"];
+            _sharedInstance.calendarController = [WLCalendarController sharedController];
         }
     }
     return _sharedInstance;
 }
 
-- (id)initWithWindow:(NSWindow *)window
+- (BOOL)canCreateTask
 {
-    if (self = [super initWithWindow:window])
-    {
-        self.calendars = [[CalCalendarStore defaultCalendarStore] calendars];
-        _calendarsChangedObserver = [[NSNotificationCenter defaultCenter] addObserverForName:CalCalendarsChangedExternallyNotification
-                                                                                      object:[CalCalendarStore defaultCalendarStore]
-                                                                                       queue:nil
-                                                                                  usingBlock:^(NSNotification *arg1)
-        {
-            self.calendars = [[CalCalendarStore defaultCalendarStore] calendars];
-        }];
-    }
-    return self;
+    return ([self.calendarController.calCalendars count] > 0);
 }
 
-- (void)dealloc
+- (void)reset
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:_calendarsChangedObserver];
-    if (_titleViewObserver != nil)
-        [[NSNotificationCenter defaultCenter] removeObserver:_titleViewObserver];
-    [calendars release];
-    [super dealloc];
+    [(NSTextView *)_titleView setString:NSLocalizedString(@"New Task", @"Default text for title field on the New Task panel")];
+    [_isDueDate setState:NSOffState];
+    [_dueDatePicker setDateValue:[NSDate date]];
+    [_priorityPopUp selectItemWithTag:CalPriorityNone];
+    [(NSTextView *)_titleView selectAll:self];
 }
+
+- (IBAction)create:(id)aSender
+{
+    CalTask *task = [CalTask task];
+    task.title = [(NSTextView *)_titleView string];
+    if ([_isDueDate state] == NSOnState)
+        task.dueDate = [_dueDatePicker dateValue];
+    task.priority = [[_priorityPopUp selectedItem] tag];
+
+    task.calendar = [self.calendarController.calCalendars objectAtIndex:self.selectedCalCalendarIndex];
+
+    NSError *error = nil;
+    if ([[CalCalendarStore defaultCalendarStore] saveTask:task error:&error])
+        [[self window] orderOut:self];
+    else
+    {
+        NSBeep();
+        [NSApp presentError:error];
+    }
+}
+
+
+#pragma mark NSWindowController
 
 - (void)windowDidLoad
 {
@@ -92,33 +139,17 @@ static WLNewTaskWindowController *_sharedInstance;
     [self reset];
 }
 
-- (void)reset
+
+#pragma mark NSObject
+
++ (NSSet *)keyPathsForValuesAffectingCanCreateTask
 {
-    [(NSTextView *)_titleView setString:NSLocalizedString(@"New Task", @"Default text for title field on the New Task panel")];
-    [_isDueDate setState:NSOffState];
-    [_dueDatePicker setDateValue:[NSDate date]];
-    [_priorityPopUp selectItemWithTag:CalPriorityNone];
-    [(NSTextView *)_titleView selectAll:self];
+    return [NSSet setWithObject:@"calendarController"];
 }
 
-- (IBAction)create:(id)aSender
++ (NSSet *)keyPathsForValuesAffectingSelectedCalCalendarIndex
 {
-    CalTask *task = [CalTask task];
-    task.title = [(NSTextView *)_titleView string];
-    if ([_isDueDate state] == NSOnState)
-        task.dueDate = [_dueDatePicker dateValue];
-    task.priority = [[_priorityPopUp selectedItem] tag];
-
-    task.calendar = [[_calendarsController selectedObjects] lastObject];
-
-    NSError *error = nil;
-    if ([[CalCalendarStore defaultCalendarStore] saveTask:task error:&error])
-        [[self window] orderOut:self];
-    else
-    {
-        NSBeep();
-        [NSApp presentError:error];
-    }
+    return [NSSet setWithObject:@"calendarController"];
 }
 
 @end

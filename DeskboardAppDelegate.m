@@ -339,7 +339,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
             [aMenuItem setKeyEquivalent:@""];
             [aMenuItem setKeyEquivalentModifierMask:0];
         }
-        return [WLNewEventWindowController canCreateEvent];
+        return [[WLNewEventWindowController sharedWindowController] canCreateEvent];
     }
     else if (aMenuItem == newTaskMenuItem)
     {
@@ -352,7 +352,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
             [aMenuItem setKeyEquivalent:@""];
             [aMenuItem setKeyEquivalentModifierMask:0];
         }
-        return [WLNewTaskWindowController canCreateTask];
+        return [[WLNewTaskWindowController sharedWindowController] canCreateTask];
     }
     else
         return YES;

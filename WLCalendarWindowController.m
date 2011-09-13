@@ -32,20 +32,18 @@
 
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-        _calendarController = [[WLCalendarController alloc] init];
-
         _weekViewController = [[WLCalendarWeekViewController alloc] init];
-        [_weekViewController setRepresentedObject:_calendarController];
+        [_weekViewController setRepresentedObject:[WLCalendarController sharedController]];
         [_weekViewController bind:@"mode" toObject:defaults withKeyPath:@"RollingCalendar" options:nil];
         [_weekViewController bind:@"titleFormat" toObject:defaults withKeyPath:@"PerDayDate" options:nil];
         _weekViewController.highlightWeekends = YES;
 
         _rightNowViewController = [[WLCalendarWeekViewController alloc] init];
-        [_rightNowViewController setRepresentedObject:_calendarController];
+        [_rightNowViewController setRepresentedObject:[WLCalendarController sharedController]];
         _rightNowViewController.mode = WLCalendarWeekViewRightNowMode;
 
         _tasksViewController = [[WLCalendarTasksViewController alloc] initWithNibName:nil bundle:nil];
-        [_tasksViewController setRepresentedObject:_calendarController];
+        [_tasksViewController setRepresentedObject:[WLCalendarController sharedController]];
         NSArray *sortDescriptors = [NSArray arrayWithObjects:
                                     [NSSortDescriptor sortDescriptorWithKey:@"dueDate" ascending:YES],
                                     [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:YES],
@@ -54,7 +52,7 @@
         _tasksViewController.sortDescriptors = sortDescriptors;
 
         _dateViewController = [[WLCalendarDateViewController alloc] init];
-        [_dateViewController setRepresentedObject:_calendarController];
+        [_dateViewController setRepresentedObject:[WLCalendarController sharedController]];
 
         _cache = [[NSCache alloc] init];
 
@@ -75,7 +73,6 @@
     [_tasksViewController release];
     [_dateViewController release];
     [_cache release];
-    [_calendarController release];
     [_tasksViewBox release];
     [_rightNowViewBox release];
 

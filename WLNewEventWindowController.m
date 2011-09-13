@@ -14,45 +14,14 @@
 static const NSTimeInterval _WLDefaultTimeDiff = 3600; // seconds
 
 
-@interface WLNewEventWindowController (/* Private */)
-@property (copy) NSArray *calendars;
-
-@end
-
-
 static WLNewEventWindowController *_sharedInstance;
 
 @implementation WLNewEventWindowController
-@synthesize calendars;
-
-+ (BOOL)canCreateEvent
-{
-    return [[[CalCalendarStore defaultCalendarStore] calendars] count];
-}
-
-+ (id)sharedWindowController
-{
-    @synchronized (self)
-    {
-        if (_sharedInstance == nil) {
-            _sharedInstance = [[self alloc] initWithWindowNibName:@"NewEventWindow"];
-        }
-    }
-    return _sharedInstance;
-}
 
 - (id)initWithWindow:(NSWindow *)window
 {
     if (self = [super initWithWindow:window])
     {
-        self.calendars = [[CalCalendarStore defaultCalendarStore] calendars];
-        _calendarsChangedObserver = [[NSNotificationCenter defaultCenter] addObserverForName:CalCalendarsChangedExternallyNotification
-                                                                                      object:[CalCalendarStore defaultCalendarStore]
-                                                                                       queue:nil
-                                                                                  usingBlock:^(NSNotification *arg1)
-        {
-            self.calendars = [[CalCalendarStore defaultCalendarStore] calendars];
-        }];
     }
     return self;
 }
@@ -60,80 +29,59 @@ static WLNewEventWindowController *_sharedInstance;
 - (void)dealloc
 {
     [_isAllDayButton removeObserver:self forKeyPath:@"cell.state"];
-    [[NSNotificationCenter defaultCenter] removeObserver:_calendarsChangedObserver];
     if (_titleViewObserver != nil)
         [[NSNotificationCenter defaultCenter] removeObserver:_titleViewObserver];
     if (_locationViewObserver != nil)
         [[NSNotificationCenter defaultCenter] removeObserver:_locationViewObserver];
-    [calendars release];
     [_datePickerValueBackup release];
     [super dealloc];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+
+#pragma mark Properties
+@synthesize calendarController;
+@dynamic selectedCalCalendarIndex;
+
+- (void)setSelectedCalCalendarIndex:(NSUInteger)newSelectedCalCalendarIndex
 {
-    if ([keyPath isEqualTo:@"cell.state"])
-    {
-        NSInteger newState = [[change objectForKey:NSKeyValueChangeNewKey] integerValue];
-        if (newState == NSOnState)
-        {
-            [_startDatePicker setDatePickerElements:NSYearMonthDayDatePickerElementFlag];
-            [_endDatePicker setDatePickerElements:NSYearMonthDayDatePickerElementFlag];
-        }
-        else
-        {
-            [_startDatePicker setDatePickerElements:NSYearMonthDayDatePickerElementFlag | NSHourMinuteDatePickerElementFlag];
-            [_endDatePicker setDatePickerElements:NSYearMonthDayDatePickerElementFlag | NSHourMinuteDatePickerElementFlag];
-        }
-    }
-    else
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    [[NSUserDefaults standardUserDefaults] setObject:[[self.calendarController.calCalendars objectAtIndex:newSelectedCalCalendarIndex] uid] forKey:@"uidOfLastSelectedCalendarInEvents"];
 }
 
-- (void)windowDidLoad
+- (NSUInteger)selectedCalCalendarIndex
 {
-    unichar keyEquiv = NSEnterCharacter;
-    NSString *equivString = [NSString stringWithCharacters:&keyEquiv length:1];
-    [_createButton setKeyEquivalent:equivString];
-    [_startDatePicker setDelegate:self];
-    [_endDatePicker setDelegate:self];
-    [(NSTextView *)_titleView setDrawsBackground:NO];
-    [(NSTextView *)_titleView setFont:[NSFont boldSystemFontOfSize:16]];
-    [(NSTextView *)_locationView setDrawsBackground:NO];
-
-    _titleViewObserver = [[NSNotificationCenter defaultCenter] addObserverForName:WLViewSizeDidChangeNotification
-                                                                           object:_titleView
-                                                                            queue:nil
-                                                                       usingBlock:^(NSNotification *arg1)
+    NSUInteger selectedCalCalendarIndex = NSNotFound;
+    NSString *lastSelectedCalendar = [[NSUserDefaults standardUserDefaults] objectForKey:@"uidOfLastSelectedCalendarInEvents"];
+    if (lastSelectedCalendar != nil)
     {
-        CGFloat heightDiff = [[[arg1 userInfo] objectForKey:WLSizeDiff] sizeValue].height;
-        NSRect newWindowFrame = [[self window] frame];
-        newWindowFrame.size.height += heightDiff;
-        newWindowFrame.origin.y -= heightDiff;
-        [[self window] setFrame:newWindowFrame display:YES animate:YES];
-    }];
-    _titleView.postsSizeChangedNotifications = YES;
+        selectedCalCalendarIndex = [self.calendarController.calCalendars indexOfObjectPassingTest:^BOOL(CalCalendar *calCalendar, NSUInteger idx, BOOL *stop) {
+            return [calCalendar.uid isEqualToString:lastSelectedCalendar];
+        }];
+        if (selectedCalCalendarIndex == NSNotFound)
+            selectedCalCalendarIndex = 0;
+    }
+    else
+        selectedCalCalendarIndex = 0;
+    return selectedCalCalendarIndex;
+}
 
-    _locationViewObserver = [[NSNotificationCenter defaultCenter] addObserverForName:WLViewSizeDidChangeNotification
-                                                                              object:_locationView
-                                                                               queue:nil
-                                                                          usingBlock:^(NSNotification *arg1)
+
+#pragma mark Methods
+
++ (id)sharedWindowController
+{
+    @synchronized (self)
     {
-        CGFloat heightDiff = [[[arg1 userInfo] objectForKey:WLSizeDiff] sizeValue].height;
-        NSRect newWindowFrame = [[self window] frame];
-        newWindowFrame.size.height += heightDiff;
-        newWindowFrame.origin.y -= heightDiff;
-        [_locationViewContainer setAutoresizingMask:([_locationViewContainer autoresizingMask] | NSViewHeightSizable) ^ NSViewMaxYMargin];
-        [_titleView setAutoresizingMask:([_titleView autoresizingMask] ^ NSViewHeightSizable) | NSViewMinYMargin];
-        [[self window] setFrame:newWindowFrame display:YES animate:YES];
-        [_titleView setAutoresizingMask:([_titleView autoresizingMask] | NSViewHeightSizable) ^ NSViewMinYMargin];
-        [_locationViewContainer setAutoresizingMask:([_locationViewContainer autoresizingMask] ^ NSViewHeightSizable) | NSViewMaxYMargin];
-    }];
-    _locationView.postsSizeChangedNotifications = YES;
+        if (_sharedInstance == nil) {
+            _sharedInstance = [[self alloc] initWithWindowNibName:@"NewEventWindow"];
+            _sharedInstance.calendarController = [WLCalendarController sharedController];
+        }
+    }
+    return _sharedInstance;
+}
 
-    [_isAllDayButton addObserver:self forKeyPath:@"cell.state" options:NSKeyValueObservingOptionNew context:NULL];
-
-    [self reset];    
+- (BOOL)canCreateEvent
+{
+    return ([self.calendarController.calCalendars count] > 0);
 }
 
 - (void)reset
@@ -159,7 +107,7 @@ static WLNewEventWindowController *_sharedInstance;
     event.startDate = [_startDatePicker dateValue];
     event.endDate = [_endDatePicker dateValue];
 
-    event.calendar = [[_calendarsController selectedObjects] lastObject];
+    event.calendar = [self.calendarController.calCalendars objectAtIndex:self.selectedCalCalendarIndex];
 
     NSError *error = nil;
     if ([[CalCalendarStore defaultCalendarStore] saveEvent:event span:CalSpanThisEvent error:&error])
@@ -206,6 +154,88 @@ validateProposedDateValue:(NSDate **)proposedDateValue
 - (void)datePickerCellDidBecomeFirstResponder:(NSDatePickerCell *)aDatePickerCell
 {
     _datePickerValueBackup = [[aDatePickerCell dateValue] copy];
+}
+
+
+#pragma mark NSWindowController
+
+- (void)windowDidLoad
+{
+    unichar keyEquiv = NSEnterCharacter;
+    NSString *equivString = [NSString stringWithCharacters:&keyEquiv length:1];
+    [_createButton setKeyEquivalent:equivString];
+    [_startDatePicker setDelegate:self];
+    [_endDatePicker setDelegate:self];
+    [(NSTextView *)_titleView setDrawsBackground:NO];
+    [(NSTextView *)_titleView setFont:[NSFont boldSystemFontOfSize:16]];
+    [(NSTextView *)_locationView setDrawsBackground:NO];
+
+    _titleViewObserver = [[NSNotificationCenter defaultCenter] addObserverForName:WLViewSizeDidChangeNotification
+                                                                           object:_titleView
+                                                                            queue:nil
+                                                                       usingBlock:^(NSNotification *arg1)
+                          {
+                              CGFloat heightDiff = [[[arg1 userInfo] objectForKey:WLSizeDiff] sizeValue].height;
+                              NSRect newWindowFrame = [[self window] frame];
+                              newWindowFrame.size.height += heightDiff;
+                              newWindowFrame.origin.y -= heightDiff;
+                              [[self window] setFrame:newWindowFrame display:YES animate:YES];
+                          }];
+    _titleView.postsSizeChangedNotifications = YES;
+
+    _locationViewObserver = [[NSNotificationCenter defaultCenter] addObserverForName:WLViewSizeDidChangeNotification
+                                                                              object:_locationView
+                                                                               queue:nil
+                                                                          usingBlock:^(NSNotification *arg1)
+                             {
+                                 CGFloat heightDiff = [[[arg1 userInfo] objectForKey:WLSizeDiff] sizeValue].height;
+                                 NSRect newWindowFrame = [[self window] frame];
+                                 newWindowFrame.size.height += heightDiff;
+                                 newWindowFrame.origin.y -= heightDiff;
+                                 [_locationViewContainer setAutoresizingMask:([_locationViewContainer autoresizingMask] | NSViewHeightSizable) ^ NSViewMaxYMargin];
+                                 [_titleView setAutoresizingMask:([_titleView autoresizingMask] ^ NSViewHeightSizable) | NSViewMinYMargin];
+                                 [[self window] setFrame:newWindowFrame display:YES animate:YES];
+                                 [_titleView setAutoresizingMask:([_titleView autoresizingMask] | NSViewHeightSizable) ^ NSViewMinYMargin];
+                                 [_locationViewContainer setAutoresizingMask:([_locationViewContainer autoresizingMask] ^ NSViewHeightSizable) | NSViewMaxYMargin];
+                             }];
+    _locationView.postsSizeChangedNotifications = YES;
+
+    [_isAllDayButton addObserver:self forKeyPath:@"cell.state" options:NSKeyValueObservingOptionNew context:NULL];
+
+    [self reset];
+}
+
+
+#pragma mark NSObject
+
++ (NSSet *)keyPathsForValuesAffectingCanCreateEvent
+{
+    return [NSSet setWithObject:@"calendarController"];
+}
+
++ (NSSet *)keyPathsForValuesAffectingSelectedCalCalendarIndex
+{
+    return [NSSet setWithObject:@"calendarController"];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualTo:@"cell.state"])
+    {
+        NSInteger newState = [[change objectForKey:NSKeyValueChangeNewKey] integerValue];
+        if (newState == NSOnState)
+        {
+            [_startDatePicker setDatePickerElements:NSYearMonthDayDatePickerElementFlag];
+            [_endDatePicker setDatePickerElements:NSYearMonthDayDatePickerElementFlag];
+        }
+        else
+        {
+            [_startDatePicker setDatePickerElements:NSYearMonthDayDatePickerElementFlag | NSHourMinuteDatePickerElementFlag];
+            [_endDatePicker setDatePickerElements:NSYearMonthDayDatePickerElementFlag | NSHourMinuteDatePickerElementFlag];
+        }
+    }
+    else
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 }
 
 @end

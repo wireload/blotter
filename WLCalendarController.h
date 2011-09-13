@@ -25,6 +25,7 @@
 
 @property (nonatomic, copy) NSArray *calCalendars;
 
++ (id)sharedController;
 
 - (void)_localeDidChange:(NSNotification *)aNotification;
 

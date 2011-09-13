@@ -7,30 +7,33 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "WLCalendarController.h"
 
 
 @class WLGlassHudTextView;
 
+
 @interface WLNewTaskWindowController : NSWindowController {
+    WLCalendarController *calendarController;
+
     IBOutlet WLGlassHudTextView *_titleView;
     id _titleViewObserver;
     IBOutlet NSButton *_isDueDate;
     IBOutlet NSDatePicker *_dueDatePicker;
     IBOutlet NSPopUpButton *_priorityPopUp;
     IBOutlet NSButton *_createButton;
-    
-    IBOutlet NSArrayController *_calendarsController;
-    id _calendarsChangedObserver;
-    NSArray *calendars;
 }
-@property (copy, readonly) NSArray *calendars;
 
-+ (BOOL)canCreateTask;
+@property (retain) WLCalendarController *calendarController;
+
+@property (nonatomic) NSUInteger selectedCalCalendarIndex;
 
 + (id)sharedWindowController;
 
 - (void)reset;
 
 - (IBAction)create:(id)aSender;
+
+- (BOOL)canCreateTask;
 
 @end

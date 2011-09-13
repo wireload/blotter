@@ -42,7 +42,6 @@
     WLCalendarWeekViewController *_rightNowViewController;
     WLCalendarTasksViewController *_tasksViewController;
     WLCalendarDateViewController *_dateViewController;
-    WLCalendarController *_calendarController;
     WLCalendarBoxView *_tasksViewBox;
     WLCalendarBoxView *_rightNowViewBox;
 

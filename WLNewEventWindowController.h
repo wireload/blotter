@@ -8,11 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 #import "WLGlassHudDatePicker.h"
+#import "WLCalendarController.h"
 
 
 @class WLGlassHudTextView;
 
+
 @interface WLNewEventWindowController : NSWindowController <NSWindowDelegate, WLGlassHudDatePickerCellDelegate> {
+    WLCalendarController *calendarController;
+
     IBOutlet WLGlassHudTextView *_titleView;
     id _titleViewObserver;
     IBOutlet WLGlassHudTextView *_locationView;
@@ -23,16 +27,15 @@
     IBOutlet WLGlassHudDatePicker *_endDatePicker;
     NSDate *_datePickerValueBackup;
     IBOutlet NSButton *_createButton;
-
-    IBOutlet NSArrayController *_calendarsController;
-    id _calendarsChangedObserver;
-    NSArray *calendars;
 }
-@property (copy, readonly) NSArray *calendars;
 
-+ (BOOL)canCreateEvent;
+@property (retain) WLCalendarController *calendarController;
+
+@property (nonatomic) NSUInteger selectedCalCalendarIndex;
 
 + (id)sharedWindowController;
+
+- (BOOL)canCreateEvent;
 
 - (void)reset;
 

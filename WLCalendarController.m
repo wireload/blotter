@@ -17,6 +17,8 @@
     self = [super init];
     if (self != nil)
     {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+
         calendar = [[NSCalendar autoupdatingCurrentCalendar] retain];
         date = [[NSDate date] retain];
         calCalendars = [[self _calendarsToDisplay] copy];
@@ -40,7 +42,6 @@
                                                                    name:NSWorkspaceDidWakeNotification
                                                                  object:nil];
 
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         [userDefaults addObserver:self
                        forKeyPath:@"Calendars"
                           options:NSKeyValueObservingOptionNew
@@ -69,7 +70,7 @@
     [_nextDayTimer invalidate];
     [_nextDayTimer release];
     _nextDayTimer = nil;
-    
+
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -86,6 +87,16 @@
 
 
 #pragma mark Methods
+
++ (WLCalendarController *)sharedController
+{
+    static dispatch_once_t onceToken;
+    static WLCalendarController *sharedController;
+    dispatch_once(&onceToken, ^{
+        sharedController = [[self alloc] init];
+    });
+    return sharedController;
+}
 
 
 #pragma mark Private
@@ -112,7 +123,7 @@
     [_nextMinuteTimer invalidate];
     [_nextMinuteTimer release];
     _nextMinuteTimer = nil;
-    
+
     NSRange secondsRange = [self.calendar maximumRangeOfUnit:NSSecondCalendarUnit];
     NSDateComponents *oneMinuteComponent = [[NSDateComponents alloc] init];
     [oneMinuteComponent setMinute:1];
@@ -138,7 +149,7 @@
     [_nextDayTimer invalidate];
     [_nextDayTimer release];
     _nextDayTimer = nil;
-    
+
     NSDate *startDate = nil;
     NSTimeInterval interval = 0.0;
     [self.calendar rangeOfUnit:NSDayCalendarUnit startDate:&startDate interval:&interval forDate:self.date];

@@ -2,20 +2,19 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
-		<string key="IBDocument.SystemVersion">10J869</string>
-		<string key="IBDocument.InterfaceBuilderVersion">1306</string>
-		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">461.00</string>
+		<string key="IBDocument.SystemVersion">11B26</string>
+		<string key="IBDocument.InterfaceBuilderVersion">1617</string>
+		<string key="IBDocument.AppKitVersion">1138</string>
+		<string key="IBDocument.HIToolboxVersion">566.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">1306</string>
+			<string key="NS.object.0">1617</string>
 		</object>
 		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<string>NSDatePicker</string>
 			<string>NSTextField</string>
 			<string>NSPopUpButton</string>
-			<string>NSArrayController</string>
 			<string>NSButton</string>
 			<string>NSMenu</string>
 			<string>NSButtonCell</string>
@@ -57,6 +56,7 @@
 				<string key="NSWindowTitle">New Event</string>
 				<string key="NSWindowClass">WLGlassHudWindow</string>
 				<nil key="NSViewClass"/>
+				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="675070131">
 					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
@@ -255,7 +255,7 @@
 									<object class="NSDatePickerCell" key="NSCell" id="246916745">
 										<int key="NSCellFlags">67239424</int>
 										<int key="NSCellFlags2">163840</int>
-										<object class="NSDate" key="NSContents">
+										<object class="NSDate" key="NSContents" id="654752376">
 											<double key="NS.time">319219200</double>
 										</object>
 										<reference key="NSSupport" ref="26"/>
@@ -293,9 +293,7 @@
 									<object class="NSDatePickerCell" key="NSCell" id="877791295">
 										<int key="NSCellFlags">67239424</int>
 										<int key="NSCellFlags2">163840</int>
-										<object class="NSDate" key="NSContents">
-											<double key="NS.time">319219200</double>
-										</object>
+										<reference key="NSContents" ref="654752376"/>
 										<reference key="NSSupport" ref="26"/>
 										<reference key="NSControlView" ref="211563046"/>
 										<double key="NSTimeInterval">0.0</double>
@@ -377,31 +375,15 @@
 							<string key="NSClassName">NSView</string>
 						</object>
 					</object>
-					<string key="NSFrame">{{7, 11}, {285, 230}}</string>
+					<string key="NSFrameSize">{285, 230}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="690297653"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
-				<string key="NSMaxSize">{1e+13, 1e+13}</string>
+				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<string key="NSFrameAutosaveName">NewEventWindow</string>
-			</object>
-			<object class="NSArrayController" id="311408410">
-				<object class="NSMutableArray" key="NSDeclaredKeys">
-					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>title</string>
-					<string>notes</string>
-					<string>type</string>
-					<string>uid</string>
-					<string>isEditable</string>
-					<string>color</string>
-				</object>
-				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
-				<bool key="NSAvoidsEmptySelection">YES</bool>
-				<bool key="NSPreservesSelection">YES</bool>
-				<bool key="NSSelectsInsertedObjects">YES</bool>
-				<bool key="NSFilterRestrictsInsertion">YES</bool>
-				<bool key="NSClearsFilterPredicateOnInsertion">YES</bool>
+				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -456,63 +438,6 @@
 					<int key="connectionID">94</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">content: arrangedObjects</string>
-						<reference key="source" ref="408232026"/>
-						<reference key="destination" ref="311408410"/>
-						<object class="NSNibBindingConnector" key="connector" id="65275827">
-							<reference key="NSSource" ref="408232026"/>
-							<reference key="NSDestination" ref="311408410"/>
-							<string key="NSLabel">content: arrangedObjects</string>
-							<string key="NSBinding">content</string>
-							<string key="NSKeyPath">arrangedObjects</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">107</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">contentValues: arrangedObjects.title</string>
-						<reference key="source" ref="408232026"/>
-						<reference key="destination" ref="311408410"/>
-						<object class="NSNibBindingConnector" key="connector" id="140132016">
-							<reference key="NSSource" ref="408232026"/>
-							<reference key="NSDestination" ref="311408410"/>
-							<string key="NSLabel">contentValues: arrangedObjects.title</string>
-							<string key="NSBinding">contentValues</string>
-							<string key="NSKeyPath">arrangedObjects.title</string>
-							<reference key="NSPreviousConnector" ref="65275827"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">109</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">_calendarsController</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="311408410"/>
-					</object>
-					<int key="connectionID">110</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">contentArray: calendars</string>
-						<reference key="source" ref="311408410"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="311408410"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">contentArray: calendars</string>
-							<string key="NSBinding">contentArray</string>
-							<string key="NSKeyPath">calendars</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">115</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">create:</string>
 						<reference key="source" ref="1001"/>
@@ -559,23 +484,6 @@
 						<reference key="destination" ref="1015655719"/>
 					</object>
 					<int key="connectionID">266</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedIndex: selectionIndex</string>
-						<reference key="source" ref="408232026"/>
-						<reference key="destination" ref="311408410"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="408232026"/>
-							<reference key="NSDestination" ref="311408410"/>
-							<string key="NSLabel">selectedIndex: selectionIndex</string>
-							<string key="NSBinding">selectedIndex</string>
-							<string key="NSKeyPath">selectionIndex</string>
-							<reference key="NSPreviousConnector" ref="140132016"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">273</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -665,6 +573,72 @@
 					</object>
 					<int key="connectionID">322</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: canCreateEvent</string>
+						<reference key="source" ref="1026362590"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="1026362590"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">enabled: canCreateEvent</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">canCreateEvent</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">323</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">content: calendarController.calCalendars</string>
+						<reference key="source" ref="408232026"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector" id="432498570">
+							<reference key="NSSource" ref="408232026"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">content: calendarController.calCalendars</string>
+							<string key="NSBinding">content</string>
+							<string key="NSKeyPath">calendarController.calCalendars</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">327</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">contentValues: calendarController.calCalendars.title</string>
+						<reference key="source" ref="408232026"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector" id="152407274">
+							<reference key="NSSource" ref="408232026"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">contentValues: calendarController.calCalendars.title</string>
+							<string key="NSBinding">contentValues</string>
+							<string key="NSKeyPath">calendarController.calCalendars.title</string>
+							<reference key="NSPreviousConnector" ref="432498570"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">332</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedIndex: selectedCalCalendarIndex</string>
+						<reference key="source" ref="408232026"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="408232026"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">selectedIndex: selectedCalCalendarIndex</string>
+							<string key="NSBinding">selectedIndex</string>
+							<string key="NSKeyPath">selectedCalCalendarIndex</string>
+							<reference key="NSPreviousConnector" ref="152407274"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">335</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -711,12 +685,6 @@
 							<reference ref="690297653"/>
 						</object>
 						<reference key="parent" ref="1032099916"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">96</int>
-						<reference key="object" ref="311408410"/>
-						<reference key="parent" ref="0"/>
-						<string key="objectName">Calendars Controller</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">235</int>
@@ -923,139 +891,85 @@
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="NSArray" key="dict.sortedKeys">
 					<bool key="EncodedWithXMLCoder">YES</bool>
+					<string>-1.IBPluginDependency</string>
 					<string>-2.IBAttributePlaceholdersKey</string>
+					<string>-2.IBPluginDependency</string>
+					<string>-3.IBPluginDependency</string>
 					<string>101.IBPluginDependency</string>
-					<string>101.IBViewBoundsToFrameTransform</string>
 					<string>102.IBPluginDependency</string>
 					<string>103.IBPluginDependency</string>
 					<string>150.IBPluginDependency</string>
-					<string>150.IBViewBoundsToFrameTransform</string>
 					<string>151.CustomClassName</string>
 					<string>151.IBPluginDependency</string>
 					<string>164.IBPluginDependency</string>
-					<string>164.IBViewBoundsToFrameTransform</string>
 					<string>165.CustomClassName</string>
 					<string>165.IBPluginDependency</string>
 					<string>170.IBPluginDependency</string>
-					<string>170.IBViewBoundsToFrameTransform</string>
 					<string>171.IBPluginDependency</string>
 					<string>172.IBPluginDependency</string>
-					<string>172.IBViewBoundsToFrameTransform</string>
 					<string>173.IBPluginDependency</string>
 					<string>174.IBPluginDependency</string>
-					<string>174.IBViewBoundsToFrameTransform</string>
 					<string>175.IBPluginDependency</string>
 					<string>176.IBPluginDependency</string>
-					<string>176.IBViewBoundsToFrameTransform</string>
 					<string>177.IBPluginDependency</string>
 					<string>178.IBPluginDependency</string>
-					<string>178.IBViewBoundsToFrameTransform</string>
 					<string>179.IBPluginDependency</string>
 					<string>235.IBPluginDependency</string>
-					<string>235.IBViewBoundsToFrameTransform</string>
 					<string>249.IBPluginDependency</string>
-					<string>249.IBViewBoundsToFrameTransform</string>
 					<string>251.IBPluginDependency</string>
-					<string>251.IBViewBoundsToFrameTransform</string>
-					<string>3.IBEditorWindowLastContentRect</string>
 					<string>3.IBPluginDependency</string>
-					<string>3.IBViewEditorWindowController.showingLayoutRectangles</string>
 					<string>3.IBWindowTemplateEditedContentRect</string>
 					<string>3.NSWindowTemplate.visibleAtLaunch</string>
 					<string>4.IBPluginDependency</string>
 					<string>81.CustomClassName</string>
 					<string>81.IBPluginDependency</string>
-					<string>81.IBViewBoundsToFrameTransform</string>
 					<string>82.CustomClassName</string>
 					<string>82.IBPluginDependency</string>
-					<string>82.IBViewBoundsToFrameTransform</string>
 					<string>83.IBPluginDependency</string>
-					<string>83.IBViewBoundsToFrameTransform</string>
 					<string>84.IBPluginDependency</string>
 					<string>85.IBPluginDependency</string>
 					<string>86.IBPluginDependency</string>
-					<string>96.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSMutableDictionary">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<reference key="dict.sortedKeys" ref="0"/>
 						<reference key="dict.values" ref="0"/>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABCmgAAwrAAAA</bytes>
-					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABDMwAAwgwAAA</bytes>
-					</object>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>WLGlassHudButtonCell</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABC2AAAwgwAAA</bytes>
-					</object>
 					<string>WLGlassHudButtonCell</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABCAAAAwzYAAA</bytes>
-					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABBiAAAwrQAAA</bytes>
-					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABCRAAAwvoAAA</bytes>
-					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABCgAAAwwUAAA</bytes>
-					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABCFAAAwy4AAA</bytes>
-					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">AUGAAABDWgAAA</bytes>
-					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">AUKSAABDpoAAA</bytes>
-					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<object class="NSAffineTransform"/>
-					<string>{{921, 933}, {285, 230}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<boolean value="YES"/>
 					<string>{{921, 933}, {285, 230}}</string>
 					<boolean value="NO"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>WLGlassHudDatePicker</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">AUKoAABDCwAAA</bytes>
-					</object>
 					<string>WLGlassHudDatePicker</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">AUKoAABCsAAAA</bytes>
-					</object>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABCpgAAwzEAAA</bytes>
-					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1074,7 +988,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">322</int>
+			<int key="maxID">335</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1140,7 +1054,6 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_calendarsController</string>
 							<string>_createButton</string>
 							<string>_endDatePicker</string>
 							<string>_isAllDayButton</string>
@@ -1151,7 +1064,6 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSArrayController</string>
 							<string>NSButton</string>
 							<string>WLGlassHudDatePicker</string>
 							<string>NSButton</string>
@@ -1165,7 +1077,6 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_calendarsController</string>
 							<string>_createButton</string>
 							<string>_endDatePicker</string>
 							<string>_isAllDayButton</string>
@@ -1176,10 +1087,6 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_calendarsController</string>
-								<string key="candidateClassName">NSArrayController</string>
-							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">_createButton</string>
 								<string key="candidateClassName">NSButton</string>
