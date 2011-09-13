@@ -102,11 +102,9 @@
             CGFloat height = [splitView frame].size.height - [splitView dividerThickness];
             switch ([v tag]) {
                 case WLLayoutDateViewTag:
-                    NSLog(@"%f", [v frame].size.height / height);
                     [[NSUserDefaults standardUserDefaults] setFloat:[v frame].size.height / height forKey:@"DateViewHeight"];
                     break;
                 case WLLayoutTasksViewTag:
-                    NSLog(@"%f", [v frame].size.height / height);
                     [[NSUserDefaults standardUserDefaults] setFloat:[v frame].size.height / height forKey:@"TasksViewHeight"];
                     break;
                 case WLLayoutAllDayViewTag:
