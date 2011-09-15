@@ -132,7 +132,7 @@
     }
     
     NSRect titleFrame = NSMakeRect(NSMinX(bounds) + 14.0f, NSMinY(bounds) + 17.0f, NSWidth(bounds) - 14.0f, 35.0f);
-    if (NSIntersectsRect(titleFrame, dirtyRect))
+    if (NSIntersectsRect(titleFrame, dirtyRect) && NSContainsRect(bounds, titleFrame))
         [self.title drawInRect:titleFrame withAttributes:[self _titleAttributes]];
 }
 
