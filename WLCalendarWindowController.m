@@ -181,6 +181,8 @@ static const CGFloat _WLYMarginBetweenTasksAndRightNow = 10.0f;
 
 static const CGFloat _WLXMarginBetweenInfoAndWeek = 17.0f;
 
+static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
+
 - (void)_applyWindowSizeToViews
 {
     switch (self.windowSize)
@@ -234,13 +236,13 @@ static const CGFloat _WLXMarginBetweenInfoAndWeek = 17.0f;
                                     {
                                         return [[[screen deviceDescription] objectForKey:@"NSScreenNumber"] isEqualToNumber:self.windowScreenIdentifier];
                                     }];
-    
+
     NSRect screenFrame = NSMakeRect(0.0f, 0.0f, 0.0f, 0.0f);
     if (selectedScreenIdx != NSNotFound)
         screenFrame = [[screens objectAtIndex:selectedScreenIdx] visibleFrame];
     else if ([screens count] > 0)
         screenFrame = [[screens objectAtIndex:0] visibleFrame];
-    
+
     NSRect windowFrame = [BLCalendarFramer frameForPosition:self.windowPosition inFrame:screenFrame size:windowSize];
     NSDisableScreenUpdates();
     [CATransaction begin];
@@ -259,22 +261,22 @@ static const CGFloat _WLXMarginBetweenInfoAndWeek = 17.0f;
     NSParameterAssert(!_isWindowShowed);
     NSView *contentView = [window contentView];
     [contentView setAutoresizesSubviews:NO];
-    
+
     [contentView addSubview:[_dateViewController view]];
-    
+
     _tasksViewBox = [[WLCalendarBoxView alloc] initWithFrame:NSZeroRect];
     _tasksViewBox.title = NSLocalizedString(@"To Do", @"Header of To Do items list");
     _tasksViewBox.contentView = [_tasksViewController view];
     [contentView addSubview:_tasksViewBox];
     [_tasksViewBox release];
-    
+
     _rightNowViewBox = [[WLCalendarBoxView alloc] initWithFrame:NSZeroRect];
     _rightNowViewBox.title = NSLocalizedString(@"Right Now", @"Header of Right Now items list");
     _rightNowViewBox.contentView = [_rightNowViewController view];
     _rightNowViewBox.showSoftTopAndBottomEdges = YES;
     [contentView addSubview:_rightNowViewBox];
     [_rightNowViewBox release];
-    
+
     WLCalendarWeekView *weekView = [_weekViewController view];
     [weekView setAutoresizingMask:NSViewHeightSizable | NSViewWidthSizable];
     [contentView addSubview:weekView];
@@ -285,9 +287,9 @@ static const CGFloat _WLXMarginBetweenInfoAndWeek = 17.0f;
     NSRect bounds = [[window contentView] bounds];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     return [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
-                                                           NSMinY(bounds),
+                                                           NSMinY(bounds) + _WLYMarginBetweenBoundsAndDate,
                                                            [defaults floatForKey:@"InfoViewsWidth"],
-                                                           [defaults floatForKey:@"DateViewHeight"])];
+                                                           [defaults floatForKey:@"DateViewHeight"] - _WLYMarginBetweenBoundsAndDate)];
 }
 
 - (NSRect)tasksViewFrame
@@ -314,7 +316,7 @@ static const CGFloat _WLXMarginBetweenInfoAndWeek = 17.0f;
         margin = _WLYMarginBetweenTasksAndRightNow;
     NSRect bounds = [[self.window contentView] bounds];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    CGFloat height = NSHeight(bounds) - NSHeight([self dateViewFrame]) - NSHeight(tasksViewFrame) - margin;
+    CGFloat height = NSHeight(bounds) - NSMaxY([self tasksViewFrame]) - margin;
     return [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
                                                            NSMaxY([self tasksViewFrame]) + margin,
                                                            [defaults floatForKey:@"InfoViewsWidth"],
@@ -336,7 +338,7 @@ static const CGFloat _WLXMarginBetweenInfoAndWeek = 17.0f;
     NSRect bounds = [[self.window contentView] bounds];
     NSURL *defaultsURL = [[NSBundle mainBundle] URLForResource:@"defaults" withExtension:@"plist"];
     NSDictionary *defaults = [NSDictionary dictionaryWithContentsOfURL:defaultsURL];
-    return roundf((NSHeight(bounds) -[[defaults objectForKey:@"DateViewHeight"] floatValue] - _WLYMarginBetweenTasksAndRightNow) / 2);
+    return roundf((NSHeight(bounds) - ([[defaults objectForKey:@"DateViewHeight"] floatValue]) - _WLYMarginBetweenTasksAndRightNow) / 2);
 }
 
 @end
