@@ -13,12 +13,6 @@
 #import "NSColor+WLCalendar.h"
 
 
-static NSString* const _WLRootLayerName = @"root";
-
-static NSString* const _WLTitleLayerName = @"title";
-
-static NSString* const _WLScrollLayerName = @"scroll";
-
 static NSString* const _WLTasksLayerName = @"task";
 
 
@@ -26,15 +20,30 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 
 
 @implementation WLCalendarTasksView
-@synthesize dataSource;
 
 - (void)dealloc
 {
     [super dealloc];
 }
 
+
+#pragma mark Properties
+@synthesize dataSource;
+
+
+#pragma mark Methods
+
 - (void)createLayers
 {
+    CALayer *l = [CALayer layer];
+    l.layoutManager = self;
+    l.masksToBounds = YES;
+    l.name = _WLTasksLayerName;
+    [l setValue:[NSMutableArray array] forKey:_WLOrderedSublayersKey];
+#ifdef DEBUG_LAYERS
+    l.backgroundColor = [[NSColor blackColor] WL_CGColor];
+#endif
+    [self setLayer:l];
     [self setWantsLayer:YES];
     [self reloadDataAnimated:NO];
 }
@@ -55,19 +64,23 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 
 - (void)insertTaskAtIndex:(NSUInteger)anIndex
 {
+    [CATransaction begin];
     WLCalendarTaskLayer *taskLayer = [self _setupTaskLayerAtIndex:anIndex];
     CALayer *layer = [self layer];
     [layer addSublayer:taskLayer];
     [[layer valueForKey:_WLOrderedSublayersKey] insertObject:taskLayer atIndex:anIndex];
+    [CATransaction commit];
 }
 
 - (void)removeTaskAtIndex:(NSUInteger)anIndex
 {
+    [CATransaction begin];
     CALayer *layer = [self layer];
     NSMutableArray *orderedTaskLayers = [layer valueForKey:_WLOrderedSublayersKey];
     WLCalendarTaskLayer *taskLayer = [orderedTaskLayers objectAtIndex:anIndex];
     [orderedTaskLayers removeObjectAtIndex:anIndex];
     [taskLayer removeFromSuperlayer];
+    [CATransaction commit];
 }
 
 - (void)updateTaskAtIndex:(NSUInteger)anIndex
@@ -93,27 +106,22 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 }
 
 
-#pragma mark NSView
+#pragma mark CALayoutManager
 
-- (CALayer *)makeBackingLayer
+- (void)layoutSublayersOfLayer:(CALayer *)layer
 {
-    CALayer *l = [super makeBackingLayer];
-    l.needsDisplayOnBoundsChange = YES;
-    l.layoutManager = self;
-    l.cornerRadius = 2.0f;
-    l.masksToBounds = YES;
-    l.name = _WLTasksLayerName;
-    l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
-    l.actions = [NSDictionary dictionaryWithObjectsAndKeys:
-                              [NSNull null], @"position",
-                              [NSNull null], @"bounds",
-                              [NSNull null], @"sublayers", nil];
-    [l.compositingFilter setDefaults];
-    [l setValue:[NSMutableArray array] forKey:_WLOrderedSublayersKey];
-#ifdef DEBUG_LAYERS
-    l.backgroundColor = [[NSColor blackColor] WL_CGColor];
-#endif
-    return l;
+    NSParameterAssert([layer.name isEqualToString:_WLTasksLayerName]);
+
+    CGSize layerSize = layer.bounds.size;
+    CGFloat top = layerSize.height;
+    static const CGFloat TopMargin = 10.0f;
+    for (WLCalendarTaskLayer *taskLayer in [layer valueForKey:_WLOrderedSublayersKey])
+    {
+        CGFloat preferredHeight = fminf([taskLayer maxHeightForWidth:layerSize.width], layerSize.height);
+        taskLayer.frame = CGRectMake(0.0f, top - preferredHeight, layerSize.width, preferredHeight);
+        taskLayer.hidden = !CGRectContainsRect(layer.bounds, taskLayer.frame);
+        top -= preferredHeight + TopMargin;
+    }
 }
 
 
@@ -126,33 +134,10 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     taskLayer.name = task.uid;
     taskLayer.string = task.title;
     taskLayer.markColor = [[[task calendar] color] WL_CGColor];
-    CABasicAnimation *orderInAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-    [orderInAnimation setFromValue:[NSNumber numberWithFloat:0.0]];
-    [orderInAnimation setToValue:[NSNumber numberWithFloat:1.0]];
-    taskLayer.actions = [NSDictionary dictionaryWithObject:orderInAnimation forKey:kCAOnOrderIn];
 #ifdef DEBUG_LAYERS
     taskLayer.backgroundColor = [[NSColor orangeColor] WL_CGColor];
 #endif
     return taskLayer;
-}
-
-
-#pragma mark CALayoutManager
-
-- (void)layoutSublayersOfLayer:(CALayer *)layer
-{
-    NSParameterAssert([layer.name isEqualToString:_WLTasksLayerName]);
-
-    CGSize layerSize = layer.bounds.size;
-    CGFloat top = layerSize.height;
-    static const CGFloat TopMargin = 20.0f;
-    for (WLCalendarTaskLayer *taskLayer in [layer valueForKey:_WLOrderedSublayersKey])
-    {
-        CGFloat preferredHeight = fminf([taskLayer maxHeightForWidth:layerSize.width], layerSize.height);
-        taskLayer.frame = CGRectMake(0.0f, top - preferredHeight, layerSize.width, preferredHeight);
-        taskLayer.hidden = !CGRectContainsRect(layer.bounds, taskLayer.frame);
-        top -= preferredHeight + TopMargin;
-    }
 }
 
 @end
