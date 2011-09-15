@@ -48,36 +48,36 @@
                                        p,                                   NSParagraphStyleAttributeName, nil];
     [p release];
     [s release];
-    NSRect monthDayRect = NSMakeRect(bounds.origin.x, bounds.origin.y - 40, bounds.size.width, 200.0f);
-    if (NSIntersectsRect(monthDayRect, aDirtyRect))
+    NSRect monthDayFrame = NSMakeRect(bounds.origin.x, bounds.origin.y, bounds.size.width, 200.0f);
+    if (NSIntersectsRect(monthDayFrame, aDirtyRect) && NSContainsRect(bounds, monthDayFrame))
     {
 #ifdef DEBUG_LAYERS
         [[NSColor greenColor] set];
         NSRectFill(monthDayRect);
 #endif
-        [self.monthDay drawInRect:monthDayRect withAttributes:attributes];
+        [self.monthDay drawInRect:monthDayFrame withAttributes:attributes];
     }
 
-    NSRect monthAndYearRect = NSMakeRect(bounds.origin.x, NSMaxY(monthDayRect) + 10.0f, bounds.size.width, 35.0f);
-    if (NSIntersectsRect(monthAndYearRect, aDirtyRect))
+    NSRect monthAndYearFrame = NSMakeRect(bounds.origin.x, NSMaxY(monthDayFrame) + 10.0f, bounds.size.width, 35.0f);
+    if (NSIntersectsRect(monthAndYearFrame, aDirtyRect) && NSContainsRect(bounds, monthAndYearFrame))
     {
 #ifdef DEBUG_LAYERS
         [[NSColor greenColor] set];
         NSRectFill(monthAndYearRect);
 #endif
         [attributes setObject:[NSFont WL_dateViewMonthAndYearFont] forKey:NSFontAttributeName];
-        [self.monthAndYear drawInRect:monthAndYearRect withAttributes:attributes];
+        [self.monthAndYear drawInRect:monthAndYearFrame withAttributes:attributes];
     }
 
-    NSRect weekdayRect = NSMakeRect(bounds.origin.x, NSMaxY(monthAndYearRect), bounds.size.width, 35.0f);
-    if (NSIntersectsRect(weekdayRect, aDirtyRect))
+    NSRect weekdayFrame = NSMakeRect(bounds.origin.x, NSMaxY(monthAndYearFrame), bounds.size.width, 35.0f);
+    if (NSIntersectsRect(weekdayFrame, aDirtyRect) && NSContainsRect(bounds, weekdayFrame))
     {
 #ifdef DEBUG_LAYERS
         [[NSColor greenColor] set];
         NSRectFill(weekdayRect);
 #endif
         [attributes setObject:[NSFont WL_dateViewWeekdayFont] forKey:NSFontAttributeName];
-        [self.weekday drawInRect:weekdayRect withAttributes:attributes];
+        [self.weekday drawInRect:weekdayFrame withAttributes:attributes];
     }
 }
 
