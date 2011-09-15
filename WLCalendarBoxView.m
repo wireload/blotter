@@ -14,6 +14,17 @@
 
 @implementation WLCalendarBoxView
 
+- (id)initWithFrame:(NSRect)aFrameRect
+{
+    self = [super initWithFrame:aFrameRect];
+    if (self != nil)
+    {
+        [self setAutoresizesSubviews:NO];
+    }
+    return self;
+}
+
+
 #pragma mark Properties
 @synthesize title;
 @dynamic contentView;

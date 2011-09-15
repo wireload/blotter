@@ -257,6 +257,7 @@ static const CGFloat _WLXMarginBetweenInfoAndWeek = 17.0f;
 {
     NSParameterAssert(!_isWindowShowed);
     NSView *contentView = [window contentView];
+    [contentView setAutoresizesSubviews:NO];
     
     [contentView addSubview:[_dateViewController view]];
     
