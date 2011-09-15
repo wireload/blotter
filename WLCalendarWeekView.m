@@ -381,7 +381,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
         return ([self dayScrollFrame].size.height) / (endHour - floorf(r.startHour));
     }
     else
-        return 40.0f;
+        return fmaxf([self dayScrollFrame].size.height / [self numberOfHours], 40.0f);
 }
 
 - (CGFloat)hourForDate:(NSDate *)aDate
