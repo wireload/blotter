@@ -118,7 +118,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     for (WLCalendarTaskLayer *taskLayer in [layer valueForKey:_WLOrderedSublayersKey])
     {
         CGFloat preferredHeight = fminf([taskLayer maxHeightForWidth:layerSize.width], layerSize.height);
-        taskLayer.frame = CGRectMake(0.0f, top - preferredHeight, layerSize.width, preferredHeight);
+        taskLayer.frame = CGRectIntegral(CGRectMake(0.0f, top - preferredHeight, layerSize.width, preferredHeight));
         taskLayer.hidden = !CGRectContainsRect(layer.bounds, taskLayer.frame);
         top -= preferredHeight + TopMargin;
     }
