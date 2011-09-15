@@ -75,18 +75,18 @@
     _infoWidthSplitViewToBlotterWindowTransform = [[NSAffineTransform alloc] init];
     _blotterWindowToAllDayHeightSplitViewTransform = [_blotterWindowToInfoWidthSplitViewTransform retain];
     _allDayHeightSplitViewToBlotterWindowTransform = [_infoWidthSplitViewToBlotterWindowTransform retain];
-    _blotterWindowToDateHeightSplitViewTransform = [_blotterWindowToInfoWidthSplitViewTransform retain];
-    _dateHeightSplitViewToBlotterWindowTransform = [_infoWidthSplitViewToBlotterWindowTransform retain];
     _blotterWindowToTasksHeightSplitViewTransform = [[NSAffineTransform alloc] init];
     _tasksHeightSplitViewToBlotterWindowTransform = [[NSAffineTransform alloc] init];
+    _blotterWindowToDateHeightSplitViewTransform = [_blotterWindowToTasksHeightSplitViewTransform retain];
+    _dateHeightSplitViewToBlotterWindowTransform = [_tasksHeightSplitViewToBlotterWindowTransform retain];
     
     NSRect layoutViewFrame = [_layoutView frame];
     DeskboardAppDelegate *delegate = (DeskboardAppDelegate *)[[NSApplication sharedApplication] delegate];
     NSRect blotterViewFrame = [[delegate.windowController.window contentView] frame];
     // All split views have the same divider thickness.
     CGFloat dividerThickness = [_infoWidthSplitView dividerThickness];
-    // _infoWidthSplitView, _allDayHeightSplitView and _dateHeightSplitView have only 1 divider.
-    // _tasksHeightSplitView has 2 dividers.
+    // _infoWidthSplitViewa and _allDayHeightSplitView have only 1 divider.
+    // _dateHeightSplitView and _tasksHeightSplitView has 2 dividers.
     [_blotterWindowToInfoWidthSplitViewTransform scaleXBy:(NSWidth(layoutViewFrame) - dividerThickness) / NSWidth(blotterViewFrame)
                                                  yBy:(NSHeight(layoutViewFrame) - dividerThickness) / NSHeight(blotterViewFrame)];
     [_infoWidthSplitViewToBlotterWindowTransform scaleXBy:NSWidth(blotterViewFrame) / (NSWidth(layoutViewFrame) - dividerThickness)
