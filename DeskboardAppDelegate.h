@@ -31,6 +31,8 @@
     SS_PrefsController *prefs;
 }
 
+@property (readonly) WLCalendarWindowController *windowController;
+
 - (IBAction)showPrefs:(id)sender;
 
 - (IBAction)newEvent:(id)sender;

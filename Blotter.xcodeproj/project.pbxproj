@@ -404,6 +404,7 @@
 		E29DDCB512E9D56B00751CFA /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E29DDCB612E9D57500751CFA /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E29DDCB712E9D57F00751CFA /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E29ED79A142138EE00DB179C /* SS_PreferencePaneProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SS_PreferencePaneProtocol.h; path = "auxiliary/Blotter Preferences/SS_PreferencePaneProtocol.h"; sourceTree = "<group>"; };
 		E29F38EA131968B200A865D9 /* NewTaskWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewTaskWindow.xib; path = Resources/English.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
 		E29F38EC1319694C00A865D9 /* WLNewTaskWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNewTaskWindowController.h; sourceTree = "<group>"; };
 		E29F38ED1319694C00A865D9 /* WLNewTaskWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNewTaskWindowController.m; sourceTree = "<group>"; };
@@ -492,6 +493,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E29ED79A142138EE00DB179C /* SS_PreferencePaneProtocol.h */,
 				E27196B713C5A19E008E5C43 /* WLCalendar */,
 				E27936431324F6BD00BC5224 /* WLGlassHud */,
 				E27313C31349F41200A84433 /* PTHotKey+ShortcutRecorder.h */,

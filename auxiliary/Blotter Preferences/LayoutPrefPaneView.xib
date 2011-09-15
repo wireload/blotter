@@ -1,26 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
-		<int key="IBDocument.SystemTarget">1070</int>
+		<int key="IBDocument.SystemTarget">1060</int>
 		<string key="IBDocument.SystemVersion">11B26</string>
-		<string key="IBDocument.InterfaceBuilderVersion">1617</string>
+		<string key="IBDocument.InterfaceBuilderVersion">907</string>
 		<string key="IBDocument.AppKitVersion">1138</string>
 		<string key="IBDocument.HIToolboxVersion">566.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">1617</string>
+			<string key="NS.object.0">907</string>
 		</object>
-		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
+		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<string>NSSplitView</string>
-			<string>NSTextField</string>
-			<string>NSTextFieldCell</string>
-			<string>NSCustomView</string>
-			<string>NSImageCell</string>
-			<string>NSButtonCell</string>
-			<string>NSImageView</string>
-			<string>NSButton</string>
-			<string>NSCustomObject</string>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -31,7 +22,9 @@
 			<object class="NSArray" key="dict.sortedKeys" id="0">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 			</object>
-			<reference key="dict.values" ref="0"/>
+			<object class="NSMutableArray" key="dict.values">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+			</object>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.RootObjects" id="1000">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -45,7 +38,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="1005">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -54,7 +47,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 35}, {187, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="852806371"/>
 						<string key="NSReuseIdentifierKey">_NS:3936</string>
 						<bool key="NSEnabled">YES</bool>
@@ -65,7 +57,7 @@
 							<object class="NSFont" key="NSSupport" id="724121852">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">13</double>
-								<int key="NSfFlags">1044</int>
+								<int key="NSfFlags">1040</int>
 							</object>
 							<string key="NSCellIdentifier">_NS:3936</string>
 							<reference key="NSControlView" ref="829428846"/>
@@ -94,8 +86,6 @@
 						<int key="NSvFlags">289</int>
 						<string key="NSFrame">{{282, 12}, {144, 32}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:161</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="998497881">
@@ -138,7 +128,6 @@
 														<int key="NSvFlags">256</int>
 														<string key="NSFrameSize">{113, 65}</string>
 														<reference key="NSSuperview" ref="732422139"/>
-														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="770099130"/>
 														<string key="NSReuseIdentifierKey">_NS:547</string>
 														<string key="NSClassName">WLLayoutDateView</string>
@@ -153,7 +142,6 @@
 																<int key="NSvFlags">256</int>
 																<string key="NSFrameSize">{113, 117}</string>
 																<reference key="NSSuperview" ref="770099130"/>
-																<reference key="NSWindow"/>
 																<reference key="NSNextKeyView" ref="48844516"/>
 																<string key="NSReuseIdentifierKey">_NS:547</string>
 																<string key="NSClassName">WLLayoutTasksView</string>
@@ -163,7 +151,6 @@
 																<int key="NSvFlags">256</int>
 																<string key="NSFrame">{{0, 126}, {113, 128}}</string>
 																<reference key="NSSuperview" ref="770099130"/>
-																<reference key="NSWindow"/>
 																<reference key="NSNextKeyView" ref="209585813"/>
 																<string key="NSReuseIdentifierKey">_NS:549</string>
 																<string key="NSClassName">WLLayoutRightNowView</string>
@@ -171,14 +158,12 @@
 														</object>
 														<string key="NSFrame">{{0, 74}, {113, 254}}</string>
 														<reference key="NSSuperview" ref="732422139"/>
-														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="474719257"/>
 														<string key="NSReuseIdentifierKey">_NS:545</string>
 													</object>
 												</object>
 												<string key="NSFrameSize">{113, 328}</string>
 												<reference key="NSSuperview" ref="413383031"/>
-												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="1052202239"/>
 												<string key="NSReuseIdentifierKey">_NS:545</string>
 											</object>
@@ -192,7 +177,6 @@
 														<int key="NSvFlags">256</int>
 														<string key="NSFrameSize">{277, 156}</string>
 														<reference key="NSSuperview" ref="209585813"/>
-														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="286032300"/>
 														<string key="NSReuseIdentifierKey">_NS:547</string>
 														<string key="NSClassName">WLLayoutAllDayView</string>
@@ -202,7 +186,6 @@
 														<int key="NSvFlags">256</int>
 														<string key="NSFrame">{{0, 165}, {277, 163}}</string>
 														<reference key="NSSuperview" ref="209585813"/>
-														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="829428846"/>
 														<string key="NSReuseIdentifierKey">_NS:549</string>
 														<string key="NSClassName">WLLayoutDayView</string>
@@ -210,14 +193,12 @@
 												</object>
 												<string key="NSFrame">{{122, 0}, {277, 328}}</string>
 												<reference key="NSSuperview" ref="413383031"/>
-												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="557101213"/>
 												<string key="NSReuseIdentifierKey">_NS:545</string>
 											</object>
 										</object>
 										<string key="NSFrameSize">{399, 328}</string>
 										<reference key="NSSuperview" ref="468275927"/>
-										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="732422139"/>
 										<string key="NSReuseIdentifierKey">_NS:597</string>
 										<bool key="NSIsVertical">YES</bool>
@@ -225,7 +206,6 @@
 								</object>
 								<string key="NSFrame">{{20, 20}, {399, 328}}</string>
 								<reference key="NSSuperview" ref="307974184"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="413383031"/>
 								<string key="NSReuseIdentifierKey">_NS:499</string>
 								<string key="NSClassName">WLLayoutRootView</string>
@@ -233,7 +213,6 @@
 						</object>
 						<string key="NSFrame">{{0, 60}, {440, 370}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="468275927"/>
 						<string key="NSReuseIdentifierKey">_NS:499</string>
 						<string key="NSClassName">WLCalendarWindowFrameView</string>
@@ -255,7 +234,6 @@
 						</object>
 						<string key="NSFrame">{{0, 60}, {440, 370}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="307974184"/>
 						<string key="NSReuseIdentifierKey">_NS:1658</string>
 						<bool key="NSEnabled">YES</bool>
@@ -276,8 +254,6 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{440, 430}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="401819132"/>
 				<string key="NSClassName">NSView</string>
 			</object>
@@ -335,43 +311,51 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">_mainSplitView</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="413383031"/>
-					</object>
-					<int key="connectionID">45</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">_infoSplitView</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="732422139"/>
-					</object>
-					<int key="connectionID">46</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">_tasksAndRightNowSplitView</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="770099130"/>
-					</object>
-					<int key="connectionID">47</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">_weekSplitView</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="209585813"/>
-					</object>
-					<int key="connectionID">48</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">_mainView</string>
 						<reference key="source" ref="1001"/>
 						<reference key="destination" ref="1005"/>
 					</object>
 					<int key="connectionID">49</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_layoutView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="468275927"/>
+					</object>
+					<int key="connectionID">52</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_infoWidthSplitView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="413383031"/>
+					</object>
+					<int key="connectionID">54</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_allDayHeightSplitView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="209585813"/>
+					</object>
+					<int key="connectionID">55</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_dateHeightSplitView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="732422139"/>
+					</object>
+					<int key="connectionID">56</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_tasksHeightSplitView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="770099130"/>
+					</object>
+					<int key="connectionID">57</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -431,6 +415,7 @@
 							<reference ref="413383031"/>
 						</object>
 						<reference key="parent" ref="307974184"/>
+						<string key="objectName">Layout View</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">19</int>
@@ -469,7 +454,7 @@
 							<reference ref="732422139"/>
 						</object>
 						<reference key="parent" ref="468275927"/>
-						<string key="objectName">Split View</string>
+						<string key="objectName">Info Width Split View</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">26</int>
@@ -480,6 +465,7 @@
 							<reference ref="286032300"/>
 						</object>
 						<reference key="parent" ref="413383031"/>
+						<string key="objectName">All Day Height Split View</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">27</int>
@@ -505,6 +491,7 @@
 							<reference ref="770099130"/>
 						</object>
 						<reference key="parent" ref="413383031"/>
+						<string key="objectName">Date Height Split View</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">33</int>
@@ -521,6 +508,7 @@
 							<reference ref="48844516"/>
 						</object>
 						<reference key="parent" ref="732422139"/>
+						<string key="objectName">Tasks Height Split View</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">36</int>
@@ -604,16 +592,20 @@
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<reference key="dict.sortedKeys" ref="0"/>
-				<reference key="dict.values" ref="0"/>
+				<object class="NSMutableArray" key="dict.values">
+					<bool key="EncodedWithXMLCoder">YES</bool>
+				</object>
 			</object>
 			<nil key="activeLocalization"/>
 			<object class="NSMutableDictionary" key="localizations">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<reference key="dict.sortedKeys" ref="0"/>
-				<reference key="dict.values" ref="0"/>
+				<object class="NSMutableArray" key="dict.values">
+					<bool key="EncodedWithXMLCoder">YES</bool>
+				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">51</int>
+			<int key="maxID">57</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -636,18 +628,20 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_infoSplitView</string>
-							<string>_mainSplitView</string>
+							<string>_allDayHeightSplitView</string>
+							<string>_dateHeightSplitView</string>
+							<string>_infoWidthSplitView</string>
+							<string>_layoutView</string>
 							<string>_mainView</string>
-							<string>_tasksAndRightNowSplitView</string>
-							<string>_weekSplitView</string>
+							<string>_tasksHeightSplitView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSSplitView</string>
 							<string>NSSplitView</string>
-							<string>NSView</string>
 							<string>NSSplitView</string>
+							<string>NSView</string>
+							<string>NSView</string>
 							<string>NSSplitView</string>
 						</object>
 					</object>
@@ -655,32 +649,37 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_infoSplitView</string>
-							<string>_mainSplitView</string>
+							<string>_allDayHeightSplitView</string>
+							<string>_dateHeightSplitView</string>
+							<string>_infoWidthSplitView</string>
+							<string>_layoutView</string>
 							<string>_mainView</string>
-							<string>_tasksAndRightNowSplitView</string>
-							<string>_weekSplitView</string>
+							<string>_tasksHeightSplitView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_infoSplitView</string>
+								<string key="name">_allDayHeightSplitView</string>
 								<string key="candidateClassName">NSSplitView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_mainSplitView</string>
+								<string key="name">_dateHeightSplitView</string>
 								<string key="candidateClassName">NSSplitView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">_infoWidthSplitView</string>
+								<string key="candidateClassName">NSSplitView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">_layoutView</string>
+								<string key="candidateClassName">NSView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">_mainView</string>
 								<string key="candidateClassName">NSView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">_tasksAndRightNowSplitView</string>
-								<string key="candidateClassName">NSSplitView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_weekSplitView</string>
+								<string key="name">_tasksHeightSplitView</string>
 								<string key="candidateClassName">NSSplitView</string>
 							</object>
 						</object>
@@ -755,6 +754,7 @@
 			<integer value="3000" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
+		<nil key="IBDocument.LastKnownRelativeProjectPath"/>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="NS.key.0">Recreated-Aqua</string>

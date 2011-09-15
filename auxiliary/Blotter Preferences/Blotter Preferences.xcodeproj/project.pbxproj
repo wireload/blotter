@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		283A5EE61306CDA2006B916A /* WLCountGreaterThanOneTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 283A5EE51306CDA2006B916A /* WLCountGreaterThanOneTransformer.m */; };
-		2844DB26129DA197006C5545 /* BLCalendarFramer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2844DB25129DA197006C5545 /* BLCalendarFramer.m */; };
 		28B54D5E12839B8D0037BF53 /* GeneralPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54D5D12839B8D0037BF53 /* GeneralPrefController.m */; };
 		28B54D7A1283AEEE0037BF53 /* PositionPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54D791283AEEE0037BF53 /* PositionPrefController.m */; };
 		28F6993D129B723900D4BB97 /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */; };
@@ -93,7 +92,6 @@
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		283A5EE41306CDA2006B916A /* WLCountGreaterThanOneTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCountGreaterThanOneTransformer.h; sourceTree = "<group>"; };
 		283A5EE51306CDA2006B916A /* WLCountGreaterThanOneTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCountGreaterThanOneTransformer.m; sourceTree = "<group>"; };
-		2844DB25129DA197006C5545 /* BLCalendarFramer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLCalendarFramer.m; path = ../../BLCalendarFramer.m; sourceTree = SOURCE_ROOT; };
 		28A09A0B1308E3C5005EA923 /* PositionPrefPaneView.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = PositionPrefPaneView.strings; path = ko.lproj/PositionPrefPaneView.strings; sourceTree = "<group>"; };
 		28A09A0C1308E3C5005EA923 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		28A09A0D1308E3C5005EA923 /* GeneralPrefPaneView.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = GeneralPrefPaneView.strings; path = ko.lproj/GeneralPrefPaneView.strings; sourceTree = "<group>"; };
@@ -177,6 +175,10 @@
 		E29DDD5C12E9DE9F00751CFA /* CalendarsPrefPaneView.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = CalendarsPrefPaneView.strings; path = ru.lproj/CalendarsPrefPaneView.strings; sourceTree = "<group>"; };
 		E29DDD5D12E9DE9F00751CFA /* GeneralPrefPaneView.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = GeneralPrefPaneView.strings; path = ru.lproj/GeneralPrefPaneView.strings; sourceTree = "<group>"; };
 		E29DDD5E12E9DE9F00751CFA /* PositionPrefPaneView.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = PositionPrefPaneView.strings; path = ru.lproj/PositionPrefPaneView.strings; sourceTree = "<group>"; };
+		E29ED7A214213A3000DB179C /* SS_PrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SS_PrefsController.h; path = ../../libs/SS_PrefsController.h; sourceTree = "<group>"; };
+		E29ED7A814213B2300DB179C /* WLClosableWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WLClosableWindow.h; path = ../../WLClosableWindow/WLClosableWindow.h; sourceTree = "<group>"; };
+		E29ED7AB14220CD300DB179C /* DeskboardAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeskboardAppDelegate.h; path = ../../DeskboardAppDelegate.h; sourceTree = "<group>"; };
+		E29ED7AC14220CEF00DB179C /* WLCalendarWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WLCalendarWindowController.h; path = ../../WLCalendarWindowController.h; sourceTree = "<group>"; };
 		E2BADDBF134DF2FB00F65E14 /* exclamation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exclamation.png; sourceTree = "<group>"; };
 		E2DC7DDB130810F00065CEAD /* WLScreensController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLScreensController.h; sourceTree = "<group>"; };
 		E2DC7DDC130810F00065CEAD /* WLScreensController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLScreensController.m; sourceTree = "<group>"; };
@@ -212,7 +214,6 @@
 			isa = PBXGroup;
 			children = (
 				E27310351349CD2C00A84433 /* ShortcutRecorder.xcodeproj */,
-				28B54D52128398250037BF53 /* SS_PreferencePaneProtocol.h */,
 				08FB77AFFE84173DC02AAC07 /* Classes */,
 				32C88E010371C26100C91783 /* Other Sources */,
 				089C167CFE841241C02AAC07 /* Resources */,
@@ -255,7 +256,6 @@
 				E21BC9D2141625F200A91662 /* Pref Controllers */,
 				E2FE5F1612D760E000003E48 /* ColorCheckboxCell */,
 				28F69D55129D854F00D4BB97 /* BLCalendarFramer.h */,
-				2844DB25129DA197006C5545 /* BLCalendarFramer.m */,
 				28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */,
 				28F6993C129B723900D4BB97 /* LaunchAtLoginController.h */,
 				28F69A27129C587F00D4BB97 /* BLPositionerControl.h */,
@@ -296,6 +296,10 @@
 		32C88E010371C26100C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				E29ED7AC14220CEF00DB179C /* WLCalendarWindowController.h */,
+				E29ED7AB14220CD300DB179C /* DeskboardAppDelegate.h */,
+				28B54D52128398250037BF53 /* SS_PreferencePaneProtocol.h */,
+				E29ED7A814213B2300DB179C /* WLClosableWindow.h */,
 				32DBCF630370AF2F00C91783 /* Blotter Preferences_Prefix.pch */,
 			);
 			name = "Other Sources";
@@ -304,6 +308,7 @@
 		E21BC9D2141625F200A91662 /* Pref Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E29ED7A214213A3000DB179C /* SS_PrefsController.h */,
 				28B54D5C12839B8D0037BF53 /* GeneralPrefController.h */,
 				28B54D5D12839B8D0037BF53 /* GeneralPrefController.m */,
 				28B54D781283AEEE0037BF53 /* PositionPrefController.h */,
@@ -476,7 +481,6 @@
 				28F6993D129B723900D4BB97 /* LaunchAtLoginController.m in Sources */,
 				28F69A29129C587F00D4BB97 /* BLPositionerControl.m in Sources */,
 				28F69B53129C82E800D4BB97 /* BLPositionerControlCell.m in Sources */,
-				2844DB26129DA197006C5545 /* BLCalendarFramer.m in Sources */,
 				E2FE5ED112D74F5E00003E48 /* CalendarsPrefController.m in Sources */,
 				E2FE5EF712D75C7700003E48 /* ColorCheckboxCell.m in Sources */,
 				E2863F971305BEC4004CFC9D /* NSScreen+WLScreenName.m in Sources */,

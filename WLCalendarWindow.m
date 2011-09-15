@@ -52,14 +52,18 @@
 
 #pragma mark NSWindow
 
-+ (NSRect)frameRectForContentRect:(NSRect)windowContentRect styleMask:(NSUInteger)windowStyle
+- (NSRect)frameRectForContentRect:(NSRect)aWindowContentRect
 {
-	return NSInsetRect(windowContentRect, [WLCalendarWindowFrameView borderWidth] + 10.0f, [WLCalendarWindowFrameView borderWidth] + 10.0f);
+	return NSInsetRect(aWindowContentRect,
+                       -[WLCalendarWindowFrameView borderWidth] - 10.0f,
+                       -[WLCalendarWindowFrameView borderWidth] - 10.0f);
 }
 
-- (NSRect)contentRectForFrameRect:(NSRect)windowFrame
+- (NSRect)contentRectForFrameRect:(NSRect)aWindowFrame
 {
-	return NSInsetRect(windowFrame, [WLCalendarWindowFrameView borderWidth] + 10.0f, [WLCalendarWindowFrameView borderWidth] + 10.0f);
+	return NSInsetRect(aWindowFrame,
+                       [WLCalendarWindowFrameView borderWidth] + 10.0f,
+                       [WLCalendarWindowFrameView borderWidth] + 10.0f);
 }
 
 - (BOOL)canBecomeKeyWindow

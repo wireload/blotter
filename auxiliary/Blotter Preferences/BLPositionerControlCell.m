@@ -142,7 +142,7 @@
     NSSize boundsSize = [[self controlView] bounds].size;
     NSRect fullFrame = [[NSScreen mainScreen] frame];
     NSPoint scaleFactor = NSMakePoint(boundsSize.width / fullFrame.size.width, boundsSize.height / fullFrame.size.height);
-    NSRect relativeFrame = [BLCalendarFramer frameForPosition:position inFrame:fullFrame scaleFactor:scaleFactor margin:NSMakeSize(14, 14)];
+    NSRect relativeFrame = [NSClassFromString(@"BLCalendarFramer") frameForPosition:position inFrame:fullFrame scaleFactor:scaleFactor margin:NSMakeSize(14, 14)];
 
     return relativeFrame;
 }

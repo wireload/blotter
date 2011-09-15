@@ -72,14 +72,6 @@
 
 - (IBAction)showWindow:(id)aSender;
 
-
-/*!
- @abstract Updates the controller's window frame.
- */
-- (void)_updateFrame;
-
-- (void)_placeViews;
-
 @end
 
 
@@ -96,7 +88,15 @@
 
 - (void)_applyFullSizeToViews;
 
-- (CGFloat)heightOfTasksAndRightNow;
+/*!
+ @abstract Updates the controller's window frame.
+ */
+- (void)_updateFrame;
+
+/*!
+ @abstract Places views to the controller's window.
+ */
+- (void)_placeViews;
 
 - (NSRect)dateViewFrame;
 
@@ -105,5 +105,7 @@
 - (NSRect)rightNowViewFrame;
 
 - (NSRect)weekViewFrame;
+
+- (CGFloat)defaultTasksViewHeight;
 
 @end

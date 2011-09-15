@@ -8,32 +8,96 @@
 
 #import "LayoutPrefController.h"
 #import "WLLayoutRootView.h"
+#import "DeskboardAppDelegate.h"
+#import "WLCalendarWindowController.h"
 
 
 @implementation LayoutPrefController
+
+- (void)dealloc {
+    [_blotterWindowToInfoWidthSplitViewTransform release];
+    [_infoWidthSplitViewToBlotterWindowTransform release];
+    [_blotterWindowToAllDayHeightSplitViewTransform release];
+    [_allDayHeightSplitViewToBlotterWindowTransform release];
+    [_blotterWindowToDateHeightSplitViewTransform release];
+    [_dateHeightSplitViewToBlotterWindowTransform release];
+    [_blotterWindowToTasksHeightSplitViewTransform release];
+    [_tasksHeightSplitViewToBlotterWindowTransform release];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [super dealloc];
+}
+
 
 #pragma mark Methods
 
 - (IBAction)restoreDefaults:(NSButton *)aButton
 {
     NSURL *defaultsURL = [[NSBundle mainBundle] URLForResource:@"defaults" withExtension:@"plist"];
-    NSDictionary *defaults = [NSDictionary dictionaryWithContentsOfURL:defaultsURL];
+    NSMutableDictionary *defaults = [NSMutableDictionary dictionaryWithContentsOfURL:defaultsURL];
+    DeskboardAppDelegate *delegate = (DeskboardAppDelegate *)[[NSApplication sharedApplication] delegate];
+    [defaults setObject:[NSNumber numberWithFloat:[delegate.windowController defaultTasksViewHeight]]
+                 forKey:@"TasksViewHeight"];
     [self layoutSplitViewWithParameters:defaults];
 }
 
 - (void)layoutSplitViewWithParameters:(id)aParameters
 {
-    CGFloat infoViewsWidth = [[aParameters objectForKey:@"InfoViewsWidth"] floatValue];
-    [_mainSplitView setPosition:([_mainSplitView frame].size.width - [_mainSplitView dividerThickness]) * infoViewsWidth ofDividerAtIndex:0];
+    NSSize infoViewsSize = NSMakeSize([[aParameters objectForKey:@"InfoViewsWidth"] floatValue], 0.0f);
+    infoViewsSize = [_blotterWindowToInfoWidthSplitViewTransform transformSize:infoViewsSize];
+    [_infoWidthSplitView setPosition:infoViewsSize.width ofDividerAtIndex:0];
 
-    CGFloat dateViewHeight = [[aParameters objectForKey:@"DateViewHeight"] floatValue];
-    [_infoSplitView setPosition:([_infoSplitView frame].size.height - [_infoSplitView dividerThickness]) * dateViewHeight ofDividerAtIndex:0];
+    NSSize dateViewSize = NSMakeSize(0.0f, [[aParameters objectForKey:@"DateViewHeight"] floatValue]);
+    dateViewSize = [_blotterWindowToDateHeightSplitViewTransform transformSize:dateViewSize];
+    [_dateHeightSplitView setPosition:dateViewSize.height ofDividerAtIndex:0];
 
-    CGFloat tasksViewHeight = [[aParameters objectForKey:@"TasksViewHeight"] floatValue];
-    [_tasksAndRightNowSplitView setPosition:([_tasksAndRightNowSplitView frame].size.height - [_tasksAndRightNowSplitView dividerThickness]) * tasksViewHeight
-                           ofDividerAtIndex:0];
-    CGFloat allDayViewHeight = [[aParameters objectForKey:@"AllDayViewHeight"] floatValue];
-    [_weekSplitView setPosition:([_weekSplitView frame].size.height - [_weekSplitView dividerThickness]) * allDayViewHeight ofDividerAtIndex:0];
+    NSSize tasksViewSize = NSMakeSize(0.0f, [[aParameters objectForKey:@"TasksViewHeight"] floatValue]);
+    tasksViewSize = [_blotterWindowToTasksHeightSplitViewTransform transformSize:tasksViewSize];
+    [_tasksHeightSplitView setPosition:tasksViewSize.height ofDividerAtIndex:0];
+    
+    NSSize allDayViewSize = NSMakeSize(0.0f, [[aParameters objectForKey:@"AllDayViewHeight"] floatValue]);
+    allDayViewSize = [_blotterWindowToAllDayHeightSplitViewTransform transformSize:allDayViewSize];
+    [_allDayHeightSplitView setPosition:allDayViewSize.height ofDividerAtIndex:0];
+}
+
+- (void)transformsDidChanged
+{
+    _splitViewsDidResizeSubviewsManually = YES;
+    [_blotterWindowToInfoWidthSplitViewTransform release];
+    [_infoWidthSplitViewToBlotterWindowTransform release];
+    [_blotterWindowToAllDayHeightSplitViewTransform release];
+    [_allDayHeightSplitViewToBlotterWindowTransform release];
+    [_blotterWindowToDateHeightSplitViewTransform release];
+    [_dateHeightSplitViewToBlotterWindowTransform release];
+    [_blotterWindowToTasksHeightSplitViewTransform release];
+    [_tasksHeightSplitViewToBlotterWindowTransform release];
+    
+    _blotterWindowToInfoWidthSplitViewTransform = [[NSAffineTransform alloc] init];
+    _infoWidthSplitViewToBlotterWindowTransform = [[NSAffineTransform alloc] init];
+    _blotterWindowToAllDayHeightSplitViewTransform = [_blotterWindowToInfoWidthSplitViewTransform retain];
+    _allDayHeightSplitViewToBlotterWindowTransform = [_infoWidthSplitViewToBlotterWindowTransform retain];
+    _blotterWindowToDateHeightSplitViewTransform = [_blotterWindowToInfoWidthSplitViewTransform retain];
+    _dateHeightSplitViewToBlotterWindowTransform = [_infoWidthSplitViewToBlotterWindowTransform retain];
+    _blotterWindowToTasksHeightSplitViewTransform = [[NSAffineTransform alloc] init];
+    _tasksHeightSplitViewToBlotterWindowTransform = [[NSAffineTransform alloc] init];
+    
+    NSRect layoutViewFrame = [_layoutView frame];
+    DeskboardAppDelegate *delegate = (DeskboardAppDelegate *)[[NSApplication sharedApplication] delegate];
+    NSRect blotterViewFrame = [[delegate.windowController.window contentView] frame];
+    // All split views have the same divider thickness.
+    CGFloat dividerThickness = [_infoWidthSplitView dividerThickness];
+    // _infoWidthSplitView, _allDayHeightSplitView and _dateHeightSplitView have only 1 divider.
+    // _tasksHeightSplitView has 2 dividers.
+    [_blotterWindowToInfoWidthSplitViewTransform scaleXBy:(NSWidth(layoutViewFrame) - dividerThickness) / NSWidth(blotterViewFrame)
+                                                 yBy:(NSHeight(layoutViewFrame) - dividerThickness) / NSHeight(blotterViewFrame)];
+    [_infoWidthSplitViewToBlotterWindowTransform scaleXBy:NSWidth(blotterViewFrame) / (NSWidth(layoutViewFrame) - dividerThickness)
+                                                 yBy:NSHeight(blotterViewFrame) / (NSHeight(layoutViewFrame) - dividerThickness)];
+    
+    [_blotterWindowToTasksHeightSplitViewTransform scaleXBy:(NSWidth(layoutViewFrame) - 2 * dividerThickness) / NSWidth(blotterViewFrame)
+                                                             yBy:(NSHeight(layoutViewFrame) - 2 * dividerThickness) / NSHeight(blotterViewFrame)];
+    [_tasksHeightSplitViewToBlotterWindowTransform scaleXBy:NSWidth(blotterViewFrame) / (NSWidth(layoutViewFrame) - 2 * dividerThickness)
+                                                             yBy:NSHeight(blotterViewFrame) / (NSHeight(layoutViewFrame) - 2 * dividerThickness)];
+    [self layoutSplitViewWithParameters:[NSUserDefaults standardUserDefaults]];
+    _splitViewsDidResizeSubviewsManually = NO;
 }
 
 
@@ -45,8 +109,12 @@
     {
         if ([NSBundle loadNibNamed:@"LayoutPrefPaneView" owner:self])
         {
-            [self layoutSplitViewWithParameters:[NSUserDefaults standardUserDefaults]];
-            // It's importatnt to set _isViewLoaded after lay out split views. Otherwise preferences will be damaged.
+            [self transformsDidChanged];
+            DeskboardAppDelegate *delegate = (DeskboardAppDelegate *)[[NSApplication sharedApplication] delegate];
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(transformsDidChanged)
+                                                         name:NSWindowDidResizeNotification
+                                                       object:delegate.windowController.window];
             _isViewLoaded = YES;
         }
     }
@@ -86,30 +154,40 @@
 
 - (void)splitViewDidResizeSubviews:(NSNotification *)aNotification
 {
-    if (!_isViewLoaded)
+    if (_splitViewsDidResizeSubviewsManually)
         return;
 
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSSplitView *splitView = [aNotification object];
-    if (splitView == _mainSplitView)
+    if (splitView == _infoWidthSplitView)
     {
-        CGFloat width = [splitView frame].size.width - [splitView dividerThickness];
-        [[NSUserDefaults standardUserDefaults] setFloat:[_infoSplitView frame].size.width / width forKey:@"InfoViewsWidth"];
+        NSSize infoViewsSize = NSMakeSize([_dateHeightSplitView frame].size.width, 0.0f);
+        infoViewsSize = [_infoWidthSplitViewToBlotterWindowTransform transformSize:infoViewsSize];
+        [[NSUserDefaults standardUserDefaults] setFloat:infoViewsSize.width forKey:@"InfoViewsWidth"];
     }
     else
     {
         for (NSView *v in [[aNotification object] subviews])
         {
-            CGFloat height = [splitView frame].size.height - [splitView dividerThickness];
             switch ([v tag]) {
-                case WLLayoutDateViewTag:
-                    [[NSUserDefaults standardUserDefaults] setFloat:[v frame].size.height / height forKey:@"DateViewHeight"];
+                case WLLayoutDateViewTag: {
+                    NSSize dateViewSize = NSMakeSize(0.0f, [v frame].size.height);
+                    dateViewSize = [_dateHeightSplitViewToBlotterWindowTransform transformSize:dateViewSize];
+                    [defaults setFloat:dateViewSize.height forKey:@"DateViewHeight"];
                     break;
-                case WLLayoutTasksViewTag:
-                    [[NSUserDefaults standardUserDefaults] setFloat:[v frame].size.height / height forKey:@"TasksViewHeight"];
+                }
+                case WLLayoutTasksViewTag: {
+                    NSSize tasksViewSize = NSMakeSize(0.0f, [v frame].size.height);
+                    tasksViewSize = [_tasksHeightSplitViewToBlotterWindowTransform transformSize:tasksViewSize];
+                    [defaults setFloat:tasksViewSize.height forKey:@"TasksViewHeight"];
                     break;
-                case WLLayoutAllDayViewTag:
-                    [[NSUserDefaults standardUserDefaults] setFloat:[v frame].size.height / height forKey:@"AllDayViewHeight"];
+                }
+                case WLLayoutAllDayViewTag: {
+                    NSSize allDayViewSize = NSMakeSize(0.0f, [v frame].size.height);
+                    allDayViewSize = [_allDayHeightSplitViewToBlotterWindowTransform transformSize:allDayViewSize];
+                    [defaults setFloat:allDayViewSize.height forKey:@"AllDayViewHeight"];
                     break;
+                }
                 default:
                     break;
             }
@@ -119,6 +197,7 @@
 
 - (CGFloat)splitView:(NSSplitView *)aSplitView constrainSplitPosition:(CGFloat)aProposedPosition ofSubviewAt:(NSInteger)aDividerIndex
 {
+    // Snap to grid if Alt is pressed.
     if ([NSEvent modifierFlags] & NSAlternateKeyMask)
         return roundf(aProposedPosition / 10.0f) * 10.0f;
     else

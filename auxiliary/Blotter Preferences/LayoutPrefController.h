@@ -12,15 +12,27 @@
 
 @interface LayoutPrefController : NSObject<SS_PreferencePaneProtocol, NSSplitViewDelegate> {
     IBOutlet NSView *_mainView;
-    IBOutlet NSSplitView *_mainSplitView;
-    IBOutlet NSSplitView *_weekSplitView;
-    IBOutlet NSSplitView *_infoSplitView;
-    IBOutlet NSSplitView *_tasksAndRightNowSplitView;
+    IBOutlet NSSplitView *_infoWidthSplitView;
+    IBOutlet NSSplitView *_allDayHeightSplitView;
+    IBOutlet NSSplitView *_dateHeightSplitView;
+    IBOutlet NSSplitView *_tasksHeightSplitView;
+    IBOutlet NSView *_layoutView;
+    NSAffineTransform *_blotterWindowToInfoWidthSplitViewTransform;
+    NSAffineTransform *_infoWidthSplitViewToBlotterWindowTransform;
+    NSAffineTransform *_blotterWindowToAllDayHeightSplitViewTransform;
+    NSAffineTransform *_allDayHeightSplitViewToBlotterWindowTransform;
+    NSAffineTransform *_blotterWindowToDateHeightSplitViewTransform;
+    NSAffineTransform *_dateHeightSplitViewToBlotterWindowTransform;
+    NSAffineTransform *_blotterWindowToTasksHeightSplitViewTransform;
+    NSAffineTransform *_tasksHeightSplitViewToBlotterWindowTransform;
+    BOOL _splitViewsDidResizeSubviewsManually;
     BOOL _isViewLoaded;
 }
 
 - (IBAction)restoreDefaults:(NSButton *)aButton;
 
 - (void)layoutSplitViewWithParameters:(id)aParameters;
+
+- (void)transformsDidChanged;
 
 @end
