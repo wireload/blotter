@@ -30,6 +30,6 @@
     LSSharedFileListRef _loginItems;
     BOOL launchAtLogin;
 }
-@property BOOL launchAtLogin;
+@property (nonatomic) BOOL launchAtLogin;
 
 @end
