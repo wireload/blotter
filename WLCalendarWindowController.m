@@ -48,7 +48,8 @@
                                     [NSSortDescriptor sortDescriptorWithKey:@"dueDate" ascending:YES],
                                     [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:YES],
                                     [NSSortDescriptor sortDescriptorWithKey:@"calendar.title" ascending:YES selector:@selector(localizedStandardCompare:)],
-                                    [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:NO selector:@selector(localizedStandardCompare:)], nil];
+                                    [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedStandardCompare:)],
+                                    nil];
         _tasksViewController.sortDescriptors = sortDescriptors;
 
         _dateViewController = [[WLCalendarDateViewController alloc] init];
