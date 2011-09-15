@@ -177,9 +177,7 @@ static const CGFloat _WLTopMargin = 10.0f;
         else
         {
             layer.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(self.bounds), offset, self.bounds.size.width, height));
-			[CATransaction WL_performWithDisabledActions:^{
-				layer.hidden = NO;
-			}];
+            layer.hidden = NO;
         }
         offset += height + _WLTopMargin;
     }
