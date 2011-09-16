@@ -62,15 +62,8 @@
     [calendar release];
     [date release];
     [calCalendars release];
-
     [_nextMinuteTimer invalidate];
-    [_nextMinuteTimer release];
-    _nextMinuteTimer = nil;
-
     [_nextDayTimer invalidate];
-    [_nextDayTimer release];
-    _nextDayTimer = nil;
-
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -121,9 +114,6 @@
 - (void)_scheduleNextMinuteTimer
 {
     [_nextMinuteTimer invalidate];
-    [_nextMinuteTimer release];
-    _nextMinuteTimer = nil;
-
     NSRange secondsRange = [self.calendar maximumRangeOfUnit:NSSecondCalendarUnit];
     NSDateComponents *oneMinuteComponent = [[NSDateComponents alloc] init];
     [oneMinuteComponent setMinute:1];
@@ -140,16 +130,17 @@
                                                 userInfo:nil
                                                  repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:_nextMinuteTimer forMode:NSDefaultRunLoopMode];
-    // We retain _nextMinuteTimer so we can safely invalidate it if necessary.
+    [_nextMinuteTimer release];
+}
+
+- (void)_updateDate
+{
+    self.date = [NSDate date];
 }
 
 - (void)_scheduleNextDayTimer
 {
-    // Discard the previous timer.
     [_nextDayTimer invalidate];
-    [_nextDayTimer release];
-    _nextDayTimer = nil;
-
     NSDate *startDate = nil;
     NSTimeInterval interval = 0.0;
     [self.calendar rangeOfUnit:NSDayCalendarUnit startDate:&startDate interval:&interval forDate:self.date];
@@ -160,16 +151,13 @@
                                              userInfo:nil
                                               repeats:NO];
     [[NSRunLoop currentRunLoop] addTimer:_nextDayTimer forMode:NSDefaultRunLoopMode];
-    // We retain _nextDayTimer so we can safely invalidate it if necessary.
-}
-
-- (void)_updateDate
-{
-    self.date = [NSDate date];
+    [_nextDayTimer release];
 }
 
 - (void)_nextDay
 {
+    _nextDayTimer = nil;
+
     NSDate *now = [NSDate date];
     NSDateComponents *nowComponents = [self.calendar components:NSWeekCalendarUnit | NSDayCalendarUnit fromDate:now];
     NSDateComponents *representedComponents = [calendar components:NSWeekCalendarUnit | NSDayCalendarUnit fromDate:self.date];
@@ -195,15 +183,17 @@
         [self _updateClock];
 }
 
-- (void)_timeZoneDidChange:(NSNotification *)aNotification
-{
-    [self _updateCalendar];
-    [self _scheduleNextDayTimer];
-}
-
 - (void)_updateClock
 {
     [self _updateDate];
+    [self _scheduleNextMinuteTimer];
+    [self _scheduleNextDayTimer];
+}
+
+- (void)_timeZoneDidChange:(NSNotification *)aNotification
+{
+    [self _updateCalendar];
+    [self _scheduleNextMinuteTimer];
     [self _scheduleNextDayTimer];
 }
 
