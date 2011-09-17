@@ -542,10 +542,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     scrollPoint.x = floorf(scrollPoint.x);
     scrollPoint.y = floorf(scrollPoint.y);
     for (WLCalendarDayEventsLayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])
-    {
         [l scrollPoint:scrollPoint];
-        l.superlayer.mask.frame = CGRectIntegral(l.superlayer.bounds);
-    }
     [timeRuler scrollPoint:scrollPoint];
 }
 
@@ -565,12 +562,8 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     newScrollPoint.y -= [timeRulerLayer hourLabelYPadding];
     newScrollPoint.x = floorf(newScrollPoint.x);
     newScrollPoint.y = floorf(newScrollPoint.y);
-    for (CALayer *l in [_columnLayers valueForKey:@"WL_dayScrollLayer"])
-    {
+    for (WLCalendarDayEventsLayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])
         [l scrollPoint:newScrollPoint];
-        l.superlayer.mask.frame = CGRectIntegral(l.superlayer.bounds);
-    }
-    timeRulerScrollLayer.mask.frame = CGRectIntegral(timeRulerScrollLayer.bounds);
     [timeRulerLayer scrollPoint:newScrollPoint];
 }
 
