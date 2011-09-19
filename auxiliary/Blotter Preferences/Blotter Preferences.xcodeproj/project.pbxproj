@@ -668,6 +668,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
 				SYMROOT = "$(SRCROOT)/../../build";
 				VALID_ARCHS = "i386 x86_64";
 			};
@@ -699,6 +700,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
 				SYMROOT = "$(SRCROOT)/../../build";
 				VALID_ARCHS = "i386 x86_64";
 			};
