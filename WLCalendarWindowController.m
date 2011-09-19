@@ -324,7 +324,10 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
 - (NSRect)weekViewFrame
 {
     NSRect bounds = [[window contentView] bounds];
-    CGFloat width = NSWidth(bounds) - [[NSUserDefaults standardUserDefaults] floatForKey:@"InfoViewsWidth"] - _WLXMarginBetweenInfoAndWeek;
+    CGFloat infoViewWidth = [[NSUserDefaults standardUserDefaults] floatForKey:@"InfoViewsWidth"];
+    CGFloat width = NSWidth(bounds) - infoViewWidth;
+    if (infoViewWidth > 0.0f && fabsf(infoViewWidth - 0.0f) >= FLT_EPSILON)
+        width -= _WLXMarginBetweenInfoAndWeek;
     return [[window contentView] centerScanRect:NSMakeRect(NSMaxX(bounds) - width,
                                                            NSMinY(bounds),
                                                            width,
