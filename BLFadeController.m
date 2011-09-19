@@ -105,7 +105,7 @@
     }
     else
     {
-        int fadeSeconds = [defaults integerForKey:@"AutoFadeSeconds"];
+        NSInteger fadeSeconds = [defaults integerForKey:@"AutoFadeSeconds"];
         if (fadeSeconds < 1)
             fadeSeconds = 60;
 

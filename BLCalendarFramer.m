@@ -8,16 +8,18 @@
 
 #import "BLCalendarFramer.h"
 
+
 const NSSize BLNarrowMinimumSize = {270, 750};
 const NSSize BLNormalMinimumSize = {950, 750};
 
+
 @implementation BLCalendarFramer
 
-+ (NSRect)frameForPosition:(BLPosition)aPosition inFrame:(NSRect)frame  scaleFactor:(NSPoint)scaleFactor margin:(NSSize)aMargin
++ (NSRect)frameForPosition:(BLPosition)aPosition inFrame:(NSRect)frame scaleFactor:(NSPoint)scaleFactor margin:(NSSize)aMargin
 {
     return [self frameForPosition:aPosition
                           inFrame:frame
-                             size:[[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"]
+                             size:(BLSize)[[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"]
                       scaleFactor:scaleFactor
                            margin:aMargin];
 }

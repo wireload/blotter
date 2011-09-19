@@ -3,7 +3,7 @@
 #import <Cocoa/Cocoa.h>
 #import "WLClosableWindow.h"
 
-@interface SS_PrefsController : NSObject
+@interface SS_PrefsController : NSObject <NSToolbarDelegate>
 {
     WLClosableWindow *prefsWindow;
     NSMutableDictionary *preferencePanes;

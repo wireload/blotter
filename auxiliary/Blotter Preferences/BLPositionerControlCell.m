@@ -159,7 +159,6 @@
     lineDash[1] = 3.0;
 
     NSColor *dashColor = [NSColor colorWithCalibratedRed:1 green:1 blue:1 alpha:0.9];
-    NSColor *selectedColor = [NSColor colorWithCalibratedRed:1 green:0 blue:0 alpha:0.9];
     int position = [self intValue];
 
     for (int x = 0; x < 3; x++)

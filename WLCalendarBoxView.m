@@ -93,12 +93,12 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
-    
+
     NSRect bounds = [self bounds];
     NSSize bottomSize = NSMakeSize(bounds.size.width, [[NSImage imageNamed:@"info-bottom"] size].height);
     NSSize topSize = NSMakeSize(bounds.size.width, [[NSImage imageNamed:@"info-top"] size].height);
     NSSize middleSize = NSMakeSize(bounds.size.width, bounds.size.height - bottomSize.height - topSize.height);
-    
+
     static const CGFloat AlphaFraction = 1.0f;
 
     NSRect topFrame = NSMakeRect(NSMinX(bounds), NSMinY(bounds), topSize.width, topSize.height);
@@ -113,11 +113,15 @@
                              AlphaFraction,
                              YES);
     }
-    
+
     NSRect middleFrame = NSMakeRect(NSMinX(bounds), NSMaxY(topFrame), middleSize.width, middleSize.height);
     if (NSIntersectsRect(middleFrame, dirtyRect))
-        [[NSImage imageNamed:@"info-middle"] drawInRect:middleFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:AlphaFraction respectFlipped:YES hints:nil];
-    
+        [(NSImage *)[NSImage imageNamed:@"info-middle"] drawInRect:middleFrame
+                                                          fromRect:NSZeroRect
+                                                         operation:NSCompositeSourceOver
+                                                          fraction:AlphaFraction
+                                                    respectFlipped:YES hints:nil];
+
     NSRect bottomFrame = NSMakeRect(NSMinX(bounds), NSMaxY(middleFrame), bottomSize.width, bottomSize.height);
     if (NSIntersectsRect(bottomFrame, dirtyRect))
     {
@@ -130,7 +134,7 @@
                              AlphaFraction,
                              YES);
     }
-    
+
     NSRect titleFrame = NSMakeRect(NSMinX(bounds) + 14.0f, NSMinY(bounds) + 17.0f, NSWidth(bounds) - 14.0f, 35.0f);
     if (NSIntersectsRect(titleFrame, dirtyRect) && NSContainsRect(bounds, titleFrame))
         [self.title drawInRect:titleFrame withAttributes:[self _titleAttributes]];
@@ -145,7 +149,7 @@
 {
     [super setFrame:newFrameRect];
     [self.contentView setFrame:[self _contentFrame]];
-    [self.contentView layer].mask.frame = NSRectToCGRect([self.contentView bounds]); 
+    [self.contentView layer].mask.frame = NSRectToCGRect([self.contentView bounds]);
 }
 
 @end

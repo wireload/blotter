@@ -10,7 +10,6 @@
 #import "DeskboardAppDelegate.h"
 #import "BLPositionerControl.h"
 #import "BLCalendarFramer.h"
-#import "WLFitWindow.h"
 #import "WLNewEventWindowController.h"
 #import "WLNewTaskWindowController.h"
 #import "SRCommon.h"
@@ -70,47 +69,17 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (void)dealloc
 {
-//    [[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self];
     [windowController release];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults removeObserver:self forKeyPath:@"ShowInMenuBar"];
     [userDefaults removeObserver:self forKeyPath:@"shortcutNewEvent"];
     [userDefaults removeObserver:self forKeyPath:@"shortcutNewTask"];
-//    [blotterWindow release];
     [prefs release];
     [super dealloc];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-//    [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self
-//                                                              forKeyPath:@"values.CalendarPosition"
-//                                                                 options:0
-//                                                                 context:NULL];
-//    [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self
-//                                                              forKeyPath:@"values.CalendarSize"
-//                                                                 options:0
-//                                                                 context:NULL];
-//    [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self
-//                                                              forKeyPath:@"values.ScreenIdentifier"
-//                                                                 options:0
-//                                                                 context:NULL];
-
-    // Configure Blotter
-//    blotterWindow = [[WLFitWindow alloc] initWithContentRect:NSMakeRect(0, 0, 0, 0)
-//                                                   styleMask:NSBorderlessWindowMask
-//                                                     backing:NSBackingStoreBuffered
-//                                                       defer:NO];
-//    [blotterWindow setOpaque:NO];
-//    [blotterWindow setHasShadow:NO];
-//    [blotterWindow setBackgroundColor:[NSColor clearColor]];
-//    [blotterWindow setIgnoresMouseEvents:YES];
-//    [blotterWindow setPreferredBackingLocation:NSWindowBackingLocationVideoMemory];
-//    DesktopView *overlayView = [[DesktopView alloc] initWithFrame:[[blotterWindow contentView] frame]];
-//    [blotterWindow setContentView:overlayView];
-//    [overlayView release];
-//    [blotterWindow setDelegate:self];
-//    [self show];
 
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 
@@ -172,10 +141,6 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     ignoreBecomeActiveNotification = NO;
 }
 
-//-(void)applicationDidChangeScreenParameters:(NSNotification *)aNotification
-//{
-//    [self show];
-//}
 
 - (IBAction)showPrefs:(id)sender
 {
@@ -253,41 +218,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
             [hotKeyCenter registerHotKey:newHotKey];
         }
     }
-//    else
-//        [self show];
 }
-
-//- (void)showOnScreen:(NSScreen *)screen
-//{
-//    [blotterWindow fitWithinFrame:[screen visibleFrame]];
-//
-//    if (![blotterWindow isVisible])
-//    {
-//        // Not -1 anymore because that causes Blotter to disappear underneath the
-//        // wallpaper under certain (rare) circumstances, like when Quiet activates.
-//        [blotterWindow setLevel:kCGDesktopWindowLevel];
-//        [blotterWindow setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
-//        // Order back to get underneath the icons.
-//        [blotterWindow orderBack:NSApp];
-//    }
-//}
-
-//- (void)show
-//{
-//    NSNumber *usedScreenID = [[NSUserDefaults standardUserDefaults] objectForKey:@"ScreenIdentifier"];
-//    NSArray *screens = [NSScreen screens];
-//    NSUInteger usedScreenIdx = [screens indexOfObjectPassingTest:^(id obj, NSUInteger idx, BOOL *stop)
-//    {
-//        return (BOOL)([[[obj deviceDescription] objectForKey:@"NSScreenNumber"] isEqualToNumber:usedScreenID]);
-//    }];
-//
-//    // If user selected screen is connected, use it. Otherwise use screen with main menu.
-//    if (usedScreenIdx != NSNotFound)
-//        [self showOnScreen:[screens objectAtIndex:usedScreenIdx]];
-//    else
-//        [self showOnScreen:[[NSScreen screens] objectAtIndex:0]];
-//
-//}
 
 
 #pragma mark Private
@@ -308,13 +239,6 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 
 #pragma mark NSWindowDelegate
-
-//- (void)windowDidResize:(NSNotification *)notification
-//{
-//    id window = [notification object];
-//    if ([window isKindOfClass:[DesktopView class]])
-//        [[window contentView] refresh];
-//}
 
 - (void)windowWillClose:(NSNotification *)notification
 {

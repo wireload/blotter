@@ -7,10 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
 #import "SS_PrefsController.h"
-
-#import "DesktopView.h"
 #import "BLCalendarFramer.h"
 
 
@@ -20,7 +17,6 @@
 
 @interface DeskboardAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate> {
     WLCalendarWindowController *windowController;
-//    WLFitWindow *blotterWindow;
     NSStatusItem *statusItem;
     IBOutlet NSMenu *statusMenu;
     IBOutlet NSMenuItem *newEventMenuItem;
@@ -38,9 +34,5 @@
 - (IBAction)newEvent:(id)sender;
 
 - (IBAction)newTask:(id)sender;
-
-//- (void)showOnScreen:(NSScreen *)screen;
-//
-//- (void)show;
 
 @end

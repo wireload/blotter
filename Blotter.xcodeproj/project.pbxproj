@@ -10,15 +10,10 @@
 		256AC3DA0F4B6AC300CF3369 /* DeskboardAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */; };
 		282FD238134FB2C5003E532E /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2BADC95134DDE6100F65E14 /* NewEventWindow.xib */; };
 		282FD239134FB2C5003E532E /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2BADC97134DDE6100F65E14 /* NewTaskWindow.xib */; };
-		284061D0127E6C4F000816FF /* DesktopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 284061CF127E6C4F000816FF /* DesktopView.m */; };
-		2840624D127E75FC000816FF /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2840624C127E75FC000816FF /* WebKit.framework */; };
-		284063EC1283176F000816FF /* CalendarAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 284063EB1283176F000816FF /* CalendarAdapter.m */; };
 		284064FC12834B98000816FF /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 284064FB12834B98000816FF /* CalendarStore.framework */; };
-		2840653812836E78000816FF /* NSColor-Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 2840653712836E78000816FF /* NSColor-Utilities.m */; };
 		2844DB2D129DA1BD006C5545 /* BLCalendarFramer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2844DB2C129DA1BD006C5545 /* BLCalendarFramer.m */; };
 		285B840913C0C6150042C813 /* Blotter-B9.icns in Resources */ = {isa = PBXBuildFile; fileRef = 285B840813C0C6150042C813 /* Blotter-B9.icns */; };
 		28B54DB61283BABF0037BF53 /* SS_PrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54DB51283BABF0037BF53 /* SS_PrefsController.m */; };
-		28DB06DE13590F5500E34FC5 /* YAJL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28DB06DD13590F5500E34FC5 /* YAJL.framework */; };
 		28F696811298B99800D4BB97 /* calendar in Resources */ = {isa = PBXBuildFile; fileRef = 28F6966B1298B99800D4BB97 /* calendar */; };
 		28F6975B129969E500D4BB97 /* NSDate-Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6975A129969E500D4BB97 /* NSDate-Utilities.m */; };
 		28F699E4129C0EBC00D4BB97 /* BLFadeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F699E3129C0EBC00D4BB97 /* BLFadeController.m */; };
@@ -141,11 +136,9 @@
 		E2BA565E13C5E4C4005F0045 /* NSColor+CGColor.m in Sources */ = {isa = PBXBuildFile; fileRef = E2BA565D13C5E4C4005F0045 /* NSColor+CGColor.m */; };
 		E2BA585813C61E3C005F0045 /* CATextLayer+WLStringSize.m in Sources */ = {isa = PBXBuildFile; fileRef = E2BA585713C61E3C005F0045 /* CATextLayer+WLStringSize.m */; };
 		E2C774C413D1C02A0067102F /* WLCalendarDayEventsLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2C774C313D1C02A0067102F /* WLCalendarDayEventsLayer.m */; };
-		E2DC7D3113071F7E0065CEAD /* WLFitWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E2DC7D3013071F7E0065CEAD /* WLFitWindow.m */; };
 		E2E64B4E1402483500912A92 /* WLSoftEdgeLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E64B4D1402483500912A92 /* WLSoftEdgeLayer.m */; };
 		E2F112DD13E6E263001C2B7B /* WLCalendarWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F112DC13E6E263001C2B7B /* WLCalendarWindow.m */; };
 		E2F1133D13E70B4F001C2B7B /* WLCalendarWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F1133C13E70B4F001C2B7B /* WLCalendarWindowController.m */; };
-		E2F805D713595528004672DF /* YAJL.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 28DB06DD13590F5500E34FC5 /* YAJL.framework */; };
 		E2F9E1DF1322A4F4007598E2 /* glass-hud-border-bottom-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1D81322A4F4007598E2 /* glass-hud-border-bottom-left.png */; };
 		E2F9E1E01322A4F4007598E2 /* glass-hud-border-bottom-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1D91322A4F4007598E2 /* glass-hud-border-bottom-right.png */; };
 		E2F9E1E11322A4F4007598E2 /* glass-hud-border-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1DA1322A4F4007598E2 /* glass-hud-border-bottom.png */; };
@@ -216,7 +209,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E2F805D713595528004672DF /* YAJL.framework in CopyFiles */,
 				E27313171349F0E200A84433 /* PTHotKey.framework in CopyFiles */,
 				E27311631349D81900A84433 /* ShortcutRecorder.framework in CopyFiles */,
 			);
@@ -230,14 +222,7 @@
 		256AC3D80F4B6AC300CF3369 /* DeskboardAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeskboardAppDelegate.h; sourceTree = "<group>"; };
 		256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeskboardAppDelegate.m; sourceTree = "<group>"; };
 		256AC3F00F4B6AF500CF3369 /* Deskboard_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deskboard_Prefix.pch; sourceTree = "<group>"; };
-		284061CE127E6C4F000816FF /* DesktopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DesktopView.h; sourceTree = "<group>"; };
-		284061CF127E6C4F000816FF /* DesktopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DesktopView.m; sourceTree = "<group>"; wrapsLines = 1; };
-		2840624C127E75FC000816FF /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
-		284063EA1283176F000816FF /* CalendarAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarAdapter.h; sourceTree = "<group>"; };
-		284063EB1283176F000816FF /* CalendarAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarAdapter.m; sourceTree = "<group>"; wrapsLines = 1; };
 		284064FB12834B98000816FF /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = System/Library/Frameworks/CalendarStore.framework; sourceTree = SDKROOT; };
-		2840653612836E78000816FF /* NSColor-Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor-Utilities.h"; sourceTree = "<group>"; };
-		2840653712836E78000816FF /* NSColor-Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor-Utilities.m"; sourceTree = "<group>"; };
 		2844DB2C129DA1BD006C5545 /* BLCalendarFramer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLCalendarFramer.m; sourceTree = "<group>"; };
 		285B840813C0C6150042C813 /* Blotter-B9.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Blotter-B9.icns"; sourceTree = "<group>"; };
 		28A09A591308E4A7005EA923 /* MainMenu.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = MainMenu.strings; path = Resources/ko.lproj/MainMenu.strings; sourceTree = "<group>"; };
@@ -246,10 +231,9 @@
 		28A09A9D1308F18B005EA923 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/fr.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		28A09A9E1308F18E005EA923 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/es.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		28A09A9F1308F192005EA923 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/ko.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		28B54DB31283BABF0037BF53 /* SS_PreferencePaneProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SS_PreferencePaneProtocol.h; path = libs/SS_PreferencePaneProtocol.h; sourceTree = "<group>"; };
-		28B54DB41283BABF0037BF53 /* SS_PrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SS_PrefsController.h; path = libs/SS_PrefsController.h; sourceTree = "<group>"; };
-		28B54DB51283BABF0037BF53 /* SS_PrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SS_PrefsController.m; path = libs/SS_PrefsController.m; sourceTree = "<group>"; };
-		28DB06DD13590F5500E34FC5 /* YAJL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YAJL.framework; path = ../blotter/Frameworks/YAJL.framework; sourceTree = "<group>"; };
+		28B54DB31283BABF0037BF53 /* SS_PreferencePaneProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SS_PreferencePaneProtocol.h; sourceTree = "<group>"; };
+		28B54DB41283BABF0037BF53 /* SS_PrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SS_PrefsController.h; sourceTree = "<group>"; };
+		28B54DB51283BABF0037BF53 /* SS_PrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SS_PrefsController.m; sourceTree = "<group>"; };
 		28E96D7312EA3145000AF199 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/sv.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		28E96D7412EA3145000AF199 /* MainMenu.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = MainMenu.strings; path = Resources/sv.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		28E96D7512EA3145000AF199 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/sv.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -271,7 +255,6 @@
 		E214582B13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarBackgroundLayer.m; sourceTree = "<group>"; };
 		E21A5F431403D2A4000B6634 /* WLCalendarTaskLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTaskLayer.h; sourceTree = "<group>"; };
 		E21A5F441403D2A4000B6634 /* WLCalendarTaskLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarTaskLayer.m; sourceTree = "<group>"; };
-		E21A5F491403FBEF000B6634 /* WLMargin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLMargin.h; sourceTree = "<group>"; };
 		E21DB6CB13560D19004084F7 /* NSDate+ISO8601.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+ISO8601.h"; sourceTree = "<group>"; };
 		E21DB6CC13560D19004084F7 /* NSDate+ISO8601.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+ISO8601.m"; sourceTree = "<group>"; };
 		E221B3A113EC5C2F00F9B392 /* CoreAnimation+WLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreAnimation+WLCalendar.h"; sourceTree = "<group>"; };
@@ -450,8 +433,6 @@
 		E2C774C213D1C02A0067102F /* WLCalendarDayEventsLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarDayEventsLayer.h; sourceTree = "<group>"; };
 		E2C774C313D1C02A0067102F /* WLCalendarDayEventsLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarDayEventsLayer.m; sourceTree = "<group>"; };
 		E2C776E413D20A970067102F /* WLCalendarTimeRuler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTimeRuler.h; sourceTree = "<group>"; };
-		E2DC7D2F13071F7E0065CEAD /* WLFitWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLFitWindow.h; sourceTree = "<group>"; };
-		E2DC7D3013071F7E0065CEAD /* WLFitWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLFitWindow.m; sourceTree = "<group>"; };
 		E2E64B4C1402483500912A92 /* WLSoftEdgeLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLSoftEdgeLayer.h; sourceTree = "<group>"; };
 		E2E64B4D1402483500912A92 /* WLSoftEdgeLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLSoftEdgeLayer.m; sourceTree = "<group>"; };
 		E2F112DB13E6E263001C2B7B /* WLCalendarWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindow.h; sourceTree = "<group>"; };
@@ -479,10 +460,8 @@
 				E27313181349F0EB00A84433 /* PTHotKey.framework in Frameworks */,
 				E27311471349D76700A84433 /* ShortcutRecorder.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				2840624D127E75FC000816FF /* WebKit.framework in Frameworks */,
 				284064FC12834B98000816FF /* CalendarStore.framework in Frameworks */,
 				E27951BB131AA060008AE1DA /* Carbon.framework in Frameworks */,
-				28DB06DE13590F5500E34FC5 /* YAJL.framework in Frameworks */,
 				E2BA531A13C5A873005F0045 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -496,6 +475,8 @@
 				E29ED79A142138EE00DB179C /* SS_PreferencePaneProtocol.h */,
 				E27196B713C5A19E008E5C43 /* WLCalendar */,
 				E27936431324F6BD00BC5224 /* WLGlassHud */,
+				256AC3D80F4B6AC300CF3369 /* DeskboardAppDelegate.h */,
+				256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */,
 				E27313C31349F41200A84433 /* PTHotKey+ShortcutRecorder.h */,
 				E23779D61312AD6000F46E7D /* WLClosableWindow.h */,
 				E27313C41349F41200A84433 /* PTHotKey+ShortcutRecorder.m */,
@@ -508,18 +489,8 @@
 				28B54DB31283BABF0037BF53 /* SS_PreferencePaneProtocol.h */,
 				28B54DB41283BABF0037BF53 /* SS_PrefsController.h */,
 				28B54DB51283BABF0037BF53 /* SS_PrefsController.m */,
-				256AC3D80F4B6AC300CF3369 /* DeskboardAppDelegate.h */,
-				256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */,
-				284061CE127E6C4F000816FF /* DesktopView.h */,
-				284061CF127E6C4F000816FF /* DesktopView.m */,
-				284063EA1283176F000816FF /* CalendarAdapter.h */,
-				284063EB1283176F000816FF /* CalendarAdapter.m */,
-				2840653612836E78000816FF /* NSColor-Utilities.h */,
-				2840653712836E78000816FF /* NSColor-Utilities.m */,
 				28F699E2129C0EBC00D4BB97 /* BLFadeController.h */,
 				28F699E3129C0EBC00D4BB97 /* BLFadeController.m */,
-				E2DC7D2F13071F7E0065CEAD /* WLFitWindow.h */,
-				E2DC7D3013071F7E0065CEAD /* WLFitWindow.m */,
 				E2596D711316C8C100A8B15E /* WLNewEventWindowController.h */,
 				E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */,
 				E29F38EC1319694C00A865D9 /* WLNewTaskWindowController.h */,
@@ -550,7 +521,6 @@
 				E2948D931401484B007122BC /* NSCalendar+WLWeekend.m */,
 				E2E64B4C1402483500912A92 /* WLSoftEdgeLayer.h */,
 				E2E64B4D1402483500912A92 /* WLSoftEdgeLayer.m */,
-				E21A5F491403FBEF000B6634 /* WLMargin.h */,
 				E282E06A14043FAF0007C401 /* WLBlockLayer.h */,
 				E282E06B14043FAF0007C401 /* WLBlockLayer.m */,
 			);
@@ -560,8 +530,6 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				28DB06DD13590F5500E34FC5 /* YAJL.framework */,
-				2840624C127E75FC000816FF /* WebKit.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				284064FB12834B98000816FF /* CalendarStore.framework */,
 				E27951BA131AA060008AE1DA /* Carbon.framework */,
@@ -1047,14 +1015,10 @@
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				256AC3DA0F4B6AC300CF3369 /* DeskboardAppDelegate.m in Sources */,
-				284061D0127E6C4F000816FF /* DesktopView.m in Sources */,
-				284063EC1283176F000816FF /* CalendarAdapter.m in Sources */,
-				2840653812836E78000816FF /* NSColor-Utilities.m in Sources */,
 				28B54DB61283BABF0037BF53 /* SS_PrefsController.m in Sources */,
 				28F6975B129969E500D4BB97 /* NSDate-Utilities.m in Sources */,
 				28F699E4129C0EBC00D4BB97 /* BLFadeController.m in Sources */,
 				2844DB2D129DA1BD006C5545 /* BLCalendarFramer.m in Sources */,
-				E2DC7D3113071F7E0065CEAD /* WLFitWindow.m in Sources */,
 				E23779EF1312AD6000F46E7D /* WLClosableWindow.m in Sources */,
 				E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */,
 				E29F38EE1319694C00A865D9 /* WLNewTaskWindowController.m in Sources */,

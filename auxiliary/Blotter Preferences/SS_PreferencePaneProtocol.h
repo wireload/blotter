@@ -2,7 +2,7 @@
 
 @protocol SS_PreferencePaneProtocol
 
-
+@optional
     //	preferencePanes is called whenever the calling application wants to instantiate preference panes.
     //	This method returns an array of preference pane instances. This array is autoreleased,
     //	so the calling application needs to retain whatever it wants to keep.
@@ -11,6 +11,7 @@
 + (NSArray *)preferencePanes;
 
 
+@required
     //	paneView returns a preference pane's view. This must not be nil.
 
 - (NSView *)paneView;

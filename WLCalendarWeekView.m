@@ -10,7 +10,6 @@
 #import "NSColor+CGColor.h"
 #import "CoreAnimation+WLCalendar.h"
 #import "WLSoftEdgeLayer.h"
-#import "WLMargin.h"
 #import "NSColor+WLCalendar.h"
 #import "NSFont+WLCalendar.h"
 
@@ -661,7 +660,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     NSUInteger numberOfColumns = [_columnLayers count];
     if (numberOfColumns == 0)
         return 0.0f;
-    CGFloat width = _rootLayer.frame.size.width - [self timeRulerRootWidth] - _WLXMarginBetweenTimeRulerAndColumns - 
+    CGFloat width = _rootLayer.frame.size.width - [self timeRulerRootWidth] - _WLXMarginBetweenTimeRulerAndColumns -
         numberOfColumns * _WLXMarginBetweenColumns;
     width /= numberOfColumns;
     return width;
@@ -673,7 +672,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     CGFloat x = [self timeRulerRootWidth] + _WLXMarginBetweenTimeRulerAndColumns + anIndex * (width + _WLXMarginBetweenColumns);
     return CGRectIntegral(CGRectMake(x,
                                      0.0f,
-                                     width, 
+                                     width,
                                      _rootLayer.frame.size.height));
 }
 
@@ -695,7 +694,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     CGFloat allDayHeightAndMargin = 0.0f;
     if (self.showAllDayEvents)
         allDayHeightAndMargin = self.heightOfAllDayPartOfColumn + _WLYMarginBetweenAllDayAndDayPartsOfColumn;
-    return CGRectIntegral(CGRectMake(0.0f, 
+    return CGRectIntegral(CGRectMake(0.0f,
                                      allDayHeightAndMargin,
                                      [self columnWidth],
                                      _rootLayer.frame.size.height - allDayHeightAndMargin));
@@ -732,21 +731,21 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
 - (void)layoutColumnLayer:(CALayer *)aColumnLayer atIndex:(NSInteger)anIndex
 {
     aColumnLayer.frame = [self columnFrameAtIndex:anIndex];
-            
+
     CALayer *allDayBackground = [aColumnLayer WL_allDayBackgroundLayer];
     if (!self.showAllDayEvents)
         allDayBackground.hidden = YES;
     allDayBackground.frame = [self allDayBackgroundFrame];
-            
+
     CALayer *allDay = [aColumnLayer WL_allDayLayer];
     // Background has 1px stroke
     allDay.frame = CGRectIntegral(CGRectInset(allDayBackground.bounds, 1.0f, 0.0f));
-            
+
     CALayer *dayBackground = [aColumnLayer WL_dayBackgroundLayer];
     dayBackground.frame = [self dayBackgroundFrame];
-            
+
     CAScrollLayer *dayScroll = [aColumnLayer WL_dayScrollLayer];
-            
+
     // Background has 1px stroke
     dayScroll.frame = [self dayScrollFrame];
 }
@@ -874,24 +873,24 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
             NSRect middleBorderFrame = NSMakeRect(0.0, NSMaxY(bottomBorderFrame), middleBorderSize.width, middleBorderSize.height);
             if (NSIntersectsRect(middleBorderFrame, dirtyRect))
             {
-                [[NSImage imageNamed:@"timeruler-middle-left"] drawInRect:NSMakeRect(0.0f, middleBorderFrame.origin.y, 1.0f, middleBorderFrame.size.height)
-                                                           fromRect:NSZeroRect
-                                                          operation:NSCompositeSourceOver
-                                                           fraction:AlphaFraction
-                                                     respectFlipped:YES
-                                                              hints:nil];
-                [[NSImage imageNamed:@"timeruler-middle"] drawInRect:NSMakeRect(1.0f, middleBorderFrame.origin.y, middleBorderFrame.size.width - 2.0f, middleBorderFrame.size.height)
-                                                      fromRect:NSZeroRect
-                                                     operation:NSCompositeSourceOver
-                                                      fraction:AlphaFraction
-                                                respectFlipped:YES
-                                                         hints:nil];
-                [[NSImage imageNamed:@"timeruler-middle-right"] drawInRect:NSMakeRect(middleBorderFrame.size.width - 1.0f, middleBorderFrame.origin.y, 1.0f, middleBorderFrame.size.height)
-                                                            fromRect:NSZeroRect
-                                                           operation:NSCompositeSourceOver
-                                                            fraction:AlphaFraction
-                                                      respectFlipped:YES
-                                                               hints:nil];
+                [(NSImage *)[NSImage imageNamed:@"timeruler-middle-left"] drawInRect:NSMakeRect(0.0f, middleBorderFrame.origin.y, 1.0f, middleBorderFrame.size.height)
+                                                                            fromRect:NSZeroRect
+                                                                           operation:NSCompositeSourceOver
+                                                                            fraction:AlphaFraction
+                                                                      respectFlipped:YES
+                                                                               hints:nil];
+                [(NSImage *)[NSImage imageNamed:@"timeruler-middle"] drawInRect:NSMakeRect(1.0f, middleBorderFrame.origin.y, middleBorderFrame.size.width - 2.0f, middleBorderFrame.size.height)
+                                                                       fromRect:NSZeroRect
+                                                                      operation:NSCompositeSourceOver
+                                                                       fraction:AlphaFraction
+                                                                 respectFlipped:YES
+                                                                          hints:nil];
+                [(NSImage *)[NSImage imageNamed:@"timeruler-middle-right"] drawInRect:NSMakeRect(middleBorderFrame.size.width - 1.0f, middleBorderFrame.origin.y, 1.0f, middleBorderFrame.size.height)
+                                                                             fromRect:NSZeroRect
+                                                                            operation:NSCompositeSourceOver
+                                                                             fraction:AlphaFraction
+                                                                       respectFlipped:YES
+                                                                                hints:nil];
             }
 
             NSRect topBorderFrame = NSMakeRect(0.0, NSMaxY(middleBorderFrame), topBorderSize.width, topBorderSize.height);
@@ -1190,24 +1189,24 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
             NSRect middleBorderFrame = NSMakeRect(0.0, NSMaxY(topBorderFrame), middleBorderSize.width, middleBorderSize.height);
             if (NSIntersectsRect(middleBorderFrame, dirtyRect))
             {
-                [[NSImage imageNamed:@"day-middle-left"] drawInRect:NSMakeRect(0.0f, middleBorderFrame.origin.y, 1.0f, middleBorderFrame.size.height)
-                                                           fromRect:NSZeroRect
-                                                          operation:NSCompositeSourceOver
-                                                           fraction:AlphaFraction
-                                                     respectFlipped:YES
-                                                              hints:nil];
-                [[NSImage imageNamed:@"day-middle"] drawInRect:NSMakeRect(1.0f, middleBorderFrame.origin.y, middleBorderFrame.size.width - 2.0f, middleBorderFrame.size.height)
-                                                      fromRect:NSZeroRect
-                                                     operation:NSCompositeSourceOver
-                                                      fraction:AlphaFraction
-                                                respectFlipped:YES
-                                                         hints:nil];
-                [[NSImage imageNamed:@"day-middle-right"] drawInRect:NSMakeRect(middleBorderFrame.size.width - 1.0f, middleBorderFrame.origin.y, 1.0f, middleBorderFrame.size.height)
-                                                            fromRect:NSZeroRect
-                                                           operation:NSCompositeSourceOver
-                                                            fraction:AlphaFraction
-                                                      respectFlipped:YES
-                                                               hints:nil];
+                [(NSImage *)[NSImage imageNamed:@"day-middle-left"] drawInRect:NSMakeRect(0.0f, middleBorderFrame.origin.y, 1.0f, middleBorderFrame.size.height)
+                                                                      fromRect:NSZeroRect
+                                                                     operation:NSCompositeSourceOver
+                                                                      fraction:AlphaFraction
+                                                                respectFlipped:YES
+                                                                         hints:nil];
+                [(NSImage *)[NSImage imageNamed:@"day-middle"] drawInRect:NSMakeRect(1.0f, middleBorderFrame.origin.y, middleBorderFrame.size.width - 2.0f, middleBorderFrame.size.height)
+                                                                 fromRect:NSZeroRect
+                                                                operation:NSCompositeSourceOver
+                                                                 fraction:AlphaFraction
+                                                           respectFlipped:YES
+                                                                    hints:nil];
+                [(NSImage *)[NSImage imageNamed:@"day-middle-right"] drawInRect:NSMakeRect(middleBorderFrame.size.width - 1.0f, middleBorderFrame.origin.y, 1.0f, middleBorderFrame.size.height)
+                                                                       fromRect:NSZeroRect
+                                                                      operation:NSCompositeSourceOver
+                                                                       fraction:AlphaFraction
+                                                                 respectFlipped:YES
+                                                                          hints:nil];
             }
 
             NSRect bottomBorderFrame = NSMakeRect(0.0, NSMaxY(middleBorderFrame), bottomBorderSize.width, bottomBorderSize.height);
@@ -1269,7 +1268,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
         l.opacity = 0.3f;
 #endif
         WLCalendarTimeIndicatorLayer *timeIndicator = [self setupTimeIndicatorLayer];
-        CGSize preferredTimeIndicatorSize = [timeIndicator preferredFrameSize]; 
+        CGSize preferredTimeIndicatorSize = [timeIndicator preferredFrameSize];
         timeIndicator.frame = CGRectMake(0.0f, 0.0f, preferredTimeIndicatorSize.width, preferredTimeIndicatorSize.height);
         timeIndicator.autoresizingMask = kCALayerWidthSizable;
         [l addSublayer:timeIndicator];
