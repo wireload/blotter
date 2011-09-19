@@ -7,7 +7,6 @@
 //
 
 #import "WLCalendarTextLayer.h"
-#import "NSColor+WLCalendar.h"
 #import "NSColor+CGColor.h"
 #import "CoreText+Additions.h"
 

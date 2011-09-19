@@ -6,9 +6,7 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
-#import <dispatch/data.h>
 #import "WLCalendarEventLayer.h"
-#import "CATextLayer+WLStringSize.h"
 #import "NSColor+CGColor.h"
 #import "CoreText+Additions.h"
 #import "NSColor+WLCalendar.h"

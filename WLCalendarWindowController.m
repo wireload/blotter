@@ -10,8 +10,6 @@
 #import "WLCalendarWeekViewController.h"
 #import "WLCalendarTasksViewController.h"
 #import "WLCalendarDateViewController.h"
-#import "NSDate+WLDayBoundaries.h"
-#import "CoreAnimation+WLCalendar.h"
 #import "WLCalendarBoxView.h"
 
 

@@ -7,7 +7,6 @@
 //
 
 #import "WLCalendarWindowFrameView.h"
-#import "NSColor+CGColor.h"
 
 
 @implementation WLCalendarWindowFrameView

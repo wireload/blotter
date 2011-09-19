@@ -8,9 +8,6 @@
 
 #import "WLCalendarTasksView.h"
 #import "NSColor+CGColor.h"
-#import "CATextLayer+WLStringSize.h"
-#import "CoreAnimation+WLCalendar.h"
-#import "NSColor+WLCalendar.h"
 
 
 static NSString* const _WLTasksLayerName = @"task";

@@ -7,9 +7,7 @@
 //
 
 #import "WLCalendarWeekView.h"
-#import "NSColor+CGColor.h"
 #import "CoreAnimation+WLCalendar.h"
-#import "WLSoftEdgeLayer.h"
 #import "NSColor+WLCalendar.h"
 #import "NSFont+WLCalendar.h"
 

@@ -8,8 +8,6 @@
 
 #import <CalendarStore/CalendarStore.h>
 #import "DeskboardAppDelegate.h"
-#import "BLPositionerControl.h"
-#import "BLCalendarFramer.h"
 #import "WLNewEventWindowController.h"
 #import "WLNewTaskWindowController.h"
 #import "SRCommon.h"

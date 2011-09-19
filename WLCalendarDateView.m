@@ -7,8 +7,6 @@
 //
 
 #import "WLCalendarDateView.h"
-#import "CoreAnimation+WLCalendar.h"
-#import "NSColor+CGColor.h"
 #import "NSColor+WLCalendar.h"
 #import "NSFont+WLCalendar.h"
 

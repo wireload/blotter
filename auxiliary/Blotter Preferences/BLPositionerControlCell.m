@@ -6,7 +6,6 @@
 //  Copyright 2010 SlevenBits. All rights reserved.
 //
 
-#import "BLPositionerControl.h"
 #import "BLPositionerControlCell.h"
 
 

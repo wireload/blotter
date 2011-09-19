@@ -9,7 +9,6 @@
 #import <Carbon/Carbon.h>
 #import "WLGlassHudWindow.h"
 #import "WLGlassHudView.h"
-#import "WLGlassHudTextView.h"
 
 
 BOOL _WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int shortcutKey)
