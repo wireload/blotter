@@ -118,11 +118,15 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     {
         if (fitDayEvents)
         {
+            for (WLCalendarDayEventsLayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])
+                l.keepTextOfEventsVisible = NO;
             [_timeRulerRootLayer WL_timeRulerLayer].shouldHideHalfVisibleHourLabels = YES;
             [self heightOfHourMayHaveChanged];
         }
         else
         {
+            for (WLCalendarDayEventsLayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])
+                l.keepTextOfEventsVisible = YES;
             [_timeRulerRootLayer WL_timeRulerLayer].shouldHideHalfVisibleHourLabels = NO;
             [self _focusOnHour];
         }
@@ -563,7 +567,10 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     newScrollPoint.x = floorf(newScrollPoint.x);
     newScrollPoint.y = floorf(newScrollPoint.y);
     for (WLCalendarDayEventsLayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])
+    {
         [l scrollPoint:newScrollPoint];
+        [l positionTextOfEvents];
+    }
     [timeRulerLayer scrollPoint:newScrollPoint];
 }
 
@@ -572,9 +579,9 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 
 - (void)setFrameSize:(NSSize)newSize
 {
+    [super setFrameSize:newSize];
     [self stopAnimations];
     [_rootLayer setNeedsLayout];
-    [super setFrameSize:newSize];
 }
 
 @end
@@ -1106,6 +1113,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
         [l.compositingFilter setDefaults];
         l.name = _WLDayLayerName;
         l.timeRuler = self;
+        l.keepTextOfEventsVisible = !self.fitDayEvents;
 #ifdef DEBUG_LAYERS
         l.needsDisplayOnBoundsChange = YES;
 #endif

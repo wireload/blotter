@@ -11,7 +11,7 @@
 #import "WLCalendarLayer.h"
 
 /*!
- @classdesign One of superlayers must be flipped (that is, geometryFlipped is set to YES).
+ @classdesign One of superlayers must be flipped (that is, geometryFlipped is set to YES) so the origin would be top left.
  */
 @interface WLCalendarEventLayer : WLCalendarLayer {
     CGFloat _cachedMinimalHeight;
@@ -21,6 +21,13 @@
 @property (copy) NSAttributedString *title;
 
 @property (copy) NSAttributedString *location;
+
+/*!
+ @abstract      Specifies whether layer should try to keep its text (title and location) visible.
+ @discussion    Default value is NO.
+ If set to YES, while drawing content uses visibleRect to determine frames of title and location to keep them visible.
+ */
+@property BOOL keepTextVisible;
 
 + (CGFloat)minimalHumanVisibleWidth;
 

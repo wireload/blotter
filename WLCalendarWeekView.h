@@ -70,6 +70,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r);
 
 /*!
  @discussion Default value is NO.
+ When set to NO, the view focuses on current hour (tries to center it) and keeps text of events visible.
  */
 @property (nonatomic) BOOL fitDayEvents;
 

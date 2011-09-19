@@ -23,11 +23,14 @@
     BOOL _eventsChanged;
 
     id<WLCalendarTimeRuler> timeRuler;
+    BOOL keepTextOfEventsVisible;
 }
 
 @property (assign) id<WLCalendarTimeRuler> timeRuler;
 
 @property (nonatomic, copy) NSSet *events;
+
+@property (nonatomic) BOOL keepTextOfEventsVisible;
 
 - (NSUInteger)maximumNumberOfColumns;
 
@@ -35,6 +38,8 @@
  @result nil if there are no events.
  */
 - (WLDateRange *)eventsDateRange;
+
+- (void)positionTextOfEvents;
 
 
 - (WLCalendarEventLayer *)_setupEventLayer;

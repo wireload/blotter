@@ -6,6 +6,7 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
+#import <dispatch/data.h>
 #import "WLCalendarEventLayer.h"
 #import "CATextLayer+WLStringSize.h"
 #import "NSColor+CGColor.h"
@@ -22,6 +23,7 @@ const CGFloat _WLXPadding = 10.0f;
 #pragma mark Properties
 @dynamic title;
 @dynamic location;
+@dynamic keepTextVisible;
 
 
 #pragma mark Methods
@@ -157,10 +159,6 @@ const CGFloat _WLXPadding = 10.0f;
     CGRect dirtyRect = CGContextGetClipBoundingBox(aContext);
     if (CGRectIntersectsRect(titleAndLocationFrame, dirtyRect))
     {
-#ifdef DEBUG_LAYERS
-        CGContextSetFillColorWithColor(aContext, [[NSColor greenColor] WL_CGColor]);
-        CGContextFillRect(aContext, titleAndLocationFrame);
-#endif
         CGContextSetTextMatrix(aContext, CGAffineTransformIdentity);
         CGContextTranslateCTM(aContext, 0.0f, self.bounds.size.height);
         CGContextScaleCTM(aContext, 1.0f, -1.0f);
@@ -171,18 +169,38 @@ const CGFloat _WLXPadding = 10.0f;
         CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0f), 0.0f, [[NSColor WL_eventShadowColor] WL_CGColor]);
 
         CGFloat preferredTitleHeight = [self _preferredTitleHeightWithWidth:self.bounds.size.width];
-
         if (preferredTitleHeight < titleAndLocationFrame.size.height)
         {
-            CGFloat titleHeight = fminf(preferredTitleHeight, titleAndLocationFrame.size.height);
+            CGFloat titleHeight = preferredTitleHeight;
+            CGFloat preferredLocationHeight = [self _preferredLocationHeightWithWidth:self.bounds.size.width];
+            CGFloat locationHeight = CGFLOAT_MAX;
+            if (preferredTitleHeight + preferredLocationHeight < titleAndLocationFrame.size.height)
+            {
+                locationHeight = preferredLocationHeight;
+                if (self.keepTextVisible)
+                {
+                    // Make text visible as much as possible.
+                    // Layer's origin is top left, while context's origin is bottom left.
+                    CGFloat visibleRectTop = self.bounds.size.height - self.visibleRect.origin.y;
+                    CGFloat y = fminf(CGRectGetMaxY(titleAndLocationFrame) - titleHeight - locationHeight,
+                                      fmaxf(titleAndLocationFrame.origin.y,
+                                            visibleRectTop - titleHeight - locationHeight));
+                    titleAndLocationFrame.origin.y = y;
+                    titleAndLocationFrame.size.height = titleHeight + locationHeight;
+                }
+            }
+            else
+                locationHeight = titleAndLocationFrame.size.height - titleHeight;
+
+#ifdef DEBUG_LAYERS
+            CGContextSetFillColorWithColor(aContext, [[NSColor greenColor] WL_CGColor]);
+            CGContextFillRect(aContext, titleAndLocationFrame);
+#endif
             CGRect titleFrame = CGRectIntegral(CGRectMake(titleAndLocationFrame.origin.x,
-                                                          self.bounds.size.height - titleAndLocationFrame.origin.y - titleHeight,
+                                                          CGRectGetMaxY(titleAndLocationFrame) - titleHeight,
                                                           titleAndLocationFrame.size.width,
                                                           titleHeight));
             [self _drawString:self.title inContext:aContext rect:titleFrame];
-
-            CGFloat locationHeight = fminf([self _preferredLocationHeightWithWidth:self.bounds.size.width],
-                                           titleAndLocationFrame.size.height - titleHeight);
             CGRect locationFrame = CGRectIntegral(CGRectMake(titleAndLocationFrame.origin.x,
                                                              CGRectGetMinY(titleFrame) - locationHeight,
                                                              titleAndLocationFrame.size.width,
@@ -191,7 +209,7 @@ const CGFloat _WLXPadding = 10.0f;
         }
         else
         {
-            // Layer cannot fit title, so there is no need to draw locationt.
+            // Layer cannot fit title, so there is no need to draw location.
             [self _drawString:self.title inContext:aContext rect:titleAndLocationFrame];
         }
     }
@@ -364,7 +382,6 @@ const CGFloat _WLXPadding = 10.0f;
 }
 
 
-
 #pragma mark CALayer
 
 + (BOOL)needsDisplayForKey:(NSString *)aKey
@@ -373,9 +390,19 @@ const CGFloat _WLXPadding = 10.0f;
         return YES;
     else if ([aKey isEqualToString:@"location"])
         return YES;
+    else if ([aKey isEqualToString:@"keepTextVisible"])
+        return YES;
     else
         return [super needsDisplayForKey:aKey];
 }
+
++ (id)defaultValueForKey:(NSString *)aKey {
+    if ([aKey isEqualToString:@"keepTextVisible"])
+        return [NSNumber numberWithBool:NO];
+    else
+        return [super defaultValueForKey:aKey];
+}
+
 
 - (void)drawInContext:(CGContextRef)aContext
 {

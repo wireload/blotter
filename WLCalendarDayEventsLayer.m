@@ -31,8 +31,6 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 
 
 @implementation WLCalendarDayEventsLayer
-@synthesize timeRuler;
-@dynamic events;
 
 - (id)init
 {
@@ -62,6 +60,12 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     [_eventsLayoutTreeRootNode release];
     [super dealloc];
 }
+
+
+#pragma mark Properties
+@synthesize timeRuler;
+@dynamic events;
+@synthesize keepTextOfEventsVisible;
 
 - (void)setEvents:(NSSet *)newEvents
 {
@@ -97,6 +101,16 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     _eventsChanged = YES;
 }
 
+- (void)setKeepTextOfEventsVisible:(BOOL)newKeepTextOfEventsVisible
+{
+    keepTextOfEventsVisible = newKeepTextOfEventsVisible;
+    for (WLCalendarEventLayer *l in _sortedByUIDEventLayers)
+        l.keepTextVisible = keepTextOfEventsVisible;
+}
+
+
+#pragma mark Methods
+
 - (NSUInteger)maximumNumberOfColumns
 {
     NSUInteger n = self.bounds.size.width / [WLCalendarEventLayer minimalHumanVisibleWidth];
@@ -117,6 +131,12 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     return [WLDateRange dateRangeWithStartDate:start endDate:end];
 }
 
+- (void)positionTextOfEvents
+{
+    if (self.keepTextOfEventsVisible)
+        [_sortedByUIDEventLayers makeObjectsPerformSelector:@selector(setNeedsDisplay)];
+}
+
 
 #pragma mark Private
 
@@ -125,12 +145,13 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     WLCalendarEventLayer *l = [WLCalendarEventLayer layer];
     [CATransaction WL_performWithDisabledActions:^{
         l.needsDisplayOnBoundsChange = YES;
-		l.masksToBounds = YES;
+        l.masksToBounds = YES;
         l.contentsGravity = kCAGravityBottom;
         l.anchorPoint = CGPointMake(0.0f, 0.0f);
         l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
+        l.keepTextVisible = self.keepTextOfEventsVisible;
 #ifndef DEBUG_LAYERS
-		l.contentsBackgroundOpacity = 0.3f;
+        l.contentsBackgroundOpacity = 0.3f;
 #endif
     }];
     return l;
@@ -500,6 +521,8 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
                     l.cornerRadius = CornerRadius;
                 else
                     l.cornerRadius = 0.0f;
+                if (self.keepTextOfEventsVisible)
+                        [l setNeedsDisplay];
             }
         }];
     }
