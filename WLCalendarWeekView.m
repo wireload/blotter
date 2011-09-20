@@ -780,13 +780,16 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     aColumnLayer.frame = [self columnFrameAtIndex:anIndex];
 
     CALayer *allDayBackground = [aColumnLayer WL_allDayBackgroundLayer];
-    if (!self.showAllDayEvents)
+    if (self.showAllDayEvents)
+    {
+        allDayBackground.hidden = NO;
+        allDayBackground.frame = [self allDayBackgroundFrame];
+        CALayer *allDay = [aColumnLayer WL_allDayLayer];
+        // Background has 1px stroke
+        allDay.frame = CGRectIntegral(CGRectInset(allDayBackground.bounds, 1.0f, 0.0f));
+    }
+    else
         allDayBackground.hidden = YES;
-    allDayBackground.frame = [self allDayBackgroundFrame];
-
-    CALayer *allDay = [aColumnLayer WL_allDayLayer];
-    // Background has 1px stroke
-    allDay.frame = CGRectIntegral(CGRectInset(allDayBackground.bounds, 1.0f, 0.0f));
 
     CALayer *dayBackground = [aColumnLayer WL_dayBackgroundLayer];
     dayBackground.frame = [self dayBackgroundFrame];
@@ -868,124 +871,110 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
 - (CALayer *)setupTimeRulerRootLayer
 {
     __block WLBlockLayer *timeRulerBackground = [self setupTimeRulerBackgroundLayer];
-    [CATransaction WL_performWithDisabledActions:^{
-        CAScrollLayer *timeRulerScroll = [self setupTimeRulerScrollLayer];
-        [timeRulerBackground addSublayer:timeRulerScroll];
-        [timeRulerBackground setValue:timeRulerScroll forKey:timeRulerScroll.name];
+    CAScrollLayer *timeRulerScroll = [self setupTimeRulerScrollLayer];
+    [timeRulerBackground addSublayer:timeRulerScroll];
+    [timeRulerBackground setValue:timeRulerScroll forKey:timeRulerScroll.name];
 
-        WLCalendarTimeRulerLayer *timeRuler = [self setupTimeRulerLayer];
-        timeRuler.autoresizingMask = kCALayerWidthSizable;
-        [timeRulerScroll addSublayer:timeRuler];
-        [timeRulerScroll setValue:timeRuler forKey:timeRuler.name];
-    }];
+    WLCalendarTimeRulerLayer *timeRuler = [self setupTimeRulerLayer];
+    timeRuler.autoresizingMask = kCALayerWidthSizable;
+    [timeRulerScroll addSublayer:timeRuler];
+    [timeRulerScroll setValue:timeRuler forKey:timeRuler.name];
     return timeRulerBackground;
 }
 
 - (WLBlockLayer *)setupTimeRulerBackgroundLayer
 {
     __block WLBlockLayer *l = [WLBlockLayer layer];
-    [CATransaction WL_performWithDisabledActions:^{
-        l.name = _WLTimeRulerBackgroundLayerName;
-        l.masksToBounds = YES;
-        l.needsDisplayOnBoundsChange = YES;
-        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
-        [l.compositingFilter setDefaults];
+    l.name = _WLTimeRulerBackgroundLayerName;
+    l.masksToBounds = YES;
+    l.needsDisplayOnBoundsChange = YES;
 #ifndef DEBUG_LAYERS
-        l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
-            NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:NO];
-            [c setImageInterpolation:NSImageInterpolationHigh];
-            [NSGraphicsContext saveGraphicsState];
-            [NSGraphicsContext setCurrentContext:c];
+    l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
+        NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:NO];
+        [c setImageInterpolation:NSImageInterpolationHigh];
+        [NSGraphicsContext saveGraphicsState];
+        [NSGraphicsContext setCurrentContext:c];
 
-            NSSize bottomBorderSize = NSMakeSize(aLayer.bounds.size.width, [[NSImage imageNamed:@"timeruler-bottom"] size].height);
-            NSSize topBorderSize = NSMakeSize(aLayer.bounds.size.width, [[NSImage imageNamed:@"timeruler-top"] size].height);
-            NSSize middleBorderSize = NSMakeSize(aLayer.bounds.size.width, aLayer.bounds.size.height - bottomBorderSize.height - topBorderSize.height);
+        NSSize bottomBorderSize = NSMakeSize(aLayer.bounds.size.width, [[NSImage imageNamed:@"timeruler-bottom"] size].height);
+        NSSize topBorderSize = NSMakeSize(aLayer.bounds.size.width, [[NSImage imageNamed:@"timeruler-top"] size].height);
+        NSSize middleBorderSize = NSMakeSize(aLayer.bounds.size.width, aLayer.bounds.size.height - bottomBorderSize.height - topBorderSize.height);
 
-            NSRect dirtyRect = NSRectFromCGRect(aDirtyRect);
-            static CGFloat AlphaFraction = 0.5f;
+        NSRect dirtyRect = NSRectFromCGRect(aDirtyRect);
+        static CGFloat AlphaFraction = 0.5f;
 
-            NSRect bottomBorderFrame = NSMakeRect(0.0, 0.0, bottomBorderSize.width, bottomBorderSize.height);
-            if (NSIntersectsRect(bottomBorderFrame, dirtyRect))
-            {
-                NSDrawThreePartImage(bottomBorderFrame,
-                                     [NSImage imageNamed:@"timeruler-bottom-left"],
-                                     [NSImage imageNamed:@"timeruler-bottom"],
-                                     [NSImage imageNamed:@"timeruler-bottom-right"],
-                                     NO,
-                                     NSCompositeSourceOver,
-                                     AlphaFraction,
-                                     NO);
-            }
+        NSRect bottomBorderFrame = NSMakeRect(0.0, 0.0, bottomBorderSize.width, bottomBorderSize.height);
+        if (NSIntersectsRect(bottomBorderFrame, dirtyRect))
+        {
+            NSDrawThreePartImage(bottomBorderFrame,
+                                 [NSImage imageNamed:@"timeruler-bottom-left"],
+                                 [NSImage imageNamed:@"timeruler-bottom"],
+                                 [NSImage imageNamed:@"timeruler-bottom-right"],
+                                 NO,
+                                 NSCompositeSourceOver,
+                                 AlphaFraction,
+                                 NO);
+        }
 
-            NSRect middleBorderFrame = NSMakeRect(0.0, NSMaxY(bottomBorderFrame), middleBorderSize.width, middleBorderSize.height);
-            if (NSIntersectsRect(middleBorderFrame, dirtyRect))
-            {
-                [(NSImage *)[NSImage imageNamed:@"timeruler-middle-left"] drawInRect:NSMakeRect(0.0f, middleBorderFrame.origin.y, 1.0f, middleBorderFrame.size.height)
-                                                                            fromRect:NSZeroRect
-                                                                           operation:NSCompositeSourceOver
-                                                                            fraction:AlphaFraction
-                                                                      respectFlipped:YES
-                                                                               hints:nil];
-                [(NSImage *)[NSImage imageNamed:@"timeruler-middle"] drawInRect:NSMakeRect(1.0f, middleBorderFrame.origin.y, middleBorderFrame.size.width - 2.0f, middleBorderFrame.size.height)
-                                                                       fromRect:NSZeroRect
-                                                                      operation:NSCompositeSourceOver
-                                                                       fraction:AlphaFraction
-                                                                 respectFlipped:YES
-                                                                          hints:nil];
-                [(NSImage *)[NSImage imageNamed:@"timeruler-middle-right"] drawInRect:NSMakeRect(middleBorderFrame.size.width - 1.0f, middleBorderFrame.origin.y, 1.0f, middleBorderFrame.size.height)
-                                                                             fromRect:NSZeroRect
-                                                                            operation:NSCompositeSourceOver
-                                                                             fraction:AlphaFraction
-                                                                       respectFlipped:YES
-                                                                                hints:nil];
-            }
+        NSRect middleBorderFrame = NSMakeRect(0.0, NSMaxY(bottomBorderFrame), middleBorderSize.width, middleBorderSize.height);
+        if (NSIntersectsRect(middleBorderFrame, dirtyRect))
+        {
+            [(NSImage *)[NSImage imageNamed:@"timeruler-middle-left"] drawInRect:NSMakeRect(0.0f, middleBorderFrame.origin.y, 1.0f, middleBorderFrame.size.height)
+                                                                        fromRect:NSZeroRect
+                                                                       operation:NSCompositeSourceOver
+                                                                        fraction:AlphaFraction
+                                                                  respectFlipped:YES
+                                                                           hints:nil];
+            [(NSImage *)[NSImage imageNamed:@"timeruler-middle"] drawInRect:NSMakeRect(1.0f, middleBorderFrame.origin.y, middleBorderFrame.size.width - 2.0f, middleBorderFrame.size.height)
+                                                                   fromRect:NSZeroRect
+                                                                  operation:NSCompositeSourceOver
+                                                                   fraction:AlphaFraction
+                                                             respectFlipped:YES
+                                                                      hints:nil];
+            [(NSImage *)[NSImage imageNamed:@"timeruler-middle-right"] drawInRect:NSMakeRect(middleBorderFrame.size.width - 1.0f, middleBorderFrame.origin.y, 1.0f, middleBorderFrame.size.height)
+                                                                         fromRect:NSZeroRect
+                                                                        operation:NSCompositeSourceOver
+                                                                         fraction:AlphaFraction
+                                                                   respectFlipped:YES
+                                                                            hints:nil];
+        }
 
-            NSRect topBorderFrame = NSMakeRect(0.0, NSMaxY(middleBorderFrame), topBorderSize.width, topBorderSize.height);
-            if (NSIntersectsRect(topBorderFrame, topBorderFrame))
-            {
-                NSDrawThreePartImage(topBorderFrame,
-                                     [NSImage imageNamed:@"timeruler-top-left"],
-                                     [NSImage imageNamed:@"timeruler-top"],
-                                     [NSImage imageNamed:@"timeruler-top-right"],
-                                     NO,
-                                     NSCompositeSourceOver,
-                                     AlphaFraction,
-                                     NO);
-            }
-            [NSGraphicsContext restoreGraphicsState];
-        };
+        NSRect topBorderFrame = NSMakeRect(0.0, NSMaxY(middleBorderFrame), topBorderSize.width, topBorderSize.height);
+        if (NSIntersectsRect(topBorderFrame, topBorderFrame))
+        {
+            NSDrawThreePartImage(topBorderFrame,
+                                 [NSImage imageNamed:@"timeruler-top-left"],
+                                 [NSImage imageNamed:@"timeruler-top"],
+                                 [NSImage imageNamed:@"timeruler-top-right"],
+                                 NO,
+                                 NSCompositeSourceOver,
+                                 AlphaFraction,
+                                 NO);
+        }
+        [NSGraphicsContext restoreGraphicsState];
+    };
 #else
-        l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
+    l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
 #endif
-    }];
     return l;
 }
 
 - (CAScrollLayer *)setupTimeRulerScrollLayer
 {
     __block CAScrollLayer *l = [CAScrollLayer layer];
-    [CATransaction WL_performWithDisabledActions:^{
-        l.name = _WLTimeRulerScrollLayerName;
-        l.scrollMode = kCAScrollVertically;
-        l.geometryFlipped = YES;
-        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
-        [l.compositingFilter setDefaults];
+    l.name = _WLTimeRulerScrollLayerName;
+    l.scrollMode = kCAScrollVertically;
+    l.geometryFlipped = YES;
 #ifdef DEBUG_LAYERS
-        l.backgroundColor = [[NSColor orangeColor] WL_CGColor];
+    l.backgroundColor = [[NSColor orangeColor] WL_CGColor];
 #endif
-    }];
     return l;
 }
 
 - (WLCalendarTimeRulerLayer *)setupTimeRulerLayer
 {
     __block WLCalendarTimeRulerLayer *l = [WLCalendarTimeRulerLayer layer];
-    [CATransaction WL_performWithDisabledActions:^{
         l.name = _WLTimeRulerLayerName;
-        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
-        [l.compositingFilter setDefaults];
         l.timeRuler = self;
-    }];
     return l;
 }
 
@@ -1028,262 +1017,237 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
 - (CALayer *)setupColumnRootLayer
 {
     __block CALayer *root = [self setupColumnLayer];
-    [CATransaction WL_performWithDisabledActions:^{
-        WLBlockLayer *allDayBackground = [self setupAllDayBackgroundLayer];
-        [root addSublayer:allDayBackground];
-        [root setValue:allDayBackground forKey:allDayBackground.name];
+    WLBlockLayer *allDayBackground = [self setupAllDayBackgroundLayer];
+    [root addSublayer:allDayBackground];
+    [root setValue:allDayBackground forKey:allDayBackground.name];
 
-        WLCalendarAllDayEventsLayer *allDay = [self setupAllDayLayer];
-        [allDayBackground addSublayer:allDay];
-        [allDayBackground setValue:allDay forKey:allDay.name];
+    WLCalendarAllDayEventsLayer *allDay = [self setupAllDayLayer];
+    [allDayBackground addSublayer:allDay];
+    [allDayBackground setValue:allDay forKey:allDay.name];
 
-        WLBlockLayer *dayBackground = [self setupDayBackgroundLayer];
-        [root addSublayer:dayBackground];
-        [root setValue:dayBackground forKey:dayBackground.name];
+    WLBlockLayer *dayBackground = [self setupDayBackgroundLayer];
+    [root addSublayer:dayBackground];
+    [root setValue:dayBackground forKey:dayBackground.name];
 
-        CAScrollLayer *scroll = [self setupDayScrollLayer];
-        [dayBackground addSublayer:scroll];
-        [dayBackground setValue:scroll forKey:scroll.name];
+    CAScrollLayer *scroll = [self setupDayScrollLayer];
+    [dayBackground addSublayer:scroll];
+    [dayBackground setValue:scroll forKey:scroll.name];
 
-        WLCalendarDayEventsLayer *day = [self setupDayLayer];
-        day.autoresizingMask = kCALayerWidthSizable;
-        [scroll addSublayer:day];
-        [scroll setValue:day forKey:day.name];
-    }];
+    WLCalendarDayEventsLayer *day = [self setupDayLayer];
+    day.autoresizingMask = kCALayerWidthSizable;
+    [scroll addSublayer:day];
+    [scroll setValue:day forKey:day.name];
     return root;
 }
 
 - (CALayer *)setupColumnLayer
 {
     __block CALayer *l = [CALayer layer];
-    [CATransaction WL_performWithDisabledActions:^{
-        l.geometryFlipped = YES;
-        l.name = _WLColumnLayerName;
-        l.anchorPoint = CGPointMake(0.0f, 0.0f);
-        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
-        [l.compositingFilter setDefaults];
+    l.geometryFlipped = YES;
+    l.name = _WLColumnLayerName;
+    l.anchorPoint = CGPointMake(0.0f, 0.0f);
 #ifdef DEBUG_LAYERS
-        l.backgroundColor = [[NSColor redColor] WL_CGColor];
+    l.backgroundColor = [[NSColor redColor] WL_CGColor];
 #endif
-    }];
     return l;
 }
 
 - (WLBlockLayer *)setupAllDayBackgroundLayer
 {
     __block WLBlockLayer *l = [WLBlockLayer layer];
-    [CATransaction WL_performWithDisabledActions:^{
-        l.name = _WLAllDayBackgroundLayerName;
-        l.needsDisplayOnBoundsChange = YES;
-        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
-        l.masksToBounds = YES;
+    l.name = _WLAllDayBackgroundLayerName;
+    l.needsDisplayOnBoundsChange = YES;
+    l.masksToBounds = YES;
 #ifndef DEBUG_LAYERS
-        l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
-            NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:NO];
-            [c setImageInterpolation:NSImageInterpolationHigh];
-            [NSGraphicsContext saveGraphicsState];
-            [NSGraphicsContext setCurrentContext:c];
+    l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
+        NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:NO];
+        [c setImageInterpolation:NSImageInterpolationHigh];
+        [NSGraphicsContext saveGraphicsState];
+        [NSGraphicsContext setCurrentContext:c];
 
-            NSSize bottomBorderSize = NSMakeSize(aLayer.bounds.size.width, [[NSImage imageNamed:@"allday-bottom"] size].height);
-            NSSize topBorderSize = NSMakeSize(aLayer.bounds.size.width, [[NSImage imageNamed:@"allday-top"] size].height);
-            NSSize middleBorderSize = NSMakeSize(aLayer.bounds.size.width, aLayer.bounds.size.height - bottomBorderSize.height - topBorderSize.height);
+        NSSize bottomBorderSize = NSMakeSize(aLayer.bounds.size.width, [[NSImage imageNamed:@"allday-bottom"] size].height);
+        NSSize topBorderSize = NSMakeSize(aLayer.bounds.size.width, [[NSImage imageNamed:@"allday-top"] size].height);
+        NSSize middleBorderSize = NSMakeSize(aLayer.bounds.size.width, aLayer.bounds.size.height - bottomBorderSize.height - topBorderSize.height);
 
-            NSRect dirtyRect = NSRectFromCGRect(aDirtyRect);
-            static CGFloat AlphaFraction = 1.0f;
+        NSRect dirtyRect = NSRectFromCGRect(aDirtyRect);
+        static CGFloat AlphaFraction = 1.0f;
 
-            NSRect topBorderFrame = NSMakeRect(0.0, 0.0, topBorderSize.width, topBorderSize.height);
-            if (NSIntersectsRect(topBorderFrame, topBorderFrame))
-            {
-                NSDrawThreePartImage(topBorderFrame,
-                                     [NSImage imageNamed:@"allday-top-left"],
-                                     [NSImage imageNamed:@"allday-top"],
-                                     [NSImage imageNamed:@"allday-top-right"],
-                                     NO,
-                                     NSCompositeSourceOver,
-                                     AlphaFraction,
-                                     YES);
-            }
+        NSRect topBorderFrame = NSMakeRect(0.0, 0.0, topBorderSize.width, topBorderSize.height);
+        if (NSIntersectsRect(topBorderFrame, topBorderFrame))
+        {
+            NSDrawThreePartImage(topBorderFrame,
+                                 [NSImage imageNamed:@"allday-top-left"],
+                                 [NSImage imageNamed:@"allday-top"],
+                                 [NSImage imageNamed:@"allday-top-right"],
+                                 NO,
+                                 NSCompositeSourceOver,
+                                 AlphaFraction,
+                                 YES);
+        }
 
-            NSRect middleBorderFrame = NSMakeRect(0.0, NSMaxY(topBorderFrame), middleBorderSize.width, middleBorderSize.height);
-            if (NSIntersectsRect(middleBorderFrame, dirtyRect))
-            {
-                NSDrawThreePartImage(middleBorderFrame,
-                                     [NSImage imageNamed:@"allday-middle-left"],
-                                     [NSImage imageNamed:@"allday-middle"],
-                                     [NSImage imageNamed:@"allday-middle-right"],
-                                     NO,
-                                     NSCompositeSourceOver,
-                                     AlphaFraction,
-                                     YES);
-            }
+        NSRect middleBorderFrame = NSMakeRect(0.0, NSMaxY(topBorderFrame), middleBorderSize.width, middleBorderSize.height);
+        if (NSIntersectsRect(middleBorderFrame, dirtyRect))
+        {
+            NSDrawThreePartImage(middleBorderFrame,
+                                 [NSImage imageNamed:@"allday-middle-left"],
+                                 [NSImage imageNamed:@"allday-middle"],
+                                 [NSImage imageNamed:@"allday-middle-right"],
+                                 NO,
+                                 NSCompositeSourceOver,
+                                 AlphaFraction,
+                                 YES);
+        }
 
-            NSRect bottomBorderFrame = NSMakeRect(0.0, NSMaxY(middleBorderFrame), bottomBorderSize.width, bottomBorderSize.height);
-            if (NSIntersectsRect(bottomBorderFrame, dirtyRect))
-            {
-                NSDrawThreePartImage(bottomBorderFrame,
-                                     [NSImage imageNamed:@"allday-bottom-left"],
-                                     [NSImage imageNamed:@"allday-bottom"],
-                                     [NSImage imageNamed:@"allday-bottom-right"],
-                                     NO,
-                                     NSCompositeSourceOver,
-                                     AlphaFraction,
-                                     YES);
-            }
+        NSRect bottomBorderFrame = NSMakeRect(0.0, NSMaxY(middleBorderFrame), bottomBorderSize.width, bottomBorderSize.height);
+        if (NSIntersectsRect(bottomBorderFrame, dirtyRect))
+        {
+            NSDrawThreePartImage(bottomBorderFrame,
+                                 [NSImage imageNamed:@"allday-bottom-left"],
+                                 [NSImage imageNamed:@"allday-bottom"],
+                                 [NSImage imageNamed:@"allday-bottom-right"],
+                                 NO,
+                                 NSCompositeSourceOver,
+                                 AlphaFraction,
+                                 YES);
+        }
 
-            [NSGraphicsContext restoreGraphicsState];
-        };
+        [NSGraphicsContext restoreGraphicsState];
+    };
 #else
-        l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
+    l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
 #endif
-    }];
     return l;
 }
 
 - (WLCalendarAllDayEventsLayer *)setupAllDayLayer
 {
     __block WLCalendarAllDayEventsLayer *l = [WLCalendarAllDayEventsLayer layer];
-    [CATransaction WL_performWithDisabledActions:^{
-        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
-        [l.compositingFilter setDefaults];
-        l.name = _WLAllDayLayerName;
-    }];
+    l.name = _WLAllDayLayerName;
     return l;
 }
 
 - (WLCalendarDayEventsLayer *)setupDayLayer
 {
     __block WLCalendarDayEventsLayer *l = [WLCalendarDayEventsLayer layer];
-    [CATransaction WL_performWithDisabledActions:^{
-        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
-        [l.compositingFilter setDefaults];
-        l.name = _WLDayLayerName;
-        l.timeRuler = self;
-        l.keepTextOfEventsVisible = !self.fitDayEvents;
+    l.name = _WLDayLayerName;
+    l.timeRuler = self;
+    l.keepTextOfEventsVisible = !self.fitDayEvents;
 #ifdef DEBUG_LAYERS
-        l.needsDisplayOnBoundsChange = YES;
+    l.needsDisplayOnBoundsChange = YES;
 #endif
-    }];
     return l;
 }
 
 - (CAScrollLayer *)setupDayScrollLayer
 {
     __block CAScrollLayer *l = [CAScrollLayer layer];
-    [CATransaction WL_performWithDisabledActions:^{
-        l.name = _WLDayScrollLayerName;
-        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
-        [l.compositingFilter setDefaults];
+    l.name = _WLDayScrollLayerName;
 #ifdef DEBUG_LAYERS
-        l.backgroundColor = [[NSColor purpleColor] WL_CGColor];
+    l.backgroundColor = [[NSColor purpleColor] WL_CGColor];
 #endif
-    }];
     return l;
 }
 
 - (WLBlockLayer *)setupDayBackgroundLayer
 {
     __block WLBlockLayer *l = [WLBlockLayer layer];
-    [CATransaction WL_performWithDisabledActions:^{
-        l.name = _WLDayBackgroundLayerName;
-        l.needsDisplayOnBoundsChange = YES;
-        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
-        l.masksToBounds = YES;
+    l.name = _WLDayBackgroundLayerName;
+    l.needsDisplayOnBoundsChange = YES;
 #ifndef DEBUG_LAYERS
-        __block WLCalendarWeekView *selfBlock = self;
-        l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
-            NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:YES];
-            [c setImageInterpolation:NSImageInterpolationHigh];
-            [c setShouldAntialias:YES];
-            [NSGraphicsContext saveGraphicsState];
-            [NSGraphicsContext setCurrentContext:c];
+    __block WLCalendarWeekView *selfBlock = self;
+    l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
+        NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:YES];
+        [c setImageInterpolation:NSImageInterpolationHigh];
+        [c setShouldAntialias:YES];
+        [NSGraphicsContext saveGraphicsState];
+        [NSGraphicsContext setCurrentContext:c];
 
-            NSSize bottomSize = NSMakeSize(aLayer.bounds.size.width,
-                                           [[NSImage imageNamed:@"allday-bottom"] size].height);
-            NSSize topSize = NSMakeSize(aLayer.bounds.size.width,
-                                        [[NSImage imageNamed:@"allday-top"] size].height);
-            NSSize middleSize = NSMakeSize(aLayer.bounds.size.width,
-                                           aLayer.bounds.size.height - bottomSize.height - topSize.height);
-            NSRect dirtyRect = NSRectFromCGRect(aDirtyRect);
-            static CGFloat AlphaFraction = 1.0f;
-            
-            NSRect topFrame = NSMakeRect(0.0,
-                                         0.0,
-                                         topSize.width,
-                                         topSize.height);
-            if (NSIntersectsRect(topFrame, topFrame))
-            {
-                NSDrawThreePartImage(topFrame,
-                                     [NSImage imageNamed:@"day-top-left"],
-                                     [NSImage imageNamed:@"day-top"],
-                                     [NSImage imageNamed:@"day-top-right"],
-                                     NO,
-                                     NSCompositeSourceOver,
-                                     AlphaFraction,
-                                     YES);
-            }
+        NSSize bottomSize = NSMakeSize(aLayer.bounds.size.width,
+                                       [[NSImage imageNamed:@"allday-bottom"] size].height);
+        NSSize topSize = NSMakeSize(aLayer.bounds.size.width,
+                                    [[NSImage imageNamed:@"allday-top"] size].height);
+        NSSize middleSize = NSMakeSize(aLayer.bounds.size.width,
+                                       aLayer.bounds.size.height - bottomSize.height - topSize.height);
+        NSRect dirtyRect = NSRectFromCGRect(aDirtyRect);
+        static CGFloat AlphaFraction = 1.0f;
 
-            NSRect middleFrame = NSMakeRect(0.0,
-                                            NSMaxY(topFrame),
-                                            middleSize.width,
-                                            middleSize.height);
-            if (NSIntersectsRect(middleFrame, dirtyRect))
-            {
-                [(NSImage *)[NSImage imageNamed:@"day-middle-left"] drawInRect:NSMakeRect(0.0f,
-                                                                                          middleFrame.origin.y,
-                                                                                          1.0f,
-                                                                                          middleFrame.size.height)
-                                                                      fromRect:NSZeroRect
-                                                                     operation:NSCompositeSourceOver
-                                                                      fraction:AlphaFraction
-                                                                respectFlipped:YES
-                                                                         hints:nil];
-                [(NSImage *)[NSImage imageNamed:@"day-middle"] drawInRect:NSMakeRect(1.0f,
-                                                                                     middleFrame.origin.y,
-                                                                                     middleFrame.size.width - 2.0f,
-                                                                                     middleFrame.size.height)
-                                                                 fromRect:NSZeroRect
-                                                                operation:NSCompositeSourceOver
-                                                                 fraction:AlphaFraction
-                                                           respectFlipped:YES
-                                                                    hints:nil];
-                [(NSImage *)[NSImage imageNamed:@"day-middle-right"] drawInRect:NSMakeRect(middleFrame.size.width - 1.0f,
-                                                                                           middleFrame.origin.y,
-                                                                                           1.0f,
-                                                                                           middleFrame.size.height)
-                                                                       fromRect:NSZeroRect
-                                                                      operation:NSCompositeSourceOver
-                                                                       fraction:AlphaFraction
-                                                                 respectFlipped:YES
-                                                                          hints:nil];
-            }
+        NSRect topFrame = NSMakeRect(0.0,
+                                     0.0,
+                                     topSize.width,
+                                     topSize.height);
+        if (NSIntersectsRect(topFrame, topFrame))
+        {
+            NSDrawThreePartImage(topFrame,
+                                 [NSImage imageNamed:@"day-top-left"],
+                                 [NSImage imageNamed:@"day-top"],
+                                 [NSImage imageNamed:@"day-top-right"],
+                                 NO,
+                                 NSCompositeSourceOver,
+                                 AlphaFraction,
+                                 YES);
+        }
 
-            NSRect bottomFrame = NSMakeRect(0.0,
-                                            NSMaxY(middleFrame),
-                                            bottomSize.width,
-                                            bottomSize.height);
-            if (NSIntersectsRect(bottomFrame, dirtyRect))
-            {
-                NSDrawThreePartImage(bottomFrame,
-                                     [NSImage imageNamed:@"day-bottom-left"],
-                                     [NSImage imageNamed:@"day-bottom"],
-                                     [NSImage imageNamed:@"day-bottom-right"],
-                                     NO,
-                                     NSCompositeSourceOver,
-                                     AlphaFraction,
-                                     YES);
-            }
+        NSRect middleFrame = NSMakeRect(0.0,
+                                        NSMaxY(topFrame),
+                                        middleSize.width,
+                                        middleSize.height);
+        if (NSIntersectsRect(middleFrame, dirtyRect))
+        {
+            [(NSImage *)[NSImage imageNamed:@"day-middle-left"] drawInRect:NSMakeRect(0.0f,
+                                                                                      middleFrame.origin.y,
+                                                                                      1.0f,
+                                                                                      middleFrame.size.height)
+                                                                  fromRect:NSZeroRect
+                                                                 operation:NSCompositeSourceOver
+                                                                  fraction:AlphaFraction
+                                                            respectFlipped:YES
+                                                                     hints:nil];
+            [(NSImage *)[NSImage imageNamed:@"day-middle"] drawInRect:NSMakeRect(1.0f,
+                                                                                 middleFrame.origin.y,
+                                                                                 middleFrame.size.width - 2.0f,
+                                                                                 middleFrame.size.height)
+                                                             fromRect:NSZeroRect
+                                                            operation:NSCompositeSourceOver
+                                                             fraction:AlphaFraction
+                                                       respectFlipped:YES
+                                                                hints:nil];
+            [(NSImage *)[NSImage imageNamed:@"day-middle-right"] drawInRect:NSMakeRect(middleFrame.size.width - 1.0f,
+                                                                                       middleFrame.origin.y,
+                                                                                       1.0f,
+                                                                                       middleFrame.size.height)
+                                                                   fromRect:NSZeroRect
+                                                                  operation:NSCompositeSourceOver
+                                                                   fraction:AlphaFraction
+                                                             respectFlipped:YES
+                                                                      hints:nil];
+        }
 
-            NSString *dayName = [aLayer valueForKey:_WLDayBackgroundLayerTitleKey];
-            [dayName drawWithRect:[selfBlock columnTitleFrame]
-                          options:_WLDayBackgroundTitleAttributes
-                       attributes:[self _titleAttributesForColumnDayBackgroundLayer:aLayer]];
+        NSRect bottomFrame = NSMakeRect(0.0,
+                                        NSMaxY(middleFrame),
+                                        bottomSize.width,
+                                        bottomSize.height);
+        if (NSIntersectsRect(bottomFrame, dirtyRect))
+        {
+            NSDrawThreePartImage(bottomFrame,
+                                 [NSImage imageNamed:@"day-bottom-left"],
+                                 [NSImage imageNamed:@"day-bottom"],
+                                 [NSImage imageNamed:@"day-bottom-right"],
+                                 NO,
+                                 NSCompositeSourceOver,
+                                 AlphaFraction,
+                                 YES);
+        }
 
-            [NSGraphicsContext restoreGraphicsState];
-        };
+        NSString *dayName = [aLayer valueForKey:_WLDayBackgroundLayerTitleKey];
+        [dayName drawWithRect:[selfBlock columnTitleFrame]
+                      options:_WLDayBackgroundTitleAttributes
+                   attributes:[self _titleAttributesForColumnDayBackgroundLayer:aLayer]];
+
+        [NSGraphicsContext restoreGraphicsState];
+    };
 #else
-        l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
+    l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
 #endif
-    }];
     return l;
 }
 
@@ -1308,34 +1272,30 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
 - (CALayer *)setupTimeIndicatorRootLayer
 {
     CALayer *l = [CALayer layer];
-    [CATransaction WL_performWithDisabledActions:^(void) {
-        l.name = _WLTimeIndicatorRootLayerName;
-        l.masksToBounds = YES;
+    l.name = _WLTimeIndicatorRootLayerName;
+    l.masksToBounds = YES;
 #ifdef DEBUG_LAYERS
-        l.backgroundColor = [[NSColor magentaColor] WL_CGColor];
-        l.opacity = 0.3f;
+    l.backgroundColor = [[NSColor magentaColor] WL_CGColor];
+    l.opacity = 0.3f;
 #endif
-        WLCalendarTimeIndicatorLayer *timeIndicator = [self setupTimeIndicatorLayer];
-        CGSize preferredTimeIndicatorSize = [timeIndicator preferredFrameSize];
-        timeIndicator.frame = CGRectMake(0.0f, 0.0f, preferredTimeIndicatorSize.width, preferredTimeIndicatorSize.height);
-        timeIndicator.autoresizingMask = kCALayerWidthSizable;
-        [l addSublayer:timeIndicator];
-        [l setValue:timeIndicator forKey:timeIndicator.name];
-    }];
+    WLCalendarTimeIndicatorLayer *timeIndicator = [self setupTimeIndicatorLayer];
+    CGSize preferredTimeIndicatorSize = [timeIndicator preferredFrameSize];
+    timeIndicator.frame = CGRectMake(0.0f, 0.0f, preferredTimeIndicatorSize.width, preferredTimeIndicatorSize.height);
+    timeIndicator.autoresizingMask = kCALayerWidthSizable;
+    [l addSublayer:timeIndicator];
+    [l setValue:timeIndicator forKey:timeIndicator.name];
     return l;
 }
 
 - (WLCalendarTimeIndicatorLayer *)setupTimeIndicatorLayer
 {
     __block WLCalendarTimeIndicatorLayer *l = [WLCalendarTimeIndicatorLayer layer];
-    [CATransaction WL_performWithDisabledActions:^{
-        l.name = _WLTimeIndicatorLayerName;
-        l.anchorPoint = CGPointMake(0.0f, 1.0f);
-        l.needsDisplayOnBoundsChange = YES;
+    l.name = _WLTimeIndicatorLayerName;
+    l.anchorPoint = CGPointMake(0.0f, 1.0f);
+    l.needsDisplayOnBoundsChange = YES;
 #ifdef DEBUG_LAYERS
-        l.backgroundColor = [[NSColor whiteColor] WL_CGColor];
+    l.backgroundColor = [[NSColor whiteColor] WL_CGColor];
 #endif
-    }];
     return l;
 }
 
