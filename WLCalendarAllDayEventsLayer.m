@@ -159,6 +159,7 @@ static const CGFloat _WLTopMargin = 10.0f;
 
 - (void)layoutSublayers
 {
+    // Origin is top left
     CGFloat maxHeight = self.bounds.size.height - _WLTopMargin;
     CGFloat offset = CGRectGetMinY(self.bounds) + _WLTopMargin;
     CGFloat lastVisibleOffset = offset;
@@ -168,15 +169,19 @@ static const CGFloat _WLTopMargin = 10.0f;
         CGFloat height = MIN([layer preferredHeightWithWidth:self.bounds.size.width], maxHeight);
         if (offset + height > CGRectGetMaxY(self.bounds))
         {
-            lastVisibleOffset = offset;
-            firstHiddenLayer = layer;
-			[CATransaction WL_performWithDisabledActions:^{
-				layer.hidden = YES;
-			}];
+            if (firstHiddenLayer == nil)
+            {
+                lastVisibleOffset = offset;
+                firstHiddenLayer = layer;
+            }
+            layer.hidden = YES;
         }
         else
         {
-            layer.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(self.bounds), offset, self.bounds.size.width, height));
+            layer.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(self.bounds),
+                                                    offset,
+                                                    self.bounds.size.width,
+                                                    height));
             layer.hidden = NO;
         }
         offset += height + _WLTopMargin;
@@ -192,9 +197,7 @@ static const CGFloat _WLTopMargin = 10.0f;
                                                                lastVisibleOffset,
                                                                self.bounds.size.width,
                                                                CGRectGetMaxY(self.bounds) - lastVisibleOffset));
-            [CATransaction WL_performWithDisabledActions:^{
-				firstHiddenLayer.hidden = NO;
-			}];
+            firstHiddenLayer.hidden = NO;
         }
     }
 }
