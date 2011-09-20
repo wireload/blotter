@@ -39,9 +39,12 @@ static NSString* const _WLTimeIndicatorRootLayerName = @"timeIndicatorRoot";
 static NSString* const _WLTimeIndicatorLayerName = @"timeIndicator";
 
 
-static NSString* const _WLDayBackgroundColorLayerTitleKey = @"title";
+static NSString* const _WLDayBackgroundLayerTitleKey = @"title";
 
-static NSString* const _WLDayBackgroundColorLayerShouldHighlightTitleKey = @"highlight";
+static NSString* const _WLDayBackgroundLayerShouldHighlightTitleKey = @"highlight";
+
+
+static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine;
 
 
 BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
@@ -60,7 +63,6 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     {
         indexOfHighlightedColumn = NSNotFound;
         heightOfAllDayPartOfColumn = 114.0f;
-        minimumHeightOfColumnTitle = 25.0f;
         _columnLayers = [[NSMutableArray alloc] init];
         showTimeIndicator = YES;
         showTitle = YES;
@@ -80,7 +82,6 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 #pragma mark Properties
 @synthesize dataSource;
 @synthesize heightOfAllDayPartOfColumn;
-@synthesize minimumHeightOfColumnTitle;
 @synthesize showTimeIndicator;
 @synthesize fitDayEvents;
 @synthesize indexOfHighlightedColumn;
@@ -96,7 +97,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     if ([self wantsLayer])
     {
         [[_columnLayers valueForKey:@"WL_dayBackgroundLayer"] enumerateObjectsUsingBlock:^(CALayer *l, NSUInteger idx, BOOL *stop) {
-            [l setValue:[NSNumber numberWithBool:(idx == indexOfHighlightedColumn)] forKey:_WLDayBackgroundColorLayerShouldHighlightTitleKey];
+            [l setValue:[NSNumber numberWithBool:(idx == indexOfHighlightedColumn)] forKey:_WLDayBackgroundLayerShouldHighlightTitleKey];
             [l setNeedsDisplay];
         }];
     }
@@ -486,7 +487,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     NSAssert([self wantsLayer], @"You MUST call -createLayers before.");
 
     CALayer *l = [[_columnLayers objectAtIndex:anIndex] WL_dayBackgroundLayer];
-    [l setValue:[dataSource weekView:self titleForColumnAtIndex:anIndex] forKey:_WLDayBackgroundColorLayerTitleKey];
+    [l setValue:[dataSource weekView:self titleForColumnAtIndex:anIndex] forKey:_WLDayBackgroundLayerTitleKey];
     [l setNeedsDisplay];
 }
 
@@ -571,6 +572,39 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     [timeRulerLayer scrollPoint:newScrollPoint];
 }
 
+- (NSDictionary *)_titleAttributesForColumnDayBackgroundLayer:(WLBlockLayer *)aLayer
+{
+    static NSDictionary *titleAttributes = nil;
+    static NSMutableDictionary *boldTitleAttributes = nil;
+    if (titleAttributes == nil)
+    {
+        NSMutableParagraphStyle *p = [[NSMutableParagraphStyle alloc] init];
+        [p setAlignment:NSCenterTextAlignment];
+        [p setLineBreakMode:NSLineBreakByWordWrapping];
+        NSShadow *s = [[NSShadow alloc] init];
+        [s setShadowBlurRadius:0.0f];
+        [s setShadowColor:[NSColor WL_columnTitleShadowColor]];
+        [s setShadowOffset:NSMakeSize(0.0f, 1.0f)];
+        titleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                                    (id)[NSFont WL_columnTitleFont],  NSFontAttributeName,
+                                                    p,                                NSParagraphStyleAttributeName,
+                                                    [NSColor whiteColor],             NSForegroundColorAttributeName,
+                                                    s,                                NSShadowAttributeName,
+                                                    nil];
+        [s release];
+        [p release];
+    }
+    if (boldTitleAttributes == nil)
+    {
+        boldTitleAttributes = [titleAttributes mutableCopy];
+        [boldTitleAttributes setObject:(id)[NSFont WL_columnBoldTitleFont] forKey:NSFontAttributeName];
+    }
+    if ([[aLayer valueForKey:_WLDayBackgroundLayerShouldHighlightTitleKey] boolValue])
+        return boldTitleAttributes;
+    else
+        return titleAttributes;
+}
+
 
 #pragma mark NSView
 
@@ -621,7 +655,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndTimeRulerRoot = 5.0f;
 {
     CGFloat columnTitleHeightAndMargin = 0.0f;
     if (self.showTitle)
-    columnTitleHeightAndMargin = self.minimumHeightOfColumnTitle + _WLYMarginBetweenTitleAndColumn;
+    columnTitleHeightAndMargin = [self columnTitleFrame].size.height + _WLYMarginBetweenTitleAndColumn;
     return _timeRulerRootLayer.frame.size.height - columnTitleHeightAndMargin;
 }
 
@@ -702,20 +736,35 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
 {
     CGFloat titleHeightAndMargin = 0;
     if (self.showTitle)
-        titleHeightAndMargin = self.minimumHeightOfColumnTitle + _WLYMarginBetweenTitleAndColumn;
+        titleHeightAndMargin = [self columnTitleFrame].size.height + _WLYMarginBetweenTitleAndColumn;
     // Height of the day must be less than time ruler by half of of the first hour.
     CGFloat hourLabelYPadding = [[_timeRulerRootLayer WL_timeRulerLayer] hourLabelYPadding];
     CGRect dayBackgroundFrame = [self dayBackgroundFrame];
     return CGRectIntegral(CGRectInset(CGRectMake(0.0f,
                                                  titleHeightAndMargin + hourLabelYPadding,
                                                  dayBackgroundFrame.size.width,
-                                                 dayBackgroundFrame.size.height - titleHeightAndMargin - hourLabelYPadding), 1.0f, 0.0f));
+                                                 dayBackgroundFrame.size.height - titleHeightAndMargin - hourLabelYPadding),
+                                      1.0f, 0.0f));
 }
 
 - (NSRect)columnTitleFrame
 {
-    CGRect dayBackgroundFrame = [self dayBackgroundFrame];
-    return NSIntegralRect(NSMakeRect(0.0f, _WLYMarginBetweenTitleAndColumn, dayBackgroundFrame.size.width, self.minimumHeightOfColumnTitle));
+    CGFloat width = [self dayBackgroundFrame].size.width;
+    CGFloat height = 25.0f;
+    CGFloat maximumHeight = [[[_columnLayers lastObject] WL_dayBackgroundLayer] frame].size.height;
+    for (WLBlockLayer *l in [_columnLayers valueForKeyPath:@"WL_dayBackgroundLayer"])
+    {
+        NSString *title = [l valueForKey:_WLDayBackgroundLayerTitleKey];
+        NSDictionary *attributes = [self _titleAttributesForColumnDayBackgroundLayer:l];
+        NSRect r = [title boundingRectWithSize:NSMakeSize(width, maximumHeight)
+                                       options:_WLDayBackgroundTitleAttributes
+                                    attributes:attributes];
+        height = fmaxf(height, r.size.height);
+    }
+    return NSIntegralRect(NSMakeRect(0.0f,
+                                     _WLYMarginBetweenTitleAndColumn,
+                                     width,
+                                     height));
 }
 
 - (void)layoutColumnLayers
@@ -1141,21 +1190,6 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
         l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
         l.masksToBounds = YES;
 #ifndef DEBUG_LAYERS
-        NSMutableParagraphStyle *p = [[NSMutableParagraphStyle alloc] init];
-        [p setAlignment:NSCenterTextAlignment];
-        NSShadow *s = [[NSShadow alloc] init];
-        [s setShadowBlurRadius:0.0f];
-        [s setShadowColor:[NSColor WL_columnTitleShadowColor]];
-        [s setShadowOffset:NSMakeSize(0.0f, 1.0f)];
-        NSDictionary *titleAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         (id)[NSFont WL_columnTitleFont],               NSFontAttributeName,
-                                         p,                                             NSParagraphStyleAttributeName,
-                                         [NSColor whiteColor],                          NSForegroundColorAttributeName,
-                                         s,                                             NSShadowAttributeName, nil];
-        NSMutableDictionary *boldTitleAttributes = [titleAttributes mutableCopy];
-        [boldTitleAttributes setObject:(id)[NSFont WL_columnBoldTitleFont] forKey:NSFontAttributeName];
-        [s release];
-        [p release];
         __block WLCalendarWeekView *selfBlock = self;
         l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
             NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:YES];
@@ -1164,17 +1198,22 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
             [NSGraphicsContext saveGraphicsState];
             [NSGraphicsContext setCurrentContext:c];
 
-            NSSize bottomBorderSize = NSMakeSize(aLayer.bounds.size.width, [[NSImage imageNamed:@"allday-bottom"] size].height);
-            NSSize topBorderSize = NSMakeSize(aLayer.bounds.size.width, [[NSImage imageNamed:@"allday-top"] size].height);
-            NSSize middleBorderSize = NSMakeSize(aLayer.bounds.size.width, aLayer.bounds.size.height - bottomBorderSize.height - topBorderSize.height);
-
+            NSSize bottomSize = NSMakeSize(aLayer.bounds.size.width,
+                                           [[NSImage imageNamed:@"allday-bottom"] size].height);
+            NSSize topSize = NSMakeSize(aLayer.bounds.size.width,
+                                        [[NSImage imageNamed:@"allday-top"] size].height);
+            NSSize middleSize = NSMakeSize(aLayer.bounds.size.width,
+                                           aLayer.bounds.size.height - bottomSize.height - topSize.height);
             NSRect dirtyRect = NSRectFromCGRect(aDirtyRect);
-
             static CGFloat AlphaFraction = 1.0f;
-            NSRect topBorderFrame = NSMakeRect(0.0, 0.0, topBorderSize.width, topBorderSize.height);
-            if (NSIntersectsRect(topBorderFrame, topBorderFrame))
+            
+            NSRect topFrame = NSMakeRect(0.0,
+                                         0.0,
+                                         topSize.width,
+                                         topSize.height);
+            if (NSIntersectsRect(topFrame, topFrame))
             {
-                NSDrawThreePartImage(topBorderFrame,
+                NSDrawThreePartImage(topFrame,
                                      [NSImage imageNamed:@"day-top-left"],
                                      [NSImage imageNamed:@"day-top"],
                                      [NSImage imageNamed:@"day-top-right"],
@@ -1184,22 +1223,34 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
                                      YES);
             }
 
-            NSRect middleBorderFrame = NSMakeRect(0.0, NSMaxY(topBorderFrame), middleBorderSize.width, middleBorderSize.height);
-            if (NSIntersectsRect(middleBorderFrame, dirtyRect))
+            NSRect middleFrame = NSMakeRect(0.0,
+                                            NSMaxY(topFrame),
+                                            middleSize.width,
+                                            middleSize.height);
+            if (NSIntersectsRect(middleFrame, dirtyRect))
             {
-                [(NSImage *)[NSImage imageNamed:@"day-middle-left"] drawInRect:NSMakeRect(0.0f, middleBorderFrame.origin.y, 1.0f, middleBorderFrame.size.height)
+                [(NSImage *)[NSImage imageNamed:@"day-middle-left"] drawInRect:NSMakeRect(0.0f,
+                                                                                          middleFrame.origin.y,
+                                                                                          1.0f,
+                                                                                          middleFrame.size.height)
                                                                       fromRect:NSZeroRect
                                                                      operation:NSCompositeSourceOver
                                                                       fraction:AlphaFraction
                                                                 respectFlipped:YES
                                                                          hints:nil];
-                [(NSImage *)[NSImage imageNamed:@"day-middle"] drawInRect:NSMakeRect(1.0f, middleBorderFrame.origin.y, middleBorderFrame.size.width - 2.0f, middleBorderFrame.size.height)
+                [(NSImage *)[NSImage imageNamed:@"day-middle"] drawInRect:NSMakeRect(1.0f,
+                                                                                     middleFrame.origin.y,
+                                                                                     middleFrame.size.width - 2.0f,
+                                                                                     middleFrame.size.height)
                                                                  fromRect:NSZeroRect
                                                                 operation:NSCompositeSourceOver
                                                                  fraction:AlphaFraction
                                                            respectFlipped:YES
                                                                     hints:nil];
-                [(NSImage *)[NSImage imageNamed:@"day-middle-right"] drawInRect:NSMakeRect(middleBorderFrame.size.width - 1.0f, middleBorderFrame.origin.y, 1.0f, middleBorderFrame.size.height)
+                [(NSImage *)[NSImage imageNamed:@"day-middle-right"] drawInRect:NSMakeRect(middleFrame.size.width - 1.0f,
+                                                                                           middleFrame.origin.y,
+                                                                                           1.0f,
+                                                                                           middleFrame.size.height)
                                                                        fromRect:NSZeroRect
                                                                       operation:NSCompositeSourceOver
                                                                        fraction:AlphaFraction
@@ -1207,10 +1258,13 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
                                                                           hints:nil];
             }
 
-            NSRect bottomBorderFrame = NSMakeRect(0.0, NSMaxY(middleBorderFrame), bottomBorderSize.width, bottomBorderSize.height);
-            if (NSIntersectsRect(bottomBorderFrame, dirtyRect))
+            NSRect bottomFrame = NSMakeRect(0.0,
+                                            NSMaxY(middleFrame),
+                                            bottomSize.width,
+                                            bottomSize.height);
+            if (NSIntersectsRect(bottomFrame, dirtyRect))
             {
-                NSDrawThreePartImage(bottomBorderFrame,
+                NSDrawThreePartImage(bottomFrame,
                                      [NSImage imageNamed:@"day-bottom-left"],
                                      [NSImage imageNamed:@"day-bottom"],
                                      [NSImage imageNamed:@"day-bottom-right"],
@@ -1220,16 +1274,13 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
                                      YES);
             }
 
-            NSString *dayName = [aLayer valueForKey:_WLDayBackgroundColorLayerTitleKey];
-            if ([[aLayer valueForKey:_WLDayBackgroundColorLayerShouldHighlightTitleKey] boolValue])
-                [dayName drawInRect:[selfBlock columnTitleFrame] withAttributes:boldTitleAttributes];
-
-            else
-                [dayName drawInRect:[selfBlock columnTitleFrame] withAttributes:titleAttributes];
+            NSString *dayName = [aLayer valueForKey:_WLDayBackgroundLayerTitleKey];
+            [dayName drawWithRect:[selfBlock columnTitleFrame]
+                          options:_WLDayBackgroundTitleAttributes
+                       attributes:[self _titleAttributesForColumnDayBackgroundLayer:aLayer]];
 
             [NSGraphicsContext restoreGraphicsState];
         };
-        [boldTitleAttributes release];
 #else
         l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
 #endif
