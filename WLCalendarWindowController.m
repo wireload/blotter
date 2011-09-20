@@ -47,6 +47,7 @@
                                     [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:YES],
                                     [NSSortDescriptor sortDescriptorWithKey:@"calendar.title" ascending:YES selector:@selector(localizedStandardCompare:)],
                                     [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedStandardCompare:)],
+                                    [NSSortDescriptor sortDescriptorWithKey:@"dateStamp" ascending:YES],
                                     nil];
         _tasksViewController.sortDescriptors = sortDescriptors;
 
