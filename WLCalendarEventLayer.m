@@ -26,7 +26,7 @@ const CGFloat _WLXPadding = 10.0f;
 
 #pragma mark Methods
 
-+ (CGFloat)minimalHumanVisibleWidth
++ (CGFloat)minimumHumanVisibleWidth
 {
     return _WLXPadding + 30.0f;
 }
@@ -36,14 +36,14 @@ const CGFloat _WLXPadding = 10.0f;
     return [self _preferredTitleHeightWithWidth:aWidth] + [self _preferredLocationHeightWithWidth:aWidth] + _WLYPadding;
 }
 
-- (CGFloat)minimalHumanVisibleHeight
+- (CGFloat)minimumHumanVisibleHeight
 {
-    if (!_shouldUpdateMinimalHeightCache)
-        return _cachedMinimalHeight;
+    if (!_shouldUpdateMinimumHeightCache)
+        return _cachedMinimumHeight;
     else
     {
         NSAttributedString *visibleString = [self.title length] > 0 ? self.title : self.location;
-        _cachedMinimalHeight = 0.0f;
+        _cachedMinimumHeight = 0.0f;
         CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)visibleString);
         if (framesetter != NULL)
         {
@@ -54,21 +54,21 @@ const CGFloat _WLXPadding = 10.0f;
             {
                 NSArray *lines = (NSArray *)CTFrameGetLines(frame);
                 if ([lines count] == 1)
-                    _cachedMinimalHeight = AB_CTFrameGetSize(frame).height;
+                    _cachedMinimumHeight = AB_CTFrameGetSize(frame).height;
                 else
                 {
                     CGPoint origins[2];
                     CTFrameGetLineOrigins(frame, CFRangeMake(0, 2), origins);
-                    _cachedMinimalHeight = origins[0].y - origins[1].y;
+                    _cachedMinimumHeight = origins[0].y - origins[1].y;
                 }
                 CFRelease(frame);
             }
             CFRelease(framePath);
             CFRelease(framesetter);
         }
-        _cachedMinimalHeight += _WLYPadding;
-        _shouldUpdateMinimalHeightCache = NO;
-        return _cachedMinimalHeight;
+        _cachedMinimumHeight += _WLYPadding;
+        _shouldUpdateMinimumHeightCache = NO;
+        return _cachedMinimumHeight;
     }
 }
 
@@ -434,7 +434,7 @@ const CGFloat _WLXPadding = 10.0f;
 - (void)didChangeValueForKey:(NSString *)aKey
 {
     if ([aKey isEqualToString:@"title"] || [aKey isEqualToString:@"location"])
-        _shouldUpdateMinimalHeightCache = YES;
+        _shouldUpdateMinimumHeightCache = YES;
     [super didChangeValueForKey:aKey];
 }
 

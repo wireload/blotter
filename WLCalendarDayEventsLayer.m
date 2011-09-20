@@ -113,7 +113,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 
 - (NSUInteger)maximumNumberOfColumns
 {
-    NSUInteger n = self.bounds.size.width / [WLCalendarEventLayer minimalHumanVisibleWidth];
+    NSUInteger n = self.bounds.size.width / [WLCalendarEventLayer minimumHumanVisibleWidth];
     n = MAX(n, (NSUInteger)1); // at least 1 column
     return n;
 }
@@ -501,7 +501,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
         NSArray *columnNodes = [rowNode childNodes];
         NSUInteger n = [columnNodes count];
         CGFloat columnWidth = fmaxf((self.bounds.size.width - XSpaceBetweenEvents * (n - 1)) / n,
-                                    [WLCalendarEventLayer minimalHumanVisibleWidth]);
+                                    [WLCalendarEventLayer minimumHumanVisibleWidth]);
         BOOL shouldRoundCorners = [columnNodes count] > 1;
         [columnNodes enumerateObjectsUsingBlock:^(NSTreeNode *columnNode, NSUInteger columnIdx, BOOL *stop)
         {
@@ -509,9 +509,9 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
             {
                 CGFloat t = [[l valueForKey:_WLStartHourKey] floatValue] * [timeRuler heightOfHour];
                 CGFloat b = [[l valueForKey:_WLEndHourKey] floatValue] * [timeRuler heightOfHour];
-                CGFloat minimalHeight = [l minimalHumanVisibleHeight];
-                if (IS_LESS_F(b - t, minimalHeight))
-                    b = t + minimalHeight;
+                CGFloat minimumHeight = [l minimumHumanVisibleHeight];
+                if (IS_LESS_F(b - t, minimumHeight))
+                    b = t + minimumHeight;
                 NSUInteger numberOfColumnsToSkip = [[l valueForKey:_WLNumberOfColumnsToSkipKey] unsignedIntegerValue];
                 l.frame = CGRectMake(ceilf(CGRectGetMinX(self.bounds) + columnIdx * (columnWidth + XSpaceBetweenEvents)),
                                      floorf(t),

@@ -14,8 +14,8 @@
  @classdesign One of superlayers must be flipped (that is, geometryFlipped is set to YES) so the origin would be top left.
  */
 @interface WLCalendarEventLayer : WLCalendarLayer {
-    CGFloat _cachedMinimalHeight;
-    BOOL _shouldUpdateMinimalHeightCache;
+    CGFloat _cachedMinimumHeight;
+    BOOL _shouldUpdateMinimumHeightCache;
 }
 
 @property (copy) NSAttributedString *title;
@@ -29,7 +29,7 @@
  */
 @property BOOL keepTextVisible;
 
-+ (CGFloat)minimalHumanVisibleWidth;
++ (CGFloat)minimumHumanVisibleWidth;
 
 /*!
  @abstract Returns height that layer should have to fit all lines when width is equal to th aWidth.
@@ -39,7 +39,7 @@
 /*!
  @abstract Returns height that layer should have to fit at least 1 line.
  */
-- (CGFloat)minimalHumanVisibleHeight;
+- (CGFloat)minimumHumanVisibleHeight;
 
 
 - (void)_drawBackground:(CGContextRef)aContext;

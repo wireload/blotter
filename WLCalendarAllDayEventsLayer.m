@@ -185,8 +185,8 @@ static const CGFloat _WLTopMargin = 10.0f;
     // If there is enough space to fit at least one line of the first hidden layer, show this layer.
     if (firstHiddenLayer != nil)
     {
-        CGFloat minimalHeight = [firstHiddenLayer minimalHumanVisibleHeight];
-        if (CGRectGetMaxY(self.bounds) - lastVisibleOffset >= minimalHeight)
+        CGFloat minimumHeight = [firstHiddenLayer minimumHumanVisibleHeight];
+        if (CGRectGetMaxY(self.bounds) - lastVisibleOffset >= minimumHeight)
         {
             firstHiddenLayer.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(self.bounds),
                                                                lastVisibleOffset,
