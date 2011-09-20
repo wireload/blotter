@@ -1060,22 +1060,25 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     l.masksToBounds = YES;
 #ifndef DEBUG_LAYERS
     l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
-        NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:NO];
+        NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:YES];
         [c setImageInterpolation:NSImageInterpolationHigh];
         [NSGraphicsContext saveGraphicsState];
         [NSGraphicsContext setCurrentContext:c];
 
-        NSSize bottomBorderSize = NSMakeSize(aLayer.bounds.size.width, [[NSImage imageNamed:@"allday-bottom"] size].height);
-        NSSize topBorderSize = NSMakeSize(aLayer.bounds.size.width, [[NSImage imageNamed:@"allday-top"] size].height);
-        NSSize middleBorderSize = NSMakeSize(aLayer.bounds.size.width, aLayer.bounds.size.height - bottomBorderSize.height - topBorderSize.height);
+        NSSize bottomSize = NSMakeSize(aLayer.bounds.size.width,
+                                       [[NSImage imageNamed:@"allday-bottom"] size].height);
+        NSSize topSize = NSMakeSize(aLayer.bounds.size.width,
+                                    [[NSImage imageNamed:@"allday-top"] size].height);
+        NSSize middleSize = NSMakeSize(aLayer.bounds.size.width,
+                                       aLayer.bounds.size.height - bottomSize.height - topSize.height);
 
         NSRect dirtyRect = NSRectFromCGRect(aDirtyRect);
         static CGFloat AlphaFraction = 1.0f;
 
-        NSRect topBorderFrame = NSMakeRect(0.0, 0.0, topBorderSize.width, topBorderSize.height);
-        if (NSIntersectsRect(topBorderFrame, topBorderFrame))
+        NSRect topFrame = NSMakeRect(0.0, 0.0, topSize.width, topSize.height);
+        if (NSIntersectsRect(topFrame, topFrame))
         {
-            NSDrawThreePartImage(topBorderFrame,
+            NSDrawThreePartImage(topFrame,
                                  [NSImage imageNamed:@"allday-top-left"],
                                  [NSImage imageNamed:@"allday-top"],
                                  [NSImage imageNamed:@"allday-top-right"],
@@ -1085,23 +1088,42 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
                                  YES);
         }
 
-        NSRect middleBorderFrame = NSMakeRect(0.0, NSMaxY(topBorderFrame), middleBorderSize.width, middleBorderSize.height);
-        if (NSIntersectsRect(middleBorderFrame, dirtyRect))
+        NSRect middleFrame = NSMakeRect(0.0, NSMaxY(topFrame), middleSize.width, middleSize.height);
+        if (NSIntersectsRect(middleFrame, dirtyRect))
         {
-            NSDrawThreePartImage(middleBorderFrame,
-                                 [NSImage imageNamed:@"allday-middle-left"],
-                                 [NSImage imageNamed:@"allday-middle"],
-                                 [NSImage imageNamed:@"allday-middle-right"],
-                                 NO,
-                                 NSCompositeSourceOver,
-                                 AlphaFraction,
-                                 YES);
+            [(NSImage *)[NSImage imageNamed:@"allday-middle-left"] drawInRect:NSMakeRect(0.0f,
+                                                                                         middleFrame.origin.y,
+                                                                                         3.0f,
+                                                                                         middleFrame.size.height)
+                                                                     fromRect:NSZeroRect
+                                                                    operation:NSCompositeSourceOver
+                                                                     fraction:AlphaFraction
+                                                               respectFlipped:YES
+                                                                        hints:nil];
+            [(NSImage *)[NSImage imageNamed:@"allday-middle"] drawInRect:NSMakeRect(3.0f,
+                                                                                    middleFrame.origin.y,
+                                                                                    middleFrame.size.width - 6.0f,
+                                                                                    middleFrame.size.height)
+                                                                fromRect:NSZeroRect
+                                                               operation:NSCompositeSourceOver
+                                                                fraction:AlphaFraction
+                                                          respectFlipped:YES
+                                                                   hints:nil];
+            [(NSImage *)[NSImage imageNamed:@"allday-middle-right"] drawInRect:NSMakeRect(middleFrame.size.width - 3.0f,
+                                                                                          middleFrame.origin.y,
+                                                                                          3.0f,
+                                                                                          middleFrame.size.height)
+                                                                      fromRect:NSZeroRect
+                                                                     operation:NSCompositeSourceOver
+                                                                      fraction:AlphaFraction
+                                                                respectFlipped:YES
+                                                                         hints:nil];
         }
 
-        NSRect bottomBorderFrame = NSMakeRect(0.0, NSMaxY(middleBorderFrame), bottomBorderSize.width, bottomBorderSize.height);
-        if (NSIntersectsRect(bottomBorderFrame, dirtyRect))
+        NSRect bottomFrame = NSMakeRect(0.0, NSMaxY(middleFrame), bottomSize.width, bottomSize.height);
+        if (NSIntersectsRect(bottomFrame, dirtyRect))
         {
-            NSDrawThreePartImage(bottomBorderFrame,
+            NSDrawThreePartImage(bottomFrame,
                                  [NSImage imageNamed:@"allday-bottom-left"],
                                  [NSImage imageNamed:@"allday-bottom"],
                                  [NSImage imageNamed:@"allday-bottom-right"],

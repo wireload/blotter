@@ -116,11 +116,35 @@
 
     NSRect middleFrame = NSMakeRect(NSMinX(bounds), NSMaxY(topFrame), middleSize.width, middleSize.height);
     if (NSIntersectsRect(middleFrame, dirtyRect))
-        [(NSImage *)[NSImage imageNamed:@"info-middle"] drawInRect:middleFrame
+    {
+        [(NSImage *)[NSImage imageNamed:@"info-middle-left"] drawInRect:NSMakeRect(0.0f,
+                                                                                   middleFrame.origin.y,
+                                                                                   2.0f,
+                                                                                   middleFrame.size.height)
+                                                               fromRect:NSZeroRect
+                                                              operation:NSCompositeSourceOver
+                                                               fraction:AlphaFraction
+                                                         respectFlipped:YES
+                                                                  hints:nil];
+        [(NSImage *)[NSImage imageNamed:@"info-middle"] drawInRect:NSMakeRect(2.0f,
+                                                                              middleFrame.origin.y,
+                                                                              middleFrame.size.width - 4.0f,
+                                                                              middleFrame.size.height)
                                                           fromRect:NSZeroRect
                                                          operation:NSCompositeSourceOver
                                                           fraction:AlphaFraction
-                                                    respectFlipped:YES hints:nil];
+                                                    respectFlipped:YES
+                                                             hints:nil];
+        [(NSImage *)[NSImage imageNamed:@"info-middle-right"] drawInRect:NSMakeRect(middleFrame.size.width - 2.0f,
+                                                                                    middleFrame.origin.y,
+                                                                                    2.0f,
+                                                                                    middleFrame.size.height)
+                                                                fromRect:NSZeroRect
+                                                               operation:NSCompositeSourceOver
+                                                                fraction:AlphaFraction
+                                                          respectFlipped:YES
+                                                                   hints:nil];
+    }
 
     NSRect bottomFrame = NSMakeRect(NSMinX(bounds), NSMaxY(middleFrame), bottomSize.width, bottomSize.height);
     if (NSIntersectsRect(bottomFrame, dirtyRect))

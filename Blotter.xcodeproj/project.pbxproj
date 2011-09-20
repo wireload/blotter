@@ -21,6 +21,8 @@
 		28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 28F69CF4129CC12100D4BB97 /* Licenses.rtf */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		E20DAC4F1428FF0B00EF65EA /* info-middle-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E20DAC4D1428FF0B00EF65EA /* info-middle-left.png */; };
+		E20DAC501428FF0B00EF65EA /* info-middle-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E20DAC4E1428FF0B00EF65EA /* info-middle-right.png */; };
 		E214525313FF9550009FEEB8 /* WLCalendarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E214525213FF9550009FEEB8 /* WLCalendarController.m */; };
 		E214582C13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E214582B13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m */; };
 		E21A5F451403D2A4000B6634 /* WLCalendarTaskLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E21A5F441403D2A4000B6634 /* WLCalendarTaskLayer.m */; };
@@ -249,6 +251,8 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Blotter-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Blotter-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Blotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E20DAC4D1428FF0B00EF65EA /* info-middle-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-middle-left.png"; sourceTree = "<group>"; };
+		E20DAC4E1428FF0B00EF65EA /* info-middle-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-middle-right.png"; sourceTree = "<group>"; };
 		E214525113FF9550009FEEB8 /* WLCalendarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarController.h; sourceTree = "<group>"; };
 		E214525213FF9550009FEEB8 /* WLCalendarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarController.m; sourceTree = "<group>"; };
 		E214582A13D5AE7F00B21398 /* WLCalendarBackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarBackgroundLayer.h; sourceTree = "<group>"; };
@@ -762,6 +766,8 @@
 		E282E0A714045EB20007C401 /* info */ = {
 			isa = PBXGroup;
 			children = (
+				E20DAC4D1428FF0B00EF65EA /* info-middle-left.png */,
+				E20DAC4E1428FF0B00EF65EA /* info-middle-right.png */,
 				E2678AA01404787100ABB89B /* info-middle.png */,
 				E282E0A814045EC10007C401 /* info-top-left.png */,
 				E282E0A914045EC10007C401 /* info-top.png */,
@@ -1003,6 +1009,8 @@
 				E2678AC61404947B00ABB89B /* calendar-background-right.png in Resources */,
 				E2678AC91404968600ABB89B /* calendar-background-left-gradient.png in Resources */,
 				E2678ACA1404968600ABB89B /* calendar-background-right-gradient.png in Resources */,
+				E20DAC4F1428FF0B00EF65EA /* info-middle-left.png in Resources */,
+				E20DAC501428FF0B00EF65EA /* info-middle-right.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
