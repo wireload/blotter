@@ -1034,7 +1034,6 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
         [root setValue:allDayBackground forKey:allDayBackground.name];
 
         WLCalendarAllDayEventsLayer *allDay = [self setupAllDayLayer];
-        allDay.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
         [allDayBackground addSublayer:allDay];
         [allDayBackground setValue:allDay forKey:allDay.name];
 
