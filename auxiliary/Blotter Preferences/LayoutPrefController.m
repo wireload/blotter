@@ -10,6 +10,7 @@
 #import "WLLayoutRootView.h"
 #import "DeskboardAppDelegate.h"
 #import "WLCalendarWindowController.h"
+#import "BLCalendarFramer.h"
 
 
 @implementation LayoutPrefController
@@ -159,8 +160,15 @@
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSSplitView *splitView = [aNotification object];
-    if (splitView == _infoWidthSplitView)
+    if (splitView == _infoWidthSplitView && [defaults integerForKey:@"CalendarSize"] != BLNarrowSize)
     {
+        // A User shouldn't be able to rewrite defaults of info section while calendar size is Narrow.
+        // E.g. before setting calendar size to Narrow size was 600. After setting calendar size to Narrow
+        // width will be forced to a specific value (@see -[WLCalendarWindowController _applyNarrowSizeToViews),
+        // but defaults will contain original setting (600). If the user drags divider of _infoWidthSplitView,
+        // it won't be moved (@see -[LayoutPrefController splitView:constrainSplitPosition:ofSubviewAt:]),
+        // but this method will be called and defaults will be overwritten.
+        // Do prevent this, we are checking CalendarSize.
         NSSize infoViewsSize = NSMakeSize([_dateHeightSplitView frame].size.width, 0.0f);
         infoViewsSize = [_infoWidthSplitViewToBlotterWindowTransform transformSize:infoViewsSize];
         [[NSUserDefaults standardUserDefaults] setFloat:infoViewsSize.width forKey:@"InfoViewsWidth"];
@@ -197,11 +205,32 @@
 
 - (CGFloat)splitView:(NSSplitView *)aSplitView constrainSplitPosition:(CGFloat)aProposedPosition ofSubviewAt:(NSInteger)aDividerIndex
 {
+    CGFloat position = 0.0f;
     // Snap to grid if Alt is pressed.
     if ([NSEvent modifierFlags] & NSAlternateKeyMask)
-        return roundf(aProposedPosition / 10.0f) * 10.0f;
+        position = roundf(aProposedPosition / 10.0f) * 10.0f;
     else
-        return aProposedPosition;
+        position = aProposedPosition;
+    if (aSplitView == _infoWidthSplitView)
+    {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSSize minWeekViewSize = NSMakeSize([defaults floatForKey:@"MinimumWeekViewWidth"], 0.0f);
+        minWeekViewSize = [_blotterWindowToInfoWidthSplitViewTransform transformSize:minWeekViewSize];
+        CGFloat splitViewWidth = [aSplitView bounds].size.width;
+        if (position > splitViewWidth - minWeekViewSize.width)
+        {
+            if (position < (splitViewWidth - minWeekViewSize.width / 2))
+                position = splitViewWidth - minWeekViewSize.width;
+            else
+                position = splitViewWidth;
+        }
+        else if ([defaults integerForKey:@"CalendarSize"] == BLNarrowSize)
+        {
+            // User cannot resize week view while calendar size is Narrow.
+            return splitViewWidth;
+        }
+    }
+    return position;
 }
 
 @end

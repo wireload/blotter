@@ -19,12 +19,14 @@
 	<key>RollingCalendar</key>
 	<false/>
 	<key>DateViewHeight</key>
-	<real>250.0</real>
+	<real>250</real>
 	<key>AllDayViewHeight</key>
-	<real>110.0</real>
+	<real>110</real>
 	<key>InfoViewsWidth</key>
-	<real>250.0</real>
+	<real>250</real>
 	<key>PerDayDate</key>
 	<false/>
+	<key>MinimumWeekViewWidth</key>
+	<real>350</real>
 </dict>
 </plist>

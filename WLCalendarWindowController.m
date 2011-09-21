@@ -200,9 +200,20 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
 
 - (void)_applyNarrowSizeToViews
 {
-    [[_dateViewController view] setFrame:[self dateViewFrame]];
-    [_tasksViewBox setFrame:[self tasksViewFrame]];
-    [_rightNowViewBox setFrame:[self rightNowViewFrame]];
+    // Ignore width for info section, but don't overwrite it in user defaults.
+    CGFloat width = [[self.window contentView] bounds].size.width;
+
+    NSRect r = [self dateViewFrame];
+    r.size.width = width;
+    [[_dateViewController view] setFrame:r];
+
+    r = [self tasksViewFrame];
+    r.size.width = width;
+    [_tasksViewBox setFrame:r];
+
+    r = [self rightNowViewFrame];
+    r.size.width = width;
+    [_rightNowViewBox setFrame:r];
     [[_weekViewController view] setHidden:YES];
 }
 
