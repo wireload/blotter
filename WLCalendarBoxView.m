@@ -12,6 +12,13 @@
 #import "WLSoftEdgeLayer.h"
 
 
+static const CGFloat _WLXPadding = 28.0f;
+
+static const CGFloat _WLYPadding = 34.0f;
+
+static const CGFloat _WLYContentMargin = 15.0f;
+
+
 @implementation WLCalendarBoxView
 
 - (id)initWithFrame:(NSRect)aFrameRect
@@ -66,25 +73,35 @@
 - (NSDictionary *)_titleAttributes
 {
     NSShadow *s = [[NSShadow alloc] init];
-    [s setShadowColor:[NSColor WL_tasksShadowColor]];
+    [s setShadowColor:[NSColor WL_taskTextShadowColor]];
     [s setShadowBlurRadius:0.0f];
     // View is flipped
     [s setShadowOffset:NSMakeSize(0.0f, -1.0f)];
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [NSFont WL_infoViewTitleFont],   NSFontAttributeName,
-                                [NSColor WL_infoViewTitleColor], NSForegroundColorAttributeName,
+                                [NSFont WL_boxViewTitleFont],   NSFontAttributeName,
+                                [NSColor WL_boxViewTitleColor], NSForegroundColorAttributeName,
                                 s,                               NSShadowAttributeName, nil];
     [s release];
     return attributes;
 }
 
+- (NSRect)_titleFrame
+{
+    NSRect bounds = [self bounds];
+    return NSIntegralRect(NSMakeRect(NSMinX(bounds) + _WLXPadding / 2,
+                                     NSMinY(bounds) + _WLYPadding / 2,
+                                     NSWidth(bounds) - _WLXPadding,
+                                     34.0f));
+}
+
 - (NSRect)_contentFrame
 {
     NSRect bounds = [self bounds];
-    return NSMakeRect(NSMinX(bounds) + 14.0f,
-                      NSMinY(bounds) + 17.0f + 35.0f + 15.0f,
-                      NSWidth(bounds) - 14.0f - 14.0f,
-                      NSHeight(bounds) - 17.0f - 35.0f - 15.0f - 17.0f);
+    NSRect titleFrame = [self _titleFrame];
+    return NSIntegralRect(NSMakeRect(NSMinX(bounds) + _WLXPadding / 2,
+                                     NSMaxY(titleFrame) + _WLYContentMargin,
+                                     NSWidth(bounds) - _WLXPadding,
+                                     NSHeight(bounds) - NSMaxY(titleFrame) - _WLYContentMargin - _WLYPadding / 2));
 }
 
 
@@ -159,7 +176,7 @@
                              YES);
     }
 
-    NSRect titleFrame = NSMakeRect(NSMinX(bounds) + 14.0f, NSMinY(bounds) + 17.0f, NSWidth(bounds) - 14.0f, 35.0f);
+    NSRect titleFrame = [self _titleFrame];
     if (NSIntersectsRect(titleFrame, dirtyRect) && NSContainsRect(bounds, titleFrame))
         [self.title drawInRect:titleFrame withAttributes:[self _titleAttributes]];
 }

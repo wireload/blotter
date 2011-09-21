@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 #import "WLCalendarTimeRuler.h"
-#import "WLCalendarTextLayer.h"
+#import "WLCalendarTimeRulerLabelLayer.h"
 
 
 @interface WLCalendarTimeRulerLayer : CALayer {
@@ -31,11 +31,11 @@
 - (CGFloat)preferredFrameWidth;
 
 /*!
- @abstract      Returns half of the maximum height of hour label. 
+ @abstract      Returns half of the maximum height of hour label.
  @discussion    You may use this value to make sure that hour label is visible.
  */
 - (CGFloat)hourLabelYPadding;
 
-- (WLCalendarTextLayer *)_setupTimeLayerWithString:(NSString *)aTime;
+- (WLCalendarTimeRulerLabelLayer *)_setupTimeLayerWithString:(NSString *)aTime;
 
 @end

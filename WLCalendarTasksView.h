@@ -36,6 +36,10 @@
 
 - (WLCalendarTaskLayer *)_setupTaskLayerAtIndex:(NSUInteger)anIndex;
 
+- (NSAttributedString *)_titleWithString:(NSString *)aString;
+
+- (NSAttributedString *)_markWithColor:(CGColorRef)aColor;
+
 @end
 
 

@@ -8,6 +8,8 @@
 
 #import "WLCalendarTasksView.h"
 #import "NSColor+CGColor.h"
+#import "NSFont+WLCalendar.h"
+#import "NSColor+WLCalendar.h"
 
 
 static NSString* const _WLTasksLayerName = @"task";
@@ -85,8 +87,8 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     CalTask *task = [dataSource tasksView:self taskAtIndex:anIndex];
     CALayer *layer = [self layer];
     WLCalendarTaskLayer *taskLayer = [[layer valueForKey:_WLOrderedSublayersKey] objectAtIndex:anIndex];
-    taskLayer.string = task.title;
-    taskLayer.markColor = [[[task calendar] color] WL_CGColor];
+    taskLayer.title = [self _titleWithString:task.title];
+    taskLayer.mark = [self _markWithColor:[[[task calendar] color] WL_CGColor]];
     [layer setNeedsLayout];
 }
 
@@ -105,19 +107,51 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 
 #pragma mark CALayoutManager
 
-- (void)layoutSublayersOfLayer:(CALayer *)layer
+- (void)layoutSublayersOfLayer:(CALayer *)aLayer
 {
-    NSParameterAssert([layer.name isEqualToString:_WLTasksLayerName]);
+    // Origin is bottom left.
+    NSParameterAssert([aLayer.name isEqualToString:_WLTasksLayerName]);
 
-    CGSize layerSize = layer.bounds.size;
-    CGFloat top = layerSize.height;
+    CGSize layerSize = aLayer.bounds.size;
+    CGFloat offset = layerSize.height;
+    CGFloat lastVisibleOffset = offset;
+    WLCalendarTaskLayer *firstHiddenLayer = nil;
     static const CGFloat TopMargin = 10.0f;
-    for (WLCalendarTaskLayer *taskLayer in [layer valueForKey:_WLOrderedSublayersKey])
+    for (WLCalendarTaskLayer *taskLayer in [aLayer valueForKey:_WLOrderedSublayersKey])
     {
-        CGFloat preferredHeight = fminf([taskLayer maxHeightForWidth:layerSize.width], layerSize.height);
-        taskLayer.frame = CGRectIntegral(CGRectMake(0.0f, top - preferredHeight, layerSize.width, preferredHeight));
-        taskLayer.hidden = !CGRectContainsRect(layer.bounds, taskLayer.frame);
-        top -= preferredHeight + TopMargin;
+        CGFloat height = fminf([taskLayer preferredHeightWithWidth:layerSize.width], layerSize.height);
+        if (offset - height >= 0.0f)
+        {
+            taskLayer.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(aLayer.bounds),
+                                                        offset - height,
+                                                        layerSize.width,
+                                                        height));
+            taskLayer.hidden = NO;
+        }
+        else
+        {
+            if (firstHiddenLayer == nil)
+            {
+                firstHiddenLayer = taskLayer;
+                lastVisibleOffset = offset;
+            }
+            taskLayer.hidden = YES;
+        }
+        offset -= height + TopMargin;
+    }
+    
+    // If there is enough space to fit at least one line of the first hidden layer, show this layer.
+    if (firstHiddenLayer != nil)
+    {
+        CGFloat minimumHeight = [firstHiddenLayer minimumHumanVisibleHeight];
+        if (lastVisibleOffset - minimumHeight >= 0.0f)
+        {
+            firstHiddenLayer.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(aLayer.bounds),
+                                                               0.0f,
+                                                               self.bounds.size.width,
+                                                               25));
+            firstHiddenLayer.hidden = NO;
+        }
     }
 }
 
@@ -129,12 +163,44 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     CalTask *task = [dataSource tasksView:self taskAtIndex:anIndex];
     WLCalendarTaskLayer *taskLayer = [WLCalendarTaskLayer layer];
     taskLayer.name = task.uid;
-    taskLayer.string = task.title;
-    taskLayer.markColor = [[[task calendar] color] WL_CGColor];
+    taskLayer.title = [self _titleWithString:task.title];
+    taskLayer.mark = [self _markWithColor:[[[task calendar] color] WL_CGColor]];
+    taskLayer.needsDisplayOnBoundsChange = YES;
 #ifdef DEBUG_LAYERS
     taskLayer.backgroundColor = [[NSColor orangeColor] WL_CGColor];
 #endif
     return taskLayer;
+}
+
+- (NSAttributedString *)_titleWithString:(NSString *)aString
+{
+    if ([aString length] == 0)
+        return nil;
+    
+    static NSDictionary *a = nil;
+    if (a == nil)
+    {
+        a = [[NSDictionary alloc] initWithObjectsAndKeys:
+             (id)[NSFont WL_taskFont],                      (id)kCTFontAttributeName,
+             (id)[[NSColor WL_taskTitleColor] WL_CGColor],  (id)kCTForegroundColorAttributeName,
+             nil];
+    }
+    return [[[NSAttributedString alloc] initWithString:aString attributes:a] autorelease];
+}
+
+- (NSAttributedString *)_markWithColor:(CGColorRef)aColor
+{
+    static NSMutableDictionary *a = nil;
+    if (a == nil)
+    {
+        a = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+             (id)[NSFont WL_taskFont],                      (id)kCTFontAttributeName,
+             (id)[[NSColor WL_taskTitleColor] WL_CGColor],  (id)kCTForegroundColorAttributeName,
+             nil];
+    }
+    [a setObject:(id)aColor forKey:(id)kCTForegroundColorAttributeName];
+    return [[[NSAttributedString alloc] initWithString:NSLocalizedString(@"•", @"Task's mark")
+                                            attributes:a] autorelease];
 }
 
 @end

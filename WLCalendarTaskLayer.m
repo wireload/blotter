@@ -8,13 +8,9 @@
 
 #import "WLCalendarTaskLayer.h"
 #import "NSColor+CGColor.h"
-#import "CATextLayer+WLStringSize.h"
+#import "NSFont+WLCalendar.h"
 #import "NSColor+WLCalendar.h"
-
-
-static NSString* const _WLMarkLayerName = @"mark";
-
-static NSString* const _WLTextLayerName = @"text";
+#import "NSAttributedString+WLStringDrawing.h"
 
 
 static const CGFloat _WLMarkTailIndent = 6.0f;
@@ -22,150 +18,84 @@ static const CGFloat _WLMarkTailIndent = 6.0f;
 
 @implementation WLCalendarTaskLayer
 
-- (id)init
-{
-    self = [super init];
-    if (self != nil) {
-        CATextLayer *mark = [CATextLayer layer];
-        mark.name = _WLMarkLayerName;
-        mark.string = @"•";
-        mark.foregroundColor = (CGColorRef)[[self class] defaultValueForKey:@"markColor"];
-        mark.fontSize = [[[self class] defaultValueForKey:@"fontSize"] floatValue];
-        mark.font = [[self class] defaultValueForKey:@"font"];
-        mark.alignmentMode = kCAAlignmentRight;
-#ifdef DEBUG_LAYERS
-        mark.backgroundColor = [[NSColor greenColor] WL_CGColor];
-#endif
-        [self addSublayer:mark];
-        [self setValue:mark forKey:_WLMarkLayerName];
-
-        CATextLayer *text = [CATextLayer layer];
-        text.name = _WLTextLayerName;
-        text.wrapped = YES;
-        text.foregroundColor = (CGColorRef)[[self class] defaultValueForKey:@"markColor"];
-        text.fontSize = [[[self class] defaultValueForKey:@"fontSize"] floatValue];
-        text.font = [[self class] defaultValueForKey:@"font"];
-        text.shadowColor = [[NSColor WL_tasksShadowColor] WL_CGColor];
-        text.shadowOffset = CGSizeMake(0.0f, -1.0f);
-        text.shadowOpacity = 1.0f;
-        text.shadowRadius = 0.0f;
-#ifdef DEBUG_LAYERS
-        text.backgroundColor = [[NSColor greenColor] WL_CGColor];
-#endif
-        [self addSublayer:text];
-        [self setValue:text forKey:_WLTextLayerName];
-    }
-    return self;
-}
-
 
 #pragma mark Properties
-@dynamic string;
-@dynamic stringColor;
-@dynamic markColor;
-@dynamic font;
-@dynamic fontSize;
+@dynamic mark;
+@dynamic title;
 
-- (NSString *)string
+
+#pragma mark Methods
+
+- (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth
 {
-    return [[self valueForKey:_WLTextLayerName] string];
+    CGSize markSize = [self.mark WL_preferredSize];
+    return fmaxf([self.title WL_preferredHeightWithWidth:aWidth - markSize.width - _WLMarkTailIndent],
+                 [self.mark WL_preferredSize].height);
 }
 
-- (void)setString:(NSString *)newString
+- (CGFloat)minimumHumanVisibleHeight
 {
-    [[self valueForKey:_WLTextLayerName] setString:newString];
+    CGSize markSize = [self.mark WL_preferredSize];
+    return fmaxf([self.mark WL_firstLineHeightWithWidth:self.bounds.size.width],
+                 [self.title WL_firstLineHeightWithWidth:self.bounds.size.width - markSize.width - _WLMarkTailIndent]);
 }
 
-- (CGColorRef)stringColor
+
+#pragma mark Private
+
+- (CGRect)_titleFrame
 {
-    return [(CATextLayer *)[self valueForKey:_WLTextLayerName] foregroundColor];
+    CGRect markFrame = [self _markFrame];
+    return CGRectIntegral(CGRectMake(CGRectGetMaxX(markFrame) + _WLMarkTailIndent,
+                                     0.0f,
+                                     self.bounds.size.width - CGRectGetMaxX(markFrame) - _WLMarkTailIndent,
+                                     self.bounds.size.height));
 }
 
-- (void)setStringColor:(CGColorRef)newStringColor
+- (CGRect)_markFrame
 {
-    [(CATextLayer *)[self valueForKey:_WLTextLayerName] setForegroundColor:newStringColor];
+    CGSize preferredSize = [self.mark WL_preferredSize];
+    return CGRectIntegral(CGRectMake(0.0f,
+                                     0.0f,
+                                     preferredSize.width,
+                                     self.bounds.size.height));
 }
 
-- (CGColorRef)markColor
-{
-    return [(CATextLayer *)[self valueForKey:_WLMarkLayerName] foregroundColor];
-}
-
-- (void)setMarkColor:(CGColorRef)newMarkColor
-{
-    [(CATextLayer *)[self valueForKey:_WLMarkLayerName] setForegroundColor:newMarkColor];
-}
-
-- (CFTypeRef)font
-{
-    return [[self valueForKey:_WLTextLayerName] font];
-}
-
-- (void)setFont:(CFTypeRef)newFont
-{
-    [[self valueForKey:_WLTextLayerName] setFont:newFont];
-    [[self valueForKey:_WLMarkLayerName] setFont:newFont];
-}
-
-- (CGFloat)fontSize
-{
-    return [[self valueForKey:_WLTextLayerName] fontSize];
-}
-
-- (void)setFontSize:(CGFloat)newFontSize
-{
-    [[self valueForKey:_WLTextLayerName] setFontSize:newFontSize];
-    [[self valueForKey:_WLMarkLayerName] setFontSize:newFontSize];
-}
 
 #pragma mark CALayer
 
-+ (id)defaultValueForKey:(NSString *)aKey
++ (BOOL)needsDisplayForKey:(NSString *)aKey
 {
-    if ([aKey isEqualToString:@"markColor"])
-        return (id)[[NSColor whiteColor] WL_CGColor];
-    else if ([aKey isEqualToString:@"stringColor"] || [aKey isEqualToString:@"markColor"])
-        return [CATextLayer defaultValueForKey:@"foregroundColor"];
-    else if ([aKey isEqualToString:@"font"])
-        return [NSFont fontWithName:@"Helvetica" size:16.0f];
-    else if ([aKey isEqualToString:@"fontSize"])
-        return [NSNumber numberWithFloat:16.0f];
+    if ([aKey isEqualToString:@"title"])
+        return YES;
+    else if ([aKey isEqualToString:@"mark"])
+        return YES;
     else
-        return [super defaultValueForKey:aKey];
+        return [super needsDisplayForKey:aKey];
 }
 
-- (void)layoutSublayers
+- (void)drawInContext:(CGContextRef)aContext
 {
-    CATextLayer *mark = [self valueForKey:_WLMarkLayerName];
-    CGSize preferredSize = [mark preferredFrameSize];
-    mark.frame = CGRectIntegral(CGRectMake(0.0f,
-                                           0.0f,
-                                           preferredSize.width,
-                                           self.bounds.size.height));
+    NSLog(@"%d", [self contentsAreFlipped]);
+    CGContextSaveGState(aContext);
+    CGContextSetShouldAntialias(aContext, YES);
+    CGContextSetAllowsAntialiasing(aContext, YES);
+    CGContextSetAllowsFontSubpixelQuantization(aContext, NO);
+    CGContextSetAllowsFontSmoothing(aContext, NO);
+    CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f, -1.0f), 0.0f, [[NSColor WL_taskTextShadowColor] WL_CGColor]);
 
-    CATextLayer *text = [self valueForKey:_WLTextLayerName];
-    text.frame = CGRectIntegral(CGRectMake(CGRectGetMaxX(mark.frame) + _WLMarkTailIndent,
-                                           0.0f,
-                                           self.bounds.size.width - CGRectGetMaxX(mark.frame) - _WLMarkTailIndent,
-                                           self.bounds.size.height));
+    [self.mark WL_drawWithRect:[self _markFrame] context:aContext];
+    [self.title WL_drawWithRect:[self _titleFrame] context:aContext];
+
+    CGContextRestoreGState(aContext);
 }
 
 - (CGSize)preferredFrameSize
 {
-    CATextLayer *text = [self valueForKey:_WLTextLayerName];
-    CGSize preferredSize = [text preferredFrameSize];
-    CATextLayer *mark = [self valueForKey:_WLMarkLayerName];
-    preferredSize.width += mark.bounds.size.width + _WLMarkTailIndent;
-    return preferredSize;
-}
-
-- (CGFloat)maxHeightForWidth:(CGFloat)aWidth
-{
-    CATextLayer *text = [self valueForKey:_WLTextLayerName];
-    CATextLayer *mark = [self valueForKey:_WLMarkLayerName];
-    CGFloat markHeight = [mark WL_maxStringHeightForWidth:aWidth];
-    CGFloat textHeight = [text WL_maxStringHeightForWidth:aWidth - mark.bounds.size.width - _WLMarkTailIndent];
-    return fmaxf(markHeight, textHeight);
+    CGSize titleSize = [self.title WL_preferredSize];
+    CGSize markSize = [self.mark WL_preferredSize];
+    return CGSizeMake(markSize.width + _WLMarkTailIndent + titleSize.width,
+                      fmaxf(titleSize.height, markSize.height));
 }
 
 @end

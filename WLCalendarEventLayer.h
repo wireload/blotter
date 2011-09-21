@@ -32,7 +32,7 @@
 + (CGFloat)minimumHumanVisibleWidth;
 
 /*!
- @abstract Returns height that layer should have to fit all lines when width is equal to th aWidth.
+ @abstract Returns height that layer should have to fit all lines when width is equal to aWidth.
  */
 - (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth;
 
@@ -45,15 +45,5 @@
 - (void)_drawBackground:(CGContextRef)aContext;
 
 - (void)_drawString:(CGContextRef)aContext;
-
-- (CGSize)_preferredTitleSize;
-
-- (CGSize)_preferredLocationSize;
-
-- (CGFloat)_preferredTitleHeightWithWidth:(CGFloat)aWidth;
-
-- (CGFloat)_preferredLocationHeightWithWidth:(CGFloat)aWidth;
-
-- (void)_drawString:(NSAttributedString *)aString inContext:(CGContextRef)aContext rect:(CGRect)aRect;
 
 @end

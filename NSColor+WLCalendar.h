@@ -13,13 +13,16 @@
 
 + (NSColor *)WL_weekendColor;
 
+
 + (NSColor *)WL_columnColor;
 
-+ (NSColor *)WL_tasksColor;
++ (NSColor *)WL_columnTitleShadowColor;
 
-+ (NSColor *)WL_tasksShadowColor;
 
-+ (NSColor *)WL_dateShadowColor;
++ (NSColor *)WL_boxViewTitleColor;
+
++ (NSColor *)WL_boxViewTitleColor;
+
 
 + (NSColor *)WL_timelineShadowColor;
 
@@ -27,16 +30,22 @@
 
 + (NSColor *)WL_timelineLineShadowColor;
 
-+ (NSColor *)WL_columnTitleShadowColor;
 
-+ (NSColor *)WL_eventShadowColor;
++ (NSColor *)WL_eventTextShadowColor;
 
 
 + (NSColor *)WL_dateViewBackgroundColor;
 
 + (NSColor *)WL_dateViewTextColor;
 
++ (NSColor *)WL_dateViewTextShadowColor;
 
-+ (NSColor *)WL_infoViewTitleColor;
+
++ (NSColor *)WL_taskTextShadowColor;
+
++ (NSColor *)WL_taskTitleColor;
+
+
++ (NSColor *)WL_timeRulerLabelColor;
 
 @end

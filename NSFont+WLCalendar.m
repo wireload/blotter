@@ -36,7 +36,7 @@
     return [self WL_dateViewMonthAndYearFont];
 }
 
-+ (NSFont *)WL_infoViewTitleFont
++ (NSFont *)WL_boxViewTitleFont
 {
     return [NSFont fontWithName:@"Helvetica Neue Light" size:26.0f];
 }
@@ -49,6 +49,16 @@
 + (CTFontRef)WL_eventLocationFont
 {
     return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("HelveticaNeue-Italic"), 10.0f, nil) autorelease];
+}
+
++ (CTFontRef)WL_taskFont
+{
+    return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica"), 16.0f, nil) autorelease];
+}
+
++ (CTFontRef)WL_timeRulerLabelFont
+{
+    return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica Neue"), 10.0f, nil) autorelease];
 }
 
 @end

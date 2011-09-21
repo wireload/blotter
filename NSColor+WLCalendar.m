@@ -24,23 +24,7 @@
                                      alpha:1.0f];
 }
 
-+ (NSColor *)WL_tasksColor
-{
-    return [NSColor colorWithCalibratedRed:101.0f / 255.0f
-                                     green:161.0f / 255.0f
-                                      blue:165.0f / 255.0f
-                                     alpha:0.15f];
-}
-
-+ (NSColor *)WL_tasksShadowColor
-{
-    return [NSColor colorWithCalibratedRed:47.0f / 255.0f
-                                     green:47.0f / 255.0f
-                                      blue:47.0f / 255.0f
-                                     alpha:0.3f];
-}
-
-+ (NSColor *)WL_dateShadowColor
++ (NSColor *)WL_dateViewTextShadowColor
 {
     return [NSColor colorWithCalibratedRed:47.0f / 255.0f
                                      green:47.0f / 255.0f
@@ -61,7 +45,7 @@
     return [NSColor colorWithCalibratedRed:242.0f / 255.0f
                                      green:242.0f / 255.0f
                                       blue:242.0f / 255.0f
-                                     alpha:0.75f];    
+                                     alpha:0.75f];
 }
 
 + (NSColor *)WL_timelineLineShadowColor
@@ -69,7 +53,7 @@
     return [NSColor colorWithCalibratedRed:0.0f / 255.0f
                                      green:0.0f / 255.0f
                                       blue:0.0f / 255.0f
-                                     alpha:0.25f];    
+                                     alpha:0.25f];
 }
 
 + (NSColor *)WL_columnTitleShadowColor
@@ -80,7 +64,7 @@
                                      alpha:1.0f];
 }
 
-+ (NSColor *)WL_eventShadowColor
++ (NSColor *)WL_eventTextShadowColor
 {
     return [NSColor colorWithCalibratedRed:47.0f / 255.0f
                                      green:47.0f / 255.0f
@@ -98,9 +82,27 @@
     return [NSColor whiteColor];
 }
 
-+ (NSColor *)WL_infoViewTitleColor
++ (NSColor *)WL_boxViewTitleColor
 {
     return [NSColor whiteColor];
+}
+
++ (NSColor *)WL_timeRulerLabelColor
+{
+    return [NSColor whiteColor];
+}
+
++ (NSColor *)WL_taskTitleColor
+{
+    return [NSColor whiteColor];
+}
+
++ (NSColor *)WL_taskTextShadowColor
+{
+    return [NSColor colorWithCalibratedRed:47.0f / 255.0f
+                                     green:47.0f / 255.0f
+                                      blue:47.0f / 255.0f
+                                     alpha:0.3f];
 }
 
 @end

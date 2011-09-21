@@ -10,6 +10,7 @@
 #import "NSColor+CGColor.h"
 #import "CoreAnimation+WLCalendar.h"
 #import "NSColor+WLCalendar.h"
+#import "NSFont+WLCalendar.h"
 
 
 @implementation WLCalendarTimeRulerLayer
@@ -62,7 +63,7 @@
     self.sublayers = nil;
     for (NSString *hour in hours)
     {
-        WLCalendarTextLayer *timeLayer = [self _setupTimeLayerWithString:hour];
+        WLCalendarTimeRulerLabelLayer *timeLayer = [self _setupTimeLayerWithString:hour];
         [self addSublayer:timeLayer];
         [_sortedTimeLayers addObject:timeLayer];
     }
@@ -92,19 +93,23 @@
 
 #pragma mark Private
 
-- (WLCalendarTextLayer *)_setupTimeLayerWithString:(NSString *)aTime
+- (WLCalendarTimeRulerLabelLayer *)_setupTimeLayerWithString:(NSString *)aTime
 {
-    WLCalendarTextLayer *l = [WLCalendarTextLayer layer];
-    [CATransaction WL_performWithDisabledActions:^{
-        l.string = aTime;
-        l.alignmentMode = kCAAlignmentRight;
-        l.stringShadowColor = [[NSColor WL_timelineShadowColor] WL_CGColor];
-        l.font = (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica Neue"), 10.0f, nil) autorelease];
-        l.needsDisplayOnBoundsChange = YES;
+    WLCalendarTimeRulerLabelLayer *l = [WLCalendarTimeRulerLabelLayer layer];
+    CTTextAlignment a = kCTRightTextAlignment;
+    CTParagraphStyleSetting alignmentSetting = {.spec = kCTParagraphStyleSpecifierAlignment, .valueSize = sizeof(CTTextAlignment), .value = &a};
+    CTParagraphStyleRef p = CTParagraphStyleCreate(&alignmentSetting, 1);
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                (id)[NSFont WL_timeRulerLabelFont],                 (id)kCTFontAttributeName,
+                                (id)[[NSColor WL_timeRulerLabelColor] WL_CGColor],  (id)kCTForegroundColorAttributeName,
+                                (id)p,                                              (id)kCTParagraphStyleAttributeName,
+                                nil];
+    CFRelease(p);
+    l.string = [[[NSAttributedString alloc] initWithString:aTime attributes:attributes] autorelease];
+    l.needsDisplayOnBoundsChange = YES;
 #ifdef DEBUG_LAYERS
-        l.backgroundColor = [[NSColor greenColor] WL_CGColor];
+    l.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif
-    }];
     return l;
 }
 
@@ -129,7 +134,7 @@
 
     CGFloat heightOfHour = timeRuler.heightOfHour;
     CGFloat hourPosition = [self hourLabelYPadding];
-    for (CATextLayer *hourLabel in _sortedTimeLayers)
+    for (WLCalendarTimeRulerLabelLayer *hourLabel in _sortedTimeLayers)
     {
         CGSize size = [hourLabel preferredFrameSize];
         hourLabel.frame = CGRectIntegral(CGRectMake(0.0f, hourPosition - size.height / 2.0, self.bounds.size.width, size.height));

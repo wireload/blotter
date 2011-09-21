@@ -39,6 +39,8 @@
 
 - (NSDictionary *)_titleAttributes;
 
+- (NSRect)_titleFrame;
+
 - (NSRect)_contentFrame;
 
 @end

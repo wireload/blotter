@@ -23,11 +23,17 @@
 + (NSFont *)WL_dateViewWeekdayFont;
 
 
-+ (NSFont *)WL_infoViewTitleFont;
++ (NSFont *)WL_boxViewTitleFont;
 
 
 + (CTFontRef)WL_eventTitleFont;
 
 + (CTFontRef)WL_eventLocationFont;
+
+
++ (CTFontRef)WL_taskFont;
+
+
++ (CTFontRef)WL_timeRulerLabelFont;
 
 @end

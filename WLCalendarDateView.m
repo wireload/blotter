@@ -34,7 +34,7 @@
     NSRect bounds = [self bounds];
 
     NSShadow *s = [[NSShadow alloc] init];
-    [s setShadowColor:[NSColor WL_dateShadowColor]];
+    [s setShadowColor:[NSColor WL_dateViewTextShadowColor]];
     [s setShadowBlurRadius:0.0f];
     [s setShadowOffset:NSMakeSize(0.0f, 1.0f)];
     NSMutableParagraphStyle *p = [[NSMutableParagraphStyle alloc] init];

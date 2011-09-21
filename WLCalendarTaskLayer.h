@@ -11,16 +11,24 @@
 
 @interface WLCalendarTaskLayer : CALayer
 
-@property (nonatomic, copy) NSString *string;
+@property (copy) NSAttributedString *mark;
 
-@property (nonatomic) CGColorRef stringColor;
+@property (copy) NSAttributedString *title;
 
-@property (nonatomic) CGColorRef markColor;
 
-@property (nonatomic) CFTypeRef font;
+/*!
+ @abstract Returns height that layer should have to fit all lines when width is equal to aWidth.
+ */
+- (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth;
 
-@property (nonatomic) CGFloat fontSize;
+/*!
+ @abstract Returns height that layer should have to fit at least 1 line.
+ */
+- (CGFloat)minimumHumanVisibleHeight;
 
-- (CGFloat)maxHeightForWidth:(CGFloat)aWidth;
+
+- (CGRect)_titleFrame;
+
+- (CGRect)_markFrame;
 
 @end

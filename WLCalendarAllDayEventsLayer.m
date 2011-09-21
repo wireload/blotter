@@ -167,7 +167,15 @@ static const CGFloat _WLTopMargin = 10.0f;
     for (WLCalendarEventLayer *layer in _icalSortedEventLayers)
     {
         CGFloat height = MIN([layer preferredHeightWithWidth:self.bounds.size.width], maxHeight);
-        if (offset + height > CGRectGetMaxY(self.bounds))
+        if (offset + height <= CGRectGetMaxY(self.bounds))
+        {
+            layer.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(self.bounds),
+                                                    offset,
+                                                    self.bounds.size.width,
+                                                    height));
+            layer.hidden = NO;
+        }
+        else
         {
             if (firstHiddenLayer == nil)
             {
@@ -175,14 +183,6 @@ static const CGFloat _WLTopMargin = 10.0f;
                 firstHiddenLayer = layer;
             }
             layer.hidden = YES;
-        }
-        else
-        {
-            layer.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(self.bounds),
-                                                    offset,
-                                                    self.bounds.size.width,
-                                                    height));
-            layer.hidden = NO;
         }
         offset += height + _WLTopMargin;
     }

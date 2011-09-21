@@ -10,6 +10,7 @@
 #import "NSColor+CGColor.h"
 #import "CoreText+Additions.h"
 #import "NSColor+WLCalendar.h"
+#import "NSAttributedString+WLStringDrawing.h"
 
 
 const CGFloat _WLYPadding = 6.0f;
@@ -33,7 +34,7 @@ const CGFloat _WLXPadding = 10.0f;
 
 - (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth
 {
-    return [self _preferredTitleHeightWithWidth:aWidth] + [self _preferredLocationHeightWithWidth:aWidth] + _WLYPadding;
+    return [self.title WL_preferredHeightWithWidth:aWidth - _WLXPadding] + [self.location WL_preferredHeightWithWidth:aWidth - _WLXPadding] + _WLYPadding;
 }
 
 - (CGFloat)minimumHumanVisibleHeight
@@ -43,29 +44,7 @@ const CGFloat _WLXPadding = 10.0f;
     else
     {
         NSAttributedString *visibleString = [self.title length] > 0 ? self.title : self.location;
-        _cachedMinimumHeight = 0.0f;
-        CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)visibleString);
-        if (framesetter != NULL)
-        {
-            CGMutablePathRef framePath = CGPathCreateMutable();
-            CGPathAddRect(framePath, NULL, CGRectMake(0.0f, 0.0f, self.bounds.size.width - _WLXPadding, 9999.0f));
-            CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
-            if (frame != NULL)
-            {
-                NSArray *lines = (NSArray *)CTFrameGetLines(frame);
-                if ([lines count] == 1)
-                    _cachedMinimumHeight = AB_CTFrameGetSize(frame).height;
-                else
-                {
-                    CGPoint origins[2];
-                    CTFrameGetLineOrigins(frame, CFRangeMake(0, 2), origins);
-                    _cachedMinimumHeight = origins[0].y - origins[1].y;
-                }
-                CFRelease(frame);
-            }
-            CFRelease(framePath);
-            CFRelease(framesetter);
-        }
+        _cachedMinimumHeight = [visibleString WL_firstLineHeightWithWidth:self.bounds.size.width - _WLXPadding];
         _cachedMinimumHeight += _WLYPadding;
         _shouldUpdateMinimumHeightCache = NO;
         return _cachedMinimumHeight;
@@ -152,6 +131,7 @@ const CGFloat _WLXPadding = 10.0f;
 
 - (void)_drawString:(CGContextRef)aContext
 {
+    NSLog(@"%d", [self contentsAreFlipped]);
     CGContextSaveGState(aContext);
     CGRect titleAndLocationFrame = CGRectInset(self.bounds, _WLXPadding / 2, _WLYPadding / 2);
     CGRect dirtyRect = CGContextGetClipBoundingBox(aContext);
@@ -164,13 +144,13 @@ const CGFloat _WLXPadding = 10.0f;
         CGContextSetAllowsFontSmoothing(aContext, YES);
         CGContextSetShouldAntialias(aContext, YES);
         CGContextSetAllowsAntialiasing(aContext, YES);
-        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0f), 0.0f, [[NSColor WL_eventShadowColor] WL_CGColor]);
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0f), 0.0f, [[NSColor WL_eventTextShadowColor] WL_CGColor]);
 
-        CGFloat preferredTitleHeight = [self _preferredTitleHeightWithWidth:self.bounds.size.width];
+        CGFloat preferredTitleHeight = [self.title WL_preferredHeightWithWidth:self.bounds.size.width - _WLXPadding];
         if (preferredTitleHeight < titleAndLocationFrame.size.height)
         {
             CGFloat titleHeight = preferredTitleHeight;
-            CGFloat preferredLocationHeight = [self _preferredLocationHeightWithWidth:self.bounds.size.width];
+            CGFloat preferredLocationHeight = [self.location WL_preferredHeightWithWidth:self.bounds.size.width - _WLXPadding];
             CGFloat locationHeight = CGFLOAT_MAX;
             if (preferredTitleHeight + preferredLocationHeight < titleAndLocationFrame.size.height)
             {
@@ -198,184 +178,23 @@ const CGFloat _WLXPadding = 10.0f;
                                                           CGRectGetMaxY(titleAndLocationFrame) - titleHeight,
                                                           titleAndLocationFrame.size.width,
                                                           titleHeight));
-            [self _drawString:self.title inContext:aContext rect:titleFrame];
+            [self.title WL_drawWithRect:titleFrame context:aContext];
             CGRect locationFrame = CGRectIntegral(CGRectMake(titleAndLocationFrame.origin.x,
                                                              CGRectGetMinY(titleFrame) - locationHeight,
                                                              titleAndLocationFrame.size.width,
                                                              locationHeight));
-            [self _drawString:self.location inContext:aContext rect:locationFrame];
+            [self.location WL_drawWithRect:locationFrame context:aContext];
         }
         else
         {
             // Layer cannot fit title, so there is no need to draw location.
-            [self _drawString:self.title inContext:aContext rect:titleAndLocationFrame];
+            [self.title WL_drawWithRect:titleAndLocationFrame context:aContext];
         }
     }
 #ifdef DEBUG_PERFORMANCE
     else
         NSLog(@"Avoid drawing string");
 #endif
-    CGContextRestoreGState(aContext);
-}
-
-- (CGSize)_preferredTitleSize
-{
-    CGSize preferredFrameSize = CGSizeZero;
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self.title);
-    if (framesetter != NULL)
-    {
-        CGMutablePathRef framePath = CGPathCreateMutable();
-        CGPathAddRect(framePath, NULL, CGRectMake(0.0f, 0.0f, 9999.0f, 9999.0f));
-        CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
-        if (frame != NULL)
-        {
-            preferredFrameSize = AB_CTFrameGetSize(frame);
-            CFRelease(frame);
-        }
-        CFRelease(framePath);
-        CFRelease(framesetter);
-    }
-    return CGSizeMake(ceilf(preferredFrameSize.width), ceilf(preferredFrameSize.height));
-}
-
-- (CGSize)_preferredLocationSize
-{
-    CGSize preferredFrameSize = CGSizeZero;
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self.location);
-    if (framesetter != NULL)
-    {
-        CGMutablePathRef framePath = CGPathCreateMutable();
-        CGPathAddRect(framePath, NULL, CGRectMake(0.0f, 0.0f, 9999.0f, 9999.0f));
-        CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
-        if (frame != NULL)
-        {
-            preferredFrameSize = AB_CTFrameGetSize(frame);
-            CFRelease(frame);
-        }
-        CFRelease(framePath);
-        CFRelease(framesetter);
-    }
-    return CGSizeMake(ceilf(preferredFrameSize.width), ceilf(preferredFrameSize.height));
-}
-
-- (CGFloat)_preferredTitleHeightWithWidth:(CGFloat)aWidth
-{
-    CGSize preferredFrameSize = CGSizeZero;
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self.title);
-    if (framesetter != NULL)
-    {
-        CGMutablePathRef framePath = CGPathCreateMutable();
-        CGPathAddRect(framePath, NULL, CGRectMake(0.0f, 0.0f, aWidth - _WLXPadding, 9999.0f));
-        CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
-        if (frame != NULL)
-        {
-            preferredFrameSize = AB_CTFrameGetSize(frame);
-            CFRelease(frame);
-        }
-        CFRelease(framePath);
-        CFRelease(framesetter);
-    }
-    return ceilf(preferredFrameSize.height);
-}
-
-- (CGFloat)_preferredLocationHeightWithWidth:(CGFloat)aWidth
-{
-    CGSize preferredFrameSize = CGSizeZero;
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self.location);
-    if (framesetter != NULL)
-    {
-        CGMutablePathRef framePath = CGPathCreateMutable();
-        CGPathAddRect(framePath, NULL, CGRectMake(0.0f, 0.0f, aWidth - _WLXPadding, 9999.0f));
-        CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
-        if (frame != NULL)
-        {
-            preferredFrameSize = AB_CTFrameGetSize(frame);
-            CFRelease(frame);
-        }
-        CFRelease(framePath);
-        CFRelease(framesetter);
-    }
-    return ceilf(preferredFrameSize.height);
-}
-
-- (void)_drawString:(NSAttributedString *)aString inContext:(CGContextRef)aContext rect:(CGRect)aRect
-{
-    CGContextSaveGState(aContext);
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)aString);
-    if (framesetter != NULL)
-    {
-        CGMutablePathRef framePath = CGPathCreateMutable();
-        CGPathAddRect(framePath, NULL, aRect);
-        CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
-        if (frame != NULL)
-        {
-            __block NSArray *lines = (NSArray *)CTFrameGetLines(frame);
-            NSUInteger numberOfLines = [lines count];
-            if (numberOfLines > 0)
-            {
-                __block CGPoint *lineOrigins = calloc(numberOfLines, sizeof(CGPoint));
-                CTFrameGetLineOrigins(frame, CFRangeMake(0, numberOfLines), lineOrigins);
-
-                CFRange frameRange = CTFrameGetVisibleStringRange(frame);
-                CFIndex stringLength = [aString length];
-                NSParameterAssert((NSUInteger)stringLength == [aString length]);
-                BOOL shouldTruncateLastLine = (frameRange.location + frameRange.length) < stringLength;
-
-                [lines enumerateObjectsUsingBlock:^(id line, NSUInteger idx, BOOL *stop)
-                 {
-                     CGPoint origin = lineOrigins[idx];
-                     CGContextSetTextPosition(aContext, aRect.origin.x + origin.x, aRect.origin.y + origin.y);
-
-                     if (idx != numberOfLines - 1 || !shouldTruncateLastLine)
-                         CTLineDraw((CTLineRef)line, aContext);
-                     else
-                     {
-                         CFRange lineRange = CTLineGetStringRange((CTLineRef)line);
-                         NSRange range = NSMakeRange(lineRange.location, lineRange.length);
-                         NSMutableAttributedString *truncatedString = [[NSMutableAttributedString alloc] initWithAttributedString:
-                                                                       [aString attributedSubstringFromRange:range]];
-                         NSString *trimmedString = [[truncatedString string] stringByTrimmingCharactersInSet:
-                                                    [NSCharacterSet whitespaceAndNewlineCharacterSet]];
-                         [[truncatedString mutableString] setString:trimmedString];
-                         static const CFStringRef Token = CFSTR("\u2026");
-                         [[truncatedString mutableString] appendString:(NSString *)Token];
-                         CTLineRef truncatedLine = CTLineCreateWithAttributedString((CFAttributedStringRef)truncatedString);
-                         [truncatedString release];
-                         if (truncatedLine != NULL)
-                         {
-                             CTLineRef truncationToken = NULL;
-                             CFDictionaryRef tokenAttributes = (CFDictionaryRef)[aString attributesAtIndex:0 effectiveRange:NULL];
-                             CFAttributedStringRef truncationString = CFAttributedStringCreate(NULL,
-                                                                                               Token,
-                                                                                               tokenAttributes);
-                             truncationToken = CTLineCreateWithAttributedString(truncationString);
-                             CFRelease(truncationString);
-                             // In case when adding truncation symbol to the end of line make the line to not fit the bounds.
-                             CTLineRef truncatedTruncatedLine = CTLineCreateTruncatedLine(truncatedLine,
-                                                                                          aRect.size.width,
-                                                                                          kCTLineTruncationEnd,
-                                                                                          truncationToken);
-                             CFRelease(truncationToken);
-                             if (truncatedTruncatedLine != NULL)
-                             {
-                                 CTLineDraw(truncatedTruncatedLine, aContext);
-                                 CFRelease(truncatedTruncatedLine);
-                             }
-                             else
-                                 CTLineDraw(truncatedLine, aContext);
-                             CFRelease(truncatedLine);
-                         }
-                         else
-                             CTLineDraw((CTLineRef)line, aContext);
-                     }
-                 }];
-                free(lineOrigins);
-            }
-            CFRelease(frame);
-        }
-        CFRelease(framePath);
-        CFRelease(framesetter);
-    }
     CGContextRestoreGState(aContext);
 }
 
@@ -417,15 +236,10 @@ const CGFloat _WLXPadding = 10.0f;
 {
     NSAssert(self.layoutManager == nil, @"You cannot use custom layout managers with this class");
 
-    CGSize preferredTitleSize = [self _preferredTitleSize];
-    CGSize preferredLocationSize = [self _preferredLocationSize];
+    CGSize preferredTitleSize = [self.title WL_preferredSize];
+    CGSize preferredLocationSize = [self.location WL_preferredSize];
     return CGSizeMake(ceilf(fmaxf(preferredTitleSize.width, preferredLocationSize.width) + _WLXPadding),
                       ceilf(preferredTitleSize.height + preferredLocationSize.height + _WLYPadding));
-}
-
-- (BOOL)contentsAreFlipped
-{
-    return YES;
 }
 
 
