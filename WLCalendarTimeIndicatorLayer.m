@@ -32,9 +32,6 @@
 
 - (void)drawInContext:(CGContextRef)aContext
 {
-#ifdef DEBUG_PERFORMANCE
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-#endif
     CGContextSaveGState(aContext);
     
     CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f,  -1.0f), 0, [[NSColor WL_timelineLineShadowColor] WL_CGColor]);

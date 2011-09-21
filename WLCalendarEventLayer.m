@@ -131,7 +131,6 @@ const CGFloat _WLXPadding = 10.0f;
 
 - (void)_drawString:(CGContextRef)aContext
 {
-    NSLog(@"%d", [self contentsAreFlipped]);
     CGContextSaveGState(aContext);
     CGRect titleAndLocationFrame = CGRectInset(self.bounds, _WLXPadding / 2, _WLYPadding / 2);
     CGRect dirtyRect = CGContextGetClipBoundingBox(aContext);
@@ -191,10 +190,6 @@ const CGFloat _WLXPadding = 10.0f;
             [self.title WL_drawWithRect:titleAndLocationFrame context:aContext];
         }
     }
-#ifdef DEBUG_PERFORMANCE
-    else
-        NSLog(@"Avoid drawing string");
-#endif
     CGContextRestoreGState(aContext);
 }
 

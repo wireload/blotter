@@ -76,7 +76,6 @@ static const CGFloat _WLMarkTailIndent = 6.0f;
 
 - (void)drawInContext:(CGContextRef)aContext
 {
-    NSLog(@"%d", [self contentsAreFlipped]);
     CGContextSaveGState(aContext);
     CGContextSetShouldAntialias(aContext, YES);
     CGContextSetAllowsAntialiasing(aContext, YES);

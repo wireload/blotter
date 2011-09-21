@@ -127,9 +127,6 @@
 
 - (void)layoutSublayers
 {
-#ifdef DEBUG_PERFORMANCE
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-#endif
     NSAssert(self.layoutManager == nil, @"You cannot use custom layout managers with this class");
 
     CGFloat heightOfHour = timeRuler.heightOfHour;
