@@ -15,7 +15,6 @@
 		285B840913C0C6150042C813 /* Blotter-B9.icns in Resources */ = {isa = PBXBuildFile; fileRef = 285B840813C0C6150042C813 /* Blotter-B9.icns */; };
 		28B54DB61283BABF0037BF53 /* SS_PrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54DB51283BABF0037BF53 /* SS_PrefsController.m */; };
 		28F696811298B99800D4BB97 /* calendar in Resources */ = {isa = PBXBuildFile; fileRef = 28F6966B1298B99800D4BB97 /* calendar */; };
-		28F6975B129969E500D4BB97 /* NSDate-Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6975A129969E500D4BB97 /* NSDate-Utilities.m */; };
 		28F699E4129C0EBC00D4BB97 /* BLFadeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F699E3129C0EBC00D4BB97 /* BLFadeController.m */; };
 		28F69A1B129C1CAA00D4BB97 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 28F69A1A129C1CAA00D4BB97 /* Credits.rtf */; };
 		28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 28F69CF4129CC12100D4BB97 /* Licenses.rtf */; };
@@ -27,7 +26,6 @@
 		E214525313FF9550009FEEB8 /* WLCalendarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E214525213FF9550009FEEB8 /* WLCalendarController.m */; };
 		E214582C13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E214582B13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m */; };
 		E21A5F451403D2A4000B6634 /* WLCalendarTaskLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E21A5F441403D2A4000B6634 /* WLCalendarTaskLayer.m */; };
-		E21DB6CD13560D19004084F7 /* NSDate+ISO8601.m in Sources */ = {isa = PBXBuildFile; fileRef = E21DB6CC13560D19004084F7 /* NSDate+ISO8601.m */; };
 		E221B3A313EC5C2F00F9B392 /* CoreAnimation+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = E221B3A213EC5C2F00F9B392 /* CoreAnimation+WLCalendar.m */; };
 		E22C78AB13FFCD9F00EE44C0 /* NSColor+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */; };
 		E23779EF1312AD6000F46E7D /* WLClosableWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E23779D71312AD6000F46E7D /* WLClosableWindow.m */; };
@@ -240,8 +238,6 @@
 		28E96D7412EA3145000AF199 /* MainMenu.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = MainMenu.strings; path = Resources/sv.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		28E96D7512EA3145000AF199 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		28F6966B1298B99800D4BB97 /* calendar */ = {isa = PBXFileReference; lastKnownFileType = folder; name = calendar; path = Resources/calendar; sourceTree = "<group>"; };
-		28F69759129969E500D4BB97 /* NSDate-Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate-Utilities.h"; sourceTree = "<group>"; };
-		28F6975A129969E500D4BB97 /* NSDate-Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate-Utilities.m"; sourceTree = "<group>"; };
 		28F699E2129C0EBC00D4BB97 /* BLFadeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLFadeController.h; sourceTree = "<group>"; };
 		28F699E3129C0EBC00D4BB97 /* BLFadeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLFadeController.m; sourceTree = "<group>"; };
 		28F69A1A129C1CAA00D4BB97 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = Credits.rtf; path = Resources/Credits.rtf; sourceTree = "<group>"; };
@@ -261,8 +257,6 @@
 		E214582B13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarBackgroundLayer.m; sourceTree = "<group>"; };
 		E21A5F431403D2A4000B6634 /* WLCalendarTaskLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTaskLayer.h; sourceTree = "<group>"; };
 		E21A5F441403D2A4000B6634 /* WLCalendarTaskLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarTaskLayer.m; sourceTree = "<group>"; };
-		E21DB6CB13560D19004084F7 /* NSDate+ISO8601.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+ISO8601.h"; sourceTree = "<group>"; };
-		E21DB6CC13560D19004084F7 /* NSDate+ISO8601.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+ISO8601.m"; sourceTree = "<group>"; };
 		E221B3A113EC5C2F00F9B392 /* CoreAnimation+WLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreAnimation+WLCalendar.h"; sourceTree = "<group>"; };
 		E221B3A213EC5C2F00F9B392 /* CoreAnimation+WLCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CoreAnimation+WLCalendar.m"; sourceTree = "<group>"; };
 		E22C78A913FFCD9F00EE44C0 /* NSColor+WLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+WLCalendar.h"; sourceTree = "<group>"; };
@@ -488,8 +482,6 @@
 				28F69D52129D854300D4BB97 /* BLCalendarFramer.h */,
 				2844DB2C129DA1BD006C5545 /* BLCalendarFramer.m */,
 				28F69C4A129C9B3D00D4BB97 /* BLPositionerControl.h */,
-				28F69759129969E500D4BB97 /* NSDate-Utilities.h */,
-				28F6975A129969E500D4BB97 /* NSDate-Utilities.m */,
 				28B54DB31283BABF0037BF53 /* SS_PreferencePaneProtocol.h */,
 				28B54DB41283BABF0037BF53 /* SS_PrefsController.h */,
 				28B54DB51283BABF0037BF53 /* SS_PrefsController.m */,
@@ -499,8 +491,6 @@
 				E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */,
 				E29F38EC1319694C00A865D9 /* WLNewTaskWindowController.h */,
 				E29F38ED1319694C00A865D9 /* WLNewTaskWindowController.m */,
-				E21DB6CB13560D19004084F7 /* NSDate+ISO8601.h */,
-				E21DB6CC13560D19004084F7 /* NSDate+ISO8601.m */,
 				E2BA565C13C5E4C4005F0045 /* NSColor+CGColor.h */,
 				E2BA565D13C5E4C4005F0045 /* NSColor+CGColor.m */,
 				E278ECF213C8B73D00B327EB /* WLCalendarTasksViewController.h */,
@@ -1024,7 +1014,6 @@
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				256AC3DA0F4B6AC300CF3369 /* DeskboardAppDelegate.m in Sources */,
 				28B54DB61283BABF0037BF53 /* SS_PrefsController.m in Sources */,
-				28F6975B129969E500D4BB97 /* NSDate-Utilities.m in Sources */,
 				28F699E4129C0EBC00D4BB97 /* BLFadeController.m in Sources */,
 				2844DB2D129DA1BD006C5545 /* BLCalendarFramer.m in Sources */,
 				E23779EF1312AD6000F46E7D /* WLClosableWindow.m in Sources */,
@@ -1036,7 +1025,6 @@
 				E2701FA9133B563B0098CD79 /* WLGlassHudTextView.m in Sources */,
 				E2FCE09D133F9264006E713F /* WLGlassHudDatePicker.m in Sources */,
 				E27313C51349F41200A84433 /* PTHotKey+ShortcutRecorder.m in Sources */,
-				E21DB6CD13560D19004084F7 /* NSDate+ISO8601.m in Sources */,
 				E27196BB13C5A1C3008E5C43 /* WLCalendarTasksView.m in Sources */,
 				E2BA565E13C5E4C4005F0045 /* NSColor+CGColor.m in Sources */,
 				E278ECF413C8B73D00B327EB /* WLCalendarTasksViewController.m in Sources */,
