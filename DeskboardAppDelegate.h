@@ -35,4 +35,8 @@
 
 - (IBAction)newTask:(id)sender;
 
+- (BOOL)isOnlyBlotterWindowVisible;
+
+- (BOOL)_isOnlyBlotterWindowVisible:(NSArray *)aVisibleWindows;
+
 @end

@@ -9,16 +9,7 @@
 #import "BLFadeController.h"
 
 
-@interface BLFadeController (/* Private */)
-
-- (void)createFadeOutTimer;
-
-@end
-
-
 @implementation BLFadeController
-
-@synthesize fadeView;
 
 - (id)initWithView:(NSView *)aView
 {
@@ -28,92 +19,78 @@
 
         NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
         [notificationCenter addObserver:self
-                               selector:@selector(applicationDidBecomeActive:)
+                               selector:@selector(_applicationDidBecomeActive:)
                                    name:NSApplicationDidBecomeActiveNotification
                                  object:NSApp];
         [notificationCenter addObserver:self
-                               selector:@selector(applicationDidResignActive:)
+                               selector:@selector(_applicationDidResignActive:)
                                    name:NSApplicationDidResignActiveNotification
                                  object:NSApp];
-
-        [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self
-                                                                  forKeyPath:@"values.AutoFade"
-                                                                     options:0
-                                                                     context:NULL];
-        [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self
-                                                                  forKeyPath:@"values.AutoFadeSeconds"
-                                                                     options:NSKeyValueObservingOptionInitial
-                                                                     context:NULL];
     }
-
     return self;
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+- (void)dealloc
 {
-    if ([keyPath isEqualToString:@"values.AutoFade"] || [keyPath isEqualToString:@"values.AutoFadeSeconds"])
-    {
-        [self createFadeOutTimer];
-    }
+    [_fadeOutTimer invalidate];
+    [fadeView release];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [super dealloc];
 }
 
-- (void)applicationDidBecomeActive:(NSNotification *)aNotification
+
+#pragma mark Properties
+@synthesize fadeView;
+
+- (void)setFadeView:(NSView *)newFadeView
+{
+    NSAssert([newFadeView wantsLayer], @"View must be either layer-backed or host its own layer.");
+    [newFadeView retain];
+    [fadeView release];
+    fadeView = newFadeView;
+}
+
+
+#pragma mark Methods
+
+- (void)fadeIn
+{
+    [_fadeOutTimer invalidate];
+    _fadeOutTimer = nil;
+    if ([fadeView alphaValue] < 1.0)
+        [fadeView setAlphaValue:1.0];
+}
+
+- (void)scheduleFadeOutTimer
+{
+    [_fadeOutTimer invalidate];
+    _fadeOutTimer = nil;
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"AutoFade"])
+        return;
+    NSInteger fadeSeconds = [[NSUserDefaults standardUserDefaults] integerForKey:@"AutoFadeSeconds"];
+    if (fadeSeconds < 1)
+        fadeSeconds = 60;
+    _fadeOutTimer = [NSTimer scheduledTimerWithTimeInterval:fadeSeconds target:self selector:@selector(_fadeOut) userInfo:nil repeats:NO];
+}
+
+
+#pragma mark Private
+
+- (void)_fadeOut
+{
+    _fadeOutTimer = nil;
+    if ([fadeView alphaValue] > 0.5)
+        [[fadeView animator] setAlphaValue:0.5];
+}
+
+- (void)_applicationDidBecomeActive:(NSNotification *)aNotification
 {
     [self fadeIn];
 }
 
-- (void)applicationDidResignActive:(NSNotification *)aNotification
+- (void)_applicationDidResignActive:(NSNotification *)aNotification
 {
-    [self createFadeOutTimer];
-}
-
-- (void)fadeIn
-{
-    if ([fadeView alphaValue] < 1.0)
-    {
-        /*[NSAnimationContext beginGrouping];
-        [[NSAnimationContext currentContext] setDuration:0.1];
-        [[self animator] setAlphaValue:1.0];
-        [NSAnimationContext endGrouping];*/
-        [fadeView setAlphaValue:1.0];
-    }
-}
-
-- (void)fadeOut
-{
-    if ([fadeView alphaValue] > 0.5)
-    {
-        [NSAnimationContext beginGrouping];
-        [[NSAnimationContext currentContext] setDuration:1.0];
-        [[fadeView animator] setAlphaValue:0.5];
-        [NSAnimationContext endGrouping];
-    }
-}
-
-- (void)createFadeOutTimer
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    BOOL shouldFade = [defaults boolForKey:@"AutoFade"];
-
-    [fadeOutTimer invalidate];
-    [fadeOutTimer release];
-    fadeOutTimer = nil;
-
-    if (!shouldFade || [NSApp isActive])
-    {
-        [self fadeIn];
-    }
-    else
-    {
-        NSInteger fadeSeconds = [defaults integerForKey:@"AutoFadeSeconds"];
-        if (fadeSeconds < 1)
-            fadeSeconds = 60;
-
-        // NSLog(@"Fade out in %d seconds", fadeSeconds);
-
-        fadeOutTimer = [NSTimer scheduledTimerWithTimeInterval:fadeSeconds target:self selector:@selector(fadeOut) userInfo:nil repeats:NO];
-        [fadeOutTimer retain];
-    }
+    [self scheduleFadeOutTimer];
 }
 
 @end

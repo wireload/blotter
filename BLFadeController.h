@@ -9,15 +9,29 @@
 #import <Cocoa/Cocoa.h>
 
 
+/*!
+ @abstract      Controls alpha value of a specific view.
+ @discussion    Observes system notifications (NSApplicationDidBecomeActiveNotification and
+ NSApplicationDidResignActiveNotification).
+ */
 @interface BLFadeController : NSObject {
-    NSTimer *fadeOutTimer;
+    NSTimer *_fadeOutTimer;
     NSView  *fadeView;
 }
 
-@property (retain) NSView  *fadeView;
+@property (nonatomic, retain) NSView  *fadeView;
 
 - (id)initWithView:(NSView *)aView;
 
 - (void)fadeIn;
+
+
+- (void)_fadeOut;
+
+- (void)scheduleFadeOutTimer;
+
+- (void)_applicationDidBecomeActive:(NSNotification *)aNotification;
+
+- (void)_applicationDidResignActive:(NSNotification *)aNotification;
 
 @end

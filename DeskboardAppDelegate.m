@@ -218,13 +218,17 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     }
 }
 
+- (BOOL)isOnlyBlotterWindowVisible
+{
+    return [self _isOnlyBlotterWindowVisible:[NSApp windows]];
+}
+
 
 #pragma mark Private
 
 - (void)_addStatusItem
 {
     NSAssert(statusItem == nil, @"You cannot add status bar twice");
-    // Configure system-wide menubar item
     statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength] retain];;
     [statusItem setHighlightMode:YES];
     [statusItem setMenu:statusMenu];
@@ -235,6 +239,15 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     [statusItem setAlternateImage:statusHighlightImage];
 }
 
+- (BOOL)_isOnlyBlotterWindowVisible:(NSArray *)aVisibleWindows
+{
+    NSMutableArray *visibleWindows = [[aVisibleWindows mutableCopy] autorelease];
+    [visibleWindows filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSWindow *w, NSDictionary *bindings) {
+        return [w isVisible] && ![[w className] hasPrefix:@"NSStatusBarWindow"];
+    }]];
+    return ([visibleWindows count] == 1); // If only desktop window is visible
+}
+
 
 #pragma mark NSWindowDelegate
 
@@ -242,13 +255,9 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 {
     NSMutableArray *visibleWindows = [[[NSApp windows] mutableCopy] autorelease];
     [visibleWindows removeObjectIdenticalTo:[notification object]];
-    [visibleWindows filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSWindow *w, NSDictionary *bindings) {
-        return [w isVisible] && ![[w className] hasPrefix:@"NSStatusBarWindow"];
-    }]];
-    if ([visibleWindows count] == 1) // If only desktop window is visible
+    if ([self _isOnlyBlotterWindowVisible:visibleWindows])
         [NSApp hide:self];
 }
-
 
 #pragma mark NSMenuValidation
 
@@ -289,6 +298,12 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 - (void)menuWillOpen:(NSMenu *)menu
 {
     [[windowController fadeController] fadeIn];
+}
+
+- (void)menuDidClose:(NSMenu *)aMenu
+{
+    if ([self isOnlyBlotterWindowVisible] && ![NSApp isActive])
+        [self.windowController.fadeController scheduleFadeOutTimer];
 }
 
 @end
