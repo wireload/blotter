@@ -105,4 +105,9 @@
                                      alpha:0.3f];
 }
 
++ (NSColor *)WL_windowFrameBackgroundColor
+{
+    return [[NSColor blackColor] colorWithAlphaComponent:0.25f];
+}
+
 @end

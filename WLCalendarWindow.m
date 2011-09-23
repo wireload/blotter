@@ -8,6 +8,7 @@
 
 #import "WLCalendarWindow.h"
 #import "WLCalendarWindowFrameView.h"
+#import "NSColor+WLCalendar.h"
 
 
 @interface _WLFlippedView : NSView
@@ -19,6 +20,12 @@
 - (BOOL)isFlipped
 {
     return YES;
+}
+
+- (void)drawRect:(NSRect)aDirtyRect
+{
+    [[NSColor WL_windowFrameBackgroundColor] set];
+    NSRectFill([self bounds]);
 }
 
 @end
@@ -50,20 +57,28 @@
 }
 
 
+#pragma mark Methods
+
+- (NSView *)realContentView
+{
+    return [super contentView];
+}
+
+
 #pragma mark NSWindow
 
 - (NSRect)frameRectForContentRect:(NSRect)aWindowContentRect
 {
 	return NSInsetRect(aWindowContentRect,
-                       -[WLCalendarWindowFrameView borderWidth] - 10.0f,
-                       -[WLCalendarWindowFrameView borderWidth] - 10.0f);
+                       -[WLCalendarWindowFrameView borderWidth],
+                       -[WLCalendarWindowFrameView borderWidth]);
 }
 
 - (NSRect)contentRectForFrameRect:(NSRect)aWindowFrame
 {
 	return NSInsetRect(aWindowFrame,
-                       [WLCalendarWindowFrameView borderWidth] + 10.0f,
-                       [WLCalendarWindowFrameView borderWidth] + 10.0f);
+                       [WLCalendarWindowFrameView borderWidth],
+                       [WLCalendarWindowFrameView borderWidth]);
 }
 
 - (BOOL)canBecomeKeyWindow

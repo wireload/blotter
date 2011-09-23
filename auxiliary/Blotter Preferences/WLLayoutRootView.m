@@ -15,8 +15,10 @@
 
 - (void)drawRect:(NSRect)aDirtyRect
 {
+    [NSGraphicsContext saveGraphicsState];
     [[NSColor blackColor] setStroke];
     [[NSBezierPath bezierPathWithRect:[self bounds]] stroke];
+    [NSGraphicsContext restoreGraphicsState];
 }
 
 @end

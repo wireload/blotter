@@ -31,7 +31,15 @@
 
 - (void)drawRect:(NSRect)aDirtyRect
 {
+    [NSGraphicsContext saveGraphicsState];
+    [[NSGraphicsContext currentContext] setShouldAntialias:YES];
     NSRect bounds = [self bounds];
+
+    if ([self wantsLayer])
+    {
+        [[NSColor WL_windowFrameBackgroundColor] set];
+        NSRectFill(aDirtyRect);
+    }
 
     NSShadow *s = [[NSShadow alloc] init];
     [s setShadowColor:[NSColor WL_dateViewTextShadowColor]];
@@ -77,6 +85,7 @@
         [attributes setObject:[NSFont WL_dateViewWeekdayFont] forKey:NSFontAttributeName];
         [self.weekday drawInRect:weekdayFrame withAttributes:attributes];
     }
+    [NSGraphicsContext restoreGraphicsState];
 }
 
 @end

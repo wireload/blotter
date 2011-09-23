@@ -48,4 +48,7 @@
 
 + (NSColor *)WL_timeRulerLabelColor;
 
+
++ (NSColor *)WL_windowFrameBackgroundColor;
+
 @end

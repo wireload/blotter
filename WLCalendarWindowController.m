@@ -11,6 +11,7 @@
 #import "WLCalendarTasksViewController.h"
 #import "WLCalendarDateViewController.h"
 #import "WLCalendarBoxView.h"
+#import "WLCopyCompositingFilter.h"
 
 
 @implementation WLCalendarWindowController
@@ -53,10 +54,6 @@
 
         _dateViewController = [[WLCalendarDateViewController alloc] init];
         [_dateViewController setRepresentedObject:[WLCalendarController sharedController]];
-
-        _cache = [[NSCache alloc] init];
-
-        fadeController = [[BLFadeController alloc] initWithView:[window contentView]];
     }
     return self;
 }
@@ -72,7 +69,6 @@
     [_rightNowViewController release];
     [_tasksViewController release];
     [_dateViewController release];
-    [_cache release];
     [_tasksViewBox release];
     [_rightNowViewBox release];
 
@@ -135,6 +131,7 @@
     {
         [self _placeViews];
         [self _updateFrame];
+        fadeController = [[BLFadeController alloc] initWithView:[self.window realContentView]];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults addObserver:self forKeyPath:@"InfoViewsWidth" options:NSKeyValueObservingOptionNew context:NULL];
         [defaults addObserver:self forKeyPath:@"DateViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
@@ -268,15 +265,26 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
 
 - (void)_placeViews
 {
+    // TODO: There is no need make views to be layer-backed if AutoFade is disabled.
     NSParameterAssert(!_isWindowShowed);
-    NSView *contentView = [window contentView];
+    [[self.window realContentView] setWantsLayer:YES];
+    NSView *contentView = [self.window contentView];
     [contentView setAutoresizesSubviews:NO];
 
-    [contentView addSubview:[_dateViewController view]];
+    [WLCopyCompositingFilter class];
+    CIFilter *f = [CIFilter filterWithName:@"WLCopyCompositing"];
+    [f setDefaults];
+
+    NSView *dateView = [_dateViewController view];
+    [dateView setWantsLayer:YES];
+    [dateView setCompositingFilter:f];
+    [contentView addSubview:dateView];
 
     _tasksViewBox = [[WLCalendarBoxView alloc] initWithFrame:NSZeroRect];
     _tasksViewBox.title = NSLocalizedString(@"To Do", @"Header of To Do items list");
     _tasksViewBox.contentView = [_tasksViewController view];
+    [_tasksViewBox setWantsLayer:YES];
+    [_tasksViewBox setCompositingFilter:f];
     [contentView addSubview:_tasksViewBox];
     [_tasksViewBox release];
 
@@ -284,6 +292,8 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     _rightNowViewBox.title = NSLocalizedString(@"Right Now", @"Header of Right Now items list");
     _rightNowViewBox.contentView = [_rightNowViewController view];
     _rightNowViewBox.showSoftTopAndBottomEdges = YES;
+    [_rightNowViewBox setWantsLayer:YES];
+    [_rightNowViewBox setCompositingFilter:f];
     [contentView addSubview:_rightNowViewBox];
     [_rightNowViewBox release];
 

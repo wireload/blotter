@@ -107,9 +107,18 @@ static const CGFloat _WLYContentMargin = 15.0f;
 
 #pragma mark NSView
 
-- (void)drawRect:(NSRect)dirtyRect
+- (void)drawRect:(NSRect)aDirtyRect
 {
-    [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
+    [NSGraphicsContext saveGraphicsState];
+    NSGraphicsContext *context = [NSGraphicsContext currentContext];
+    [context setShouldAntialias:YES];
+    [context setImageInterpolation:NSImageInterpolationHigh];
+
+    if ([self wantsLayer])
+    {
+        [[NSColor WL_windowFrameBackgroundColor] set];
+        NSRectFill(aDirtyRect);
+    }
 
     NSRect bounds = [self bounds];
     NSSize bottomSize = NSMakeSize(bounds.size.width, [[NSImage imageNamed:@"info-bottom"] size].height);
@@ -119,7 +128,7 @@ static const CGFloat _WLYContentMargin = 15.0f;
     static const CGFloat AlphaFraction = 1.0f;
 
     NSRect topFrame = NSMakeRect(NSMinX(bounds), NSMinY(bounds), topSize.width, topSize.height);
-    if (NSIntersectsRect(topFrame, topFrame))
+    if (NSIntersectsRect(topFrame, aDirtyRect))
     {
         NSDrawThreePartImage(topFrame,
                              [NSImage imageNamed:@"info-top-left"],
@@ -132,7 +141,7 @@ static const CGFloat _WLYContentMargin = 15.0f;
     }
 
     NSRect middleFrame = NSMakeRect(NSMinX(bounds), NSMaxY(topFrame), middleSize.width, middleSize.height);
-    if (NSIntersectsRect(middleFrame, dirtyRect))
+    if (NSIntersectsRect(middleFrame, aDirtyRect))
     {
         [(NSImage *)[NSImage imageNamed:@"info-middle-left"] drawInRect:NSMakeRect(0.0f,
                                                                                    middleFrame.origin.y,
@@ -164,7 +173,7 @@ static const CGFloat _WLYContentMargin = 15.0f;
     }
 
     NSRect bottomFrame = NSMakeRect(NSMinX(bounds), NSMaxY(middleFrame), bottomSize.width, bottomSize.height);
-    if (NSIntersectsRect(bottomFrame, dirtyRect))
+    if (NSIntersectsRect(bottomFrame, aDirtyRect))
     {
         NSDrawThreePartImage(bottomFrame,
                              [NSImage imageNamed:@"info-bottom-left"],
@@ -177,8 +186,9 @@ static const CGFloat _WLYContentMargin = 15.0f;
     }
 
     NSRect titleFrame = [self _titleFrame];
-    if (NSIntersectsRect(titleFrame, dirtyRect) && NSContainsRect(bounds, titleFrame))
+    if (NSIntersectsRect(titleFrame, aDirtyRect) && NSContainsRect(bounds, titleFrame))
         [self.title drawInRect:titleFrame withAttributes:[self _titleAttributes]];
+    [NSGraphicsContext restoreGraphicsState];
 }
 
 - (BOOL)isFlipped

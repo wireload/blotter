@@ -45,7 +45,6 @@
     WLCalendarBoxView *_tasksViewBox;
     WLCalendarBoxView *_rightNowViewBox;
 
-    NSCache *_cache;
     BOOL _isWindowShowed;
 }
 

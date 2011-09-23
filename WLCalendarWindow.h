@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "BLFadeController.h"
 
 
 /*!
@@ -20,5 +19,7 @@
 @interface WLCalendarWindow : NSWindow {
     NSView *_realContentView;
 }
+
+- (NSView *)realContentView;
 
 @end

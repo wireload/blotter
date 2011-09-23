@@ -7,6 +7,7 @@
 //
 
 #import "WLCalendarWindowFrameView.h"
+#import "NSColor+CGColor.h"
 
 
 @implementation WLCalendarWindowFrameView
@@ -15,7 +16,7 @@
 
 + (CGFloat)borderWidth
 {
-    return 10.0f;
+    return 20.0f;
 }
 
 
@@ -23,7 +24,12 @@
 
 - (void)drawRect:(NSRect)aDirtyRect
 {
-    NSRect topFrame = NSMakeRect(0.0f, 0.0f, [self bounds].size.width, 13.0f);
+    [NSGraphicsContext saveGraphicsState];
+    [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
+    NSRect topFrame = NSMakeRect(0.0f,
+                                 0.0f,
+                                 [self bounds].size.width,
+                                 20.0f);
     if (NSIntersectsRect(topFrame, aDirtyRect))
     {
         NSDrawThreePartImage(topFrame,
@@ -36,28 +42,34 @@
                              YES);
     }
     
-    NSRect middleFrame = NSMakeRect(0.0f, 13.0f, [self bounds].size.width, 69.0f);
+    NSRect middleFrame = NSMakeRect(0.0f,
+                                    NSMaxY(topFrame),
+                                    [self bounds].size.width,
+                                    63.0f);
     if (NSIntersectsRect(middleFrame, aDirtyRect))
     {
         NSDrawThreePartImage(middleFrame,
-                             [NSImage imageNamed:@"calendar-background-right-gradient"],
-                             [NSImage imageNamed:@"calendar-background-center"],
                              [NSImage imageNamed:@"calendar-background-left-gradient"],
+                             [NSImage imageNamed:@"calendar-background-middle-gradient"],
+                             [NSImage imageNamed:@"calendar-background-right-gradient"],
                              NO,
                              NSCompositeSourceOver,
                              1.0f,
                              YES);
     }
     
-    NSRect bottomFrame = NSMakeRect(0.0f, 82.0f, [self bounds].size.width, [self bounds].size.height - 82.0f);
+    NSRect bottomFrame = NSMakeRect(0.0f,
+                                    NSMaxY(middleFrame),
+                                    [self bounds].size.width,
+                                    [self bounds].size.height - NSMaxY(middleFrame));
     if (NSIntersectsRect(bottomFrame, aDirtyRect))
     {
         NSDrawNinePartImage(bottomFrame,
                             [NSImage imageNamed:@"calendar-background-left"],
-                            [NSImage imageNamed:@"calendar-background-center"],
+                            [NSImage imageNamed:@"calendar-background-middle"],
                             [NSImage imageNamed:@"calendar-background-right"],
                             [NSImage imageNamed:@"calendar-background-left"],
-                            [NSImage imageNamed:@"calendar-background-center"],
+                            [NSImage imageNamed:@"calendar-background-middle"],
                             [NSImage imageNamed:@"calendar-background-right"],
                             [NSImage imageNamed:@"calendar-background-bottom-left"],
                             [NSImage imageNamed:@"calendar-background-bottom"],
@@ -66,6 +78,7 @@
                             1.0f,
                             YES);
     }
+    [NSGraphicsContext restoreGraphicsState];
 }
 
 - (BOOL)isFlipped
