@@ -148,7 +148,6 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
         l.masksToBounds = YES;
         l.contentsGravity = kCAGravityBottom;
         l.anchorPoint = CGPointMake(0.0f, 0.0f);
-        l.compositingFilter = [CIFilter filterWithName:@"CIAdditionCompositing"];
         l.keepTextVisible = self.keepTextOfEventsVisible;
 #ifndef DEBUG_LAYERS
         l.contentsBackgroundOpacity = 0.3f;
