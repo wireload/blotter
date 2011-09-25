@@ -24,6 +24,18 @@ const CGFloat _WLXPadding = 10.0f;
 @dynamic location;
 @dynamic keepTextVisible;
 
+- (void)setCornerRadius:(CGFloat)newCornerRadius
+{
+    if (newCornerRadius == 0.0f)
+        self.borderWidth = 0.0f;
+    else
+    {
+        self.borderColor = [self _lineColor];
+        self.borderWidth = 1.0f;
+    }
+    [super setCornerRadius:newCornerRadius];
+}
+
 
 #pragma mark Methods
 
@@ -85,47 +97,18 @@ const CGFloat _WLXPadding = 10.0f;
     CGGradientRelease(whiteToTransparent);
     CGContextRestoreGState(aContext);
 
-    CGColorRef lineColor = CGColorCreateCopyWithAlpha([[NSColor whiteColor] WL_CGColor], self.contentsBackgroundOpacity);
-    CGContextSetStrokeColorWithColor(aContext, lineColor);
-    CGColorRelease(lineColor);
+
     if (self.cornerRadius == 0.0f)
     {
+        self.borderWidth = 0.0f;
+        CGContextSetLineWidth(aContext, 1.0f);
+        CGContextSetShouldAntialias(aContext, NO);
+        CGContextSetStrokeColorWithColor(aContext, [self _lineColor]);
         CGContextBeginPath(aContext);
-        CGContextMoveToPoint(aContext, self.bounds.origin.x, self.bounds.origin.y);
+        CGContextMoveToPoint(aContext, self.bounds.origin.x + 1.0f, self.bounds.origin.y + 1.0f);
         CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), self.bounds.origin.y);
         CGContextMoveToPoint(aContext, self.bounds.origin.x, CGRectGetMaxY(self.bounds));
         CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), CGRectGetMaxY(self.bounds));
-        CGContextStrokePath(aContext);
-    }
-    else
-    {
-        CGContextBeginPath(aContext);
-        CGContextMoveToPoint(aContext, self.bounds.origin.x, self.cornerRadius);
-        CGContextAddArcToPoint(aContext,
-                               self.bounds.origin.x,
-                               self.bounds.origin.y,
-                               self.bounds.origin.x + self.cornerRadius,
-                               self.bounds.origin.y,
-                               self.cornerRadius);
-        CGContextAddArcToPoint(aContext,
-                               self.bounds.origin.x + self.bounds.size.width,
-                               self.bounds.origin.y,
-                               self.bounds.origin.x + self.bounds.size.width,
-                               self.bounds.origin.x + self.cornerRadius,
-                               self.cornerRadius);
-        CGContextAddArcToPoint(aContext,
-                               self.bounds.origin.x + self.bounds.size.width,
-                               self.bounds.origin.y + self.bounds.size.height,
-                               self.bounds.origin.x + self.bounds.size.width - self.cornerRadius,
-                               self.bounds.origin.y + self.bounds.size.height,
-                               self.cornerRadius);
-        CGContextAddArcToPoint(aContext,
-                               self.bounds.origin.x,
-                               self.bounds.origin.y + self.bounds.size.height,
-                               self.bounds.origin.x,
-                               self.bounds.origin.y,
-                               self.cornerRadius);
-        CGContextAddLineToPoint(aContext, self.bounds.origin.x, self.bounds.origin.y);
         CGContextStrokePath(aContext);
     }
     CGContextRestoreGState(aContext);
@@ -193,6 +176,12 @@ const CGFloat _WLXPadding = 10.0f;
         }
     }
     CGContextRestoreGState(aContext);
+}
+
+- (CGColorRef)_lineColor
+{
+    CGColorRef lineColor = CGColorCreateCopyWithAlpha([[NSColor whiteColor] WL_CGColor], self.contentsBackgroundOpacity);
+    return (CGColorRef)[(id)lineColor autorelease];
 }
 
 

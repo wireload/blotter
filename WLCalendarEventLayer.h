@@ -46,4 +46,6 @@
 
 - (void)_drawString:(CGContextRef)aContext;
 
+- (CGColorRef)_lineColor;
+
 @end
