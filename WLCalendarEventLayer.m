@@ -29,7 +29,9 @@ const CGFloat _WLXPadding = 10.0f;
 
 + (CGFloat)minimumHumanVisibleWidth
 {
-    return _WLXPadding + 30.0f;
+    // At least 2 side-by-side events should be visible on 1280x800.
+    // Width of column depends on user's locale. The widest locale is South Korea.
+    return _WLXPadding + 20.0f;
 }
 
 - (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth
