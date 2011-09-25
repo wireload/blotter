@@ -533,9 +533,9 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     for (WLCalendarEventLayer *l in _sortedByStartDateEventLayers)
     {
         CGSize ls = [l preferredFrameSize];
-        s.width = MAX(s.width, ls.width);
+        s.width = ceilf(fmaxf(s.width, ls.width));
     }
-    s.height = timeRuler.numberOfHours * timeRuler.heightOfHour;
+    s.height = ceilf(timeRuler.numberOfHours * timeRuler.heightOfHour);
     return s;
 }
 
