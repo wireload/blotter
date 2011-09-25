@@ -46,7 +46,13 @@
         [self setHasShadow:NO];
         [self setBackgroundColor:[NSColor clearColor]];
         [self setIgnoresMouseEvents:YES];
-        [self setLevel:kCGDesktopWindowLevel];
+        if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
+            [self setLevel:kCGDesktopWindowLevel];
+        else
+        {
+            // On Lion window level of desktop elements is kCGDesktopWindowLevel + 21.
+            [self setLevel:kCGDesktopWindowLevel + 20];
+        }
         [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
         [self setCanHide:NO];
         [self setDisplaysWhenScreenProfileChanges:YES];
