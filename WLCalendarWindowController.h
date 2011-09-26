@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "WLCalendarWindow.h"
 #import "BLCalendarFramer.h"
-#import "BLFadeController.h"
+#import "WLViewFade.h"
 #import "WLCalendarController.h"
 
 
@@ -23,20 +23,14 @@
  @abstract      This class is responsible for sizing and placing its window according to user settings.
  It observes various system notifications to update its subcontrollers appropriately.
  @performance   You SHOULD prepare the controller and its window before you call -showWindow:
- @dependency    Depends on the following user defaults settings: DisplayAllCalendars, Calendars,
- PerDayDate, RollingCalendar.
- @dependency    Observes NSApplicationDidChangeScreenParametersNotification, NSSystemClockDidChangeNotification,
- NSSystemTimeZoneDidChangeNotification, NSCurrentLocaleDidChangeNotification
  @coclass       WLCalendarWindow The class of controller's window.
- @helper        BLCalendarFramer
- @helper        BLFadeController
  */
 @interface WLCalendarWindowController : NSObject <NSWindowDelegate> {
     WLCalendarWindow *window;
     BLSize windowSize;
     BLPosition windowPosition;
     NSNumber *windowScreenIdentifier;
-    BLFadeController *fadeController;
+    WLViewFade *fadeController;
 
     WLCalendarWeekViewController *_weekViewController;
     WLCalendarWeekViewController *_rightNowViewController;
@@ -67,7 +61,7 @@
  */
 @property (nonatomic, copy) NSNumber *windowScreenIdentifier;
 
-@property (readonly) BLFadeController *fadeController;
+@property (readonly) WLViewFade *fadeController;
 
 - (IBAction)showWindow:(id)aSender;
 

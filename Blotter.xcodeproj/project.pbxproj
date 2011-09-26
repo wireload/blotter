@@ -14,8 +14,7 @@
 		2844DB2D129DA1BD006C5545 /* BLCalendarFramer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2844DB2C129DA1BD006C5545 /* BLCalendarFramer.m */; };
 		285B840913C0C6150042C813 /* Blotter-B9.icns in Resources */ = {isa = PBXBuildFile; fileRef = 285B840813C0C6150042C813 /* Blotter-B9.icns */; };
 		28B54DB61283BABF0037BF53 /* SS_PrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54DB51283BABF0037BF53 /* SS_PrefsController.m */; };
-		28F696811298B99800D4BB97 /* calendar in Resources */ = {isa = PBXBuildFile; fileRef = 28F6966B1298B99800D4BB97 /* calendar */; };
-		28F699E4129C0EBC00D4BB97 /* BLFadeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F699E3129C0EBC00D4BB97 /* BLFadeController.m */; };
+		28F699E4129C0EBC00D4BB97 /* WLViewFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F699E3129C0EBC00D4BB97 /* WLViewFade.m */; };
 		28F69A1B129C1CAA00D4BB97 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 28F69A1A129C1CAA00D4BB97 /* Credits.rtf */; };
 		28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 28F69CF4129CC12100D4BB97 /* Licenses.rtf */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -239,9 +238,8 @@
 		28E96D7312EA3145000AF199 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/sv.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		28E96D7412EA3145000AF199 /* MainMenu.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = MainMenu.strings; path = Resources/sv.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		28E96D7512EA3145000AF199 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/sv.lproj/Localizable.strings; sourceTree = "<group>"; };
-		28F6966B1298B99800D4BB97 /* calendar */ = {isa = PBXFileReference; lastKnownFileType = folder; name = calendar; path = Resources/calendar; sourceTree = "<group>"; };
-		28F699E2129C0EBC00D4BB97 /* BLFadeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLFadeController.h; sourceTree = "<group>"; };
-		28F699E3129C0EBC00D4BB97 /* BLFadeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLFadeController.m; sourceTree = "<group>"; };
+		28F699E2129C0EBC00D4BB97 /* WLViewFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLViewFade.h; sourceTree = "<group>"; };
+		28F699E3129C0EBC00D4BB97 /* WLViewFade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLViewFade.m; sourceTree = "<group>"; };
 		28F69A1A129C1CAA00D4BB97 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = Credits.rtf; path = Resources/Credits.rtf; sourceTree = "<group>"; };
 		28F69C4A129C9B3D00D4BB97 /* BLPositionerControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLPositionerControl.h; path = "auxiliary/Blotter Preferences/BLPositionerControl.h"; sourceTree = "<group>"; };
 		28F69CF4129CC12100D4BB97 /* Licenses.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = Licenses.rtf; path = Resources/Licenses.rtf; sourceTree = "<group>"; };
@@ -490,8 +488,8 @@
 				28B54DB31283BABF0037BF53 /* SS_PreferencePaneProtocol.h */,
 				28B54DB41283BABF0037BF53 /* SS_PrefsController.h */,
 				28B54DB51283BABF0037BF53 /* SS_PrefsController.m */,
-				28F699E2129C0EBC00D4BB97 /* BLFadeController.h */,
-				28F699E3129C0EBC00D4BB97 /* BLFadeController.m */,
+				28F699E2129C0EBC00D4BB97 /* WLViewFade.h */,
+				28F699E3129C0EBC00D4BB97 /* WLViewFade.m */,
 				E2596D711316C8C100A8B15E /* WLNewEventWindowController.h */,
 				E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */,
 				E29F38EC1319694C00A865D9 /* WLNewTaskWindowController.h */,
@@ -583,7 +581,6 @@
 				E29DDCB012E9D54C00751CFA /* Localizable.strings */,
 				285B840813C0C6150042C813 /* Blotter-B9.icns */,
 				28F69A1A129C1CAA00D4BB97 /* Credits.rtf */,
-				28F6966B1298B99800D4BB97 /* calendar */,
 				8D1107310486CEB800E47090 /* Blotter-Info.plist */,
 				E29DDC8512E9C7BF00751CFA /* MainMenu.strings */,
 				E29DDC8612E9C7BF00751CFA /* MainMenu.xib */,
@@ -925,7 +922,6 @@
 				282FD239134FB2C5003E532E /* NewTaskWindow.xib in Resources */,
 				E273117C1349D88100A84433 /* Blotter Preferences.preferencePane in Resources */,
 				E29DDC8712E9C7BF00751CFA /* MainMenu.xib in Resources */,
-				28F696811298B99800D4BB97 /* calendar in Resources */,
 				28F69A1B129C1CAA00D4BB97 /* Credits.rtf in Resources */,
 				28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */,
 				E29DDCB212E9D54C00751CFA /* Localizable.strings in Resources */,
@@ -1023,7 +1019,7 @@
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				256AC3DA0F4B6AC300CF3369 /* DeskboardAppDelegate.m in Sources */,
 				28B54DB61283BABF0037BF53 /* SS_PrefsController.m in Sources */,
-				28F699E4129C0EBC00D4BB97 /* BLFadeController.m in Sources */,
+				28F699E4129C0EBC00D4BB97 /* WLViewFade.m in Sources */,
 				2844DB2D129DA1BD006C5545 /* BLCalendarFramer.m in Sources */,
 				E23779EF1312AD6000F46E7D /* WLClosableWindow.m in Sources */,
 				E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */,

@@ -131,7 +131,7 @@
     {
         [self _placeViews];
         [self _updateFrame];
-        fadeController = [[BLFadeController alloc] initWithView:[self.window realContentView]];
+        fadeController = [[WLViewFade alloc] initWithView:[self.window realContentView]];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults addObserver:self forKeyPath:@"InfoViewsWidth" options:NSKeyValueObservingOptionNew context:NULL];
         [defaults addObserver:self forKeyPath:@"DateViewHeight" options:NSKeyValueObservingOptionNew context:NULL];

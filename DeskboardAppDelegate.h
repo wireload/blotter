@@ -7,36 +7,41 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "SS_PrefsController.h"
-#import "BLCalendarFramer.h"
+#import "WLCalendarWindowController.h"
 
 
-@class WLCalendarWindowController;
+@class SS_PrefsController;
 
-@class WLFitWindow;
 
 @interface DeskboardAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate> {
     WLCalendarWindowController *windowController;
-    NSStatusItem *statusItem;
-    IBOutlet NSMenu *statusMenu;
-    IBOutlet NSMenuItem *newEventMenuItem;
-    IBOutlet NSMenuItem *newTaskMenuItem;
-    IBOutlet NSMenuItem *preferencesMenuItem;
-    BOOL ignoreBecomeActiveNotification;
 
-    SS_PrefsController *prefs;
+    NSStatusItem *_statusItem;
+    IBOutlet NSMenu *_statusMenu;
+    IBOutlet NSMenuItem *_newEventMenuItem;
+    IBOutlet NSMenuItem *_newTaskMenuItem;
+    IBOutlet NSMenuItem *preferencesMenuItem;
+    SS_PrefsController *_preferencesController;
 }
 
 @property (readonly) WLCalendarWindowController *windowController;
 
-- (IBAction)showPrefs:(id)sender;
+- (IBAction)showPreferences:(id)aSender;
 
-- (IBAction)newEvent:(id)sender;
+- (IBAction)newEvent:(id)aSender;
 
-- (IBAction)newTask:(id)sender;
+- (IBAction)newTask:(id)aSender;
 
-- (BOOL)isOnlyBlotterWindowVisible;
+- (IBAction)showAbout:(id)aSender;
 
-- (BOOL)_isOnlyBlotterWindowVisible:(NSArray *)aVisibleWindows;
+/*!
+ @abstract Determines whether only calendar window is visible.
+ */
+- (BOOL)isOnlyCalendarWindowVisible;
+
+
+- (BOOL)_isOnlyCalendarWindowVisible:(NSArray *)aVisibleWindows;
+
+- (void)_addStatusItem;
 
 @end

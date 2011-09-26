@@ -6,7 +6,6 @@
 //  Copyright 2010 SlevenBits. All rights reserved.
 //
 
-#import <CalendarStore/CalendarStore.h>
 #import "DeskboardAppDelegate.h"
 #import "WLNewEventWindowController.h"
 #import "WLNewTaskWindowController.h"
@@ -15,6 +14,7 @@
 #import "PTHotKey+ShortcutRecorder.h"
 #import "WLCalendarWindow.h"
 #import "WLCalendarWindowController.h"
+#import "SS_PrefsController.h"
 
 
 extern NSString* const SRShortcutCodeKey;
@@ -22,21 +22,13 @@ extern NSString* const SRShortcutFlagsKey;
 extern NSString* const SRShortcutCharacters;
 extern NSString* const SRShortcutCharactersIgnoringModifiers;
 
-// TODO: Update if New Event/Task windows stop centering at first launch.
-// Cocoa uses these strings to store frames of the new event/task windows in user defaults.
+// TODO: Update if the New Event/Task windows stop centering at first launch.
+// Cocoa uses these strings to store frames of the New Event/Task windows in user defaults.
 static NSString* const _WLNewEventWindowAutosaveName = @"NSWindow Frame NewEventWindow";
 static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWindow";
 
 
-@interface DeskboardAppDelegate (/* Private */)
-
-- (void)_addStatusItem;
-
-@end
-
-
 @implementation DeskboardAppDelegate
-@synthesize windowController;
 
 + (void)initialize
 {
@@ -44,6 +36,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 
+        // In pre 1.3 versions of Blotter CalendarSize was a string.
         if ([[userDefaults stringForKey:@"CalendarSize"] isEqualToString:@"Narrow"])
             [userDefaults setInteger:BLNarrowSize forKey:@"CalendarSize"];
         else if ([[userDefaults stringForKey:@"CalendarSize"] isEqualToString:@"Normal"])
@@ -61,7 +54,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         NSDictionary *defaults = [NSDictionary dictionaryWithContentsOfURL:defaultsURL];
         [userDefaults registerDefaults:defaults];
 
-        // see -[WLCalendarWindowController tasksViewFrame] for default value of TasksViewHeight.
+        // @see -[WLCalendarWindowController tasksViewFrame] for default value of TasksViewHeight.
     }
 }
 
@@ -72,22 +65,163 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     [userDefaults removeObserver:self forKeyPath:@"ShowInMenuBar"];
     [userDefaults removeObserver:self forKeyPath:@"shortcutNewEvent"];
     [userDefaults removeObserver:self forKeyPath:@"shortcutNewTask"];
-    [prefs release];
+    [_preferencesController release];
     [super dealloc];
 }
+
+
+#pragma mark Properties
+@synthesize windowController;
+
+
+#pragma mark Methods
+
+- (IBAction)showPreferences:(id)aSender
+{
+    if (_preferencesController == nil) {
+        // Determine path to the sample preference panes
+        NSString *pathToPanes = [[[NSBundle mainBundle] resourcePath] stringByStandardizingPath];
+        
+        _preferencesController = [[SS_PrefsController alloc] initWithPanesSearchPath:pathToPanes];
+        [_preferencesController setDebug:YES];
+        
+        // Set which panes are included, and their order.
+        [_preferencesController setPanesOrder:[NSArray arrayWithObjects:NSLocalizedStringFromTableInBundle(@"General", nil, [_preferencesController bundle], nil),
+                                               NSLocalizedStringFromTableInBundle(@"Positioning", nil, [_preferencesController bundle], nil),
+                                               NSLocalizedStringFromTableInBundle(@"Calendars", nil, [_preferencesController bundle], nil),
+                                               NSLocalizedStringFromTableInBundle(@"Layout", nil, [_preferencesController bundle], nil),
+                                               nil]];
+        [_preferencesController createPreferencesWindow];
+        [[_preferencesController preferencesWindow] setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
+    }
+    [_preferencesController showPreferencesWindow];
+    [NSApp activateIgnoringOtherApps:YES];
+}
+
+- (IBAction)newEvent:(id)aSender
+{
+    WLNewEventWindowController *controller = [WLNewEventWindowController sharedWindowController];
+    [controller reset];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:_WLNewEventWindowAutosaveName] == nil)
+        [[controller window] center];
+    [controller showWindow:aSender];
+    [NSApp activateIgnoringOtherApps:YES];
+}
+
+- (IBAction)newTask:(id)aSender
+{
+    WLNewTaskWindowController *controller = [WLNewTaskWindowController sharedWindowController];
+    [controller reset];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:_WLNewTaskWindowAutosaveName] == nil)
+        [[controller window] center];
+    [controller showWindow:aSender];
+    [NSApp activateIgnoringOtherApps:YES];
+}
+
+- (IBAction)showAbout:(id)aSender
+{
+    [NSApp orderFrontStandardAboutPanelWithOptions:nil];
+    [NSApp activateIgnoringOtherApps:YES];
+}
+
+- (BOOL)isOnlyCalendarWindowVisible
+{
+    return [self _isOnlyCalendarWindowVisible:[NSApp windows]];
+}
+
+
+#pragma mark NSWindowDelegate
+
+- (void)windowWillClose:(NSNotification *)aNotification
+{
+    NSMutableArray *visibleWindows = [[[NSApp windows] mutableCopy] autorelease];
+    NSWindow *closedWindow = [aNotification object];
+    [visibleWindows removeObjectIdenticalTo:closedWindow];
+    if ([self _isOnlyCalendarWindowVisible:visibleWindows])
+        [NSApp hide:self];
+}
+
+
+#pragma mark NSMenuValidation
+
+- (BOOL)validateMenuItem:(NSMenuItem *)aMenuItem {
+    if (aMenuItem == _newEventMenuItem)
+    {
+        NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutNewEvent"];
+        if (shortcut != nil) {
+            [aMenuItem setKeyEquivalent:[shortcut objectForKey:SRShortcutCharactersIgnoringModifiers]];
+            [aMenuItem setKeyEquivalentModifierMask:[[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue]];
+        }
+        else {
+            [aMenuItem setKeyEquivalent:@""];
+            [aMenuItem setKeyEquivalentModifierMask:0];
+        }
+        return [[WLNewEventWindowController sharedWindowController] canCreateEvent];
+    }
+    else if (aMenuItem == _newTaskMenuItem)
+    {
+        NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutNewTask"];
+        if (shortcut != nil) {
+            [aMenuItem setKeyEquivalent:[shortcut objectForKey:SRShortcutCharactersIgnoringModifiers]];
+            [aMenuItem setKeyEquivalentModifierMask:[[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue]];
+        }
+        else {
+            [aMenuItem setKeyEquivalent:@""];
+            [aMenuItem setKeyEquivalentModifierMask:0];
+        }
+        return [[WLNewTaskWindowController sharedWindowController] canCreateTask];
+    }
+    else
+        return YES;
+}
+
+
+#pragma mark NSMenuDelegate
+
+- (void)menuWillOpen:(NSMenu *)aMenu
+{
+    [[windowController fadeController] fadeIn];
+}
+
+- (void)menuDidClose:(NSMenu *)aMenu
+{
+    if ([self isOnlyCalendarWindowVisible])
+        [self.windowController.fadeController scheduleFadeOutTimer];
+}
+
+
+
+#pragma mark Private
+
+- (void)_addStatusItem
+{
+    NSAssert(_statusItem == nil, @"You cannot add status bar twice");
+    _statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength] retain];;
+    [_statusItem setHighlightMode:YES];
+    [_statusItem setMenu:_statusMenu];
+    
+    NSImage *statusImage = [NSImage imageNamed:@"blotter-status-bar"];
+    NSImage *statusHighlightImage = [NSImage imageNamed:@"blotter-status-bar-active"];
+    [_statusItem setImage:statusImage];
+    [_statusItem setAlternateImage:statusHighlightImage];
+}
+
+- (BOOL)_isOnlyCalendarWindowVisible:(NSArray *)aVisibleWindows
+{
+    NSMutableArray *visibleWindows = [[aVisibleWindows mutableCopy] autorelease];
+    [visibleWindows filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSWindow *w, NSDictionary *bindings) {
+        return [w isVisible] && ![[w className] hasPrefix:@"NSStatusBarWindow"];
+    }]];
+    return ([visibleWindows count] == 1); // If only desktop window is visible
+}
+
+
+#pragma mark NSApplicationDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-
-    // Show preferences at first start.
-    NSNumber *showPrefsAtStartup = [userDefaults objectForKey:@"ShowPreferencesAtStartUp"];
-    if (showPrefsAtStartup == nil || [showPrefsAtStartup boolValue]) {
-        // TODO: 1.3 Show about pref pane at first start.
-        [self showPrefs:self];
-        [userDefaults setBool:NO forKey:@"ShowPreferencesAtStartUp"];
-    }
 
     // Configure status bar
     if ([userDefaults boolForKey:@"ShowInMenuBar"])
@@ -112,198 +246,80 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
     windowController = [[WLCalendarWindowController alloc] init];
     [windowController bind:@"windowSize"
-                  toObject:[NSUserDefaultsController sharedUserDefaultsController]
-               withKeyPath:@"values.CalendarSize"
+                  toObject:userDefaults
+               withKeyPath:@"CalendarSize"
                    options:nil];
     [windowController bind:@"windowPosition"
-                  toObject:[NSUserDefaultsController sharedUserDefaultsController]
-               withKeyPath:@"values.CalendarPosition"
+                  toObject:userDefaults
+               withKeyPath:@"CalendarPosition"
                    options:nil];
     [windowController bind:@"windowScreenIdentifier"
-                  toObject:[NSUserDefaultsController sharedUserDefaultsController]
-               withKeyPath:@"values.ScreenIdentifier"
+                  toObject:userDefaults
+               withKeyPath:@"ScreenIdentifier"
                    options:nil];
     [windowController showWindow:self];
+    
+    // Show preferences at first start.
+    if ([userDefaults boolForKey:@"ShowPreferencesAtStartUp"])
+    {
+        [self showPreferences:self];
+        [userDefaults setBool:NO forKey:@"ShowPreferencesAtStartUp"];
+    }
 }
 
-/*!
-* @discussion There are a few exclusion when this message should be ignored:
-* 1) User press the new event shortcut
-* 2) User press the new task shortcut
- */
 - (void)applicationDidBecomeActive:(NSNotification *)aNotification
 {
-    if (!ignoreBecomeActiveNotification && ![[NSUserDefaults standardUserDefaults] boolForKey:@"ShowInMenuBar"]) {
-        [self showPrefs:self];
-    }
-    ignoreBecomeActiveNotification = NO;
+    [self.windowController.fadeController fadeIn];
+    
+    if ([self isOnlyCalendarWindowVisible])
+        [NSApp hide:self];
+}
+
+- (void)applicationDidResignActive:(NSNotification *)aNotification
+{
+    [self.windowController.fadeController scheduleFadeOutTimer];
+}
+
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)anApplication hasVisibleWindows:(BOOL)aFlag
+{
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"ShowInMenuBar"])
+        [self showPreferences:self];
+    return NO;
 }
 
 
-- (IBAction)showPrefs:(id)sender
+#pragma mark NSObject
+
+- (void)observeValueForKeyPath:(NSString *)aKeyPath ofObject:(id)aObject change:(NSDictionary *)aChange context:(void *)aContext
 {
-    if (!prefs) {
-        // Determine path to the sample preference panes
-        NSString *pathToPanes = [[[NSBundle mainBundle] resourcePath] stringByStandardizingPath];
-
-        prefs = [[SS_PrefsController alloc] initWithPanesSearchPath:pathToPanes];
-        [prefs setDebug:YES];
-
-        // Set which panes are included, and their order.
-        [prefs setPanesOrder:[NSArray arrayWithObjects:NSLocalizedStringFromTableInBundle(@"General", nil, [prefs bundle], nil),
-                              NSLocalizedStringFromTableInBundle(@"Positioning", nil, [prefs bundle], nil),
-                              NSLocalizedStringFromTableInBundle(@"Calendars", nil, [prefs bundle], nil),
-                              NSLocalizedStringFromTableInBundle(@"Layout", nil, [prefs bundle], nil),
-                              nil]];
-        [prefs createPreferencesWindow];
-        [[prefs preferencesWindow] setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
-    }
-
-    // Show the preferences window.
-    [prefs showPreferencesWindow];
-    [NSApp activateIgnoringOtherApps:YES];
-}
-
-- (IBAction)newEvent:(id)sender
-{
-    WLNewEventWindowController *controller = [WLNewEventWindowController sharedWindowController];
-    [controller reset];
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:_WLNewEventWindowAutosaveName] == nil)
-        [[controller window] center];
-    [controller showWindow:sender];
-    ignoreBecomeActiveNotification = YES;
-    [NSApp activateIgnoringOtherApps:YES];
-}
-
-- (IBAction)newTask:(id)sender
-{
-    WLNewTaskWindowController *controller = [WLNewTaskWindowController sharedWindowController];
-    [controller reset];
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:_WLNewTaskWindowAutosaveName] == nil)
-        [[controller window] center];
-    [controller showWindow:sender];
-    ignoreBecomeActiveNotification = YES;
-    [NSApp activateIgnoringOtherApps:YES];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if ([keyPath isEqualToString:@"ShowInMenuBar"])
+    if ([aKeyPath isEqualToString:@"ShowInMenuBar"])
     {
-        if ([[change objectForKey:NSKeyValueChangeNewKey] boolValue])
+        if ([[aChange objectForKey:NSKeyValueChangeNewKey] boolValue])
             [self _addStatusItem];
         else
         {
-            [[NSStatusBar systemStatusBar] removeStatusItem:statusItem];
-            [statusItem release], statusItem = nil;
+            [[NSStatusBar systemStatusBar] removeStatusItem:_statusItem];
+            [_statusItem release], _statusItem = nil;
         }
     }
-    else if ([keyPath isEqualToString:@"shortcutNewEvent"] || [keyPath isEqualToString:@"shortcutNewTask"])
+    else if ([aKeyPath isEqualToString:@"shortcutNewEvent"] || [aKeyPath isEqualToString:@"shortcutNewTask"])
     {
         PTHotKeyCenter *hotKeyCenter = [PTHotKeyCenter sharedCenter];
-        PTHotKey *oldHotKey = [hotKeyCenter hotKeyWithIdentifier:keyPath];
+        PTHotKey *oldHotKey = [hotKeyCenter hotKeyWithIdentifier:aKeyPath];
         [hotKeyCenter unregisterHotKey:oldHotKey];
 
-        NSDictionary *newHotKeyDict = [change objectForKey:NSKeyValueChangeNewKey];
+        NSDictionary *newHotKeyDict = [aChange objectForKey:NSKeyValueChangeNewKey];
         if (newHotKeyDict != nil && (id)newHotKeyDict != [NSNull null]) {
             PTHotKey *newHotKey = nil;
-            if ([keyPath isEqualToString:@"shortcutNewEvent"]) {
-                newHotKey = [PTHotKey hotKeyWithIdentifier:keyPath keyCombo:newHotKeyDict target:self action:@selector(newEvent:)];
+            if ([aKeyPath isEqualToString:@"shortcutNewEvent"]) {
+                newHotKey = [PTHotKey hotKeyWithIdentifier:aKeyPath keyCombo:newHotKeyDict target:self action:@selector(newEvent:)];
             }
             else {
-                newHotKey = [PTHotKey hotKeyWithIdentifier:keyPath keyCombo:newHotKeyDict target:self action:@selector(newTask:)];
+                newHotKey = [PTHotKey hotKeyWithIdentifier:aKeyPath keyCombo:newHotKeyDict target:self action:@selector(newTask:)];
             }
             [hotKeyCenter registerHotKey:newHotKey];
         }
     }
-}
-
-- (BOOL)isOnlyBlotterWindowVisible
-{
-    return [self _isOnlyBlotterWindowVisible:[NSApp windows]];
-}
-
-
-#pragma mark Private
-
-- (void)_addStatusItem
-{
-    NSAssert(statusItem == nil, @"You cannot add status bar twice");
-    statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength] retain];;
-    [statusItem setHighlightMode:YES];
-    [statusItem setMenu:statusMenu];
-
-    NSImage *statusImage = [NSImage imageNamed:@"blotter-status-bar"];
-    NSImage *statusHighlightImage = [NSImage imageNamed:@"blotter-status-bar-active"];
-    [statusItem setImage:statusImage];
-    [statusItem setAlternateImage:statusHighlightImage];
-}
-
-- (BOOL)_isOnlyBlotterWindowVisible:(NSArray *)aVisibleWindows
-{
-    NSMutableArray *visibleWindows = [[aVisibleWindows mutableCopy] autorelease];
-    [visibleWindows filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSWindow *w, NSDictionary *bindings) {
-        return [w isVisible] && ![[w className] hasPrefix:@"NSStatusBarWindow"];
-    }]];
-    return ([visibleWindows count] == 1); // If only desktop window is visible
-}
-
-
-#pragma mark NSWindowDelegate
-
-- (void)windowWillClose:(NSNotification *)notification
-{
-    NSMutableArray *visibleWindows = [[[NSApp windows] mutableCopy] autorelease];
-    [visibleWindows removeObjectIdenticalTo:[notification object]];
-    if ([self _isOnlyBlotterWindowVisible:visibleWindows])
-        [NSApp hide:self];
-}
-
-#pragma mark NSMenuValidation
-
-- (BOOL)validateMenuItem:(NSMenuItem *)aMenuItem {
-    if (aMenuItem == newEventMenuItem)
-    {
-        NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutNewEvent"];
-        if (shortcut != nil) {
-            [aMenuItem setKeyEquivalent:[shortcut objectForKey:SRShortcutCharactersIgnoringModifiers]];
-            [aMenuItem setKeyEquivalentModifierMask:[[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue]];
-        }
-        else {
-            [aMenuItem setKeyEquivalent:@""];
-            [aMenuItem setKeyEquivalentModifierMask:0];
-        }
-        return [[WLNewEventWindowController sharedWindowController] canCreateEvent];
-    }
-    else if (aMenuItem == newTaskMenuItem)
-    {
-        NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutNewTask"];
-        if (shortcut != nil) {
-            [aMenuItem setKeyEquivalent:[shortcut objectForKey:SRShortcutCharactersIgnoringModifiers]];
-            [aMenuItem setKeyEquivalentModifierMask:[[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue]];
-        }
-        else {
-            [aMenuItem setKeyEquivalent:@""];
-            [aMenuItem setKeyEquivalentModifierMask:0];
-        }
-        return [[WLNewTaskWindowController sharedWindowController] canCreateTask];
-    }
-    else
-        return YES;
-}
-
-
-#pragma mark NSMenuDelegate
-
-- (void)menuWillOpen:(NSMenu *)menu
-{
-    [[windowController fadeController] fadeIn];
-}
-
-- (void)menuDidClose:(NSMenu *)aMenu
-{
-    if ([self isOnlyBlotterWindowVisible] && ![NSApp isActive])
-        [self.windowController.fadeController scheduleFadeOutTimer];
 }
 
 @end

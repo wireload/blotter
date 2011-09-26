@@ -28,5 +28,7 @@
 	<false/>
 	<key>MinimumWeekViewWidth</key>
 	<real>350</real>
+	<key>ShowPreferencesAtStartUp</key>
+	<true/>
 </dict>
 </plist>
