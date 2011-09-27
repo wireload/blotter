@@ -584,7 +584,10 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
         NSShadow *s = [[NSShadow alloc] init];
         [s setShadowBlurRadius:0.0f];
         [s setShadowColor:[NSColor WL_columnTitleShadowColor]];
-        [s setShadowOffset:NSMakeSize(0.0f, 1.0f)];
+        if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
+            [s setShadowOffset:NSMakeSize(0.0f, -1.0f)];
+        else
+            [s setShadowOffset:NSMakeSize(0.0f, 10.0f)];
         titleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
                                                     (id)[NSFont WL_columnTitleFont],  NSFontAttributeName,
                                                     p,                                NSParagraphStyleAttributeName,
@@ -973,8 +976,8 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
 - (WLCalendarTimeRulerLayer *)setupTimeRulerLayer
 {
     __block WLCalendarTimeRulerLayer *l = [WLCalendarTimeRulerLayer layer];
-        l.name = _WLTimeRulerLayerName;
-        l.timeRuler = self;
+    l.name = _WLTimeRulerLayerName;
+    l.timeRuler = self;
     return l;
 }
 

@@ -32,19 +32,18 @@
 - (void)drawInContext:(CGContextRef)aContext
 {
     CGContextSaveGState(aContext);
-    CGRect dirtyRect = CGContextGetClipBoundingBox(aContext);
-    if (CGRectIntersectsRect(self.bounds, dirtyRect))
-    {
-        CGContextSetTextMatrix(aContext, CGAffineTransformIdentity);
-        CGContextTranslateCTM(aContext, 0.0f, self.bounds.size.height);
-        CGContextScaleCTM(aContext, 1.0f, -1.0f);
-        CGContextSetShouldAntialias(aContext, YES);
-        CGContextSetAllowsAntialiasing(aContext, YES);
-        CGContextSetAllowsFontSubpixelQuantization(aContext, NO);
-        CGContextSetAllowsFontSmoothing(aContext, NO);
+    CGContextSetTextMatrix(aContext, CGAffineTransformIdentity);
+    CGContextTranslateCTM(aContext, 0.0f, self.bounds.size.height);
+    CGContextScaleCTM(aContext, 1.0f, -1.0f);
+    CGContextSetShouldAntialias(aContext, YES);
+    CGContextSetAllowsAntialiasing(aContext, YES);
+    CGContextSetAllowsFontSubpixelQuantization(aContext, NO);
+    CGContextSetAllowsFontSmoothing(aContext, NO);
+    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f, -1.0f), 0.0f, [[NSColor WL_timelineShadowColor] WL_CGColor]);
+    else
         CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f, 1.0f), 0.0f, [[NSColor WL_timelineShadowColor] WL_CGColor]);
-        [self.string WL_drawWithRect:self.bounds context:aContext];
-    }
+    [self.string WL_drawWithRect:self.bounds context:aContext];
     CGContextRestoreGState(aContext);
 }
 
