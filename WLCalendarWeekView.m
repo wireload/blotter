@@ -893,7 +893,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     l.needsDisplayOnBoundsChange = YES;
 #ifndef DEBUG_LAYERS
     l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
-        NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:NO];
+        NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:[aLayer contentsAreFlipped]];
         [c setImageInterpolation:NSImageInterpolationHigh];
         [NSGraphicsContext saveGraphicsState];
         [NSGraphicsContext setCurrentContext:c];
@@ -1063,7 +1063,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     l.masksToBounds = YES;
 #ifndef DEBUG_LAYERS
     l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
-        NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:YES];
+        NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:[aLayer contentsAreFlipped]];
         [c setImageInterpolation:NSImageInterpolationHigh];
         [NSGraphicsContext saveGraphicsState];
         [NSGraphicsContext setCurrentContext:c];
@@ -1181,7 +1181,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
 #ifndef DEBUG_LAYERS
     __block WLCalendarWeekView *selfBlock = self;
     l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
-        NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:YES];
+        NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:[aLayer contentsAreFlipped]];
         [c setImageInterpolation:NSImageInterpolationHigh];
         [c setShouldAntialias:YES];
         [NSGraphicsContext saveGraphicsState];
