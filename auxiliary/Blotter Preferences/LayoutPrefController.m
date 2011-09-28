@@ -171,7 +171,7 @@
         // Do prevent this, we are checking CalendarSize.
         NSSize infoViewsSize = NSMakeSize([_dateHeightSplitView frame].size.width, 0.0f);
         infoViewsSize = [_infoWidthSplitViewToBlotterWindowTransform transformSize:infoViewsSize];
-        [[NSUserDefaults standardUserDefaults] setFloat:infoViewsSize.width forKey:@"InfoViewsWidth"];
+        [defaults setFloat:floorf(infoViewsSize.width) forKey:@"InfoViewsWidth"];
     }
     else
     {
@@ -181,19 +181,19 @@
                 case WLLayoutDateViewTag: {
                     NSSize dateViewSize = NSMakeSize(0.0f, [v frame].size.height);
                     dateViewSize = [_dateHeightSplitViewToBlotterWindowTransform transformSize:dateViewSize];
-                    [defaults setFloat:dateViewSize.height forKey:@"DateViewHeight"];
+                    [defaults setFloat:floorf(dateViewSize.height) forKey:@"DateViewHeight"];
                     break;
                 }
                 case WLLayoutTasksViewTag: {
                     NSSize tasksViewSize = NSMakeSize(0.0f, [v frame].size.height);
                     tasksViewSize = [_tasksHeightSplitViewToBlotterWindowTransform transformSize:tasksViewSize];
-                    [defaults setFloat:tasksViewSize.height forKey:@"TasksViewHeight"];
+                    [defaults setFloat:floorf(tasksViewSize.height) forKey:@"TasksViewHeight"];
                     break;
                 }
                 case WLLayoutAllDayViewTag: {
                     NSSize allDayViewSize = NSMakeSize(0.0f, [v frame].size.height);
                     allDayViewSize = [_allDayHeightSplitViewToBlotterWindowTransform transformSize:allDayViewSize];
-                    [defaults setFloat:allDayViewSize.height forKey:@"AllDayViewHeight"];
+                    [defaults setFloat:floorf(allDayViewSize.height) forKey:@"AllDayViewHeight"];
                     break;
                 }
                 default:
