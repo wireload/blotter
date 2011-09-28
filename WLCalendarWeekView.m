@@ -587,7 +587,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
         if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
             [s setShadowOffset:NSMakeSize(0.0f, -1.0f)];
         else
-            [s setShadowOffset:NSMakeSize(0.0f, 10.0f)];
+            [s setShadowOffset:NSMakeSize(0.0f, 1.0f)];
         titleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
                                                     (id)[NSFont WL_columnTitleFont],  NSFontAttributeName,
                                                     p,                                NSParagraphStyleAttributeName,
