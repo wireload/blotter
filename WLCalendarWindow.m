@@ -51,7 +51,7 @@
         else
         {
             // On Lion window level of desktop elements is kCGDesktopWindowLevel + 21.
-            [self setLevel:kCGDesktopWindowLevel + 20];
+            [self setLevel:kCGDesktopWindowLevel + 15];
         }
         [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
         [self setCanHide:NO];
