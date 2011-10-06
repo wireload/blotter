@@ -114,6 +114,7 @@ static const CGFloat _WLYPadding = 34.0f;
 
 - (void)drawRect:(NSRect)aDirtyRect
 {
+    // (0, 0) is top left.
     [NSGraphicsContext saveGraphicsState];
     NSGraphicsContext *context = [NSGraphicsContext currentContext];
     [context setShouldAntialias:YES];
@@ -189,6 +190,18 @@ static const CGFloat _WLYPadding = 34.0f;
                              AlphaFraction,
                              YES);
     }
+
+    [NSGraphicsContext saveGraphicsState];
+    // Gradient is already applied to top images.
+    NSGradient *whiteToTransparentGradient = [[NSGradient alloc] initWithStartingColor:[[NSColor whiteColor] colorWithAlphaComponent:0.125f]
+                                                                           endingColor:[NSColor clearColor]];
+    // Images have 1px stroke.
+    NSRect gradientFrame = NSInsetRect(bounds, 1.0f, 0.0f);
+    gradientFrame.size.height -= topSize.height;
+    gradientFrame.origin.y += topSize.height;
+    [whiteToTransparentGradient drawInRect:gradientFrame angle:90];
+    [whiteToTransparentGradient release];
+    [NSGraphicsContext restoreGraphicsState];
 
     NSRect titleFrame = [self _titleFrame];
     if (NSIntersectsRect(titleFrame, aDirtyRect) && NSContainsRect(bounds, titleFrame))
