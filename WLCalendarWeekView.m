@@ -1179,8 +1179,12 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     l.name = _WLDayBackgroundLayerName;
     l.needsDisplayOnBoundsChange = YES;
 #ifndef DEBUG_LAYERS
+    NSGradient *whiteToTransparentGradient = [[NSGradient alloc] initWithStartingColor:[[NSColor whiteColor] colorWithAlphaComponent:0.1f]
+                                                                   endingColor:[NSColor clearColor]];
+    [whiteToTransparentGradient autorelease];
     __block WLCalendarWeekView *selfBlock = self;
     l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
+        // (0, 0) is top left.
         NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:[aLayer contentsAreFlipped]];
         [c setImageInterpolation:NSImageInterpolationHigh];
         [c setShouldAntialias:YES];
@@ -1188,9 +1192,9 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
         [NSGraphicsContext setCurrentContext:c];
 
         NSSize bottomSize = NSMakeSize(aLayer.bounds.size.width,
-                                       [[NSImage imageNamed:@"allday-bottom"] size].height);
+                                       [[NSImage imageNamed:@"day-bottom"] size].height);
         NSSize topSize = NSMakeSize(aLayer.bounds.size.width,
-                                    [[NSImage imageNamed:@"allday-top"] size].height);
+                                    [[NSImage imageNamed:@"day-top"] size].height);
         NSSize middleSize = NSMakeSize(aLayer.bounds.size.width,
                                        aLayer.bounds.size.height - bottomSize.height - topSize.height);
         NSRect dirtyRect = NSRectFromCGRect(aDirtyRect);
@@ -1262,6 +1266,12 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
                                  AlphaFraction,
                                  YES);
         }
+
+        // Inset layer bounds, since images have 1px stroke.
+        [whiteToTransparentGradient drawInRect:NSInsetRect(NSRectFromCGRect(aLayer.bounds),
+                                                   1.0f,
+                                                   1.0f)
+                                 angle:90];
 
         NSString *dayName = [aLayer valueForKey:_WLDayBackgroundLayerTitleKey];
         [dayName drawWithRect:[selfBlock columnTitleFrame]
