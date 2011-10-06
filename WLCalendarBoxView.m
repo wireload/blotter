@@ -16,8 +16,6 @@ static const CGFloat _WLXPadding = 28.0f;
 
 static const CGFloat _WLYPadding = 34.0f;
 
-static const CGFloat _WLYContentMargin = 15.0f;
-
 
 @implementation WLCalendarBoxView
 
@@ -35,7 +33,7 @@ static const CGFloat _WLYContentMargin = 15.0f;
 #pragma mark Properties
 @synthesize title;
 @dynamic contentView;
-@synthesize showSoftTopAndBottomEdges;
+@synthesize softEdges;
 
 - (NSView *)contentView
 {
@@ -51,15 +49,15 @@ static const CGFloat _WLYContentMargin = 15.0f;
     else
         [self addSubview:newContentView];
     contentView = newContentView;
-    self.showSoftTopAndBottomEdges = showSoftTopAndBottomEdges;
+    self.softEdges = softEdges;
 }
 
-- (void)setShowSoftTopAndBottomEdges:(BOOL)newShowSoftTopAndBottomEdges
+- (void)setSoftEdges:(BOOL)newSoftEdges
 {
-    showSoftTopAndBottomEdges = newShowSoftTopAndBottomEdges;
+    softEdges = newSoftEdges;
     if (![self.contentView wantsLayer])
         return;
-    else if (showSoftTopAndBottomEdges)
+    else if (self.softEdges)
         [self.contentView layer].mask = [WLSoftEdgeLayer layer];
     else
         [self.contentView layer].mask = nil;
@@ -98,10 +96,17 @@ static const CGFloat _WLYContentMargin = 15.0f;
 {
     NSRect bounds = [self bounds];
     NSRect titleFrame = [self _titleFrame];
+    CGFloat yTopMargin = 15.0f;
+    CGFloat yBottomMargin = _WLYPadding / 2;
+    if (self.softEdges)
+    {
+        yTopMargin = 0.0f;
+        yBottomMargin = 5.0f;
+    }
     return NSIntegralRect(NSMakeRect(NSMinX(bounds) + _WLXPadding / 2,
-                                     NSMaxY(titleFrame) + _WLYContentMargin,
+                                     NSMaxY(titleFrame) + yTopMargin,
                                      NSWidth(bounds) - _WLXPadding,
-                                     NSHeight(bounds) - NSMaxY(titleFrame) - _WLYContentMargin - _WLYPadding / 2));
+                                     NSHeight(bounds) - NSMaxY(titleFrame) - yTopMargin - yBottomMargin));
 }
 
 

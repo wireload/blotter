@@ -291,7 +291,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     _rightNowViewBox = [[WLCalendarBoxView alloc] initWithFrame:NSZeroRect];
     _rightNowViewBox.title = NSLocalizedString(@"Right Now", @"Header of Right Now items list");
     _rightNowViewBox.contentView = [_rightNowViewController view];
-    _rightNowViewBox.showSoftTopAndBottomEdges = YES;
+    _rightNowViewBox.softEdges = YES;
     [_rightNowViewBox setWantsLayer:YES];
     [_rightNowViewBox setCompositingFilter:f];
     [contentView addSubview:_rightNowViewBox];
