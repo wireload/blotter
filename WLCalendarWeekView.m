@@ -1062,7 +1062,11 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     l.needsDisplayOnBoundsChange = YES;
     l.masksToBounds = YES;
 #ifndef DEBUG_LAYERS
+    NSGradient *whiteToTransparentGradient = [[NSGradient alloc] initWithStartingColor:[[NSColor whiteColor] colorWithAlphaComponent:0.13f]
+                                                                           endingColor:[NSColor clearColor]];
+    [whiteToTransparentGradient autorelease];
     l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
+        // (0, 0) is top left.
         NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:[aLayer contentsAreFlipped]];
         [c setImageInterpolation:NSImageInterpolationHigh];
         [NSGraphicsContext saveGraphicsState];
@@ -1135,6 +1139,12 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
                                  AlphaFraction,
                                  YES);
         }
+
+        // Inset layer bounds, since images have 1px stroke.
+        [whiteToTransparentGradient drawInRect:NSInsetRect(NSRectFromCGRect(aLayer.bounds),
+                                                           1.0f,
+                                                           1.0f)
+                                         angle:90];
 
         [NSGraphicsContext restoreGraphicsState];
     };
