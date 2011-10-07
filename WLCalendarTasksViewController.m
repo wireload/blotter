@@ -59,7 +59,7 @@
     NSArray *updatedTaskUIDs = [[aNotification userInfo] objectForKey:CalUpdatedRecordsKey];
     NSMutableArray *deletedTaskUIDs = [NSMutableArray array];
     [deletedTaskUIDs addObjectsFromArray:[[aNotification userInfo] objectForKey:CalDeletedRecordsKey]];
-    NSPredicate *calendarPredicate = [NSPredicate predicateWithFormat:@"calendar in %@", [[self representedObject] calCalendars]];
+    NSPredicate *calendarPredicate = [NSPredicate predicateWithFormat:@"(calendar in %@) AND (isCompleted == NO)", [[self representedObject] calCalendars]];
 
     [CATransaction begin];
     static const NSInteger CurrentCalendarIsChecked = 1 << 0;
