@@ -28,13 +28,13 @@
     [sortDescriptors release];
     sortDescriptors = [newDescriptors copy];
     if (_isViewLoaded)
-        [self updateView];
+        [self fetchTasksAndReloadViewDataAnimated:YES];
 }
 
 
 #pragma mark Methods
 
-- (void)updateView
+- (void)fetchTasksAndReloadViewDataAnimated:(BOOL)isAnimated
 {
     NSParameterAssert([sortDescriptors count] > 0);
 
@@ -44,7 +44,7 @@
     for (CalTask *task in _tasks)
         [self _preprocessTask:task];
     [_tasks sortUsingDescriptors:self.sortDescriptors];
-    [[self view] reloadDataAnimated:YES];
+    [[self view] reloadDataAnimated:isAnimated];
 }
 
 
@@ -185,7 +185,7 @@
     v.dataSource = self;
     [v createLayers];
     [v release];
-    [self updateView];
+    [self fetchTasksAndReloadViewDataAnimated:NO];
     [self addObserver:self forKeyPath:@"representedObject.calCalendars" options:NSKeyValueObservingOptionNew context:NULL];
     NSNotificationCenter *n = [NSNotificationCenter defaultCenter];
     [n addObserver:self
@@ -215,7 +215,7 @@
 - (void)observeValueForKeyPath:(NSString *)aKeyPath ofObject:(id)anObject change:(NSDictionary *)aChange context:(void *)aContext
 {
     if ([aKeyPath hasPrefix:@"representedObject"])
-        [self updateView];
+        [self fetchTasksAndReloadViewDataAnimated:YES];
     else
         [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];
 }

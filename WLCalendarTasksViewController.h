@@ -21,7 +21,10 @@
 
 - (WLCalendarTasksView *)view;
 
-- (void)updateView;
+/*!
+ @abstract Fetches tasks and reload data of view without care of current state.
+ */
+- (void)fetchTasksAndReloadViewDataAnimated:(BOOL)isAnimated;
 
 - (void)_tasksDidChange:(NSNotification *)aNotification;
 

@@ -19,7 +19,7 @@
 
 - (WLCalendarController *)representedObject;
 
-- (void)updateView;
+- (void)reloadViewData;
 
 
 @property (nonatomic, retain) NSDateFormatter *_dateFormatter;
