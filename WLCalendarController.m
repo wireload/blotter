@@ -113,16 +113,11 @@
 - (void)_scheduleNextMinuteTimer
 {
     [_nextMinuteTimer invalidate];
+    NSDate *startDate = nil;
+    NSTimeInterval interval = 0.0;
+    [self.calendar rangeOfUnit:NSMinuteCalendarUnit startDate:&startDate interval:&interval forDate:self.date];
     NSRange secondsRange = [self.calendar maximumRangeOfUnit:NSSecondCalendarUnit];
-    NSDateComponents *oneMinuteComponent = [[NSDateComponents alloc] init];
-    [oneMinuteComponent setMinute:1];
-    NSDateComponents *nextMinuteDateComponents = [self.calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit |
-        NSHourCalendarUnit | NSMinuteCalendarUnit
-                                                                  fromDate:self.date];
-    NSDate *nextMinuteDate = [self.calendar dateFromComponents:nextMinuteDateComponents];
-    nextMinuteDate = [self.calendar dateByAddingComponents:oneMinuteComponent toDate:nextMinuteDate options:0];
-    [oneMinuteComponent release];
-    _nextMinuteTimer = [[NSTimer alloc] initWithFireDate:nextMinuteDate
+    _nextMinuteTimer = [[NSTimer alloc] initWithFireDate:[startDate dateByAddingTimeInterval:interval]
                                                 interval:(NSTimeInterval)secondsRange.length
                                                   target:self
                                                 selector:@selector(_updateDate)
