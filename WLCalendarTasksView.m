@@ -199,7 +199,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
              nil];
     }
     [a setObject:(id)aColor forKey:(id)kCTForegroundColorAttributeName];
-    return [[[NSAttributedString alloc] initWithString:NSLocalizedString(@"•", @"Task's mark")
+    return [[[NSAttributedString alloc] initWithString:NSLocalizedString(@"●", @"Task's mark")
                                             attributes:a] autorelease];
 }
 

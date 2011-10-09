@@ -4,6 +4,8 @@
 
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
+    #include <IOKit/ps/IOPowerSources.h>
+    #include <IOKit/ps/IOPSKeys.h>
 #endif
 
 #ifndef NSAppKitVersionNumber10_6

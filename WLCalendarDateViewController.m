@@ -34,7 +34,7 @@ static NSString* const _WLDateFormatterCacheKey = @"dateFormatter";
 
 #pragma mark Methods
 
-- (void)updateView
+- (void)reloadViewData
 {
     WLCalendarDateView *view = [self view];
     NSDate *date = [[self representedObject] date];
@@ -79,7 +79,7 @@ static NSString* const _WLDateFormatterCacheKey = @"dateFormatter";
     WLCalendarDateView *v = [[WLCalendarDateView alloc] init];
     [self setView:v];
     [v release];
-    [self updateView];
+    [self reloadViewData];
     [self addObserver:self forKeyPath:@"representedObject.date" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:NULL];
     [self addObserver:self forKeyPath:@"representedObject.calendar" options:NSKeyValueObservingOptionNew context:NULL];
 }
@@ -103,7 +103,7 @@ static NSString* const _WLDateFormatterCacheKey = @"dateFormatter";
     {
         if ([aKeyPath isEqualToString:@"representedObject.calendar"])
             self._dateFormatter = nil;
-        [self updateView];
+        [self reloadViewData];
     }
     else
         [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];

@@ -39,6 +39,8 @@
 
 - (void)_nextDay;
 
+- (void)_nextMinute;
+
 - (void)_clockDidChange:(NSNotification *)aNotification;
 
 - (void)_timeZoneDidChange:(NSNotification *)aNotification;
