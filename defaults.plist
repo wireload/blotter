@@ -30,5 +30,7 @@
 	<real>350</real>
 	<key>ShowPreferencesAtStartUp</key>
 	<true/>
+	<key>NSSupportsAutomaticGraphicsSwitching</key>
+	<true/>
 </dict>
 </plist>
