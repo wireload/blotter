@@ -7,6 +7,7 @@
 //
 
 #import "WLCalendarController.h"
+#import "IKPowerSources.h"
 
 
 @implementation WLCalendarController
@@ -116,13 +117,18 @@
     NSDate *startDate = nil;
     NSTimeInterval interval = 0.0;
     [self.calendar rangeOfUnit:NSMinuteCalendarUnit startDate:&startDate interval:&interval forDate:self.date];
-    NSRange secondsRange = [self.calendar maximumRangeOfUnit:NSSecondCalendarUnit];
+    if (IKGetProvidingPowerSourceType() != IKACPowerType)
+    {
+        NSRange secondsRange = [self.calendar maximumRangeOfUnit:NSSecondCalendarUnit];
+        static const NSTimeInterval BatteryModifier = 5;
+        interval = BatteryModifier * secondsRange.length;
+    }
     _nextMinuteTimer = [[NSTimer alloc] initWithFireDate:[startDate dateByAddingTimeInterval:interval]
-                                                interval:(NSTimeInterval)secondsRange.length
+                                                interval:0.0
                                                   target:self
-                                                selector:@selector(_updateDate)
+                                                selector:@selector(_nextMinute)
                                                 userInfo:nil
-                                                 repeats:YES];
+                                                 repeats:NO];
     [[NSRunLoop currentRunLoop] addTimer:_nextMinuteTimer forMode:NSDefaultRunLoopMode];
     [_nextMinuteTimer release];
 }
@@ -163,6 +169,13 @@
     }
     else
         [self performSelector:@selector(_nextDay) withObject:nil afterDelay:0.1];
+}
+
+- (void)_nextMinute
+{
+    _nextMinuteTimer = nil;
+    [self _updateDate];
+    [self _scheduleNextMinuteTimer];
 }
 
 - (void)_clockDidChange:(NSNotification *)aNotification

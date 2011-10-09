@@ -137,6 +137,8 @@
 		E2BA531A13C5A873005F0045 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2BA531913C5A873005F0045 /* QuartzCore.framework */; };
 		E2BA565E13C5E4C4005F0045 /* NSColor+CGColor.m in Sources */ = {isa = PBXBuildFile; fileRef = E2BA565D13C5E4C4005F0045 /* NSColor+CGColor.m */; };
 		E2C774C413D1C02A0067102F /* WLCalendarDayEventsLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2C774C313D1C02A0067102F /* WLCalendarDayEventsLayer.m */; };
+		E2D6488E1441060F00A03FAD /* IKPowerSources.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D6488D1441060F00A03FAD /* IKPowerSources.m */; };
+		E2D648901441062300A03FAD /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2D6488F1441062300A03FAD /* IOKit.framework */; };
 		E2E64B4E1402483500912A92 /* WLSoftEdgeLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E64B4D1402483500912A92 /* WLSoftEdgeLayer.m */; };
 		E2F112DD13E6E263001C2B7B /* WLCalendarWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F112DC13E6E263001C2B7B /* WLCalendarWindow.m */; };
 		E2F1133D13E70B4F001C2B7B /* WLCalendarWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F1133C13E70B4F001C2B7B /* WLCalendarWindowController.m */; };
@@ -434,6 +436,9 @@
 		E2C774C213D1C02A0067102F /* WLCalendarDayEventsLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarDayEventsLayer.h; sourceTree = "<group>"; };
 		E2C774C313D1C02A0067102F /* WLCalendarDayEventsLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarDayEventsLayer.m; sourceTree = "<group>"; };
 		E2C776E413D20A970067102F /* WLCalendarTimeRuler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTimeRuler.h; sourceTree = "<group>"; };
+		E2D6488C1441060F00A03FAD /* IKPowerSources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IKPowerSources.h; path = IKPowerSources/IKPowerSources.h; sourceTree = "<group>"; };
+		E2D6488D1441060F00A03FAD /* IKPowerSources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IKPowerSources.m; path = IKPowerSources/IKPowerSources.m; sourceTree = "<group>"; };
+		E2D6488F1441062300A03FAD /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		E2E64B4C1402483500912A92 /* WLSoftEdgeLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLSoftEdgeLayer.h; sourceTree = "<group>"; };
 		E2E64B4D1402483500912A92 /* WLSoftEdgeLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLSoftEdgeLayer.m; sourceTree = "<group>"; };
 		E2F112DB13E6E263001C2B7B /* WLCalendarWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindow.h; sourceTree = "<group>"; };
@@ -458,6 +463,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2D648901441062300A03FAD /* IOKit.framework in Frameworks */,
 				E27313181349F0EB00A84433 /* PTHotKey.framework in Frameworks */,
 				E27311471349D76700A84433 /* ShortcutRecorder.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
@@ -473,6 +479,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E2D6488C1441060F00A03FAD /* IKPowerSources.h */,
+				E2D6488D1441060F00A03FAD /* IKPowerSources.m */,
 				E29ED79A142138EE00DB179C /* SS_PreferencePaneProtocol.h */,
 				E27196B713C5A19E008E5C43 /* WLCalendar */,
 				E27936431324F6BD00BC5224 /* WLGlassHud */,
@@ -548,6 +556,7 @@
 		29B97314FDCFA39411CA2CEA /* Deskboard */ = {
 			isa = PBXGroup;
 			children = (
+				E2D6488F1441062300A03FAD /* IOKit.framework */,
 				E27311741349D86200A84433 /* Blotter Preferences.xcodeproj */,
 				E2730F961349C4A500A84433 /* ShortcutRecorder.xcodeproj */,
 				080E96DDFE201D6D7F000001 /* Classes */,
@@ -1062,6 +1071,7 @@
 				E2A61A80140745FC0059F201 /* WLCalendarBoxView.m in Sources */,
 				E20DAC5614294D8800EF65EA /* NSAttributedString+WLStringDrawing.m in Sources */,
 				E262E5E3142BD2C500715C02 /* WLCopyCompositingFilter.m in Sources */,
+				E2D6488E1441060F00A03FAD /* IKPowerSources.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

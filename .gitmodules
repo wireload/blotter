@@ -2,3 +2,6 @@
 	path = ShortcutRecorder
 	url = git://github.com/Kentzo/ShortcutRecorder.git
 
+[submodule "IKPowerSources"]
+	path = IKPowerSources
+	url = git://github.com/Kentzo/IKPowerSources.git
