@@ -350,7 +350,7 @@ static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLine
 {
     NSAssert([self wantsLayer], @"You MUST call -createLayers before.");
     NSParameterAssert([_columnLayers count] > 0);
-    
+
     if (self.fitDayEvents)
     {
         // Actual height of hour may be greater than calculated one.

@@ -52,7 +52,7 @@
 
 /*!
  @abstract      Returns visible hour range of events taking care of minimum visible heights of events.
- @discussion    E.g. event's length is 5 minutes and passed height of hour is 10 points. Therefore calculated height of event is 
+ @discussion    E.g. event's length is 5 minutes and passed height of hour is 10 points. Therefore calculated height of event is
  0.16 (assuming 60 minutes/hour) but it may be less than minimumVisibleHeight so it will be extended.
  @see           hourRangeOfEvents
  */
@@ -69,8 +69,8 @@
 
 - (void)_buildEventsLayoutTree;
 
-- (CGFloat)_startHourOfEventLayer:(WLCalendarEventLayer *)aLayer;
+- (CGFloat)_minYOfEventLayer:(WLCalendarEventLayer *)aLayer forHeightOfHour:(CGFloat)aHeightOfHour;
 
-- (CGFloat)_endHourOfEventLayer:(WLCalendarEventLayer *)aLayer;
+- (CGFloat)_maxYOfEventLayer:(WLCalendarEventLayer *)aLayer forHeightOfHour:(CGFloat)aHeightOfHour minY:(CGFloat)aMinY;
 
 @end
