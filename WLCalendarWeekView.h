@@ -16,24 +16,13 @@
 #import "WLCalendarAllDayEventsLayer.h"
 #import "WLCalendarTimeIndicatorLayer.h"
 #import "WLBlockLayer.h"
+#import "WLHourRange.h"
 
 
 @protocol WLCalendarWeekViewDataSource;
 
 @class WLCalendarTimeIndicatorLayer;
 
-
-typedef struct
-{
-    CGFloat startHour;
-    CGFloat endHour;
-} WLHourRange;
-
-static const WLHourRange WLHourRangeZero = {0.0f, 0.0f};
-
-static const WLHourRange WLHourRangeInvalid = {CGFLOAT_MAX, 0.0f};
-
-BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r);
 
 
 @interface WLCalendarWeekView : NSView <WLCalendarTimeRuler/*, CALayerManager*/> {
@@ -108,11 +97,21 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r);
 - (void)stopAnimations;
 
 /*!
- @see rangeOfAlwaysVisibleHours
+ @abstract  Returns maximum hour range of all day events presented in view.
+ @see       rangeOfAlwaysVisibleHours
  */
 - (WLHourRange)rangeOfVisibleHours;
 
-- (void)heightOfHourMayHaveChanged;
+/*!
+ @abstract Called when height of hour should be recalculated.
+ */
+- (void)setNeedsUpdateHeightOfHour;
+
+/*!
+ @abstract      Height of hour on the view.
+ @discussion    Returns not aligned value.
+ */
+- (CGFloat)heightOfHour;
 
 
 - (void)_updateEventsOfColumnsAtIndexes:(NSIndexSet *)anIndexSet;

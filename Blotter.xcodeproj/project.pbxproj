@@ -28,6 +28,7 @@
 		E221B3A313EC5C2F00F9B392 /* CoreAnimation+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = E221B3A213EC5C2F00F9B392 /* CoreAnimation+WLCalendar.m */; };
 		E22C78AB13FFCD9F00EE44C0 /* NSColor+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */; };
 		E23779EF1312AD6000F46E7D /* WLClosableWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E23779D71312AD6000F46E7D /* WLClosableWindow.m */; };
+		E23F746F14434DE40055D6CE /* WLHourRange.m in Sources */ = {isa = PBXBuildFile; fileRef = E23F746E14434DE40055D6CE /* WLHourRange.m */; };
 		E253575013DC884D0010A2ED /* NSDate+WLDayBoundaries.m in Sources */ = {isa = PBXBuildFile; fileRef = E253574F13DC884D0010A2ED /* NSDate+WLDayBoundaries.m */; };
 		E2535B8713DCA88B0010A2ED /* WLDateRange.m in Sources */ = {isa = PBXBuildFile; fileRef = E2535B8613DCA88B0010A2ED /* WLDateRange.m */; };
 		E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */; };
@@ -265,6 +266,8 @@
 		E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+WLCalendar.m"; sourceTree = "<group>"; };
 		E23779D61312AD6000F46E7D /* WLClosableWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WLClosableWindow.h; path = WLClosableWindow/WLClosableWindow.h; sourceTree = "<group>"; };
 		E23779D71312AD6000F46E7D /* WLClosableWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WLClosableWindow.m; path = WLClosableWindow/WLClosableWindow.m; sourceTree = "<group>"; };
+		E23F746D14434DE40055D6CE /* WLHourRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLHourRange.h; sourceTree = "<group>"; };
+		E23F746E14434DE40055D6CE /* WLHourRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLHourRange.m; sourceTree = "<group>"; };
 		E253574E13DC884D0010A2ED /* NSDate+WLDayBoundaries.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+WLDayBoundaries.h"; sourceTree = "<group>"; };
 		E253574F13DC884D0010A2ED /* NSDate+WLDayBoundaries.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+WLDayBoundaries.m"; sourceTree = "<group>"; };
 		E2535B8513DCA88B0010A2ED /* WLDateRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDateRange.h; sourceTree = "<group>"; };
@@ -530,6 +533,8 @@
 				E20DAC5514294D8700EF65EA /* NSAttributedString+WLStringDrawing.m */,
 				E262E5E1142BD2C400715C02 /* WLCopyCompositingFilter.h */,
 				E262E5E2142BD2C400715C02 /* WLCopyCompositingFilter.m */,
+				E23F746D14434DE40055D6CE /* WLHourRange.h */,
+				E23F746E14434DE40055D6CE /* WLHourRange.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1072,6 +1077,7 @@
 				E20DAC5614294D8800EF65EA /* NSAttributedString+WLStringDrawing.m in Sources */,
 				E262E5E3142BD2C500715C02 /* WLCopyCompositingFilter.m in Sources */,
 				E2D6488E1441060F00A03FAD /* IKPowerSources.m in Sources */,
+				E23F746F14434DE40055D6CE /* WLHourRange.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

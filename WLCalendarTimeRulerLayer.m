@@ -25,16 +25,6 @@
     return self;
 }
 
-- (id)initWithLayer:(id)aLayer
-{
-    self = [super initWithLayer:aLayer];
-    if (self != nil)
-    {
-        self.timeRuler = [aLayer timeRuler];
-    }
-    return self;
-}
-
 - (void)dealloc
 {
     [_sortedTimeLayers release];
@@ -43,25 +33,21 @@
 
 
 #pragma mark Properties
-@synthesize timeRuler;
-@synthesize shouldHideHalfVisibleHourLabels;
+@dynamic timeRuler;
+@dynamic shouldHideHalfVisibleHourLabels;
+@dynamic heightOfHour;
+@dynamic hours;
 
-
-#pragma mark Methods
-
-- (CGFloat)hourLabelYPadding
+- (NSArray *)hours
 {
-    if ([_sortedTimeLayers count] > 0)
-        return [[_sortedTimeLayers objectAtIndex:0] preferredFrameSize].height / 2;
-    else
-        return 0.0f;
+    return [_sortedTimeLayers valueForKeyPath:@"string.string"];
 }
 
-- (void)setHours:(NSArray *)hours
+- (void)setHours:(NSArray *)aHours
 {
     [_sortedTimeLayers removeAllObjects];
     self.sublayers = nil;
-    for (NSString *hour in hours)
+    for (NSString *hour in aHours)
     {
         WLCalendarTimeRulerLabelLayer *timeLayer = [self _setupTimeLayerWithString:hour];
         [self addSublayer:timeLayer];
@@ -70,9 +56,20 @@
     _shouldUpdatePreferredFrameWidthCache = YES;
 }
 
+
+#pragma mark Methods
+
+- (CGFloat)maximumHeightOfHourLabel
+{
+    if ([_sortedTimeLayers count] > 0)
+        return [[_sortedTimeLayers objectAtIndex:0] preferredFrameSize].height;
+    else
+        return 0.0f;
+}
+
 - (CGPoint)pointForHour:(CGFloat)aHour
 {
-    return CGPointMake(0.0f, floorf([self hourLabelYPadding] + aHour * timeRuler.heightOfHour));
+    return CGPointMake(0.0f, floorf([self maximumHeightOfHourLabel] / 2 + aHour * self.heightOfHour));
 }
 
 - (CGFloat)preferredFrameWidth
@@ -121,7 +118,7 @@
     if ([_sortedTimeLayers count] == 0)
         return CGSizeZero;
 
-    CGFloat h = floorf(timeRuler.heightOfHour * [_sortedTimeLayers count] + [self hourLabelYPadding]);
+    CGFloat h = floorf(self.heightOfHour * [_sortedTimeLayers count] + [self maximumHeightOfHourLabel] / 2);
     return CGSizeMake([self preferredFrameWidth], h);
 }
 
@@ -129,20 +126,19 @@
 {
     NSAssert(self.layoutManager == nil, @"You cannot use custom layout managers with this class");
 
-    CGFloat heightOfHour = timeRuler.heightOfHour;
-    CGFloat hourPosition = [self hourLabelYPadding];
+    CGFloat hourPosition = [self maximumHeightOfHourLabel] / 2;
     for (WLCalendarTimeRulerLabelLayer *hourLabel in _sortedTimeLayers)
     {
         CGSize size = [hourLabel preferredFrameSize];
         hourLabel.frame = CGRectIntegral(CGRectMake(0.0f, hourPosition - size.height / 2.0, self.bounds.size.width, size.height));
-        if (shouldHideHalfVisibleHourLabels)
+        if (self.shouldHideHalfVisibleHourLabels)
         {
             if (CGRectGetMaxY(self.visibleRect) < CGRectGetMaxY(hourLabel.frame))
                 hourLabel.hidden = YES;
             else
                 hourLabel.hidden = NO;
         }
-        hourPosition += heightOfHour;
+        hourPosition += self.heightOfHour;
     }
 }
 

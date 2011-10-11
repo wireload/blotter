@@ -47,13 +47,6 @@ static NSString* const _WLDayBackgroundLayerShouldHighlightTitleKey = @"highligh
 static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine;
 
 
-BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
-{
-    return (l.startHour == r.startHour || fabsf(l.startHour - r.startHour) < FLT_EPSILON) &&
-            (l.endHour == r.endHour || fabsf(l.endHour - r.endHour) < FLT_EPSILON);
-}
-
-
 @implementation WLCalendarWeekView
 
 - (id)initWithFrame:(NSRect)aFrameRect
@@ -119,7 +112,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
             for (WLCalendarDayEventsLayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])
                 l.keepTextOfEventsVisible = NO;
             [_timeRulerRootLayer WL_timeRulerLayer].shouldHideHalfVisibleHourLabels = YES;
-            [self heightOfHourMayHaveChanged];
+            [self setNeedsUpdateHeightOfHour];
         }
         else
         {
@@ -149,7 +142,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 {
     rangeOfAlwaysVisibleHours = newHourRange;
     if ([self wantsLayer] && self.fitDayEvents)
-        [self heightOfHourMayHaveChanged];
+        [self setNeedsUpdateHeightOfHour];
 }
 
 
@@ -234,7 +227,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 - (void)updateEventsOfColumnsAtIndexes:(NSIndexSet *)anIndexSet
 {
     [self _updateEventsOfColumnsAtIndexes:anIndexSet];
-    [self heightOfHourMayHaveChanged];
+    [self setNeedsUpdateHeightOfHour];
 }
 
 - (void)updateTitleOfColumnsAtIndexes:(NSIndexSet *)anIndexSet
@@ -250,7 +243,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 - (void)updateColumnsAtIndexes:(NSIndexSet *)anIndexSet
 {
     [self _updateColumnsAtIndexes:anIndexSet];
-    [self heightOfHourMayHaveChanged];
+    [self setNeedsUpdateHeightOfHour];
 }
 
 - (void)showNextDay
@@ -323,29 +316,59 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     WLHourRange r = self.rangeOfAlwaysVisibleHours;
     for (WLCalendarDayEventsLayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])
     {
-        WLDateRange *columnRange = [l eventsDateRange];
-        if (columnRange != nil)
+        WLHourRange columnHourRange = [l hourRangeOfEvents];
+        if (!WLHourRangeEqualToHourRange(columnHourRange, WLHourRangeZero))
         {
-            r.startHour = fminf(r.startHour, [self hourForDate:columnRange.startDate]);
-            r.endHour = fmaxf(r.endHour, [self hourForDate:columnRange.endDate]);
+            r.startHour = fminf(r.startHour, columnHourRange.startHour);
+            r.endHour = fmaxf(r.endHour, columnHourRange.endHour);
         }
     }
     return r;
 }
 
-- (void)heightOfHourMayHaveChanged
+- (void)setNeedsUpdateHeightOfHour
 {
     NSAssert([self wantsLayer], @"You MUST call -createLayers before.");
 
+    CGFloat heightOfHour = [self heightOfHour];
+    [_timeRulerRootLayer WL_timeRulerLayer].heightOfHour = heightOfHour;
     [self layoutTimeRulerLayer:[_timeRulerRootLayer WL_timeRulerLayer]];
     for (CALayer *c in _columnLayers)
+    {
+        [c WL_dayLayer].heightOfHour = heightOfHour;
         [self layoutDayLayer:[c WL_dayLayer]];
+    }
     if (self.fitDayEvents)
         [self _focusOnDayEvents];
     else
         [self _focusOnHour];
     // Scroll timeRuler and columns before positioning timeIndicator, since its position is relative to them.
     [self layoutTimeIndicatorLayer];
+}
+
+- (CGFloat)heightOfHour
+{
+    NSAssert([self wantsLayer], @"You MUST call -createLayers before.");
+    NSParameterAssert([_columnLayers count] > 0);
+    
+    if (self.fitDayEvents)
+    {
+        // Actual height of hour may be greater than calculated one.
+        WLHourRange r = [self rangeOfVisibleHours];
+        CGFloat minHeight = ([self dayScrollFrame].size.height) / (ceilf(r.endHour) - floorf(r.startHour));
+        for (WLCalendarDayEventsLayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])
+        {
+            WLHourRange columnHourRange = [l visibleHourRangeOfEventsForHeightOfHour:minHeight];
+            if (!WLHourRangeEqualToHourRange(columnHourRange, WLHourRangeZero))
+            {
+                r.startHour = fminf(r.startHour, columnHourRange.startHour);
+                r.endHour = fmaxf(r.endHour, columnHourRange.endHour);
+            }
+        }
+        return ([self dayScrollFrame].size.height) / (ceilf(r.endHour) - floorf(r.startHour));
+    }
+    else
+        return fmaxf([self dayScrollFrame].size.height / [self numberOfHours], 40.0f);
 }
 
 
@@ -360,7 +383,7 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
         [self layoutColumnLayers];
     }];
     [self layoutTimeIndicatorRootLayer];
-    [self heightOfHourMayHaveChanged];
+    [self setNeedsUpdateHeightOfHour];
 }
 
 
@@ -369,21 +392,6 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
 - (NSUInteger)numberOfHours
 {
     return [dataSource numberOfHoursInWeekView:self];
-}
-
-- (CGFloat)heightOfHour
-{
-    NSAssert([self wantsLayer], @"You MUST call -createLayers before.");
-    NSParameterAssert([_columnLayers count] > 0);
-
-    if (self.fitDayEvents)
-    {
-        WLHourRange r = [self rangeOfVisibleHours];
-        CGFloat endHour = ceilf(r.endHour);
-        return ([self dayScrollFrame].size.height) / (endHour - floorf(r.startHour));
-    }
-    else
-        return fmaxf([self dayScrollFrame].size.height / [self numberOfHours], 40.0f);
 }
 
 - (CGFloat)hourForDate:(NSDate *)aDate
@@ -534,13 +542,13 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     WLHourRange r = [self rangeOfVisibleHours];
     if (WLHourRangeEqualToHourRange(r, WLHourRangeZero))
     {
-        [self _focusOnHour]; // No events to focus. Better focus on current hour rather than 0:00.
+        [self _focusOnHour]; // No range to focus. Better focus on current hour rather than 0:00.
         return;
     }
 
     WLCalendarTimeRulerLayer *timeRuler = [_timeRulerRootLayer WL_timeRulerLayer];
     CGPoint scrollPoint = [timeRuler pointForHour:floorf(r.startHour)];
-    scrollPoint.y -= [timeRuler hourLabelYPadding];
+    scrollPoint.y -= [timeRuler maximumHeightOfHourLabel] / 2;
     scrollPoint.x = floorf(scrollPoint.x);
     scrollPoint.y = floorf(scrollPoint.y);
     for (WLCalendarDayEventsLayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])
@@ -561,14 +569,11 @@ BOOL WLHourRangeEqualToHourRange(WLHourRange l, WLHourRange r)
     CGFloat bottomLimit = CGRectGetMaxY(timeRulerLayer.bounds) - visibleHeight;
     newScrollPoint.y = floorf(fminf(fmaxf(newScrollPoint.y, topLimit), bottomLimit));
 
-    newScrollPoint.y -= [timeRulerLayer hourLabelYPadding];
+    newScrollPoint.y -= [timeRulerLayer maximumHeightOfHourLabel] / 2;
     newScrollPoint.x = floorf(newScrollPoint.x);
     newScrollPoint.y = floorf(newScrollPoint.y);
     for (WLCalendarDayEventsLayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])
-    {
         [l scrollPoint:newScrollPoint];
-        [l positionTextOfEvents];
-    }
     [timeRulerLayer scrollPoint:newScrollPoint];
 }
 
@@ -741,7 +746,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     if (self.showTitle)
         titleHeightAndMargin = [self columnTitleFrame].size.height + _WLYMarginBetweenTitleAndColumn;
     // Height of the day must be less than time ruler by half of of the first hour.
-    CGFloat hourLabelYPadding = [[_timeRulerRootLayer WL_timeRulerLayer] hourLabelYPadding];
+    CGFloat hourLabelYPadding = [[_timeRulerRootLayer WL_timeRulerLayer] maximumHeightOfHourLabel] / 2;
     CGRect dayBackgroundFrame = [self dayBackgroundFrame];
     return CGRectIntegral(CGRectInset(CGRectMake(0.0f,
                                                  titleHeightAndMargin + hourLabelYPadding,

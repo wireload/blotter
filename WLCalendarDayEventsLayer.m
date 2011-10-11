@@ -43,16 +43,6 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     return self;
 }
 
-- (id)initWithLayer:(id)aLayer
-{
-    self = [super initWithLayer:aLayer];
-    if (self != nil)
-    {
-        [self setValue:[aLayer valueForKey:@"timeRuler"] forKey:@"timeRuler"];
-    }
-    return self;
-}
-
 - (void)dealloc
 {
     [_sortedByStartDateEventLayers release];
@@ -63,9 +53,24 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 
 
 #pragma mark Properties
-@synthesize timeRuler;
+@dynamic timeRuler;
 @dynamic events;
 @synthesize keepTextOfEventsVisible;
+@dynamic heightOfHour;
+
+- (NSSet *)events
+{
+    NSMutableSet *events = [NSMutableSet setWithCapacity:[_sortedByUIDEventLayers count]];
+    for (WLCalendarEventLayer *eventLayer in _sortedByUIDEventLayers)
+    {
+        NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:
+                               eventLayer.name,             @"uid",
+                               [eventLayer.title string],   @"title",
+                               nil];
+        [events addObject:event];
+    }
+    return events;
+}
 
 - (void)setEvents:(NSSet *)newEvents
 {
@@ -118,23 +123,37 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     return n;
 }
 
-
-- (WLDateRange *)eventsDateRange
+- (WLHourRange)hourRangeOfEvents
 {
     if ([_sortedByStartDateEventLayers count] == 0)
-        return nil;
+        return WLHourRangeZero;
 
     NSDate *start = [[_sortedByStartDateEventLayers objectAtIndex:0] valueForKey:_WLStartDateKey];
     NSDate *end = nil;
-    for (NSEvent *e in _sortedByStartDateEventLayers)
+    for (WLCalendarEventLayer *e in _sortedByStartDateEventLayers)
         end = [[e valueForKey:_WLEndDateKey] laterDate:end];
-    return [WLDateRange dateRangeWithStartDate:start endDate:end];
+    return (WLHourRange) {
+        .startHour = [self.timeRuler hourForDate:start],
+        .endHour = [self.timeRuler hourForDate:end]
+    };
 }
 
-- (void)positionTextOfEvents
+- (WLHourRange)visibleHourRangeOfEventsForHeightOfHour:(CGFloat)aHeightOfHour
 {
-    if (self.keepTextOfEventsVisible)
-        [_sortedByUIDEventLayers makeObjectsPerformSelector:@selector(setNeedsDisplay)];
+    if ([_sortedByStartDateEventLayers count] == 0)
+        return WLHourRangeZero;
+    
+    WLCalendarEventLayer *lastEventLayer = [_sortedByStartDateEventLayers lastObject];
+    CGFloat t = [self _startHourOfEventLayer:lastEventLayer] * aHeightOfHour;
+    CGFloat b = [self _endHourOfEventLayer:lastEventLayer] * aHeightOfHour;
+    CGFloat minimumHeight = [lastEventLayer minimumHumanVisibleHeight];
+    if (IS_LESS_F(b - t, minimumHeight))
+        b = t + minimumHeight;
+    WLHourRange actualHourRange = [self hourRangeOfEvents];
+    return (WLHourRange) {
+        .startHour = actualHourRange.startHour,
+        .endHour = fmaxf(actualHourRange.endHour, b / aHeightOfHour)
+    };
 }
 
 
@@ -178,9 +197,9 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 
     [aLayer setValue:[anEvent startDate] forKey:_WLStartDateKey];
     [aLayer setValue:[anEvent endDate] forKey:_WLEndDateKey];
-    [aLayer setValue:[NSNumber numberWithFloat:0.0f] forKey:_WLStartHourKey];
-    [aLayer setValue:[NSNumber numberWithFloat:0.0f] forKey:_WLEndHourKey];
-    [aLayer setValue:[NSNumber numberWithInt:0] forKey:_WLNumberOfColumnsToSkipKey];
+    [aLayer setValue:nil forKey:_WLStartHourKey];
+    [aLayer setValue:nil forKey:_WLEndHourKey];
+    [aLayer setValue:nil forKey:_WLNumberOfColumnsToSkipKey];
 #ifdef DEBUG_LAYERS
     aLayer.backgroundColor = [[(CalCalendar *)[anEvent calendar] color] WL_CGColor];
 #else
@@ -258,17 +277,15 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     // Step 1: Divde layers into rows, where each element of the row intersects all other elements of the row itself or through it's siblings.
     {
         __block NSTreeNode *rowNode = nil;
-        __block CGFloat rowTop = 0.0f;
-        __block CGFloat rowBottom = 0.0f;
+        __block CGFloat rowStartHour = 0.0f;
+        __block CGFloat rowEndHour = 0.0f;
         [_sortedByStartDateEventLayers enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger idx, BOOL *stop)
         {
-            CGFloat layerTop = [timeRuler hourForDate:[l valueForKey:_WLStartDateKey]];
-            CGFloat layerBottom = [timeRuler hourForDate:[l valueForKey:_WLEndDateKey]];
-            [l setValue:[NSNumber numberWithFloat:layerTop] forKey:_WLStartHourKey];
-            [l setValue:[NSNumber numberWithFloat:layerBottom] forKey:_WLEndHourKey];
-            if (IS_LESS_F(layerTop, rowBottom))
+            CGFloat startHour = [self _startHourOfEventLayer:l];
+            CGFloat endHour = [self _endHourOfEventLayer:l];
+            if (IS_LESS_F(startHour, rowEndHour))
             {
-                rowBottom = fmaxf(rowBottom, layerBottom);
+                rowEndHour = fmaxf(rowEndHour, endHour);
                 [[rowNode representedObject] addObject:l];
             }
             else
@@ -280,8 +297,8 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
                     rowNode = nil;
                 }
                 rowNode = [[NSTreeNode alloc] initWithRepresentedObject:[NSMutableArray array]];
-                rowTop = layerTop;
-                rowBottom = layerBottom;
+                rowStartHour = startHour;
+                rowEndHour = endHour;
                 [[rowNode representedObject] addObject:l];
             }
         }];
@@ -328,7 +345,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
                                                                  usingBlock:^(NSTreeNode *rowNode, NSUInteger rowIdx, BOOL *stopRow)
         {
             __block NSMutableArray *row = [rowNode representedObject];
-            while ([row count] > 0 && [[rowNode childNodes] count] < _cachedMaximumNumberOfColumns)
+            while ([row count] > 0 && [[rowNode childNodes] count] < _maximumNumberOfColumns)
             {
                 WLCalendarEventLayer *topLayer = [row objectAtIndex:0];
                 NSMutableArray *column = [NSMutableArray arrayWithObject:topLayer];
@@ -337,16 +354,16 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 
                 if ([row count] > 0)
                 {
-                    __block CGFloat columnBottom = [[topLayer valueForKey:_WLEndHourKey] floatValue];
+                    __block CGFloat columnEndHour = [self _endHourOfEventLayer:topLayer];
                     NSMutableIndexSet *placedLayers = [NSMutableIndexSet indexSet];
                     [row enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger layerIdx, BOOL *stopLayer)
                     {
-                        CGFloat layerTop = [[l valueForKey:_WLStartHourKey] floatValue];
-                        CGFloat layerBottom = [[l valueForKey:_WLEndHourKey] floatValue];
-                        if (IS_LESS_OR_EQ_F(columnBottom, layerTop))
+                        CGFloat startHour = [self _startHourOfEventLayer:l];
+                        CGFloat endHour = [self _endHourOfEventLayer:l];
+                        if (IS_LESS_OR_EQ_F(columnEndHour, startHour))
                         {
                             [column addObject:l];
-                            columnBottom = layerBottom;
+                            columnEndHour = endHour;
                             [placedLayers addIndex:layerIdx];
                         }
                     }];
@@ -360,7 +377,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
             // Distribute them among available columns.
             [row enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger layerIdx, BOOL *stopLayer)
             {
-                NSTreeNode *columnNode = [[rowNode childNodes] objectAtIndex:layerIdx % _cachedMaximumNumberOfColumns];
+                NSTreeNode *columnNode = [[rowNode childNodes] objectAtIndex:layerIdx % _maximumNumberOfColumns];
                 NSMutableArray *column = [columnNode representedObject];
                 [column addObject:l];
             }];
@@ -413,8 +430,8 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
                 NSArray *events = [columnNode representedObject];
                 for (WLCalendarEventLayer *left in events)
                 {
-                    CGFloat leftTop = [[left valueForKey:_WLStartHourKey] floatValue];
-                    CGFloat leftBottom = [[left valueForKey:_WLEndHourKey] floatValue];
+                    CGFloat leftStartHour = [self _startHourOfEventLayer:left];
+                    CGFloat leftEndHour = [self _endHourOfEventLayer:left];
                     NSRange rightColumns = NSMakeRange(columnIdx + 1, [columnNodes count] - columnIdx - 1);
                     __block NSUInteger numberOfColumnsToSkip = 0;
                     [columnNodes enumerateObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:rightColumns]
@@ -424,14 +441,14 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
                         BOOL doesIntersectRightColumn = NO;
                         for (WLCalendarEventLayer *right in [rightColumnNode representedObject])
                         {
-                            CGFloat rightTop = [[right valueForKey:_WLStartHourKey] floatValue];
-                            CGFloat rightBottom = [[right valueForKey:_WLEndHourKey] floatValue];
-                            if (IS_LESS_F(leftTop, rightBottom) && IS_LESS_F(rightTop, leftBottom))
+                            CGFloat rightStartHour = [self _startHourOfEventLayer:right];
+                            CGFloat rightEndHour = [self _endHourOfEventLayer:right];
+                            if (IS_LESS_F(leftStartHour, rightEndHour) && IS_LESS_F(rightStartHour, leftEndHour))
                             {
                                 doesIntersectRightColumn = YES;
                                 break;
                             }
-                            else if (IS_LESS_F(leftBottom, rightTop))
+                            else if (IS_LESS_F(leftEndHour, rightStartHour))
                                 break;
                         }
                         if (!doesIntersectRightColumn)
@@ -475,6 +492,29 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
      */
 }
 
+- (CGFloat)_startHourOfEventLayer:(WLCalendarEventLayer *)aLayer
+{
+    NSNumber *startHour = [aLayer valueForKey:_WLStartHourKey];
+    if (startHour == nil)
+    {
+        startHour = [NSNumber numberWithFloat:[self.timeRuler hourForDate:[aLayer valueForKey:_WLStartDateKey]]];
+        [aLayer setValue:startHour forKey:_WLStartHourKey];
+    }
+    return [startHour floatValue];
+}
+
+- (CGFloat)_endHourOfEventLayer:(WLCalendarEventLayer *)aLayer
+{
+    NSNumber *endHour = [aLayer valueForKey:_WLEndHourKey];
+    if (endHour == nil)
+    {
+        endHour = [NSNumber numberWithFloat:[self.timeRuler hourForDate:[aLayer valueForKey:_WLEndDateKey]]];
+        [aLayer setValue:endHour forKey:_WLEndHourKey];
+    }
+    return [endHour floatValue];    
+}
+
+
 #pragma mark CALayer
 
 - (void)layoutSublayers
@@ -484,10 +524,10 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     if ([_sortedByStartDateEventLayers count] == 0)
         return;
 
-    if (_eventsChanged || _cachedMaximumNumberOfColumns != [self maximumNumberOfColumns])
+    if (_eventsChanged || _maximumNumberOfColumns != [self maximumNumberOfColumns])
     {
         _eventsChanged = NO;
-        _cachedMaximumNumberOfColumns = [self maximumNumberOfColumns];
+        _maximumNumberOfColumns = [self maximumNumberOfColumns];
         [self _buildEventsLayoutTree];
     }
 
@@ -506,8 +546,8 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
         {
             for (WLCalendarEventLayer *l in [columnNode representedObject])
             {
-                CGFloat t = [[l valueForKey:_WLStartHourKey] floatValue] * [timeRuler heightOfHour];
-                CGFloat b = [[l valueForKey:_WLEndHourKey] floatValue] * [timeRuler heightOfHour];
+                CGFloat t = [self _startHourOfEventLayer:l] * self.heightOfHour;
+                CGFloat b = [self _endHourOfEventLayer:l] * self.heightOfHour;
                 CGFloat minimumHeight = [l minimumHumanVisibleHeight];
                 if (IS_LESS_F(b - t, minimumHeight))
                     b = t + minimumHeight;
@@ -515,7 +555,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
                 l.frame = CGRectMake(ceilf(CGRectGetMinX(self.bounds) + columnIdx * (columnWidth + XSpaceBetweenEvents)),
                                      floorf(t),
                                      floorf(columnWidth + (columnWidth + XSpaceBetweenEvents) * numberOfColumnsToSkip),
-                                     floorf(b - t));
+                                     floor(b - t));
                 if (shouldRoundCorners)
                     l.cornerRadius = CornerRadius;
                 else
@@ -535,7 +575,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
         CGSize ls = [l preferredFrameSize];
         s.width = ceilf(fmaxf(s.width, ls.width));
     }
-    s.height = ceilf(timeRuler.numberOfHours * timeRuler.heightOfHour);
+    s.height = ceilf(self.timeRuler.numberOfHours * self.heightOfHour);
     return s;
 }
 
@@ -548,8 +588,8 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     CGContextFillRect(aContext, CGContextGetClipBoundingBox(aContext));
 
     CGContextBeginPath(aContext);
-    CGFloat hourHeight = timeRuler.heightOfHour;
-    for (NSUInteger i=0, numberOfHours=timeRuler.numberOfHours; i<numberOfHours; ++i)
+    CGFloat hourHeight = self.heightOfHour;
+    for (NSUInteger i=0, numberOfHours=self.timeRuler.numberOfHours; i<numberOfHours; ++i)
     {
         CGFloat y = self.bounds.origin.y + hourHeight * i;
         CGContextMoveToPoint(aContext, self.bounds.origin.x, y);
@@ -561,5 +601,19 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     CGContextRestoreGState(aContext);
 }
 #endif
+
+- (void)scrollPoint:(CGPoint)aPoint
+{
+    [super scrollPoint:aPoint];
+    if (self.keepTextOfEventsVisible)
+        [_sortedByUIDEventLayers makeObjectsPerformSelector:@selector(setNeedsDisplay)];
+}
+
+- (void)scrollRectToVisible:(CGRect)aRect
+{
+    [super scrollRectToVisible:aRect];
+    if (self.keepTextOfEventsVisible)
+        [_sortedByUIDEventLayers makeObjectsPerformSelector:@selector(setNeedsDisplay)];
+}
 
 @end

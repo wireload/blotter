@@ -17,11 +17,6 @@
 - (NSUInteger)numberOfHours;
 
 /*!
- @abstract Returns height of a hour.
- */
-- (CGFloat)heightOfHour;
-
-/*!
  @abstract      Converts a given date into hour. 
  @discussion    You can use result to calculate offset for the time of given date.
  Integral part represents hours, fractional part represents minutes: 13:45 -> 13.75

@@ -9,37 +9,54 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 #import "WLCalendarTimeRuler.h"
-#import "WLDateRange.h"
+#import "WLHourRange.h"
 
 
 @class WLCalendarEventLayer;
 
 
 @interface WLCalendarDayEventsLayer : CALayer {
+    BOOL keepTextOfEventsVisible;
     NSMutableArray *_sortedByStartDateEventLayers;
     NSMutableArray *_sortedByUIDEventLayers;
-    NSUInteger _cachedMaximumNumberOfColumns;
+    NSUInteger _maximumNumberOfColumns;
     NSTreeNode *_eventsLayoutTreeRootNode;
     BOOL _eventsChanged;
-
-    id<WLCalendarTimeRuler> timeRuler;
-    BOOL keepTextOfEventsVisible;
 }
 
 @property (assign) id<WLCalendarTimeRuler> timeRuler;
 
 @property (nonatomic, copy) NSSet *events;
 
+/*!
+ @abstract Indicates whether text of event is visible if visible rect of event is changed (e.g. because of scrolling).
+ */
 @property (nonatomic) BOOL keepTextOfEventsVisible;
 
+/*!
+ @abstract Height of house used for layout.
+ */
+@property CGFloat heightOfHour;
+
+/*!
+ @abstract      Returns maximum number of horizontal adjacent events.
+ @discussion    Minimum value is 1.
+ */
 - (NSUInteger)maximumNumberOfColumns;
 
 /*!
- @result nil if there are no events.
+ @abstract  Returns actual hour range of events.
+ @see       visibleHourRangeOfEventsForHeightOfHour
  */
-- (WLDateRange *)eventsDateRange;
+- (WLHourRange)hourRangeOfEvents;
 
-- (void)positionTextOfEvents;
+/*!
+ @abstract      Returns visible hour range of events taking care of minimum visible heights of events.
+ @discussion    E.g. event's length is 5 minutes and passed height of hour is 10 points. Therefore calculated height of event is 
+ 0.16 (assuming 60 minutes/hour) but it may be less than minimumVisibleHeight so it will be extended.
+ @see           hourRangeOfEvents
+ */
+- (WLHourRange)visibleHourRangeOfEventsForHeightOfHour:(CGFloat)aHeightOfHour;
 
 
 - (WLCalendarEventLayer *)_setupEventLayer;
@@ -51,5 +68,9 @@
 - (NSUInteger)_indexOfEventLayerWithUID:(NSString *)anUID isFound:(BOOL *)outIsFound;
 
 - (void)_buildEventsLayoutTree;
+
+- (CGFloat)_startHourOfEventLayer:(WLCalendarEventLayer *)aLayer;
+
+- (CGFloat)_endHourOfEventLayer:(WLCalendarEventLayer *)aLayer;
 
 @end
