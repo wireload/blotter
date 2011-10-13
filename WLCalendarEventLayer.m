@@ -142,11 +142,12 @@ const CGFloat _WLXPadding = 10.0f;
                 if (self.keepTextVisible)
                 {
                     // Make text visible as much as possible.
-                    // Layer's origin is top left, while context's origin is bottom left.
+                    // Visible rect origin is top left, while context's origin is bottom left. Convert to context's coordinates.
                     CGFloat visibleRectTop = self.bounds.size.height - self.visibleRect.origin.y;
-                    CGFloat y = fminf(CGRectGetMaxY(titleAndLocationFrame) - titleHeight - locationHeight,
+                    // Center text on visible rect.
+                    CGFloat y = fminf((CGRectGetMaxY(titleAndLocationFrame) - titleHeight - locationHeight) / 2,
                                       fmaxf(titleAndLocationFrame.origin.y,
-                                            visibleRectTop - titleHeight - locationHeight));
+                                            (visibleRectTop - titleHeight - locationHeight) / 2));
                     titleAndLocationFrame.origin.y = y;
                     titleAndLocationFrame.size.height = titleHeight + locationHeight;
                 }
