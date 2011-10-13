@@ -16,13 +16,16 @@ static CIKernel *kernel = nil;
 
 + (void)initialize
 {
-    [CIFilter registerFilterName:@"WLCopyCompositing"
-                     constructor:(id)self
-                 classAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                   @"WLCopyCompositing",                                    kCIAttributeFilterDisplayName,
-                                   [NSArray arrayWithObject:kCICategoryCompositeOperation], kCIAttributeFilterCategories,
-                                   nil]
-     ];
+    if (self == [WLCopyCompositingFilter class])
+    {
+        [CIFilter registerFilterName:@"WLCopyCompositing"
+                         constructor:(id)self
+                     classAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                       @"WLCopyCompositing",                                    kCIAttributeFilterDisplayName,
+                                       [NSArray arrayWithObject:kCICategoryCompositeOperation], kCIAttributeFilterCategories,
+                                       nil]
+         ];
+    }
 }
 
 
