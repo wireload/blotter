@@ -160,6 +160,10 @@
 
 - (CGFloat)columnWidth;
 
+/*!
+ @discussion    0 column is the column just after the time ruler.
+ You may use negative values to animate disappearing of old columns.
+ */
 - (CGRect)columnFrameAtIndex:(NSInteger)anIndex;
 
 - (CGRect)allDayBackgroundFrame;
@@ -172,6 +176,9 @@
 
 - (void)layoutColumnLayers;
 
+/*!
+ @see columnFrameAtIndex:
+ */
 - (void)layoutColumnLayer:(CALayer *)aColumnLayer atIndex:(NSInteger)anIndex;
 
 - (void)layoutDayLayer:(WLCalendarDayEventsLayer *)aDayLayer;
