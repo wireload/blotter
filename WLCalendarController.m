@@ -10,7 +10,64 @@
 #import "IKPowerSources.h"
 
 
+@interface WLCalendarController (/*Private*/)
+
+@property (nonatomic, retain) NSCalendar *calendar;
+
+@property (nonatomic, retain) NSDate *date;
+
+@property (nonatomic, copy) NSArray *calCalendars;
+
+@end
+
+
 @implementation WLCalendarController
+
++ (void)initialize
+{
+    if (self == [WLCalendarController class])
+    {
+        // Update defaults calendars.
+        NSMutableArray *calCalendarDicts = [[[[NSUserDefaults standardUserDefaults] objectForKey:@"Calendars"] mutableCopy] autorelease];
+        NSMutableArray *calCalendarDictsToDelete = [[calCalendarDicts mutableCopy] autorelease];
+        for (CalCalendar *c in [[CalCalendarStore defaultCalendarStore] calendars])
+        {
+            __block BOOL calendarAlreadyExists = NO;
+            NSUInteger index = [calCalendarDicts indexOfObject:c
+                                                 inSortedRange:NSMakeRange(0, [calCalendarDicts count])
+                                                       options:NSBinarySearchingFirstEqual | NSBinarySearchingInsertionIndex
+                                               usingComparator:^(id left, id right)
+            {
+                NSComparisonResult result = [[left valueForKey:@"uid"] compare:[right valueForKey:@"uid"]];
+                if (result == NSOrderedSame)
+                    calendarAlreadyExists = YES;
+                return result;
+            }];
+            if (calendarAlreadyExists)
+                [calCalendarDictsToDelete removeObjectIdenticalTo:[calCalendarDicts objectAtIndex:index]];
+            else
+            {
+                NSDictionary *d = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   c.uid,                           @"uid",
+                                   [NSNumber numberWithBool:YES],   @"check",
+                                   nil];
+                [calCalendarDicts insertObject:d atIndex:index];
+            }
+        }
+        [calCalendarDicts removeObjectsInArray:calCalendarDictsToDelete];
+        [[NSUserDefaults standardUserDefaults] setObject:calCalendarDicts forKey:@"Calendars"];
+    }
+}
+
++ (WLCalendarController *)sharedController
+{
+    static dispatch_once_t onceToken;
+    static WLCalendarController *sharedController = nil;
+    dispatch_once(&onceToken, ^{
+        sharedController = [[self alloc] init];
+    });
+    return sharedController;
+}
 
 - (id)init
 {
@@ -19,29 +76,32 @@
     {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 
-        calendar = [[NSCalendar autoupdatingCurrentCalendar] retain];
-        date = [[NSDate date] retain];
-        calCalendars = [[self _calendarsToDisplay] copy];
-
         NSNotificationCenter *n = [NSNotificationCenter defaultCenter];
         [n addObserver:self
               selector:@selector(_localeDidChange:)
                   name:NSCurrentLocaleDidChangeNotification
                 object:nil];
         [n addObserver:self
-              selector:@selector(_clockDidChange:)
+              selector:@selector(_systemClockDidChange:)
                   name:NSSystemClockDidChangeNotification
                 object:nil];
         [n addObserver:self
               selector:@selector(_timeZoneDidChange:)
                   name:NSSystemTimeZoneDidChangeNotification
                 object:nil];
+        [n addObserver:self
+              selector:@selector(_calCalendarsDidChange:)
+                  name:CalCalendarsChangedNotification
+                object:[CalCalendarStore defaultCalendarStore]];
+        [n addObserver:self
+              selector:@selector(_calCalendarsDidChange:)
+                  name:CalCalendarsChangedExternallyNotification
+                object:[CalCalendarStore defaultCalendarStore]];
 
         [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self
-                                                               selector:@selector(_clockDidChange:)
+                                                               selector:@selector(updateDate)
                                                                    name:NSWorkspaceDidWakeNotification
                                                                  object:nil];
-
         [userDefaults addObserver:self
                        forKeyPath:@"Calendars"
                           options:NSKeyValueObservingOptionNew
@@ -50,9 +110,12 @@
                        forKeyPath:@"DisplayAllCalendars"
                           options:NSKeyValueObservingOptionNew
                           context:NULL];
-        [self _updateDate];
-        [self _scheduleNextMinuteTimer];
+
+        calendar = [[NSCalendar autoupdatingCurrentCalendar] retain];
+        date = [[NSDate date] retain];
+        calCalendars = [[self _calendarsToDisplay] copy];
         [self _scheduleNextDayTimer];
+        [self _scheduleNextMinuteTimer];
     }
     return self;
 }
@@ -81,14 +144,18 @@
 
 #pragma mark Methods
 
-+ (WLCalendarController *)sharedController
+- (void)updateCalendar
 {
-    static dispatch_once_t onceToken;
-    static WLCalendarController *sharedController;
-    dispatch_once(&onceToken, ^{
-        sharedController = [[self alloc] init];
-    });
-    return sharedController;
+    self.calendar = [NSCalendar autoupdatingCurrentCalendar];
+    [self _scheduleNextDayTimer];
+    [self _scheduleNextMinuteTimer];
+}
+
+- (void)updateDate
+{
+    self.date = [NSDate date];
+    [self _scheduleNextDayTimer];
+    [self _scheduleNextMinuteTimer];
 }
 
 
@@ -96,19 +163,11 @@
 
 - (void)_localeDidChange:(NSNotification *)aNotification
 {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_updateCalendar) object:nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateCalendar) object:nil];
     // NSCurrentLocaleDidChangeNotification may be posted multiple times for 1 change (meaning user's change in the sys prefs).
     // Don't annoy the user with multiple updates.
     static const NSTimeInterval AnyDelay = 1.0f;
-    [self performSelector:@selector(_updateCalendar) withObject:nil afterDelay:AnyDelay];
-}
-
-- (void)_updateCalendar
-{
-    self.calendar = [NSCalendar autoupdatingCurrentCalendar];
-    [self _updateDate];
-    [self _scheduleNextDayTimer];
-    [self _scheduleNextMinuteTimer];
+    [self performSelector:@selector(updateCalendar) withObject:nil afterDelay:AnyDelay];
 }
 
 - (void)_scheduleNextMinuteTimer
@@ -126,16 +185,11 @@
     _nextMinuteTimer = [[NSTimer alloc] initWithFireDate:[startDate dateByAddingTimeInterval:interval]
                                                 interval:0.0
                                                   target:self
-                                                selector:@selector(_nextMinute)
+                                                selector:@selector(_nextMinuteTimerDidFire)
                                                 userInfo:nil
                                                  repeats:NO];
     [[NSRunLoop currentRunLoop] addTimer:_nextMinuteTimer forMode:NSDefaultRunLoopMode];
     [_nextMinuteTimer release];
-}
-
-- (void)_updateDate
-{
-    self.date = [NSDate date];
 }
 
 - (void)_scheduleNextDayTimer
@@ -147,14 +201,14 @@
     _nextDayTimer = [[NSTimer alloc] initWithFireDate:[startDate dateByAddingTimeInterval:interval]
                                              interval:0.0
                                                target:self
-                                             selector:@selector(_nextDay)
+                                             selector:@selector(_nextDayTimerDidFire)
                                              userInfo:nil
                                               repeats:NO];
     [[NSRunLoop currentRunLoop] addTimer:_nextDayTimer forMode:NSDefaultRunLoopMode];
     [_nextDayTimer release];
 }
 
-- (void)_nextDay
+- (void)_nextDayTimerDidFire
 {
     _nextDayTimer = nil;
 
@@ -164,44 +218,74 @@
     // Though accuracy of NSTimer is documented as 50-100ms, we must ensure day is actually changed.
     if ([nowComponents day] != [representedComponents day] || [nowComponents week] != [representedComponents week])
     {
-        [self _updateDate];
-        [self _scheduleNextDayTimer];
+        [self updateDate];
     }
     else
-        [self performSelector:@selector(_nextDay) withObject:nil afterDelay:0.1];
+        [self performSelector:@selector(_nextDayTimerDidFire) withObject:nil afterDelay:0.1];
 }
 
-- (void)_nextMinute
+- (void)_nextMinuteTimerDidFire
 {
     _nextMinuteTimer = nil;
-    [self _updateDate];
-    [self _scheduleNextMinuteTimer];
+    [self updateDate];
 }
 
-- (void)_clockDidChange:(NSNotification *)aNotification
+- (void)_systemClockDidChange:(NSNotification *)aNotification
 {
     // http://groups.google.com/group/cocoa-unbound/browse_thread/thread/46fe3433cfef6a97#
     if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
     {
-        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_updateClock) object:nil];
-        [self performSelector:@selector(_updateClock) withObject:nil afterDelay:0.5];
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateDate) object:nil];
+        [self performSelector:@selector(updateDate) withObject:nil afterDelay:0.5];
     }
     else
-        [self _updateClock];
-}
-
-- (void)_updateClock
-{
-    [self _updateDate];
-    [self _scheduleNextMinuteTimer];
-    [self _scheduleNextDayTimer];
+        [self updateDate];
 }
 
 - (void)_timeZoneDidChange:(NSNotification *)aNotification
 {
-    [self _updateCalendar];
-    [self _scheduleNextMinuteTimer];
-    [self _scheduleNextDayTimer];
+    [self updateCalendar];
+}
+
+- (void)_calCalendarsDidChange:(NSNotification *)aNotification
+{
+    NSArray *deletedCalCalendarUIDs = [[aNotification userInfo] objectForKey:CalDeletedRecordsKey];
+    NSArray *insertedCalCalendarUIDs = [[aNotification userInfo] objectForKey:CalInsertedRecordsKey];
+    if ([deletedCalCalendarUIDs count] == 0 && [insertedCalCalendarUIDs count] == 0)
+        return;
+    
+    NSMutableArray *calCalendarDicts = [[[[NSUserDefaults standardUserDefaults] objectForKey:@"Calendars"] mutableCopy] autorelease];
+    
+    for (NSString *uid in deletedCalCalendarUIDs)
+    {
+        NSUInteger index = [calCalendarDicts indexOfObject:[NSDictionary dictionaryWithObject:uid forKey:@"uid"]
+                                             inSortedRange:NSMakeRange(0, [calCalendarDicts count])
+                                                   options:NSBinarySearchingFirstEqual
+                                           usingComparator:^NSComparisonResult(NSDictionary *obj1, NSDictionary *obj2)
+                            {
+                                return [[obj1 objectForKey:@"uid"] compare:[obj2 objectForKey:@"uid"]];
+                            }];
+        if (index != NSNotFound)
+            [calCalendarDicts removeObjectAtIndex:index];
+    }
+    
+    for (NSString *uid in insertedCalCalendarUIDs)
+    {
+        NSUInteger index = [calCalendarDicts indexOfObject:[NSDictionary dictionaryWithObject:uid forKey:@"uid"]
+                                             inSortedRange:NSMakeRange(0, [calCalendarDicts count])
+                                                   options:NSBinarySearchingFirstEqual | NSBinarySearchingInsertionIndex
+                                           usingComparator:^NSComparisonResult(NSDictionary *obj1, NSDictionary *obj2)
+                            {
+                                return [[obj1 objectForKey:@"uid"] compare:[obj2 objectForKey:@"uid"]];
+                            }];
+        CalCalendar *c = [[CalCalendarStore defaultCalendarStore] calendarWithUID:uid];
+        NSDictionary *d = [NSDictionary dictionaryWithObjectsAndKeys:
+                           c.uid,                           @"uid",
+                           [NSNumber numberWithBool:YES],   @"check",
+                           nil];
+        [calCalendarDicts insertObject:d atIndex:index];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:calCalendarDicts forKey:@"Calendars"];
 }
 
 - (NSArray *)_calendarsToDisplay
@@ -210,9 +294,9 @@
         return [[CalCalendarStore defaultCalendarStore] calendars];
     else
     {
-        NSArray *selectedCalendarDicts = [[NSUserDefaults standardUserDefaults] arrayForKey:@"Calendars"];
-        NSMutableArray *calendars = [NSMutableArray arrayWithCapacity:[selectedCalendarDicts count]];
-        for (NSDictionary *d in selectedCalendarDicts)
+        NSArray *selectedCalCalendarDicts = [[NSUserDefaults standardUserDefaults] arrayForKey:@"Calendars"];
+        NSMutableArray *calendars = [NSMutableArray arrayWithCapacity:[selectedCalCalendarDicts count]];
+        for (NSDictionary *d in selectedCalCalendarDicts)
         {
             if ([[d objectForKey:@"check"] boolValue])
             {

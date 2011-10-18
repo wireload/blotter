@@ -11,12 +11,21 @@
 #import "SS_PreferencePaneProtocol.h"
 
 
-@interface CalendarsPrefController : NSObject<SS_PreferencePaneProtocol, NSTableViewDelegate>
-{
+@interface CalendarsPrefController : NSObject <SS_PreferencePaneProtocol, NSTableViewDelegate, NSTableViewDataSource> {
     IBOutlet NSView *_mainView;
     IBOutlet NSTableView *_tableView;
-    NSArray *_cachedCalCalendars;
-    id _calCalendarStoreObserver;
+    NSMutableArray *_cachedCalCalendars;
 }
+
+@property (retain) NSMutableArray *_cachedCalCalendars;
+
+- (NSDictionary *)_calCalendarDictForUID:(NSString *)anUID;
+
+- (void)_setState:(NSNumber *)newState forCalCalendarWithUID:(NSString *)anUID;
+
+/*!
+ @abstract  Reloads data if there are only updated calendars.
+ */
+- (void)_calCalendarsDidChange:(NSNotification *)aNotification;
 
 @end

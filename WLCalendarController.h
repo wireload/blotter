@@ -19,33 +19,46 @@
     NSTimer *_nextDayTimer;
 }
 
-@property (nonatomic, retain) NSCalendar *calendar;
+@property (nonatomic, retain, readonly) NSCalendar *calendar;
 
-@property (nonatomic, retain) NSDate *date;
+@property (nonatomic, retain, readonly) NSDate *date;
 
-@property (nonatomic, copy) NSArray *calCalendars;
+@property (nonatomic, copy, readonly) NSArray *calCalendars;
 
 + (id)sharedController;
 
-- (void)_localeDidChange:(NSNotification *)aNotification;
+- (void)updateDate;
 
-- (void)_updateCalendar;
+- (void)updateCalendar;
+
 
 - (void)_scheduleNextMinuteTimer;
 
 - (void)_scheduleNextDayTimer;
 
-- (void)_updateDate;
+- (void)_nextDayTimerDidFire;
 
-- (void)_nextDay;
+- (void)_nextMinuteTimerDidFire;
 
-- (void)_nextMinute;
+/*!
+ @abstract  Updates calendar.
+ */
+- (void)_localeDidChange:(NSNotification *)aNotification;
 
-- (void)_clockDidChange:(NSNotification *)aNotification;
+/*!
+ @abstract  Updates date.
+ */
+- (void)_systemClockDidChange:(NSNotification *)aNotification;
 
+/*!
+ @abstract  Updates calendar.
+ */
 - (void)_timeZoneDidChange:(NSNotification *)aNotification;
 
-- (void)_updateClock;
+/*!
+ @abstract  Inserts/deletes calendars of Calendars setting.
+ */
+- (void)_calCalendarsDidChange:(NSNotification *)aNotification;
 
 - (NSArray *)_calendarsToDisplay;
 
