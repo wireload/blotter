@@ -26,8 +26,24 @@
  */
 - (void)fetchTasksAndReloadViewDataAnimated:(BOOL)isAnimated;
 
-- (void)_tasksDidChange:(NSNotification *)aNotification;
+/*!
+ @abstract Inserts/updates/deletes tasks of the view if there are only updated tasks.
+ */
+- (void)_calTasksDidChange:(NSNotification *)aNotification;
 
-- (void)_preprocessTask:(CalTask *)aTask;
+/*!
+ @abstract Reloads data if there are only updated calendars.
+ */
+- (void)_calCalendarsDidChange:(NSNotification *)aNotification;
+
+@end
+
+
+@interface CalTask (WLCalendarTasksViewController)
+
+/*!
+ @abstract Fixes priority and due date for correct sorting.
+ */
+- (void)WL_fixPriorityAndDueDate;
 
 @end

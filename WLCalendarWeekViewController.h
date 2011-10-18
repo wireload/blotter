@@ -71,9 +71,13 @@ typedef enum
 @property (nonatomic, retain) NSString *_columnTitleFormat;
 
 /*!
- @abstract      Updates events of affected columns which are determined by dates of changed events.
- @discussion    Called when either CalEventsChangedExternallyNotification or CalEventsChangedNotification is posted.
+ @abstract  Reloads data if there are only updated events.
  */
-- (void)_eventsDidChange:(NSNotification *)aNotification;
+- (void)_calEventsDidChange:(NSNotification *)aNotification;
+
+/*!
+ @abstract  Reloads data if there are only updated calendars.
+ */
+- (void)_calCalendarsDidChange:(NSNotification *)aNotification;
 
 @end

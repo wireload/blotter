@@ -437,38 +437,29 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     [_cache removeObjectForKey:_WLColumnTitleFormatCacheKey];
 }
 
-- (void)_eventsDidChange:(NSNotification *)aNotification
+- (void)_calEventsDidChange:(NSNotification *)aNotification
 {
-    NSArray *insertedEvents = [[aNotification userInfo] objectForKey:CalInsertedRecordsKey];
-    NSArray *deletedEvents = [[aNotification userInfo] objectForKey:CalDeletedRecordsKey];
-    NSArray *updatedEvents = [[aNotification userInfo] objectForKey:CalUpdatedRecordsKey];
-    NSMutableIndexSet *columnIndexes = [NSMutableIndexSet indexSet];
-    NSUInteger numberOfColumns = [self numberOfColumnsInWeekView:[self view]];
-    if ([updatedEvents count] == 0 && deletedEvents == 0)
+    NSArray *insertedEventUIDs = [[aNotification userInfo] objectForKey:CalInsertedRecordsKey];
+    NSArray *deletedEventUIDs = [[aNotification userInfo] objectForKey:CalDeletedRecordsKey];
+    // Inserting and deleting events will call _calCalendarsDidChange:, so skip this case.
+    if ([insertedEventUIDs count] == 0 && [deletedEventUIDs count] == 0)
     {
-        for (NSString *uid in insertedEvents)
-        {
-            CalEvent *e = [[CalCalendarStore defaultCalendarStore] eventWithUID:uid occurrence:nil];
-            // Find column for the event.
-            for (NSUInteger i=0; i<numberOfColumns; ++i)
-            {
-                if ([[self dateRangeForColumnAtIndex:i] intersectsRange:[WLDateRange dateRangeWithStartDate:e.startDate endDate:e.endDate]])
-                {
-                    [columnIndexes addIndex:i];
-                    break;
-                }
-            }
-            // All columns are marked to update so there is no need to continue.
-            if ([columnIndexes containsIndexesInRange:NSMakeRange(0, numberOfColumns)])
-                break;
-        }
+        NSUInteger numberOfColumns = [self numberOfColumnsInWeekView:[self view]];
+        NSIndexSet *allColumnIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, numberOfColumns)];
+        [[self view] updateEventsOfColumnsAtIndexes:allColumnIndexes];
     }
-    else
+}
+
+- (void)_calCalendarsDidChange:(NSNotification *)aNotification
+{
+    NSSet *updatedCalendarUIDs = [NSSet setWithArray:[[aNotification userInfo] objectForKey:CalUpdatedRecordsKey]];
+    NSSet *calCalendarUIDs = [NSSet setWithArray:[[self representedObject] valueForKeyPath:@"calCalendars.uid"]];
+    if ([updatedCalendarUIDs intersectsSet:calCalendarUIDs])
     {
-        // Unfortunately, we don't know where events may be deleted or moved from.
-        [columnIndexes addIndexesInRange:NSMakeRange(0, numberOfColumns)];
+        NSUInteger numberOfColumns = [self numberOfColumnsInWeekView:[self view]];
+        NSIndexSet *allColumnIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, numberOfColumns)];
+        [[self view] updateEventsOfColumnsAtIndexes:allColumnIndexes];
     }
-    [[self view] updateEventsOfColumnsAtIndexes:columnIndexes];
 }
 
 
@@ -496,12 +487,20 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     [self addObserver:self forKeyPath:@"representedObject.calCalendars" options:NSKeyValueObservingOptionNew context:NULL];
     NSNotificationCenter *n = [NSNotificationCenter defaultCenter];
     [n addObserver:self
-          selector:@selector(_eventsDidChange:)
+          selector:@selector(_calEventsDidChange:)
               name:CalEventsChangedExternallyNotification
             object:[CalCalendarStore defaultCalendarStore]];
     [n addObserver:self
-          selector:@selector(_eventsDidChange:)
+          selector:@selector(_calEventsDidChange:)
               name:CalEventsChangedNotification
+            object:[CalCalendarStore defaultCalendarStore]];
+    [n addObserver:self
+          selector:@selector(_calCalendarsDidChange:)
+              name:CalCalendarsChangedNotification
+            object:[CalCalendarStore defaultCalendarStore]];
+    [n addObserver:self
+          selector:@selector(_calCalendarsDidChange:)
+              name:CalCalendarsChangedExternallyNotification
             object:[CalCalendarStore defaultCalendarStore]];
     isViewLoaded = YES;
 }
