@@ -11,27 +11,23 @@
 
 @implementation PositionPrefController
 
+#pragma mark SS_PreferencePaneProtocol
+
 - (NSView *)paneView
 {
-    BOOL loaded = YES;
-
-    if (!mainView)
+    if (_mainView == nil)
     {
-        loaded = [NSBundle loadNibNamed:@"PositionPrefPaneView" owner:self];
-
-        if (loaded)
+        if ([NSBundle loadNibNamed:@"PositionPrefPaneView" owner:self])
         {
-            [positionView bind:NSValueBinding
-                      toObject:[NSUserDefaultsController sharedUserDefaultsController]
-                   withKeyPath:@"values.CalendarPosition"
-                       options:0];
+            [_positionView bind:NSValueBinding
+                       toObject:[NSUserDefaults standardUserDefaults]
+                    withKeyPath:@"CalendarPosition"
+                        options:0];
         }
+        else
+            NSLog(@"Cannot load PositionPrefPaneView");
     }
-
-    if (loaded)
-        return mainView;
-
-    return nil;
+    return _mainView;
 }
 
 - (NSString *)paneName

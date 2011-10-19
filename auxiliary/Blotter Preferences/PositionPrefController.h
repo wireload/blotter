@@ -7,16 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
 #import "SS_PreferencePaneProtocol.h"
 #import "BLPositionerControl.h"
 
 
-@interface PositionPrefController : NSObject<SS_PreferencePaneProtocol>
-{
-    IBOutlet NSView *mainView;
-    IBOutlet BLPositionerControl *positionView;
-    IBOutlet NSArrayController *screensController;
+@interface PositionPrefController : NSObject <SS_PreferencePaneProtocol> {
+    IBOutlet NSView *_mainView;
+    IBOutlet BLPositionerControl *_positionView;
+    IBOutlet NSArrayController *_screensController;
 }
 
 @end

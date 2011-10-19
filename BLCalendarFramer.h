@@ -12,6 +12,7 @@ typedef enum {
     BLNarrowSize    = 0,
     BLNormalSize    = 1,
     BLFullSize      = 2,
+    BLCustomSize    = 3
 } BLSize;
 
 typedef enum BLPosition {
