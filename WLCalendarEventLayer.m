@@ -131,7 +131,8 @@ const CGFloat _WLXPadding = 10.0f;
         CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0f), 0.0f, [[NSColor WL_eventTextShadowColor] WL_CGColor]);
 
         CGFloat preferredTitleHeight = [self.title WL_preferredHeightWithWidth:self.bounds.size.width - _WLXPadding];
-        if (preferredTitleHeight < titleAndLocationFrame.size.height)
+        if (preferredTitleHeight < titleAndLocationFrame.size.height &&
+            self.visibleRect.size.height < self.bounds.size.height)
         {
             CGFloat titleHeight = preferredTitleHeight;
             CGFloat preferredLocationHeight = [self.location WL_preferredHeightWithWidth:self.bounds.size.width - _WLXPadding];
