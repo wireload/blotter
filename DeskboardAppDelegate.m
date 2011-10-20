@@ -74,7 +74,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 @synthesize windowController;
 
 
-#pragma mark Methods
+#pragma mark Methodsj
 
 - (IBAction)showPreferences:(id)aSender
 {

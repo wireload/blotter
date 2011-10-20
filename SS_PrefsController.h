@@ -77,4 +77,9 @@ float ToolbarHeightForWindow(NSWindow *window);
 - (void)setToolbarSizeMode:(NSToolbarSizeMode)sizeMode;
 #endif
 
+/*!
+ @abstract If frame size of currently selected pane is changed, update size of the prefs window.
+ */
+- (void)_paneViewPreferredFrameSizeDidChange:(NSNotification *)aNotification;
+
 @end

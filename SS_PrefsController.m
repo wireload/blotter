@@ -128,6 +128,7 @@
     if (bundle) {
         [bundle release];
     }
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
 
@@ -297,12 +298,18 @@
         return NO;
     }
     
-    NSView *prefsView = nil;
+    WLPrefPaneView *prefsView = nil;
     prefsView = [tempPane paneView];
     if (!prefsView) {
         [self debugLog:[NSString stringWithFormat:@"Could not load \"%@\" preference pane because its view could not be loaded from the bundle.", name]];
         return NO;
     }
+    prefsView.postsPreferredFrameSizeDidChangeNotification = YES;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:WLViewPreferredFrameSizeDidChangeNotification object:prefsView];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_paneViewPreferredFrameSizeDidChange:)
+                                                 name:WLViewPreferredFrameSizeDidChangeNotification
+                                               object:prefsView];
     
     // Get rid of old view before resizing, for display purposes.
     if (disp) {
@@ -313,9 +320,9 @@
     
     // Preserve upper left point of window during resize.
     NSRect newFrame = [prefsWindow frame];
-    newFrame.size.height = [prefsView frame].size.height + ([prefsWindow frame].size.height - [[prefsWindow contentView] frame].size.height);
-    newFrame.size.width = [prefsView frame].size.width;
-    newFrame.origin.y += ([[prefsWindow contentView] frame].size.height - [prefsView frame].size.height);
+    newFrame.size.height = prefsView.preferredFrameSize.height + ([prefsWindow frame].size.height - [[prefsWindow contentView] frame].size.height);
+    newFrame.size.width = prefsView.preferredFrameSize.width;
+    newFrame.origin.y += ([[prefsWindow contentView] frame].size.height - prefsView.preferredFrameSize.height);
     
     id <SS_PreferencePaneProtocol> pane = [preferencePanes objectForKey:name];
     [prefsWindow setShowsResizeIndicator:([pane allowsHorizontalResizing] || [pane allowsHorizontalResizing])];
@@ -593,5 +600,25 @@ float ToolbarHeightForWindow(NSWindow *window)
     alwaysOpensCentered = newAlwaysOpensCentered;
 }
 
+- (void)_paneViewPreferredFrameSizeDidChange:(NSNotification *)aNotification
+{
+    if ([aNotification object] == [prefsWindow contentView])
+    {
+        NSSize preferredPaneViewFrameSize = [(WLPrefPaneView *)[aNotification object] preferredFrameSize];
+        NSRect oldWindowFrame = [prefsWindow frame];
+        NSRect newWindowFrame = [prefsWindow frameRectForContentRect:NSMakeRect(oldWindowFrame.origin.x,
+                                                                                oldWindowFrame.origin.y,
+                                                                                preferredPaneViewFrameSize.width,
+                                                                                preferredPaneViewFrameSize.height)];
+        newWindowFrame.origin.y += oldWindowFrame.size.height - newWindowFrame.size.height;
+//        [[prefsWindow contentView] setPostsFrameChangedNotifications:NO];
+//        [NSAnimationContext beginGrouping];
+        [prefsWindow setFrame:newWindowFrame display:YES animate:YES];
+//        [[NSAnimationContext currentContext] setCompletionHandler:^{
+//            [[prefsWindow contentView] setPostsFrameChangedNotifications:YES];
+//        }];
+//        [NSAnimationContext endGrouping];
+    }
+}
 
 @end

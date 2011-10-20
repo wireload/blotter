@@ -57,7 +57,7 @@ static NSString* const _WLDateFormatterCacheKey = @"dateFormatter";
 
 - (NSDateFormatter *)_dateFormatter
 {
-    NSDateFormatter *f = [_cache objectForKey:_WLDateFormatterCacheKey];
+    NSDateFormatter *f = [[[_cache objectForKey:_WLDateFormatterCacheKey] retain] autorelease];
     if (f == nil) {
         f = [[[NSDateFormatter alloc] init] autorelease];
         [_cache setObject:f forKey:_WLDateFormatterCacheKey];

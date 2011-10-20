@@ -1,3 +1,0 @@
-closure-library/closure/bin/calcdeps.py -i ../Resources/calendar/calendar.js \
-  -p closure-library -o compiled \
-  -c closure-library/compiler.jar > calendar-compiled.js

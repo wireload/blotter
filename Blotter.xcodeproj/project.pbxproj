@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		256AC3DA0F4B6AC300CF3369 /* DeskboardAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */; };
-		282FD238134FB2C5003E532E /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2BADC95134DDE6100F65E14 /* NewEventWindow.xib */; };
-		282FD239134FB2C5003E532E /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2BADC97134DDE6100F65E14 /* NewTaskWindow.xib */; };
 		284064FC12834B98000816FF /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 284064FB12834B98000816FF /* CalendarStore.framework */; };
 		2844DB2D129DA1BD006C5545 /* BLCalendarFramer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2844DB2C129DA1BD006C5545 /* BLCalendarFramer.m */; };
 		285B840913C0C6150042C813 /* Blotter-B9.icns in Resources */ = {isa = PBXBuildFile; fileRef = 285B840813C0C6150042C813 /* Blotter-B9.icns */; };
@@ -29,6 +27,7 @@
 		E22C78AB13FFCD9F00EE44C0 /* NSColor+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */; };
 		E23779EF1312AD6000F46E7D /* WLClosableWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E23779D71312AD6000F46E7D /* WLClosableWindow.m */; };
 		E23F746F14434DE40055D6CE /* WLHourRange.m in Sources */ = {isa = PBXBuildFile; fileRef = E23F746E14434DE40055D6CE /* WLHourRange.m */; };
+		E2435B1A145057620052D9A3 /* WLPrefPaneView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2435B19145057620052D9A3 /* WLPrefPaneView.m */; };
 		E253575013DC884D0010A2ED /* NSDate+WLDayBoundaries.m in Sources */ = {isa = PBXBuildFile; fileRef = E253574F13DC884D0010A2ED /* NSDate+WLDayBoundaries.m */; };
 		E2535B8713DCA88B0010A2ED /* WLDateRange.m in Sources */ = {isa = PBXBuildFile; fileRef = E2535B8613DCA88B0010A2ED /* WLDateRange.m */; };
 		E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */; };
@@ -76,7 +75,6 @@
 		E271E5B613377E6100BF7F2B /* blotter-status-bar-active.png in Resources */ = {isa = PBXBuildFile; fileRef = E271E5B413377E6100BF7F2B /* blotter-status-bar-active.png */; };
 		E27311471349D76700A84433 /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2730FA01349C4A500A84433 /* ShortcutRecorder.framework */; };
 		E27311631349D81900A84433 /* ShortcutRecorder.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E2730FA01349C4A500A84433 /* ShortcutRecorder.framework */; };
-		E273117C1349D88100A84433 /* Blotter Preferences.preferencePane in Resources */ = {isa = PBXBuildFile; fileRef = E27311791349D86200A84433 /* Blotter Preferences.preferencePane */; };
 		E27313171349F0E200A84433 /* PTHotKey.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E27312321349EC9000A84433 /* PTHotKey.framework */; };
 		E27313181349F0EB00A84433 /* PTHotKey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E27312321349EC9000A84433 /* PTHotKey.framework */; };
 		E27313C51349F41200A84433 /* PTHotKey+ShortcutRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = E27313C41349F41200A84433 /* PTHotKey+ShortcutRecorder.m */; };
@@ -127,8 +125,6 @@
 		E28C418D13F081A1005789DD /* defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = E28C418C13F081A1005789DD /* defaults.plist */; };
 		E292D7E013E9DCEA00433262 /* WLCalendarWindowFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = E292D7DF13E9DCEA00433262 /* WLCalendarWindowFrameView.m */; };
 		E2948D941401484B007122BC /* NSCalendar+WLWeekend.m in Sources */ = {isa = PBXBuildFile; fileRef = E2948D931401484B007122BC /* NSCalendar+WLWeekend.m */; };
-		E29DDC8712E9C7BF00751CFA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29DDC8612E9C7BF00751CFA /* MainMenu.xib */; };
-		E29DDCB212E9D54C00751CFA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E29DDCB012E9D54C00751CFA /* Localizable.strings */; };
 		E29F38EE1319694C00A865D9 /* WLNewTaskWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E29F38ED1319694C00A865D9 /* WLNewTaskWindowController.m */; };
 		E2A61A80140745FC0059F201 /* WLCalendarBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A61A7F140745FC0059F201 /* WLCalendarBoxView.m */; };
 		E2A701ED13EFE4C500A4BF3A /* WLCalendarDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A701EC13EFE4C500A4BF3A /* WLCalendarDateView.m */; };
@@ -141,6 +137,35 @@
 		E2D6488E1441060F00A03FAD /* IKPowerSources.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D6488D1441060F00A03FAD /* IKPowerSources.m */; };
 		E2D648901441062300A03FAD /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2D6488F1441062300A03FAD /* IOKit.framework */; };
 		E2E64B4E1402483500912A92 /* WLSoftEdgeLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E64B4D1402483500912A92 /* WLSoftEdgeLayer.m */; };
+		E2E826CF145023A6007035E5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C7145023A6007035E5 /* Localizable.strings */; };
+		E2E826D0145023A6007035E5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C9145023A6007035E5 /* MainMenu.xib */; };
+		E2E826D1145023A6007035E5 /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CB145023A6007035E5 /* NewEventWindow.xib */; };
+		E2E826D2145023A6007035E5 /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CD145023A6007035E5 /* NewTaskWindow.xib */; };
+		E2E826D7145023B4007035E5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C7145023A6007035E5 /* Localizable.strings */; };
+		E2E826D8145023B4007035E5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C9145023A6007035E5 /* MainMenu.xib */; };
+		E2E826D9145023B4007035E5 /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CB145023A6007035E5 /* NewEventWindow.xib */; };
+		E2E826DA145023B4007035E5 /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CD145023A6007035E5 /* NewTaskWindow.xib */; };
+		E2E826DF145023BE007035E5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C7145023A6007035E5 /* Localizable.strings */; };
+		E2E826E0145023BE007035E5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C9145023A6007035E5 /* MainMenu.xib */; };
+		E2E826E1145023BE007035E5 /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CB145023A6007035E5 /* NewEventWindow.xib */; };
+		E2E826E2145023BE007035E5 /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CD145023A6007035E5 /* NewTaskWindow.xib */; };
+		E2E826E7145023CD007035E5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C7145023A6007035E5 /* Localizable.strings */; };
+		E2E826E8145023CD007035E5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C9145023A6007035E5 /* MainMenu.xib */; };
+		E2E826E9145023CD007035E5 /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CB145023A6007035E5 /* NewEventWindow.xib */; };
+		E2E826EA145023CD007035E5 /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CD145023A6007035E5 /* NewTaskWindow.xib */; };
+		E2E826EF145023DA007035E5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C7145023A6007035E5 /* Localizable.strings */; };
+		E2E826F0145023DA007035E5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C9145023A6007035E5 /* MainMenu.xib */; };
+		E2E826F1145023DA007035E5 /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CB145023A6007035E5 /* NewEventWindow.xib */; };
+		E2E826F2145023DA007035E5 /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CD145023A6007035E5 /* NewTaskWindow.xib */; };
+		E2E826F7145023E5007035E5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C7145023A6007035E5 /* Localizable.strings */; };
+		E2E826F8145023E5007035E5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C9145023A6007035E5 /* MainMenu.xib */; };
+		E2E826F9145023E5007035E5 /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CB145023A6007035E5 /* NewEventWindow.xib */; };
+		E2E826FA145023E5007035E5 /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CD145023A6007035E5 /* NewTaskWindow.xib */; };
+		E2E826FF145023EF007035E5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C7145023A6007035E5 /* Localizable.strings */; };
+		E2E82700145023EF007035E5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C9145023A6007035E5 /* MainMenu.xib */; };
+		E2E82701145023EF007035E5 /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CB145023A6007035E5 /* NewEventWindow.xib */; };
+		E2E82702145023EF007035E5 /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CD145023A6007035E5 /* NewTaskWindow.xib */; };
+		E2E827031450256F007035E5 /* Blotter Preferences.preferencePane in Resources */ = {isa = PBXBuildFile; fileRef = E2E8267014500E11007035E5 /* Blotter Preferences.preferencePane */; };
 		E2F112DD13E6E263001C2B7B /* WLCalendarWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F112DC13E6E263001C2B7B /* WLCalendarWindow.m */; };
 		E2F1133D13E70B4F001C2B7B /* WLCalendarWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F1133C13E70B4F001C2B7B /* WLCalendarWindowController.m */; };
 		E2F9E1DF1322A4F4007598E2 /* glass-hud-border-bottom-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1D81322A4F4007598E2 /* glass-hud-border-bottom-left.png */; };
@@ -169,20 +194,6 @@
 			remoteGlobalIDString = 342E00CF109CCBF5009AD8CA;
 			remoteInfo = "ShortcutRecorder.ibplugin - standalone";
 		};
-		E27311781349D86200A84433 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E27311741349D86200A84433 /* Blotter Preferences.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = "Blotter Preferences";
-		};
-		E273117A1349D86C00A84433 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E27311741349D86200A84433 /* Blotter Preferences.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = "Blotter Preferences";
-		};
 		E27312311349EC9000A84433 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E2730F961349C4A500A84433 /* ShortcutRecorder.xcodeproj */;
@@ -204,6 +215,20 @@
 			remoteGlobalIDString = 9398377F0DA42965007F53F3;
 			remoteInfo = ShortcutRecorder.framework;
 		};
+		E2E8266F14500E11007035E5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E27311741349D86200A84433 /* Blotter Preferences.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
+			remoteInfo = "Blotter Preferences";
+		};
+		E2E8270414502600007035E5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E27311741349D86200A84433 /* Blotter Preferences.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
+			remoteInfo = "Blotter Preferences";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -222,33 +247,22 @@
 
 /* Begin PBXFileReference section */
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		1DDD58150DA1D0A300B32029 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		256AC3D80F4B6AC300CF3369 /* DeskboardAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeskboardAppDelegate.h; sourceTree = "<group>"; };
 		256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeskboardAppDelegate.m; sourceTree = "<group>"; };
 		256AC3F00F4B6AF500CF3369 /* Deskboard_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deskboard_Prefix.pch; sourceTree = "<group>"; };
 		284064FB12834B98000816FF /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = System/Library/Frameworks/CalendarStore.framework; sourceTree = SDKROOT; };
 		2844DB2C129DA1BD006C5545 /* BLCalendarFramer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLCalendarFramer.m; sourceTree = "<group>"; };
 		285B840813C0C6150042C813 /* Blotter-B9.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Blotter-B9.icns"; sourceTree = "<group>"; };
-		28A09A591308E4A7005EA923 /* MainMenu.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = MainMenu.strings; path = Resources/ko.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		28A09A5A1308E4A7005EA923 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/ko.lproj/Localizable.strings; sourceTree = "<group>"; };
-		28A09A9C1308F188005EA923 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/de.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		28A09A9D1308F18B005EA923 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/fr.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		28A09A9E1308F18E005EA923 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/es.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		28A09A9F1308F192005EA923 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/ko.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		28B54DB31283BABF0037BF53 /* SS_PreferencePaneProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SS_PreferencePaneProtocol.h; sourceTree = "<group>"; };
 		28B54DB41283BABF0037BF53 /* SS_PrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SS_PrefsController.h; sourceTree = "<group>"; };
 		28B54DB51283BABF0037BF53 /* SS_PrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SS_PrefsController.m; sourceTree = "<group>"; };
-		28E96D7312EA3145000AF199 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/sv.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		28E96D7412EA3145000AF199 /* MainMenu.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = MainMenu.strings; path = Resources/sv.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		28E96D7512EA3145000AF199 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		28F699E2129C0EBC00D4BB97 /* WLViewFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLViewFade.h; sourceTree = "<group>"; };
 		28F699E3129C0EBC00D4BB97 /* WLViewFade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLViewFade.m; sourceTree = "<group>"; };
-		28F69A1A129C1CAA00D4BB97 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = Credits.rtf; path = Resources/Credits.rtf; sourceTree = "<group>"; };
-		28F69C4A129C9B3D00D4BB97 /* BLPositionerControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLPositionerControl.h; path = "auxiliary/Blotter Preferences/BLPositionerControl.h"; sourceTree = "<group>"; };
-		28F69CF4129CC12100D4BB97 /* Licenses.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = Licenses.rtf; path = Resources/Licenses.rtf; sourceTree = "<group>"; };
+		28F69A1A129C1CAA00D4BB97 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
+		28F69CF4129CC12100D4BB97 /* Licenses.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Licenses.rtf; sourceTree = "<group>"; };
 		28F69D52129D854300D4BB97 /* BLCalendarFramer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLCalendarFramer.h; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		8D1107310486CEB800E47090 /* Blotter-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Blotter-Info.plist"; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* Blotter-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Blotter-Info.plist"; path = "../Blotter-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Blotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E20DAC4D1428FF0B00EF65EA /* info-middle-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-middle-left.png"; sourceTree = "<group>"; };
 		E20DAC4E1428FF0B00EF65EA /* info-middle-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-middle-right.png"; sourceTree = "<group>"; };
@@ -264,15 +278,16 @@
 		E221B3A213EC5C2F00F9B392 /* CoreAnimation+WLCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CoreAnimation+WLCalendar.m"; sourceTree = "<group>"; };
 		E22C78A913FFCD9F00EE44C0 /* NSColor+WLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+WLCalendar.h"; sourceTree = "<group>"; };
 		E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+WLCalendar.m"; sourceTree = "<group>"; };
-		E23779D61312AD6000F46E7D /* WLClosableWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WLClosableWindow.h; path = WLClosableWindow/WLClosableWindow.h; sourceTree = "<group>"; };
-		E23779D71312AD6000F46E7D /* WLClosableWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WLClosableWindow.m; path = WLClosableWindow/WLClosableWindow.m; sourceTree = "<group>"; };
+		E23779D61312AD6000F46E7D /* WLClosableWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLClosableWindow.h; sourceTree = "<group>"; };
+		E23779D71312AD6000F46E7D /* WLClosableWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLClosableWindow.m; sourceTree = "<group>"; };
 		E23F746D14434DE40055D6CE /* WLHourRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLHourRange.h; sourceTree = "<group>"; };
 		E23F746E14434DE40055D6CE /* WLHourRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLHourRange.m; sourceTree = "<group>"; };
+		E2435B18145057620052D9A3 /* WLPrefPaneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLPrefPaneView.h; sourceTree = "<group>"; };
+		E2435B19145057620052D9A3 /* WLPrefPaneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLPrefPaneView.m; sourceTree = "<group>"; };
 		E253574E13DC884D0010A2ED /* NSDate+WLDayBoundaries.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+WLDayBoundaries.h"; sourceTree = "<group>"; };
 		E253574F13DC884D0010A2ED /* NSDate+WLDayBoundaries.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+WLDayBoundaries.m"; sourceTree = "<group>"; };
 		E2535B8513DCA88B0010A2ED /* WLDateRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDateRange.h; sourceTree = "<group>"; };
 		E2535B8613DCA88B0010A2ED /* WLDateRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDateRange.m; sourceTree = "<group>"; };
-		E2596D601316B20400A8B15E /* NewEventWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewEventWindow.xib; path = Resources/English.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
 		E2596D711316C8C100A8B15E /* WLNewEventWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNewEventWindowController.h; sourceTree = "<group>"; };
 		E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNewEventWindowController.m; sourceTree = "<group>"; };
 		E262E585142B917400715C02 /* calendar-background-middle-gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar-background-middle-gradient.png"; sourceTree = "<group>"; };
@@ -304,7 +319,6 @@
 		E2678AC81404968600ABB89B /* calendar-background-right-gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar-background-right-gradient.png"; sourceTree = "<group>"; };
 		E2678ACF14050FCE00ABB89B /* WLCalendarTimeRulerLabelLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTimeRulerLabelLayer.h; sourceTree = "<group>"; };
 		E2678AD014050FCE00ABB89B /* WLCalendarTimeRulerLabelLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarTimeRulerLabelLayer.m; sourceTree = "<group>"; };
-		E267AADF12EDF7AE00EDB7B6 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E2701FA7133B563B0098CD79 /* WLGlassHudTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudTextView.h; sourceTree = "<group>"; };
 		E2701FA8133B563B0098CD79 /* WLGlassHudTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudTextView.m; sourceTree = "<group>"; };
 		E2702193133BA7610098CD79 /* glass-hud-textview-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-textview-bottom-left.png"; sourceTree = "<group>"; };
@@ -321,10 +335,10 @@
 		E271E503133762A300BF7F2B /* glass-hud-button-pressed-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-pressed-right.png"; sourceTree = "<group>"; };
 		E271E504133762A300BF7F2B /* glass-hud-button-pressed-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-pressed-middle.png"; sourceTree = "<group>"; };
 		E271E505133762A300BF7F2B /* glass-hud-button-pressed-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-pressed-left.png"; sourceTree = "<group>"; };
-		E271E5B313377E6100BF7F2B /* blotter-status-bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blotter-status-bar.png"; path = "Resources/blotter-status-bar.png"; sourceTree = "<group>"; };
-		E271E5B413377E6100BF7F2B /* blotter-status-bar-active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blotter-status-bar-active.png"; path = "Resources/blotter-status-bar-active.png"; sourceTree = "<group>"; };
+		E271E5B313377E6100BF7F2B /* blotter-status-bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blotter-status-bar.png"; sourceTree = "<group>"; };
+		E271E5B413377E6100BF7F2B /* blotter-status-bar-active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blotter-status-bar-active.png"; sourceTree = "<group>"; };
 		E2730F961349C4A500A84433 /* ShortcutRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShortcutRecorder.xcodeproj; path = ShortcutRecorder/ShortcutRecorder.xcodeproj; sourceTree = "<group>"; };
-		E27311741349D86200A84433 /* Blotter Preferences.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Blotter Preferences.xcodeproj"; path = "auxiliary/Blotter Preferences/Blotter Preferences.xcodeproj"; sourceTree = "<group>"; };
+		E27311741349D86200A84433 /* Blotter Preferences.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Blotter Preferences.xcodeproj"; path = "Blotter Preferences/Blotter Preferences.xcodeproj"; sourceTree = "<group>"; };
 		E27313C31349F41200A84433 /* PTHotKey+ShortcutRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PTHotKey+ShortcutRecorder.h"; path = "ShortcutRecorder/Demo/HotKey/PTHotKey+ShortcutRecorder.h"; sourceTree = "<group>"; };
 		E27313C41349F41200A84433 /* PTHotKey+ShortcutRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "PTHotKey+ShortcutRecorder.m"; path = "ShortcutRecorder/Demo/HotKey/PTHotKey+ShortcutRecorder.m"; sourceTree = "<group>"; };
 		E27433BC13CB3E1B00F531B6 /* WLCalendarWeekViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWeekViewController.h; sourceTree = "<group>"; };
@@ -386,17 +400,6 @@
 		E292D7DF13E9DCEA00433262 /* WLCalendarWindowFrameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindowFrameView.m; sourceTree = "<group>"; };
 		E2948D921401484B007122BC /* NSCalendar+WLWeekend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCalendar+WLWeekend.h"; sourceTree = "<group>"; };
 		E2948D931401484B007122BC /* NSCalendar+WLWeekend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+WLWeekend.m"; sourceTree = "<group>"; };
-		E29DDC8812E9C7C900751CFA /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/ru.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		E29DDC8E12E9C7E000751CFA /* MainMenu.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = MainMenu.strings; path = Resources/ru.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		E29DDC8F12E9C7E200751CFA /* MainMenu.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = MainMenu.strings; path = Resources/de.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		E29DDC9012E9C7E300751CFA /* MainMenu.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = MainMenu.strings; path = Resources/fr.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		E29DDC9112E9C7E600751CFA /* MainMenu.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = MainMenu.strings; path = Resources/es.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		E29DDCB312E9D55500751CFA /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E29DDCB512E9D56B00751CFA /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E29DDCB612E9D57500751CFA /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/es.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E29DDCB712E9D57F00751CFA /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E29ED79A142138EE00DB179C /* SS_PreferencePaneProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SS_PreferencePaneProtocol.h; path = "auxiliary/Blotter Preferences/SS_PreferencePaneProtocol.h"; sourceTree = "<group>"; };
-		E29F38EA131968B200A865D9 /* NewTaskWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewTaskWindow.xib; path = Resources/English.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
 		E29F38EC1319694C00A865D9 /* WLNewTaskWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNewTaskWindowController.h; sourceTree = "<group>"; };
 		E29F38ED1319694C00A865D9 /* WLNewTaskWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNewTaskWindowController.m; sourceTree = "<group>"; };
 		E2A61A7E140745FB0059F201 /* WLCalendarBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarBoxView.h; sourceTree = "<group>"; };
@@ -412,30 +415,6 @@
 		E2BA531913C5A873005F0045 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E2BA565C13C5E4C4005F0045 /* NSColor+CGColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+CGColor.h"; sourceTree = "<group>"; };
 		E2BA565D13C5E4C4005F0045 /* NSColor+CGColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+CGColor.m"; sourceTree = "<group>"; };
-		E2BADC99134DDF6900F65E14 /* NewEventWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewEventWindow.xib; path = Resources/de.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
-		E2BADC9A134DDF6D00F65E14 /* NewEventWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewEventWindow.xib; path = Resources/es.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
-		E2BADC9B134DDF6F00F65E14 /* NewEventWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewEventWindow.xib; path = Resources/fr.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
-		E2BADC9C134DDF7300F65E14 /* NewEventWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewEventWindow.xib; path = Resources/ko.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
-		E2BADC9D134DDF7500F65E14 /* NewEventWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewEventWindow.xib; path = Resources/sv.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
-		E2BADC9E134DDF7800F65E14 /* NewEventWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewEventWindow.xib; path = Resources/ru.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
-		E2BADC9F134DDF8200F65E14 /* NewTaskWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewTaskWindow.xib; path = Resources/ru.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
-		E2BADCA0134DDF8400F65E14 /* NewTaskWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewTaskWindow.xib; path = Resources/sv.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
-		E2BADCA1134DDF8600F65E14 /* NewTaskWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewTaskWindow.xib; path = Resources/de.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
-		E2BADCA2134DDF8800F65E14 /* NewTaskWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewTaskWindow.xib; path = Resources/fr.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
-		E2BADCA3134DDF8900F65E14 /* NewTaskWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewTaskWindow.xib; path = Resources/es.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
-		E2BADCA4134DDF8B00F65E14 /* NewTaskWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewTaskWindow.xib; path = Resources/ko.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
-		E2BADCBD134DE28300F65E14 /* NewTaskWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewTaskWindow.strings; path = Resources/de.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
-		E2BADCBE134DE28300F65E14 /* NewTaskWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewTaskWindow.strings; path = Resources/es.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
-		E2BADCBF134DE28300F65E14 /* NewTaskWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewTaskWindow.strings; path = Resources/fr.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
-		E2BADCC0134DE28300F65E14 /* NewTaskWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewTaskWindow.strings; path = Resources/ko.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
-		E2BADCC1134DE28300F65E14 /* NewTaskWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewTaskWindow.strings; path = Resources/sv.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
-		E2BADCC2134DE28300F65E14 /* NewTaskWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewTaskWindow.strings; path = Resources/ru.lproj/NewTaskWindow.strings; sourceTree = "<group>"; };
-		E2BADCC4134DE28300F65E14 /* NewEventWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewEventWindow.strings; path = Resources/de.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
-		E2BADCC5134DE28300F65E14 /* NewEventWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewEventWindow.strings; path = Resources/es.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
-		E2BADCC6134DE28300F65E14 /* NewEventWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewEventWindow.strings; path = Resources/fr.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
-		E2BADCC7134DE28300F65E14 /* NewEventWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewEventWindow.strings; path = Resources/ko.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
-		E2BADCC8134DE28300F65E14 /* NewEventWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewEventWindow.strings; path = Resources/sv.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
-		E2BADCC9134DE28300F65E14 /* NewEventWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = NewEventWindow.strings; path = Resources/ru.lproj/NewEventWindow.strings; sourceTree = "<group>"; };
 		E2C774C213D1C02A0067102F /* WLCalendarDayEventsLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarDayEventsLayer.h; sourceTree = "<group>"; };
 		E2C774C313D1C02A0067102F /* WLCalendarDayEventsLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarDayEventsLayer.m; sourceTree = "<group>"; };
 		E2C776E413D20A970067102F /* WLCalendarTimeRuler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTimeRuler.h; sourceTree = "<group>"; };
@@ -444,6 +423,34 @@
 		E2D6488F1441062300A03FAD /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		E2E64B4C1402483500912A92 /* WLSoftEdgeLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLSoftEdgeLayer.h; sourceTree = "<group>"; };
 		E2E64B4D1402483500912A92 /* WLSoftEdgeLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLSoftEdgeLayer.m; sourceTree = "<group>"; };
+		E2E826C8145023A6007035E5 /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E2E826CA145023A6007035E5 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		E2E826CC145023A6007035E5 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
+		E2E826CE145023A6007035E5 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
+		E2E826D3145023B4007035E5 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E2E826D4145023B4007035E5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		E2E826D5145023B4007035E5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
+		E2E826D6145023B4007035E5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
+		E2E826DB145023BE007035E5 /* es */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E2E826DC145023BE007035E5 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		E2E826DD145023BE007035E5 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
+		E2E826DE145023BE007035E5 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
+		E2E826E3145023CD007035E5 /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E2E826E4145023CD007035E5 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		E2E826E5145023CD007035E5 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
+		E2E826E6145023CD007035E5 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
+		E2E826EB145023DA007035E5 /* ko */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E2E826EC145023DA007035E5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = ko.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		E2E826ED145023DA007035E5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = ko.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
+		E2E826EE145023DA007035E5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = ko.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
+		E2E826F3145023E5007035E5 /* ru */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E2E826F4145023E5007035E5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		E2E826F5145023E5007035E5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
+		E2E826F6145023E5007035E5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
+		E2E826FB145023EF007035E5 /* sv */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E2E826FC145023EF007035E5 /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = sv.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		E2E826FD145023EF007035E5 /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = sv.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
+		E2E826FE145023EF007035E5 /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = sv.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
 		E2F112DB13E6E263001C2B7B /* WLCalendarWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindow.h; sourceTree = "<group>"; };
 		E2F112DC13E6E263001C2B7B /* WLCalendarWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindow.m; sourceTree = "<group>"; };
 		E2F1133B13E70B4F001C2B7B /* WLCalendarWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowController.h; sourceTree = "<group>"; };
@@ -482,11 +489,10 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				E2D6488C1441060F00A03FAD /* IKPowerSources.h */,
-				E2D6488D1441060F00A03FAD /* IKPowerSources.m */,
-				E29ED79A142138EE00DB179C /* SS_PreferencePaneProtocol.h */,
 				E27196B713C5A19E008E5C43 /* WLCalendar */,
 				E27936431324F6BD00BC5224 /* WLGlassHud */,
+				E2D6488C1441060F00A03FAD /* IKPowerSources.h */,
+				E2D6488D1441060F00A03FAD /* IKPowerSources.m */,
 				256AC3D80F4B6AC300CF3369 /* DeskboardAppDelegate.h */,
 				256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */,
 				E27313C31349F41200A84433 /* PTHotKey+ShortcutRecorder.h */,
@@ -495,10 +501,11 @@
 				E23779D71312AD6000F46E7D /* WLClosableWindow.m */,
 				28F69D52129D854300D4BB97 /* BLCalendarFramer.h */,
 				2844DB2C129DA1BD006C5545 /* BLCalendarFramer.m */,
-				28F69C4A129C9B3D00D4BB97 /* BLPositionerControl.h */,
 				28B54DB31283BABF0037BF53 /* SS_PreferencePaneProtocol.h */,
 				28B54DB41283BABF0037BF53 /* SS_PrefsController.h */,
 				28B54DB51283BABF0037BF53 /* SS_PrefsController.m */,
+				E2435B18145057620052D9A3 /* WLPrefPaneView.h */,
+				E2435B19145057620052D9A3 /* WLPrefPaneView.m */,
 				28F699E2129C0EBC00D4BB97 /* WLViewFade.h */,
 				28F699E3129C0EBC00D4BB97 /* WLViewFade.m */,
 				E2596D711316C8C100A8B15E /* WLNewEventWindowController.h */,
@@ -585,24 +592,21 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E2E826C7145023A6007035E5 /* Localizable.strings */,
+				E2E826C9145023A6007035E5 /* MainMenu.xib */,
+				E2E826CB145023A6007035E5 /* NewEventWindow.xib */,
+				E2E826CD145023A6007035E5 /* NewTaskWindow.xib */,
 				E282E06D140448CF0007C401 /* calendar */,
+				E2F9E1D71322A4F4007598E2 /* glass-hud */,
 				E28C418C13F081A1005789DD /* defaults.plist */,
-				E2BADCBC134DE28300F65E14 /* NewTaskWindow.strings */,
-				E2BADCC3134DE28300F65E14 /* NewEventWindow.strings */,
+				8D1107310486CEB800E47090 /* Blotter-Info.plist */,
 				E271E5B313377E6100BF7F2B /* blotter-status-bar.png */,
 				E271E5B413377E6100BF7F2B /* blotter-status-bar-active.png */,
-				E2F9E1D71322A4F4007598E2 /* glass-hud */,
-				E29DDCB012E9D54C00751CFA /* Localizable.strings */,
 				285B840813C0C6150042C813 /* Blotter-B9.icns */,
 				28F69A1A129C1CAA00D4BB97 /* Credits.rtf */,
-				8D1107310486CEB800E47090 /* Blotter-Info.plist */,
-				E29DDC8512E9C7BF00751CFA /* MainMenu.strings */,
-				E29DDC8612E9C7BF00751CFA /* MainMenu.xib */,
 				28F69CF4129CC12100D4BB97 /* Licenses.rtf */,
-				E2BADC95134DDE6100F65E14 /* NewEventWindow.xib */,
-				E2BADC97134DDE6100F65E14 /* NewTaskWindow.xib */,
 			);
-			name = Resources;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
@@ -686,14 +690,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E27311751349D86200A84433 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E27311791349D86200A84433 /* Blotter Preferences.preferencePane */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		E27936431324F6BD00BC5224 /* WLGlassHud */ = {
 			isa = PBXGroup;
 			children = (
@@ -720,8 +716,7 @@
 				E282E081140451DF0007C401 /* timeruler */,
 				E282E06E140448DA0007C401 /* allday */,
 			);
-			name = calendar;
-			path = Resources/calendar;
+			path = calendar;
 			sourceTree = "<group>";
 		};
 		E282E06E140448DA0007C401 /* allday */ = {
@@ -788,6 +783,14 @@
 			name = info;
 			sourceTree = "<group>";
 		};
+		E2E8266C14500E11007035E5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E2E8267014500E11007035E5 /* Blotter Preferences.preferencePane */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		E2F9E1D71322A4F4007598E2 /* glass-hud */ = {
 			isa = PBXGroup;
 			children = (
@@ -821,8 +824,7 @@
 				E2F9E1DD1322A4F4007598E2 /* glass-hud-border-top-right.png */,
 				E2F9E1DE1322A4F4007598E2 /* glass-hud-border-top.png */,
 			);
-			name = "glass-hud";
-			path = "Resources/glass-hud";
+			path = "glass-hud";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -840,7 +842,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				E273117B1349D86C00A84433 /* PBXTargetDependency */,
+				E2E8270514502600007035E5 /* PBXTargetDependency */,
 				E294887E1361BA6500FA83B8 /* PBXTargetDependency */,
 				E29488801361BA6D00FA83B8 /* PBXTargetDependency */,
 			);
@@ -876,12 +878,13 @@
 				fr,
 				sv,
 				ko,
+				"zh-Hans",
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* Deskboard */;
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = E27311751349D86200A84433 /* Products */;
+					ProductGroup = E2E8266C14500E11007035E5 /* Products */;
 					ProjectRef = E27311741349D86200A84433 /* Blotter Preferences.xcodeproj */;
 				},
 				{
@@ -911,18 +914,18 @@
 			remoteRef = E2730FA51349C4A500A84433 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		E27311791349D86200A84433 /* Blotter Preferences.preferencePane */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Blotter Preferences.preferencePane";
-			remoteRef = E27311781349D86200A84433 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		E27312321349EC9000A84433 /* PTHotKey.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = PTHotKey.framework;
 			remoteRef = E27312311349EC9000A84433 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E2E8267014500E11007035E5 /* Blotter Preferences.preferencePane */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Blotter Preferences.preferencePane";
+			remoteRef = E2E8266F14500E11007035E5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -932,13 +935,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				282FD238134FB2C5003E532E /* NewEventWindow.xib in Resources */,
-				282FD239134FB2C5003E532E /* NewTaskWindow.xib in Resources */,
-				E273117C1349D88100A84433 /* Blotter Preferences.preferencePane in Resources */,
-				E29DDC8712E9C7BF00751CFA /* MainMenu.xib in Resources */,
 				28F69A1B129C1CAA00D4BB97 /* Credits.rtf in Resources */,
 				28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */,
-				E29DDCB212E9D54C00751CFA /* Localizable.strings in Resources */,
 				E2F9E1DF1322A4F4007598E2 /* glass-hud-border-bottom-left.png in Resources */,
 				E2F9E1E01322A4F4007598E2 /* glass-hud-border-bottom-right.png in Resources */,
 				E2F9E1E11322A4F4007598E2 /* glass-hud-border-bottom.png in Resources */,
@@ -1020,6 +1018,35 @@
 				E20DAC4F1428FF0B00EF65EA /* info-middle-left.png in Resources */,
 				E20DAC501428FF0B00EF65EA /* info-middle-right.png in Resources */,
 				E262E586142B917400715C02 /* calendar-background-middle-gradient.png in Resources */,
+				E2E826CF145023A6007035E5 /* Localizable.strings in Resources */,
+				E2E826D0145023A6007035E5 /* MainMenu.xib in Resources */,
+				E2E826D1145023A6007035E5 /* NewEventWindow.xib in Resources */,
+				E2E826D2145023A6007035E5 /* NewTaskWindow.xib in Resources */,
+				E2E826D7145023B4007035E5 /* Localizable.strings in Resources */,
+				E2E826D8145023B4007035E5 /* MainMenu.xib in Resources */,
+				E2E826D9145023B4007035E5 /* NewEventWindow.xib in Resources */,
+				E2E826DA145023B4007035E5 /* NewTaskWindow.xib in Resources */,
+				E2E826DF145023BE007035E5 /* Localizable.strings in Resources */,
+				E2E826E0145023BE007035E5 /* MainMenu.xib in Resources */,
+				E2E826E1145023BE007035E5 /* NewEventWindow.xib in Resources */,
+				E2E826E2145023BE007035E5 /* NewTaskWindow.xib in Resources */,
+				E2E826E7145023CD007035E5 /* Localizable.strings in Resources */,
+				E2E826E8145023CD007035E5 /* MainMenu.xib in Resources */,
+				E2E826E9145023CD007035E5 /* NewEventWindow.xib in Resources */,
+				E2E826EA145023CD007035E5 /* NewTaskWindow.xib in Resources */,
+				E2E826EF145023DA007035E5 /* Localizable.strings in Resources */,
+				E2E826F0145023DA007035E5 /* MainMenu.xib in Resources */,
+				E2E826F1145023DA007035E5 /* NewEventWindow.xib in Resources */,
+				E2E826F2145023DA007035E5 /* NewTaskWindow.xib in Resources */,
+				E2E826F7145023E5007035E5 /* Localizable.strings in Resources */,
+				E2E826F8145023E5007035E5 /* MainMenu.xib in Resources */,
+				E2E826F9145023E5007035E5 /* NewEventWindow.xib in Resources */,
+				E2E826FA145023E5007035E5 /* NewTaskWindow.xib in Resources */,
+				E2E826FF145023EF007035E5 /* Localizable.strings in Resources */,
+				E2E82700145023EF007035E5 /* MainMenu.xib in Resources */,
+				E2E82701145023EF007035E5 /* NewEventWindow.xib in Resources */,
+				E2E827031450256F007035E5 /* Blotter Preferences.preferencePane in Resources */,
+				E2E82702145023EF007035E5 /* NewTaskWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1078,17 +1105,13 @@
 				E262E5E3142BD2C500715C02 /* WLCopyCompositingFilter.m in Sources */,
 				E2D6488E1441060F00A03FAD /* IKPowerSources.m in Sources */,
 				E23F746F14434DE40055D6CE /* WLHourRange.m in Sources */,
+				E2435B1A145057620052D9A3 /* WLPrefPaneView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		E273117B1349D86C00A84433 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Blotter Preferences";
-			targetProxy = E273117A1349D86C00A84433 /* PBXContainerItemProxy */;
-		};
 		E294887E1361BA6500FA83B8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = PTHotKey.framework;
@@ -1099,102 +1122,68 @@
 			name = ShortcutRecorder.framework;
 			targetProxy = E294887F1361BA6D00FA83B8 /* PBXContainerItemProxy */;
 		};
+		E2E8270514502600007035E5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Blotter Preferences";
+			targetProxy = E2E8270414502600007035E5 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		E29DDC8512E9C7BF00751CFA /* MainMenu.strings */ = {
+		E2E826C7145023A6007035E5 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E29DDC8E12E9C7E000751CFA /* MainMenu.strings */,
-				E29DDC8F12E9C7E200751CFA /* MainMenu.strings */,
-				E29DDC9012E9C7E300751CFA /* MainMenu.strings */,
-				E29DDC9112E9C7E600751CFA /* MainMenu.strings */,
-				28E96D7412EA3145000AF199 /* MainMenu.strings */,
-				28A09A591308E4A7005EA923 /* MainMenu.strings */,
-			);
-			name = MainMenu.strings;
-			sourceTree = "<group>";
-		};
-		E29DDC8612E9C7BF00751CFA /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1DDD58150DA1D0A300B32029 /* MainMenu.xib */,
-				28A09A9C1308F188005EA923 /* MainMenu.xib */,
-				28A09A9E1308F18E005EA923 /* MainMenu.xib */,
-				28A09A9D1308F18B005EA923 /* MainMenu.xib */,
-				28A09A9F1308F192005EA923 /* MainMenu.xib */,
-				E29DDC8812E9C7C900751CFA /* MainMenu.xib */,
-				28E96D7312EA3145000AF199 /* MainMenu.xib */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-		E29DDCB012E9D54C00751CFA /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E267AADF12EDF7AE00EDB7B6 /* Localizable.strings */,
-				E29DDCB712E9D57F00751CFA /* Localizable.strings */,
-				E29DDCB612E9D57500751CFA /* Localizable.strings */,
-				E29DDCB512E9D56B00751CFA /* Localizable.strings */,
-				28A09A5A1308E4A7005EA923 /* Localizable.strings */,
-				E29DDCB312E9D55500751CFA /* Localizable.strings */,
-				28E96D7512EA3145000AF199 /* Localizable.strings */,
+				E2E826C8145023A6007035E5 /* de */,
+				E2E826D3145023B4007035E5 /* English */,
+				E2E826DB145023BE007035E5 /* es */,
+				E2E826E3145023CD007035E5 /* fr */,
+				E2E826EB145023DA007035E5 /* ko */,
+				E2E826F3145023E5007035E5 /* ru */,
+				E2E826FB145023EF007035E5 /* sv */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
-		E2BADC95134DDE6100F65E14 /* NewEventWindow.xib */ = {
+		E2E826C9145023A6007035E5 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E2596D601316B20400A8B15E /* NewEventWindow.xib */,
-				E2BADC99134DDF6900F65E14 /* NewEventWindow.xib */,
-				E2BADC9A134DDF6D00F65E14 /* NewEventWindow.xib */,
-				E2BADC9B134DDF6F00F65E14 /* NewEventWindow.xib */,
-				E2BADC9C134DDF7300F65E14 /* NewEventWindow.xib */,
-				E2BADC9E134DDF7800F65E14 /* NewEventWindow.xib */,
-				E2BADC9D134DDF7500F65E14 /* NewEventWindow.xib */,
+				E2E826CA145023A6007035E5 /* de */,
+				E2E826D4145023B4007035E5 /* English */,
+				E2E826DC145023BE007035E5 /* es */,
+				E2E826E4145023CD007035E5 /* fr */,
+				E2E826EC145023DA007035E5 /* ko */,
+				E2E826F4145023E5007035E5 /* ru */,
+				E2E826FC145023EF007035E5 /* sv */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		E2E826CB145023A6007035E5 /* NewEventWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E2E826CC145023A6007035E5 /* de */,
+				E2E826D5145023B4007035E5 /* English */,
+				E2E826DD145023BE007035E5 /* es */,
+				E2E826E5145023CD007035E5 /* fr */,
+				E2E826ED145023DA007035E5 /* ko */,
+				E2E826F5145023E5007035E5 /* ru */,
+				E2E826FD145023EF007035E5 /* sv */,
 			);
 			name = NewEventWindow.xib;
 			sourceTree = "<group>";
 		};
-		E2BADC97134DDE6100F65E14 /* NewTaskWindow.xib */ = {
+		E2E826CD145023A6007035E5 /* NewTaskWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E29F38EA131968B200A865D9 /* NewTaskWindow.xib */,
-				E2BADCA1134DDF8600F65E14 /* NewTaskWindow.xib */,
-				E2BADCA3134DDF8900F65E14 /* NewTaskWindow.xib */,
-				E2BADCA2134DDF8800F65E14 /* NewTaskWindow.xib */,
-				E2BADCA4134DDF8B00F65E14 /* NewTaskWindow.xib */,
-				E2BADC9F134DDF8200F65E14 /* NewTaskWindow.xib */,
-				E2BADCA0134DDF8400F65E14 /* NewTaskWindow.xib */,
+				E2E826CE145023A6007035E5 /* de */,
+				E2E826D6145023B4007035E5 /* English */,
+				E2E826DE145023BE007035E5 /* es */,
+				E2E826E6145023CD007035E5 /* fr */,
+				E2E826EE145023DA007035E5 /* ko */,
+				E2E826F6145023E5007035E5 /* ru */,
+				E2E826FE145023EF007035E5 /* sv */,
 			);
 			name = NewTaskWindow.xib;
-			sourceTree = "<group>";
-		};
-		E2BADCBC134DE28300F65E14 /* NewTaskWindow.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E2BADCBD134DE28300F65E14 /* NewTaskWindow.strings */,
-				E2BADCBE134DE28300F65E14 /* NewTaskWindow.strings */,
-				E2BADCBF134DE28300F65E14 /* NewTaskWindow.strings */,
-				E2BADCC0134DE28300F65E14 /* NewTaskWindow.strings */,
-				E2BADCC2134DE28300F65E14 /* NewTaskWindow.strings */,
-				E2BADCC1134DE28300F65E14 /* NewTaskWindow.strings */,
-			);
-			name = NewTaskWindow.strings;
-			sourceTree = "<group>";
-		};
-		E2BADCC3134DE28300F65E14 /* NewEventWindow.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E2BADCC4134DE28300F65E14 /* NewEventWindow.strings */,
-				E2BADCC5134DE28300F65E14 /* NewEventWindow.strings */,
-				E2BADCC6134DE28300F65E14 /* NewEventWindow.strings */,
-				E2BADCC7134DE28300F65E14 /* NewEventWindow.strings */,
-				E2BADCC9134DE28300F65E14 /* NewEventWindow.strings */,
-				E2BADCC8134DE28300F65E14 /* NewEventWindow.strings */,
-			);
-			name = NewEventWindow.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1231,10 +1220,7 @@
 				);
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: WireLoad, LLC";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SRCROOT)/Frameworks\"",
-					"\"$(SRCROOT)\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1266,10 +1252,7 @@
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: WireLoad, LLC";
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SRCROOT)/Frameworks\"",
-					"\"$(SRCROOT)\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_UNROLL_LOOPS = YES;

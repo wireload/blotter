@@ -131,8 +131,7 @@ const CGFloat _WLXPadding = 10.0f;
         CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0f), 0.0f, [[NSColor WL_eventTextShadowColor] WL_CGColor]);
 
         CGFloat preferredTitleHeight = [self.title WL_preferredHeightWithWidth:self.bounds.size.width - _WLXPadding];
-        if (preferredTitleHeight < titleAndLocationFrame.size.height &&
-            self.visibleRect.size.height < self.bounds.size.height)
+        if (preferredTitleHeight < titleAndLocationFrame.size.height)
         {
             CGFloat titleHeight = preferredTitleHeight;
             CGFloat preferredLocationHeight = [self.location WL_preferredHeightWithWidth:self.bounds.size.width - _WLXPadding];
@@ -145,10 +144,15 @@ const CGFloat _WLXPadding = 10.0f;
                     // Make text visible as much as possible.
                     // Visible rect origin is top left, while context's origin is bottom left. Convert to context's coordinates.
                     CGFloat visibleRectTop = self.bounds.size.height - self.visibleRect.origin.y;
-                    // Center text on visible rect.
-                    CGFloat y = fminf((CGRectGetMaxY(titleAndLocationFrame) - titleHeight - locationHeight) / 2,
-                                      fmaxf(titleAndLocationFrame.origin.y,
-                                            (visibleRectTop - titleHeight - locationHeight) / 2));
+                    // If the parent layer fits the whole event layer, draw text as usual, otherwise center it.
+                    CGFloat maxY = CGRectGetMaxY(titleAndLocationFrame) - titleHeight - locationHeight;
+                    CGFloat minY = titleAndLocationFrame.origin.y;
+                    CGFloat y = 0.0f;
+                    BOOL doesSuperlayerFitsEventLayer = self.visibleRect.size.height <= self.bounds.size.height;
+                    if (doesSuperlayerFitsEventLayer)
+                        y = fminf(maxY, fmaxf(minY, visibleRectTop - titleHeight - locationHeight));
+                    else
+                        y = fminf(maxY / 2, fmaxf(minY, (visibleRectTop - titleHeight - locationHeight) / 2));
                     titleAndLocationFrame.origin.y = y;
                     titleAndLocationFrame.size.height = titleHeight + locationHeight;
                 }

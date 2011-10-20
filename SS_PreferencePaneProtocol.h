@@ -1,19 +1,12 @@
 #import <Cocoa/Cocoa.h>
+#import "WLPrefPaneView.h"
+
 
 @protocol SS_PreferencePaneProtocol
 
-
-    //	preferencePanes is called whenever the calling application wants to instantiate preference panes.
-    //	This method returns an array of preference pane instances. This array is autoreleased,
-    //	so the calling application needs to retain whatever it wants to keep.
-    //	If no instances were generated, this returns nil.
-
-+ (NSArray *)preferencePanes;
-
-
     //	paneView returns a preference pane's view. This must not be nil.
 
-- (NSView *)paneView;
+- (WLPrefPaneView *)paneView;
 
 
     //	paneName returns the name associated with a preference pane's view.
@@ -45,6 +38,16 @@
 
 - (BOOL)allowsHorizontalResizing;
 - (BOOL)allowsVerticalResizing;
+
+
+@optional
+
+//	preferencePanes is called whenever the calling application wants to instantiate preference panes.
+//	This method returns an array of preference pane instances. This array is autoreleased,
+//	so the calling application needs to retain whatever it wants to keep.
+//	If no instances were generated, this returns nil.
+
++ (NSArray *)preferencePanes;
 
 
 @end

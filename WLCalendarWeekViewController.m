@@ -403,7 +403,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 
 - (NSDateFormatter *)_dateFormatter
 {
-    NSDateFormatter *f = [_cache objectForKey:_WLDateFormatterCacheKey];
+    NSDateFormatter *f = [[[_cache objectForKey:_WLDateFormatterCacheKey] retain] autorelease];
     if (f == nil) {
         f = [[[NSDateFormatter alloc] init] autorelease];
         [_cache setObject:f forKey:_WLDateFormatterCacheKey];
@@ -419,7 +419,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 
 - (NSString *)_columnTitleFormat
 {
-    NSString *f = [_cache objectForKey:_WLColumnTitleFormatCacheKey];
+    NSString *f = [[[_cache objectForKey:_WLColumnTitleFormatCacheKey] retain] autorelease];
     if (f == nil)
     {
         if (titleFormat == WLCalendarWeekViewWeekdayAndMonthdayTitleFormat)
