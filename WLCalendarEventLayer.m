@@ -148,7 +148,8 @@ const CGFloat _WLXPadding = 10.0f;
                     CGFloat maxY = CGRectGetMaxY(titleAndLocationFrame) - titleHeight - locationHeight;
                     CGFloat minY = titleAndLocationFrame.origin.y;
                     CGFloat y = 0.0f;
-                    BOOL doesSuperlayerFitsEventLayer = self.visibleRect.size.height <= self.bounds.size.height;
+                    BOOL doesSuperlayerFitsEventLayer = (self.visibleRect.size.height == self.bounds.size.height ||
+                                                         fabsf(self.visibleRect.size.height - self.bounds.size.height) < FLT_EPSILON);
                     if (doesSuperlayerFitsEventLayer)
                         y = fminf(maxY, fmaxf(minY, visibleRectTop - titleHeight - locationHeight));
                     else
