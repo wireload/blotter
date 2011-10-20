@@ -49,6 +49,7 @@ static const CGFloat _WLYPadding = 34.0f;
     else
         [self addSubview:newContentView];
     contentView = newContentView;
+    [contentView setNeedsDisplay:YES];
     self.softEdges = softEdges;
 }
 

@@ -203,37 +203,54 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     NSRect r = [self dateViewFrame];
     r.size.width = width;
     [[_dateViewController view] setFrame:r];
+    [[_dateViewController view] setNeedsDisplay:YES];
 
     r = [self tasksViewFrame];
     r.size.width = width;
     [_tasksViewBox setFrame:r];
+    [_tasksViewBox setNeedsDisplay:YES];
 
     r = [self rightNowViewFrame];
     r.size.width = width;
     [_rightNowViewBox setFrame:r];
+    [_rightNowViewBox setNeedsDisplay:YES];
     [[_weekViewController view] setHidden:YES];
 }
 
 - (void)_applyNormalSizeToViews
 {
     [[_dateViewController view] setFrame:[self dateViewFrame]];
+    [[_dateViewController view] setNeedsDisplay:YES];
+    
     [_tasksViewBox setFrame:[self tasksViewFrame]];
+    [_tasksViewBox setNeedsDisplay:YES];
+    
     [_rightNowViewBox setFrame:[self rightNowViewFrame]];
+    [_rightNowViewBox setNeedsDisplay:YES];
+    
     NSRect weekViewFrame = [self weekViewFrame];
     [_weekViewController view].heightOfAllDayPartOfColumn = [[NSUserDefaults standardUserDefaults] floatForKey:@"AllDayViewHeight"];
     [[_weekViewController view] setFrame:weekViewFrame];
     [[_weekViewController view] setHidden:NO];
+    [[_weekViewController view] setNeedsDisplay:YES];
 }
 
 - (void)_applyFullSizeToViews
 {
     [[_dateViewController view] setFrame:[self dateViewFrame]];
+    [[_dateViewController view] setNeedsDisplay:YES];
+    
     [_tasksViewBox setFrame:[self tasksViewFrame]];
+    [_tasksViewBox setNeedsDisplay:YES];
+    
     [_rightNowViewBox setFrame:[self rightNowViewFrame]];
+    [_rightNowViewBox setNeedsDisplay:YES];
+    
     NSRect weekViewFrame = [self weekViewFrame];
     [_weekViewController view].heightOfAllDayPartOfColumn = [[NSUserDefaults standardUserDefaults] floatForKey:@"AllDayViewHeight"];
     [[_weekViewController view] setFrame:weekViewFrame];
     [[_weekViewController view] setHidden:NO];
+    [[_weekViewController view] setNeedsDisplay:YES];
 }
 
 - (void)_updateFrame

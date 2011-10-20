@@ -100,6 +100,7 @@ BOOL _WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int s
 
         [_realContentView setFrame:[self contentRectForFrameRect:bounds]];
         [_realContentView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+        [_realContentView setNeedsDisplay:YES];
         [frameView addSubview:_realContentView];
     }
 }
