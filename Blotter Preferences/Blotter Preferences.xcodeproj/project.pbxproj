@@ -11,7 +11,7 @@
 		28B54D5E12839B8D0037BF53 /* GeneralPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54D5D12839B8D0037BF53 /* GeneralPrefController.m */; };
 		28B54D7A1283AEEE0037BF53 /* PositionPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54D791283AEEE0037BF53 /* PositionPrefController.m */; };
 		28F6993D129B723900D4BB97 /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */; };
-		28F69A29129C587F00D4BB97 /* BLPositionerControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69A28129C587F00D4BB97 /* BLPositionerControl.m */; };
+		28F69A29129C587F00D4BB97 /* WLCalendarWindowPositionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69A28129C587F00D4BB97 /* WLCalendarWindowPositionControl.m */; };
 		28F69A55129C5EA100D4BB97 /* Recreated-Aqua.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 28F69A54129C5EA100D4BB97 /* Recreated-Aqua.jpg */; };
 		28F69B53129C82E800D4BB97 /* BLPositionerControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69B52129C82E800D4BB97 /* BLPositionerControlCell.m */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
@@ -28,7 +28,6 @@
 		E262E5E9142C199800715C02 /* WLLayoutBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = E262E5E8142C199700715C02 /* WLLayoutBackgroundView.m */; };
 		E2730E361349BC1000A84433 /* WLRecorderControl.m in Sources */ = {isa = PBXBuildFile; fileRef = E2730E351349BC1000A84433 /* WLRecorderControl.m */; };
 		E2794F9F131A6425008AE1DA /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2794F9E131A6425008AE1DA /* Carbon.framework */; };
-		E2863F971305BEC4004CFC9D /* NSScreen+WLScreenName.m in Sources */ = {isa = PBXBuildFile; fileRef = E2863F961305BEC4004CFC9D /* NSScreen+WLScreenName.m */; };
 		E28640971305C7C9004CFC9D /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2863FDB1305C741004CFC9D /* IOKit.framework */; };
 		E2B0D2511450268600AA3A40 /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2B0D2451450262B00AA3A40 /* ShortcutRecorder.framework */; };
 		E2B0D2521450268900AA3A40 /* PTHotKey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2B0D2491450262B00AA3A40 /* PTHotKey.framework */; };
@@ -124,8 +123,8 @@
 		28B54D791283AEEE0037BF53 /* PositionPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PositionPrefController.m; sourceTree = "<group>"; };
 		28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAtLoginController.m; sourceTree = "<group>"; };
 		28F6993C129B723900D4BB97 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
-		28F69A27129C587F00D4BB97 /* BLPositionerControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLPositionerControl.h; sourceTree = "<group>"; };
-		28F69A28129C587F00D4BB97 /* BLPositionerControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLPositionerControl.m; sourceTree = "<group>"; };
+		28F69A27129C587F00D4BB97 /* WLCalendarWindowPositionControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowPositionControl.h; sourceTree = "<group>"; };
+		28F69A28129C587F00D4BB97 /* WLCalendarWindowPositionControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindowPositionControl.m; sourceTree = "<group>"; };
 		28F69A54129C5EA100D4BB97 /* Recreated-Aqua.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Recreated-Aqua.jpg"; sourceTree = "<group>"; };
 		28F69B51129C82E800D4BB97 /* BLPositionerControlCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLPositionerControlCell.h; sourceTree = "<group>"; };
 		28F69B52129C82E800D4BB97 /* BLPositionerControlCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLPositionerControlCell.m; sourceTree = "<group>"; };
@@ -158,8 +157,6 @@
 		E2730E351349BC1000A84433 /* WLRecorderControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLRecorderControl.m; sourceTree = "<group>"; };
 		E27310351349CD2C00A84433 /* ShortcutRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShortcutRecorder.xcodeproj; path = ../ShortcutRecorder/ShortcutRecorder.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E2794F9E131A6425008AE1DA /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
-		E2863F951305BEC4004CFC9D /* NSScreen+WLScreenName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSScreen+WLScreenName.h"; sourceTree = "<group>"; };
-		E2863F961305BEC4004CFC9D /* NSScreen+WLScreenName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSScreen+WLScreenName.m"; sourceTree = "<group>"; };
 		E2863FDB1305C741004CFC9D /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		E29ED7A814213B2300DB179C /* WLClosableWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WLClosableWindow.h; path = ../WLClosableWindow.h; sourceTree = "<group>"; };
 		E29ED7AB14220CD300DB179C /* DeskboardAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeskboardAppDelegate.h; path = ../DeskboardAppDelegate.h; sourceTree = "<group>"; };
@@ -275,16 +272,14 @@
 				28F69D55129D854F00D4BB97 /* BLCalendarFramer.h */,
 				28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */,
 				28F6993C129B723900D4BB97 /* LaunchAtLoginController.h */,
-				28F69A27129C587F00D4BB97 /* BLPositionerControl.h */,
-				28F69A28129C587F00D4BB97 /* BLPositionerControl.m */,
+				28F69A27129C587F00D4BB97 /* WLCalendarWindowPositionControl.h */,
+				28F69A28129C587F00D4BB97 /* WLCalendarWindowPositionControl.m */,
 				28F69B51129C82E800D4BB97 /* BLPositionerControlCell.h */,
 				28F69B52129C82E800D4BB97 /* BLPositionerControlCell.m */,
 				283A5EE41306CDA2006B916A /* WLCountGreaterThanOneTransformer.h */,
 				283A5EE51306CDA2006B916A /* WLCountGreaterThanOneTransformer.m */,
 				E2DC7DDB130810F00065CEAD /* WLScreensController.h */,
 				E2DC7DDC130810F00065CEAD /* WLScreensController.m */,
-				E2863F951305BEC4004CFC9D /* NSScreen+WLScreenName.h */,
-				E2863F961305BEC4004CFC9D /* NSScreen+WLScreenName.m */,
 				E2730E341349BC1000A84433 /* WLRecorderControl.h */,
 				E2730E351349BC1000A84433 /* WLRecorderControl.m */,
 				E2FE5EF512D75C7700003E48 /* WLColorCheckboxCell.h */,
@@ -519,11 +514,10 @@
 				28B54D5E12839B8D0037BF53 /* GeneralPrefController.m in Sources */,
 				28B54D7A1283AEEE0037BF53 /* PositionPrefController.m in Sources */,
 				28F6993D129B723900D4BB97 /* LaunchAtLoginController.m in Sources */,
-				28F69A29129C587F00D4BB97 /* BLPositionerControl.m in Sources */,
+				28F69A29129C587F00D4BB97 /* WLCalendarWindowPositionControl.m in Sources */,
 				28F69B53129C82E800D4BB97 /* BLPositionerControlCell.m in Sources */,
 				E2FE5ED112D74F5E00003E48 /* CalendarsPrefController.m in Sources */,
 				E2FE5EF712D75C7700003E48 /* WLColorCheckboxCell.m in Sources */,
-				E2863F971305BEC4004CFC9D /* NSScreen+WLScreenName.m in Sources */,
 				283A5EE61306CDA2006B916A /* WLCountGreaterThanOneTransformer.m in Sources */,
 				E2DC7DDD130810F00065CEAD /* WLScreensController.m in Sources */,
 				E2730E361349BC1000A84433 /* WLRecorderControl.m in Sources */,

@@ -6,124 +6,110 @@
 //  Copyright 2011 Wireload. All rights reserved.
 //
 
+#import <IOKit/graphics/IOGraphicsLib.h>
 #import "WLScreensController.h"
-#import "NSScreen+WLScreenName.h"
 
 
 NSString* const WLScreenLocalizedName = @"ScreenName";
-NSString* const WLScreenID = @"ScreenIdentifier";
 
-@interface WLScreensController (/* Private */)
-
-- (void)_updateScreens;
-
-- (NSArray *)_systemScreens;
-
-@end
+NSString* const WLScreenIdentifier = @"ScreenIdentifier";
 
 
 @implementation WLScreensController
-@synthesize screens;
 
-- (id)init
+- (void)awakeFromNib
 {
-    if (self = [super init])
-    {
-        NSNumber *selectedScreenID = [[NSUserDefaults standardUserDefaults] objectForKey:WLScreenID];
-        NSAssert(selectedScreenID != nil, @"There must be a screenID in UserDefaults");
-        screens = [self _systemScreens];
-        NSUInteger selectedScreenIndex = [screens indexOfObjectPassingTest:^(id obj, NSUInteger idx, BOOL *stop)
-        {
-            return [[obj objectForKey:WLScreenID] isEqualToNumber:selectedScreenID];
-        }];
-
-        if (selectedScreenIndex == NSNotFound)
-        {
-            NSDictionary *unpluggedScreen = [NSDictionary dictionaryWithObjectsAndKeys:
-                                             selectedScreenID,                                              WLScreenID,
-                                             NSLocalizedString(@"Unplugged", @"Name of unplugged monitor"), WLScreenLocalizedName,
-                                             nil];
-            screens = [screens arrayByAddingObject:unpluggedScreen];
-        }
-        [screens retain];
-
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(_updateScreens)
-                                                     name:NSApplicationDidChangeScreenParametersNotification
-                                                   object:nil];
-        [[NSUserDefaults standardUserDefaults] addObserver:self
-                                                forKeyPath:WLScreenID
-                                                   options:NSKeyValueObservingOptionNew
-                                                   context:NULL];
-    }
-    return self;
+    [self setContent:[self screens]];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_screensDidChange)
+                                                 name:NSApplicationDidChangeScreenParametersNotification
+                                               object:nil];
+    [[NSUserDefaults standardUserDefaults] addObserver:self
+                                            forKeyPath:WLScreenIdentifier
+                                               options:NSKeyValueObservingOptionNew
+                                               context:NULL];
 }
 
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:WLScreenID];
-    [screens release];
+    [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:WLScreenIdentifier];
     [super dealloc];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+
+#pragma mark Methods
+
+- (NSArray *)screens
 {
-    [self _updateScreens];
-}
-
-
-#pragma mark Private
-
-- (void)_updateScreens
-{
-    NSNumber *selectedScreenID = [[NSUserDefaults standardUserDefaults] objectForKey:WLScreenID];
-    NSMutableArray *newScreens = [NSMutableArray arrayWithArray:[self _systemScreens]];
-    NSUInteger newScreenIndex = [newScreens indexOfObjectPassingTest:^(id obj, NSUInteger idx, BOOL *stop)
+    NSMutableArray *screens = [NSMutableArray arrayWithArray:[[NSScreen screens] valueForKey:@"WL_dictionary"]];
+    NSNumber *selectedScreenID = [[NSUserDefaults standardUserDefaults] objectForKey:WLScreenIdentifier];
+    if (selectedScreenID != nil &&
+        ![[screens valueForKey:WLScreenIdentifier] containsObject:selectedScreenID])
     {
-        return [[obj objectForKey:WLScreenID] isEqualToNumber:selectedScreenID];
-    }];
-
-    if (newScreenIndex != NSNotFound)
-    {
-        [self willChangeValueForKey:@"selectedScreenIndex"];
-        [self willChangeValueForKey:@"screens"];
-        [screens release];
-        screens = [[NSArray alloc] initWithArray:newScreens];
-        [self didChangeValueForKey:@"screens"];
-        [self didChangeValueForKey:@"selectedScreenIndex"];
-    }
-    else
-    {
-        // We should always provide a human-readble string to a user, so we handle such cases when device is unplugged.
         NSDictionary *unpluggedScreen = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         selectedScreenID,                                              WLScreenID,
+                                         selectedScreenID,                                              WLScreenIdentifier,
                                          NSLocalizedString(@"Unplugged", @"Name of unplugged monitor"), WLScreenLocalizedName,
                                          nil];
-        [newScreens addObject:unpluggedScreen];
-        [self willChangeValueForKey:@"selectedScreenIndex"];
-        [self willChangeValueForKey:@"screens"];
-        [screens release];
-        screens = [newScreens copy];
-        [self didChangeValueForKey:@"screens"];
-        [self didChangeValueForKey:@"selectedScreenIndex"];
+        [screens insertObject:unpluggedScreen atIndex:0];
     }
+    return screens;
 }
 
-- (NSArray *)_systemScreens
+- (void)_screensDidChange
 {
-    NSMutableArray *systemScreens = [NSMutableArray array];
-    for (NSScreen *screen in [NSScreen screens])
-    {
-        NSString *screenName = [NSString stringWithFormat:NSLocalizedString(@"%@, %@", @"Format of screen name string (localized device name + screen size)"),
-                                [screen WL_localizedScreenName], [screen WL_localizedScreenSizeString]];
-        NSDictionary *screenDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    screenName,                                                     WLScreenLocalizedName,
-                                    [[screen deviceDescription] objectForKey:@"NSScreenNumber"],    WLScreenID,
-                                    nil];
-        [systemScreens addObject:screenDict];
+    [self setContent:[self screens]];
+}
+
+
+#pragma mark NSObject
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    [self _screensDidChange];
+}
+
+@end
+
+
+@implementation NSScreen (WLScreensController)
+
+- (NSDictionary *)WL_dictionary
+{
+    NSString *screenName = [NSString stringWithFormat:NSLocalizedString(@"%@, %@", @"Format of screen name string (localized device name + screen size)"),
+                            [self WL_localizedScreenName], [self WL_localizedScreenSizeString]];
+    NSDictionary *screenDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                screenName,                                                     WLScreenLocalizedName,
+                                [[self deviceDescription] objectForKey:@"NSScreenNumber"],      WLScreenIdentifier,
+                                nil];
+    return screenDict;
+}
+
+// http://stackoverflow.com/questions/1236498/how-to-get-the-display-name-with-the-display-id-in-mac-os-x/1241627#1241627
+- (NSString *)WL_localizedScreenName
+{
+    CGDirectDisplayID displayID = [[[self deviceDescription] objectForKey:@"NSScreenNumber"] unsignedIntValue];
+    NSDictionary *deviceInfo = (NSDictionary *)IODisplayCreateInfoDictionary(CGDisplayIOServicePort(displayID), kIODisplayOnlyPreferredName);
+    NSDictionary *localizedNames = [deviceInfo objectForKey:[NSString stringWithUTF8String:kDisplayProductName]];
+    
+    NSString *deviceName = nil;
+    if ([localizedNames count] > 0) {
+        deviceName = [[[localizedNames objectForKey:[[localizedNames allKeys] objectAtIndex:0]] copy] autorelease];
     }
-    return systemScreens;
+    else {
+        deviceName = NSLocalizedString(@"Unknown screen", @"Placeholder when name of the screen cannot be given");
+    }
+    
+    [deviceInfo release];
+    return deviceName;
+}
+
+- (NSString *)WL_localizedScreenSizeString
+{
+    NSSize screenSize = [[[self deviceDescription] objectForKey:NSDeviceSize] sizeValue];
+    NSString *screenSizeString = [NSString stringWithFormat:NSLocalizedString(@"%.0f x %.0f", @"Format of screen size string"),
+                                  screenSize.width, screenSize.height];
+    return screenSizeString;
 }
 
 @end
