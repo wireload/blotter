@@ -7,7 +7,7 @@
 //
 
 #import "WLCalendarSizeToPositionPrefPaneSizeTransformer.h"
-#import "BLCalendarFramer.h"
+#import "WLCalendarWindowController.h"
 
 
 @implementation WLCalendarSizeToPositionPrefPaneSizeTransformer
@@ -41,9 +41,6 @@
         switch ([aValue integerValue]) {
             case BLCustomSize:
                 return [NSValue valueWithSize:DoubledPositionControlSize];
-            BLNarrowSize:
-            BLNormalSize:
-            BLFullSize:
             default:
                 return [NSValue valueWithSize:self.defaultSize];
         }

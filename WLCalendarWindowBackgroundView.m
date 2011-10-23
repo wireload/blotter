@@ -6,11 +6,11 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
-#import "WLCalendarWindowFrameView.h"
+#import "WLCalendarWindowBackgroundView.h"
 #import "NSColor+CGColor.h"
 
 
-@implementation WLCalendarWindowFrameView
+@implementation WLCalendarWindowBackgroundView
 
 #pragma mark Methods
 

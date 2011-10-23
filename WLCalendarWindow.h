@@ -13,7 +13,7 @@
  @abstract      Borderless window that draws custom background.
  @discussion    Default contentView is flipped.
  @classdesign   You SHOULD use -init to initialize.
- @coclass       WLCalendarWindowFrameView
+ @coclass       WLCalendarWindowBackgroundView
  @ownership     WLCalendarWindowController
  */
 @interface WLCalendarWindow : NSWindow {

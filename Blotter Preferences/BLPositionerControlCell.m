@@ -7,6 +7,7 @@
 //
 
 #import "BLPositionerControlCell.h"
+#import "DeskboardAppDelegate.h"
 
 
 @implementation BLPositionerControlCell
@@ -103,6 +104,7 @@
 
 - (NSRect)rectForPosition:(BLPosition)aPosition
 {
+    NSLog(@"rectForPosition:");
     NSRect bounds = [[self controlView] bounds];
 
     int width = bounds.size.width - 2;
@@ -139,15 +141,19 @@
 {
     int position = [self intValue];
     NSSize boundsSize = [[self controlView] bounds].size;
-    NSRect fullFrame = [[NSScreen mainScreen] frame];
+    NSRect fullFrame = [[[[(DeskboardAppDelegate *)[NSApp delegate] calendarWindowController] window] screen] frame];
+    fullFrame.origin = NSZeroPoint;
     NSPoint scaleFactor = NSMakePoint(boundsSize.width / fullFrame.size.width, boundsSize.height / fullFrame.size.height);
-    NSRect relativeFrame = [NSClassFromString(@"BLCalendarFramer") frameForPosition:position inFrame:fullFrame scaleFactor:scaleFactor margin:NSMakeSize(14, 14)];
+//    NSRect relativeFrame = [[NSClassFromString(@"WLCalendarWindowFrame") sharedCalendarWindowFrame] windowFrameForBoundingRect:[[self controlView] bounds] inView:[self controlView]];
+//                            frameForPosition:position inFrame:fullFrame scaleFactor:scaleFactor margin:NSMakeSize(14, 14)];
 
-    return relativeFrame;
+//    return relativeFrame;
+    return NSZeroRect;
 }
 
 - (void)drawWithFrame:(NSRect)bounds inView:(NSView *)controlView
 {
+    NSLog(@"drawWithFrame:inView:");
     [NSBezierPath setDefaultLineWidth:1.0];
 
     [backgroundImage drawInRect:bounds fromRect:NSZeroRect
@@ -191,7 +197,7 @@
             {
                 // Draw the calendar widget.
 
-                path = [NSBezierPath bezierPath];
+                NSBezierPath *path = [NSBezierPath bezierPath];
 
                 [path appendBezierPathWithRoundedRect:NSInsetRect([self selectedRect], 2.5, 2.5) xRadius:5 yRadius:5];
 
@@ -215,6 +221,18 @@
 
     [[NSColor grayColor] set];
     [NSBezierPath strokeRect:NSInsetRect(bounds, 0.5, 0.5)];
+}
+
+- (void)setAction:(SEL)aSelector
+{
+    [super setAction:aSelector];
+    NSLog(@"setAction: %@", NSStringFromSelector(aSelector));
+}
+
+- (void)setTarget:(id)anObject
+{
+    [super setTarget:anObject];
+    NSLog(@"setTarget: %@", anObject);
 }
 
 @end

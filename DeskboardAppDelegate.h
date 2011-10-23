@@ -14,7 +14,7 @@
 
 
 @interface DeskboardAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate> {
-    WLCalendarWindowController *windowController;
+    WLCalendarWindowController *calendarWindowController;
 
     NSStatusItem *_statusItem;
     IBOutlet NSMenu *_statusMenu;
@@ -24,7 +24,7 @@
     SS_PrefsController *_preferencesController;
 }
 
-@property (readonly) WLCalendarWindowController *windowController;
+@property (readonly) WLCalendarWindowController *calendarWindowController;
 
 - (IBAction)showPreferences:(id)aSender;
 

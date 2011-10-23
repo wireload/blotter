@@ -8,14 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 #import "SS_PreferencePaneProtocol.h"
-#import "BLPositionerControl.h"
+#import "WLCalendarWindowArrangement.h"
 
 @class WLPrefPaneView;
 
 
-@interface PositionPrefController : NSObject <SS_PreferencePaneProtocol> {
+@interface PositionPrefController : NSObject <SS_PreferencePaneProtocol, WLCalendarWindowArrangementDelegate> {
     IBOutlet WLPrefPaneView *_mainView;
-    IBOutlet BLPositionerControl *_positionView;
+    IBOutlet WLCalendarWindowArrangement *_positionView;
     IBOutlet NSArrayController *_screensController;
 }
 

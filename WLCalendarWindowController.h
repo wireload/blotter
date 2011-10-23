@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import "WLCalendarWindow.h"
-#import "BLCalendarFramer.h"
 #import "WLViewFade.h"
 #import "WLCalendarController.h"
 
@@ -27,9 +26,6 @@
  */
 @interface WLCalendarWindowController : NSObject <NSWindowDelegate> {
     WLCalendarWindow *window;
-    BLSize windowSize;
-    BLPosition windowPosition;
-    NSNumber *windowScreenIdentifier;
     WLViewFade *fadeController;
 
     WLCalendarWeekViewController *_weekViewController;
@@ -44,26 +40,69 @@
 
 @property (readonly) WLCalendarWindow *window;
 
-/*!
- @abstract Specifies the type of size.
- */
-@property (nonatomic) BLSize windowSize;
-
-/*!
- @abstract Specifies the position on the screen.
- */
-@property (nonatomic) BLPosition windowPosition;
-
-/*!
- @abstract      Specifies the identifier of preferred screen that should be used to draw the window.
- @discussion    If there is no screen with this identifier, the primary screen is used.
- When screen with this identifier becomes available, the controller automatically moves its window to that screen.
- */
-@property (nonatomic, copy) NSNumber *windowScreenIdentifier;
-
 @property (readonly) WLViewFade *fadeController;
 
 - (IBAction)showWindow:(id)aSender;
+
+
+- (void)_screensDidChange;
+
+@end
+
+
+typedef enum {
+    BLNarrowSize    = 0,
+    BLNormalSize    = 1,
+    BLFullSize      = 2,
+    BLCustomSize    = 3
+} BLSize;
+
+
+typedef enum BLPosition {
+    BLPositionTopLeft,
+    BLPositionTopCenter,
+    BLPositionTopRight,
+    BLPositionCenterLeft,
+    BLPositionCenterCenter,
+    BLPositionCenterRight,
+    BLPositionBottomLeft,
+    BLPositionBottomCenter,
+    BLPositionBottomRight
+} BLPosition;
+
+
+extern NSSize const BLNarrowMinimumSize;
+
+extern NSSize const BLNormalMinimumSize;
+
+
+extern NSString* const WLCalendarWindowFrameDidChangeNotification;
+
+
+@interface WLCalendarWindowController (Frame)
+
+/*!
+ @abstract  Returns frame of the calendar window on the window screen in device pixel-aligned screen coordinates.
+ @result    If it's impossible to calculate frame, returns NSZeroRect.
+ @see       windowFrameOnScreen:withPosition:size:margin:
+ @see       windowScreen
+ */
+- (NSRect)windowFrame;
+
+/*!
+ @abstract  Returns screen to show calendar window according to user settings.
+ @result    Returns
+ 1. User selected screen
+ 2. If 1 doesn't exist, screen with the main menu
+ 3. If 2 doesn't exist, nil
+ */
+- (NSScreen *)windowScreen;
+
+/*!
+ @abstract  Designated method to calculate window frame.
+ @result    If it's impossible to calculate frame, returns NSZeroRect.
+ */
+- (NSRect)windowFrameOnScreen:(NSScreen *)aScreen withPosition:(BLPosition)aPosition size:(BLSize)aSize;
 
 @end
 

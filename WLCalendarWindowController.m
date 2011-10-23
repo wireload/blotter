@@ -14,6 +14,16 @@
 #import "WLCopyCompositingFilter.h"
 
 
+// Sizes are chosen so that when switching between these 2 modes only week view is disappeard. that is the date, todo and right now vies are visually unchanged.
+// @see WLCalendarWindowController
+const NSSize BLNarrowMinimumSize = {290, 750};
+
+const NSSize BLNormalMinimumSize = {950, 750};
+
+
+NSString* const WLCalendarWindowFrameDidChangeNotification = @"WLCalendarWindowFrameDidChangeNotification";
+
+
 @implementation WLCalendarWindowController
 
 - (id)init
@@ -54,6 +64,14 @@
 
         _dateViewController = [[WLCalendarDateViewController alloc] init];
         [_dateViewController setRepresentedObject:[WLCalendarController sharedController]];
+        
+        [defaults addObserver:self forKeyPath:@"CalendarSize" options:NSKeyValueObservingOptionNew context:NULL];
+        [defaults addObserver:self forKeyPath:@"CalendarPosition" options:NSKeyValueObservingOptionNew context:NULL];
+        [defaults addObserver:self forKeyPath:@"ScreenIdentifier" options:NSKeyValueObservingOptionNew context:NULL];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(_screensDidChange)
+                                                     name:NSApplicationDidChangeScreenParametersNotification
+                                                   object:NSApp];
     }
     return self;
 }
@@ -62,7 +80,6 @@
 {
     [window setDelegate:nil];
     [window release];
-    [windowScreenIdentifier release];
     [fadeController release];
 
     [_weekViewController release];
@@ -73,54 +90,22 @@
     [_rightNowViewBox release];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObserver:self forKeyPath:@"InfoViewsWidth"];
     [defaults removeObserver:self forKeyPath:@"DateViewHeight"];
     [defaults removeObserver:self forKeyPath:@"TasksViewHeight"];
     [defaults removeObserver:self forKeyPath:@"AllDayViewHeight"];
-    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
-
+    [defaults removeObserver:self forKeyPath:@"CalendarSize"];
+    [defaults removeObserver:self forKeyPath:@"CalendarPosition"];
+    [defaults removeObserver:self forKeyPath:@"ScreenIdentifier"];
     [super dealloc];
 }
 
 
 #pragma mark Properties
 @synthesize window;
-@synthesize windowSize;
-@synthesize windowPosition;
-@synthesize windowScreenIdentifier;
 @synthesize fadeController;
-
-- (void)setWindowSize:(BLSize)newSize
-{
-    if (newSize != windowSize)
-    {
-        windowSize = newSize;
-        if (_isWindowShowed)
-            [self _updateFrame];
-    }
-}
-
-- (void)setWindowPosition:(BLPosition)newPosition
-{
-    if (newPosition != windowPosition)
-    {
-        windowPosition = newPosition;
-        if (_isWindowShowed)
-            [self _updateFrame];
-    }
-}
-
-- (void)setWindowScreenIdentifier:(NSNumber *)newIdentifier
-{
-    if (windowScreenIdentifier == nil || ![newIdentifier isEqualToNumber:windowScreenIdentifier])
-    {
-        [windowScreenIdentifier release];
-        windowScreenIdentifier = [newIdentifier copy];
-        if (_isWindowShowed)
-            [self _updateFrame];
-    }
-}
 
 
 #pragma mark Methods
@@ -152,6 +137,16 @@
 }
 
 
+#pragma mark Private
+
+- (void)_screensDidChange
+{
+    if (_isWindowShowed)
+        [self _updateFrame];
+    [[NSNotificationCenter defaultCenter] postNotificationName:WLCalendarWindowFrameDidChangeNotification object:self];
+}
+
+
 #pragma mark NSObject
 
 - (void)observeValueForKeyPath:(NSString *)aKeyPath ofObject:(id)anObject change:(NSDictionary *)aChange context:(void *)aContext
@@ -164,8 +159,114 @@
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_updateFrame) object:nil];
         [self performSelector:@selector(_updateFrame) withObject:nil afterDelay:0.0];
     }
+    else if ([aKeyPath isEqualToString:@"CalendarSize"] ||
+        [aKeyPath isEqualToString:@"CalendarPosition"] ||
+        [aKeyPath isEqualToString:@"ScreenIdentifier"])
+    {
+        if (_isWindowShowed)
+            [self _updateFrame];
+        [[NSNotificationCenter defaultCenter] postNotificationName:WLCalendarWindowFrameDidChangeNotification object:self];
+    }
     else
         [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];
+}
+
+@end
+
+
+@implementation WLCalendarWindowController (Frame)
+
+- (NSRect)windowFrame
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return [self windowFrameOnScreen:[self windowScreen]
+                        withPosition:[defaults integerForKey:@"CalendarPosition"]
+                                size:[defaults integerForKey:@"CalendarSize"]];
+}
+
+- (NSRect)windowFrameOnScreen:(NSScreen *)aScreen withPosition:(BLPosition)aPosition size:(BLSize)aSize
+{
+    if (aScreen == nil)
+        return NSZeroRect;
+    static const NSSize Margin = {.width = 14.0f, .height = 14.0f};
+    NSRect screenFrame = [aScreen visibleFrame];
+    
+    NSRect windowFrame = NSZeroRect;
+    NSSize fullScreenSizeWithMargin = NSMakeSize(screenFrame.size.width - Margin.width * 2,
+                                                 screenFrame.size.height - Margin.height * 2);
+    switch (aSize) {
+        case BLNarrowSize:
+            windowFrame.size.width = BLNarrowMinimumSize.width;
+            windowFrame.size.height = fminf(BLNarrowMinimumSize.height, fullScreenSizeWithMargin.height);
+            break;
+        case BLNormalSize:
+            windowFrame.size.width = fmaxf(BLNormalMinimumSize.width, screenFrame.size.width / 2);
+            windowFrame.size.height = fminf(fmaxf(BLNormalMinimumSize.height, screenFrame.size.height / 2), fullScreenSizeWithMargin.height);
+            break;
+        case BLFullSize:
+            windowFrame.size = fullScreenSizeWithMargin;
+            break;
+    }
+    
+    CGFloat px = Margin.width;
+    CGFloat py = Margin.height;
+    
+    if (aPosition == BLPositionTopCenter ||
+        aPosition == BLPositionCenterCenter ||
+        aPosition == BLPositionBottomCenter)
+    {
+        px = floor(screenFrame.size.width / 2.0 - windowFrame.size.width / 2.0);
+    }
+    
+    if (aPosition == BLPositionTopRight ||
+        aPosition == BLPositionCenterRight ||
+        aPosition == BLPositionBottomRight)
+    {
+        px = screenFrame.size.width - windowFrame.size.width - Margin.width;
+    }
+    
+    if (aPosition == BLPositionTopLeft ||
+        aPosition == BLPositionTopCenter ||
+        aPosition == BLPositionTopRight)
+    {
+        py = screenFrame.size.height - windowFrame.size.height - Margin.height;
+    }
+    
+    if (aPosition == BLPositionCenterLeft ||
+        aPosition == BLPositionCenterCenter ||
+        aPosition == BLPositionCenterRight)
+    {
+        py = screenFrame.size.height / 2.0 - windowFrame.size.height / 2.0;
+    }
+    windowFrame.origin = NSMakePoint(screenFrame.origin.x + px, screenFrame.origin.y + py);
+    
+    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
+        return NSIntegralRect(windowFrame);
+    else
+        return [aScreen backingAlignedRect:windowFrame options:NSAlignAllEdgesInward];
+}
+
+- (NSScreen *)windowScreen
+{
+    NSArray *screens = [NSScreen screens];
+    NSNumber *screenIdentifier = [[NSUserDefaults standardUserDefaults] objectForKey:@"ScreenIdentifier"];
+    if ([screens count] > 0)
+    {
+        NSUInteger index = NSNotFound;
+        if (screenIdentifier != nil)
+        {
+            index = [screens indexOfObjectPassingTest:^(NSScreen *screen, NSUInteger idx, BOOL *stop)
+                     {
+                         return [[screen valueForKeyPath:@"deviceDescription.NSScreenNumber"] isEqualToNumber:screenIdentifier];
+                     }];
+        }
+        if (index != NSNotFound)
+            return [screens objectAtIndex:index];
+        else
+            return [screens objectAtIndex:0];
+    }
+    else
+        return nil;
 }
 
 @end
@@ -181,7 +282,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
 
 - (void)_applyWindowSizeToViews
 {
-    switch (self.windowSize)
+    switch ((BLSize)[[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"])
     {
         case BLNarrowSize:
             [self _applyNarrowSizeToViews];
@@ -255,25 +356,13 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
 
 - (void)_updateFrame
 {
-    NSArray *screens = [NSScreen screens];
-    NSUInteger selectedScreenIdx = [screens indexOfObjectPassingTest:^(NSScreen *screen, NSUInteger idx, BOOL *stop)
-                                    {
-                                        return [[[screen deviceDescription] objectForKey:@"NSScreenNumber"] isEqualToNumber:self.windowScreenIdentifier];
-                                    }];
-
-    NSRect screenFrame = NSMakeRect(0.0f, 0.0f, 0.0f, 0.0f);
-    if (selectedScreenIdx != NSNotFound)
-        screenFrame = [[screens objectAtIndex:selectedScreenIdx] visibleFrame];
-    else if ([screens count] > 0)
-        screenFrame = [[screens objectAtIndex:0] visibleFrame];
-
-    NSRect windowFrame = [BLCalendarFramer frameForPosition:self.windowPosition inFrame:screenFrame size:windowSize];
+    NSRect windowFrame = [self windowFrame];
     NSDisableScreenUpdates();
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
     [CATransaction setCompletionBlock:^(void) {
-        [window displayIfNeeded];
         NSEnableScreenUpdates();
+        [window displayIfNeeded];
     }];
     [window setFrame:windowFrame display:NO];
     [self _applyWindowSizeToViews];

@@ -234,7 +234,7 @@
 						<int key="NSvFlags">274</int>
 						<string key="NSFrame">{{20, 19}, {483, 224}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
-						<string key="NSClassName">WLCalendarWindowPositionControl</string>
+						<string key="NSClassName">WLCalendarWindowArrangement</string>
 					</object>
 				</object>
 				<string key="NSFrameSize">{523, 355}</string>

@@ -7,7 +7,7 @@
 //
 
 #import "WLCalendarWindow.h"
-#import "WLCalendarWindowFrameView.h"
+#import "WLCalendarWindowBackgroundView.h"
 #import "NSColor+WLCalendar.h"
 
 
@@ -37,7 +37,7 @@
 
 - (id)init
 {
-    self = [self initWithContentRect:NSMakeRect(0.0f, 0.0f, 0.0f, 0.0f)
+    self = [self initWithContentRect:NSZeroRect
                            styleMask:NSBorderlessWindowMask
                              backing:NSBackingStoreBuffered
                                defer:NO];
@@ -78,15 +78,15 @@
 - (NSRect)frameRectForContentRect:(NSRect)aWindowContentRect
 {
 	return NSInsetRect(aWindowContentRect,
-                       -[WLCalendarWindowFrameView borderWidth],
-                       -[WLCalendarWindowFrameView borderWidth]);
+                       -[WLCalendarWindowBackgroundView borderWidth],
+                       -[WLCalendarWindowBackgroundView borderWidth]);
 }
 
 - (NSRect)contentRectForFrameRect:(NSRect)aWindowFrame
 {
 	return NSInsetRect(aWindowFrame,
-                       [WLCalendarWindowFrameView borderWidth],
-                       [WLCalendarWindowFrameView borderWidth]);
+                       [WLCalendarWindowBackgroundView borderWidth],
+                       [WLCalendarWindowBackgroundView borderWidth]);
 }
 
 - (BOOL)canBecomeKeyWindow
@@ -106,10 +106,10 @@
         NSRect bounds = [self frame];
         bounds.origin = NSZeroPoint;
 
-        WLCalendarWindowFrameView *frameView = [super contentView];
+        WLCalendarWindowBackgroundView *frameView = [super contentView];
         if (frameView == nil)
         {
-            frameView = [[[WLCalendarWindowFrameView alloc] initWithFrame:bounds] autorelease];
+            frameView = [[[WLCalendarWindowBackgroundView alloc] initWithFrame:bounds] autorelease];
             [super setContentView:frameView];
         }
 

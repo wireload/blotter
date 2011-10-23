@@ -611,13 +611,7 @@ float ToolbarHeightForWindow(NSWindow *window)
                                                                                 preferredPaneViewFrameSize.width,
                                                                                 preferredPaneViewFrameSize.height)];
         newWindowFrame.origin.y += oldWindowFrame.size.height - newWindowFrame.size.height;
-//        [[prefsWindow contentView] setPostsFrameChangedNotifications:NO];
-//        [NSAnimationContext beginGrouping];
         [prefsWindow setFrame:newWindowFrame display:YES animate:YES];
-//        [[NSAnimationContext currentContext] setCompletionHandler:^{
-//            [[prefsWindow contentView] setPostsFrameChangedNotifications:YES];
-//        }];
-//        [NSAnimationContext endGrouping];
     }
 }
 

@@ -60,7 +60,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (void)dealloc
 {
-    [windowController release];
+    [calendarWindowController release];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults removeObserver:self forKeyPath:@"ShowInMenuBar"];
     [userDefaults removeObserver:self forKeyPath:@"shortcutNewEvent"];
@@ -71,7 +71,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 
 #pragma mark Properties
-@synthesize windowController;
+@synthesize calendarWindowController;
 
 
 #pragma mark Methodsj
@@ -180,13 +180,13 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (void)menuWillOpen:(NSMenu *)aMenu
 {
-    [[windowController fadeController] fadeIn];
+    [[calendarWindowController fadeController] fadeIn];
 }
 
 - (void)menuDidClose:(NSMenu *)aMenu
 {
     if ([self isOnlyCalendarWindowVisible])
-        [self.windowController.fadeController scheduleFadeOutTimer];
+        [self.calendarWindowController.fadeController scheduleFadeOutTimer];
 }
 
 
@@ -244,20 +244,8 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillClose:) name:NSWindowWillCloseNotification object:nil];
 
-    windowController = [[WLCalendarWindowController alloc] init];
-    [windowController bind:@"windowSize"
-                  toObject:userDefaults
-               withKeyPath:@"CalendarSize"
-                   options:nil];
-    [windowController bind:@"windowPosition"
-                  toObject:userDefaults
-               withKeyPath:@"CalendarPosition"
-                   options:nil];
-    [windowController bind:@"windowScreenIdentifier"
-                  toObject:userDefaults
-               withKeyPath:@"ScreenIdentifier"
-                   options:nil];
-    [windowController showWindow:self];
+    calendarWindowController = [[WLCalendarWindowController alloc] init];
+    [calendarWindowController showWindow:self];
     
     // Show preferences at first start.
     if ([userDefaults boolForKey:@"ShowPreferencesAtStartUp"])
@@ -269,7 +257,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (void)applicationDidBecomeActive:(NSNotification *)aNotification
 {
-    [self.windowController.fadeController fadeIn];
+    [self.calendarWindowController.fadeController fadeIn];
     
     if ([self isOnlyCalendarWindowVisible])
         [NSApp hide:self];
@@ -277,7 +265,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (void)applicationDidResignActive:(NSNotification *)aNotification
 {
-    [self.windowController.fadeController scheduleFadeOutTimer];
+    [self.calendarWindowController.fadeController scheduleFadeOutTimer];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)anApplication hasVisibleWindows:(BOOL)aFlag

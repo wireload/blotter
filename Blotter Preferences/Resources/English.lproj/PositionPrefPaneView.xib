@@ -47,6 +47,16 @@
 				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
+					<object class="NSCustomView" id="238193824">
+						<reference key="NSNextResponder" ref="453662770"/>
+						<int key="NSvFlags">274</int>
+						<string key="NSFrame">{{20, 20}, {400, 224}}</string>
+						<reference key="NSSuperview" ref="453662770"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
+						<string key="NSReuseIdentifierKey">_NS:1192</string>
+						<string key="NSClassName">WLCalendarWindowArrangement</string>
+					</object>
 					<object class="NSPopUpButton" id="738986184">
 						<reference key="NSNextResponder" ref="453662770"/>
 						<int key="NSvFlags">268</int>
@@ -236,7 +246,7 @@
 						<string key="NSFrame">{{17, 252}, {359, 17}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="827254361"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="262417130">
 							<int key="NSCellFlags">68288064</int>
@@ -247,15 +257,6 @@
 							<reference key="NSBackgroundColor" ref="48242679"/>
 							<reference key="NSTextColor" ref="300560464"/>
 						</object>
-					</object>
-					<object class="NSCustomView" id="827254361">
-						<reference key="NSNextResponder" ref="453662770"/>
-						<int key="NSvFlags">274</int>
-						<string key="NSFrame">{{20, 20}, {400, 224}}</string>
-						<reference key="NSSuperview" ref="453662770"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
-						<string key="NSClassName">WLCalendarWindowPositionControl</string>
 					</object>
 				</object>
 				<string key="NSFrameSize">{440, 356}</string>
@@ -297,19 +298,19 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">_positionView</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="827254361"/>
-					</object>
-					<int key="connectionID">136</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">_screensController</string>
 						<reference key="source" ref="1001"/>
 						<reference key="destination" ref="388316468"/>
 					</object>
 					<int key="connectionID">137</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_positionView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="238193824"/>
+					</object>
+					<int key="connectionID">140</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -425,6 +426,14 @@
 					</object>
 					<int key="connectionID">132</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="238193824"/>
+						<reference key="destination" ref="1001"/>
+					</object>
+					<int key="connectionID">141</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -460,20 +469,15 @@
 						<reference key="object" ref="453662770"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="827254361"/>
 							<reference ref="437884597"/>
 							<reference ref="138711095"/>
 							<reference ref="551017980"/>
 							<reference ref="219358551"/>
 							<reference ref="738986184"/>
+							<reference ref="238193824"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Position View</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">3</int>
-						<reference key="object" ref="827254361"/>
-						<reference key="parent" ref="453662770"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">4</int>
@@ -603,6 +607,11 @@
 						<reference key="object" ref="310524277"/>
 						<reference key="parent" ref="514710584"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">139</int>
+						<reference key="object" ref="238193824"/>
+						<reference key="parent" ref="453662770"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -618,10 +627,10 @@
 					<string>12.IBPluginDependency</string>
 					<string>13.IBPluginDependency</string>
 					<string>133.IBPluginDependency</string>
+					<string>139.IBPluginDependency</string>
 					<string>14.IBPluginDependency</string>
 					<string>15.IBPluginDependency</string>
 					<string>25.IBPluginDependency</string>
-					<string>3.IBPluginDependency</string>
 					<string>34.IBPluginDependency</string>
 					<string>35.IBPluginDependency</string>
 					<string>4.IBPluginDependency</string>
@@ -680,7 +689,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">138</int>
+			<int key="maxID">141</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -699,7 +708,7 @@
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>WLPrefPaneView</string>
-							<string>WLCalendarWindowPositionControl</string>
+							<string>WLCalendarWindowArrangement</string>
 							<string>NSArrayController</string>
 						</object>
 					</object>
@@ -719,7 +728,7 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">_positionView</string>
-								<string key="candidateClassName">WLCalendarWindowPositionControl</string>
+								<string key="candidateClassName">WLCalendarWindowArrangement</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">_screensController</string>
@@ -733,11 +742,22 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">WLCalendarWindowPositionControl</string>
-					<string key="superclassName">NSControl</string>
+					<string key="className">WLCalendarWindowArrangement</string>
+					<string key="superclassName">NSView</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">delegate</string>
+						<string key="NS.object.0">NSObject</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">delegate</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">delegate</string>
+							<string key="candidateClassName">NSObject</string>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/WLCalendarWindowPositionControl.h</string>
+						<string key="minorKey">./Classes/WLCalendarWindowArrangement.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

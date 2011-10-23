@@ -10,7 +10,6 @@
 #import "WLLayoutRootView.h"
 #import "DeskboardAppDelegate.h"
 #import "WLCalendarWindowController.h"
-#import "BLCalendarFramer.h"
 #import "WLPrefPaneView.h"
 
 
@@ -37,7 +36,7 @@
     NSURL *defaultsURL = [[NSBundle mainBundle] URLForResource:@"defaults" withExtension:@"plist"];
     NSMutableDictionary *defaults = [NSMutableDictionary dictionaryWithContentsOfURL:defaultsURL];
     DeskboardAppDelegate *delegate = (DeskboardAppDelegate *)[[NSApplication sharedApplication] delegate];
-    [defaults setObject:[NSNumber numberWithFloat:[delegate.windowController defaultTasksViewHeight]]
+    [defaults setObject:[NSNumber numberWithFloat:[delegate.calendarWindowController defaultTasksViewHeight]]
                  forKey:@"TasksViewHeight"];
     [self layoutSplitViewWithParameters:defaults];
 }
@@ -84,7 +83,7 @@
     
     NSRect layoutViewFrame = [_layoutView frame];
     DeskboardAppDelegate *delegate = (DeskboardAppDelegate *)[[NSApplication sharedApplication] delegate];
-    NSRect blotterViewFrame = [[delegate.windowController.window contentView] frame];
+    NSRect blotterViewFrame = [[delegate.calendarWindowController.window contentView] frame];
     // All split views have the same divider thickness.
     CGFloat dividerThickness = [_infoWidthSplitView dividerThickness];
     // _infoWidthSplitViewa and _allDayHeightSplitView have only 1 divider.
@@ -117,7 +116,7 @@
             [[NSNotificationCenter defaultCenter] addObserver:self
                                                      selector:@selector(transformsDidChanged)
                                                          name:NSWindowDidResizeNotification
-                                                       object:delegate.windowController.window];
+                                                       object:delegate.calendarWindowController.window];
         }
     }
     return _mainView;

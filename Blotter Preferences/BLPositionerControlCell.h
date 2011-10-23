@@ -7,11 +7,17 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "WLCalendarWindowController.h"
 
-#import "BLCalendarFramer.h"
 
+/*!
+ @discussion    Represented object should be set to any object that responds to CalendarPosition and CustomCalendarFrame keys.
+ */
 @interface BLPositionerControlCell : NSActionCell {
     NSImage *backgroundImage;
+    BLPosition calendarWindowPosition;
+    BLSize calendarWindowSize;
+    NSRect customFrame;
 
     BOOL    isDragging;
     NSPoint dragStart;
@@ -19,7 +25,17 @@
     int     dragDropPosition;
 }
 
+@property (copy) NSImage *backgroundImage;
+
+@property BLPosition calendarWindowPosition;
+
+@property BLSize calendarWindowSize;
+
+@property NSRect customCalendarWindowFrame;
+
+
 - (NSRect)rectForPosition:(BLPosition)aPosition;
+
 - (NSRect)selectedRect;
 
 @end
