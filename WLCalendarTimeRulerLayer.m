@@ -8,7 +8,7 @@
 
 #import "WLCalendarTimeRulerLayer.h"
 #import "NSColor+CGColor.h"
-#import "CoreAnimation+WLCalendar.h"
+#import "CATransaction+WLBlocks.h"
 #import "NSColor+WLCalendar.h"
 #import "NSFont+WLCalendar.h"
 

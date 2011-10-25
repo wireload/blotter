@@ -21,9 +21,6 @@ const NSSize BLNarrowMinimumSize = {290, 750};
 const NSSize BLNormalMinimumSize = {950, 750};
 
 
-NSString* const WLCalendarWindowFrameDidChangeNotification = @"WLCalendarWindowFrameDidChangeNotification";
-
-
 @implementation WLCalendarWindowController
 
 - (id)init
@@ -64,10 +61,11 @@ NSString* const WLCalendarWindowFrameDidChangeNotification = @"WLCalendarWindowF
 
         _dateViewController = [[WLCalendarDateViewController alloc] init];
         [_dateViewController setRepresentedObject:[WLCalendarController sharedController]];
-        
+
         [defaults addObserver:self forKeyPath:@"CalendarSize" options:NSKeyValueObservingOptionNew context:NULL];
         [defaults addObserver:self forKeyPath:@"CalendarPosition" options:NSKeyValueObservingOptionNew context:NULL];
         [defaults addObserver:self forKeyPath:@"ScreenIdentifier" options:NSKeyValueObservingOptionNew context:NULL];
+        [defaults addObserver:self forKeyPath:@"CustomFrameFactors" options:NSKeyValueObservingOptionNew context:NULL];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(_screensDidChange)
                                                      name:NSApplicationDidChangeScreenParametersNotification
@@ -90,7 +88,7 @@ NSString* const WLCalendarWindowFrameDidChangeNotification = @"WLCalendarWindowF
     [_rightNowViewBox release];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];    
+    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObserver:self forKeyPath:@"InfoViewsWidth"];
     [defaults removeObserver:self forKeyPath:@"DateViewHeight"];
@@ -99,6 +97,7 @@ NSString* const WLCalendarWindowFrameDidChangeNotification = @"WLCalendarWindowF
     [defaults removeObserver:self forKeyPath:@"CalendarSize"];
     [defaults removeObserver:self forKeyPath:@"CalendarPosition"];
     [defaults removeObserver:self forKeyPath:@"ScreenIdentifier"];
+    [defaults removeObserver:self forKeyPath:@"CustomFrameFactors"];
     [super dealloc];
 }
 
@@ -137,16 +136,6 @@ NSString* const WLCalendarWindowFrameDidChangeNotification = @"WLCalendarWindowF
 }
 
 
-#pragma mark Private
-
-- (void)_screensDidChange
-{
-    if (_isWindowShowed)
-        [self _updateFrame];
-    [[NSNotificationCenter defaultCenter] postNotificationName:WLCalendarWindowFrameDidChangeNotification object:self];
-}
-
-
 #pragma mark NSObject
 
 - (void)observeValueForKeyPath:(NSString *)aKeyPath ofObject:(id)anObject change:(NSDictionary *)aChange context:(void *)aContext
@@ -160,12 +149,17 @@ NSString* const WLCalendarWindowFrameDidChangeNotification = @"WLCalendarWindowF
         [self performSelector:@selector(_updateFrame) withObject:nil afterDelay:0.0];
     }
     else if ([aKeyPath isEqualToString:@"CalendarSize"] ||
-        [aKeyPath isEqualToString:@"CalendarPosition"] ||
-        [aKeyPath isEqualToString:@"ScreenIdentifier"])
+             [aKeyPath isEqualToString:@"CalendarPosition"] ||
+             [aKeyPath isEqualToString:@"ScreenIdentifier"] ||
+             [aKeyPath isEqualToString:@"CustomFrameFactors"])
     {
-        if (_isWindowShowed)
-            [self _updateFrame];
-        [[NSNotificationCenter defaultCenter] postNotificationName:WLCalendarWindowFrameDidChangeNotification object:self];
+        BLSize calendarSize = [[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"];
+        if (![aKeyPath isEqualToString:@"CustomFrameFactors"] ||
+            ([aKeyPath isEqualToString:@"CustomFrameFactors"] && calendarSize == BLCustomSize))
+        {
+            if (_isWindowShowed)
+                [self _updateFrame];
+        }
     }
     else
         [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];
@@ -188,58 +182,71 @@ NSString* const WLCalendarWindowFrameDidChangeNotification = @"WLCalendarWindowF
 {
     if (aScreen == nil)
         return NSZeroRect;
-    static const NSSize Margin = {.width = 14.0f, .height = 14.0f};
+
     NSRect screenFrame = [aScreen visibleFrame];
-    
     NSRect windowFrame = NSZeroRect;
-    NSSize fullScreenSizeWithMargin = NSMakeSize(screenFrame.size.width - Margin.width * 2,
-                                                 screenFrame.size.height - Margin.height * 2);
-    switch (aSize) {
-        case BLNarrowSize:
-            windowFrame.size.width = BLNarrowMinimumSize.width;
-            windowFrame.size.height = fminf(BLNarrowMinimumSize.height, fullScreenSizeWithMargin.height);
-            break;
-        case BLNormalSize:
-            windowFrame.size.width = fmaxf(BLNormalMinimumSize.width, screenFrame.size.width / 2);
-            windowFrame.size.height = fminf(fmaxf(BLNormalMinimumSize.height, screenFrame.size.height / 2), fullScreenSizeWithMargin.height);
-            break;
-        case BLFullSize:
-            windowFrame.size = fullScreenSizeWithMargin;
-            break;
-    }
-    
-    CGFloat px = Margin.width;
-    CGFloat py = Margin.height;
-    
-    if (aPosition == BLPositionTopCenter ||
-        aPosition == BLPositionCenterCenter ||
-        aPosition == BLPositionBottomCenter)
+    if (aSize != BLCustomSize)
     {
-        px = floor(screenFrame.size.width / 2.0 - windowFrame.size.width / 2.0);
+        static const NSSize Margin = {.width = 14.0f, .height = 14.0f};
+        NSSize fullScreenSizeWithMargin = NSMakeSize(screenFrame.size.width - Margin.width * 2,
+                                                     screenFrame.size.height - Margin.height * 2);
+        switch (aSize) {
+            case BLNarrowSize:
+                windowFrame.size.width = BLNarrowMinimumSize.width;
+                windowFrame.size.height = fminf(BLNarrowMinimumSize.height, fullScreenSizeWithMargin.height);
+                break;
+            case BLNormalSize:
+                windowFrame.size.width = fmaxf(BLNormalMinimumSize.width, screenFrame.size.width / 2);
+                windowFrame.size.height = fminf(fmaxf(BLNormalMinimumSize.height, screenFrame.size.height / 2), fullScreenSizeWithMargin.height);
+                break;
+            case BLFullSize:
+                windowFrame.size = fullScreenSizeWithMargin;
+                break;
+            default:
+                break;
+        }
+
+        CGFloat px = Margin.width;
+        CGFloat py = Margin.height;
+
+        if (aPosition == BLPositionTopCenter ||
+            aPosition == BLPositionCenterCenter ||
+            aPosition == BLPositionBottomCenter)
+        {
+            px = floor(screenFrame.size.width / 2.0 - windowFrame.size.width / 2.0);
+        }
+
+        if (aPosition == BLPositionTopRight ||
+            aPosition == BLPositionCenterRight ||
+            aPosition == BLPositionBottomRight)
+        {
+            px = screenFrame.size.width - windowFrame.size.width - Margin.width;
+        }
+
+        if (aPosition == BLPositionTopLeft ||
+            aPosition == BLPositionTopCenter ||
+            aPosition == BLPositionTopRight)
+        {
+            py = screenFrame.size.height - windowFrame.size.height - Margin.height;
+        }
+
+        if (aPosition == BLPositionCenterLeft ||
+            aPosition == BLPositionCenterCenter ||
+            aPosition == BLPositionCenterRight)
+        {
+            py = screenFrame.size.height / 2.0 - windowFrame.size.height / 2.0;
+        }
+        windowFrame.origin = NSMakePoint(screenFrame.origin.x + px, screenFrame.origin.y + py);
     }
-    
-    if (aPosition == BLPositionTopRight ||
-        aPosition == BLPositionCenterRight ||
-        aPosition == BLPositionBottomRight)
+    else
     {
-        px = screenFrame.size.width - windowFrame.size.width - Margin.width;
+        NSRect customFrameFactos = NSRectFromString([[NSUserDefaults standardUserDefaults] stringForKey:@"CustomFrameFactors"]);
+        windowFrame = NSMakeRect(screenFrame.origin.x + customFrameFactos.origin.x * screenFrame.size.width,
+                                 screenFrame.origin.y + customFrameFactos.origin.y * screenFrame.size.height,
+                                 customFrameFactos.size.width * screenFrame.size.width,
+                                 customFrameFactos.size.height * screenFrame.size.height);
     }
-    
-    if (aPosition == BLPositionTopLeft ||
-        aPosition == BLPositionTopCenter ||
-        aPosition == BLPositionTopRight)
-    {
-        py = screenFrame.size.height - windowFrame.size.height - Margin.height;
-    }
-    
-    if (aPosition == BLPositionCenterLeft ||
-        aPosition == BLPositionCenterCenter ||
-        aPosition == BLPositionCenterRight)
-    {
-        py = screenFrame.size.height / 2.0 - windowFrame.size.height / 2.0;
-    }
-    windowFrame.origin = NSMakePoint(screenFrame.origin.x + px, screenFrame.origin.y + py);
-    
+
     if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
         return NSIntegralRect(windowFrame);
     else
@@ -256,9 +263,9 @@ NSString* const WLCalendarWindowFrameDidChangeNotification = @"WLCalendarWindowF
         if (screenIdentifier != nil)
         {
             index = [screens indexOfObjectPassingTest:^(NSScreen *screen, NSUInteger idx, BOOL *stop)
-                     {
-                         return [[screen valueForKeyPath:@"deviceDescription.NSScreenNumber"] isEqualToNumber:screenIdentifier];
-                     }];
+            {
+                return [[screen valueForKeyPath:@"deviceDescription.NSScreenNumber"] isEqualToNumber:screenIdentifier];
+            }];
         }
         if (index != NSNotFound)
             return [screens objectAtIndex:index];
@@ -287,8 +294,9 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
         case BLNarrowSize:
             [self _applyNarrowSizeToViews];
             break;
+        case BLCustomSize:
         case BLNormalSize:
-            [self _applyNormalSizeToViews];
+            [self _applyNormalOrCustomSizeToViews];
             break;
         case BLFullSize:
             [self _applyFullSizeToViews];
@@ -318,17 +326,17 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     [[_weekViewController view] setHidden:YES];
 }
 
-- (void)_applyNormalSizeToViews
+- (void)_applyNormalOrCustomSizeToViews
 {
     [[_dateViewController view] setFrame:[self dateViewFrame]];
     [[_dateViewController view] setNeedsDisplay:YES];
-    
+
     [_tasksViewBox setFrame:[self tasksViewFrame]];
     [_tasksViewBox setNeedsDisplay:YES];
-    
+
     [_rightNowViewBox setFrame:[self rightNowViewFrame]];
     [_rightNowViewBox setNeedsDisplay:YES];
-    
+
     NSRect weekViewFrame = [self weekViewFrame];
     [_weekViewController view].heightOfAllDayPartOfColumn = [[NSUserDefaults standardUserDefaults] floatForKey:@"AllDayViewHeight"];
     [[_weekViewController view] setFrame:weekViewFrame];
@@ -340,13 +348,13 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
 {
     [[_dateViewController view] setFrame:[self dateViewFrame]];
     [[_dateViewController view] setNeedsDisplay:YES];
-    
+
     [_tasksViewBox setFrame:[self tasksViewFrame]];
     [_tasksViewBox setNeedsDisplay:YES];
-    
+
     [_rightNowViewBox setFrame:[self rightNowViewFrame]];
     [_rightNowViewBox setNeedsDisplay:YES];
-    
+
     NSRect weekViewFrame = [self weekViewFrame];
     [_weekViewController view].heightOfAllDayPartOfColumn = [[NSUserDefaults standardUserDefaults] floatForKey:@"AllDayViewHeight"];
     [[_weekViewController view] setFrame:weekViewFrame];

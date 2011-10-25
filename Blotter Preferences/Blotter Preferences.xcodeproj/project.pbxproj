@@ -12,7 +12,6 @@
 		28B54D7A1283AEEE0037BF53 /* PositionPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54D791283AEEE0037BF53 /* PositionPrefController.m */; };
 		28F6993D129B723900D4BB97 /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */; };
 		28F69A29129C587F00D4BB97 /* WLCalendarWindowArrangement.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69A28129C587F00D4BB97 /* WLCalendarWindowArrangement.m */; };
-		28F69A55129C5EA100D4BB97 /* Recreated-Aqua.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 28F69A54129C5EA100D4BB97 /* Recreated-Aqua.jpg */; };
 		28F69B53129C82E800D4BB97 /* BLPositionerControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69B52129C82E800D4BB97 /* BLPositionerControlCell.m */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		E21BC9C814161EF700A91662 /* LayoutPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E21BC9C714161EF700A91662 /* LayoutPrefPaneView.xib */; };
@@ -31,6 +30,7 @@
 		E2794F9F131A6425008AE1DA /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2794F9E131A6425008AE1DA /* Carbon.framework */; };
 		E28640971305C7C9004CFC9D /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2863FDB1305C741004CFC9D /* IOKit.framework */; };
 		E2A01DB5145459030008BDF2 /* WLCalendarSizeToArrangementModeTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A01DB4145459030008BDF2 /* WLCalendarSizeToArrangementModeTransformer.m */; };
+		E2A01DC61455634C0008BDF2 /* Recreated-Aqua.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2A01DC51455634C0008BDF2 /* Recreated-Aqua.jpg */; };
 		E2B0D2511450268600AA3A40 /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2B0D2451450262B00AA3A40 /* ShortcutRecorder.framework */; };
 		E2B0D2521450268900AA3A40 /* PTHotKey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2B0D2491450262B00AA3A40 /* PTHotKey.framework */; };
 		E2BADDC0134DF2FB00F65E14 /* exclamation.png in Resources */ = {isa = PBXBuildFile; fileRef = E2BADDBF134DF2FB00F65E14 /* exclamation.png */; };
@@ -127,7 +127,6 @@
 		28F6993C129B723900D4BB97 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
 		28F69A27129C587F00D4BB97 /* WLCalendarWindowArrangement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowArrangement.h; sourceTree = "<group>"; };
 		28F69A28129C587F00D4BB97 /* WLCalendarWindowArrangement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindowArrangement.m; sourceTree = "<group>"; };
-		28F69A54129C5EA100D4BB97 /* Recreated-Aqua.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Recreated-Aqua.jpg"; sourceTree = "<group>"; };
 		28F69B51129C82E800D4BB97 /* BLPositionerControlCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLPositionerControlCell.h; sourceTree = "<group>"; };
 		28F69B52129C82E800D4BB97 /* BLPositionerControlCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLPositionerControlCell.m; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* Blotter Preferences_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Blotter Preferences_Prefix.pch"; sourceTree = "<group>"; };
@@ -154,6 +153,7 @@
 		E2435B2714539E080052D9A3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E2435B291453ABD70052D9A3 /* WLBlockLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WLBlockLayer.h; path = ../WLBlockLayer.h; sourceTree = "<group>"; };
 		E2435B2A1453ACDE0052D9A3 /* NSColor+CGColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSColor+CGColor.h"; path = "../NSColor+CGColor.h"; sourceTree = "<group>"; };
+		E2451BD51456D53A001907C6 /* CATransaction+WLBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CATransaction+WLBlocks.h"; path = "../CATransaction+WLBlocks.h"; sourceTree = "<group>"; };
 		E262E5E5142BF83600715C02 /* NSColor+WLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSColor+WLCalendar.h"; path = "../NSColor+WLCalendar.h"; sourceTree = "<group>"; };
 		E262E5E7142C199700715C02 /* WLLayoutBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutBackgroundView.h; sourceTree = "<group>"; };
 		E262E5E8142C199700715C02 /* WLLayoutBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutBackgroundView.m; sourceTree = "<group>"; };
@@ -167,6 +167,7 @@
 		E29ED7AC14220CEF00DB179C /* WLCalendarWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WLCalendarWindowController.h; path = ../WLCalendarWindowController.h; sourceTree = "<group>"; };
 		E2A01DB3145459030008BDF2 /* WLCalendarSizeToArrangementModeTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarSizeToArrangementModeTransformer.h; sourceTree = "<group>"; };
 		E2A01DB4145459030008BDF2 /* WLCalendarSizeToArrangementModeTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarSizeToArrangementModeTransformer.m; sourceTree = "<group>"; };
+		E2A01DC51455634C0008BDF2 /* Recreated-Aqua.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Recreated-Aqua.jpg"; sourceTree = "<group>"; };
 		E2BADDBF134DF2FB00F65E14 /* exclamation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exclamation.png; sourceTree = "<group>"; };
 		E2DC7DDB130810F00065CEAD /* WLScreensController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLScreensController.h; sourceTree = "<group>"; };
 		E2DC7DDC130810F00065CEAD /* WLScreensController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLScreensController.m; sourceTree = "<group>"; };
@@ -254,6 +255,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E2A01DC51455634C0008BDF2 /* Recreated-Aqua.jpg */,
 				E2E8268B1450217A007035E5 /* CalendarsPrefPaneView.xib */,
 				E2E8268D1450217A007035E5 /* GeneralPrefPaneView.xib */,
 				E2E826911450217B007035E5 /* PositionPrefPaneView.xib */,
@@ -266,7 +268,6 @@
 				E2E8267614501BD8007035E5 /* chkbxColormask_10_6.png */,
 				E2E8267714501BD8007035E5 /* chkbxColormask_10_7.png */,
 				E2BADDBF134DF2FB00F65E14 /* exclamation.png */,
-				28F69A54129C5EA100D4BB97 /* Recreated-Aqua.jpg */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 			);
 			path = Resources;
@@ -321,6 +322,7 @@
 		32C88E010371C26100C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				E2451BD51456D53A001907C6 /* CATransaction+WLBlocks.h */,
 				E2435B2A1453ACDE0052D9A3 /* NSColor+CGColor.h */,
 				E2435B291453ABD70052D9A3 /* WLBlockLayer.h */,
 				E2435B13145038CE0052D9A3 /* WLPrefPaneView.h */,
@@ -477,7 +479,6 @@
 			files = (
 				E259D3B21450370A000B2E0C /* chkbxColormask_10_7.png in Resources */,
 				E2E826C5145021D9007035E5 /* Localizable.strings in Resources */,
-				28F69A55129C5EA100D4BB97 /* Recreated-Aqua.jpg in Resources */,
 				E2E826C6145021D9007035E5 /* PositionPrefPaneView.xib in Resources */,
 				E2E826C3145021D9007035E5 /* CalendarsPrefPaneView.xib in Resources */,
 				E2E826C4145021D9007035E5 /* GeneralPrefPaneView.xib in Resources */,
@@ -512,6 +513,7 @@
 				E2E826C4145021D9007035E5 /* GeneralPrefPaneView.xib in Resources */,
 				E2E826C5145021D9007035E5 /* Localizable.strings in Resources */,
 				E2E826C6145021D9007035E5 /* PositionPrefPaneView.xib in Resources */,
+				E2A01DC61455634C0008BDF2 /* Recreated-Aqua.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

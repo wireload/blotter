@@ -10,7 +10,7 @@
 #import "WLCalendarDayEventsLayer.h"
 #import "WLCalendarEventLayer.h"
 #import "NSColor+CGColor.h"
-#import "CoreAnimation+WLCalendar.h"
+#import "CATransaction+WLBlocks.h"
 #import "NSFont+WLCalendar.h"
 
 

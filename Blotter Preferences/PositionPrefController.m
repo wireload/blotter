@@ -15,6 +15,13 @@
 
 @implementation PositionPrefController
 
+- (void)dealloc
+{
+    [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:@"CalendarSize"];
+    [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:@"ScreenIdentifier"];
+    [super dealloc];
+}
+
 #pragma mark SS_PreferencePaneProtocol
 
 - (WLPrefPaneView *)paneView
@@ -23,22 +30,26 @@
     {
         if ([NSBundle loadNibNamed:@"PositionPrefPaneView" owner:self])
         {
-            [_positionView createLayers];
+            [_arrangement createLayers];
             NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"Recreated-Aqua" ofType:@"jpg"];
             NSImage *backgroundImage = [[NSImage alloc] initWithContentsOfFile:path];
-            _positionView.backgroundImage = backgroundImage;
-            [_positionView bind:@"arrangementMode"
+            _arrangement.backgroundImage = backgroundImage;
+            [backgroundImage release];
+            [_arrangement bind:@"arrangementMode"
                        toObject:[NSUserDefaults standardUserDefaults]
                     withKeyPath:@"CalendarSize"
                         options:[NSDictionary dictionaryWithObject:[[[WLCalendarSizeToArrangementModeTransformer alloc] init] autorelease]
                                                             forKey:NSValueTransformerBindingOption]];
-            [backgroundImage release];
+
             _mainView.preferredFrameSize = [_mainView frame].size;
             [_mainView bind:@"preferredFrameSize"
                    toObject:[NSUserDefaults standardUserDefaults]
                 withKeyPath:@"CalendarSize"
                     options:[NSDictionary dictionaryWithObject:[[[WLCalendarSizeToPositionPrefPaneSizeTransformer alloc] initWithDefaultSize:[_mainView frame].size] autorelease]
                                                         forKey:NSValueTransformerBindingOption]];
+
+            [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:@"CalendarSize" options:NSKeyValueObservingOptionNew context:NULL];
+            [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:@"ScreenIdentifier" options:NSKeyValueObservingOptionNew context:NULL];
         }
         else
             NSLog(@"Cannot load PositionPrefPaneView");
@@ -98,13 +109,35 @@
 
 - (NSRect)calendarWindowArrangement:(WLCalendarWindowArrangement *)anArrangement setFrame:(NSRect)aFrame
 {
-//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    NSRect bounds = [anArrangement bounds];
-//    [defaults setObject:[NSValue valueWithRect:NSMakeRect(aFrame.origin.x / bounds.size.width,
-//                                                          aFrame.origin.y / bounds.size.height,
-//                                                          aFrame.size.width / bounds.size.width,
-//                                                          aFrame.size.height / bounds.size.height)]
-//                 forKey:@"CalendarCustomFrame"];
+    NSRect bounds = [anArrangement bounds];
+
+    if (NSMinX(aFrame) < NSMinX(bounds))
+    {
+        aFrame.size.width = fminf(NSWidth(aFrame), NSWidth(bounds));
+        aFrame.origin.x = NSMinX(bounds);
+    }
+    if (NSMaxX(aFrame) > NSMaxX(bounds))
+    {
+        aFrame.size.width = fminf(NSWidth(aFrame), NSWidth(bounds));
+        aFrame.origin.x = NSMaxX(bounds) - NSWidth(aFrame);
+    }
+
+    if (NSMinY(aFrame) < NSMinY(bounds))
+    {
+        aFrame.size.height = fminf(NSHeight(aFrame), NSHeight(bounds));
+        aFrame.origin.y = NSMinY(bounds);
+    }
+    if (NSMaxY(aFrame) > NSMaxY(bounds))
+    {
+        aFrame.size.height = fminf(NSHeight(aFrame), NSHeight(bounds));
+        aFrame.origin.y = NSMaxY(bounds) - NSHeight(aFrame);
+    }
+
+    NSRect customFrameFractos = NSMakeRect(aFrame.origin.x / bounds.size.width,
+                                           aFrame.origin.y / bounds.size.height,
+                                           aFrame.size.width / bounds.size.width,
+                                           aFrame.size.height / bounds.size.height);
+    [[NSUserDefaults standardUserDefaults] setObject:NSStringFromRect(customFrameFractos) forKey:@"CustomFrameFactors"];
     return aFrame;
 }
 
@@ -123,14 +156,28 @@
         // We have to map global screen coordinates to a local one.
         NSRect bounds = [anArrangement bounds];
         windowFrame = NSOffsetRect(windowFrame, -screenFrame.origin.x, -screenFrame.origin.y);
-        NSRect scaledWindowFrame = NSMakeRect(bounds.origin.x + bounds.size.width * windowFrame.origin.x / screenFrame.size.width,
-                                              bounds.origin.y + bounds.size.height * windowFrame.origin.y / screenFrame.size.height,
+        NSRect scaledWindowFrame = NSMakeRect((bounds.origin.x + bounds.size.width) * windowFrame.origin.x / screenFrame.size.width,
+                                              (bounds.origin.y + bounds.size.height) * windowFrame.origin.y / screenFrame.size.height,
                                               bounds.size.width * windowFrame.size.width / screenFrame.size.width,
                                               bounds.size.height * windowFrame.size.height / screenFrame.size.height);
         return NSIntegralRect(scaledWindowFrame);
     }
     else
         return NSZeroRect;
+}
+
+
+#pragma mark NSObject
+
+- (void)observeValueForKeyPath:(NSString *)aKeyPath ofObject:(id)anObject change:(NSDictionary *)aChange context:(void *)aContext
+{
+    if ([aKeyPath isEqualToString:@"CalendarSize"] ||
+        [aKeyPath isEqualToString:@"ScreenIdentifier"])
+    {
+        [[_arrangement layer] setNeedsLayout];
+    }
+    else
+        [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];
 }
 
 @end

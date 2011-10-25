@@ -44,9 +44,6 @@
 
 - (IBAction)showWindow:(id)aSender;
 
-
-- (void)_screensDidChange;
-
 @end
 
 
@@ -74,9 +71,6 @@ typedef enum BLPosition {
 extern NSSize const BLNarrowMinimumSize;
 
 extern NSSize const BLNormalMinimumSize;
-
-
-extern NSString* const WLCalendarWindowFrameDidChangeNotification;
 
 
 @interface WLCalendarWindowController (Frame)
@@ -116,7 +110,7 @@ extern NSString* const WLCalendarWindowFrameDidChangeNotification;
 
 - (void)_applyNarrowSizeToViews;
 
-- (void)_applyNormalSizeToViews;
+- (void)_applyNormalOrCustomSizeToViews;
 
 - (void)_applyFullSizeToViews;
 

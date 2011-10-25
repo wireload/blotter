@@ -43,7 +43,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="453662770">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -52,8 +52,6 @@
 						<int key="NSvFlags">274</int>
 						<string key="NSFrame">{{20, 20}, {400, 224}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:1192</string>
 						<string key="NSClassName">WLCalendarWindowArrangement</string>
 					</object>
@@ -62,7 +60,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{126, 282}, {297, 26}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="437884597"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="769130927">
@@ -105,7 +102,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{18, 288}, {107, 17}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="738986184"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="389274649">
@@ -139,7 +135,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 318}, {107, 17}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="138711095"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="202913726">
@@ -157,7 +152,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{126, 312}, {141, 26}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="219358551"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="608658124">
@@ -245,8 +239,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 252}, {359, 17}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="262417130">
 							<int key="NSCellFlags">68288064</int>
@@ -260,8 +252,6 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{440, 356}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="551017980"/>
 				<string key="NSClassName">WLPrefPaneView</string>
 			</object>
@@ -306,11 +296,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">_positionView</string>
+						<string key="label">_arrangement</string>
 						<reference key="source" ref="1001"/>
 						<reference key="destination" ref="238193824"/>
 					</object>
-					<int key="connectionID">140</int>
+					<int key="connectionID">142</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -689,7 +679,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">141</int>
+			<int key="maxID">142</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

@@ -22,7 +22,7 @@
 		E214525313FF9550009FEEB8 /* WLCalendarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E214525213FF9550009FEEB8 /* WLCalendarController.m */; };
 		E214582C13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E214582B13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m */; };
 		E21A5F451403D2A4000B6634 /* WLCalendarTaskLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E21A5F441403D2A4000B6634 /* WLCalendarTaskLayer.m */; };
-		E221B3A313EC5C2F00F9B392 /* CoreAnimation+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = E221B3A213EC5C2F00F9B392 /* CoreAnimation+WLCalendar.m */; };
+		E221B3A313EC5C2F00F9B392 /* CATransaction+WLBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = E221B3A213EC5C2F00F9B392 /* CATransaction+WLBlocks.m */; };
 		E22C78AB13FFCD9F00EE44C0 /* NSColor+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */; };
 		E23779EF1312AD6000F46E7D /* WLClosableWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E23779D71312AD6000F46E7D /* WLClosableWindow.m */; };
 		E23F746F14434DE40055D6CE /* WLHourRange.m in Sources */ = {isa = PBXBuildFile; fileRef = E23F746E14434DE40055D6CE /* WLHourRange.m */; };
@@ -271,8 +271,8 @@
 		E214582B13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarBackgroundLayer.m; sourceTree = "<group>"; };
 		E21A5F431403D2A4000B6634 /* WLCalendarTaskLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTaskLayer.h; sourceTree = "<group>"; };
 		E21A5F441403D2A4000B6634 /* WLCalendarTaskLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarTaskLayer.m; sourceTree = "<group>"; };
-		E221B3A113EC5C2F00F9B392 /* CoreAnimation+WLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreAnimation+WLCalendar.h"; sourceTree = "<group>"; };
-		E221B3A213EC5C2F00F9B392 /* CoreAnimation+WLCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CoreAnimation+WLCalendar.m"; sourceTree = "<group>"; };
+		E221B3A113EC5C2F00F9B392 /* CATransaction+WLBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CATransaction+WLBlocks.h"; sourceTree = "<group>"; };
+		E221B3A213EC5C2F00F9B392 /* CATransaction+WLBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CATransaction+WLBlocks.m"; sourceTree = "<group>"; };
 		E22C78A913FFCD9F00EE44C0 /* NSColor+WLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+WLCalendar.h"; sourceTree = "<group>"; };
 		E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+WLCalendar.m"; sourceTree = "<group>"; };
 		E23779D61312AD6000F46E7D /* WLClosableWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLClosableWindow.h; sourceTree = "<group>"; };
@@ -490,6 +490,8 @@
 				E27936431324F6BD00BC5224 /* WLGlassHud */,
 				E2D6488C1441060F00A03FAD /* IKPowerSources.h */,
 				E2D6488D1441060F00A03FAD /* IKPowerSources.m */,
+				E221B3A113EC5C2F00F9B392 /* CATransaction+WLBlocks.h */,
+				E221B3A213EC5C2F00F9B392 /* CATransaction+WLBlocks.m */,
 				256AC3D80F4B6AC300CF3369 /* DeskboardAppDelegate.h */,
 				256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */,
 				E27313C31349F41200A84433 /* PTHotKey+ShortcutRecorder.h */,
@@ -665,8 +667,6 @@
 				E214582B13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m */,
 				E2678ACF14050FCE00ABB89B /* WLCalendarTimeRulerLabelLayer.h */,
 				E2678AD014050FCE00ABB89B /* WLCalendarTimeRulerLabelLayer.m */,
-				E221B3A113EC5C2F00F9B392 /* CoreAnimation+WLCalendar.h */,
-				E221B3A213EC5C2F00F9B392 /* CoreAnimation+WLCalendar.m */,
 				E22C78A913FFCD9F00EE44C0 /* NSColor+WLCalendar.h */,
 				E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */,
 				E286C00114068703008C0CDB /* NSFont+WLCalendar.h */,
@@ -1083,7 +1083,7 @@
 				E2F1133D13E70B4F001C2B7B /* WLCalendarWindowController.m in Sources */,
 				E2FCE09D133F9264006E7141 /* WLCalendarTimeIndicatorLayer.m in Sources */,
 				E292D7E013E9DCEA00433262 /* WLCalendarWindowBackgroundView.m in Sources */,
-				E221B3A313EC5C2F00F9B392 /* CoreAnimation+WLCalendar.m in Sources */,
+				E221B3A313EC5C2F00F9B392 /* CATransaction+WLBlocks.m in Sources */,
 				E2A701ED13EFE4C500A4BF3A /* WLCalendarDateView.m in Sources */,
 				E2A7085E13F0427800A4BF3A /* WLCalendarDateViewController.m in Sources */,
 				E214525313FF9550009FEEB8 /* WLCalendarController.m in Sources */,

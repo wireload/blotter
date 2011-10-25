@@ -1,5 +1,5 @@
 //
-//  CoreAnimation+WLCalendar.h
+//  CoreAnimation+WLBlocks.h
 //  Blotter
 //
 //  Created by Ilya Kulakov on 04.08.11.
@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 
-@interface CATransaction (WLCalendar)
+@interface CATransaction (WLBlocks)
 
 + (void)WL_performWithDisabledActions:(void (^)(void))aBlock;
 

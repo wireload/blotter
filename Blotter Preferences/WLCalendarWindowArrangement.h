@@ -35,7 +35,7 @@ typedef enum {
 @interface WLCalendarWindowArrangement : NSView /*<CALayerDelegate, CALayoutManager>*/ {
     NSInteger arrangementMode;
     IBOutlet NSObject<WLCalendarWindowArrangementDelegate> *delegate;
-    
+
     CALayer *_imageLayer;
     CALayer *_navigationLayer;
     CALayer *_calendarWindowLayer;
@@ -50,6 +50,8 @@ typedef enum {
 @property (nonatomic, copy) NSImage *backgroundImage;
 
 @property (nonatomic) NSInteger arrangementMode;
+
+@property (nonatomic) NSSize edgeSize;
 
 @property (assign) NSObject<WLCalendarWindowArrangementDelegate> *delegate;
 

@@ -12,11 +12,13 @@
 
 @class WLPrefPaneView;
 
+@class WLScreensController;
+
 
 @interface PositionPrefController : NSObject <SS_PreferencePaneProtocol, WLCalendarWindowArrangementDelegate> {
     IBOutlet WLPrefPaneView *_mainView;
-    IBOutlet WLCalendarWindowArrangement *_positionView;
-    IBOutlet NSArrayController *_screensController;
+    IBOutlet WLCalendarWindowArrangement *_arrangement;
+    IBOutlet WLScreensController *_screensController;
 }
 
 @end

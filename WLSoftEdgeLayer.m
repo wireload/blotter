@@ -8,7 +8,7 @@
 
 #import "WLSoftEdgeLayer.h"
 #import "NSColor+CGColor.h"
-#import "CoreAnimation+WLCalendar.h"
+#import "CATransaction+WLBlocks.h"
 
 
 static NSString* const _WLTopEdgeLayerKey = @"top";

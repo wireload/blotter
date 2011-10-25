@@ -6,10 +6,10 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
-#import "CoreAnimation+WLCalendar.h"
+#import "CATransaction+WLBlocks.h"
 
 
-@implementation CATransaction (WLCalendar)
+@implementation CATransaction (WLBlocks)
 
 + (void)WL_performWithDisabledActions:(void (^)(void))aBlock
 {
