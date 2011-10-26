@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		280A24DB14588519001B82C8 /* Layout-Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 280A24DA14588519001B82C8 /* Layout-Icon.png */; };
 		283A5EE61306CDA2006B916A /* WLCountGreaterThanOneTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 283A5EE51306CDA2006B916A /* WLCountGreaterThanOneTransformer.m */; };
 		28B54D5E12839B8D0037BF53 /* GeneralPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54D5D12839B8D0037BF53 /* GeneralPrefController.m */; };
 		28B54D7A1283AEEE0037BF53 /* PositionPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54D791283AEEE0037BF53 /* PositionPrefController.m */; };
@@ -116,6 +117,7 @@
 
 /* Begin PBXFileReference section */
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		280A24DA14588519001B82C8 /* Layout-Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Layout-Icon.png"; sourceTree = "<group>"; };
 		283A5EE41306CDA2006B916A /* WLCountGreaterThanOneTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCountGreaterThanOneTransformer.h; sourceTree = "<group>"; };
 		283A5EE51306CDA2006B916A /* WLCountGreaterThanOneTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCountGreaterThanOneTransformer.m; sourceTree = "<group>"; };
 		28B54D52128398250037BF53 /* SS_PreferencePaneProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SS_PreferencePaneProtocol.h; path = ../SS_PreferencePaneProtocol.h; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				280A24DA14588519001B82C8 /* Layout-Icon.png */,
 				E2A01DC51455634C0008BDF2 /* Recreated-Aqua.jpg */,
 				E2E8268B1450217A007035E5 /* CalendarsPrefPaneView.xib */,
 				E2E8268D1450217A007035E5 /* GeneralPrefPaneView.xib */,
@@ -514,6 +517,7 @@
 				E2E826C5145021D9007035E5 /* Localizable.strings in Resources */,
 				E2E826C6145021D9007035E5 /* PositionPrefPaneView.xib in Resources */,
 				E2A01DC61455634C0008BDF2 /* Recreated-Aqua.jpg in Resources */,
+				280A24DB14588519001B82C8 /* Layout-Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
