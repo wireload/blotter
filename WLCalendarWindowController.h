@@ -76,7 +76,7 @@ extern NSSize const BLNormalMinimumSize;
 @interface WLCalendarWindowController (Frame)
 
 /*!
- @abstract  Returns frame of the calendar window on the window screen in device pixel-aligned screen coordinates.
+ @abstract  Returns frame of the calendar window on the window screen's visible frame in device pixel-aligned screen coordinates.
  @result    If it's impossible to calculate frame, returns NSZeroRect.
  @see       windowFrameOnScreen:withPosition:size:margin:
  @see       windowScreen

@@ -48,7 +48,9 @@
                     options:[NSDictionary dictionaryWithObject:[[[WLCalendarSizeToPositionPrefPaneSizeTransformer alloc] initWithDefaultSize:[_mainView frame].size] autorelease]
                                                         forKey:NSValueTransformerBindingOption]];
 
-            [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:@"CalendarSize" options:NSKeyValueObservingOptionNew context:NULL];
+            [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:@"CalendarSize"
+                                                       options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionPrior
+                                                       context:NULL];
             [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:@"ScreenIdentifier" options:NSKeyValueObservingOptionNew context:NULL];
         }
         else
@@ -171,11 +173,26 @@
 
 - (void)observeValueForKeyPath:(NSString *)aKeyPath ofObject:(id)anObject change:(NSDictionary *)aChange context:(void *)aContext
 {
-    if ([aKeyPath isEqualToString:@"CalendarSize"] ||
-        [aKeyPath isEqualToString:@"ScreenIdentifier"])
+    if ([aKeyPath isEqualToString:@"CalendarSize"])
     {
+        BLSize oldSize = [[aChange objectForKey:NSKeyValueChangeOldKey] integerValue];
+        if ([[aChange objectForKey:NSKeyValueChangeNotificationIsPriorKey] boolValue] && oldSize != BLCustomSize)
+        {
+            BLPosition position = [[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarPosition"];
+            DeskboardAppDelegate *appDelegate = [NSApp delegate];
+            NSScreen *screen = [appDelegate.calendarWindowController windowScreen];
+            NSRect windowFrame = [appDelegate.calendarWindowController windowFrameOnScreen:screen withPosition:position size:oldSize];
+            NSRect screenFrame = [screen visibleFrame];
+            NSRect customFrameFractos = NSMakeRect(windowFrame.origin.x / screenFrame.size.width,
+                                                   windowFrame.origin.y / screenFrame.size.height,
+                                                   windowFrame.size.width / screenFrame.size.width,
+                                                   windowFrame.size.height / screenFrame.size.height);
+            [[NSUserDefaults standardUserDefaults] setObject:NSStringFromRect(customFrameFractos) forKey:@"CustomFrameFactors"];
+        }
         [[_arrangement layer] setNeedsLayout];
     }
+    else if ([aKeyPath isEqualToString:@"ScreenIdentifier"])
+        [[_arrangement layer] setNeedsLayout];
     else
         [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];
 }

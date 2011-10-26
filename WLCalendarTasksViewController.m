@@ -102,29 +102,30 @@
                 continue;
             }
 
-            // It's important to remove object from data before looking for a new index
+            NSAssert(oldIndex != NSNotFound, @"Index of the removed item must not be NSNotFound at this point: %d", mode);
             if ([[[_tasks objectAtIndex:oldIndex] dateStamp] isEqualToDate:updatedTask.dateStamp])
             {
                 // Task may be already updated because fetchTasksAndReloadViewDataAnimated was called
                 // before iCal tasks notification is processed.
                 continue;
             }
+            // It's important to remove object from data before looking for a new index
             [_tasks removeObjectAtIndex:oldIndex];
             [updatedTask WL_fixPriorityAndDueDate];
             NSUInteger newIndex = [_tasks indexOfObject:updatedTask
                                           inSortedRange:NSMakeRange(0, [_tasks count])
                                                 options:NSBinarySearchingInsertionIndex | NSBinarySearchingFirstEqual
                                         usingComparator:^(id obj1, id obj2)
-                                   {
-                                       NSComparisonResult result = NSOrderedSame;
-                                       for (NSSortDescriptor *descriptor in sortDescriptors)
-                                       {
-                                           result = [descriptor compareObject:obj1 toObject:obj2];
-                                           if (result != NSOrderedSame)
-                                               break;
-                                       }
-                                       return result;
-                                   }];
+            {
+                NSComparisonResult result = NSOrderedSame;
+                for (NSSortDescriptor *descriptor in sortDescriptors)
+                {
+                    result = [descriptor compareObject:obj1 toObject:obj2];
+                    if (result != NSOrderedSame)
+                        break;
+                }
+                return result;
+            }];
             [_tasks insertObject:updatedTask atIndex:newIndex];
             [[self view] moveTaskAtIndex:oldIndex toIndex:newIndex];
             [[self view] updateTaskAtIndex:newIndex];

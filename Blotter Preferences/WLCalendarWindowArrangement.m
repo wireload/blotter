@@ -78,7 +78,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     if (arrangementMode & WLCalendarWindowResizingArrangement)
         _calendarWindowLayer.borderColor = [[NSColor whiteColor] WL_CGColor];
     else
-        _calendarWindowLayer.borderColor = [[[NSColor whiteColor] colorWithAlphaComponent:0.5f] WL_CGColor];
+        _calendarWindowLayer.borderColor = [[NSColor clearColor] WL_CGColor];
     [_navigationLayer setNeedsDisplay];
     [[self layer] setNeedsLayout];
 }
@@ -126,7 +126,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         }
         [CATransaction commit];
     }
-    [_calendarWindowLayer setValue:[NSValue valueWithRect:NSRectFromCGRect(_calendarWindowLayer.frame)] forKey:_WLOriginalFrame];
+    [_calendarWindowLayer setValue:[NSValue valueWithRect:NSIntegralRect(NSRectFromCGRect(_calendarWindowLayer.frame))] forKey:_WLOriginalFrame];
     _navigationLayer.hidden = NO;
 }
 
@@ -179,7 +179,12 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
 - (void)startResizingAtPoint:(NSPoint)aPoint edge:(WLCalendarWindowEdge)anEdge
 {
-    [_calendarWindowLayer setValue:[NSValue valueWithRect:NSRectFromCGRect(_calendarWindowLayer.frame)] forKey:_WLOriginalFrame];
+    NSRect windowFrame = NSRectFromCGRect(_calendarWindowLayer.frame);
+    windowFrame.origin.x = roundf(windowFrame.origin.x / 10.0f) * 10.0f;
+    windowFrame.origin.y = roundf(windowFrame.origin.y / 10.0f) * 10.0f;
+    windowFrame.size.width = roundf(windowFrame.size.width / 10.0f) * 10.0f;
+    windowFrame.size.height = roundf(windowFrame.size.height / 10.0f) * 10.0f;
+    [_calendarWindowLayer setValue:[NSValue valueWithRect:windowFrame] forKey:_WLOriginalFrame];
     switch (anEdge) {
         case WLCalendarWindowTopLeftEdge:
             _calendarWindowLayer.contentsGravity = kCAGravityBottomRight;
@@ -257,14 +262,14 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         newFrame.size.height = roundf(newFrame.size.height / 10.0f) * 10.0f;
 
         // Fix frame
-        if (newFrame.origin.x > CGRectGetMaxX(originalFrame) - _WLMinimumWindowFrameSize.width - 2 * self.edgeSize.width)
+        if (newFrame.origin.x > (CGRectGetMaxX(originalFrame) - _WLMinimumWindowFrameSize.width - 2 * self.edgeSize.width))
             newFrame.origin.x = CGRectGetMaxX(originalFrame) - _WLMinimumWindowFrameSize.width - 2 * self.edgeSize.width;
-        if (newFrame.origin.y > CGRectGetMaxY(originalFrame) - _WLMinimumWindowFrameSize.height - 2 * self.edgeSize.height)
+        if (newFrame.origin.y > (CGRectGetMaxY(originalFrame) - _WLMinimumWindowFrameSize.height - 2 * self.edgeSize.height))
             newFrame.origin.y = CGRectGetMaxY(originalFrame) - _WLMinimumWindowFrameSize.height - 2 * self.edgeSize.height;
-        if (newFrame.size.width < _WLMinimumWindowFrameSize.width - 2 * self.edgeSize.width)
-            newFrame.size.width = _WLMinimumWindowFrameSize.width - 2 * self.edgeSize.width;
-        if (newFrame.size.height < _WLMinimumWindowFrameSize.height - 2 * self.edgeSize.height)
-            newFrame.size.height = _WLMinimumWindowFrameSize.height - 2 * self.edgeSize.height;
+        if (newFrame.size.width < (_WLMinimumWindowFrameSize.width + 2 * self.edgeSize.width))
+            newFrame.size.width = _WLMinimumWindowFrameSize.width + 2 * self.edgeSize.width;
+        if (newFrame.size.height < (_WLMinimumWindowFrameSize.height + 2 * self.edgeSize.height))
+            newFrame.size.height = _WLMinimumWindowFrameSize.height + 2 * self.edgeSize.height;
 
         _calendarWindowLayer.frame = newFrame;
     }];
@@ -423,7 +428,8 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
                 [self startPositioningAtPoint:[self convertPoint:[anEvent locationInWindow] fromView:nil]];
             }
         }
-        else if (self.arrangementMode & WLCalendarWindowPositioningArrangement)
+        else if (self.arrangementMode & WLCalendarWindowPositioningArrangement &&
+                 NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLCenterCenterEdgeFrameKey] rectValue]))
         {
             _isPositioning = YES;
             [self startPositioningAtPoint:[self convertPoint:[anEvent locationInWindow] fromView:nil]];
