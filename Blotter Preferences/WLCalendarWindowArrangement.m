@@ -343,7 +343,6 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
                                              [self bounds].size.width,
                                              [self bounds].size.height - 1);
         }
-        NSLog(@"%d", [self inLiveResize]);
         NSRect windowFrame = [self.delegate windowFrameOfCalendarWindowArrangement:self];
         windowFrame = NSInsetRect(windowFrame, -self.edgeSize.width, -self.edgeSize.height);
         if (self.arrangementMode & WLCalendarWindowResizingArrangement && ![self inLiveResize])
