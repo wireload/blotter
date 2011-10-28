@@ -17,6 +17,7 @@
 {
     [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:@"CalendarSize"];
     [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:@"ScreenIdentifier"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
 
@@ -49,6 +50,10 @@
                                                        options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionPrior
                                                        context:NULL];
             [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:@"ScreenIdentifier" options:NSKeyValueObservingOptionNew context:NULL];
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(updatePreferredFrameSize)
+                                                         name:NSApplicationDidChangeScreenParametersNotification
+                                                       object:NSApp];
         }
         else
             NSLog(@"Cannot load PositionPrefPaneView");
