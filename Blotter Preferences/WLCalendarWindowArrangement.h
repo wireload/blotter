@@ -71,6 +71,8 @@ typedef enum {
 
 - (NSRect)positioningHelperFrameForPosition:(BLPosition)aPosition;
 
+- (NSRect)positionerBounds;
+
 @end
 
 

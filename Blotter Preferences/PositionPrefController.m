@@ -96,7 +96,7 @@
     if (!NSEqualRects(windowFrame, NSZeroRect) && !NSEqualRects(screenFrame, NSZeroRect))
     {
         // We have to map global screen coordinates to a local one.
-        NSRect bounds = [anArrangement bounds];
+        NSRect bounds = [anArrangement positionerBounds];
         windowFrame = NSOffsetRect(windowFrame, -screenFrame.origin.x, -screenFrame.origin.y);
         NSRect scaledWindowFrame = NSMakeRect(bounds.origin.x + bounds.size.width * windowFrame.origin.x / screenFrame.size.width,
                                               bounds.origin.y + bounds.size.height * windowFrame.origin.y / screenFrame.size.height,
@@ -110,7 +110,7 @@
 
 - (NSRect)calendarWindowArrangement:(WLCalendarWindowArrangement *)anArrangement setFrame:(NSRect)aFrame
 {
-    NSRect bounds = [anArrangement bounds];
+    NSRect bounds = [anArrangement positionerBounds];
 
     if (NSMinX(aFrame) < NSMinX(bounds))
     {
@@ -155,7 +155,7 @@
     if (!NSEqualRects(windowFrame, NSZeroRect) && !NSEqualRects(screenFrame, NSZeroRect))
     {
         // We have to map global screen coordinates to a local one.
-        NSRect bounds = [anArrangement bounds];
+        NSRect bounds = [anArrangement positionerBounds];
         windowFrame = NSOffsetRect(windowFrame, -screenFrame.origin.x, -screenFrame.origin.y);
         NSRect scaledWindowFrame = NSMakeRect((bounds.origin.x + bounds.size.width) * windowFrame.origin.x / screenFrame.size.width,
                                               (bounds.origin.y + bounds.size.height) * windowFrame.origin.y / screenFrame.size.height,

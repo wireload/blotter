@@ -100,6 +100,11 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     return [[_calendarWindowLayer valueForKey:_WLEdgeSizeKey] sizeValue];
 }
 
+- (NSRect)positionerBounds
+{
+    return NSRectFromCGRect([recessedLayer bounds]);
+}
+
 
 #pragma mark Methods
 
@@ -538,13 +543,14 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         // The shadow layer draws a semi transparent shine line at the bottom.
         rootLayer.opaque = NO;
         rootLayer.layoutManager = self;
+        rootLayer.masksToBounds = YES;
+        rootLayer.cornerRadius = 1.5;
 
         recessedLayer = [CALayer layer];
         recessedLayer.layoutManager = self;
         recessedLayer.delegate = self;
-        recessedLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
         recessedLayer.masksToBounds = YES;
-        recessedLayer.cornerRadius = 1.0;
+        recessedLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
         recessedLayer.opaque = YES;
         
         _imageLayer = [self setupImageLayer];
@@ -581,7 +587,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     l.contentsGravity = kCAGravityResize;
     l.masksToBounds = YES;
     // This is hardly visible but makes the positioner slightly less sharp edged.
-    l.cornerRadius = 1;
+    l.cornerRadius = 1.25;
     return l;
 }
 
