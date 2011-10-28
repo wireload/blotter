@@ -33,7 +33,6 @@
 		E21BC9E51416396200A91662 /* WLLayoutRightNowView.m in Sources */ = {isa = PBXBuildFile; fileRef = E21BC9E41416396100A91662 /* WLLayoutRightNowView.m */; };
 		E21BC9E81416397D00A91662 /* WLLayoutAllDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = E21BC9E71416397D00A91662 /* WLLayoutAllDayView.m */; };
 		E21BC9EC1416399800A91662 /* WLLayoutDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = E21BC9EB1416399800A91662 /* WLLayoutDayView.m */; };
-		E2435B15145038CE0052D9A3 /* WLCalendarSizeToPositionPrefPaneSizeTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2435B12145038CE0052D9A3 /* WLCalendarSizeToPositionPrefPaneSizeTransformer.m */; };
 		E2435B2814539E090052D9A3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2435B2714539E080052D9A3 /* QuartzCore.framework */; };
 		E259D3B21450370A000B2E0C /* chkbxColormask_10_7.png in Resources */ = {isa = PBXBuildFile; fileRef = E2E8267714501BD8007035E5 /* chkbxColormask_10_7.png */; };
 		E262E5E9142C199800715C02 /* WLLayoutBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = E262E5E8142C199700715C02 /* WLLayoutBackgroundView.m */; };
@@ -169,8 +168,6 @@
 		E21BC9E71416397D00A91662 /* WLLayoutAllDayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutAllDayView.m; sourceTree = "<group>"; };
 		E21BC9EA1416399800A91662 /* WLLayoutDayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutDayView.h; sourceTree = "<group>"; };
 		E21BC9EB1416399800A91662 /* WLLayoutDayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutDayView.m; sourceTree = "<group>"; };
-		E2435B11145038CE0052D9A3 /* WLCalendarSizeToPositionPrefPaneSizeTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarSizeToPositionPrefPaneSizeTransformer.h; sourceTree = "<group>"; };
-		E2435B12145038CE0052D9A3 /* WLCalendarSizeToPositionPrefPaneSizeTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarSizeToPositionPrefPaneSizeTransformer.m; sourceTree = "<group>"; };
 		E2435B13145038CE0052D9A3 /* WLPrefPaneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WLPrefPaneView.h; path = ../WLPrefPaneView.h; sourceTree = "<group>"; };
 		E2435B2714539E080052D9A3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E2435B291453ABD70052D9A3 /* WLBlockLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WLBlockLayer.h; path = ../WLBlockLayer.h; sourceTree = "<group>"; };
@@ -322,8 +319,6 @@
 				E2730E351349BC1000A84433 /* WLRecorderControl.m */,
 				E2FE5EF512D75C7700003E48 /* WLColorCheckboxCell.h */,
 				E2FE5EF612D75C7700003E48 /* WLColorCheckboxCell.m */,
-				E2435B11145038CE0052D9A3 /* WLCalendarSizeToPositionPrefPaneSizeTransformer.h */,
-				E2435B12145038CE0052D9A3 /* WLCalendarSizeToPositionPrefPaneSizeTransformer.m */,
 				280A24E11459EE08001B82C8 /* WLRecessedBoxShadowLayer.h */,
 				280A24E21459EE08001B82C8 /* WLRecessedBoxShadowLayer.m */,
 			);
@@ -582,7 +577,6 @@
 				E21BC9E81416397D00A91662 /* WLLayoutAllDayView.m in Sources */,
 				E21BC9EC1416399800A91662 /* WLLayoutDayView.m in Sources */,
 				E262E5E9142C199800715C02 /* WLLayoutBackgroundView.m in Sources */,
-				E2435B15145038CE0052D9A3 /* WLCalendarSizeToPositionPrefPaneSizeTransformer.m in Sources */,
 				280A24E31459EE08001B82C8 /* WLRecessedBoxShadowLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
