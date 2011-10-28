@@ -69,9 +69,11 @@ typedef enum {
 
 - (void)stopResizingAtPoint:(NSPoint)aPoint edge:(WLCalendarWindowEdge)anEdge;
 
-- (NSRect)positioningHelperFrameForPosition:(BLPosition)aPosition;
+- (NSRect)navigationHelperFrameForPosition:(BLPosition)aPosition;
 
 - (NSRect)positionerBounds;
+
+- (NSRect)alignCalendarWindowFrame:(NSRect)aFrame;
 
 @end
 

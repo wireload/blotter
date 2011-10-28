@@ -34,7 +34,7 @@
 
 - (id)transformedValue:(id)aValue
 {
-    static const NSSize DoubledPositionControlSize = {.width = 840.0f, .height = 580.0f};
+    static const NSSize DoubledPositionControlSize = {.width = 840.0f, .height = 594.0f};
     
     if (aValue != nil)
     {

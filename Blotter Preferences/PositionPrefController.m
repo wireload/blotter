@@ -8,7 +8,6 @@
 
 #import "PositionPrefController.h"
 #import "WLCalendarSizeToPositionPrefPaneSizeTransformer.h"
-#import "WLCalendarSizeToArrangementModeTransformer.h"
 #import "WLPrefPaneView.h"
 #import "DeskboardAppDelegate.h"
 
@@ -35,11 +34,14 @@
             NSImage *backgroundImage = [[NSImage alloc] initWithContentsOfFile:path];
             _arrangement.backgroundImage = backgroundImage;
             [backgroundImage release];
-            [_arrangement bind:@"arrangementMode"
-                       toObject:[NSUserDefaults standardUserDefaults]
-                    withKeyPath:@"CalendarSize"
-                        options:[NSDictionary dictionaryWithObject:[[[WLCalendarSizeToArrangementModeTransformer alloc] init] autorelease]
-                                                            forKey:NSValueTransformerBindingOption]];
+            switch ([[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"]) {
+                case BLCustomSize:
+                    _arrangement.arrangementMode = WLCalendarWindowPositioningArrangement | WLCalendarWindowResizingArrangement;
+                    break;
+                default:
+                    _arrangement.arrangementMode = WLCalendarWindowPositioningArrangement;
+                    break;
+            }
 
             _mainView.preferredFrameSize = [_mainView frame].size;
             [_mainView bind:@"preferredFrameSize"
@@ -102,7 +104,7 @@
                                               bounds.origin.y + bounds.size.height * windowFrame.origin.y / screenFrame.size.height,
                                               bounds.size.width * windowFrame.size.width / screenFrame.size.width,
                                               bounds.size.height * windowFrame.size.height / screenFrame.size.height);
-        return NSIntegralRect(scaledWindowFrame);
+        return [anArrangement centerScanRect:scaledWindowFrame];
     }
     else
         return NSZeroRect;
@@ -175,7 +177,8 @@
     if ([aKeyPath isEqualToString:@"CalendarSize"])
     {
         BLSize oldSize = [[aChange objectForKey:NSKeyValueChangeOldKey] integerValue];
-        if ([[aChange objectForKey:NSKeyValueChangeNotificationIsPriorKey] boolValue] && oldSize != BLCustomSize)
+        BOOL isPrior = [[aChange objectForKey:NSKeyValueChangeNotificationIsPriorKey] boolValue];
+        if (isPrior && oldSize != BLCustomSize)
         {
             BLPosition position = [[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarPosition"];
             DeskboardAppDelegate *appDelegate = [NSApp delegate];
@@ -188,7 +191,18 @@
                                                    windowFrame.size.height / screenFrame.size.height);
             [[NSUserDefaults standardUserDefaults] setObject:NSStringFromRect(customFrameFractos) forKey:@"CustomFrameFactors"];
         }
-        [[_arrangement layer] setNeedsLayout];
+        else if (!isPrior)
+        {
+            switch ([[aChange objectForKey:NSKeyValueChangeNewKey] integerValue]) {
+                case BLCustomSize:
+                    _arrangement.arrangementMode = WLCalendarWindowPositioningArrangement | WLCalendarWindowResizingArrangement;
+                    break;
+                default:
+                    _arrangement.arrangementMode = WLCalendarWindowPositioningArrangement;
+                    break;
+            }
+            [[_arrangement layer] setNeedsLayout];
+        }
     }
     else if ([aKeyPath isEqualToString:@"ScreenIdentifier"])
         [[_arrangement layer] setNeedsLayout];
