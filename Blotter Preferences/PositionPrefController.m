@@ -226,8 +226,8 @@
             NSScreen *screen = [appDelegate.calendarWindowController windowScreen];
             NSRect windowFrame = [appDelegate.calendarWindowController windowFrameOnScreen:screen withPosition:position size:oldSize];
             NSRect screenFrame = [screen visibleFrame];
-            NSRect customFrameFractos = NSMakeRect(windowFrame.origin.x / screenFrame.size.width,
-                                                   windowFrame.origin.y / screenFrame.size.height,
+            NSRect customFrameFractos = NSMakeRect(fabsf(windowFrame.origin.x - screenFrame.origin.x) / screenFrame.size.width,
+                                                   fabsf(windowFrame.origin.y - screenFrame.origin.y) / screenFrame.size.height,
                                                    windowFrame.size.width / screenFrame.size.width,
                                                    windowFrame.size.height / screenFrame.size.height);
             [[NSUserDefaults standardUserDefaults] setObject:NSStringFromRect(customFrameFractos) forKey:@"CustomFrameFactors"];
