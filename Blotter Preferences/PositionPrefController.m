@@ -75,7 +75,6 @@
     return NSLocalizedStringFromTableInBundle(@"Position and Size Preferences", nil, [NSBundle bundleForClass:[self class]], @"Positioning pref pane tooltip");
 }
 
-
 - (BOOL)allowsHorizontalResizing
 {
     return NO;

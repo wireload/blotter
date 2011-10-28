@@ -36,9 +36,11 @@ typedef enum {
     NSInteger arrangementMode;
     IBOutlet NSObject<WLCalendarWindowArrangementDelegate> *delegate;
 
+    CALayer *recessedLayer;
     CALayer *_imageLayer;
     CALayer *_navigationLayer;
     CALayer *_calendarWindowLayer;
+    CALayer *_shadowLayer;
     NSTrackingArea *_navigationHelperAreas[9];
     CALayer *_navigationHelperLayers[9];
     BOOL _isPositioning;
@@ -77,6 +79,8 @@ typedef enum {
 - (void)createLayers;
 
 - (CALayer *)setupImageLayer;
+
+- (CALayer *)setupShadowLayer;
 
 - (CALayer *)setupNavigationLayer;
 

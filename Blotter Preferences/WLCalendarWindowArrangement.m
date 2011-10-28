@@ -10,6 +10,7 @@
 #import "WLBlockLayer.h"
 #import "NSColor+CGColor.h"
 #import "CATransaction+WLBlocks.h"
+#import "WLRecessedBoxShadowLayer.h"
 
 
 static NSString *_WLPositionKey = @"position";
@@ -285,10 +286,10 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
 - (NSRect)positioningHelperFrameForPosition:(BLPosition)aPosition
 {
-    NSRect bounds = [self bounds];
+    NSRect bounds = NSRectFromCGRect(recessedLayer.bounds);
 
-    int width = bounds.size.width - 2;
-    int height = bounds.size.height - 2;
+    int width = bounds.size.width - 3;
+    int height = bounds.size.height - 3;
     int pWidth = width / 3 - 10;
     int pHeight = height / 3 - 10;
 
@@ -322,14 +323,20 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
 - (void)layoutSublayersOfLayer:(CALayer *)aLayer
 {
-    if (aLayer != [self layer])
+    if (_isPositioning || _isResizing)
         return;
-
-    if (!_isPositioning && !_isResizing)
+    
+    if (aLayer == [self layer])
     {
-        _calendarWindowLayer.frame = CGRectIntegral(NSRectToCGRect(NSInsetRect([self.delegate windowFrameOfCalendarWindowArrangement:self],
-                                                                               -self.edgeSize.width,
-                                                                               -self.edgeSize.height)));
+        recessedLayer.frame = CGRectMake(0, 1, [self bounds].size.width, [self bounds].size.height - 1);
+    }
+
+    if (aLayer == [self layer] || aLayer == recessedLayer)
+    {
+        CGRect calendarFrame = CGRectIntegral(NSRectToCGRect(NSInsetRect([self.delegate windowFrameOfCalendarWindowArrangement:self],
+                                                                         -self.edgeSize.width,
+                                                                         -self.edgeSize.height)));
+        _calendarWindowLayer.frame = calendarFrame;
     }
 }
 
@@ -528,14 +535,23 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     if (![self wantsLayer])
     {
         CALayer *rootLayer = [CALayer layer];
-        rootLayer.opaque = YES;
+        // The shadow layer draws a semi transparent shine line at the bottom.
+        rootLayer.opaque = NO;
         rootLayer.layoutManager = self;
-        rootLayer.delegate = self;
+
+        recessedLayer = [CALayer layer];
+        recessedLayer.layoutManager = self;
+        recessedLayer.delegate = self;
+        recessedLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+        recessedLayer.masksToBounds = YES;
+        recessedLayer.cornerRadius = 1.0;
+        recessedLayer.opaque = YES;
+        
         _imageLayer = [self setupImageLayer];
         _imageLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
-
+        
         _navigationLayer = [self setupNavigationLayer];
-        for (NSInteger i=0; i<9; ++i)
+        for (NSInteger i = 0; i < 9; ++i)
         {
             _navigationHelperLayers[i] = [self setupNavigationHelperLayer];
             [_navigationLayer addSublayer:_navigationHelperLayers[i]];
@@ -545,9 +561,14 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         _calendarWindowLayer = [self setupCalendarWindowLayer];
         _calendarWindowLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
 
+        _shadowLayer = [self setupShadowLayer];
+        _shadowLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+
         [_imageLayer addSublayer:_navigationLayer];
-        [rootLayer addSublayer:_imageLayer];
-        [rootLayer addSublayer:_calendarWindowLayer];
+        [recessedLayer addSublayer:_imageLayer];
+        [recessedLayer addSublayer:_calendarWindowLayer];
+        [rootLayer addSublayer:recessedLayer];
+        [rootLayer addSublayer:_shadowLayer];
         [self setLayer:rootLayer];
         [self setWantsLayer:YES];
     }
@@ -558,6 +579,15 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     CALayer *l = [CALayer layer];
     l.opaque = YES;
     l.contentsGravity = kCAGravityResize;
+    l.masksToBounds = YES;
+    // This is hardly visible but makes the positioner slightly less sharp edged.
+    l.cornerRadius = 1;
+    return l;
+}
+
+- (CALayer *)setupShadowLayer {
+    CALayer *l = [WLRecessedBoxShadowLayer layer];
+    l.opaque = NO;
     return l;
 }
 
