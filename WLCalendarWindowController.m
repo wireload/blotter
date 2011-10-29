@@ -20,6 +20,10 @@ const NSSize BLNarrowMinimumSize = {290, 750};
 
 const NSSize BLNormalMinimumSize = {950, 750};
 
+/**
+    This is the overall smallest possible size for Blotter when using custom sizing.
+*/
+const NSSize BLMinimumSize = {280, 215};
 
 @implementation WLCalendarWindowController
 
@@ -471,6 +475,11 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     NSURL *defaultsURL = [[NSBundle mainBundle] URLForResource:@"defaults" withExtension:@"plist"];
     NSDictionary *defaults = [NSDictionary dictionaryWithContentsOfURL:defaultsURL];
     return roundf((NSHeight(bounds) - ([[defaults objectForKey:@"DateViewHeight"] floatValue]) - _WLYMarginBetweenTasksAndRightNow) / 2);
+}
+
+- (NSSize)minimumSize
+{
+    return BLMinimumSize;
 }
 
 @end

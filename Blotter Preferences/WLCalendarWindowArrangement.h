@@ -104,4 +104,6 @@ typedef enum {
 
 - (NSRect)calendarWindowArrangement:(WLCalendarWindowArrangement *)anArrangement setPosition:(BLPosition)aPosition;
 
+- (NSSize)minimumSizeForCalendarWindowArrangement:(WLCalendarWindowArrangement *)anArrangement;
+
 @end

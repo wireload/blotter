@@ -72,7 +72,6 @@ extern NSSize const BLNarrowMinimumSize;
 
 extern NSSize const BLNormalMinimumSize;
 
-
 @interface WLCalendarWindowController (Frame)
 
 /*!
@@ -133,5 +132,7 @@ extern NSSize const BLNormalMinimumSize;
 - (NSRect)weekViewFrame;
 
 - (CGFloat)defaultTasksViewHeight;
+
+- (NSSize)minimumSize;
 
 @end

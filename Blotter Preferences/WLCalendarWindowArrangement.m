@@ -303,15 +303,21 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
                 break;
         }
 
+        // Don't allow a custom size so small that Blotter would be useless or look buggy.
+        NSSize effectiveMinimumFrameSize = _WLMinimumWindowFrameSize;
+        NSSize blotterMinimum = [self.delegate minimumSizeForCalendarWindowArrangement:self];
+        effectiveMinimumFrameSize.width = MAX(effectiveMinimumFrameSize.width, blotterMinimum.width);
+        effectiveMinimumFrameSize.height = MAX(effectiveMinimumFrameSize.height, blotterMinimum.height);        
+        
         newFrame = NSRectToCGRect([self alignCalendarWindowFrame:NSRectFromCGRect(newFrame)]);
-        if (newFrame.origin.x > (CGRectGetMaxX(originalFrame) - _WLMinimumWindowFrameSize.width - 2 * self.edgeSize.width))
-            newFrame.origin.x = CGRectGetMaxX(originalFrame) - _WLMinimumWindowFrameSize.width - 2 * self.edgeSize.width;
-        if (newFrame.origin.y > (CGRectGetMaxY(originalFrame) - _WLMinimumWindowFrameSize.height - 2 * self.edgeSize.height))
-            newFrame.origin.y = CGRectGetMaxY(originalFrame) - _WLMinimumWindowFrameSize.height - 2 * self.edgeSize.height;
-        if (newFrame.size.width < (_WLMinimumWindowFrameSize.width + 2 * self.edgeSize.width))
-            newFrame.size.width = _WLMinimumWindowFrameSize.width + 2 * self.edgeSize.width;
-        if (newFrame.size.height < (_WLMinimumWindowFrameSize.height + 2 * self.edgeSize.height))
-            newFrame.size.height = _WLMinimumWindowFrameSize.height + 2 * self.edgeSize.height;
+        if (newFrame.origin.x > (CGRectGetMaxX(originalFrame) - effectiveMinimumFrameSize.width - 2 * self.edgeSize.width))
+            newFrame.origin.x = CGRectGetMaxX(originalFrame) - effectiveMinimumFrameSize.width - 2 * self.edgeSize.width;
+        if (newFrame.origin.y > (CGRectGetMaxY(originalFrame) - effectiveMinimumFrameSize.height - 2 * self.edgeSize.height))
+            newFrame.origin.y = CGRectGetMaxY(originalFrame) - effectiveMinimumFrameSize.height - 2 * self.edgeSize.height;
+        if (newFrame.size.width < (effectiveMinimumFrameSize.width + 2 * self.edgeSize.width))
+            newFrame.size.width = effectiveMinimumFrameSize.width + 2 * self.edgeSize.width;
+        if (newFrame.size.height < (effectiveMinimumFrameSize.height + 2 * self.edgeSize.height))
+            newFrame.size.height = effectiveMinimumFrameSize.height + 2 * self.edgeSize.height;
         _calendarWindowLayer.frame = newFrame;
         // Force an immediate layout within this disabled actions block so that we don't get a resize animation when the parts of the 9-part image realise they need to move later.
         [_calendarWindowLayer layoutIfNeeded];

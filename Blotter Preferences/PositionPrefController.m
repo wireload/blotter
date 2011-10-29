@@ -150,6 +150,24 @@
         return NSZeroRect;
 }
 
+/**
+    The smallest size the positioner proxy should be allowed to become in the given WLCalendarWindowArrangement.
+*/
+- (NSSize)minimumSizeForCalendarWindowArrangement:(WLCalendarWindowArrangement *)anArrangement
+{
+    WLCalendarWindowController *w = [(DeskboardAppDelegate *)[NSApp delegate] calendarWindowController];
+    NSRect screenFrame = [[w windowScreen] visibleFrame];
+    if (!NSEqualRects(screenFrame, NSZeroRect))
+    {
+        NSRect bounds = [anArrangement positionerBounds];
+        return NSMakeSize(ceilf([w minimumSize].width * bounds.size.width / screenFrame.size.width),
+                          ceilf([w minimumSize].height * bounds.size.height / screenFrame.size.height));
+    }
+    else
+        return NSMakeSize(90, 70);
+    
+}
+
 - (NSRect)calendarWindowArrangement:(WLCalendarWindowArrangement *)anArrangement setFrame:(NSRect)aFrame
 {
     NSRect bounds = [anArrangement positionerBounds];
