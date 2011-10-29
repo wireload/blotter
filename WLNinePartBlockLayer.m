@@ -79,17 +79,14 @@
         switch(i % 3)
         {
             case 0:
-                sublayer.backgroundColor = [[NSColor greenColor] WL_CGColor];
                 frame.origin.x = 0.0f;
                 frame.size.width = self.edgeSize.width;
                 break;
             case 1:
-                sublayer.backgroundColor = [[NSColor yellowColor] WL_CGColor];
                 frame.origin.x = self.edgeSize.width;
                 frame.size.width = self.bounds.size.width - 2 * self.edgeSize.width;
                 break;
             case 2:
-                sublayer.backgroundColor = [[NSColor redColor] WL_CGColor];
                 frame.origin.x = self.bounds.size.width - self.edgeSize.width;
                 frame.size.width = self.edgeSize.width;
                 break;
