@@ -641,28 +641,26 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
             {
                 CGContextMoveToPoint(aContext, i, aLayer.bounds.origin.y);
                 CGContextAddLineToPoint(aContext, i, CGRectGetMaxY(aLayer.bounds));
-                CGContextStrokePath(aContext);
             }
             for (CGFloat i=aLayer.bounds.origin.y; i<CGRectGetMaxY(aLayer.bounds); i += 20.0f)
             {
                 CGContextMoveToPoint(aContext, aLayer.bounds.origin.x, i);
                 CGContextAddLineToPoint(aContext, CGRectGetMaxX(aLayer.bounds), i);
-                CGContextStrokePath(aContext);
             }
+            CGContextStrokePath(aContext);
 
             CGContextSetStrokeColorWithColor(aContext, [[[NSColor whiteColor] colorWithAlphaComponent:0.25f] WL_CGColor]);
             for (CGFloat i=aLayer.bounds.origin.x + 10.0f; i<CGRectGetMaxX(aLayer.bounds); i += 20.0f)
             {
                 CGContextMoveToPoint(aContext, i, aLayer.bounds.origin.y);
                 CGContextAddLineToPoint(aContext, i, CGRectGetMaxY(aLayer.bounds));
-                CGContextStrokePath(aContext);
             }
             for (CGFloat i=aLayer.bounds.origin.y + 10.0f; i<CGRectGetMaxY(aLayer.bounds); i += 20.0f)
             {
                 CGContextMoveToPoint(aContext, aLayer.bounds.origin.x, i);
                 CGContextAddLineToPoint(aContext, CGRectGetMaxX(aLayer.bounds), i);
-                CGContextStrokePath(aContext);
             }
+            CGContextStrokePath(aContext);
         }
     };
     return l;
