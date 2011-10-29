@@ -97,7 +97,7 @@
 - (NSSize)preferredFrameSize
 {
     // XXX This has to be changed if more controls are added on the top of the position pref pane.
-    static const NSSize PositionerMargins = {.width = 40.0, .height = 132.0};
+    static const NSSize PositionerMargins = {.width = 40.0, .height = 133.0};
     const NSSize DoubledPositionControlSize = {.width = 2 * (defaultFrameSize.width - PositionerMargins.width) + PositionerMargins.width, .height = 2 * (defaultFrameSize.height - PositionerMargins.height) + PositionerMargins.height };
     
     int calendarSize = [[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"];
@@ -113,9 +113,9 @@
     // Remove the margins on the left and the right so we can calculate the desired height of the positioner alone.
     float desiredHeight = (r.width - PositionerMargins.width) / aspectRatio;
     // NSLog(@"desired height for a positioner control of %f px width: %f", (r.width - PositionerMargins.width), desiredHeight);
-    // Round to nearest multiple of 10 so that we get whole grid squares. This will slightly distort the aspect
+    // Round to nearest multiple of 20 so that we get whole grid squares. This will slightly distort the aspect
     // ratio but it's the lesser of two evils.
-    float adjustedDesiredHeight = 10.0 * roundf(desiredHeight / 10.0);
+    float adjustedDesiredHeight = 20.0 * roundf(desiredHeight / 20.0);
     // NSLog(@"adjusted desired height: %f", adjustedDesiredHeight);
     
     r.height = adjustedDesiredHeight + PositionerMargins.height;
@@ -216,7 +216,6 @@
 {
     if ([aKeyPath isEqualToString:@"CalendarSize"])
     {
-        [self updatePreferredFrameSize];
         BLSize oldSize = [[aChange objectForKey:NSKeyValueChangeOldKey] integerValue];
         BOOL isPrior = [[aChange objectForKey:NSKeyValueChangeNotificationIsPriorKey] boolValue];
         if (isPrior && oldSize != BLCustomSize)
@@ -243,6 +242,7 @@
                     break;
             }
             [[_arrangement layer] setNeedsLayout];
+            [self updatePreferredFrameSize];
         }
     }
     else if ([aKeyPath isEqualToString:@"ScreenIdentifier"])
