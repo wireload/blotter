@@ -333,7 +333,6 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 - (void)layoutSublayersOfLayer:(CALayer *)aLayer
 {
     // [CATransaction setAnimationDuration:1.5]; 
-    NSLog(@"layoutlayoutSublayersOfLayer: %@ _isPositioning: %d _isResizing: %d", aLayer, _isPositioning, _isResizing);
     if (_isPositioning || _isResizing)
         return;
 
@@ -350,7 +349,6 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         windowFrame = NSInsetRect(windowFrame, -self.edgeSize.width, -self.edgeSize.height);
         if (self.arrangementMode & WLCalendarWindowResizingArrangement && ![self inLiveResize])
             windowFrame = [self alignCalendarWindowFrame:windowFrame];
-        NSLog(@"Setting _calendarWindowLayer.frame to %@", NSStringFromRect(windowFrame));
         _calendarWindowLayer.frame = NSRectToCGRect(windowFrame);
     }
 }
