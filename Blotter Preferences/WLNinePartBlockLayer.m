@@ -16,8 +16,6 @@
         upperLeftSize = anUpperLeftSize;
         lowerRightSize = aLowerRightSize;
         
-        self.bounds = CGRectMake(0, 0, 1 + upperLeftSize.width + lowerRightSize.width, 1 + upperLeftSize.height + lowerRightSize.height);
-        
         drawer = aDrawer;
         for (int i = 0; i < 9; i++) {
             CALayer *subLayer = [CALayer layer];
@@ -25,46 +23,60 @@
             subLayer.minificationFilter = kCAFilterLinear;
             subLayer.autoresizingMask = 0;
             subLayer.edgeAntialiasingMask = 0;
-            CGRect frame = CGRectMake(0, 0, 1, 1);
             switch(i % 3) {
                 case 0:
-                    subLayer.autoresizingMask |= kCALayerMaxXMargin;
                     subLayer.edgeAntialiasingMask |= kCALayerLeftEdge;
-                    frame.size.width = upperLeftSize.width;
-                    break;
-                case 1:
-                    subLayer.autoresizingMask |= kCALayerWidthSizable;
-                    frame.origin.x = upperLeftSize.width;
                     break;
                 case 2:
-                    subLayer.autoresizingMask |= kCALayerMinXMargin;
                     subLayer.edgeAntialiasingMask |= kCALayerRightEdge;                
-                    frame.origin.x = upperLeftSize.width + 1;
-                    frame.size.width = lowerRightSize.width;
                     break;
             }
             if (i < 3) {
-                subLayer.autoresizingMask |= kCALayerMaxYMargin;
                 subLayer.edgeAntialiasingMask |= kCALayerBottomEdge;     
-                frame.size.height = lowerRightSize.height;
-            } else if (i < 6) {
-                subLayer.autoresizingMask |= kCALayerHeightSizable;
-                frame.origin.y = lowerRightSize.height;
-            } else {
-                subLayer.autoresizingMask |= kCALayerMinYMargin;
+            } else if (i >= 6) {
                 subLayer.edgeAntialiasingMask |= kCALayerTopEdge;                
-                frame.origin.y = lowerRightSize.height + 1;
-                frame.size.height = upperLeftSize.height;
             }           
-            subLayer.frame = frame;
 
             [self addSublayer:subLayer];
         }
         
+        // Set a minimal size for drawing the sublayer images.
+        self.bounds = CGRectMake(0, 0, 1 + upperLeftSize.width + lowerRightSize.width, 1 + upperLeftSize.height + lowerRightSize.height);
+        [self layoutSublayers];
         [self _updateSublayerImages];
-        //[self setNeedsDisplay];
     }
     return self;
+}
+
+- (void)layoutSublayers
+{
+    int middleWidth = MAX(1, [self bounds].size.width - upperLeftSize.width - lowerRightSize.width);
+    int middleHeight = MAX(1, [self bounds].size.height - upperLeftSize.height - lowerRightSize.height);
+    for (int i = 0; i < 9; i++) {
+        CALayer *subLayer = [[self sublayers] objectAtIndex:i];
+        CGRect frame = CGRectMake(0, 0, middleWidth, middleHeight);
+        switch(i % 3) {
+            case 0:
+                frame.size.width = upperLeftSize.width;
+                break;
+            case 1:
+                frame.origin.x = upperLeftSize.width;
+                break;
+            case 2:
+                frame.origin.x = upperLeftSize.width + middleWidth;
+                frame.size.width = lowerRightSize.width;
+                break;
+        }
+        if (i < 3) {
+            frame.size.height = lowerRightSize.height;
+        } else if (i < 6) {
+            frame.origin.y = lowerRightSize.height;
+        } else {
+            frame.origin.y = lowerRightSize.height + middleHeight;
+            frame.size.height = upperLeftSize.height;
+        }           
+        subLayer.frame = frame;
+    }
 }
 
 - (void)_updateSublayerImages
