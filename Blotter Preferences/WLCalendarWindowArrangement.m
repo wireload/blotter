@@ -275,6 +275,8 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         if (newFrame.size.height < (_WLMinimumWindowFrameSize.height + 2 * self.edgeSize.height))
             newFrame.size.height = _WLMinimumWindowFrameSize.height + 2 * self.edgeSize.height;
         _calendarWindowLayer.frame = newFrame;
+        // Force an immediate layout within this disabled actions block so that we don't get a resize animation when the parts of the 9-part image realise they need to move later.
+        [_calendarWindowLayer layoutIfNeeded];
     }];
 }
 
