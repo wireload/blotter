@@ -226,42 +226,80 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 - (void)continueResizingAtPoint:(NSPoint)aPoint startPoint:(NSPoint)aStartPoint edge:(WLCalendarWindowEdge)anEdge
 {
     [CATransaction WL_performWithDisabledActions:^{
+        NSPoint currentPoint = aPoint;
+        if ([NSEvent modifierFlags] & NSShiftKeyMask)
+        {
+            currentPoint = aStartPoint;
+            switch (anEdge) {
+                case WLCalendarWindowTopLeftEdge:
+                {
+                    CGFloat offset = fminf(aStartPoint.x - aPoint.x, aPoint.y - aStartPoint.y);
+                    currentPoint.x -= offset;
+                    currentPoint.y += offset;
+                    break;
+                }
+                case WLCalendarWindowTopRightEdge:
+                {
+                    CGFloat offset = fminf(aPoint.x - aStartPoint.x, aPoint.y - aStartPoint.y);
+                    currentPoint.x += offset;
+                    currentPoint.y += offset;
+                    break;
+                }
+                case WLCalendarWindowBottomLeftEdge:
+                {
+                    CGFloat offset = fminf(aStartPoint.x - aPoint.x, aStartPoint.y - aPoint.y);
+                    currentPoint.x -= offset;
+                    currentPoint.y -= offset;
+                    break;
+                }
+                case WLCalendarWindowBottomRightEdge:
+                {
+                    CGFloat offset = fminf(aPoint.x - aStartPoint.x, aStartPoint.y - aPoint.y);
+                    currentPoint.x += offset;
+                    currentPoint.y -= offset;
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+
         CGRect originalFrame = NSRectToCGRect([[_calendarWindowLayer valueForKey:_WLOriginalFrame] rectValue]);
         CGRect newFrame = originalFrame;
         switch (anEdge) {
             case WLCalendarWindowTopLeftEdge:
-                newFrame.origin.x += aPoint.x - aStartPoint.x;
-                newFrame.size.width -= aPoint.x - aStartPoint.x;
-                newFrame.size.height += aPoint.y - aStartPoint.y;
+                newFrame.origin.x += currentPoint.x - aStartPoint.x;
+                newFrame.size.width -= currentPoint.x - aStartPoint.x;
+                newFrame.size.height += currentPoint.y - aStartPoint.y;
                 break;
             case WLCalendarWindowTopCenterEdge:
-                newFrame.size.height += aPoint.y - aStartPoint.y;
+                newFrame.size.height += currentPoint.y - aStartPoint.y;
                 break;
             case WLCalendarWindowTopRightEdge:
-                newFrame.size.width += aPoint.x - aStartPoint.x;
-                newFrame.size.height += aPoint.y - aStartPoint.y;
+                newFrame.size.width += currentPoint.x - aStartPoint.x;
+                newFrame.size.height += currentPoint.y - aStartPoint.y;
                 break;
             case WLCalendarWindowCenterLeftEdge:
-                newFrame.origin.x += aPoint.x - aStartPoint.x;
-                newFrame.size.width -= aPoint.x - aStartPoint.x;
+                newFrame.origin.x += currentPoint.x - aStartPoint.x;
+                newFrame.size.width -= currentPoint.x - aStartPoint.x;
                 break;
             case WLCalendarWindowCenterRightEdge:
-                newFrame.size.width += aPoint.x - aStartPoint.x;
+                newFrame.size.width += currentPoint.x - aStartPoint.x;
                 break;
             case WLCalendarWindowBottomLeftEdge:
-                newFrame.origin.x += aPoint.x - aStartPoint.x;
-                newFrame.origin.y += aPoint.y - aStartPoint.y;
-                newFrame.size.width -= aPoint.x - aStartPoint.x;
-                newFrame.size.height -= aPoint.y - aStartPoint.y;
+                newFrame.origin.x += currentPoint.x - aStartPoint.x;
+                newFrame.origin.y += currentPoint.y - aStartPoint.y;
+                newFrame.size.width -= currentPoint.x - aStartPoint.x;
+                newFrame.size.height -= currentPoint.y - aStartPoint.y;
                 break;
             case WLCalendarWindowBottomCenterEdge:
-                newFrame.origin.y += aPoint.y - aStartPoint.y;
-                newFrame.size.height -= aPoint.y - aStartPoint.y;
+                newFrame.origin.y += currentPoint.y - aStartPoint.y;
+                newFrame.size.height -= currentPoint.y - aStartPoint.y;
                 break;
             case WLCalendarWindowBottomRightEdge:
-                newFrame.origin.y += aPoint.y - aStartPoint.y;
-                newFrame.size.width += aPoint.x - aStartPoint.x;
-                newFrame.size.height -= aPoint.y - aStartPoint.y;
+                newFrame.origin.y += currentPoint.y - aStartPoint.y;
+                newFrame.size.width += currentPoint.x - aStartPoint.x;
+                newFrame.size.height -= currentPoint.y - aStartPoint.y;
                 break;
         }
 

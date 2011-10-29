@@ -47,6 +47,7 @@ typedef enum {
     BOOL _isResizing;
     WLCalendarWindowEdge _resizedEdge;
     NSPoint _startPoint;
+    id _flagsMonitor;
 }
 
 @property (nonatomic, copy) NSImage *backgroundImage;
@@ -59,13 +60,13 @@ typedef enum {
 
 - (void)startPositioningAtPoint:(NSPoint)aPoint;
 
-- (void)continuePositioningAtPoint:(NSPoint)aPoint startPoint:(NSPoint)aLastPoint;
+- (void)continuePositioningAtPoint:(NSPoint)aPoint startPoint:(NSPoint)aStartPoint;
 
 - (void)stopPositioningAtPoint:(NSPoint)aPoint;
 
 - (void)startResizingAtPoint:(NSPoint)aPoint edge:(WLCalendarWindowEdge)anEdge;
 
-- (void)continueResizingAtPoint:(NSPoint)aPoint startPoint:(NSPoint)aLastPoint edge:(WLCalendarWindowEdge)anEdge;
+- (void)continueResizingAtPoint:(NSPoint)aPoint startPoint:(NSPoint)aStartPoint edge:(WLCalendarWindowEdge)anEdge;
 
 - (void)stopResizingAtPoint:(NSPoint)aPoint edge:(WLCalendarWindowEdge)anEdge;
 
