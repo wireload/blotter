@@ -21,7 +21,6 @@
 		283A5EE61306CDA2006B916A /* WLCountGreaterThanOneTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 283A5EE51306CDA2006B916A /* WLCountGreaterThanOneTransformer.m */; };
 		28B54D5E12839B8D0037BF53 /* GeneralPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54D5D12839B8D0037BF53 /* GeneralPrefController.m */; };
 		28B54D7A1283AEEE0037BF53 /* PositionPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54D791283AEEE0037BF53 /* PositionPrefController.m */; };
-		28D35E25145B4447006E6419 /* WLNinePartBlockLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D35E24145B4447006E6419 /* WLNinePartBlockLayer.m */; };
 		28F6993D129B723900D4BB97 /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */; };
 		28F69A29129C587F00D4BB97 /* WLCalendarWindowArrangement.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69A28129C587F00D4BB97 /* WLCalendarWindowArrangement.m */; };
 		28F69B53129C82E800D4BB97 /* BLPositionerControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69B52129C82E800D4BB97 /* BLPositionerControlCell.m */; };
@@ -145,8 +144,6 @@
 		28B54D5D12839B8D0037BF53 /* GeneralPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralPrefController.m; sourceTree = "<group>"; wrapsLines = 1; };
 		28B54D781283AEEE0037BF53 /* PositionPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PositionPrefController.h; sourceTree = "<group>"; };
 		28B54D791283AEEE0037BF53 /* PositionPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PositionPrefController.m; sourceTree = "<group>"; };
-		28D35E23145B4447006E6419 /* WLNinePartBlockLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNinePartBlockLayer.h; sourceTree = "<group>"; };
-		28D35E24145B4447006E6419 /* WLNinePartBlockLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNinePartBlockLayer.m; sourceTree = "<group>"; };
 		28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAtLoginController.m; sourceTree = "<group>"; };
 		28F6993C129B723900D4BB97 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
 		28F69A27129C587F00D4BB97 /* WLCalendarWindowArrangement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowArrangement.h; sourceTree = "<group>"; };
@@ -189,6 +186,7 @@
 		E29ED7AC14220CEF00DB179C /* WLCalendarWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WLCalendarWindowController.h; path = ../WLCalendarWindowController.h; sourceTree = "<group>"; };
 		E2A01DC51455634C0008BDF2 /* Recreated-Aqua.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Recreated-Aqua.jpg"; sourceTree = "<group>"; };
 		E2BADDBF134DF2FB00F65E14 /* exclamation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exclamation.png; sourceTree = "<group>"; };
+		E2CBD794145C648C00CF2630 /* WLNinePartBlockLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WLNinePartBlockLayer.h; path = ../WLNinePartBlockLayer.h; sourceTree = "<group>"; };
 		E2DC7DDB130810F00065CEAD /* WLScreensController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLScreensController.h; sourceTree = "<group>"; };
 		E2DC7DDC130810F00065CEAD /* WLScreensController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLScreensController.m; sourceTree = "<group>"; };
 		E2E8267214501BD8007035E5 /* chkbxBackground_10_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chkbxBackground_10_6.png; sourceTree = "<group>"; };
@@ -350,6 +348,7 @@
 		32C88E010371C26100C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				E2CBD794145C648C00CF2630 /* WLNinePartBlockLayer.h */,
 				E2451BD51456D53A001907C6 /* CATransaction+WLBlocks.h */,
 				E2435B2A1453ACDE0052D9A3 /* NSColor+CGColor.h */,
 				E2435B291453ABD70052D9A3 /* WLBlockLayer.h */,
@@ -360,8 +359,6 @@
 				28B54D52128398250037BF53 /* SS_PreferencePaneProtocol.h */,
 				E29ED7A814213B2300DB179C /* WLClosableWindow.h */,
 				32DBCF630370AF2F00C91783 /* Blotter Preferences_Prefix.pch */,
-				28D35E23145B4447006E6419 /* WLNinePartBlockLayer.h */,
-				28D35E24145B4447006E6419 /* WLNinePartBlockLayer.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -583,7 +580,6 @@
 				E21BC9EC1416399800A91662 /* WLLayoutDayView.m in Sources */,
 				E262E5E9142C199800715C02 /* WLLayoutBackgroundView.m in Sources */,
 				280A24E31459EE08001B82C8 /* WLRecessedBoxShadowLayer.m in Sources */,
-				28D35E25145B4447006E6419 /* WLNinePartBlockLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

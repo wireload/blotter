@@ -133,6 +133,7 @@
 		E2BA531A13C5A873005F0045 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2BA531913C5A873005F0045 /* QuartzCore.framework */; };
 		E2BA565E13C5E4C4005F0045 /* NSColor+CGColor.m in Sources */ = {isa = PBXBuildFile; fileRef = E2BA565D13C5E4C4005F0045 /* NSColor+CGColor.m */; };
 		E2C774C413D1C02A0067102F /* WLCalendarDayEventsLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2C774C313D1C02A0067102F /* WLCalendarDayEventsLayer.m */; };
+		E2CBD792145C642700CF2630 /* WLNinePartBlockLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CBD791145C642700CF2630 /* WLNinePartBlockLayer.m */; };
 		E2D6488E1441060F00A03FAD /* IKPowerSources.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D6488D1441060F00A03FAD /* IKPowerSources.m */; };
 		E2D648901441062300A03FAD /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2D6488F1441062300A03FAD /* IOKit.framework */; };
 		E2E64B4E1402483500912A92 /* WLSoftEdgeLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E64B4D1402483500912A92 /* WLSoftEdgeLayer.m */; };
@@ -415,6 +416,8 @@
 		E2C774C213D1C02A0067102F /* WLCalendarDayEventsLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarDayEventsLayer.h; sourceTree = "<group>"; };
 		E2C774C313D1C02A0067102F /* WLCalendarDayEventsLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarDayEventsLayer.m; sourceTree = "<group>"; };
 		E2C776E413D20A970067102F /* WLCalendarTimeRuler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTimeRuler.h; sourceTree = "<group>"; };
+		E2CBD790145C642700CF2630 /* WLNinePartBlockLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNinePartBlockLayer.h; sourceTree = "<group>"; };
+		E2CBD791145C642700CF2630 /* WLNinePartBlockLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNinePartBlockLayer.m; sourceTree = "<group>"; };
 		E2D6488C1441060F00A03FAD /* IKPowerSources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IKPowerSources.h; path = IKPowerSources/IKPowerSources.h; sourceTree = "<group>"; };
 		E2D6488D1441060F00A03FAD /* IKPowerSources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IKPowerSources.m; path = IKPowerSources/IKPowerSources.m; sourceTree = "<group>"; };
 		E2D6488F1441062300A03FAD /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -533,6 +536,8 @@
 				E2E64B4D1402483500912A92 /* WLSoftEdgeLayer.m */,
 				E282E06A14043FAF0007C401 /* WLBlockLayer.h */,
 				E282E06B14043FAF0007C401 /* WLBlockLayer.m */,
+				E2CBD790145C642700CF2630 /* WLNinePartBlockLayer.h */,
+				E2CBD791145C642700CF2630 /* WLNinePartBlockLayer.m */,
 				E20DAC5414294D8700EF65EA /* NSAttributedString+WLStringDrawing.h */,
 				E20DAC5514294D8700EF65EA /* NSAttributedString+WLStringDrawing.m */,
 				E262E5E1142BD2C400715C02 /* WLCopyCompositingFilter.h */,
@@ -1100,6 +1105,7 @@
 				E2D6488E1441060F00A03FAD /* IKPowerSources.m in Sources */,
 				E23F746F14434DE40055D6CE /* WLHourRange.m in Sources */,
 				E2435B1A145057620052D9A3 /* WLPrefPaneView.m in Sources */,
+				E2CBD792145C642700CF2630 /* WLNinePartBlockLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

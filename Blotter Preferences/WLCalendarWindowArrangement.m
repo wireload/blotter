@@ -36,7 +36,7 @@ static NSString *_WLBottomCenterKey = @"bottomCenter";
 
 static NSString *_WLBottomRightKey = @"bottomRight";
 
-static NSString *_WLEdgeSizeKey = @"edgeSize";
+static NSString *_WLEdgeSizeKey = @"_edgeSize";
 
 
 static const NSSize _WLDefaultEdgeSize = {.width = 20.0f, .height = 20.0f};
@@ -103,6 +103,8 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
 - (NSRect)positionerBounds
 {
+    NSParameterAssert([self wantsLayer]);
+
     return NSRectFromCGRect([recessedLayer bounds]);
 }
 
@@ -332,7 +334,6 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
 - (void)layoutSublayersOfLayer:(CALayer *)aLayer
 {
-    // [CATransaction setAnimationDuration:1.5]; 
     if (_isPositioning || _isResizing)
         return;
 
@@ -668,35 +669,35 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
 - (CALayer *)setupCalendarWindowLayer
 {
-    WLNinePartBlockLayer *l = [[WLNinePartBlockLayer alloc] initWithDrawer:^(CGContextRef aContext)
-                               {
-                                   static const CGFloat CalendarWindowFrameLineWidth = 5.0f;
-                                   [NSGraphicsContext saveGraphicsState];
-                                   NSGraphicsContext *context = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:NO];
-                                   [NSGraphicsContext setCurrentContext:context];
-                                   
-                                   NSBezierPath *path = [NSBezierPath bezierPath];
-                                   NSRect centerFrame = NSRectFromCGRect(CGRectInset(CGContextGetClipBoundingBox(aContext), _WLDefaultEdgeSize.width, _WLDefaultEdgeSize.height));
-                                   centerFrame = NSInsetRect(centerFrame, CalendarWindowFrameLineWidth / 2, CalendarWindowFrameLineWidth / 2);
-                                   [path appendBezierPathWithRoundedRect:centerFrame xRadius:5.0f yRadius:5.0f];
-                                   
-                                   [[[NSColor blackColor] colorWithAlphaComponent:0.25f] setFill];
-                                   [path fill];
-                                   
-                                   [[[NSColor blackColor] colorWithAlphaComponent:0.75f] setStroke];
-                                   [path setLineWidth:CalendarWindowFrameLineWidth];
-                                   [path stroke];
-                                   [NSGraphicsContext restoreGraphicsState];
-                               }
-                                                             upperLeftSize:CGSizeMake(_WLDefaultEdgeSize.width + 6, _WLDefaultEdgeSize.height + 6) 
-                                                            lowerRightSize:CGSizeMake(_WLDefaultEdgeSize.width + 6, _WLDefaultEdgeSize.height + 6)];
-    
+    static const CGFloat CalendarWindowFrameLineWidth = 5.0f;
+    WLNinePartBlockLayer *l = [NSClassFromString(@"WLNinePartBlockLayer") layer];
+    l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect)
+    {
+        [NSGraphicsContext saveGraphicsState];
+        NSGraphicsContext *context = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:NO];
+        [NSGraphicsContext setCurrentContext:context];
+
+        NSBezierPath *path = [NSBezierPath bezierPath];
+        NSRect centerFrame = NSRectFromCGRect(CGRectInset(CGContextGetClipBoundingBox(aContext), _WLDefaultEdgeSize.width, _WLDefaultEdgeSize.height));
+        centerFrame = NSInsetRect(centerFrame, CalendarWindowFrameLineWidth / 2, CalendarWindowFrameLineWidth / 2);
+        [path appendBezierPathWithRoundedRect:centerFrame xRadius:5.0f yRadius:5.0f];
+
+        [[[NSColor blackColor] colorWithAlphaComponent:0.25f] setFill];
+        [path fill];
+
+        [[[NSColor blackColor] colorWithAlphaComponent:0.75f] setStroke];
+        [path setLineWidth:CalendarWindowFrameLineWidth];
+        [path stroke];
+        [NSGraphicsContext restoreGraphicsState];
+    };
     NSMutableDictionary *newActions = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                                        [NSNull null], @"contents",
                                        nil];
     l.actions = newActions;
     [newActions release];
-    [l addObserver:self forKeyPath:@"bounds" options:NSKeyValueObservingOptionNew context:NULL];
+    // Extend size to take care of such things like anti-aliasing.
+    l.edgeSize = CGSizeMake(_WLDefaultEdgeSize.width + CalendarWindowFrameLineWidth + 1,
+                            _WLDefaultEdgeSize.height + CalendarWindowFrameLineWidth + 1);
     l.needsDisplayOnBoundsChange = YES;
     l.anchorPoint = CGPointMake(0.0f, 0.0f);
     l.cornerRadius = 5.0f;
@@ -704,6 +705,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     l.borderWidth = 2.0f;
     l.borderColor = [[NSColor whiteColor] WL_CGColor];
     [l setValue:[NSValue valueWithSize:_WLDefaultEdgeSize] forKeyPath:_WLEdgeSizeKey];
+    [l addObserver:self forKeyPath:@"bounds" options:NSKeyValueObservingOptionNew context:NULL];
     return l;
 }
 
