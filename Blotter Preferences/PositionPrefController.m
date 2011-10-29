@@ -216,7 +216,6 @@
 {
     if ([aKeyPath isEqualToString:@"CalendarSize"])
     {
-        [self updatePreferredFrameSize];
         BLSize oldSize = [[aChange objectForKey:NSKeyValueChangeOldKey] integerValue];
         BOOL isPrior = [[aChange objectForKey:NSKeyValueChangeNotificationIsPriorKey] boolValue];
         if (isPrior && oldSize != BLCustomSize)
@@ -243,6 +242,7 @@
                     break;
             }
             [[_arrangement layer] setNeedsLayout];
+            [self updatePreferredFrameSize];
         }
     }
     else if ([aKeyPath isEqualToString:@"ScreenIdentifier"])
