@@ -75,25 +75,24 @@
     for (NSInteger i = 0; i < 9; ++i)
     {
         CALayer *sublayer = [[self sublayers] objectAtIndex:i];
-        CGRect frame = CGRectZero;
+        CGFloat middleWidth = fmaxf(1.0f, [self bounds].size.width - 2 * self.edgeSize.width);
+        CGFloat middleHeight = fmaxf(1.0f, [self bounds].size.height - 2 * self.edgeSize.height);
+        CGRect frame = CGRectMake(0.0f, 0.0f, middleWidth, middleHeight);
         switch(i % 3)
         {
             case 0:
-                frame.origin.x = 0.0f;
                 frame.size.width = self.edgeSize.width;
                 break;
             case 1:
                 frame.origin.x = self.edgeSize.width;
-                frame.size.width = self.bounds.size.width - 2 * self.edgeSize.width;
                 break;
             case 2:
-                frame.origin.x = self.bounds.size.width - self.edgeSize.width;
+                frame.origin.x = self.edgeSize.width + middleWidth;
                 frame.size.width = self.edgeSize.width;
                 break;
         }
         if (i < 3)
         {
-            frame.origin.y = 0.0f;
             frame.size.height = self.edgeSize.height;
         }
         else if (i < 6)
@@ -103,7 +102,7 @@
         }
         else if (i < 9)
         {
-            frame.origin.y = self.bounds.size.height - self.edgeSize.height;
+            frame.origin.y = self.edgeSize.height + middleHeight;
             frame.size.height = self.edgeSize.height;
         }
         sublayer.frame = frame;
