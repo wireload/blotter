@@ -1,8 +1,8 @@
 //
-//  WLCalendarWindowPositionControl.h
+//  WLCalendarWindowArrangement.h
 //  Blotter Preferences
 //
-//  Created by Ilya Kulakov on 07.01.11.
+//  Created by Ilya Kulakov on 27.10.11.
 //  Copyright 2011 Wireload. All rights reserved.
 //
 

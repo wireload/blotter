@@ -1,11 +1,12 @@
 //
-//  WLCalendarWindowPositionControl.m
-//  General Preferences
+//  WLCalendarWindowArrangement.m
+//  Blotter Preferences
 //
-//  Created by Alexander Ljungberg on 23/11/2010.
-//  Copyright 2010 SlevenBits. All rights reserved.
+//  Created by Ilya Kulakov on 27.10.11.
+//  Copyright 2011 Wireload. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "WLCalendarWindowArrangement.h"
 #import "WLBlockLayer.h"
 #import "WLNinePartBlockLayer.h"
