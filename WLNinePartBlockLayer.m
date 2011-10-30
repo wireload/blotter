@@ -25,22 +25,6 @@
             subLayer.autoresizingMask = 0;
             subLayer.edgeAntialiasingMask = 0;
             subLayer.delegate = self;
-            switch(i % 3) {
-                case 0:
-                    subLayer.edgeAntialiasingMask |= kCALayerLeftEdge;
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    subLayer.edgeAntialiasingMask |= kCALayerRightEdge;                
-                    break;
-            }
-            if (i < 3)
-                subLayer.edgeAntialiasingMask |= kCALayerBottomEdge;     
-            else if (i < 6)
-                ;
-            else
-                subLayer.edgeAntialiasingMask |= kCALayerTopEdge;
             [self addSublayer:subLayer];
             [subLayer setNeedsDisplay];
         }
