@@ -43,6 +43,7 @@ typedef enum {
     CALayer *_resizeHandlesLayer;
     CALayer *_shadowLayer;
     NSTrackingArea *_navigationHelperAreas[9];
+    NSTrackingArea *_resizeAreas[9];
     CALayer *_navigationHelperLayers[9];
     BOOL _isPositioning;
     BOOL _isResizing;

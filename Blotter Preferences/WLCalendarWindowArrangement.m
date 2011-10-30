@@ -48,9 +48,27 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
 @implementation WLCalendarWindowArrangement
 
+- (id)initWithFrame:(NSRect)frameRect
+{
+    if (self = [super initWithFrame:frameRect]) {       
+        for (int i = 0; i < 9; i++)
+            _resizeAreas[i] = nil;
+    }
+    return self;
+}
+
 - (void)dealloc
 {
     [_calendarWindowLayer removeObserver:self forKeyPath:@"bounds"];
+
+    for (int i = 0; i < 9; i++) {
+        if (_resizeAreas[i] == nil)
+            continue;
+        [self removeTrackingArea:_resizeAreas[i]];
+        [_resizeAreas[i] release];
+        _resizeAreas[i] = nil;
+    }
+
     [super dealloc];
 }
 
@@ -612,6 +630,25 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     _startPoint = NSZeroPoint;
 }
 
+- (void)cursorUpdate:(NSEvent *)anEvent
+{
+    NSPoint hitPoint;
+    NSTrackingArea *trackingArea;
+    
+    trackingArea = [anEvent trackingArea];
+    hitPoint = [self convertPoint:[anEvent locationInWindow]
+                         fromView:nil];
+
+    // FIXME According to documentation, the cursor should automatically be reset when the mouse leaves a cursor
+    // area. This does not appear to work: instead this method gets called again with the same userInfo and
+    // tracking area as when the mouse first entered.
+    if ([self mouse:hitPoint inRect:[trackingArea rect]]) {
+        [((NSCursor *)[((NSDictionary *) [trackingArea userInfo]) objectForKey:@"cursor"]) set];
+    } else {
+        [super cursorUpdate:anEvent];
+    }
+}
+
 
 #pragma mark NSObject
 
@@ -664,6 +701,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
                                                                                         self.edgeSize.width,
                                                                                         self.edgeSize.height))]
                                 forKey:_WLTopRightEdgeFrameKey];
+        [self updateTrackingAreas];
     }
     else
         [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];
@@ -973,6 +1011,65 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     CALayer *l = [CALayer layer];
     l.backgroundColor = [[[NSColor blackColor] colorWithAlphaComponent:0.25f] WL_CGColor];
     return l;
+}
+
+- (void)updateTrackingAreas
+{
+    [super updateTrackingAreas];
+    
+    for (int i = 0; i < 9; i++) {
+        if (_resizeAreas[i] != nil) {
+            [self removeTrackingArea:_resizeAreas[i]];
+            [_resizeAreas[i] release];
+            _resizeAreas[i] = nil;
+        }
+        if (_resizeHandlesLayer == nil || [[_resizeHandlesLayer sublayers] objectAtIndex:i] == nil)
+            continue;
+        
+        // No resize cursors for the resize handles if they aren't visible.
+        if (i != 4 && !(arrangementMode & WLCalendarWindowResizingArrangement))
+            continue;
+        
+        CGRect frame;
+        if (i == 4) {
+            // The calendar itself does not have a resize handle.
+            CGSize size = [_resizeHandlesLayer bounds].size;
+            frame = CGRectMake(self.edgeSize.width, self.edgeSize.height, size.width - 2 * self.edgeSize.width, size.height - 2 * self.edgeSize.height);
+            frame = [_resizeHandlesLayer convertRect:frame toLayer:nil];
+        } else {
+            frame = [((CALayer *) [[_resizeHandlesLayer sublayers] objectAtIndex:i - (i > 4 ? 1 : 0)]) frame];
+            frame = [_resizeHandlesLayer convertRect:frame toLayer:nil];
+        }
+        
+        NSCursor *cursor = nil;
+        switch(i) {
+            case 0:
+            case 3:
+            case 6:
+                cursor = [NSCursor resizeLeftCursor];
+                break;
+            case 1:                
+                cursor = [NSCursor resizeDownCursor];
+                break;
+            case 7:
+                cursor = [NSCursor resizeUpCursor];
+                break;
+            case 4:
+                cursor = [NSCursor openHandCursor];
+                break;
+            case 2:
+            case 5:
+            case 8:
+                cursor = [NSCursor resizeRightCursor];
+                break;
+            default:
+                cursor = [NSCursor arrowCursor];
+        }
+        
+        NSRect f = NSRectFromCGRect(frame);
+        _resizeAreas[i] = [[NSTrackingArea alloc] initWithRect:f options:NSTrackingCursorUpdate | NSTrackingActiveInKeyWindow owner:self userInfo:[NSDictionary dictionaryWithObject:cursor forKey:@"cursor"]];
+        [self addTrackingArea:_resizeAreas[i]];
+    }
 }
 
 - (void)setResizeHandlesNeedDisplay
