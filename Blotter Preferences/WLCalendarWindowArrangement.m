@@ -80,11 +80,11 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
     arrangementMode = newArrangementMode;
     if (arrangementMode & WLCalendarWindowResizingArrangement) {
-        _resizeHandlesLayer.hidden = NO;
+        _resizeHandlesLayer.opacity = 1.0;
         _calendarWindowLayer.borderColor = [[NSColor whiteColor] WL_CGColor];
     }
     else {
-        _resizeHandlesLayer.hidden = YES;
+        _resizeHandlesLayer.opacity = 0.0f;
         _calendarWindowLayer.borderColor = [[NSColor clearColor] WL_CGColor];        
     }
     [_navigationLayer setNeedsDisplay];
@@ -707,10 +707,10 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         _calendarWindowLayer.autoresizingMask = kCALayerNotSizable;
 
         _resizeHandlesLayer = [self setupResizeHandlesLayer];
-        _resizeHandlesLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
         [_calendarWindowLayer addSublayer:_resizeHandlesLayer];
         _resizeHandlesLayer.frame = _calendarWindowLayer.bounds;
-        _resizeHandlesLayer.hidden = YES;
+        _resizeHandlesLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+        _resizeHandlesLayer.opacity = 0.0;
         
         _shadowLayer = [self setupShadowLayer];
         _shadowLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
@@ -857,7 +857,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     
     CALayer *l = [CALayer layer];
     
-    l.layoutManager = [[[WLBlockLayoutManager alloc] initWithLayoutManager:^(CALayer *aLayer) {       
+    l.layoutManager = [[[WLBlockLayoutManager alloc] initWithLayoutManager:^(CALayer *aLayer) {
         CGSize size = [aLayer bounds].size;
         for (int i = 0; i < 9; i++) {
             if (i == 4)
@@ -880,10 +880,10 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
             } else {
                 frame.origin.y = floorf(size.height - margin.height - dotWidth) - 1;
             }
-            if (i == 6 || i == 8)
-                frame.origin.y = size.height - margin.height - dotSpace - dotWidth - 1;
             if (i == 2 || i == 8)
                 frame.origin.x = size.width - margin.width - dotSpace - dotWidth;
+            if (i == 6 || i == 8)
+                frame.origin.y = size.height - margin.height - dotSpace - dotWidth - 1;
             
             sublayer.frame = frame;
         }
