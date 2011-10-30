@@ -21,6 +21,7 @@
 		283A5EE61306CDA2006B916A /* WLCountGreaterThanOneTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 283A5EE51306CDA2006B916A /* WLCountGreaterThanOneTransformer.m */; };
 		28B54D5E12839B8D0037BF53 /* GeneralPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54D5D12839B8D0037BF53 /* GeneralPrefController.m */; };
 		28B54D7A1283AEEE0037BF53 /* PositionPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54D791283AEEE0037BF53 /* PositionPrefController.m */; };
+		28CB5085145DB3E200810395 /* WLBlockLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CB5084145DB3E200810395 /* WLBlockLayoutManager.m */; };
 		28F6993D129B723900D4BB97 /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */; };
 		28F69A29129C587F00D4BB97 /* WLCalendarWindowArrangement.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69A28129C587F00D4BB97 /* WLCalendarWindowArrangement.m */; };
 		28F69B53129C82E800D4BB97 /* BLPositionerControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69B52129C82E800D4BB97 /* BLPositionerControlCell.m */; };
@@ -144,6 +145,8 @@
 		28B54D5D12839B8D0037BF53 /* GeneralPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralPrefController.m; sourceTree = "<group>"; wrapsLines = 1; };
 		28B54D781283AEEE0037BF53 /* PositionPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PositionPrefController.h; sourceTree = "<group>"; };
 		28B54D791283AEEE0037BF53 /* PositionPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PositionPrefController.m; sourceTree = "<group>"; };
+		28CB5083145DB3E200810395 /* WLBlockLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLBlockLayoutManager.h; sourceTree = "<group>"; };
+		28CB5084145DB3E200810395 /* WLBlockLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLBlockLayoutManager.m; sourceTree = "<group>"; };
 		28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAtLoginController.m; sourceTree = "<group>"; };
 		28F6993C129B723900D4BB97 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
 		28F69A27129C587F00D4BB97 /* WLCalendarWindowArrangement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowArrangement.h; sourceTree = "<group>"; };
@@ -322,6 +325,8 @@
 				E2FE5EF612D75C7700003E48 /* WLColorCheckboxCell.m */,
 				280A24E11459EE08001B82C8 /* WLRecessedBoxShadowLayer.h */,
 				280A24E21459EE08001B82C8 /* WLRecessedBoxShadowLayer.m */,
+				28CB5083145DB3E200810395 /* WLBlockLayoutManager.h */,
+				28CB5084145DB3E200810395 /* WLBlockLayoutManager.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -580,6 +585,7 @@
 				E21BC9EC1416399800A91662 /* WLLayoutDayView.m in Sources */,
 				E262E5E9142C199800715C02 /* WLLayoutBackgroundView.m in Sources */,
 				280A24E31459EE08001B82C8 /* WLRecessedBoxShadowLayer.m in Sources */,
+				28CB5085145DB3E200810395 /* WLBlockLayoutManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,6 +13,7 @@
 #import "NSColor+CGColor.h"
 #import "CATransaction+WLBlocks.h"
 #import "WLRecessedBoxShadowLayer.h"
+#import "WLBlockLayoutManager.h"
 
 
 static NSString *_WLPositionKey = @"position";
@@ -79,11 +80,11 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
     arrangementMode = newArrangementMode;
     if (arrangementMode & WLCalendarWindowResizingArrangement) {
-        _resizeHandlesLayer.hidden = NO;
+        _resizeHandlesLayer.opacity = 1.0;
         _calendarWindowLayer.borderColor = [[NSColor whiteColor] WL_CGColor];
     }
     else {
-        _resizeHandlesLayer.hidden = YES;
+        _resizeHandlesLayer.opacity = 0.0f;
         _calendarWindowLayer.borderColor = [[NSColor clearColor] WL_CGColor];        
     }
     [_navigationLayer setNeedsDisplay];
@@ -706,10 +707,10 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         _calendarWindowLayer.autoresizingMask = kCALayerNotSizable;
 
         _resizeHandlesLayer = [self setupResizeHandlesLayer];
-        _resizeHandlesLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
         [_calendarWindowLayer addSublayer:_resizeHandlesLayer];
         _resizeHandlesLayer.frame = _calendarWindowLayer.bounds;
-        _resizeHandlesLayer.hidden = YES;
+        _resizeHandlesLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+        _resizeHandlesLayer.opacity = 0.0;
         
         _shadowLayer = [self setupShadowLayer];
         _shadowLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
@@ -855,44 +856,45 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     static const CGSize margin = {.width = 9.0f, .height = 9.0f};
     
     CALayer *l = [CALayer layer];
-    l.bounds = CGRectMake(0, 0, 100, 100);
+    
+    l.layoutManager = [[[WLBlockLayoutManager alloc] initWithLayoutManager:^(CALayer *aLayer) {
+        CGSize size = [aLayer bounds].size;
+        for (int i = 0; i < 9; i++) {
+            if (i == 4)
+                continue;  
+            CALayer *sublayer = [[aLayer sublayers] objectAtIndex:i + (i > 4 ? -1 : 0)];
+
+            CGRect frame = CGRectMake(margin.width, margin.height - 1, dotSpace * 2 + dotWidth + 1, dotSpace * 2 + dotWidth + 1);
+            switch(i % 3) {
+                case 1:
+                    frame.origin.x = floorf(size.width / 2 - frame.size.width / 2);
+                    break;
+                case 2:
+                    frame.origin.x = floorf(size.width - margin.width - dotWidth);
+                    break;
+            }
+            if (i < 3)
+                ;
+            else if (i < 6) {
+                frame.origin.y = floorf(size.height / 2 - frame.size.height / 2) - 1;
+            } else {
+                frame.origin.y = floorf(size.height - margin.height - dotWidth) - 1;
+            }
+            if (i == 2 || i == 8)
+                frame.origin.x = size.width - margin.width - dotSpace - dotWidth;
+            if (i == 6 || i == 8)
+                frame.origin.y = size.height - margin.height - dotSpace - dotWidth - 1;
+            
+            sublayer.frame = frame;
+        }
+    }] autorelease];
     
     for (int i = 0; i < 9; i++) {
         if (i == 4)
             continue;
         WLBlockLayer *sublayer = [NSClassFromString(@"WLBlockLayer") layer];
-        
+               
         sublayer.autoresizingMask = 0;
-
-        CGRect frame = CGRectMake(margin.width, margin.height - 1, dotSpace * 2 + dotWidth + 1, dotSpace * 2 + dotWidth + 1);
-        switch(i % 3) {
-            case 0:
-                sublayer.autoresizingMask |= kCALayerMaxXMargin;
-                break;
-            case 1:
-                sublayer.autoresizingMask |= kCALayerMinXMargin | kCALayerMaxXMargin;
-                frame.origin.x = floorf(100 / 2 - frame.size.width / 2);
-                break;
-            case 2:
-                sublayer.autoresizingMask |= kCALayerMinXMargin;
-                frame.origin.x = floorf(100 - margin.width - dotWidth);
-                break;
-        }
-        if (i < 3) {
-            sublayer.autoresizingMask |= kCALayerMaxYMargin;
-        } else if (i < 6) {
-            sublayer.autoresizingMask |= kCALayerMinYMargin | kCALayerMaxYMargin;
-            frame.origin.y = floorf(100 / 2 - frame.size.height / 2) - 1;
-        } else {
-            sublayer.autoresizingMask |= kCALayerMinYMargin;
-            frame.origin.y = floorf(100 - margin.height - dotWidth) - 1;
-        }
-        if (i == 6 || i == 8)
-            frame.origin.y = 100 - margin.height - dotSpace - dotWidth - 1;
-        if (i == 2 || i == 8)
-            frame.origin.x = 100 - margin.width - dotSpace - dotWidth;
-            
-        sublayer.frame = frame;
         
         sublayer.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect)
         {
@@ -940,6 +942,8 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
         [l addSublayer:sublayer];
     }
+
+    [l setNeedsLayout];
     return l;
 }
 
