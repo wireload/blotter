@@ -864,7 +864,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
                 continue;  
             CALayer *sublayer = [[aLayer sublayers] objectAtIndex:i + (i > 4 ? -1 : 0)];
 
-            CGRect frame = CGRectMake(margin.width, margin.height - 1, dotSpace * 2 + dotWidth + 1, dotSpace * 2 + dotWidth + 1);
+            CGRect frame = CGRectMake(margin.width + 1, margin.height, dotSpace * 2 + dotWidth, dotSpace * 2 + dotWidth + 1);
             switch(i % 3) {
                 case 1:
                     frame.origin.x = floorf(size.width / 2 - frame.size.width / 2);
