@@ -449,6 +449,19 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
     if (aLayer == [self layer] || aLayer == recessedLayer)
     {
+        if ([self inLiveResize])
+        {
+            /*
+             Conceal certain glitches in the calendar widgets CA based resize animation. The window frame
+             animation has a different frame rate timing than the CA based animation, causing what appears to 
+             be the the double buffer swapping in the middle of CA based layout and redraws. This is visible
+             as tearing of the calendar border. By making the CA animation very fast, the proxy moves into 
+             its final position faster, hiding the tearing effects.
+             
+             The drawback is that the proxy animation finishes faster than the window movement. 
+            */
+            [CATransaction setAnimationDuration:0.1];
+        }
         if (aLayer == [self layer])
         {
             recessedLayer.frame = CGRectMake(0,
