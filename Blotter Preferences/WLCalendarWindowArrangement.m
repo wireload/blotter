@@ -195,32 +195,6 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     NSRect windowFrame = NSRectFromCGRect(_calendarWindowLayer.frame);
     windowFrame = [self alignCalendarWindowFrame:windowFrame];
     [_calendarWindowLayer setValue:[NSValue valueWithRect:windowFrame] forKey:_WLOriginalFrame];
-    switch (anEdge) {
-        case WLCalendarWindowTopLeftEdge:
-            _calendarWindowLayer.contentsGravity = kCAGravityBottomRight;
-            break;
-        case WLCalendarWindowTopCenterEdge:
-            _calendarWindowLayer.contentsGravity = kCAGravityBottom;
-            break;
-        case WLCalendarWindowTopRightEdge:
-            _calendarWindowLayer.contentsGravity = kCAGravityBottomLeft;
-            break;
-        case WLCalendarWindowCenterLeftEdge:
-            _calendarWindowLayer.contentsGravity = kCAGravityRight;
-            break;
-        case WLCalendarWindowCenterRightEdge:
-            _calendarWindowLayer.contentsGravity = kCAGravityLeft;
-            break;
-        case WLCalendarWindowBottomLeftEdge:
-            _calendarWindowLayer.contentsGravity = kCAGravityTopRight;
-            break;
-        case WLCalendarWindowBottomCenterEdge:
-            _calendarWindowLayer.contentsGravity = kCAGravityTop;
-            break;
-        case WLCalendarWindowBottomRightEdge:
-            _calendarWindowLayer.contentsGravity = kCAGravityTopLeft;
-            break;
-    }
     _navigationLayer.hidden = NO;
 }
 
@@ -228,8 +202,10 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 {
     [CATransaction WL_performWithDisabledActions:^{
         NSPoint currentPoint = aPoint;
+        BOOL isShiftPressed = NO;
         if ([NSEvent modifierFlags] & NSShiftKeyMask)
         {
+            isShiftPressed = YES;
             currentPoint = aStartPoint;
             switch (anEdge) {
                 case WLCalendarWindowTopLeftEdge:
@@ -261,56 +237,139 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
                     break;
                 }
                 default:
+                    currentPoint = aPoint;
                     break;
             }
         }
 
+        /*
+              ^
+              |
+              |     S - start point
+              |     E - current point
+              |
+              |
+              |             +--+--------------------+--+
+              |             |  |                    |  |
+              |             +--------------------------+
+              |             |  |                    |  |
+              |             |  |                    |  |
+              |             |  |                    |  |
+              |             |  |                    |  |
+              |             |  |                    |  |
+              |             |  |                    |  |
+              |             |  |                    |  |
+              |             |  |                    |  |
+              |             +-----------------------|--+
+              |     xOffset |  |                    |  |
+              |   <--------+S--+--------------------+--+
+              |             +
+              |             | yOffset
+              |   E         v
+              +------------------------------------------------>
+        */
         CGRect originalFrame = NSRectToCGRect([[_calendarWindowLayer valueForKey:_WLOriginalFrame] rectValue]);
         CGRect newFrame = originalFrame;
+        CGRect offsets = CGRectZero;
         switch (anEdge) {
             case WLCalendarWindowTopLeftEdge:
-                newFrame.origin.x += currentPoint.x - aStartPoint.x;
-                newFrame.size.width -= currentPoint.x - aStartPoint.x;
-                newFrame.size.height += currentPoint.y - aStartPoint.y;
+            {
+                CGFloat xOffset = currentPoint.x - aStartPoint.x;
+                CGFloat yOffset = currentPoint.y - aStartPoint.y;
+                offsets.origin.x = xOffset;
+                offsets.size.width = -xOffset;
+                offsets.size.height = yOffset;
                 break;
+            }
             case WLCalendarWindowTopCenterEdge:
-                newFrame.size.height += currentPoint.y - aStartPoint.y;
+            {
+                CGFloat yOffset = currentPoint.y - aStartPoint.y;
+                offsets.size.height = yOffset;
+                if (isShiftPressed)
+                {
+                    yOffset = roundf(yOffset / 10.0f) * 10.0f;
+                    offsets.origin.x = -roundf((yOffset / 2.0f) / 10.0f) * 10.0f;
+                    offsets.size.width = yOffset;
+                }
                 break;
+            }
             case WLCalendarWindowTopRightEdge:
-                newFrame.size.width += currentPoint.x - aStartPoint.x;
-                newFrame.size.height += currentPoint.y - aStartPoint.y;
+            {
+                CGFloat xOffset = currentPoint.x - aStartPoint.x;
+                CGFloat yOffset = currentPoint.y - aStartPoint.y;
+                offsets.size.width = xOffset;
+                offsets.size.height = yOffset;
                 break;
+            }
             case WLCalendarWindowCenterLeftEdge:
-                newFrame.origin.x += currentPoint.x - aStartPoint.x;
-                newFrame.size.width -= currentPoint.x - aStartPoint.x;
+            {
+                CGFloat xOffset = currentPoint.x - aStartPoint.x;
+                offsets.origin.x = xOffset;
+                offsets.size.width = -xOffset;
+                if (isShiftPressed)
+                {
+                    xOffset = roundf(xOffset / 10.0f) * 10.0f;
+                    offsets.origin.y = roundf((xOffset / 2.0f) / 10.0f) * 10.0f;
+                    offsets.size.height = -xOffset;
+                }
                 break;
+            }
             case WLCalendarWindowCenterRightEdge:
-                newFrame.size.width += currentPoint.x - aStartPoint.x;
+            {
+                CGFloat xOffset = currentPoint.x - aStartPoint.x;
+                offsets.size.width = xOffset;
+                if (isShiftPressed)
+                {
+                    xOffset = roundf(xOffset / 10.0f) * 10.0f;
+                    offsets.origin.y = -roundf((xOffset / 2.0f) / 10.0f) * 10.0f;
+                    offsets.size.height = xOffset;
+                }
                 break;
+            }
             case WLCalendarWindowBottomLeftEdge:
-                newFrame.origin.x += currentPoint.x - aStartPoint.x;
-                newFrame.origin.y += currentPoint.y - aStartPoint.y;
-                newFrame.size.width -= currentPoint.x - aStartPoint.x;
-                newFrame.size.height -= currentPoint.y - aStartPoint.y;
+            {
+                CGFloat xOffset = currentPoint.x - aStartPoint.x;
+                CGFloat yOffset = currentPoint.y - aStartPoint.y;
+                offsets.origin.x = xOffset;
+                offsets.origin.y = yOffset;
+                offsets.size.width = -xOffset;
+                offsets.size.height = -yOffset;
                 break;
+            }
             case WLCalendarWindowBottomCenterEdge:
-                newFrame.origin.y += currentPoint.y - aStartPoint.y;
-                newFrame.size.height -= currentPoint.y - aStartPoint.y;
+            {
+                CGFloat yOffset = currentPoint.y - aStartPoint.y;
+                offsets.origin.y = yOffset;
+                offsets.size.height = -yOffset;
+                if (isShiftPressed)
+                {
+                    yOffset = roundf(yOffset / 10.0f) * 10.0f;
+                    offsets.origin.x = roundf((yOffset / 2.0f) / 10.0f) * 10.0f;
+                    offsets.size.width = -yOffset;
+                }
                 break;
+            }
             case WLCalendarWindowBottomRightEdge:
-                newFrame.origin.y += currentPoint.y - aStartPoint.y;
-                newFrame.size.width += currentPoint.x - aStartPoint.x;
-                newFrame.size.height -= currentPoint.y - aStartPoint.y;
+            {
+                CGFloat xOffset = currentPoint.x - aStartPoint.x;
+                CGFloat yOffset =  currentPoint.y - aStartPoint.y;
+                offsets.origin.y = yOffset;
+                offsets.size.width = xOffset;
+                offsets.size.height = -yOffset;
                 break;
+            }
         }
+        newFrame.origin.x += offsets.origin.x;
+        newFrame.origin.y += offsets.origin.y;
+        newFrame.size.width += offsets.size.width;
+        newFrame.size.height += offsets.size.height;
 
         // Don't allow a custom size so small that Blotter would be useless or look buggy.
         NSSize effectiveMinimumFrameSize = _WLMinimumWindowFrameSize;
         NSSize blotterMinimum = [self.delegate minimumSizeForCalendarWindowArrangement:self];
-        effectiveMinimumFrameSize.width = MAX(effectiveMinimumFrameSize.width, blotterMinimum.width);
-        effectiveMinimumFrameSize.height = MAX(effectiveMinimumFrameSize.height, blotterMinimum.height);        
+        effectiveMinimumFrameSize.width = fmaxf(effectiveMinimumFrameSize.width, blotterMinimum.width);
+        effectiveMinimumFrameSize.height = fmaxf(effectiveMinimumFrameSize.height, blotterMinimum.height);
         
-        newFrame = NSRectToCGRect([self alignCalendarWindowFrame:NSRectFromCGRect(newFrame)]);
         if (newFrame.origin.x > (CGRectGetMaxX(originalFrame) - effectiveMinimumFrameSize.width - 2 * self.edgeSize.width))
             newFrame.origin.x = CGRectGetMaxX(originalFrame) - effectiveMinimumFrameSize.width - 2 * self.edgeSize.width;
         if (newFrame.origin.y > (CGRectGetMaxY(originalFrame) - effectiveMinimumFrameSize.height - 2 * self.edgeSize.height))
@@ -319,7 +378,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
             newFrame.size.width = effectiveMinimumFrameSize.width + 2 * self.edgeSize.width;
         if (newFrame.size.height < (effectiveMinimumFrameSize.height + 2 * self.edgeSize.height))
             newFrame.size.height = effectiveMinimumFrameSize.height + 2 * self.edgeSize.height;
-        _calendarWindowLayer.frame = newFrame;
+        _calendarWindowLayer.frame = NSRectToCGRect([self alignCalendarWindowFrame:NSRectFromCGRect(newFrame)]);;
         // Force an immediate layout within this disabled actions block so that we don't get a resize animation when the parts of the 9-part image realise they need to move later.
         [_calendarWindowLayer layoutIfNeeded];
     }];
@@ -337,17 +396,17 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 {
     NSRect bounds = NSRectFromCGRect(recessedLayer.bounds);
 
-    int width = bounds.size.width - 3;
-    int height = bounds.size.height - 3;
-    int pWidth = width / 3 - 10;
-    int pHeight = height / 3 - 10;
+    CGFloat width = bounds.size.width - 3;
+    CGFloat height = bounds.size.height - 3;
+    CGFloat pWidth = width / 3 - 10;
+    CGFloat pHeight = height / 3 - 10;
 
     CGFloat px = 1.5;
     CGFloat py = 1.5;
     if (aPosition == BLPositionTopCenter ||
         aPosition == BLPositionCenterCenter ||
         aPosition == BLPositionBottomCenter)
-        px = floor(width / 2.0 - pWidth / 2.0) + 0.5;
+        px = floorf(width / 2.0 - pWidth / 2.0) + 0.5;
 
     if (aPosition == BLPositionTopRight ||
         aPosition == BLPositionCenterRight ||
@@ -362,9 +421,9 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     if (aPosition == BLPositionCenterLeft ||
         aPosition == BLPositionCenterCenter ||
         aPosition == BLPositionCenterRight)
-        py = floor(height / 2.0 - pHeight / 2.0) + 0.5;
+        py = floorf(height / 2.0 - pHeight / 2.0) + 0.5;
 
-    return NSIntegralRect(NSMakeRect(px, py, pWidth, pHeight));
+    return [self centerScanRect:NSMakeRect(px, py, pWidth, pHeight)];
 }
 
 - (NSRect)alignCalendarWindowFrame:(NSRect)aFrame
@@ -671,15 +730,25 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         {
             CGContextSetStrokeColorWithColor(aContext, [[[NSColor whiteColor] colorWithAlphaComponent:0.9f] WL_CGColor]);
             CGContextSetLineDash(aContext, 0.0f, (CGFloat[]){2.0f, 3.0f}, 2);
-            CGContextAddRect(aContext, NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionTopLeft]));
-            CGContextAddRect(aContext, NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionCenterLeft]));
-            CGContextAddRect(aContext, NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionBottomLeft]));
-            CGContextAddRect(aContext, NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionTopCenter]));
-            CGContextAddRect(aContext, NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionCenterCenter]));
-            CGContextAddRect(aContext, NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionBottomCenter]));
-            CGContextAddRect(aContext, NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionTopRight]));
-            CGContextAddRect(aContext, NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionCenterRight]));
-            CGContextAddRect(aContext, NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionBottomRight]));
+
+            CGContextAddRect(aContext,
+                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionTopLeft]) fromLayer:[selfBlock layer]]);
+            CGContextAddRect(aContext,
+                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionCenterLeft]) fromLayer:[selfBlock layer]]);
+            CGContextAddRect(aContext,
+                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionBottomLeft]) fromLayer:[selfBlock layer]]);
+            CGContextAddRect(aContext,
+                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionTopCenter]) fromLayer:[selfBlock layer]]);
+            CGContextAddRect(aContext,
+                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionCenterCenter]) fromLayer:[selfBlock layer]]);
+            CGContextAddRect(aContext,
+                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionBottomCenter]) fromLayer:[selfBlock layer]]);
+            CGContextAddRect(aContext,
+                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionTopRight]) fromLayer:[selfBlock layer]]);
+            CGContextAddRect(aContext,
+                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionCenterRight]) fromLayer:[selfBlock layer]]);
+            CGContextAddRect(aContext,
+                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionBottomRight]) fromLayer:[selfBlock layer]]);
             CGContextStrokePath(aContext);
         }
         else
