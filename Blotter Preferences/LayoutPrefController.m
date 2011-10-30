@@ -129,7 +129,7 @@
 
 - (NSImage *)paneIcon
 {
-    return [[NSImage alloc] initWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"Layout-Icon" ofType:@"png"]];
+    return [[[NSImage alloc] initWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"Layout-Icon" ofType:@"png"]] autorelease];
 }
 
 
