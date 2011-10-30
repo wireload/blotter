@@ -96,6 +96,8 @@ typedef enum {
 
 - (CALayer *)setupResizeHandlesLayer;
 
+- (void)setResizeHandlesNeedDisplay;
+
 @end
 
 
