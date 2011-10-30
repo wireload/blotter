@@ -432,10 +432,10 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
 - (NSRect)alignCalendarWindowFrame:(NSRect)aFrame
 {
-    aFrame.origin.x = roundf(aFrame.origin.x / 10.0f) * 10.0f;
-    aFrame.origin.y = roundf(aFrame.origin.y / 10.0f) * 10.0f;
-    aFrame.size.width = roundf(aFrame.size.width / 10.0f) * 10.0f;
-    aFrame.size.height = roundf(aFrame.size.height / 10.0f) * 10.0f;
+    aFrame.origin.x = floorf(aFrame.origin.x / 10.0f) * 10.0f;
+    aFrame.origin.y = floorf(aFrame.origin.y / 10.0f) * 10.0f;
+    aFrame.size.width = ceilf(aFrame.size.width / 10.0f) * 10.0f;
+    aFrame.size.height = ceilf(aFrame.size.height / 10.0f) * 10.0f;
     return [self centerScanRect:aFrame];
 }
 
