@@ -8,6 +8,7 @@
 
 #import "WLNinePartBlockLayer.h"
 #import "NSColor+CGColor.h"
+#import "CATransaction+WLBlocks.h"
 
 
 @implementation WLNinePartBlockLayer
@@ -72,41 +73,43 @@
 
 - (void)layoutSublayers
 {
-    for (NSInteger i = 0; i < 9; ++i)
-    {
-        CALayer *sublayer = [[self sublayers] objectAtIndex:i];
-        CGFloat middleWidth = fmaxf(1.0f, [self bounds].size.width - 2 * self.edgeSize.width);
-        CGFloat middleHeight = fmaxf(1.0f, [self bounds].size.height - 2 * self.edgeSize.height);
-        CGRect frame = CGRectMake(0.0f, 0.0f, middleWidth, middleHeight);
-        switch(i % 3)
+    [CATransaction WL_performWithDisabledActions:^{
+        for (NSInteger i = 0; i < 9; ++i)
         {
-            case 0:
-                frame.size.width = self.edgeSize.width;
-                break;
-            case 1:
-                frame.origin.x = self.edgeSize.width;
-                break;
-            case 2:
-                frame.origin.x = self.edgeSize.width + middleWidth;
-                frame.size.width = self.edgeSize.width;
-                break;
+            CALayer *sublayer = [[self sublayers] objectAtIndex:i];
+            CGFloat middleWidth = fmaxf(1.0f, [self bounds].size.width - 2 * self.edgeSize.width);
+            CGFloat middleHeight = fmaxf(1.0f, [self bounds].size.height - 2 * self.edgeSize.height);
+            CGRect frame = CGRectMake(0.0f, 0.0f, middleWidth, middleHeight);
+            switch(i % 3)
+            {
+                case 0:
+                    frame.size.width = self.edgeSize.width;
+                    break;
+                case 1:
+                    frame.origin.x = self.edgeSize.width;
+                    break;
+                case 2:
+                    frame.origin.x = self.edgeSize.width + middleWidth;
+                    frame.size.width = self.edgeSize.width;
+                    break;
+            }
+            if (i < 3)
+            {
+                frame.size.height = self.edgeSize.height;
+            }
+            else if (i < 6)
+            {
+                frame.origin.y = self.edgeSize.height;
+                frame.size.height = self.bounds.size.height - 2 * self.edgeSize.height;
+            }
+            else if (i < 9)
+            {
+                frame.origin.y = self.edgeSize.height + middleHeight;
+                frame.size.height = self.edgeSize.height;
+            }
+            sublayer.frame = frame;
         }
-        if (i < 3)
-        {
-            frame.size.height = self.edgeSize.height;
-        }
-        else if (i < 6)
-        {
-            frame.origin.y = self.edgeSize.height;
-            frame.size.height = self.bounds.size.height - 2 * self.edgeSize.height;
-        }
-        else if (i < 9)
-        {
-            frame.origin.y = self.edgeSize.height + middleHeight;
-            frame.size.height = self.edgeSize.height;
-        }
-        sublayer.frame = frame;
-    }
+    }];
 }
 
 - (void)displayLayer:(CALayer *)aLayer
