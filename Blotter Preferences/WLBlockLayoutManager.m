@@ -13,10 +13,16 @@
 - (id)initWithLayoutManager:(WLLayoutManager)aLayoutManager
 {
     if (self = [super init]) {
-        layoutManager = aLayoutManager;
+        layoutManager = [aLayoutManager copy];
     }
     
     return self;
+}
+
+- (void)dealloc
+{
+    [layoutManager release];
+    [super dealloc];
 }
 
 
