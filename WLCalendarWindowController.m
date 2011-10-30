@@ -12,6 +12,7 @@
 #import "WLCalendarDateViewController.h"
 #import "WLCalendarBoxView.h"
 #import "WLCopyCompositingFilter.h"
+#import "CATransaction+WLBlocks.h"
 
 
 // Sizes are chosen so that when switching between these 2 modes only week view is disappeard. that is the date, todo and right now vies are visually unchanged.
@@ -367,16 +368,13 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
 - (void)_updateFrame
 {
     NSRect windowFrame = [self windowFrame];
-    NSDisableScreenUpdates();
-    [CATransaction begin];
-    [CATransaction setDisableActions:YES];
-    [CATransaction setCompletionBlock:^(void) {
+    [CATransaction WL_performWithDisabledActions:^{
+        NSDisableScreenUpdates();
+        [window setFrame:windowFrame display:NO];
+        [self _applyWindowSizeToViews];
         NSEnableScreenUpdates();
         [window displayIfNeeded];
     }];
-    [window setFrame:windowFrame display:NO];
-    [self _applyWindowSizeToViews];
-    [CATransaction commit];
 }
 
 - (void)_placeViews
