@@ -72,11 +72,12 @@
 
 - (void)layoutSublayers
 {
+    CGSize size = [self bounds].size;
+    CGFloat middleWidth = fmaxf(1.0f, size.width - 2 * self.edgeSize.width);
+    CGFloat middleHeight = fmaxf(1.0f, size.height - 2 * self.edgeSize.height);
     for (NSInteger i = 0; i < 9; ++i)
     {
         CALayer *sublayer = [[self sublayers] objectAtIndex:i];
-        CGFloat middleWidth = fmaxf(1.0f, [self bounds].size.width - 2 * self.edgeSize.width);
-        CGFloat middleHeight = fmaxf(1.0f, [self bounds].size.height - 2 * self.edgeSize.height);
         CGRect frame = CGRectMake(0.0f, 0.0f, middleWidth, middleHeight);
         switch(i % 3)
         {
@@ -98,7 +99,6 @@
         else if (i < 6)
         {
             frame.origin.y = self.edgeSize.height;
-            frame.size.height = self.bounds.size.height - 2 * self.edgeSize.height;
         }
         else if (i < 9)
         {
