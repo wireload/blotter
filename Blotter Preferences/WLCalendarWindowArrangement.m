@@ -752,7 +752,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect)
     {
         CGContextSetAllowsAntialiasing(aContext, NO);
-        if (self.arrangementMode == WLCalendarWindowPositioningArrangement)
+        if (selfBlock.arrangementMode == WLCalendarWindowPositioningArrangement)
         {
             CGContextSetStrokeColorWithColor(aContext, [[[NSColor whiteColor] colorWithAlphaComponent:0.9f] WL_CGColor]);
             CGContextSetLineDash(aContext, 0.0f, (CGFloat[]){2.0f, 3.0f}, 2);
@@ -906,19 +906,20 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         sublayer.actions = newActions;
         [newActions release];
         
+        __block WLCalendarWindowArrangement *selfBlock = self;
         sublayer.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect)
         {
             /* The corner handles look like L shapes and the side handles look like I shapes. */
             
-            BOOL isResizeHandle = _isResizing && (
-                                   (i == 0 && _resizedEdge == WLCalendarWindowBottomLeftEdge) ||
-                                   (i == 1 && _resizedEdge == WLCalendarWindowBottomCenterEdge) ||
-                                   (i == 2 && _resizedEdge == WLCalendarWindowBottomRightEdge) ||
-                                   (i == 3 && _resizedEdge == WLCalendarWindowCenterLeftEdge) ||
-                                   (i == 5 && _resizedEdge == WLCalendarWindowCenterRightEdge) ||
-                                   (i == 6 && _resizedEdge == WLCalendarWindowTopLeftEdge) ||
-                                   (i == 7 && _resizedEdge == WLCalendarWindowTopCenterEdge) ||
-                                   (i == 8 && _resizedEdge == WLCalendarWindowTopRightEdge)
+            BOOL isResizeHandle = selfBlock->_isResizing && (
+                                   (i == 0 && selfBlock->_resizedEdge == WLCalendarWindowBottomLeftEdge) ||
+                                   (i == 1 && selfBlock->_resizedEdge == WLCalendarWindowBottomCenterEdge) ||
+                                   (i == 2 && selfBlock->_resizedEdge == WLCalendarWindowBottomRightEdge) ||
+                                   (i == 3 && selfBlock->_resizedEdge == WLCalendarWindowCenterLeftEdge) ||
+                                   (i == 5 && selfBlock->_resizedEdge == WLCalendarWindowCenterRightEdge) ||
+                                   (i == 6 && selfBlock->_resizedEdge == WLCalendarWindowTopLeftEdge) ||
+                                   (i == 7 && selfBlock->_resizedEdge == WLCalendarWindowTopCenterEdge) ||
+                                   (i == 8 && selfBlock->_resizedEdge == WLCalendarWindowTopRightEdge)
                                    );
             CGContextSetFillColorWithColor(aContext, [(isResizeHandle ? [NSColor colorWithCalibratedWhite:0.2 alpha:1.0] : [NSColor whiteColor]) WL_CGColor]);
             CGContextSetShadowWithColor(aContext, CGSizeMake(0, -1.0), 0.0, [[isResizeHandle ? [NSColor whiteColor] : [NSColor blackColor] colorWithAlphaComponent:0.20] WL_CGColor]);
