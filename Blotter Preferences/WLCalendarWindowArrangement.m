@@ -690,7 +690,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         _navigationLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
 
         _calendarWindowLayer = [self setupCalendarWindowLayer];
-        _calendarWindowLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+        _calendarWindowLayer.autoresizingMask = kCALayerNotSizable;
 
         _resizeHandlesLayer = [self setupResizeHandlesLayer];
         _resizeHandlesLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
