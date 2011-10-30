@@ -12,6 +12,7 @@
 
 @interface WLNinePartBlockLayer : WLBlockLayer {
     CGImageRef _contents;
+    NSArray *_sublayers;
 }
 
 /*!

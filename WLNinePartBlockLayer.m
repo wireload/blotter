@@ -6,8 +6,8 @@
 //  Copyright (c) 2011 WireLoad. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "WLNinePartBlockLayer.h"
-#import "NSColor+CGColor.h"
 
 
 @implementation WLNinePartBlockLayer
@@ -17,7 +17,8 @@
     self = [super init];
     if (self != nil)
     {
-        for (NSInteger i = 0; i < 9; ++i)
+        NSMutableArray *a = [[NSMutableArray alloc] initWithCapacity:9];
+        for (NSUInteger i = 0; i < 9; ++i)
         {
             CALayer *subLayer = [CALayer layer];
             subLayer.magnificationFilter = kCAFilterLinear;
@@ -25,9 +26,10 @@
             subLayer.autoresizingMask = 0;
             subLayer.edgeAntialiasingMask = 0;
             subLayer.delegate = self;
+            [a addObject:subLayer];
             [self addSublayer:subLayer];
-            [subLayer setNeedsDisplay];
         }
+        _sublayers = a;
     }
     return self;
 }
@@ -36,6 +38,7 @@
 {
     if (_contents != NULL)
         CGImageRelease(_contents);
+    [_sublayers release];
     [super dealloc];
 }
 
@@ -59,9 +62,9 @@
     CGSize size = [self bounds].size;
     CGFloat middleWidth = fmaxf(1.0f, size.width - 2 * self.edgeSize.width);
     CGFloat middleHeight = fmaxf(1.0f, size.height - 2 * self.edgeSize.height);
-    for (NSInteger i = 0; i < 9; ++i)
+    for (NSUInteger i = 0; i < 9; ++i)
     {
-        CALayer *sublayer = [[self sublayers] objectAtIndex:i];
+        CALayer *sublayer = [_sublayers objectAtIndex:i];
         CGRect frame = CGRectMake(0.0f, 0.0f, middleWidth, middleHeight);
         switch(i % 3)
         {
@@ -97,21 +100,22 @@
 {
     NSAssert(_contents != NULL, @"_contents must be initialized at this point");
     
-    NSInteger i = [self.sublayers indexOfObjectIdenticalTo:aLayer];
+    NSInteger i = [_sublayers indexOfObjectIdenticalTo:aLayer];
     if (i == NSNotFound)
     {
         NSLog(@"Unknown sublayer: %@", aLayer);
         return;
     }
-    CALayer *sublayer = [[self sublayers] objectAtIndex:i];
+    CALayer *sublayer = [_sublayers objectAtIndex:i];
     CGRect sliceFrame = [sublayer frame];
     if (!self.geometryFlipped)
         sliceFrame.origin.y = self.bounds.size.height - sliceFrame.size.height - sliceFrame.origin.y;
     CGImageRef sliceImage = CGImageCreateWithImageInRect(_contents, sliceFrame); //CGBitmapContextCreateImage(sliceImageContext);
-    
-    sublayer.contents = (id)sliceImage;
-    // TODO If setNeedsDisplay is ever called on the sublayer, its contents will be overwritten.
-    CGImageRelease(sliceImage);
+    if (sliceImage != NULL)
+    {
+        sublayer.contents = (id)sliceImage;
+        CGImageRelease(sliceImage);
+    }
 }
 
 - (void)display
@@ -136,7 +140,7 @@
         }
         CGColorSpaceRelease(colorSpace);
     }
-    [self.sublayers makeObjectsPerformSelector:@selector(setNeedsDisplay)];
+    [_sublayers makeObjectsPerformSelector:@selector(setNeedsDisplay)];
     self.contents = nil;
 }
 
