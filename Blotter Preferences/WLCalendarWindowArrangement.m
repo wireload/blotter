@@ -201,6 +201,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     windowFrame = [self alignCalendarWindowFrame:windowFrame];
     [_calendarWindowLayer setValue:[NSValue valueWithRect:windowFrame] forKey:_WLOriginalFrame];
     _navigationLayer.hidden = NO;
+    [self setResizeHandlesNeedDisplay];
 }
 
 - (void)continueResizingAtPoint:(NSPoint)aPoint startPoint:(NSPoint)aStartPoint edge:(WLCalendarWindowEdge)anEdge
@@ -395,6 +396,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     windowFrame = NSRectToCGRect([self.delegate calendarWindowArrangement:self setFrame:NSRectFromCGRect(windowFrame)]);
     _calendarWindowLayer.frame = CGRectInset(windowFrame, -self.edgeSize.width, -self.edgeSize.height);
     _navigationLayer.hidden = YES;
+    [self setResizeHandlesNeedDisplay];
 }
 
 - (NSRect)navigationHelperFrameForPosition:(BLPosition)aPosition
@@ -855,8 +857,8 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     static const int dotSpace = 6;
     static const CGSize margin = {.width = 9.0f, .height = 9.0f};
     
-    CALayer *l = [CALayer layer];
-    
+    CALayer *l = [CALayer layer];   
+   
     l.layoutManager = [[[WLBlockLayoutManager alloc] initWithLayoutManager:^(CALayer *aLayer) {
         CGSize size = [aLayer bounds].size;
         for (int i = 0; i < 9; i++) {
@@ -864,7 +866,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
                 continue;  
             CALayer *sublayer = [[aLayer sublayers] objectAtIndex:i + (i > 4 ? -1 : 0)];
 
-            CGRect frame = CGRectMake(margin.width, margin.height - 1, dotSpace * 2 + dotWidth + 1, dotSpace * 2 + dotWidth + 1);
+            CGRect frame = CGRectMake(margin.width + 1, margin.height, dotSpace * 2 + dotWidth, dotSpace * 2 + dotWidth + 1);
             switch(i % 3) {
                 case 1:
                     frame.origin.x = floorf(size.width / 2 - frame.size.width / 2);
@@ -896,12 +898,30 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
                
         sublayer.autoresizingMask = 0;
         
+        // Don't animate content changes - when you click a resize handle it should immediately look
+        // selected, not cross fade to a selected state.
+        NSMutableDictionary *newActions = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+                                           [NSNull null], @"contents",
+                                           nil];
+        sublayer.actions = newActions;
+        [newActions release];
+        
         sublayer.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect)
         {
             /* The corner handles look like L shapes and the side handles look like I shapes. */
             
-            CGContextSetFillColorWithColor(aContext, [[NSColor whiteColor] WL_CGColor]);
-            CGContextSetShadowWithColor(aContext, CGSizeMake(0, -1.0), 0.0, [[[NSColor blackColor] colorWithAlphaComponent:0.20] WL_CGColor]);
+            BOOL isResizeHandle = _isResizing && (
+                                   (i == 0 && _resizedEdge == WLCalendarWindowBottomLeftEdge) ||
+                                   (i == 1 && _resizedEdge == WLCalendarWindowBottomCenterEdge) ||
+                                   (i == 2 && _resizedEdge == WLCalendarWindowBottomRightEdge) ||
+                                   (i == 3 && _resizedEdge == WLCalendarWindowCenterLeftEdge) ||
+                                   (i == 5 && _resizedEdge == WLCalendarWindowCenterRightEdge) ||
+                                   (i == 6 && _resizedEdge == WLCalendarWindowTopLeftEdge) ||
+                                   (i == 7 && _resizedEdge == WLCalendarWindowTopCenterEdge) ||
+                                   (i == 8 && _resizedEdge == WLCalendarWindowTopRightEdge)
+                                   );
+            CGContextSetFillColorWithColor(aContext, [(isResizeHandle ? [NSColor colorWithCalibratedWhite:0.2 alpha:1.0] : [NSColor whiteColor]) WL_CGColor]);
+            CGContextSetShadowWithColor(aContext, CGSizeMake(0, -1.0), 0.0, [[isResizeHandle ? [NSColor whiteColor] : [NSColor blackColor] colorWithAlphaComponent:0.20] WL_CGColor]);
             
             switch(i)
             {
@@ -952,6 +972,14 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     CALayer *l = [CALayer layer];
     l.backgroundColor = [[[NSColor blackColor] colorWithAlphaComponent:0.25f] WL_CGColor];
     return l;
+}
+
+- (void)setResizeHandlesNeedDisplay
+{
+    for (int i = 0; i < 8; i++) {
+        CALayer *sublayer = [[_resizeHandlesLayer sublayers] objectAtIndex:i];
+        [sublayer setNeedsDisplay];
+    }
 }
 
 @end
