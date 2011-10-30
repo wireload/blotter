@@ -40,6 +40,7 @@ typedef enum {
     CALayer *_imageLayer;
     CALayer *_navigationLayer;
     CALayer *_calendarWindowLayer;
+    CALayer *_resizeHandlesLayer;
     CALayer *_shadowLayer;
     NSTrackingArea *_navigationHelperAreas[9];
     CALayer *_navigationHelperLayers[9];
@@ -92,6 +93,8 @@ typedef enum {
 - (CALayer *)setupCalendarWindowLayer;
 
 - (CALayer *)setupNavigationHelperLayer;
+
+- (CALayer *)setupResizeHandlesLayer;
 
 @end
 
