@@ -78,10 +78,14 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     NSParameterAssert([self wantsLayer]);
 
     arrangementMode = newArrangementMode;
-    if (arrangementMode & WLCalendarWindowResizingArrangement)
+    if (arrangementMode & WLCalendarWindowResizingArrangement) {
+        _resizeHandlesLayer.hidden = NO;
         _calendarWindowLayer.borderColor = [[NSColor whiteColor] WL_CGColor];
-    else
-        _calendarWindowLayer.borderColor = [[NSColor clearColor] WL_CGColor];
+    }
+    else {
+        _resizeHandlesLayer.hidden = YES;
+        _calendarWindowLayer.borderColor = [[NSColor clearColor] WL_CGColor];        
+    }
     [_navigationLayer setNeedsDisplay];
     [[self layer] setNeedsLayout];
 }
@@ -692,6 +696,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         _resizeHandlesLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
         [_calendarWindowLayer addSublayer:_resizeHandlesLayer];
         _resizeHandlesLayer.frame = _calendarWindowLayer.bounds;
+        _resizeHandlesLayer.hidden = YES;
         
         _shadowLayer = [self setupShadowLayer];
         _shadowLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
@@ -919,12 +924,6 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
                     break;
             }
         };
-        
-        /*sublayer.shadowColor = [[NSColor blackColor] WL_CGColor];
-        sublayer.shadowOffset = CGSizeMake(1.0, 1.0);
-        sublayer.shadowOpacity = 0.5f;
-        sublayer.shadowRadius = 10.0f;*/
-
 
         [l addSublayer:sublayer];
     }
