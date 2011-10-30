@@ -628,6 +628,11 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         _calendarWindowLayer = [self setupCalendarWindowLayer];
         _calendarWindowLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
 
+        _resizeHandlesLayer = [self setupResizeHandlesLayer];
+        _resizeHandlesLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+        [_calendarWindowLayer addSublayer:_resizeHandlesLayer];
+        _resizeHandlesLayer.frame = _calendarWindowLayer.bounds;
+        
         _shadowLayer = [self setupShadowLayer];
         _shadowLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
 
@@ -752,6 +757,107 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     l.borderColor = [[NSColor whiteColor] WL_CGColor];
     [l setValue:[NSValue valueWithSize:_WLDefaultEdgeSize] forKeyPath:_WLEdgeSizeKey];
     [l addObserver:self forKeyPath:@"bounds" options:NSKeyValueObservingOptionNew context:NULL];
+    return l;
+}
+
+- (CALayer *)setupResizeHandlesLayer
+{
+    static const int dotWidth = 3;
+    static const int dotSpace = 6;
+    static const CGSize margin = {.width = 9.0f, .height = 9.0f};
+    
+    CALayer *l = [CALayer layer];
+    l.bounds = CGRectMake(0, 0, 100, 100);
+    
+    for (int i = 0; i < 9; i++) {
+        if (i == 4)
+            continue;
+        WLBlockLayer *sublayer = [NSClassFromString(@"WLBlockLayer") layer];
+        
+        sublayer.autoresizingMask = 0;
+
+        CGRect frame = CGRectMake(margin.width, margin.height - 1, dotSpace * 2 + dotWidth + 1, dotSpace * 2 + dotWidth + 1);
+        switch(i % 3) {
+            case 0:
+                sublayer.autoresizingMask |= kCALayerMaxXMargin;
+                break;
+            case 1:
+                sublayer.autoresizingMask |= kCALayerMinXMargin | kCALayerMaxXMargin;
+                frame.origin.x = floorf(100 / 2 - frame.size.width / 2);
+                break;
+            case 2:
+                sublayer.autoresizingMask |= kCALayerMinXMargin;
+                frame.origin.x = floorf(100 - margin.width - dotWidth);
+                break;
+        }
+        if (i < 3) {
+            sublayer.autoresizingMask |= kCALayerMaxYMargin;
+        } else if (i < 6) {
+            sublayer.autoresizingMask |= kCALayerMinYMargin | kCALayerMaxYMargin;
+            frame.origin.y = floorf(100 / 2 - frame.size.height / 2) - 1;
+        } else {
+            sublayer.autoresizingMask |= kCALayerMinYMargin;
+            frame.origin.y = floorf(100 - margin.height - dotWidth) - 1;
+        }
+        if (i == 6 || i == 8)
+            frame.origin.y = 100 - margin.height - dotSpace - dotWidth - 1;
+        if (i == 2 || i == 8)
+            frame.origin.x = 100 - margin.width - dotSpace - dotWidth;
+            
+        sublayer.frame = frame;
+        
+        sublayer.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect)
+        {
+            /* The corner handles look like L shapes and the side handles look like I shapes. */
+            
+            CGContextSetFillColorWithColor(aContext, [[NSColor whiteColor] WL_CGColor]);
+            CGContextSetShadowWithColor(aContext, CGSizeMake(0, -1.0), 0.0, [[[NSColor blackColor] colorWithAlphaComponent:0.20] WL_CGColor]);
+            
+            switch(i)
+            {
+                case 0:
+                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1, dotWidth, dotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(dotSpace, 1, dotWidth, dotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1 + dotSpace, dotWidth, dotWidth));
+                    break;
+                case 1:
+                case 7:
+                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1, dotWidth, dotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(dotSpace, 1, dotWidth, dotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(2 * dotSpace, 1, dotWidth, dotWidth));
+                    break;
+                case 2:
+                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1, dotWidth, dotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(dotSpace, 1, dotWidth, dotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(dotSpace, 1 + dotSpace, dotWidth, dotWidth));
+                    break;
+                case 3:
+                case 5:
+                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1, dotWidth, dotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1 + dotSpace, dotWidth, dotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1 + 2 * dotSpace, dotWidth, dotWidth));
+                    break;
+                case 6:
+                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1, dotWidth, dotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1 + dotSpace, dotWidth, dotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(dotSpace, 1 + dotSpace, dotWidth, dotWidth));
+                    break;
+                case 8:
+                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1 + dotSpace, dotWidth, dotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(dotSpace, 1 + dotSpace, dotWidth, dotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(dotSpace, 1, dotWidth, dotWidth));
+                    break;
+            }
+        };
+        
+        /*sublayer.shadowColor = [[NSColor blackColor] WL_CGColor];
+        sublayer.shadowOffset = CGSizeMake(1.0, 1.0);
+        sublayer.shadowOpacity = 0.5f;
+        sublayer.shadowRadius = 10.0f;*/
+
+
+        [l addSublayer:sublayer];
+    }
     return l;
 }
 
