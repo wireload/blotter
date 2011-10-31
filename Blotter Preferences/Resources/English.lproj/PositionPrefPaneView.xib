@@ -12,16 +12,16 @@
 		</object>
 		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<string>NSTextField</string>
-			<string>NSCustomObject</string>
-			<string>NSMenu</string>
 			<string>NSMenuItem</string>
+			<string>NSMenu</string>
+			<string>NSTextField</string>
+			<string>NSTextFieldCell</string>
 			<string>NSArrayController</string>
 			<string>NSPopUpButton</string>
 			<string>NSCustomView</string>
 			<string>NSPopUpButtonCell</string>
 			<string>NSUserDefaultsController</string>
-			<string>NSTextFieldCell</string>
+			<string>NSCustomObject</string>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -50,7 +50,7 @@
 					<object class="NSCustomView" id="238193824">
 						<reference key="NSNextResponder" ref="453662770"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrame">{{20, 20}, {400, 251}}</string>
+						<string key="NSFrame">{{21, 20}, {400, 251}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -60,10 +60,10 @@
 					<object class="NSPopUpButton" id="738986184">
 						<reference key="NSNextResponder" ref="453662770"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{126, 309}, {297, 26}}</string>
+						<string key="NSFrame">{{126, 287}, {297, 26}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="437884597"/>
+						<reference key="NSNextKeyView" ref="238193824"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="769130927">
 							<int key="NSCellFlags">-2076049856</int>
@@ -103,7 +103,7 @@
 					<object class="NSTextField" id="219358551">
 						<reference key="NSNextResponder" ref="453662770"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{18, 315}, {107, 17}}</string>
+						<string key="NSFrame">{{18, 293}, {107, 17}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="738986184"/>
@@ -137,7 +137,7 @@
 					<object class="NSTextField" id="551017980">
 						<reference key="NSNextResponder" ref="453662770"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{17, 345}, {107, 17}}</string>
+						<string key="NSFrame">{{17, 323}, {107, 17}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="138711095"/>
@@ -155,7 +155,7 @@
 					<object class="NSPopUpButton" id="138711095">
 						<reference key="NSNextResponder" ref="453662770"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{126, 339}, {141, 26}}</string>
+						<string key="NSFrame">{{126, 317}, {141, 26}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="219358551"/>
@@ -240,26 +240,8 @@
 							<int key="NSArrowPosition">2</int>
 						</object>
 					</object>
-					<object class="NSTextField" id="437884597">
-						<reference key="NSNextResponder" ref="453662770"/>
-						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{17, 279}, {359, 17}}</string>
-						<reference key="NSSuperview" ref="453662770"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="238193824"/>
-						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="262417130">
-							<int key="NSCellFlags">68288064</int>
-							<int key="NSCellFlags2">272630784</int>
-							<string key="NSContents">To position the calendar, drag it to the desired position.</string>
-							<reference key="NSSupport" ref="943739518"/>
-							<reference key="NSControlView" ref="437884597"/>
-							<reference key="NSBackgroundColor" ref="48242679"/>
-							<reference key="NSTextColor" ref="300560464"/>
-						</object>
-					</object>
 				</object>
-				<string key="NSFrameSize">{440, 383}</string>
+				<string key="NSFrameSize">{440, 361}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="551017980"/>
@@ -469,7 +451,6 @@
 						<reference key="object" ref="453662770"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="437884597"/>
 							<reference ref="138711095"/>
 							<reference ref="551017980"/>
 							<reference ref="219358551"/>
@@ -478,20 +459,6 @@
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Position View</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">4</int>
-						<reference key="object" ref="437884597"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="262417130"/>
-						</object>
-						<reference key="parent" ref="453662770"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">5</int>
-						<reference key="object" ref="262417130"/>
-						<reference key="parent" ref="437884597"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">8</int>
@@ -633,10 +600,8 @@
 					<string>25.IBPluginDependency</string>
 					<string>34.IBPluginDependency</string>
 					<string>35.IBPluginDependency</string>
-					<string>4.IBPluginDependency</string>
 					<string>46.CustomClassName</string>
 					<string>46.IBPluginDependency</string>
-					<string>5.IBPluginDependency</string>
 					<string>64.IBPluginDependency</string>
 					<string>65.IBPluginDependency</string>
 					<string>66.IBPluginDependency</string>
@@ -661,9 +626,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>WLScreensController</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>

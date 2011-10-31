@@ -97,7 +97,7 @@
 - (NSSize)preferredFrameSize
 {
     // XXX This has to be changed if more controls are added on the top of the position pref pane.
-    static const NSSize PositionerMargins = {.width = 40.0, .height = 133.0};
+    static const NSSize PositionerMargins = {.width = 40.0, .height = 111.0};
     const NSSize DoubledPositionControlSize = {.width = 2 * (defaultFrameSize.width - PositionerMargins.width) + PositionerMargins.width, .height = 2 * (defaultFrameSize.height - PositionerMargins.height) + PositionerMargins.height };
     
     int calendarSize = [[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"];
