@@ -22,6 +22,11 @@
 		28B54D5E12839B8D0037BF53 /* GeneralPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54D5D12839B8D0037BF53 /* GeneralPrefController.m */; };
 		28B54D7A1283AEEE0037BF53 /* PositionPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54D791283AEEE0037BF53 /* PositionPrefController.m */; };
 		28CB5085145DB3E200810395 /* WLBlockLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CB5084145DB3E200810395 /* WLBlockLayoutManager.m */; };
+		28CB5089145E22B900810395 /* NSCursor+ResizeAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CB5088145E22B900810395 /* NSCursor+ResizeAdditions.m */; };
+		28CB50B5145E277800810395 /* Resize-Cursor-Down-Left.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50B1145E277800810395 /* Resize-Cursor-Down-Left.png */; };
+		28CB50B6145E277800810395 /* Resize-Cursor-Down-Right.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50B2145E277800810395 /* Resize-Cursor-Down-Right.png */; };
+		28CB50B7145E277800810395 /* Resize-Cursor-Up-Right.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50B3145E277800810395 /* Resize-Cursor-Up-Right.png */; };
+		28CB50B8145E277800810395 /* Resize-Cursor-Up-Left.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50B4145E277800810395 /* Resize-Cursor-Up-Left.png */; };
 		28F6993D129B723900D4BB97 /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */; };
 		28F69A29129C587F00D4BB97 /* WLCalendarWindowArrangement.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69A28129C587F00D4BB97 /* WLCalendarWindowArrangement.m */; };
 		28F69B53129C82E800D4BB97 /* BLPositionerControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69B52129C82E800D4BB97 /* BLPositionerControlCell.m */; };
@@ -147,6 +152,12 @@
 		28B54D791283AEEE0037BF53 /* PositionPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PositionPrefController.m; sourceTree = "<group>"; };
 		28CB5083145DB3E200810395 /* WLBlockLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLBlockLayoutManager.h; sourceTree = "<group>"; };
 		28CB5084145DB3E200810395 /* WLBlockLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLBlockLayoutManager.m; sourceTree = "<group>"; };
+		28CB5087145E22B900810395 /* NSCursor+ResizeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; path = "NSCursor+ResizeAdditions.h"; sourceTree = "<group>"; };
+		28CB5088145E22B900810395 /* NSCursor+ResizeAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCursor+ResizeAdditions.m"; sourceTree = "<group>"; };
+		28CB50B1145E277800810395 /* Resize-Cursor-Down-Left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Resize-Cursor-Down-Left.png"; sourceTree = "<group>"; };
+		28CB50B2145E277800810395 /* Resize-Cursor-Down-Right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Resize-Cursor-Down-Right.png"; sourceTree = "<group>"; };
+		28CB50B3145E277800810395 /* Resize-Cursor-Up-Right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Resize-Cursor-Up-Right.png"; sourceTree = "<group>"; };
+		28CB50B4145E277800810395 /* Resize-Cursor-Up-Left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Resize-Cursor-Up-Left.png"; sourceTree = "<group>"; };
 		28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAtLoginController.m; sourceTree = "<group>"; };
 		28F6993C129B723900D4BB97 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
 		28F69A27129C587F00D4BB97 /* WLCalendarWindowArrangement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowArrangement.h; sourceTree = "<group>"; };
@@ -276,6 +287,10 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				28CB50B1145E277800810395 /* Resize-Cursor-Down-Left.png */,
+				28CB50B2145E277800810395 /* Resize-Cursor-Down-Right.png */,
+				28CB50B3145E277800810395 /* Resize-Cursor-Up-Right.png */,
+				28CB50B4145E277800810395 /* Resize-Cursor-Up-Left.png */,
 				280A24E4145A2312001B82C8 /* positioning-border-2.png */,
 				280A24E5145A2312001B82C8 /* positioning-border-3.png */,
 				280A24E6145A2312001B82C8 /* positioning-border-4.png */,
@@ -307,6 +322,8 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				28CB5087145E22B900810395 /* NSCursor+ResizeAdditions.h */,
+				28CB5088145E22B900810395 /* NSCursor+ResizeAdditions.m */,
 				E21BC9D3141635AD00A91662 /* Layout Pref Pane Views */,
 				E21BC9D2141625F200A91662 /* Pref Controllers */,
 				28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */,
@@ -556,6 +573,10 @@
 				280A24F2145A2312001B82C8 /* positioning-border-9.png in Resources */,
 				280A24F3145A2312001B82C8 /* positioning-border-1.png in Resources */,
 				280A24F5145A255E001B82C8 /* positioning-border-5.png in Resources */,
+				28CB50B5145E277800810395 /* Resize-Cursor-Down-Left.png in Resources */,
+				28CB50B6145E277800810395 /* Resize-Cursor-Down-Right.png in Resources */,
+				28CB50B7145E277800810395 /* Resize-Cursor-Up-Right.png in Resources */,
+				28CB50B8145E277800810395 /* Resize-Cursor-Up-Left.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -586,6 +607,7 @@
 				E262E5E9142C199800715C02 /* WLLayoutBackgroundView.m in Sources */,
 				280A24E31459EE08001B82C8 /* WLRecessedBoxShadowLayer.m in Sources */,
 				28CB5085145DB3E200810395 /* WLBlockLayoutManager.m in Sources */,
+				28CB5089145E22B900810395 /* NSCursor+ResizeAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

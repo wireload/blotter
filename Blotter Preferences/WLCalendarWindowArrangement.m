@@ -14,6 +14,7 @@
 #import "CATransaction+WLBlocks.h"
 #import "WLRecessedBoxShadowLayer.h"
 #import "WLBlockLayoutManager.h"
+#import "NSCursor+ResizeAdditions.h"
 
 
 static NSString *_WLPositionKey = @"position";
@@ -211,6 +212,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         _calendarWindowLayer.frame = CGRectInset(windowFrame, -self.edgeSize.width, -self.edgeSize.height);
     }
     _navigationLayer.hidden = YES;
+    [self updateTrackingAreas];
 }
 
 - (void)startResizingAtPoint:(NSPoint)aPoint edge:(WLCalendarWindowEdge)anEdge
@@ -415,6 +417,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     _calendarWindowLayer.frame = CGRectInset(windowFrame, -self.edgeSize.width, -self.edgeSize.height);
     _navigationLayer.hidden = YES;
     [self setResizeHandlesNeedDisplay];
+    [self updateTrackingAreas];
 }
 
 - (NSRect)navigationHelperFrameForPosition:(BLPosition)aPosition
@@ -632,6 +635,10 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
 - (void)cursorUpdate:(NSEvent *)anEvent
 {
+    // Leave the cursor alone while resizing.
+    if (_isResizing || _isPositioning)
+        return;
+    
     NSPoint hitPoint;
     NSTrackingArea *trackingArea;
     
@@ -1044,9 +1051,13 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         NSCursor *cursor = nil;
         switch(i) {
             case 0:
+                cursor = [NSCursor resizeDownLeftCursor];
+                break;
             case 3:
-            case 6:
                 cursor = [NSCursor resizeLeftCursor];
+                break;
+            case 6:
+                cursor = [NSCursor resizeUpLeftCursor];
                 break;
             case 1:                
                 cursor = [NSCursor resizeDownCursor];
@@ -1058,9 +1069,13 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
                 cursor = [NSCursor openHandCursor];
                 break;
             case 2:
-            case 5:
-            case 8:
+                cursor = [NSCursor resizeDownRightCursor];
+                break;
+            case 5:                
                 cursor = [NSCursor resizeRightCursor];
+                break;
+            case 8:
+                cursor = [NSCursor resizeUpRightCursor];
                 break;
             default:
                 cursor = [NSCursor arrowCursor];
