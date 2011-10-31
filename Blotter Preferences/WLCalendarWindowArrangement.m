@@ -1086,7 +1086,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
         
         NSRect f = NSRectFromCGRect(frame);
-        _resizeAreas[i] = [[NSTrackingArea alloc] initWithRect:f options:NSTrackingCursorUpdate | NSTrackingActiveInKeyWindow owner:self userInfo:[NSDictionary dictionaryWithObject:cursor forKey:@"cursor"]];
+        _resizeAreas[i] = [[NSTrackingArea alloc] initWithRect:f options:NSTrackingCursorUpdate | NSTrackingActiveInActiveApp owner:self userInfo:[NSDictionary dictionaryWithObject:cursor forKey:@"cursor"]];
         [self addTrackingArea:_resizeAreas[i]];
     }
 }
