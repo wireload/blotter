@@ -116,7 +116,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     CGFloat offset = layerSize.height;
     CGFloat lastVisibleOffset = offset;
     WLCalendarTaskLayer *firstHiddenLayer = nil;
-    static const CGFloat TopMargin = 10.0f;
+    static const CGFloat TopMargin = 9.0f;
     for (WLCalendarTaskLayer *taskLayer in [aLayer valueForKey:_WLOrderedSublayersKey])
     {
         CGFloat height = fminf([taskLayer preferredHeightWithWidth:layerSize.width], layerSize.height);

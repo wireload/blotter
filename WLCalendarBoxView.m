@@ -18,6 +18,8 @@ static const CGFloat _WLYPadding = 26.0f;
 
 static const CGFloat _WLMysteriousExtraLeftSpace = 2.0f;
 
+static const CGFloat _WLMysteriousExtraBottomSpace = 4.0f;
+
 @implementation WLCalendarBoxView
 
 - (id)initWithFrame:(NSRect)aFrameRect
@@ -99,9 +101,10 @@ static const CGFloat _WLMysteriousExtraLeftSpace = 2.0f;
     NSRect bounds = [self bounds];
     NSRect titleFrame = [self _titleFrame];
     CGFloat yTopMargin = 10.0f;
-    CGFloat yBottomMargin = _WLYPadding / 2;
+    CGFloat yBottomMargin = _WLYPadding / 2 + _WLMysteriousExtraBottomSpace;
     if (self.softEdges)
     {
+        yTopMargin = 5.0f;
         yBottomMargin = 14.0f;
     }
     return NSIntegralRect(NSMakeRect(NSMinX(bounds) + _WLXPadding / 2 + _WLMysteriousExtraLeftSpace,
