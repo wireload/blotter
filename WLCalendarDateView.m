@@ -35,6 +35,11 @@
     [[NSGraphicsContext currentContext] setShouldAntialias:YES];
     NSRect bounds = [self bounds];
 
+    CGContextRef cgContext = [[NSGraphicsContext currentContext] graphicsPort];
+    CGContextSetAllowsAntialiasing(cgContext, YES);
+    CGContextSetShouldAntialias(cgContext, YES);
+    CGContextSetAllowsFontSmoothing(cgContext, NO);
+    
     if ([self wantsLayer])
     {
         [[NSColor WL_windowFrameBackgroundColor] set];
