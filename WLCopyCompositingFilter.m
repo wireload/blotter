@@ -37,7 +37,7 @@ static CIKernel *kernel = nil;
         NSString *kernelCode = @"\
         kernel vec4 coreImageKernel(sampler image, sampler backgroundImage)\
         {\
-        vec4 srcColor = sample(image, samplerCoord(backgroundImage));\
+        vec4 srcColor = sample(image, samplerCoord(image));\
         vec4 destColor = sample(backgroundImage, samplerCoord(backgroundImage));\
         destColor.a -= srcColor.a;\
         destColor.a = max(0.0, destColor.a);\
