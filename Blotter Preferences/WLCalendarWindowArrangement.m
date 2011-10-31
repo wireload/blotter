@@ -1043,14 +1043,14 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         NSCursor *cursor = nil;
         switch(i) {
             case 0:
-                cursor = [NSCursor resizeDownLeftCursor];
+                cursor = [NSCursor WL_resizeDownLeftCursor];
                 break;
             case 1:                
                 cursor = [NSCursor resizeDownCursor];
                 frame = CGRectMake(self.edgeSize.width, 0, size.width - 2 * self.edgeSize.width, self.edgeSize.height - 1);
                 break;
             case 2:
-                cursor = [NSCursor resizeDownRightCursor];
+                cursor = [NSCursor WL_resizeDownRightCursor];
                 frame = CGRectMake(size.width - self.edgeSize.width + 1, 0, self.edgeSize.width - 1, self.edgeSize.height - 1);
                 break;
             case 3:
@@ -1067,7 +1067,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
                 frame = CGRectMake(size.width - self.edgeSize.width + 1, self.edgeSize.height, self.edgeSize.width - 1, size.height - 2 * self.edgeSize.height);
                 break;
             case 6:
-                cursor = [NSCursor resizeUpLeftCursor];
+                cursor = [NSCursor WL_resizeUpLeftCursor];
                 frame = CGRectMake(0, size.height - self.edgeSize.height + 1, self.edgeSize.width - 1, self.edgeSize.height - 1);
                 break;
             case 7:
@@ -1075,7 +1075,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
                 frame = CGRectMake(self.edgeSize.width, size.height - self.edgeSize.height + 1, size.width - 2 * self.edgeSize.width, self.edgeSize.height - 1);
                 break;
             case 8:
-                cursor = [NSCursor resizeUpRightCursor];
+                cursor = [NSCursor WL_resizeUpRightCursor];
                 frame = CGRectMake(size.width - self.edgeSize.width + 1, size.height - self.edgeSize.height + 1, self.edgeSize.width - 1, self.edgeSize.height - 1);
                 break;
             default:

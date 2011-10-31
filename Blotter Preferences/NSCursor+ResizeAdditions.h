@@ -8,11 +8,11 @@
 
 #import <AppKit/AppKit.h>
 
-@interface NSCursor (ResizeAdditions)
+@interface NSCursor (WLResizeAdditions)
 
-+ (NSCursor *)resizeUpLeftCursor;
-+ (NSCursor *)resizeUpRightCursor;
-+ (NSCursor *)resizeDownLeftCursor;
-+ (NSCursor *)resizeDownRightCursor;
++ (NSCursor *)WL_resizeUpLeftCursor;
++ (NSCursor *)WL_resizeUpRightCursor;
++ (NSCursor *)WL_resizeDownLeftCursor;
++ (NSCursor *)WL_resizeDownRightCursor;
 
 @end

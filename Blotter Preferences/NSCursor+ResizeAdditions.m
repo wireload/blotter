@@ -25,28 +25,28 @@ static NSCursor *_downRightCursor = nil;
     return [result autorelease];
 }
 
-+ (NSCursor *)resizeUpLeftCursor {
++ (NSCursor *)WL_resizeUpLeftCursor {
     if (_upLeftCursor == nil) {
         _upLeftCursor = [[self cursorFromImage:@"Resize-Cursor-Up-Left"] retain];
     }
     return _upLeftCursor;    
 }
 
-+ (NSCursor *)resizeUpRightCursor {
++ (NSCursor *)WL_resizeUpRightCursor {
     if (_upRightCursor == nil) {
         _upRightCursor = [[self cursorFromImage:@"Resize-Cursor-Up-Right"] retain];
     }
     return _upRightCursor;    
 }
 
-+ (NSCursor *)resizeDownLeftCursor {
++ (NSCursor *)WL_resizeDownLeftCursor {
     if (_downLeftCursor == nil) {
         _downLeftCursor = [[self cursorFromImage:@"Resize-Cursor-Down-Left"] retain];
     }
     return _downLeftCursor;    
 }
 
-+ (NSCursor *)resizeDownRightCursor {
++ (NSCursor *)WL_resizeDownRightCursor {
     if (_downRightCursor == nil) {
         _downRightCursor = [[self cursorFromImage:@"Resize-Cursor-Down-Right"] retain];
     }
