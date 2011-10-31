@@ -152,7 +152,7 @@
 		28B54D791283AEEE0037BF53 /* PositionPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PositionPrefController.m; sourceTree = "<group>"; };
 		28CB5083145DB3E200810395 /* WLBlockLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLBlockLayoutManager.h; sourceTree = "<group>"; };
 		28CB5084145DB3E200810395 /* WLBlockLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLBlockLayoutManager.m; sourceTree = "<group>"; };
-		28CB5087145E22B900810395 /* NSCursor+ResizeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; path = "NSCursor+ResizeAdditions.h"; sourceTree = "<group>"; };
+		28CB5087145E22B900810395 /* NSCursor+ResizeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCursor+ResizeAdditions.h"; sourceTree = "<group>"; };
 		28CB5088145E22B900810395 /* NSCursor+ResizeAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCursor+ResizeAdditions.m"; sourceTree = "<group>"; };
 		28CB50B1145E277800810395 /* Resize-Cursor-Down-Left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Resize-Cursor-Down-Left.png"; sourceTree = "<group>"; };
 		28CB50B2145E277800810395 /* Resize-Cursor-Down-Right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Resize-Cursor-Down-Right.png"; sourceTree = "<group>"; };
@@ -322,8 +322,6 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				28CB5087145E22B900810395 /* NSCursor+ResizeAdditions.h */,
-				28CB5088145E22B900810395 /* NSCursor+ResizeAdditions.m */,
 				E21BC9D3141635AD00A91662 /* Layout Pref Pane Views */,
 				E21BC9D2141625F200A91662 /* Pref Controllers */,
 				28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */,
@@ -344,6 +342,8 @@
 				280A24E21459EE08001B82C8 /* WLRecessedBoxShadowLayer.m */,
 				28CB5083145DB3E200810395 /* WLBlockLayoutManager.h */,
 				28CB5084145DB3E200810395 /* WLBlockLayoutManager.m */,
+				28CB5087145E22B900810395 /* NSCursor+ResizeAdditions.h */,
+				28CB5088145E22B900810395 /* NSCursor+ResizeAdditions.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";

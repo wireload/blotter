@@ -1030,56 +1030,60 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
             [_resizeAreas[i] release];
             _resizeAreas[i] = nil;
         }
-        if (_resizeHandlesLayer == nil || [[_resizeHandlesLayer sublayers] objectAtIndex:i] == nil)
+        if (_resizeHandlesLayer == nil)
             continue;
         
         // No resize cursors for the resize handles if they aren't visible.
         if (i != 4 && !(arrangementMode & WLCalendarWindowResizingArrangement))
             continue;
         
-        CGRect frame;
-        if (i == 4) {
-            // The calendar itself does not have a resize handle.
-            CGSize size = [_resizeHandlesLayer bounds].size;
-            frame = CGRectMake(self.edgeSize.width, self.edgeSize.height, size.width - 2 * self.edgeSize.width, size.height - 2 * self.edgeSize.height);
-            frame = [_resizeHandlesLayer convertRect:frame toLayer:nil];
-        } else {
-            frame = [((CALayer *) [[_resizeHandlesLayer sublayers] objectAtIndex:i - (i > 4 ? 1 : 0)]) frame];
-            frame = [_resizeHandlesLayer convertRect:frame toLayer:nil];
-        }
+        CGRect frame = CGRectMake(0, 0, self.edgeSize.width - 1, self.edgeSize.height - 1);
+        CGSize size = [_resizeHandlesLayer bounds].size;
         
         NSCursor *cursor = nil;
         switch(i) {
             case 0:
                 cursor = [NSCursor resizeDownLeftCursor];
                 break;
-            case 3:
-                cursor = [NSCursor resizeLeftCursor];
-                break;
-            case 6:
-                cursor = [NSCursor resizeUpLeftCursor];
-                break;
             case 1:                
                 cursor = [NSCursor resizeDownCursor];
-                break;
-            case 7:
-                cursor = [NSCursor resizeUpCursor];
-                break;
-            case 4:
-                cursor = [NSCursor openHandCursor];
+                frame = CGRectMake(self.edgeSize.width, 0, size.width - 2 * self.edgeSize.width, self.edgeSize.height - 1);
                 break;
             case 2:
                 cursor = [NSCursor resizeDownRightCursor];
+                frame = CGRectMake(size.width - self.edgeSize.width + 1, 0, self.edgeSize.width - 1, self.edgeSize.height - 1);
+                break;
+            case 3:
+                cursor = [NSCursor resizeLeftCursor];
+                frame = CGRectMake(0, self.edgeSize.height, self.edgeSize.width - 1, size.height - 2 * self.edgeSize.height);
+                break;
+            case 4:
+                cursor = [NSCursor openHandCursor];
+                // The calendar itself does not have a resize handle.
+                frame = CGRectMake(self.edgeSize.width, self.edgeSize.height, size.width - 2 * self.edgeSize.width, size.height - 2 * self.edgeSize.height);
                 break;
             case 5:                
                 cursor = [NSCursor resizeRightCursor];
+                frame = CGRectMake(size.width - self.edgeSize.width + 1, self.edgeSize.height, self.edgeSize.width - 1, size.height - 2 * self.edgeSize.height);
+                break;
+            case 6:
+                cursor = [NSCursor resizeUpLeftCursor];
+                frame = CGRectMake(0, size.height - self.edgeSize.height + 1, self.edgeSize.width - 1, self.edgeSize.height - 1);
+                break;
+            case 7:
+                cursor = [NSCursor resizeUpCursor];
+                frame = CGRectMake(self.edgeSize.width, size.height - self.edgeSize.height + 1, size.width - 2 * self.edgeSize.width, self.edgeSize.height - 1);
                 break;
             case 8:
                 cursor = [NSCursor resizeUpRightCursor];
+                frame = CGRectMake(size.width - self.edgeSize.width + 1, size.height - self.edgeSize.height + 1, self.edgeSize.width - 1, self.edgeSize.height - 1);
                 break;
             default:
                 cursor = [NSCursor arrowCursor];
         }
+        
+        frame = [_resizeHandlesLayer convertRect:frame toLayer:nil];
+
         
         NSRect f = NSRectFromCGRect(frame);
         _resizeAreas[i] = [[NSTrackingArea alloc] initWithRect:f options:NSTrackingCursorUpdate | NSTrackingActiveInKeyWindow owner:self userInfo:[NSDictionary dictionaryWithObject:cursor forKey:@"cursor"]];
