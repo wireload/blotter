@@ -102,8 +102,7 @@ static const CGFloat _WLMysteriousExtraLeftSpace = 2.0f;
     CGFloat yBottomMargin = _WLYPadding / 2;
     if (self.softEdges)
     {
-        yTopMargin = 0.0f;
-        yBottomMargin = 5.0f;
+        yBottomMargin = 14.0f;
     }
     return NSIntegralRect(NSMakeRect(NSMinX(bounds) + _WLXPadding / 2 + _WLMysteriousExtraLeftSpace,
                                      NSMaxY(titleFrame) + yTopMargin,
