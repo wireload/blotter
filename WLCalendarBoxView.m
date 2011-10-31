@@ -12,10 +12,11 @@
 #import "WLSoftEdgeLayer.h"
 
 
-static const CGFloat _WLXPadding = 28.0f;
+static const CGFloat _WLXPadding = 26.0f;
 
-static const CGFloat _WLYPadding = 34.0f;
+static const CGFloat _WLYPadding = 26.0f;
 
+static const CGFloat _WLMysteriousExtraLeftSpace = 2.0f;
 
 @implementation WLCalendarBoxView
 
@@ -87,7 +88,7 @@ static const CGFloat _WLYPadding = 34.0f;
 - (NSRect)_titleFrame
 {
     NSRect bounds = [self bounds];
-    return NSIntegralRect(NSMakeRect(NSMinX(bounds) + _WLXPadding / 2,
+    return NSIntegralRect(NSMakeRect(NSMinX(bounds) + _WLXPadding / 2 + _WLMysteriousExtraLeftSpace,
                                      NSMinY(bounds) + _WLYPadding / 2,
                                      NSWidth(bounds) - _WLXPadding,
                                      34.0f));
@@ -97,14 +98,14 @@ static const CGFloat _WLYPadding = 34.0f;
 {
     NSRect bounds = [self bounds];
     NSRect titleFrame = [self _titleFrame];
-    CGFloat yTopMargin = 15.0f;
+    CGFloat yTopMargin = 10.0f;
     CGFloat yBottomMargin = _WLYPadding / 2;
     if (self.softEdges)
     {
         yTopMargin = 0.0f;
         yBottomMargin = 5.0f;
     }
-    return NSIntegralRect(NSMakeRect(NSMinX(bounds) + _WLXPadding / 2,
+    return NSIntegralRect(NSMakeRect(NSMinX(bounds) + _WLXPadding / 2 + _WLMysteriousExtraLeftSpace,
                                      NSMaxY(titleFrame) + yTopMargin,
                                      NSWidth(bounds) - _WLXPadding,
                                      NSHeight(bounds) - NSMaxY(titleFrame) - yTopMargin - yBottomMargin));
