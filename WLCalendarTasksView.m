@@ -140,16 +140,16 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
         offset -= height + TopMargin;
     }
     
-    // If there is enough space to fit at least one line of the first hidden layer, show this layer.
+    // If the last layer didn't fit, but there is enough space to show at least one or more of its lines, show them.
     if (firstHiddenLayer != nil)
     {
         CGFloat minimumHeight = [firstHiddenLayer minimumHumanVisibleHeight];
         if (lastVisibleOffset - minimumHeight >= 0.0f)
         {
             firstHiddenLayer.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(aLayer.bounds),
-                                                               lastVisibleOffset - 25,
+                                                               0,
                                                                self.bounds.size.width,
-                                                               25));
+                                                               lastVisibleOffset));
             firstHiddenLayer.hidden = NO;
         }
     }
