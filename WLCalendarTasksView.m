@@ -192,7 +192,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 {
     static NSMutableDictionary *a = nil;
     if (a == nil)
-    {
+    {       
         a = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
              (id)[NSFont WL_taskFont],                      (id)kCTFontAttributeName,
              (id)[[NSColor WL_taskTitleColor] WL_CGColor],  (id)kCTForegroundColorAttributeName,

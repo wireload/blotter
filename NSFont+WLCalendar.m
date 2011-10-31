@@ -53,7 +53,7 @@
 
 + (CTFontRef)WL_taskFont
 {
-    return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica"), 16.0f, nil) autorelease];
+    return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica Neue"), 15.0f, nil) autorelease];
 }
 
 + (CTFontRef)WL_timeRulerLabelFont

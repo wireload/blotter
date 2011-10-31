@@ -56,7 +56,7 @@ static const CGFloat _WLMarkTailIndent = 6.0f;
 {
     CGSize preferredSize = [self.mark WL_preferredSize];
     return CGRectIntegral(CGRectMake(0.0f,
-                                     0.0f,
+                                     2.0f,
                                      preferredSize.width,
                                      self.bounds.size.height));
 }
