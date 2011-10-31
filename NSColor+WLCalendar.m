@@ -29,7 +29,7 @@
     return [NSColor colorWithCalibratedRed:47.0f / 255.0f
                                      green:47.0f / 255.0f
                                       blue:47.0f / 255.0f
-                                     alpha:0.1f];
+                                     alpha:0.25f];
 }
 
 + (NSColor *)WL_timelineShadowColor

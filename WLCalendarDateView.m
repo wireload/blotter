@@ -49,7 +49,8 @@
     NSShadow *s = [[NSShadow alloc] init];
     [s setShadowColor:[NSColor WL_dateViewTextShadowColor]];
     [s setShadowBlurRadius:0.0f];
-    [s setShadowOffset:NSMakeSize(0.0f, 1.0f)];
+    // Shadow direction is /not/ flipped.
+    [s setShadowOffset:NSMakeSize(0.0f, -1.0f)];
     NSMutableParagraphStyle *p = [[NSMutableParagraphStyle alloc] init];
     [p setAlignment:NSCenterTextAlignment];
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
