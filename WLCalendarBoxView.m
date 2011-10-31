@@ -204,9 +204,15 @@ static const CGFloat _WLYPadding = 34.0f;
     [whiteToTransparentGradient release];
     [NSGraphicsContext restoreGraphicsState];
 
+    CGContextRef cgContext = [[NSGraphicsContext currentContext] graphicsPort];
+    CGContextSetAllowsAntialiasing(cgContext, YES);
+    CGContextSetShouldAntialias(cgContext, YES);
+    CGContextSetAllowsFontSmoothing(cgContext, NO);
+
     NSRect titleFrame = [self _titleFrame];
     if (NSIntersectsRect(titleFrame, aDirtyRect) && NSContainsRect(bounds, titleFrame))
         [self.title drawInRect:titleFrame withAttributes:[self _titleAttributes]];
+
     [NSGraphicsContext restoreGraphicsState];
 }
 
