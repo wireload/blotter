@@ -147,7 +147,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
         if (lastVisibleOffset - minimumHeight >= 0.0f)
         {
             firstHiddenLayer.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(aLayer.bounds),
-                                                               0.0f,
+                                                               lastVisibleOffset - 25,
                                                                self.bounds.size.width,
                                                                25));
             firstHiddenLayer.hidden = NO;
