@@ -49,27 +49,9 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
 @implementation WLCalendarWindowArrangement
 
-- (id)initWithFrame:(NSRect)frameRect
-{
-    if (self = [super initWithFrame:frameRect]) {       
-        for (int i = 0; i < 9; i++)
-            _resizeAreas[i] = nil;
-    }
-    return self;
-}
-
 - (void)dealloc
 {
     [_calendarWindowLayer removeObserver:self forKeyPath:@"bounds"];
-
-    for (int i = 0; i < 9; i++) {
-        if (_resizeAreas[i] == nil)
-            continue;
-        [self removeTrackingArea:_resizeAreas[i]];
-        [_resizeAreas[i] release];
-        _resizeAreas[i] = nil;
-    }
-
     [super dealloc];
 }
 
@@ -104,7 +86,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     }
     else {
         _resizeHandlesLayer.opacity = 0.0f;
-        _calendarWindowLayer.borderColor = [[NSColor clearColor] WL_CGColor];        
+        _calendarWindowLayer.borderColor = [[NSColor clearColor] WL_CGColor];
     }
     [_navigationLayer setNeedsDisplay];
     [[self layer] setNeedsLayout];
@@ -212,7 +194,6 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         _calendarWindowLayer.frame = CGRectInset(windowFrame, -self.edgeSize.width, -self.edgeSize.height);
     }
     _navigationLayer.hidden = YES;
-    [self updateTrackingAreas];
 }
 
 - (void)startResizingAtPoint:(NSPoint)aPoint edge:(WLCalendarWindowEdge)anEdge
@@ -221,7 +202,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     windowFrame = [self alignCalendarWindowFrame:windowFrame];
     [_calendarWindowLayer setValue:[NSValue valueWithRect:windowFrame] forKey:_WLOriginalFrame];
     _navigationLayer.hidden = NO;
-    [self setResizeHandlesNeedDisplay];
+    [_resizeHandlesLayer.sublayers makeObjectsPerformSelector:@selector(setNeedsDisplay)];
 }
 
 - (void)continueResizingAtPoint:(NSPoint)aPoint startPoint:(NSPoint)aStartPoint edge:(WLCalendarWindowEdge)anEdge
@@ -384,6 +365,8 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
                 offsets.size.height = -yOffset;
                 break;
             }
+            default:
+                break;
         }
         newFrame.origin.x += offsets.origin.x;
         newFrame.origin.y += offsets.origin.y;
@@ -395,7 +378,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         NSSize blotterMinimum = [self.delegate minimumSizeForCalendarWindowArrangement:self];
         effectiveMinimumFrameSize.width = fmaxf(effectiveMinimumFrameSize.width, blotterMinimum.width);
         effectiveMinimumFrameSize.height = fmaxf(effectiveMinimumFrameSize.height, blotterMinimum.height);
-        
+
         if (newFrame.origin.x > (CGRectGetMaxX(originalFrame) - effectiveMinimumFrameSize.width - 2 * self.edgeSize.width))
             newFrame.origin.x = CGRectGetMaxX(originalFrame) - effectiveMinimumFrameSize.width - 2 * self.edgeSize.width;
         if (newFrame.origin.y > (CGRectGetMaxY(originalFrame) - effectiveMinimumFrameSize.height - 2 * self.edgeSize.height))
@@ -416,8 +399,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     windowFrame = NSRectToCGRect([self.delegate calendarWindowArrangement:self setFrame:NSRectFromCGRect(windowFrame)]);
     _calendarWindowLayer.frame = CGRectInset(windowFrame, -self.edgeSize.width, -self.edgeSize.height);
     _navigationLayer.hidden = YES;
-    [self setResizeHandlesNeedDisplay];
-    [self updateTrackingAreas];
+    [_resizeHandlesLayer.sublayers makeObjectsPerformSelector:@selector(setNeedsDisplay)];
 }
 
 - (NSRect)navigationHelperFrameForPosition:(BLPosition)aPosition
@@ -477,12 +459,12 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         {
             /*
              Conceal certain glitches in the calendar widgets CA based resize animation. The window frame
-             animation has a different frame rate timing than the CA based animation, causing what appears to 
+             animation has a different frame rate timing than the CA based animation, causing what appears to
              be the the double buffer swapping in the middle of CA based layout and redraws. This is visible
-             as tearing of the calendar border. By making the CA animation very fast, the proxy moves into 
+             as tearing of the calendar border. By making the CA animation very fast, the proxy moves into
              its final position faster, hiding the tearing effects.
-             
-             The drawback is that the proxy animation finishes faster than the window movement. 
+
+             The drawback is that the proxy animation finishes faster than the window movement.
             */
             [CATransaction setAnimationDuration:0.1];
         }
@@ -502,6 +484,33 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 }
 
 
+#pragma mark Private
+
+- (NSInteger)_edgeForCurrentMouseLocation
+{
+    NSPoint locationInScreen = [NSEvent mouseLocation];
+    NSPoint locationInWindow = NSZeroPoint;
+    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
+        locationInWindow = [[self window] convertScreenToBase:locationInScreen];
+    else
+    {
+        NSRect r = NSMakeRect(locationInScreen.x, locationInScreen.y, 0.0f, 0.0f);
+        locationInWindow = [[self window] convertRectFromScreen:r].origin;
+    }
+    NSPoint locationInView = [self convertPoint:locationInWindow fromView:nil];
+    NSInteger edge = -1;
+    for (NSInteger i = 0; i < WLCalendarWindowNumberOfEdges; ++i)
+    {
+        if ([self mouse:locationInView inRect:_resizingAreas[i]])
+        {
+            edge = i;
+            break;
+        }
+    }
+    return edge;
+}
+
+
 #pragma mark NSView
 
 - (void)setFrameSize:(NSSize)newSize
@@ -517,6 +526,86 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     [[self layer] setNeedsLayout];
 }
 
+- (void)resetCursorRects
+{
+    [super resetCursorRects];
+
+    if (_isPositioning || _isResizing)
+        return;
+
+    for (NSUInteger edge = 0; edge < WLCalendarWindowNumberOfEdges; ++edge) {
+        if (_resizeHandlesLayer == nil)
+            continue;
+
+        // No resize cursors for the resize handles if they aren't visible.
+        if (edge != WLCalendarWindowCenterCenterEdge &&
+            !(arrangementMode & WLCalendarWindowResizingArrangement))
+            continue;
+
+        CGRect frame = CGRectZero;
+        CGSize size = [_resizeHandlesLayer bounds].size;
+        switch(edge) {
+            case WLCalendarWindowBottomLeftEdge:
+                frame = CGRectMake(0.0f,
+                                   0.0f,
+                                   self.edgeSize.width,
+                                   self.edgeSize.height);
+                break;
+            case WLCalendarWindowBottomCenterEdge:
+                frame = CGRectMake(self.edgeSize.width,
+                                   0.0f,
+                                   size.width - 2 * self.edgeSize.width,
+                                   self.edgeSize.height);
+                break;
+            case WLCalendarWindowBottomRightEdge:
+                frame = CGRectMake(size.width - self.edgeSize.width,
+                                   0.0f,
+                                   self.edgeSize.width,
+                                   self.edgeSize.height);
+                break;
+            case WLCalendarWindowCenterLeftEdge:
+                frame = CGRectMake(0.0f,
+                                   self.edgeSize.height,
+                                   self.edgeSize.width,
+                                   size.height - 2 * self.edgeSize.height);
+                break;
+            case WLCalendarWindowCenterCenterEdge:
+                // The calendar itself does not have a resize handle.
+                frame = CGRectMake(self.edgeSize.width,
+                                   self.edgeSize.height,
+                                   size.width - 2 * self.edgeSize.width,
+                                   size.height - 2 * self.edgeSize.height);
+                break;
+            case WLCalendarWindowCenterRightEdge:
+                frame = CGRectMake(size.width - self.edgeSize.width,
+                                   self.edgeSize.height,
+                                   self.edgeSize.width,
+                                   size.height - 2 * self.edgeSize.height);
+                break;
+            case WLCalendarWindowTopLeftEdge:
+                frame = CGRectMake(0.0f,
+                                   size.height - self.edgeSize.height,
+                                   self.edgeSize.width,
+                                   self.edgeSize.height);
+                break;
+            case WLCalendarWindowTopCenterEdge:
+                frame = CGRectMake(self.edgeSize.width,
+                                   size.height - self.edgeSize.height,
+                                   size.width - 2 * self.edgeSize.width,
+                                   self.edgeSize.height);
+                break;
+            case WLCalendarWindowTopRightEdge:
+                frame = CGRectMake(size.width - self.edgeSize.width,
+                                   size.height - self.edgeSize.height,
+                                   self.edgeSize.width,
+                                   self.edgeSize.height);
+                break;
+        }
+        _resizingAreas[edge] = NSRectFromCGRect([_resizeHandlesLayer convertRect:frame toLayer:[self layer]]);
+        [self addCursorRect:_resizingAreas[edge] cursor:[NSCursor WL_cursorForEdge:(WLCalendarWindowEdge)edge]];
+    }
+}
+
 
 #pragma mark NSResponder
 
@@ -524,6 +613,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 {
     return YES;
 }
+
 
 - (void)mouseEntered:(NSEvent *)anEvent
 {
@@ -608,6 +698,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
             [self startPositioningAtPoint:[self convertPoint:[anEvent locationInWindow] fromView:nil]];
         }
     }
+    [[self window] invalidateCursorRectsForView:self];
 }
 
 - (void)mouseDragged:(NSEvent *)anEvent
@@ -631,29 +722,13 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         _isResizing = NO;
     }
     _startPoint = NSZeroPoint;
+    [[self window] invalidateCursorRectsForView:self];
 }
 
 - (void)cursorUpdate:(NSEvent *)anEvent
 {
-    // Leave the cursor alone while resizing.
-    if (_isResizing || _isPositioning)
-        return;
-    
-    NSPoint hitPoint;
-    NSTrackingArea *trackingArea;
-    
-    trackingArea = [anEvent trackingArea];
-    hitPoint = [self convertPoint:[anEvent locationInWindow]
-                         fromView:nil];
-
-    // FIXME According to documentation, the cursor should automatically be reset when the mouse leaves a cursor
-    // area. This does not appear to work: instead this method gets called again with the same userInfo and
-    // tracking area as when the mouse first entered.
-    if ([self mouse:hitPoint inRect:[trackingArea rect]]) {
-        [((NSCursor *)[((NSDictionary *) [trackingArea userInfo]) objectForKey:@"cursor"]) set];
-    } else {
-        [super cursorUpdate:anEvent];
-    }
+    NSLog(@"cursorUpdate");
+    [[NSCursor WL_cursorForEdge:(WLCalendarWindowEdge)[self _edgeForCurrentMouseLocation]] set];
 }
 
 
@@ -708,7 +783,8 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
                                                                                         self.edgeSize.width,
                                                                                         self.edgeSize.height))]
                                 forKey:_WLTopRightEdgeFrameKey];
-        [self updateTrackingAreas];
+        if (!_isResizing && !_isPositioning)
+            [[self window] invalidateCursorRectsForView:self];
     }
     else
         [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];
@@ -718,7 +794,6 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
 
 @implementation WLCalendarWindowArrangement (Layers)
-
 
 - (void)createLayers
 {
@@ -758,7 +833,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         _resizeHandlesLayer.frame = _calendarWindowLayer.bounds;
         _resizeHandlesLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
         _resizeHandlesLayer.opacity = 0.0;
-        
+
         _shadowLayer = [self setupShadowLayer];
         _shadowLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
 
@@ -783,7 +858,8 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     return l;
 }
 
-- (CALayer *)setupShadowLayer {
+- (CALayer *)setupShadowLayer
+{
     CALayer *l = [WLRecessedBoxShadowLayer layer];
     l.opaque = NO;
     return l;
@@ -877,11 +953,6 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         [path stroke];
         [NSGraphicsContext restoreGraphicsState];
     };
-    NSMutableDictionary *newActions = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                                       [NSNull null], @"contents",
-                                       nil];
-    l.actions = newActions;
-    [newActions release];
     // Extend size to take care of such things like anti-aliasing.
     l.edgeSize = CGSizeMake(_WLDefaultEdgeSize.width + CalendarWindowFrameLineWidth + 1,
                             _WLDefaultEdgeSize.height + CalendarWindowFrameLineWidth + 1);
@@ -898,26 +969,26 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
 - (CALayer *)setupResizeHandlesLayer
 {
-    static const int dotWidth = 3;
-    static const int dotSpace = 6;
-    static const CGSize margin = {.width = 9.0f, .height = 9.0f};
-    
-    CALayer *l = [CALayer layer];   
-   
+    static const CGFloat DotWidth = 3.0f;
+    static const CGFloat DotSpace = 6.0f;
+    static const CGSize Margin = {.width = 9.0f, .height = 9.0f};
+
+    CALayer *l = [CALayer layer];
+
     l.layoutManager = [[[WLBlockLayoutManager alloc] initWithLayoutManager:^(CALayer *aLayer) {
         CGSize size = [aLayer bounds].size;
-        for (int i = 0; i < 9; i++) {
-            if (i == 4)
-                continue;  
+        for (NSInteger i = 0; i < WLCalendarWindowNumberOfEdges; i++) {
+            if (i == WLCalendarWindowCenterCenterEdge)
+                continue;
             CALayer *sublayer = [[aLayer sublayers] objectAtIndex:i + (i > 4 ? -1 : 0)];
 
-            CGRect frame = CGRectMake(margin.width + 1, margin.height, dotSpace * 2 + dotWidth, dotSpace * 2 + dotWidth + 1);
+            CGRect frame = CGRectMake(Margin.width + 1, Margin.height, DotSpace * 2 + DotWidth, DotSpace * 2 + DotWidth + 1);
             switch(i % 3) {
                 case 1:
                     frame.origin.x = floorf(size.width / 2 - frame.size.width / 2);
                     break;
                 case 2:
-                    frame.origin.x = floorf(size.width - margin.width - dotWidth);
+                    frame.origin.x = floorf(size.width - Margin.width - DotWidth);
                     break;
             }
             if (i < 3)
@@ -925,24 +996,24 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
             else if (i < 6) {
                 frame.origin.y = floorf(size.height / 2 - frame.size.height / 2) - 1;
             } else {
-                frame.origin.y = floorf(size.height - margin.height - dotWidth) - 1;
+                frame.origin.y = floorf(size.height - Margin.height - DotWidth) - 1;
             }
-            if (i == 2 || i == 8)
-                frame.origin.x = size.width - margin.width - dotSpace - dotWidth;
-            if (i == 6 || i == 8)
-                frame.origin.y = size.height - margin.height - dotSpace - dotWidth - 1;
-            
+            if (i == WLCalendarWindowTopRightEdge || i == WLCalendarWindowBottomRightEdge)
+                frame.origin.x = size.width - Margin.width - DotSpace - DotWidth;
+            if (i == WLCalendarWindowBottomLeftEdge || i == WLCalendarWindowBottomRightEdge)
+                frame.origin.y = size.height - Margin.height - DotSpace - DotWidth - 1;
+
             sublayer.frame = frame;
         }
     }] autorelease];
-    
-    for (int i = 0; i < 9; i++) {
-        if (i == 4)
+
+    for (NSInteger i = 0; i < WLCalendarWindowNumberOfEdges; i++) {
+        if (i == WLCalendarWindowCenterCenterEdge)
             continue;
         WLBlockLayer *sublayer = [NSClassFromString(@"WLBlockLayer") layer];
-               
+
         sublayer.autoresizingMask = 0;
-        
+
         // Don't animate content changes - when you click a resize handle it should immediately look
         // selected, not cross fade to a selected state.
         NSMutableDictionary *newActions = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
@@ -950,58 +1021,58 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
                                            nil];
         sublayer.actions = newActions;
         [newActions release];
-        
+
         __block WLCalendarWindowArrangement *selfBlock = self;
         sublayer.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect)
         {
             /* The corner handles look like L shapes and the side handles look like I shapes. */
-            
+
             BOOL isResizeHandle = selfBlock->_isResizing && (
-                                   (i == 0 && selfBlock->_resizedEdge == WLCalendarWindowBottomLeftEdge) ||
-                                   (i == 1 && selfBlock->_resizedEdge == WLCalendarWindowBottomCenterEdge) ||
-                                   (i == 2 && selfBlock->_resizedEdge == WLCalendarWindowBottomRightEdge) ||
-                                   (i == 3 && selfBlock->_resizedEdge == WLCalendarWindowCenterLeftEdge) ||
-                                   (i == 5 && selfBlock->_resizedEdge == WLCalendarWindowCenterRightEdge) ||
-                                   (i == 6 && selfBlock->_resizedEdge == WLCalendarWindowTopLeftEdge) ||
-                                   (i == 7 && selfBlock->_resizedEdge == WLCalendarWindowTopCenterEdge) ||
-                                   (i == 8 && selfBlock->_resizedEdge == WLCalendarWindowTopRightEdge)
+                                   (i == WLCalendarWindowTopLeftEdge && selfBlock->_resizedEdge == WLCalendarWindowBottomLeftEdge) ||
+                                   (i == WLCalendarWindowTopCenterEdge && selfBlock->_resizedEdge == WLCalendarWindowBottomCenterEdge) ||
+                                   (i == WLCalendarWindowTopRightEdge && selfBlock->_resizedEdge == WLCalendarWindowBottomRightEdge) ||
+                                   (i == WLCalendarWindowCenterLeftEdge && selfBlock->_resizedEdge == WLCalendarWindowCenterLeftEdge) ||
+                                   (i == WLCalendarWindowCenterRightEdge && selfBlock->_resizedEdge == WLCalendarWindowCenterRightEdge) ||
+                                   (i == WLCalendarWindowBottomLeftEdge && selfBlock->_resizedEdge == WLCalendarWindowTopLeftEdge) ||
+                                   (i == WLCalendarWindowBottomCenterEdge && selfBlock->_resizedEdge == WLCalendarWindowTopCenterEdge) ||
+                                   (i == WLCalendarWindowBottomRightEdge && selfBlock->_resizedEdge == WLCalendarWindowTopRightEdge)
                                    );
             CGContextSetFillColorWithColor(aContext, [(isResizeHandle ? [NSColor colorWithCalibratedWhite:0.2 alpha:1.0] : [NSColor whiteColor]) WL_CGColor]);
             CGContextSetShadowWithColor(aContext, CGSizeMake(0, -1.0), 0.0, [[isResizeHandle ? [NSColor whiteColor] : [NSColor blackColor] colorWithAlphaComponent:0.20] WL_CGColor]);
-            
+
             switch(i)
             {
-                case 0:
-                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1, dotWidth, dotWidth));
-                    CGContextFillEllipseInRect(aContext, CGRectMake(dotSpace, 1, dotWidth, dotWidth));
-                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1 + dotSpace, dotWidth, dotWidth));
+                case WLCalendarWindowTopLeftEdge:
+                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1, DotWidth, DotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(DotSpace, 1, DotWidth, DotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1 + DotSpace, DotWidth, DotWidth));
                     break;
-                case 1:
-                case 7:
-                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1, dotWidth, dotWidth));
-                    CGContextFillEllipseInRect(aContext, CGRectMake(dotSpace, 1, dotWidth, dotWidth));
-                    CGContextFillEllipseInRect(aContext, CGRectMake(2 * dotSpace, 1, dotWidth, dotWidth));
+                case WLCalendarWindowTopCenterEdge:
+                case WLCalendarWindowBottomCenterEdge:
+                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1, DotWidth, DotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(DotSpace, 1, DotWidth, DotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(2 * DotSpace, 1, DotWidth, DotWidth));
                     break;
-                case 2:
-                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1, dotWidth, dotWidth));
-                    CGContextFillEllipseInRect(aContext, CGRectMake(dotSpace, 1, dotWidth, dotWidth));
-                    CGContextFillEllipseInRect(aContext, CGRectMake(dotSpace, 1 + dotSpace, dotWidth, dotWidth));
+                case WLCalendarWindowTopRightEdge:
+                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1, DotWidth, DotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(DotSpace, 1, DotWidth, DotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(DotSpace, 1 + DotSpace, DotWidth, DotWidth));
                     break;
-                case 3:
-                case 5:
-                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1, dotWidth, dotWidth));
-                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1 + dotSpace, dotWidth, dotWidth));
-                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1 + 2 * dotSpace, dotWidth, dotWidth));
+                case WLCalendarWindowCenterLeftEdge:
+                case WLCalendarWindowCenterRightEdge:
+                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1, DotWidth, DotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1 + DotSpace, DotWidth, DotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1 + 2 * DotSpace, DotWidth, DotWidth));
                     break;
-                case 6:
-                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1, dotWidth, dotWidth));
-                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1 + dotSpace, dotWidth, dotWidth));
-                    CGContextFillEllipseInRect(aContext, CGRectMake(dotSpace, 1 + dotSpace, dotWidth, dotWidth));
+                case WLCalendarWindowBottomLeftEdge:
+                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1, DotWidth, DotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1 + DotSpace, DotWidth, DotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(DotSpace, 1 + DotSpace, DotWidth, DotWidth));
                     break;
-                case 8:
-                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1 + dotSpace, dotWidth, dotWidth));
-                    CGContextFillEllipseInRect(aContext, CGRectMake(dotSpace, 1 + dotSpace, dotWidth, dotWidth));
-                    CGContextFillEllipseInRect(aContext, CGRectMake(dotSpace, 1, dotWidth, dotWidth));
+                case WLCalendarWindowBottomRightEdge:
+                    CGContextFillEllipseInRect(aContext, CGRectMake(0, 1 + DotSpace, DotWidth, DotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(DotSpace, 1 + DotSpace, DotWidth, DotWidth));
+                    CGContextFillEllipseInRect(aContext, CGRectMake(DotSpace, 1, DotWidth, DotWidth));
                     break;
             }
         };
@@ -1020,82 +1091,34 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     return l;
 }
 
-- (void)updateTrackingAreas
-{
-    [super updateTrackingAreas];
-    
-    for (int i = 0; i < 9; i++) {
-        if (_resizeAreas[i] != nil) {
-            [self removeTrackingArea:_resizeAreas[i]];
-            [_resizeAreas[i] release];
-            _resizeAreas[i] = nil;
-        }
-        if (_resizeHandlesLayer == nil)
-            continue;
-        
-        // No resize cursors for the resize handles if they aren't visible.
-        if (i != 4 && !(arrangementMode & WLCalendarWindowResizingArrangement))
-            continue;
-        
-        CGRect frame = CGRectMake(0, 0, self.edgeSize.width - 1, self.edgeSize.height - 1);
-        CGSize size = [_resizeHandlesLayer bounds].size;
-        
-        NSCursor *cursor = nil;
-        switch(i) {
-            case 0:
-                cursor = [NSCursor WL_resizeDownLeftCursor];
-                break;
-            case 1:                
-                cursor = [NSCursor resizeDownCursor];
-                frame = CGRectMake(self.edgeSize.width, 0, size.width - 2 * self.edgeSize.width, self.edgeSize.height - 1);
-                break;
-            case 2:
-                cursor = [NSCursor WL_resizeDownRightCursor];
-                frame = CGRectMake(size.width - self.edgeSize.width + 1, 0, self.edgeSize.width - 1, self.edgeSize.height - 1);
-                break;
-            case 3:
-                cursor = [NSCursor resizeLeftCursor];
-                frame = CGRectMake(0, self.edgeSize.height, self.edgeSize.width - 1, size.height - 2 * self.edgeSize.height);
-                break;
-            case 4:
-                cursor = [NSCursor openHandCursor];
-                // The calendar itself does not have a resize handle.
-                frame = CGRectMake(self.edgeSize.width, self.edgeSize.height, size.width - 2 * self.edgeSize.width, size.height - 2 * self.edgeSize.height);
-                break;
-            case 5:                
-                cursor = [NSCursor resizeRightCursor];
-                frame = CGRectMake(size.width - self.edgeSize.width + 1, self.edgeSize.height, self.edgeSize.width - 1, size.height - 2 * self.edgeSize.height);
-                break;
-            case 6:
-                cursor = [NSCursor WL_resizeUpLeftCursor];
-                frame = CGRectMake(0, size.height - self.edgeSize.height + 1, self.edgeSize.width - 1, self.edgeSize.height - 1);
-                break;
-            case 7:
-                cursor = [NSCursor resizeUpCursor];
-                frame = CGRectMake(self.edgeSize.width, size.height - self.edgeSize.height + 1, size.width - 2 * self.edgeSize.width, self.edgeSize.height - 1);
-                break;
-            case 8:
-                cursor = [NSCursor WL_resizeUpRightCursor];
-                frame = CGRectMake(size.width - self.edgeSize.width + 1, size.height - self.edgeSize.height + 1, self.edgeSize.width - 1, self.edgeSize.height - 1);
-                break;
-            default:
-                cursor = [NSCursor arrowCursor];
-        }
-        
-        frame = [_resizeHandlesLayer convertRect:frame toLayer:nil];
+@end
 
-        
-        NSRect f = NSRectFromCGRect(frame);
-        _resizeAreas[i] = [[NSTrackingArea alloc] initWithRect:f options:NSTrackingCursorUpdate | NSTrackingActiveInActiveApp owner:self userInfo:[NSDictionary dictionaryWithObject:cursor forKey:@"cursor"]];
-        [self addTrackingArea:_resizeAreas[i]];
-    }
-}
 
-- (void)setResizeHandlesNeedDisplay
+@implementation NSCursor (WLCalendarWindowArrangement)
+
++ (NSCursor *)WL_cursorForEdge:(WLCalendarWindowEdge)anEdge
 {
-    for (int i = 0; i < 8; i++) {
-        CALayer *sublayer = [[_resizeHandlesLayer sublayers] objectAtIndex:i];
-        [sublayer setNeedsDisplay];
+    switch (anEdge) {
+        case WLCalendarWindowTopLeftEdge:
+            return [NSCursor WL_resizeUpLeftCursor];
+        case WLCalendarWindowTopCenterEdge:
+            return [NSCursor resizeUpCursor];
+        case WLCalendarWindowTopRightEdge:
+            return [NSCursor WL_resizeUpRightCursor];
+        case WLCalendarWindowCenterLeftEdge:
+            return [NSCursor resizeLeftCursor];
+        case WLCalendarWindowCenterCenterEdge:
+            return [NSCursor openHandCursor];
+        case WLCalendarWindowCenterRightEdge:
+            return [NSCursor resizeRightCursor];
+        case WLCalendarWindowBottomLeftEdge:
+            return [NSCursor WL_resizeDownLeftCursor];
+        case WLCalendarWindowBottomCenterEdge:
+            return [NSCursor resizeDownCursor];
+        case WLCalendarWindowBottomRightEdge:
+            return [NSCursor WL_resizeDownRightCursor];
+        default:
+            return [NSCursor arrowCursor];
     }
 }
 

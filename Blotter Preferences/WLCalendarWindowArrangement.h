@@ -18,14 +18,17 @@ enum {
 
 
 typedef enum {
-    WLCalendarWindowTopLeftEdge,
-    WLCalendarWindowTopCenterEdge,
-    WLCalendarWindowTopRightEdge,
-    WLCalendarWindowCenterLeftEdge,
-    WLCalendarWindowCenterRightEdge,
-    WLCalendarWindowBottomLeftEdge,
-    WLCalendarWindowBottomCenterEdge,
-    WLCalendarWindowBottomRightEdge
+    WLCalendarWindowTopLeftEdge = 0,
+    WLCalendarWindowTopCenterEdge = 1,
+    WLCalendarWindowTopRightEdge = 2,
+    WLCalendarWindowCenterLeftEdge = 3,
+    WLCalendarWindowCenterCenterEdge = 4,
+    WLCalendarWindowCenterRightEdge = 5,
+    WLCalendarWindowBottomLeftEdge = 6,
+    WLCalendarWindowBottomCenterEdge = 7,
+    WLCalendarWindowBottomRightEdge = 8,
+
+    WLCalendarWindowNumberOfEdges
 } WLCalendarWindowEdge;
 
 
@@ -43,7 +46,7 @@ typedef enum {
     CALayer *_resizeHandlesLayer;
     CALayer *_shadowLayer;
     NSTrackingArea *_navigationHelperAreas[9];
-    NSTrackingArea *_resizeAreas[9];
+    NSRect _resizingAreas[WLCalendarWindowNumberOfEdges];
     CALayer *_navigationHelperLayers[9];
     BOOL _isPositioning;
     BOOL _isResizing;
@@ -78,6 +81,12 @@ typedef enum {
 
 - (NSRect)alignCalendarWindowFrame:(NSRect)aFrame;
 
+
+/*!
+ @abstract  Returns edge for current mouse location or -1 if mouse doesn't point to any edge.
+ */
+- (NSInteger)_edgeForCurrentMouseLocation;
+
 @end
 
 
@@ -97,8 +106,6 @@ typedef enum {
 
 - (CALayer *)setupResizeHandlesLayer;
 
-- (void)setResizeHandlesNeedDisplay;
-
 @end
 
 
@@ -111,5 +118,12 @@ typedef enum {
 - (NSRect)calendarWindowArrangement:(WLCalendarWindowArrangement *)anArrangement setPosition:(BLPosition)aPosition;
 
 - (NSSize)minimumSizeForCalendarWindowArrangement:(WLCalendarWindowArrangement *)anArrangement;
+
+@end
+
+
+@interface NSCursor (WLCalendarWindowArrangement)
+
++ (NSCursor *)WL_cursorForEdge:(WLCalendarWindowEdge)anEdge;
 
 @end
