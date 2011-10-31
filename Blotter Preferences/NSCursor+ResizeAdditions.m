@@ -9,10 +9,6 @@
 #import "NSCursor+ResizeAdditions.h"
 #import "GeneralPrefController.h"
 
-static NSCursor *_upLeftCursor = nil;
-static NSCursor *_upRightCursor = nil;
-static NSCursor *_downLeftCursor = nil;
-static NSCursor *_downRightCursor = nil;
 
 @implementation NSCursor (ResizeAdditions)
 
@@ -26,31 +22,39 @@ static NSCursor *_downRightCursor = nil;
 }
 
 + (NSCursor *)WL_resizeUpLeftCursor {
-    if (_upLeftCursor == nil) {
-        _upLeftCursor = [[self cursorFromImage:@"Resize-Cursor-Up-Left"] retain];
-    }
-    return _upLeftCursor;    
+    static dispatch_once_t onceToken;
+    static NSCursor *UpLeftCursor = nil;
+    dispatch_once(&onceToken, ^{
+        UpLeftCursor = [[self cursorFromImage:@"Resize-Cursor-Up-Left"] retain];
+    });
+    return UpLeftCursor;
 }
 
 + (NSCursor *)WL_resizeUpRightCursor {
-    if (_upRightCursor == nil) {
-        _upRightCursor = [[self cursorFromImage:@"Resize-Cursor-Up-Right"] retain];
-    }
-    return _upRightCursor;    
+    static dispatch_once_t onceToken;
+    static NSCursor *UpRightCursor = nil;
+    dispatch_once(&onceToken, ^{
+        UpRightCursor = [[self cursorFromImage:@"Resize-Cursor-Up-Right"] retain];
+    });
+    return UpRightCursor;
 }
 
 + (NSCursor *)WL_resizeDownLeftCursor {
-    if (_downLeftCursor == nil) {
-        _downLeftCursor = [[self cursorFromImage:@"Resize-Cursor-Down-Left"] retain];
-    }
-    return _downLeftCursor;    
+    static dispatch_once_t onceToken;
+    static NSCursor *DownLeftCursor = nil;
+    dispatch_once(&onceToken, ^{
+        DownLeftCursor = [[self cursorFromImage:@"Resize-Cursor-Down-Left"] retain];
+    });
+    return DownLeftCursor;
 }
 
 + (NSCursor *)WL_resizeDownRightCursor {
-    if (_downRightCursor == nil) {
-        _downRightCursor = [[self cursorFromImage:@"Resize-Cursor-Down-Right"] retain];
-    }
-    return _downRightCursor;    
+    static dispatch_once_t onceToken;
+    static NSCursor *DownRightCursor = nil;
+    dispatch_once(&onceToken, ^{
+        DownRightCursor = [[self cursorFromImage:@"Resize-Cursor-Down-Right"] retain];
+    });
+    return DownRightCursor;
 }
 
 
