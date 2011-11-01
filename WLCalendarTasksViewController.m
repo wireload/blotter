@@ -109,12 +109,12 @@
                 // before iCal tasks notification is processed.
                 continue;
             }
-            // It's important to remove object from data before looking for a new index
+
             [_tasks removeObjectAtIndex:oldIndex];
             [updatedTask WL_fixPriorityAndDueDate];
             NSUInteger newIndex = [_tasks indexOfObject:updatedTask
                                           inSortedRange:NSMakeRange(0, [_tasks count])
-                                                options:NSBinarySearchingInsertionIndex | NSBinarySearchingFirstEqual
+                                                options:NSBinarySearchingFirstEqual | NSBinarySearchingInsertionIndex
                                         usingComparator:^(id obj1, id obj2)
             {
                 NSComparisonResult result = NSOrderedSame;
@@ -132,17 +132,20 @@
         }
         for (NSString *taskUID in deletedTaskUIDs)
         {
-            NSUInteger index = [_tasks indexOfObjectPassingTest:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSUInteger index = [_tasks indexOfObjectPassingTest:^(id obj, NSUInteger idx, BOOL *stop)
+            {
                 return [[obj uid] isEqualToString:taskUID];
             }];
-            if (index == NSNotFound)
-            {
-                // Task may be already deleted because fetchTasksAndReloadViewDataAnimated was called
-                // before iCal tasks notification is processed.
+            // Task may be already deleted because fetchTasksAndReloadViewDataAnimated was called
+            // before iCal tasks notification is processed.
+            BOOL isTaskAlreadyDeleted = (index == NSNotFound);
+            if (isTaskAlreadyDeleted)
                 continue;
+            else
+            {
+                [_tasks removeObjectAtIndex:index];
+                [[self view] removeTaskAtIndex:index];
             }
-            [_tasks removeObjectAtIndex:index];
-            [[self view] removeTaskAtIndex:index];
         }
         for (NSString *taskUID in insertedTaskUIDs)
         {
@@ -150,33 +153,34 @@
             if (![calendarPredicate evaluateWithObject:newTask])
                 continue;
             [newTask WL_fixPriorityAndDueDate];
-            __block BOOL doesTaskAlreadyExist = NO;
-            NSUInteger index = [_tasks indexOfObject:newTask
-                                       inSortedRange:NSMakeRange(0, [_tasks count])
-                                             options:NSBinarySearchingInsertionIndex | NSBinarySearchingFirstEqual
-                                     usingComparator:^(CalTask *task1, CalTask *task2)
-                                {
-                                    if ([task1.uid isEqualToString:task2.uid])
-                                    {
-                                        // Task may be already added because fetchTasksAndReloadViewDataAnimated was called
-                                        // before iCal tasks notification is processed.
-                                        doesTaskAlreadyExist = YES;
-                                        return (NSComparisonResult)NSOrderedSame;
-                                    }
-
-                                    NSComparisonResult result = NSOrderedSame;
-                                    for (NSSortDescriptor *descriptor in sortDescriptors)
-                                    {
-                                        result = [descriptor compareObject:task1 toObject:task2];
-                                        if (result != NSOrderedSame)
-                                            break;
-                                    }
-                                    return result;
-                                }];
-            if (doesTaskAlreadyExist)
+            // Task may be already added because fetchTasksAndReloadViewDataAnimated was called
+            // before iCal tasks notification is processed.
+            NSUInteger index = [_tasks indexOfObjectPassingTest:^(id obj, NSUInteger idx, BOOL *stop)
+            {
+                return [[obj uid] isEqualToString:taskUID];
+            }];
+            BOOL isTaskAlreadyInserted = (index != NSNotFound);
+            if (isTaskAlreadyInserted)
                 continue;
-            [_tasks insertObject:newTask atIndex:index];
-            [[self view] insertTaskAtIndex:index];
+            else
+            {
+                index = [_tasks indexOfObject:newTask
+                                inSortedRange:NSMakeRange(0, [_tasks count])
+                                      options:NSBinarySearchingFirstEqual | NSBinarySearchingInsertionIndex
+                              usingComparator:^(CalTask *task1, CalTask *task2)
+                {
+                    NSComparisonResult result = NSOrderedSame;
+                    for (NSSortDescriptor *descriptor in sortDescriptors)
+                    {
+                        result = [descriptor compareObject:task1 toObject:task2];
+                        if (result != NSOrderedSame)
+                            break;
+                    }
+                    return result;
+                }];
+                [_tasks insertObject:newTask atIndex:index];
+                [[self view] insertTaskAtIndex:index];
+            }
         }
         [CATransaction commit];
     }

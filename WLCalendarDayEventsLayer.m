@@ -209,7 +209,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     NSArray *dates = [_sortedByStartDateEventLayers valueForKey:_WLStartDateKey];
     NSUInteger i = [dates indexOfObject:aStartDate
                           inSortedRange:NSMakeRange(0, [_sortedByStartDateEventLayers count])
-                                options:NSBinarySearchingInsertionIndex | NSBinarySearchingFirstEqual
+                                options:NSBinarySearchingFirstEqual | NSBinarySearchingInsertionIndex
                         usingComparator:^(NSDate *aDate, NSDate *bDate)
     {
         return [aDate compare:bDate];
@@ -219,20 +219,31 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 
 - (NSUInteger)_indexOfEventLayerWithUID:(NSString *)anUID isFound:(out BOOL *)outIsFound
 {
-    __block BOOL found = NO;
     NSArray *layerNames = [_sortedByUIDEventLayers valueForKey:@"name"];
     NSUInteger idx = [layerNames indexOfObject:anUID
                                  inSortedRange:NSMakeRange(0, [_sortedByUIDEventLayers count])
-                                       options:NSBinarySearchingInsertionIndex | NSBinarySearchingFirstEqual
+                                       options:NSBinarySearchingFirstEqual
                                usingComparator:^(NSString *obj1, NSString *obj2)
-                      {
-                          NSComparisonResult result = [obj1 compare:obj2];
-                          if (!found) // since we pass NSBinarySearchingInsertionIndex, block may be called even when object is actually found.
-                              found = (result == NSOrderedSame);
-                          return result;
-                      }];
-    if (outIsFound != NULL)
-        *outIsFound = found;
+    {
+        return [obj1 compare:obj2];
+    }];
+    if (idx != NSNotFound)
+    {
+        if (outIsFound != NULL)
+            *outIsFound = YES;
+    }
+    else
+    {
+        if (outIsFound != NULL)
+            *outIsFound = NO;
+        idx = [layerNames indexOfObject:anUID
+                          inSortedRange:NSMakeRange(0, [_sortedByUIDEventLayers count])
+                                options:NSBinarySearchingFirstEqual | NSBinarySearchingInsertionIndex
+                        usingComparator:^(NSString *obj1, NSString *obj2)
+        {
+            return [obj1 compare:obj2];
+        }];
+    }
     return idx;
 }
 

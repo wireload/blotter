@@ -13,6 +13,10 @@
 @class WLPrefPaneView;
 
 
+/*!
+ @abstract  Manages the check property of the items of Calendars in user defaults.
+ @see       WLCalendarController
+ */
 @interface CalendarsPrefController : NSObject <SS_PreferencePaneProtocol, NSTableViewDelegate, NSTableViewDataSource> {
     IBOutlet WLPrefPaneView *_mainView;
     IBOutlet NSTableView *_tableView;

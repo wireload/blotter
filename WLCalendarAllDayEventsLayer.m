@@ -97,20 +97,31 @@ static const CGFloat _WLTopMargin = 10.0f;
 
 - (NSUInteger)_indexOfEventLayerWithUID:(NSString *)anUID isFound:(out BOOL *)outIsFound
 {
-    __block BOOL found = NO;
     NSArray *layerNames = [_sortedByUIDEventLayers valueForKey:@"name"];
     NSUInteger idx = [layerNames indexOfObject:anUID
                                  inSortedRange:NSMakeRange(0, [_sortedByUIDEventLayers count])
-                                       options:NSBinarySearchingInsertionIndex | NSBinarySearchingFirstEqual
+                                       options:NSBinarySearchingFirstEqual
                                usingComparator:^(NSString *obj1, NSString *obj2)
     {
-        NSComparisonResult result = [obj1 compare:obj2];
-        if (!found) // since we pass NSBinarySearchingInsertionIndex, block may be called even when object is actually found.
-            found = (result == NSOrderedSame);
-        return result;
+        return [obj1 compare:obj2];
     }];
-    if (outIsFound != NULL)
-        *outIsFound = found;
+    if (idx != NSNotFound)
+    {
+        if (outIsFound != NULL)
+            *outIsFound = YES;
+    }
+    else
+    {
+        if (outIsFound != NULL)
+            *outIsFound = NO;
+        idx = [layerNames indexOfObject:anUID
+                          inSortedRange:NSMakeRange(0, [_sortedByUIDEventLayers count])
+                                options:NSBinarySearchingFirstEqual | NSBinarySearchingInsertionIndex
+                        usingComparator:^(NSString *obj1, NSString *obj2)
+        {
+            return [obj1 compare:obj2];
+        }];
+    }
     return idx;
 }
 

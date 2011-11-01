@@ -6,6 +6,7 @@
 //  Copyright 2011 Wireload. All rights reserved.
 //
 
+#import <CalendarStore/CalendarStore.h>
 #import "CalendarsPrefController.h"
 #import "WLColorCheckboxCell.h"
 #import "WLPrefPaneView.h"
@@ -136,7 +137,7 @@
     NSArray *calendars = [[NSUserDefaults standardUserDefaults] objectForKey:@"Calendars"];
     NSUInteger index = [calendars indexOfObject:[NSDictionary dictionaryWithObject:anUID forKey:@"uid"]
                                   inSortedRange:NSMakeRange(0, [calendars count])
-                                        options:NSBinarySearchingFirstEqual | NSBinarySearchingInsertionIndex
+                                        options:NSBinarySearchingFirstEqual
                                 usingComparator:^(id left, id right) {
                                     return [[left objectForKey:@"uid"] compare:[right objectForKey:@"uid"]];
                                 }];
