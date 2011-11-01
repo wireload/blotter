@@ -55,7 +55,7 @@
     NSRange titleLength = NSMakeRange(0, [whiteTitle length]);
     [whiteTitle beginEditing];
     [whiteTitle addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Lucida Grande" size:11] range:titleLength];
-    [whiteTitle addAttribute:NSForegroundColorAttributeName value:[NSColor whiteColor] range:titleLength];
+    [whiteTitle addAttribute:NSForegroundColorAttributeName value:[NSColor colorWithCalibratedWhite:0.95 alpha:1.0] range:titleLength];
     [whiteTitle endEditing];
     return [super drawTitle:whiteTitle withFrame:frame inView:controlView];
 }
