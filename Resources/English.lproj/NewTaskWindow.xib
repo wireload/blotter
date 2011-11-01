@@ -50,7 +50,7 @@
 				<int key="NSWindowStyleMask">17</int>
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{421, 311}, {269, 185}}</string>
-				<int key="NSWTFlags">1685591040</int>
+				<int key="NSWTFlags">1685586944</int>
 				<string key="NSWindowTitle">New Task</string>
 				<string key="NSWindowClass">WLGlassHudWindow</string>
 				<nil key="NSViewClass"/>

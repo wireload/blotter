@@ -49,7 +49,7 @@
 				<int key="NSWindowStyleMask">17</int>
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{400, 267}, {269, 222}}</string>
-				<int key="NSWTFlags">1685591040</int>
+				<int key="NSWTFlags">1685586944</int>
 				<string key="NSWindowTitle">New Event</string>
 				<string key="NSWindowClass">WLGlassHudWindow</string>
 				<nil key="NSViewClass"/>
