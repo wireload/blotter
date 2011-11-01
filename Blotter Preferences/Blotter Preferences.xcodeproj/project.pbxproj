@@ -29,7 +29,6 @@
 		28CB50B8145E277800810395 /* Resize-Cursor-Up-Left.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50B4145E277800810395 /* Resize-Cursor-Up-Left.png */; };
 		28F6993D129B723900D4BB97 /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */; };
 		28F69A29129C587F00D4BB97 /* WLCalendarWindowArrangement.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69A28129C587F00D4BB97 /* WLCalendarWindowArrangement.m */; };
-		28F69B53129C82E800D4BB97 /* BLPositionerControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69B52129C82E800D4BB97 /* BLPositionerControlCell.m */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		E21BC9C814161EF700A91662 /* LayoutPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E21BC9C714161EF700A91662 /* LayoutPrefPaneView.xib */; };
 		E21BC9D1141625E700A91662 /* LayoutPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = E21BC9D0141625E700A91662 /* LayoutPrefController.m */; };
@@ -162,8 +161,6 @@
 		28F6993C129B723900D4BB97 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
 		28F69A27129C587F00D4BB97 /* WLCalendarWindowArrangement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowArrangement.h; sourceTree = "<group>"; };
 		28F69A28129C587F00D4BB97 /* WLCalendarWindowArrangement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindowArrangement.m; sourceTree = "<group>"; };
-		28F69B51129C82E800D4BB97 /* BLPositionerControlCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLPositionerControlCell.h; sourceTree = "<group>"; };
-		28F69B52129C82E800D4BB97 /* BLPositionerControlCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLPositionerControlCell.m; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* Blotter Preferences_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Blotter Preferences_Prefix.pch"; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Blotter Preferences.preferencePane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Blotter Preferences.preferencePane"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
@@ -328,8 +325,6 @@
 				28F6993C129B723900D4BB97 /* LaunchAtLoginController.h */,
 				28F69A27129C587F00D4BB97 /* WLCalendarWindowArrangement.h */,
 				28F69A28129C587F00D4BB97 /* WLCalendarWindowArrangement.m */,
-				28F69B51129C82E800D4BB97 /* BLPositionerControlCell.h */,
-				28F69B52129C82E800D4BB97 /* BLPositionerControlCell.m */,
 				283A5EE41306CDA2006B916A /* WLCountGreaterThanOneTransformer.h */,
 				283A5EE51306CDA2006B916A /* WLCountGreaterThanOneTransformer.m */,
 				E2DC7DDB130810F00065CEAD /* WLScreensController.h */,
@@ -591,7 +586,6 @@
 				28B54D7A1283AEEE0037BF53 /* PositionPrefController.m in Sources */,
 				28F6993D129B723900D4BB97 /* LaunchAtLoginController.m in Sources */,
 				28F69A29129C587F00D4BB97 /* WLCalendarWindowArrangement.m in Sources */,
-				28F69B53129C82E800D4BB97 /* BLPositionerControlCell.m in Sources */,
 				E2FE5ED112D74F5E00003E48 /* CalendarsPrefController.m in Sources */,
 				E2FE5EF712D75C7700003E48 /* WLColorCheckboxCell.m in Sources */,
 				283A5EE61306CDA2006B916A /* WLCountGreaterThanOneTransformer.m in Sources */,
