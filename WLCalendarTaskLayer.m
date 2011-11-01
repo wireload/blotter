@@ -81,6 +81,10 @@ static const CGFloat _WLMarkTailIndent = 6.0f;
     CGContextSetAllowsAntialiasing(aContext, YES);
     CGContextSetAllowsFontSubpixelQuantization(aContext, NO);
     CGContextSetAllowsFontSmoothing(aContext, NO);
+
+    CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f, 1.0f), 0.0f, [[[NSColor whiteColor] colorWithAlphaComponent:0.25] WL_CGColor]);
+    [self.mark WL_drawWithRect:[self _markFrame] context:aContext];
+    
     CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f, -1.0f), 0.0f, [[NSColor WL_taskTextShadowColor] WL_CGColor]);
 
     [self.mark WL_drawWithRect:[self _markFrame] context:aContext];
