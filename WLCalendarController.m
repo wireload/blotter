@@ -407,93 +407,91 @@
 
     WLCalendarType type = 0;
 
-    CalEvent *tmpEvent = [CalEvent event];
-    tmpEvent.calendar = self;
-    tmpEvent.title = @"Blotter's tmp event";
-    tmpEvent.startDate = [NSDate distantPast];
-    tmpEvent.endDate = [[NSDate distantPast] dateByAddingTimeInterval:1];
-    NSError *error = nil;
-    BOOL canSaveEvent = NO;
-    NSUInteger currentAttempt = 0;
-    while (self.isEditable &&
-           currentAttempt < MaximumNumberOfAttemptsToAddOrDelete &&
-           !canSaveEvent &&
-           [error code] != CalCalendarNotEditableError)
-    {
-        if (currentAttempt > 0)
-            [NSThread sleepForTimeInterval:AttemptDelay];
-        canSaveEvent = [[CalCalendarStore defaultCalendarStore] saveEvent:tmpEvent span:CalSpanThisEvent error:&error];
-        ++currentAttempt;
-    }
-    if (canSaveEvent)
-    {
-        currentAttempt = 0;
-        while (currentAttempt < MaximumNumberOfAttemptsToAddOrDelete)
-        {
-            if (currentAttempt > 0)
-                [NSThread sleepForTimeInterval:AttemptDelay];
-            if ([[CalCalendarStore defaultCalendarStore] removeEvent:tmpEvent span:CalSpanThisEvent error:&error])
-                break;
-            ++currentAttempt;
-        }
-        if (currentAttempt == MaximumNumberOfAttemptsToAddOrDelete)
-            NSLog(@"Unable to delete event: %@\nError:%@", tmpEvent, error);
+    NSPredicate *allEventsPredicate = [CalCalendarStore eventPredicateWithStartDate:[NSDate distantPast]
+                                                                            endDate:[NSDate distantFuture]
+                                                                          calendars:[NSArray arrayWithObject:self]];
+    NSArray *events = [[CalCalendarStore defaultCalendarStore] eventsWithPredicate:allEventsPredicate];
+    if ([events count] > 0)
         type |= WLCalendarEventType;
-    }
     else
     {
-        // If the calendar has events it conforms to WLCalendarEventType.
-        NSPredicate *allEventsPredicate = [CalCalendarStore eventPredicateWithStartDate:[NSDate distantPast]
-                                                                                endDate:[NSDate distantFuture]
-                                                                              calendars:[NSArray arrayWithObject:self]];
-        NSArray *events = [[CalCalendarStore defaultCalendarStore] eventsWithPredicate:allEventsPredicate];
-        if ([events count] > 0)
-            type |= WLCalendarEventType;
-    }
-
-    CalTask *tmpReminder = [CalTask task];
-    tmpReminder.calendar = self;
-    tmpReminder.title = @"Blotter's tmp task";
-    // To hide task from Blotter, mark it completed.
-    tmpReminder.isCompleted = YES;
-    // To hide it from other apps which could monitor due date.
-    tmpReminder.dueDate = [NSDate distantFuture];
-    tmpReminder.priority = CalPriorityNone;
-    error = nil;
-    BOOL canSaveTask = NO;
-    currentAttempt = 0;
-    while (self.isEditable &&
-           currentAttempt < MaximumNumberOfAttemptsToAddOrDelete &&
-           !canSaveTask &&
-           [error code] != CalCalendarNotEditableError)
-    {
-        if (currentAttempt > 0)
-            [NSThread sleepForTimeInterval:AttemptDelay];
-        canSaveTask = [[CalCalendarStore defaultCalendarStore] saveTask:tmpReminder error:&error];
-        ++currentAttempt;
-    }
-    if (canSaveTask)
-    {
-        currentAttempt = 0;
-        while (currentAttempt < MaximumNumberOfAttemptsToAddOrDelete)
+        CalEvent *tmpEvent = [CalEvent event];
+        tmpEvent.calendar = self;
+        tmpEvent.title = @"Blotter's tmp event";
+        tmpEvent.startDate = [NSDate distantPast];
+        tmpEvent.endDate = [[NSDate distantPast] dateByAddingTimeInterval:1];
+        NSError *error = nil;
+        BOOL canSaveEvent = NO;
+        NSUInteger currentAttempt = 0;
+        while (self.isEditable &&
+               currentAttempt < MaximumNumberOfAttemptsToAddOrDelete &&
+               !canSaveEvent &&
+               [error code] != CalCalendarNotEditableError)
         {
             if (currentAttempt > 0)
                 [NSThread sleepForTimeInterval:AttemptDelay];
-            if ([[CalCalendarStore defaultCalendarStore] removeTask:tmpReminder error:&error])
-                break;
+            canSaveEvent = [[CalCalendarStore defaultCalendarStore] saveEvent:tmpEvent span:CalSpanThisEvent error:&error];
             ++currentAttempt;
         }
-        if (currentAttempt == MaximumNumberOfAttemptsToAddOrDelete)
-            NSLog(@"Unable to delete task: %@\nError:%@", tmpReminder, error);
-        type |= WLCalendarReminderType;
+        if (canSaveEvent)
+        {
+            currentAttempt = 0;
+            while (currentAttempt < MaximumNumberOfAttemptsToAddOrDelete)
+            {
+                if (currentAttempt > 0)
+                    [NSThread sleepForTimeInterval:AttemptDelay];
+                if ([[CalCalendarStore defaultCalendarStore] removeEvent:tmpEvent span:CalSpanThisEvent error:&error])
+                    break;
+                ++currentAttempt;
+            }
+            if (currentAttempt == MaximumNumberOfAttemptsToAddOrDelete)
+                NSLog(@"Unable to delete event: %@\nError:%@", tmpEvent, error);
+            type |= WLCalendarEventType;
+        }
     }
+    
+    NSPredicate *allRemindersPredicate = [CalCalendarStore taskPredicateWithCalendars:[NSArray arrayWithObject:self]];
+    NSArray *reminders = [[CalCalendarStore defaultCalendarStore] tasksWithPredicate:allRemindersPredicate];
+    if ([reminders count] > 0)
+        type |= WLCalendarReminderType;
     else
     {
-        // If the calendar has tasks it conforms to WLCalendarReminderType.
-        NSPredicate *allRemindersPredicate = [CalCalendarStore taskPredicateWithCalendars:[NSArray arrayWithObject:self]];
-        NSArray *tasks = [[CalCalendarStore defaultCalendarStore] tasksWithPredicate:allRemindersPredicate];
-        if ([tasks count] > 0)
+        CalTask *tmpReminder = [CalTask task];
+        tmpReminder.calendar = self;
+        tmpReminder.title = @"Blotter's tmp task";
+        // To hide task from Blotter, mark it completed.
+        tmpReminder.isCompleted = YES;
+        // To hide it from other apps which could monitor due date.
+        tmpReminder.dueDate = [NSDate distantFuture];
+        tmpReminder.priority = CalPriorityNone;
+        NSError *error = nil;
+        BOOL canSaveTask = NO;
+        NSUInteger currentAttempt = 0;
+        while (self.isEditable &&
+               currentAttempt < MaximumNumberOfAttemptsToAddOrDelete &&
+               !canSaveTask &&
+               [error code] != CalCalendarNotEditableError)
+        {
+            if (currentAttempt > 0)
+                [NSThread sleepForTimeInterval:AttemptDelay];
+            canSaveTask = [[CalCalendarStore defaultCalendarStore] saveTask:tmpReminder error:&error];
+            ++currentAttempt;
+        }
+        if (canSaveTask)
+        {
+            currentAttempt = 0;
+            while (currentAttempt < MaximumNumberOfAttemptsToAddOrDelete)
+            {
+                if (currentAttempt > 0)
+                    [NSThread sleepForTimeInterval:AttemptDelay];
+                if ([[CalCalendarStore defaultCalendarStore] removeTask:tmpReminder error:&error])
+                    break;
+                ++currentAttempt;
+            }
+            if (currentAttempt == MaximumNumberOfAttemptsToAddOrDelete)
+                NSLog(@"Unable to delete task: %@\nError:%@", tmpReminder, error);
             type |= WLCalendarReminderType;
+        }
     }
     return type;
 }
