@@ -95,7 +95,7 @@ static const CGFloat _WLTopMargin = 10.0f;
 
 #pragma mark Private
 
-- (NSUInteger)_indexOfEventLayerWithUID:(NSString *)anUID isFound:(BOOL *)outIsFound
+- (NSUInteger)_indexOfEventLayerWithUID:(NSString *)anUID isFound:(out BOOL *)outIsFound
 {
     __block BOOL found = NO;
     NSArray *layerNames = [_sortedByUIDEventLayers valueForKey:@"name"];

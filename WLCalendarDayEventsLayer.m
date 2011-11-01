@@ -95,7 +95,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
             [self addSublayer:layer];
         }
 
-        NSUInteger idxByStartDate = [self _indexOfEventLayerWithStartDate:[event startDate]];
+        NSUInteger idxByStartDate = [self _indexForInsertionOfEventLayerWithStartDate:[event startDate]];
         [_sortedByStartDateEventLayers insertObject:layer atIndex:idxByStartDate];
         layer.zPosition = idxByStartDate;
     }
@@ -204,7 +204,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 #endif
 }
 
-- (NSUInteger)_indexOfEventLayerWithStartDate:(NSDate *)aStartDate
+- (NSUInteger)_indexForInsertionOfEventLayerWithStartDate:(NSDate *)aStartDate
 {
     NSArray *dates = [_sortedByStartDateEventLayers valueForKey:_WLStartDateKey];
     NSUInteger i = [dates indexOfObject:aStartDate
@@ -217,7 +217,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     return i;
 }
 
-- (NSUInteger)_indexOfEventLayerWithUID:(NSString *)anUID isFound:(BOOL *)outIsFound
+- (NSUInteger)_indexOfEventLayerWithUID:(NSString *)anUID isFound:(out BOOL *)outIsFound
 {
     __block BOOL found = NO;
     NSArray *layerNames = [_sortedByUIDEventLayers valueForKey:@"name"];

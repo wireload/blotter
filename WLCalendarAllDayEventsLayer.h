@@ -27,6 +27,6 @@
 
 - (void)_updateEventLayer:(WLCalendarEventLayer *)aLayer withEvent:(id)anEvent;
 
-- (NSUInteger)_indexOfEventLayerWithUID:(NSString *)anUID isFound:(BOOL *)outIsFound;
+- (NSUInteger)_indexOfEventLayerWithUID:(NSString *)anUID isFound:(out BOOL *)outIsFound;
 
 @end
