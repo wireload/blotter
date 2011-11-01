@@ -10,10 +10,28 @@
 #import <CalendarStore/CalendarStore.h>
 
 
+typedef enum
+{
+    WLCalendarUnknownType = 0,
+    WLCalendarEventType = 1,
+    WLCalendarReminderType = 2,
+    WLCalendarBothType = 3
+} WLCalendarType;
+
+
+@interface CalCalendar (WLCalendarController)
+
+- (WLCalendarType)WL_type;
+
+@end
+
+
 @interface WLCalendarController : NSObject {
     NSCalendar *calendar;
     NSDate *date;
     NSArray *calCalendars;
+    NSArray *calEventCalendars;
+    NSArray *calReminderCalendars;
 
     NSTimer *_nextMinuteTimer;
     NSTimer *_nextDayTimer;
@@ -25,11 +43,19 @@
 
 @property (nonatomic, copy, readonly) NSArray *calCalendars;
 
+@property (nonatomic, copy, readonly) NSArray *calEventCalendars;
+
+@property (nonatomic, copy, readonly) NSArray *calReminderCalendars;
+
 + (id)sharedController;
 
 - (void)updateDate;
 
 - (void)updateCalendar;
+
+- (NSArray *)calEventCalendarsFromCalCalendars:(NSArray *)aCalCalendars;
+
+- (NSArray *)calReminderCalendarsFromCalCalendars:(NSArray *)aCalCalendars;
 
 
 - (void)_scheduleNextMinuteTimer;
