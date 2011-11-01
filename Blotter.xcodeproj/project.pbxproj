@@ -11,6 +11,15 @@
 		284064FC12834B98000816FF /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 284064FB12834B98000816FF /* CalendarStore.framework */; };
 		285B840913C0C6150042C813 /* Blotter-B9.icns in Resources */ = {isa = PBXBuildFile; fileRef = 285B840813C0C6150042C813 /* Blotter-B9.icns */; };
 		28B54DB61283BABF0037BF53 /* SS_PrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54DB51283BABF0037BF53 /* SS_PrefsController.m */; };
+		28CB50F114603CEC00810395 /* glass-hud-bottom-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50E814603CEC00810395 /* glass-hud-bottom-left.png */; };
+		28CB50F214603CEC00810395 /* glass-hud-bottom-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50E914603CEC00810395 /* glass-hud-bottom-middle.png */; };
+		28CB50F314603CEC00810395 /* glass-hud-bottom-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50EA14603CEC00810395 /* glass-hud-bottom-right.png */; };
+		28CB50F414603CEC00810395 /* glass-hud-middle-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50EB14603CEC00810395 /* glass-hud-middle-left.png */; };
+		28CB50F514603CEC00810395 /* glass-hud-middle-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50EC14603CEC00810395 /* glass-hud-middle-middle.png */; };
+		28CB50F614603CEC00810395 /* glass-hud-middle-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50ED14603CEC00810395 /* glass-hud-middle-right.png */; };
+		28CB50F714603CEC00810395 /* glass-hud-top-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50EE14603CEC00810395 /* glass-hud-top-left.png */; };
+		28CB50F814603CEC00810395 /* glass-hud-top-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50EF14603CEC00810395 /* glass-hud-top-middle.png */; };
+		28CB50F914603CEC00810395 /* glass-hud-top-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50F014603CEC00810395 /* glass-hud-top-right.png */; };
 		28F699E4129C0EBC00D4BB97 /* WLViewFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F699E3129C0EBC00D4BB97 /* WLViewFade.m */; };
 		28F69A1B129C1CAA00D4BB97 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 28F69A1A129C1CAA00D4BB97 /* Credits.rtf */; };
 		28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 28F69CF4129CC12100D4BB97 /* Licenses.rtf */; };
@@ -82,13 +91,6 @@
 		E278F19E13C9EA6700B327EB /* WLCalendarWeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = E278F19D13C9EA6700B327EB /* WLCalendarWeekView.m */; };
 		E279363A1324F05800BC5224 /* WLGlassHudWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E27936391324F05800BC5224 /* WLGlassHudWindow.m */; };
 		E27936461324F6E200BC5224 /* WLGlassHudView.m in Sources */ = {isa = PBXBuildFile; fileRef = E27936451324F6E200BC5224 /* WLGlassHudView.m */; };
-		E27937F513254D9400BC5224 /* glass-hud-content-top.png in Resources */ = {isa = PBXBuildFile; fileRef = E27937EE13254D9400BC5224 /* glass-hud-content-top.png */; };
-		E27937F613254D9400BC5224 /* glass-hud-content-top-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E27937EF13254D9400BC5224 /* glass-hud-content-top-right.png */; };
-		E27937F713254D9400BC5224 /* glass-hud-content-top-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E27937F013254D9400BC5224 /* glass-hud-content-top-left.png */; };
-		E27937F813254D9400BC5224 /* glass-hud-content-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = E27937F113254D9400BC5224 /* glass-hud-content-middle.png */; };
-		E27937F913254D9400BC5224 /* glass-hud-content-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = E27937F213254D9400BC5224 /* glass-hud-content-bottom.png */; };
-		E27937FA13254D9400BC5224 /* glass-hud-content-bottom-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E27937F313254D9400BC5224 /* glass-hud-content-bottom-right.png */; };
-		E27937FB13254D9400BC5224 /* glass-hud-content-bottom-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E27937F413254D9400BC5224 /* glass-hud-content-bottom-left.png */; };
 		E27951BB131AA060008AE1DA /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E27951BA131AA060008AE1DA /* Carbon.framework */; };
 		E27DE06A13CF18B1003E8E9A /* WLCalendarAllDayEventsLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E27DE06913CF18B1003E8E9A /* WLCalendarAllDayEventsLayer.m */; };
 		E27DE07613D03E19003E8E9A /* WLCalendarEventLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E27DE07513D03E19003E8E9A /* WLCalendarEventLayer.m */; };
@@ -168,13 +170,6 @@
 		E2E827031450256F007035E5 /* Blotter Preferences.preferencePane in Resources */ = {isa = PBXBuildFile; fileRef = E2E8267014500E11007035E5 /* Blotter Preferences.preferencePane */; };
 		E2F112DD13E6E263001C2B7B /* WLCalendarWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F112DC13E6E263001C2B7B /* WLCalendarWindow.m */; };
 		E2F1133D13E70B4F001C2B7B /* WLCalendarWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F1133C13E70B4F001C2B7B /* WLCalendarWindowController.m */; };
-		E2F9E1DF1322A4F4007598E2 /* glass-hud-border-bottom-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1D81322A4F4007598E2 /* glass-hud-border-bottom-left.png */; };
-		E2F9E1E01322A4F4007598E2 /* glass-hud-border-bottom-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1D91322A4F4007598E2 /* glass-hud-border-bottom-right.png */; };
-		E2F9E1E11322A4F4007598E2 /* glass-hud-border-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1DA1322A4F4007598E2 /* glass-hud-border-bottom.png */; };
-		E2F9E1E21322A4F4007598E2 /* glass-hud-border-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1DB1322A4F4007598E2 /* glass-hud-border-middle.png */; };
-		E2F9E1E31322A4F4007598E2 /* glass-hud-border-top-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1DC1322A4F4007598E2 /* glass-hud-border-top-left.png */; };
-		E2F9E1E41322A4F4007598E2 /* glass-hud-border-top-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1DD1322A4F4007598E2 /* glass-hud-border-top-right.png */; };
-		E2F9E1E51322A4F4007598E2 /* glass-hud-border-top.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F9E1DE1322A4F4007598E2 /* glass-hud-border-top.png */; };
 		E2FCE09D133F9264006E713F /* WLGlassHudDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FCE09C133F9264006E713F /* WLGlassHudDatePicker.m */; };
 		E2FCE09D133F9264006E7141 /* WLCalendarTimeIndicatorLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FCE09D133F9264006E7140 /* WLCalendarTimeIndicatorLayer.m */; };
 /* End PBXBuildFile section */
@@ -255,6 +250,15 @@
 		28B54DB31283BABF0037BF53 /* SS_PreferencePaneProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SS_PreferencePaneProtocol.h; sourceTree = "<group>"; };
 		28B54DB41283BABF0037BF53 /* SS_PrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SS_PrefsController.h; sourceTree = "<group>"; };
 		28B54DB51283BABF0037BF53 /* SS_PrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SS_PrefsController.m; sourceTree = "<group>"; };
+		28CB50E814603CEC00810395 /* glass-hud-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-bottom-left.png"; sourceTree = "<group>"; };
+		28CB50E914603CEC00810395 /* glass-hud-bottom-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-bottom-middle.png"; sourceTree = "<group>"; };
+		28CB50EA14603CEC00810395 /* glass-hud-bottom-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-bottom-right.png"; sourceTree = "<group>"; };
+		28CB50EB14603CEC00810395 /* glass-hud-middle-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-middle-left.png"; sourceTree = "<group>"; };
+		28CB50EC14603CEC00810395 /* glass-hud-middle-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-middle-middle.png"; sourceTree = "<group>"; };
+		28CB50ED14603CEC00810395 /* glass-hud-middle-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-middle-right.png"; sourceTree = "<group>"; };
+		28CB50EE14603CEC00810395 /* glass-hud-top-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-top-left.png"; sourceTree = "<group>"; };
+		28CB50EF14603CEC00810395 /* glass-hud-top-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-top-middle.png"; sourceTree = "<group>"; };
+		28CB50F014603CEC00810395 /* glass-hud-top-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-top-right.png"; sourceTree = "<group>"; };
 		28F699E2129C0EBC00D4BB97 /* WLViewFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLViewFade.h; sourceTree = "<group>"; };
 		28F699E3129C0EBC00D4BB97 /* WLViewFade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLViewFade.m; sourceTree = "<group>"; };
 		28F69A1A129C1CAA00D4BB97 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
@@ -349,13 +353,6 @@
 		E27936391324F05800BC5224 /* WLGlassHudWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudWindow.m; sourceTree = "<group>"; };
 		E27936441324F6E200BC5224 /* WLGlassHudView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudView.h; sourceTree = "<group>"; };
 		E27936451324F6E200BC5224 /* WLGlassHudView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudView.m; sourceTree = "<group>"; };
-		E27937EE13254D9400BC5224 /* glass-hud-content-top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-content-top.png"; sourceTree = "<group>"; };
-		E27937EF13254D9400BC5224 /* glass-hud-content-top-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-content-top-right.png"; sourceTree = "<group>"; };
-		E27937F013254D9400BC5224 /* glass-hud-content-top-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-content-top-left.png"; sourceTree = "<group>"; };
-		E27937F113254D9400BC5224 /* glass-hud-content-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-content-middle.png"; sourceTree = "<group>"; };
-		E27937F213254D9400BC5224 /* glass-hud-content-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-content-bottom.png"; sourceTree = "<group>"; };
-		E27937F313254D9400BC5224 /* glass-hud-content-bottom-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-content-bottom-right.png"; sourceTree = "<group>"; };
-		E27937F413254D9400BC5224 /* glass-hud-content-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-content-bottom-left.png"; sourceTree = "<group>"; };
 		E27951BA131AA060008AE1DA /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		E27DE06813CF18B1003E8E9A /* WLCalendarAllDayEventsLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarAllDayEventsLayer.h; sourceTree = "<group>"; };
 		E27DE06913CF18B1003E8E9A /* WLCalendarAllDayEventsLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarAllDayEventsLayer.m; sourceTree = "<group>"; };
@@ -455,13 +452,6 @@
 		E2F112DC13E6E263001C2B7B /* WLCalendarWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindow.m; sourceTree = "<group>"; };
 		E2F1133B13E70B4F001C2B7B /* WLCalendarWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowController.h; sourceTree = "<group>"; };
 		E2F1133C13E70B4F001C2B7B /* WLCalendarWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindowController.m; sourceTree = "<group>"; };
-		E2F9E1D81322A4F4007598E2 /* glass-hud-border-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-border-bottom-left.png"; sourceTree = "<group>"; };
-		E2F9E1D91322A4F4007598E2 /* glass-hud-border-bottom-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-border-bottom-right.png"; sourceTree = "<group>"; };
-		E2F9E1DA1322A4F4007598E2 /* glass-hud-border-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-border-bottom.png"; sourceTree = "<group>"; };
-		E2F9E1DB1322A4F4007598E2 /* glass-hud-border-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-border-middle.png"; sourceTree = "<group>"; };
-		E2F9E1DC1322A4F4007598E2 /* glass-hud-border-top-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-border-top-left.png"; sourceTree = "<group>"; };
-		E2F9E1DD1322A4F4007598E2 /* glass-hud-border-top-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-border-top-right.png"; sourceTree = "<group>"; };
-		E2F9E1DE1322A4F4007598E2 /* glass-hud-border-top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-border-top.png"; sourceTree = "<group>"; };
 		E2FCE09B133F9264006E713F /* WLGlassHudDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudDatePicker.h; sourceTree = "<group>"; };
 		E2FCE09C133F9264006E713F /* WLGlassHudDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudDatePicker.m; sourceTree = "<group>"; };
 		E2FCE09D133F9264006E7140 /* WLCalendarTimeIndicatorLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarTimeIndicatorLayer.m; sourceTree = "<group>"; };
@@ -809,20 +799,15 @@
 				E2670357132CA21F003FBFC2 /* glass-hud-button-right.png */,
 				E2670358132CA21F003FBFC2 /* glass-hud-button-middle.png */,
 				E2670359132CA21F003FBFC2 /* glass-hud-button-left.png */,
-				E27937EE13254D9400BC5224 /* glass-hud-content-top.png */,
-				E27937EF13254D9400BC5224 /* glass-hud-content-top-right.png */,
-				E27937F013254D9400BC5224 /* glass-hud-content-top-left.png */,
-				E27937F113254D9400BC5224 /* glass-hud-content-middle.png */,
-				E27937F213254D9400BC5224 /* glass-hud-content-bottom.png */,
-				E27937F313254D9400BC5224 /* glass-hud-content-bottom-right.png */,
-				E27937F413254D9400BC5224 /* glass-hud-content-bottom-left.png */,
-				E2F9E1D81322A4F4007598E2 /* glass-hud-border-bottom-left.png */,
-				E2F9E1D91322A4F4007598E2 /* glass-hud-border-bottom-right.png */,
-				E2F9E1DA1322A4F4007598E2 /* glass-hud-border-bottom.png */,
-				E2F9E1DB1322A4F4007598E2 /* glass-hud-border-middle.png */,
-				E2F9E1DC1322A4F4007598E2 /* glass-hud-border-top-left.png */,
-				E2F9E1DD1322A4F4007598E2 /* glass-hud-border-top-right.png */,
-				E2F9E1DE1322A4F4007598E2 /* glass-hud-border-top.png */,
+				28CB50E814603CEC00810395 /* glass-hud-bottom-left.png */,
+				28CB50E914603CEC00810395 /* glass-hud-bottom-middle.png */,
+				28CB50EA14603CEC00810395 /* glass-hud-bottom-right.png */,
+				28CB50EB14603CEC00810395 /* glass-hud-middle-left.png */,
+				28CB50EC14603CEC00810395 /* glass-hud-middle-middle.png */,
+				28CB50ED14603CEC00810395 /* glass-hud-middle-right.png */,
+				28CB50EE14603CEC00810395 /* glass-hud-top-left.png */,
+				28CB50EF14603CEC00810395 /* glass-hud-top-middle.png */,
+				28CB50F014603CEC00810395 /* glass-hud-top-right.png */,
 			);
 			path = "glass-hud";
 			sourceTree = "<group>";
@@ -937,20 +922,6 @@
 			files = (
 				28F69A1B129C1CAA00D4BB97 /* Credits.rtf in Resources */,
 				28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */,
-				E2F9E1DF1322A4F4007598E2 /* glass-hud-border-bottom-left.png in Resources */,
-				E2F9E1E01322A4F4007598E2 /* glass-hud-border-bottom-right.png in Resources */,
-				E2F9E1E11322A4F4007598E2 /* glass-hud-border-bottom.png in Resources */,
-				E2F9E1E21322A4F4007598E2 /* glass-hud-border-middle.png in Resources */,
-				E2F9E1E31322A4F4007598E2 /* glass-hud-border-top-left.png in Resources */,
-				E2F9E1E41322A4F4007598E2 /* glass-hud-border-top-right.png in Resources */,
-				E2F9E1E51322A4F4007598E2 /* glass-hud-border-top.png in Resources */,
-				E27937F513254D9400BC5224 /* glass-hud-content-top.png in Resources */,
-				E27937F613254D9400BC5224 /* glass-hud-content-top-right.png in Resources */,
-				E27937F713254D9400BC5224 /* glass-hud-content-top-left.png in Resources */,
-				E27937F813254D9400BC5224 /* glass-hud-content-middle.png in Resources */,
-				E27937F913254D9400BC5224 /* glass-hud-content-bottom.png in Resources */,
-				E27937FA13254D9400BC5224 /* glass-hud-content-bottom-right.png in Resources */,
-				E27937FB13254D9400BC5224 /* glass-hud-content-bottom-left.png in Resources */,
 				E267035A132CA21F003FBFC2 /* glass-hud-button-right.png in Resources */,
 				E267035B132CA21F003FBFC2 /* glass-hud-button-middle.png in Resources */,
 				E267035C132CA21F003FBFC2 /* glass-hud-button-left.png in Resources */,
@@ -1047,6 +1018,15 @@
 				E2E82701145023EF007035E5 /* NewEventWindow.xib in Resources */,
 				E2E827031450256F007035E5 /* Blotter Preferences.preferencePane in Resources */,
 				E2E82702145023EF007035E5 /* NewTaskWindow.xib in Resources */,
+				28CB50F114603CEC00810395 /* glass-hud-bottom-left.png in Resources */,
+				28CB50F214603CEC00810395 /* glass-hud-bottom-middle.png in Resources */,
+				28CB50F314603CEC00810395 /* glass-hud-bottom-right.png in Resources */,
+				28CB50F414603CEC00810395 /* glass-hud-middle-left.png in Resources */,
+				28CB50F514603CEC00810395 /* glass-hud-middle-middle.png in Resources */,
+				28CB50F614603CEC00810395 /* glass-hud-middle-right.png in Resources */,
+				28CB50F714603CEC00810395 /* glass-hud-top-left.png in Resources */,
+				28CB50F814603CEC00810395 /* glass-hud-top-middle.png in Resources */,
+				28CB50F914603CEC00810395 /* glass-hud-top-right.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
