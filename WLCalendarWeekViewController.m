@@ -48,7 +48,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     [_columnsData release];
     [self removeObserver:self forKeyPath:@"representedObject.date"];
     [self removeObserver:self forKeyPath:@"representedObject.calendar"];
-    [self removeObserver:self forKeyPath:@"representedObject.calCalendars"];
+    [self removeObserver:self forKeyPath:@"representedObject.calEventCalendars"];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
@@ -223,7 +223,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     NSParameterAssert([self representedObject] != nil);
 
     NSCalendar *calendar = [[self representedObject] calendar];
-    NSArray *calCalendars = [[self representedObject] calCalendars];
+    NSArray *calEventCalendars = [[self representedObject] calEventCalendars];
     NSDateComponents *offset = [[NSDateComponents alloc] init];
     [offset setDay:[anIndexSet firstIndex]];
     NSDate *startDate = [[calendar dateByAddingComponents:offset toDate:aFirstDate options:0] WL_startOfDay:calendar];
@@ -232,7 +232,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     [offset release];
     NSPredicate *p = [CalCalendarStore eventPredicateWithStartDate:startDate
                                                            endDate:endDate
-                                                         calendars:calCalendars];
+                                                         calendars:calEventCalendars];
     return [[CalCalendarStore defaultCalendarStore] eventsWithPredicate:p];
 }
 
@@ -439,27 +439,9 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 
 - (void)_calEventsDidChange:(NSNotification *)aNotification
 {
-    NSArray *insertedEventUIDs = [[aNotification userInfo] objectForKey:CalInsertedRecordsKey];
-    NSArray *deletedEventUIDs = [[aNotification userInfo] objectForKey:CalDeletedRecordsKey];
-    // Inserting and deleting events will call _calCalendarsDidChange:, so skip this case.
-    if ([insertedEventUIDs count] == 0 && [deletedEventUIDs count] == 0)
-    {
-        NSUInteger numberOfColumns = [self numberOfColumnsInWeekView:[self view]];
-        NSIndexSet *allColumnIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, numberOfColumns)];
-        [[self view] updateEventsOfColumnsAtIndexes:allColumnIndexes];
-    }
-}
-
-- (void)_calCalendarsDidChange:(NSNotification *)aNotification
-{
-    NSSet *updatedCalendarUIDs = [NSSet setWithArray:[[aNotification userInfo] objectForKey:CalUpdatedRecordsKey]];
-    NSSet *calCalendarUIDs = [NSSet setWithArray:[[self representedObject] valueForKeyPath:@"calCalendars.uid"]];
-    if ([updatedCalendarUIDs intersectsSet:calCalendarUIDs])
-    {
-        NSUInteger numberOfColumns = [self numberOfColumnsInWeekView:[self view]];
-        NSIndexSet *allColumnIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, numberOfColumns)];
-        [[self view] updateEventsOfColumnsAtIndexes:allColumnIndexes];
-    }
+    NSUInteger numberOfColumns = [self numberOfColumnsInWeekView:[self view]];
+    NSIndexSet *allColumnIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, numberOfColumns)];
+    [[self view] updateEventsOfColumnsAtIndexes:allColumnIndexes];
 }
 
 
@@ -484,7 +466,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     [v release];
     [self addObserver:self forKeyPath:@"representedObject.date" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:NULL];
     [self addObserver:self forKeyPath:@"representedObject.calendar" options:NSKeyValueObservingOptionNew context:NULL];
-    [self addObserver:self forKeyPath:@"representedObject.calCalendars" options:NSKeyValueObservingOptionNew context:NULL];
+    [self addObserver:self forKeyPath:@"representedObject.calEventCalendars" options:NSKeyValueObservingOptionNew context:NULL];
     NSNotificationCenter *n = [NSNotificationCenter defaultCenter];
     [n addObserver:self
           selector:@selector(_calEventsDidChange:)
@@ -493,14 +475,6 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     [n addObserver:self
           selector:@selector(_calEventsDidChange:)
               name:CalEventsChangedNotification
-            object:[CalCalendarStore defaultCalendarStore]];
-    [n addObserver:self
-          selector:@selector(_calCalendarsDidChange:)
-              name:CalCalendarsChangedNotification
-            object:[CalCalendarStore defaultCalendarStore]];
-    [n addObserver:self
-          selector:@selector(_calCalendarsDidChange:)
-              name:CalCalendarsChangedExternallyNotification
             object:[CalCalendarStore defaultCalendarStore]];
     isViewLoaded = YES;
 }
@@ -520,7 +494,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 
 - (void)observeValueForKeyPath:(NSString *)aKeyPath ofObject:(id)anObject change:(NSDictionary *)aChange context:(void *)aContext
 {
-    if ([aKeyPath isEqual:@"representedObject.calendar"] || [aKeyPath isEqual:@"representedObject.calCalendars"])
+    if ([aKeyPath isEqual:@"representedObject.calendar"] || [aKeyPath isEqual:@"representedObject.calEventCalendars"])
     {
         [[self view] reloadDataAnimated:YES];
         [self highlightCurrentDayIfNeeded];

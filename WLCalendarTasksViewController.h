@@ -31,11 +31,6 @@
  */
 - (void)_calTasksDidChange:(NSNotification *)aNotification;
 
-/*!
- @abstract Reloads data if there are only updated calendars.
- */
-- (void)_calCalendarsDidChange:(NSNotification *)aNotification;
-
 @end
 
 

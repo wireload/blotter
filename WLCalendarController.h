@@ -19,6 +19,11 @@ typedef enum
 } WLCalendarType;
 
 
+extern NSString* const WLTempEventNotes;
+
+extern NSString* const WLTempTaskNotes;
+
+
 @interface CalCalendar (WLCalendarController)
 
 - (WLCalendarType)WL_type;
@@ -29,9 +34,9 @@ typedef enum
 @interface WLCalendarController : NSObject {
     NSCalendar *calendar;
     NSDate *date;
-    NSArray *calCalendars;
-    NSArray *calEventCalendars;
-    NSArray *calReminderCalendars;
+    NSMutableArray *calCalendars;
+    NSMutableArray *calEventCalendars;
+    NSMutableArray *calReminderCalendars;
 
     NSTimer *_nextMinuteTimer;
     NSTimer *_nextDayTimer;
@@ -41,10 +46,25 @@ typedef enum
 
 @property (nonatomic, retain, readonly) NSDate *date;
 
+/*!
+ @discussion    Sorted by uid.
+ You may observe it for insertion, deletion and replacement.
+ Calendar is replaced if color or title of the new one do not match to the old one.
+ */
 @property (nonatomic, copy, readonly) NSArray *calCalendars;
 
+/*!
+ @discussion    Sorted by uid.
+ You may observe it for insertion, deletion and replacement.
+ Calendar is replaced if color or title of the new one do not match to the old one.
+ */
 @property (nonatomic, copy, readonly) NSArray *calEventCalendars;
 
+/*!
+ @discussion    Sorted by uid.
+ You may observe it for insertion, deletion and replacement.
+ Calendar is replaced if color or title of the new one do not match to the old one.
+ */
 @property (nonatomic, copy, readonly) NSArray *calReminderCalendars;
 
 + (id)sharedController;
@@ -86,6 +106,6 @@ typedef enum
  */
 - (void)_calCalendarsDidChange:(NSNotification *)aNotification;
 
-- (NSArray *)_calendarsToDisplay;
+- (NSArray *)_calCalendarsToDisplay;
 
 @end

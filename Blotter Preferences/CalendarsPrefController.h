@@ -19,11 +19,15 @@
  */
 @interface CalendarsPrefController : NSObject <SS_PreferencePaneProtocol, NSTableViewDelegate, NSTableViewDataSource> {
     IBOutlet WLPrefPaneView *_mainView;
-    IBOutlet NSTableView *_tableView;
-    NSMutableArray *_cachedCalCalendars;
+    IBOutlet NSTableView *_eventsTableView;
+    IBOutlet NSTableView *_remindersTableView;
+    NSMutableArray *_cachedEventCalCalendars;
+    NSMutableArray *_cachedReminderCalCalendars;
 }
 
-@property (retain) NSMutableArray *_cachedCalCalendars;
+@property (retain) NSMutableArray *_cachedEventCalCalendars;
+
+@property (retain) NSMutableArray *_cachedReminderCalCalendars;
 
 - (NSDictionary *)_calCalendarDictForUID:(NSString *)anUID;
 

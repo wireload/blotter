@@ -25,6 +25,7 @@
 		28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 28F69CF4129CC12100D4BB97 /* Licenses.rtf */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		E206EB1D14618D2F0053A279 /* NSArray+WLDelta.m in Sources */ = {isa = PBXBuildFile; fileRef = E206EB1C14618D2F0053A279 /* NSArray+WLDelta.m */; };
 		E20DAC4F1428FF0B00EF65EA /* info-middle-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E20DAC4D1428FF0B00EF65EA /* info-middle-left.png */; };
 		E20DAC501428FF0B00EF65EA /* info-middle-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E20DAC4E1428FF0B00EF65EA /* info-middle-right.png */; };
 		E20DAC5614294D8800EF65EA /* NSAttributedString+WLStringDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = E20DAC5514294D8700EF65EA /* NSAttributedString+WLStringDrawing.m */; };
@@ -266,6 +267,8 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Blotter-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Blotter-Info.plist"; path = "../Blotter-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Blotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E206EB1B14618D2F0053A279 /* NSArray+WLDelta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+WLDelta.h"; sourceTree = "<group>"; };
+		E206EB1C14618D2F0053A279 /* NSArray+WLDelta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+WLDelta.m"; sourceTree = "<group>"; };
 		E20DAC4D1428FF0B00EF65EA /* info-middle-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-middle-left.png"; sourceTree = "<group>"; };
 		E20DAC4E1428FF0B00EF65EA /* info-middle-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-middle-right.png"; sourceTree = "<group>"; };
 		E20DAC5414294D8700EF65EA /* NSAttributedString+WLStringDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+WLStringDrawing.h"; sourceTree = "<group>"; };
@@ -520,6 +523,8 @@
 				E2A7085D13F0427800A4BF3A /* WLCalendarDateViewController.m */,
 				E214525113FF9550009FEEB8 /* WLCalendarController.h */,
 				E214525213FF9550009FEEB8 /* WLCalendarController.m */,
+				E206EB1B14618D2F0053A279 /* NSArray+WLDelta.h */,
+				E206EB1C14618D2F0053A279 /* NSArray+WLDelta.m */,
 				E2948D921401484B007122BC /* NSCalendar+WLWeekend.h */,
 				E2948D931401484B007122BC /* NSCalendar+WLWeekend.m */,
 				E2E64B4C1402483500912A92 /* WLSoftEdgeLayer.h */,
@@ -1086,6 +1091,7 @@
 				E23F746F14434DE40055D6CE /* WLHourRange.m in Sources */,
 				E2435B1A145057620052D9A3 /* WLPrefPaneView.m in Sources */,
 				E2CBD792145C642700CF2630 /* WLNinePartBlockLayer.m in Sources */,
+				E206EB1D14618D2F0053A279 /* NSArray+WLDelta.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

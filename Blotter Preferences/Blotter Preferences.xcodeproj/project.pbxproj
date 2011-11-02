@@ -164,6 +164,7 @@
 		32DBCF630370AF2F00C91783 /* Blotter Preferences_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Blotter Preferences_Prefix.pch"; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Blotter Preferences.preferencePane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Blotter Preferences.preferencePane"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
+		E206EB1E1461CA160053A279 /* WLCalendarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WLCalendarController.h; path = ../WLCalendarController.h; sourceTree = "<group>"; };
 		E21BC9C714161EF700A91662 /* LayoutPrefPaneView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LayoutPrefPaneView.xib; sourceTree = "<group>"; };
 		E21BC9CF141625E700A91662 /* LayoutPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayoutPrefController.h; sourceTree = "<group>"; };
 		E21BC9D0141625E700A91662 /* LayoutPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayoutPrefController.m; sourceTree = "<group>"; };
@@ -365,6 +366,7 @@
 		32C88E010371C26100C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				E206EB1E1461CA160053A279 /* WLCalendarController.h */,
 				E2CBD794145C648C00CF2630 /* WLNinePartBlockLayer.h */,
 				E2451BD51456D53A001907C6 /* CATransaction+WLBlocks.h */,
 				E2435B2A1453ACDE0052D9A3 /* NSColor+CGColor.h */,

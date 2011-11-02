@@ -10,24 +10,17 @@
 #import "CalendarsPrefController.h"
 #import "WLColorCheckboxCell.h"
 #import "WLPrefPaneView.h"
+#import "WLCalendarController.h"
 
 
 @implementation CalendarsPrefController
-
-- (id)init
-{
-    self = [super init];
-    if (self != nil)
-    {
-    }
-    return self;
-}
 
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:@"Calendars"];
-    [_cachedCalCalendars release];
+    [_cachedEventCalCalendars release];
+    [_cachedReminderCalCalendars release];
     [super dealloc];
 }
 
@@ -41,8 +34,8 @@
         if ([NSBundle loadNibNamed:@"CalendarsPrefPaneView" owner:self])
         {
             _mainView.preferredFrameSize = [_mainView frame].size;
-            [_tableView setIntercellSpacing:NSMakeSize(3.0f, 0.0f)];
-            [_tableView setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
+            [_eventsTableView setIntercellSpacing:NSMakeSize(3.0f, 0.0f)];
+            [_eventsTableView setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
             [[NSUserDefaults standardUserDefaults] addObserver:self
                                                     forKeyPath:@"Calendars"
                                                        options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
@@ -95,7 +88,11 @@
     if ([[aTableColumn identifier] isEqualToString:@"check"])
     {
         WLColorCheckboxCell *cell = aCell;
-        NSColor *calColor = [[self._cachedCalCalendars objectAtIndex:rowIndex] color];
+        NSColor *calColor = nil;
+        if (aTableView == _eventsTableView)
+            calColor = [[self._cachedEventCalCalendars objectAtIndex:rowIndex] color];
+        else
+            calColor = [[self._cachedReminderCalCalendars objectAtIndex:rowIndex] color];
         [cell setButtonColor:calColor];
     }
 }
@@ -105,32 +102,49 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-    return [self._cachedCalCalendars count];
+    if (aTableView == _eventsTableView)
+        return [self._cachedEventCalCalendars count];
+    else
+        return [self._cachedReminderCalCalendars count];
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
     if ([[aTableColumn identifier] isEqualToString:@"check"])
     {
-        NSString *uid = [[self._cachedCalCalendars objectAtIndex:rowIndex] uid];
+        NSString *uid = nil;
+        if (aTableView == _eventsTableView)
+            uid = [[self._cachedEventCalCalendars objectAtIndex:rowIndex] uid];
+        else
+            uid = [[self._cachedReminderCalCalendars objectAtIndex:rowIndex] uid];
         return [[self _calCalendarDictForUID:uid] objectForKey:@"check"];
     }
     else
-        return [[self._cachedCalCalendars objectAtIndex:rowIndex] title];
+    {
+        if (aTableView == _eventsTableView)
+            return [[self._cachedEventCalCalendars objectAtIndex:rowIndex] title];
+        else
+            return [[self._cachedReminderCalCalendars objectAtIndex:rowIndex] title];
+    }
 }
 
 - (void)tableView:(NSTableView *)aTableView setObjectValue:(id)anObject forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
     if ([[aTableColumn identifier] isEqualToString:@"check"])
     {
-        NSString *uid = [[self._cachedCalCalendars objectAtIndex:rowIndex] uid];
+        NSString *uid = nil;
+        if (aTableView == _eventsTableView)
+            uid = [[self._cachedEventCalCalendars objectAtIndex:rowIndex] uid];
+        else
+            uid = [[self._cachedReminderCalCalendars objectAtIndex:rowIndex] uid];
         [self _setState:anObject forCalCalendarWithUID:uid];
     }
 }
 
 
 #pragma mark Private
-@synthesize _cachedCalCalendars;
+@synthesize _cachedEventCalCalendars;
+@synthesize _cachedReminderCalCalendars;
 
 - (NSDictionary *)_calCalendarDictForUID:(NSString *)anUID
 {
@@ -162,35 +176,45 @@
                                 }];
     if (index != NSNotFound)
     {
-        NSDictionary *newCalendar = [NSDictionary dictionaryWithObjectsAndKeys:anUID, @"uid", newState, @"check", nil];
+        NSMutableDictionary *newCalendar = [[calendars objectAtIndex:index] mutableCopy];
+        [newCalendar setObject:newState forKey:@"check"];
         [calendars replaceObjectAtIndex:index withObject:newCalendar];
         [[NSUserDefaults standardUserDefaults] setObject:calendars forKey:@"Calendars"];
     }
     else
-    {
         NSLog(@"Cannot find calendar with UID %@. Please, contact the developers.", anUID);
-    }
 }
 
 - (void)_calCalendarsDidChange:(NSNotification *)aNotification
 {
-    // Only update calendars (to match color, title etc).
     NSSet *updatedCalCalendarUIDs = [NSSet setWithArray:[[aNotification userInfo] objectForKey:CalUpdatedRecordsKey]];
     NSSet *calCalendarUIDs = [NSSet setWithArray:[[NSUserDefaults standardUserDefaults] valueForKeyPath:@"Calendars.uid"]];
     if ([updatedCalCalendarUIDs intersectsSet:calCalendarUIDs])
     {
         for (NSString *uid in updatedCalCalendarUIDs)
         {
-            NSUInteger index = [self._cachedCalCalendars indexOfObjectPassingTest:^BOOL(CalCalendar *c, NSUInteger idx, BOOL *stop) {
+            CalCalendar *updatedCalCalendar = [[CalCalendarStore defaultCalendarStore] calendarWithUID:uid];
+            NSUInteger index = [self._cachedEventCalCalendars indexOfObjectPassingTest:^BOOL(CalCalendar *c, NSUInteger idx, BOOL *stop) {
                 return [c.uid isEqualToString:uid];
             }];
-            CalCalendar *updatedCalCalendar = [[CalCalendarStore defaultCalendarStore] calendarWithUID:uid];
-            [self._cachedCalCalendars replaceObjectAtIndex:index withObject:updatedCalCalendar];
+            if (index != NSNotFound)
+                [self._cachedEventCalCalendars replaceObjectAtIndex:index withObject:updatedCalCalendar];
+            else
+            {
+                index = [self._cachedReminderCalCalendars indexOfObjectPassingTest:^BOOL(CalCalendar *c, NSUInteger idx, BOOL *stop) {
+                    return [c.uid isEqualToString:uid];
+                }];
+                [self._cachedReminderCalCalendars replaceObjectAtIndex:index withObject:updatedCalCalendar];
+            }
         }
-        [self._cachedCalCalendars sortUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"title"
+        [self._cachedEventCalCalendars sortUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"title"
                                                                                                               ascending:YES
                                                                                                                selector:@selector(localizedCaseInsensitiveCompare:)]]];
-        [_tableView reloadData];
+        [_eventsTableView reloadData];
+        [self._cachedReminderCalCalendars sortUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"title"
+                                                                                                                   ascending:YES
+                                                                                                                    selector:@selector(localizedCaseInsensitiveCompare:)]]];
+        [_remindersTableView reloadData];
     }
 }
 
@@ -212,8 +236,10 @@
         [calCalendars sortUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"title"
                                                                                                   ascending:YES
                                                                                                    selector:@selector(localizedCaseInsensitiveCompare:)]]];
-        self._cachedCalCalendars = calCalendars;
-        [_tableView reloadData];
+        self._cachedEventCalCalendars = [[[[NSClassFromString(@"WLCalendarController") sharedController] calEventCalendarsFromCalCalendars:calCalendars] mutableCopy] autorelease];
+        [_eventsTableView reloadData];
+        self._cachedReminderCalCalendars = [[[[NSClassFromString(@"WLCalendarController") sharedController] calReminderCalendarsFromCalCalendars:calCalendars] mutableCopy] autorelease];
+        [_remindersTableView reloadData];
     }
     else
         [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aChange];
