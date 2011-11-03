@@ -618,9 +618,11 @@ static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLine
 
 - (void)setFrameSize:(NSSize)newSize
 {
-    [super setFrameSize:newSize];
     [self stopAnimations];
-    [_rootLayer setNeedsLayout];
+    [CATransaction WL_performWithDisabledActions:^{
+        [super setFrameSize:newSize];
+        [_rootLayer layoutIfNeeded];
+    }];
 }
 
 @end

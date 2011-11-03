@@ -10,6 +10,7 @@
 #import "NSColor+CGColor.h"
 #import "NSFont+WLCalendar.h"
 #import "NSColor+WLCalendar.h"
+#import "CATransaction+WLBlocks.h"
 
 
 static NSString* const _WLTasksLayerName = @"task";
@@ -201,6 +202,17 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     [a setObject:(id)aColor forKey:(id)kCTForegroundColorAttributeName];
     return [[[NSAttributedString alloc] initWithString:NSLocalizedString(@"●", @"Task's mark")
                                             attributes:a] autorelease];
+}
+
+
+#pragma mark NSView
+
+- (void)setFrameSize:(NSSize)newSize
+{
+    [CATransaction WL_performWithDisabledActions:^{
+        [super setFrameSize:newSize];
+        [[self layer] layoutIfNeeded];
+    }];
 }
 
 @end
