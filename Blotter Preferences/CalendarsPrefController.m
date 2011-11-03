@@ -180,6 +180,7 @@
         [newCalendar setObject:newState forKey:@"check"];
         [calendars replaceObjectAtIndex:index withObject:newCalendar];
         [[NSUserDefaults standardUserDefaults] setObject:calendars forKey:@"Calendars"];
+        [newCalendar release];
     }
     else
         NSLog(@"Cannot find calendar with UID %@. Please, contact the developers.", anUID);
