@@ -13,7 +13,7 @@
 @class WLPrefPaneView;
 
 
-@interface LayoutPrefController : NSObject<SS_PreferencePaneProtocol, NSSplitViewDelegate> {
+@interface LayoutPrefController : NSObject <SS_PreferencePaneProtocol, NSSplitViewDelegate> {
     IBOutlet WLPrefPaneView *_mainView;
     IBOutlet NSSplitView *_infoWidthSplitView;
     IBOutlet NSSplitView *_allDayHeightSplitView;
@@ -28,13 +28,13 @@
     NSAffineTransform *_dateHeightSplitViewToBlotterWindowTransform;
     NSAffineTransform *_blotterWindowToTasksHeightSplitViewTransform;
     NSAffineTransform *_tasksHeightSplitViewToBlotterWindowTransform;
-    BOOL _splitViewsDidResizeSubviewsManually;
+    BOOL _splitViewsAreBeenInitializing;
 }
 
 - (IBAction)restoreDefaults:(NSButton *)aButton;
 
 - (void)layoutSplitViewWithParameters:(id)aParameters;
 
-- (void)transformsDidChanged;
+- (void)transformsDidChange;
 
 @end

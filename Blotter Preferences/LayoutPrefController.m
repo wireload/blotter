@@ -60,9 +60,9 @@
     [_allDayHeightSplitView setPosition:allDayViewSize.height ofDividerAtIndex:0];
 }
 
-- (void)transformsDidChanged
+- (void)transformsDidChange
 {
-    _splitViewsDidResizeSubviewsManually = YES;
+    _splitViewsAreBeenInitializing = YES;
     [_blotterWindowToInfoWidthSplitViewTransform release];
     [_infoWidthSplitViewToBlotterWindowTransform release];
     [_blotterWindowToAllDayHeightSplitViewTransform release];
@@ -98,7 +98,7 @@
     [_tasksHeightSplitViewToBlotterWindowTransform scaleXBy:NSWidth(blotterViewFrame) / (NSWidth(layoutViewFrame) - 2 * dividerThickness)
                                                              yBy:NSHeight(blotterViewFrame) / (NSHeight(layoutViewFrame) - 2 * dividerThickness)];
     [self layoutSplitViewWithParameters:[NSUserDefaults standardUserDefaults]];
-    _splitViewsDidResizeSubviewsManually = NO;
+    _splitViewsAreBeenInitializing = NO;
 }
 
 
@@ -111,10 +111,10 @@
         if ([NSBundle loadNibNamed:@"LayoutPrefPaneView" owner:self])
         {
             _mainView.preferredFrameSize = [_mainView frame].size;
-            [self transformsDidChanged];
+            [self transformsDidChange];
             DeskboardAppDelegate *delegate = (DeskboardAppDelegate *)[[NSApplication sharedApplication] delegate];
             [[NSNotificationCenter defaultCenter] addObserver:self
-                                                     selector:@selector(transformsDidChanged)
+                                                     selector:@selector(transformsDidChange)
                                                          name:NSWindowDidResizeNotification
                                                        object:delegate.calendarWindowController.window];
         }
@@ -155,7 +155,7 @@
 
 - (void)splitViewDidResizeSubviews:(NSNotification *)aNotification
 {
-    if (_splitViewsDidResizeSubviewsManually)
+    if (_splitViewsAreBeenInitializing)
         return;
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
