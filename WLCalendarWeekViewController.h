@@ -75,9 +75,4 @@ typedef enum
  */
 - (void)_calEventsDidChange:(NSNotification *)aNotification;
 
-/*!
- @abstract  Reloads data if there are only updated calendars.
- */
-- (void)_calCalendarsDidChange:(NSNotification *)aNotification;
-
 @end
