@@ -727,7 +727,6 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
 - (void)cursorUpdate:(NSEvent *)anEvent
 {
-    NSLog(@"cursorUpdate");
     [[NSCursor WL_cursorForEdge:(WLCalendarWindowEdge)[self _edgeForCurrentMouseLocation]] set];
 }
 
