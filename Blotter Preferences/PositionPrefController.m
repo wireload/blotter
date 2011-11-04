@@ -36,10 +36,8 @@
      */
     // XXX This has to be changed if more controls are added on the top of the position pref pane.
     static const NSSize PositionerMargins = {.width = 40.0f, .height = 111.0f};
-    const NSSize DoubledPositionControlSize = {.width = 2 * (_defaultFrameSize.width - PositionerMargins.width) + PositionerMargins.width,
-        .height = 2 * (_defaultFrameSize.height - PositionerMargins.height) + PositionerMargins.height };
-
-    int calendarSize = [[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"];
+    static const NSSize DoubledPositionControlSize = {.width = 840.0f, .height = 611.0f};
+    NSInteger calendarSize = [[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"];
     NSSize preferredSize = calendarSize == BLCustomSize ? DoubledPositionControlSize : _defaultFrameSize;
 
     // The new screen might have a different aspect ratio than the default 16:10.
