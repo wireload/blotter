@@ -47,7 +47,7 @@
 /*!
  @discussion Default value is 114.0f.
  */
-@property CGFloat heightOfAllDayPartOfColumn;
+@property (nonatomic) CGFloat heightOfAllDayPartOfColumn;
 
 @property (nonatomic) BOOL showTimeIndicator;
 

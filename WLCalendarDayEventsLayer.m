@@ -25,9 +25,11 @@ static NSString* const _WLEndHourKey = @"endHour";
 static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 
 
-#define IS_LESS_OR_EQ_F(a, b) (BOOL)((a) <= (b) || (fabsf((b) - (a)) < FLT_EPSILON))
+#define IS_EQ_F(a, b) (BOOL)(fabsf((b) - (a)) < FLT_EPSILON)
 
-#define IS_LESS_F(a, b) (BOOL)((a) < (b) && !(fabsf((b) - (a)) < FLT_EPSILON))
+#define IS_LESS_OR_EQ_F(a, b) (BOOL)((a) <= (b) || IS_EQ_F(a, b))
+
+#define IS_LESS_F(a, b) (BOOL)((a) < (b) && !IS_EQ_F(a, b))
 
 
 @implementation WLCalendarDayEventsLayer
@@ -103,7 +105,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     for (WLCalendarEventLayer *l in sublayersToRemove)
         [_sortedByUIDEventLayers removeObjectIdenticalTo:l];
     [sublayersToRemove release];
-    _eventsChanged = YES;
+    _areEventsChanged = YES;
 }
 
 - (void)setKeepTextOfEventsVisible:(BOOL)newKeepTextOfEventsVisible
@@ -111,6 +113,13 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     keepTextOfEventsVisible = newKeepTextOfEventsVisible;
     for (WLCalendarEventLayer *l in _sortedByUIDEventLayers)
         l.keepTextVisible = keepTextOfEventsVisible;
+}
+
+- (void)setBounds:(CGRect)newBounds
+{
+    if (!IS_EQ_F(newBounds.size.height, self.bounds.size.height))
+        _isHeightChanged = YES;
+    [super setBounds:newBounds];
 }
 
 
@@ -547,9 +556,10 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     if ([_sortedByStartDateEventLayers count] == 0)
         return;
 
-    if (_eventsChanged || _maximumNumberOfColumns != [self maximumNumberOfColumns])
+    if (_areEventsChanged || _isHeightChanged || _maximumNumberOfColumns != [self maximumNumberOfColumns])
     {
-        _eventsChanged = NO;
+        _areEventsChanged = NO;
+        _isHeightChanged = NO;
         _maximumNumberOfColumns = [self maximumNumberOfColumns];
         [self _buildEventsLayoutTree];
     }
@@ -572,10 +582,10 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
                 CGFloat t = [self _minYOfEventLayer:l forHeightOfHour:self.heightOfHour];
                 CGFloat b = [self _maxYOfEventLayer:l forHeightOfHour:self.heightOfHour minY:t];
                 NSUInteger numberOfColumnsToSkip = [[l valueForKey:_WLNumberOfColumnsToSkipKey] unsignedIntegerValue];
-                l.frame = CGRectMake(ceilf(CGRectGetMinX(self.bounds) + columnIdx * (columnWidth + XSpaceBetweenEvents)),
-                                     floorf(t),
+                l.frame = CGRectMake(roundf(CGRectGetMinX(self.bounds) + columnIdx * (columnWidth + XSpaceBetweenEvents)),
+                                     roundf(t),
                                      floorf(columnWidth + (columnWidth + XSpaceBetweenEvents) * numberOfColumnsToSkip),
-                                     floor(b - t));
+                                     ceilf(b - t));
                 if (shouldRoundCorners)
                     l.cornerRadius = CornerRadius;
                 else

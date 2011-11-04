@@ -21,7 +21,8 @@
     NSMutableArray *_sortedByUIDEventLayers;
     NSUInteger _maximumNumberOfColumns;
     NSTreeNode *_eventsLayoutTreeRootNode;
-    BOOL _eventsChanged;
+    BOOL _areEventsChanged;
+    BOOL _isHeightChanged;
 }
 
 @property (assign) id<WLCalendarTimeRuler> timeRuler;
