@@ -15,11 +15,52 @@
 
 - (void)dealloc
 {
-    [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:@"CalendarSize"];
-    [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:@"ScreenIdentifier"];
+    if (_mainView != nil)
+    {
+        [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:@"CalendarSize"];
+        [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:@"ScreenIdentifier"];
+    }
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
+
+
+#pragma mark Methods
+
+- (void)updatePreferredFrameSizeOfPaneView
+{
+    /*
+     Calculate how large this preferences pane should be given the current screen and calendar size settings. The aspect ratio of the screen, and whether we are using a Custom size or not decide how large the positioner control should be.
+
+     Since default size may be different for different localizations, the default frame size must have been saved in `defaultFrameSize`. It is assumed the initial aspect ratio of the positioner is 16:10 + 1 px height (for the bottom shine line), and that the margins are 112, 20, 20, 20. This size is 440x383 in English for a 400x251 positioner control.
+     */
+    // XXX This has to be changed if more controls are added on the top of the position pref pane.
+    static const NSSize PositionerMargins = {.width = 40.0f, .height = 111.0f};
+    const NSSize DoubledPositionControlSize = {.width = 2 * (_defaultFrameSize.width - PositionerMargins.width) + PositionerMargins.width,
+        .height = 2 * (_defaultFrameSize.height - PositionerMargins.height) + PositionerMargins.height };
+
+    int calendarSize = [[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"];
+    NSSize preferredSize = calendarSize == BLCustomSize ? DoubledPositionControlSize : _defaultFrameSize;
+
+    // The new screen might have a different aspect ratio than the default 16:10.
+    WLCalendarWindowController *w = [(DeskboardAppDelegate *)[NSApp delegate] calendarWindowController];
+    NSScreen *windowScreen = [w windowScreen];
+
+    NSRect screenFrame = [windowScreen visibleFrame];
+    CGFloat aspectRatio = screenFrame.size.height ? screenFrame.size.width / screenFrame.size.height : 16.0f / 10.0f;
+
+    // Remove the margins on the left and the right so we can calculate the desired height of the positioner alone.
+    CGFloat desiredHeight = (preferredSize.width - PositionerMargins.width) / aspectRatio;
+
+    // Round to nearest multiple of 20 so that we get whole grid squares. This will slightly distort the aspect
+    // ratio but it's the lesser of two evils.
+    CGFloat adjustedDesiredHeight = 20.0f * roundf(desiredHeight / 20.0f);
+
+    preferredSize.height = adjustedDesiredHeight + PositionerMargins.height;
+
+    _mainView.preferredFrameSize = preferredSize;
+}
+
 
 #pragma mark SS_PreferencePaneProtocol
 
@@ -43,15 +84,15 @@
                     break;
             }
 
-            defaultFrameSize = [_mainView frame].size;
-            [self updatePreferredFrameSize];
+            _defaultFrameSize = [_mainView frame].size;
+            [self updatePreferredFrameSizeOfPaneView];
 
             [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:@"CalendarSize"
                                                        options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionPrior
                                                        context:NULL];
             [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:@"ScreenIdentifier" options:NSKeyValueObservingOptionNew context:NULL];
             [[NSNotificationCenter defaultCenter] addObserver:self
-                                                     selector:@selector(updatePreferredFrameSize)
+                                                     selector:@selector(updatePreferredFrameSizeOfPaneView)
                                                          name:NSApplicationDidChangeScreenParametersNotification
                                                        object:NSApp];
         }
@@ -85,46 +126,6 @@
 - (BOOL)allowsVerticalResizing
 {
     return NO;
-}
-
-#pragma mark ViewSize
-
-/*
- Calculate how large this preferences pane should be given the current screen and calendar size settings. The aspect ratio of the screen, and whether we are using a Custom size or not decide how large the positioner control should be.
- 
- Since default size may be different for different localizations, the default frame size must have been saved in `defaultFrameSize`. It is assumed the initial aspect ratio of the positioner is 16:10 + 1 px height (for the bottom shine line), and that the margins are 112, 20, 20, 20. This size is 440x383 in English for a 400x251 positioner control.
-*/
-- (NSSize)preferredFrameSize
-{
-    // XXX This has to be changed if more controls are added on the top of the position pref pane.
-    static const NSSize PositionerMargins = {.width = 40.0, .height = 111.0};
-    const NSSize DoubledPositionControlSize = {.width = 2 * (defaultFrameSize.width - PositionerMargins.width) + PositionerMargins.width, .height = 2 * (defaultFrameSize.height - PositionerMargins.height) + PositionerMargins.height };
-    
-    int calendarSize = [[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"];
-    NSSize r = calendarSize == BLCustomSize ? DoubledPositionControlSize : defaultFrameSize;
-    
-    // The new screen might have a different aspect ratio than the default 16:10.
-    WLCalendarWindowController *w = [(DeskboardAppDelegate *)[NSApp delegate] calendarWindowController];
-    NSScreen *windowScreen = [w windowScreen];
-    
-    NSRect screenFrame = [windowScreen frame];
-    float aspectRatio = screenFrame.size.height ? screenFrame.size.width / screenFrame.size.height : 16.0 / 10.0;
-    // NSLog(@"aspect ratio: %f", aspectRatio);
-    // Remove the margins on the left and the right so we can calculate the desired height of the positioner alone.
-    float desiredHeight = (r.width - PositionerMargins.width) / aspectRatio;
-    // NSLog(@"desired height for a positioner control of %f px width: %f", (r.width - PositionerMargins.width), desiredHeight);
-    // Round to nearest multiple of 20 so that we get whole grid squares. This will slightly distort the aspect
-    // ratio but it's the lesser of two evils.
-    float adjustedDesiredHeight = 20.0 * roundf(desiredHeight / 20.0);
-    // NSLog(@"adjusted desired height: %f", adjustedDesiredHeight);
-    
-    r.height = adjustedDesiredHeight + PositionerMargins.height;
-    return r;    
-}
-
-- (void)updatePreferredFrameSize
-{
-    _mainView.preferredFrameSize = [self preferredFrameSize];
 }
 
 
@@ -165,7 +166,7 @@
     }
     else
         return NSMakeSize(90, 70);
-    
+
 }
 
 - (NSRect)calendarWindowArrangement:(WLCalendarWindowArrangement *)anArrangement setFrame:(NSRect)aFrame
@@ -260,12 +261,12 @@
                     break;
             }
             [[_arrangement layer] setNeedsLayout];
-            [self updatePreferredFrameSize];
+            [self updatePreferredFrameSizeOfPaneView];
         }
     }
     else if ([aKeyPath isEqualToString:@"ScreenIdentifier"])
     {
-        [self updatePreferredFrameSize];
+        [self updatePreferredFrameSizeOfPaneView];
         [[_arrangement layer] setNeedsLayout];
     }
     else

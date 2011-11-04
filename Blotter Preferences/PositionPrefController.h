@@ -19,10 +19,9 @@
     IBOutlet WLPrefPaneView *_mainView;
     IBOutlet WLCalendarWindowArrangement *_arrangement;
     IBOutlet WLScreensController *_screensController;
-
-    NSSize defaultFrameSize;
+    NSSize _defaultFrameSize;
 }
 
-- (void)updatePreferredFrameSize;
+- (void)updatePreferredFrameSizeOfPaneView;
 
 @end
