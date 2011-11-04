@@ -18,7 +18,8 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:@"Calendars"];
+    if (_mainView != nil)
+        [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:@"Calendars"];
     [_cachedEventCalCalendars release];
     [_cachedReminderCalCalendars release];
     [super dealloc];
