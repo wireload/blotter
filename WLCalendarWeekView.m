@@ -145,6 +145,13 @@ static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLine
         [self setNeedsUpdateHeightOfHour];
 }
 
+- (void)setHeightOfAllDayPartOfColumn:(CGFloat)newHeightOfAllDayPartOfColumn
+{
+    heightOfAllDayPartOfColumn = newHeightOfAllDayPartOfColumn;
+    if ([self wantsLayer] && self.showAllDayEvents)
+        [_rootLayer setNeedsLayout];
+}
+
 
 #pragma mark Methods
 
