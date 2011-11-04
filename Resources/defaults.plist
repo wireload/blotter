@@ -27,8 +27,10 @@
 	<key>PerDayDate</key>
 	<false/>
 	<key>MinimumWeekViewWidth</key>
-	<real>350</real>
+	<real>460</real>
 	<key>ShowPreferencesAtStartUp</key>
 	<true/>
+	<key>MinimumWeekViewHeight</key>
+	<real>350</real>
 </dict>
 </plist>

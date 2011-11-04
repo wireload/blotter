@@ -25,8 +25,6 @@ const NSSize BLNormalMinimumSize = {950, 750};
 */
 const NSSize BLMinimumSize = {280, 215};
 
-const NSSize BLWeekMinimumSize = {460, 350};
-
 @implementation WLCalendarWindowController
 
 - (id)init
@@ -339,10 +337,15 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     [_rightNowViewBox setNeedsDisplay:YES];
 
     NSRect weekViewFrame = [self weekViewFrame];
-    [_weekViewController view].heightOfAllDayPartOfColumn = [[NSUserDefaults standardUserDefaults] floatForKey:@"AllDayViewHeight"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [_weekViewController view].heightOfAllDayPartOfColumn = [defaults floatForKey:@"AllDayViewHeight"];
     [[_weekViewController view] setFrame:weekViewFrame];
-    BOOL tooSmall = (weekViewFrame.size.width < BLWeekMinimumSize.width || weekViewFrame.size.height < BLWeekMinimumSize.height);
-    [[_weekViewController view] setHidden:tooSmall];
+    // Sizes in defaults know nothing about margins. Take care of them here.
+    NSSize minimumWeekViewSize = NSMakeSize([defaults floatForKey:@"MinimumWeekViewWidth"] - _WLXMarginBetweenInfoAndWeek,
+                                            [defaults floatForKey:@"MinimumWeekViewHeight"]);
+    BOOL isTooSmall = (weekViewFrame.size.width < minimumWeekViewSize.width ||
+                       weekViewFrame.size.height < minimumWeekViewSize.height);
+    [[_weekViewController view] setHidden:isTooSmall];
     [[_weekViewController view] setNeedsDisplay:YES];
 }
 
