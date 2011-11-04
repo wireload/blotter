@@ -13,6 +13,13 @@
 @class WLPrefPaneView;
 
 
+typedef enum
+{
+    WLCalendarNormalLayout = 0,
+    WLCalendarCustomLayout = 1
+} WLCalendarLayout;
+
+
 @interface LayoutPrefController : NSObject <SS_PreferencePaneProtocol, NSSplitViewDelegate> {
     IBOutlet WLPrefPaneView *_mainView;
     IBOutlet NSSplitView *_infoWidthSplitView;
@@ -20,6 +27,7 @@
     IBOutlet NSSplitView *_dateHeightSplitView;
     IBOutlet NSSplitView *_tasksHeightSplitView;
     IBOutlet NSView *_layoutView;
+    IBOutlet NSView *_layoutControl;
     NSAffineTransform *_blotterWindowToInfoWidthSplitViewTransform;
     NSAffineTransform *_infoWidthSplitViewToBlotterWindowTransform;
     NSAffineTransform *_blotterWindowToAllDayHeightSplitViewTransform;
@@ -28,13 +36,15 @@
     NSAffineTransform *_dateHeightSplitViewToBlotterWindowTransform;
     NSAffineTransform *_blotterWindowToTasksHeightSplitViewTransform;
     NSAffineTransform *_tasksHeightSplitViewToBlotterWindowTransform;
-    BOOL _splitViewsAreBeenInitializing;
+    BOOL _areSplitViewsBeenInitializing;
+    BOOL _areSplitViewsBeenResettingToDefault;
+    NSSize _defaultFrameSize;
 }
-
-- (IBAction)restoreDefaults:(NSButton *)aButton;
 
 - (void)layoutSplitViewWithParameters:(id)aParameters;
 
 - (void)transformsDidChange;
+
+- (void)updatePreferredFrameSizeOfPaneView;
 
 @end
