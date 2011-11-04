@@ -32,7 +32,7 @@
     /*
      Calculate how large this preferences pane should be given the current screen and calendar size settings. The aspect ratio of the screen, and whether we are using a Custom size or not decide how large the positioner control should be.
 
-     Since default size may be different for different localizations, the default frame size must have been saved in `defaultFrameSize`. It is assumed the initial aspect ratio of the positioner is 16:10 + 1 px height (for the bottom shine line), and that the margins are 112, 20, 20, 20. This size is 440x383 in English for a 400x251 positioner control.
+     Since default size may be different for different localizations, the default frame size must have been saved in `defaultFrameSize`. It is assumed the initial aspect ratio of the positioner is 16:10 + 1 px height (for the bottom shine line), and that the margins are minX=20, minY=20, maxX=20, maxY=91. This size is 440x383 in English for a 400x251 positioner control.
      */
     // XXX This has to be changed if more controls are added on the top of the position pref pane.
     static const NSSize PositionerMargins = {.width = 40.0f, .height = 111.0f};
