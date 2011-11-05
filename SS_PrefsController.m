@@ -311,7 +311,7 @@
         return NO;
     }
     prefsView.postsPreferredFrameSizeDidChangeNotification = YES;
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:WLViewPreferredFrameSizeDidChangeNotification object:prefsView];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:WLViewPreferredFrameSizeDidChangeNotification object:currentPrefsView];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(_paneViewPreferredFrameSizeDidChange:)
                                                  name:WLViewPreferredFrameSizeDidChangeNotification
