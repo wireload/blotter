@@ -26,6 +26,8 @@
     BOOL alwaysOpensCentered;
     
     BOOL debug;
+    
+    NSView *currentPrefsView;
 }
 
 // Convenience constructors
@@ -81,5 +83,8 @@ float ToolbarHeightForWindow(NSWindow *window);
  @abstract If frame size of currently selected pane is changed, update size of the prefs window.
  */
 - (void)_paneViewPreferredFrameSizeDidChange:(NSNotification *)aNotification;
+
+- (void)setShouldAutoResize:(BOOL)aFlag;
+- (NSView *)nonResizingContentView;
 
 @end

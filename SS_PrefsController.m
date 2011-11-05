@@ -96,6 +96,7 @@
                 [self activatePane:panePath];
             }
         }
+        
         return self;
     }
     return nil;
@@ -172,6 +173,11 @@
     
     [prefsWindow setReleasedWhenClosed:NO];
     [prefsWindow setTitle:@"Preferences"]; // initial default title
+    
+    NSView *nonResizingContentView = [[NSView alloc] initWithFrame:[[prefsWindow contentView] bounds]];
+    [nonResizingContentView setAutoresizingMask:(NSViewMaxYMargin | NSViewMaxXMargin)];
+    [nonResizingContentView setFrameOrigin:NSMakePoint(0, 0)];
+    [[prefsWindow contentView] addSubview:nonResizingContentView];
     
     [prefsWindow center];
     [self createPrefsToolbar];
@@ -311,25 +317,47 @@
                                                  name:WLViewPreferredFrameSizeDidChangeNotification
                                                object:prefsView];
     
-    // Get rid of old view before resizing, for display purposes.
-    if (disp) {
-        NSView *tempView = [[NSView alloc] initWithFrame:[[prefsWindow contentView] frame]];
-        [prefsWindow setContentView:tempView];
-        [tempView release]; 
-    }
+    // Prepare to crossfade. Delete any old views we previously faded out.
+    NSView *contentView = [self nonResizingContentView];
+    if (currentPrefsView)
+        [contentView setSubviews:[NSArray arrayWithObject:currentPrefsView]];
     
     // Preserve upper left point of window during resize.
     NSRect newFrame = [prefsWindow frame];
-    newFrame.size.height = prefsView.preferredFrameSize.height + ([prefsWindow frame].size.height - [[prefsWindow contentView] frame].size.height);
+    newFrame.size.height = prefsView.preferredFrameSize.height + ([prefsWindow frame].size.height - [contentView frame].size.height);
     newFrame.size.width = prefsView.preferredFrameSize.width;
-    newFrame.origin.y += ([[prefsWindow contentView] frame].size.height - prefsView.preferredFrameSize.height);
+    newFrame.origin.y += ([contentView frame].size.height - prefsView.preferredFrameSize.height);
     
     id <SS_PreferencePaneProtocol> pane = [preferencePanes objectForKey:name];
     [prefsWindow setShowsResizeIndicator:([pane allowsHorizontalResizing] || [pane allowsHorizontalResizing])];
     
-    [prefsWindow setFrame:newFrame display:disp animate:disp];
+    [contentView setFrameSize:[prefsWindow contentRectForFrameRect:newFrame].size];
+    [prefsView setFrameSize:[prefsWindow contentRectForFrameRect:newFrame].size];
+    [prefsView setAutoresizingMask:0];
+    [self setShouldAutoResize:NO];
+
+    if (disp)
+    {
+        // Fade out the old view, while fading in the new view and resizing the whole window.
+        /*[contentView setWantsLayer:YES];
+        [prefsView setAlphaValue:0.0];
+        [contentView addSubview:prefsView];
+        [[currentPrefsView animator] setAlphaValue:0.0];
+        [[prefsView animator] setAlphaValue:1.0];*/
+        
+        // The animation above doesn't work well with layers, so disabled for now.
+        [contentView replaceSubview:currentPrefsView with:prefsView];
+        [[prefsWindow animator] setFrame:newFrame display:disp];
+    }
+    else
+    {
+        // Just install the new view immediately.
+        [prefsView setAlphaValue:1.0];
+        [contentView setSubviews:[NSArray arrayWithObject:prefsView]];
+        [prefsWindow setFrame:newFrame display:NO animate:NO];        
+    }
     
-    [prefsWindow setContentView:prefsView];
+    currentPrefsView = prefsView;
     
     // Set appropriate resizing on window.
     NSSize theSize = [prefsWindow frame].size;
@@ -602,7 +630,7 @@ float ToolbarHeightForWindow(NSWindow *window)
 
 - (void)_paneViewPreferredFrameSizeDidChange:(NSNotification *)aNotification
 {
-    if ([aNotification object] == [prefsWindow contentView])
+    if ([aNotification object] == currentPrefsView)
     {
         NSSize preferredPaneViewFrameSize = [(WLPrefPaneView *)[aNotification object] preferredFrameSize];
         NSRect oldWindowFrame = [prefsWindow frame];
@@ -611,8 +639,28 @@ float ToolbarHeightForWindow(NSWindow *window)
                                                                                 preferredPaneViewFrameSize.width,
                                                                                 preferredPaneViewFrameSize.height)];
         newWindowFrame.origin.y += oldWindowFrame.size.height - newWindowFrame.size.height;
+        [self setShouldAutoResize:YES];
         [prefsWindow setFrame:newWindowFrame display:YES animate:YES];
     }
+}
+
+- (void)setShouldAutoResize:(BOOL)aFlag
+{
+    if (aFlag)
+    {
+        [currentPrefsView setAutoresizingMask:NSViewMaxXMargin | NSViewMinYMargin | NSViewWidthSizable | NSViewHeightSizable];
+        [[self nonResizingContentView] setAutoresizingMask:NSViewMaxXMargin | NSViewMinYMargin | NSViewWidthSizable | NSViewHeightSizable];        
+    }
+    else
+    {
+        [currentPrefsView setAutoresizingMask:0];
+        [[self nonResizingContentView] setAutoresizingMask:(NSViewMaxYMargin | NSViewMaxXMargin)];
+    }
+}
+
+- (NSView *)nonResizingContentView
+{
+    return [[[prefsWindow contentView] subviews] objectAtIndex:0];
 }
 
 @end
