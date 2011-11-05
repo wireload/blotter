@@ -5,6 +5,8 @@
 
 #define Last_Pane_Defaults_Key	[[[NSBundle mainBundle] bundleIdentifier] stringByAppendingString:@"_Preferences_Last_Pane_Defaults_Key"]
 
+#define USE_CROSS_FADES 0
+
 // ************************************************
 // version/init/dealloc/constructors
 // ************************************************
@@ -338,15 +340,16 @@
 
     if (disp)
     {
+#if USE_CROSS_FADES
         // Fade out the old view, while fading in the new view and resizing the whole window.
-        /*[contentView setWantsLayer:YES];
         [prefsView setAlphaValue:0.0];
         [contentView addSubview:prefsView];
         [[currentPrefsView animator] setAlphaValue:0.0];
-        [[prefsView animator] setAlphaValue:1.0];*/
-        
-        // The animation above doesn't work well with layers, so disabled for now.
+        [[prefsView animator] setAlphaValue:1.0];
+#else       
+        // The animation above doesn't work well with layers.
         [contentView replaceSubview:currentPrefsView with:prefsView];
+#endif
         [[prefsWindow animator] setFrame:newFrame display:disp];
     }
     else
