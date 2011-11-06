@@ -215,9 +215,9 @@
         {
             return [[left valueForKey:@"uid"] compare:[right valueForKey:@"uid"]];
         }];
-        WLCalendarType type = 0;
+        WLCalendarType type = WLCalendarUnknownType;
         if (index != NSNotFound)
-            type = [[[calCalendarDicts objectAtIndex:index] objectForKey:@"type"] unsignedIntegerValue];
+            type = (WLCalendarType)[[[calCalendarDicts objectAtIndex:index] objectForKey:@"type"] unsignedIntegerValue];
 
         if (type == WLCalendarUnknownType)
         {
@@ -261,9 +261,9 @@
     {
         return [[left valueForKey:@"uid"] compare:[right valueForKey:@"uid"]];
     }];
-        WLCalendarType type = 0;
+        WLCalendarType type = WLCalendarUnknownType;
         if (index != NSNotFound)
-            type = [[[calCalendarDicts objectAtIndex:index] objectForKey:@"type"] unsignedIntegerValue];
+            type = (WLCalendarType)[[[calCalendarDicts objectAtIndex:index] objectForKey:@"type"] unsignedIntegerValue];
 
         if (type == WLCalendarUnknownType)
         {
