@@ -348,17 +348,7 @@
 - (void)_nextDayTimerDidFire
 {
     _nextDayTimer = nil;
-
-    NSDate *now = [NSDate date];
-    NSDateComponents *nowComponents = [self.calendar components:NSWeekCalendarUnit | NSDayCalendarUnit fromDate:now];
-    NSDateComponents *representedComponents = [calendar components:NSWeekCalendarUnit | NSDayCalendarUnit fromDate:self.date];
-    // Though accuracy of NSTimer is documented as 50-100ms, we must ensure day is actually changed.
-    if ([nowComponents day] != [representedComponents day] || [nowComponents week] != [representedComponents week])
-    {
-        [self updateDate];
-    }
-    else
-        [self performSelector:@selector(_nextDayTimerDidFire) withObject:nil afterDelay:0.1];
+    [self updateDate];
 }
 
 - (void)_nextMinuteTimerDidFire
@@ -676,6 +666,5 @@ NSString* const WLTempTaskNotes = @"net.wireload.blotter.temptask";
     }
     return type;
 }
-
 
 @end
