@@ -52,12 +52,10 @@
                 if ([calDict objectForKey:@"type"] == nil)
                 {
                     // Add type to the dictionary.
-                    NSDictionary *d = [NSDictionary dictionaryWithObjectsAndKeys:
-                                       [calDict objectForKey:@"uid"],                       @"uid",
-                                       [calDict objectForKey:@"check"],                     @"check",
-                                       [NSNumber numberWithUnsignedInteger:[c WL_type]],    @"type",
-                                       nil];
+                    NSMutableDictionary *d = [calDict mutableCopy];
+                    [d setObject:[NSNumber numberWithUnsignedInteger:[c WL_type]] forKey:@"type"];
                     [calCalendarDicts replaceObjectAtIndex:index withObject:d];
+                    [d release];
                 }
                 [calCalendarDictsToDelete removeObjectIdenticalTo:calDict];
             }
