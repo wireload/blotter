@@ -19,18 +19,6 @@ typedef enum
 } WLCalendarType;
 
 
-extern NSString* const WLTempEventNotes;
-
-extern NSString* const WLTempTaskNotes;
-
-
-@interface CalCalendar (WLCalendarController)
-
-- (WLCalendarType)WL_type;
-
-@end
-
-
 @interface WLCalendarController : NSObject {
     NSCalendar *calendar;
     NSDate *date;
@@ -107,5 +95,22 @@ extern NSString* const WLTempTaskNotes;
 - (void)_calCalendarsDidChange:(NSNotification *)aNotification;
 
 - (NSArray *)_calCalendarsToDisplay;
+
+@end
+
+
+extern NSString* const WLTempEventNotes;
+
+extern NSString* const WLTempTaskNotes;
+
+
+@interface CalCalendar (WLCalendarController)
+
+/*
+ @discussion May cause to CalCalendarsChangedNotification, CalEventsChangedNotification, CalTasksChangedNotification,
+ CalCalendarsChangedExternallyNotification, CalEventsChangedExternallyNotification, CalTasksChangedExternallyNotification.
+ Ensure you remove observers before sending this method.
+ */
+- (WLCalendarType)WL_type;
 
 @end
