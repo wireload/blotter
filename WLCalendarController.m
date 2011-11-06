@@ -373,7 +373,8 @@
     if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
     {
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateDate) object:nil];
-        [self performSelector:@selector(updateDate) withObject:nil afterDelay:0.5];
+        static const NSTimeInterval AnyDelay = 0.5;
+        [self performSelector:@selector(updateDate) withObject:nil afterDelay:AnyDelay];
     }
     else
         [self updateDate];
@@ -585,7 +586,7 @@ NSString* const WLTempTaskNotes = @"net.wireload.blotter.temptask";
     static const NSUInteger MaximumNumberOfAttemptsToAddOrDelete = 5;
     static const NSTimeInterval AttemptDelay = 0.1;
 
-    WLCalendarType type = 0;
+    WLCalendarType type = WLCalendarUnknownType;
 
     NSPredicate *allEventsPredicate = [CalCalendarStore eventPredicateWithStartDate:[NSDate distantPast]
                                                                             endDate:[NSDate distantFuture]
