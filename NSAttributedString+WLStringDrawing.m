@@ -50,9 +50,8 @@
                                                                       [self attributedSubstringFromRange:range]];
                         NSString *trimmedString = [[truncatedString string] stringByTrimmingCharactersInSet:
                                                    [NSCharacterSet whitespaceAndNewlineCharacterSet]];
-                        [[truncatedString mutableString] setString:trimmedString];
                         static const CFStringRef Token = CFSTR("\u2026");
-                        [[truncatedString mutableString] appendString:(NSString *)Token];
+                        [[truncatedString mutableString] setString:[trimmedString stringByAppendingString:(NSString *)Token]];
                         CTLineRef truncatedLine = CTLineCreateWithAttributedString((CFAttributedStringRef)truncatedString);
                         [truncatedString release];
                         if (truncatedLine != NULL)
@@ -64,7 +63,7 @@
                                                                                               tokenAttributes);
                             truncationToken = CTLineCreateWithAttributedString(truncationString);
                             CFRelease(truncationString);
-                            // In case when adding truncation symbol to the end of line make it to exeed aRect.
+                            // In case when adding truncation symbol to the end of line make it to exceed aRect.
                             CTLineRef truncatedTruncatedLine = CTLineCreateTruncatedLine(truncatedLine,
                                                                                          aRect.size.width,
                                                                                          kCTLineTruncationEnd,
