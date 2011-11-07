@@ -84,7 +84,11 @@
 
 - (NSRect)contentRectForFrameRect:(NSRect)aWindowFrame
 {
-	return NSInsetRect(aWindowFrame,
+    NSRect contentRect = NSMakeRect(0.0f,
+                                    0.0f,
+                                    aWindowFrame.size.width,
+                                    aWindowFrame.size.height);
+	return NSInsetRect(contentRect,
                        [WLCalendarWindowBackgroundView borderWidth],
                        [WLCalendarWindowBackgroundView borderWidth]);
 }
