@@ -555,9 +555,9 @@ static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLine
 
     WLCalendarTimeRulerLayer *timeRuler = [_timeRulerRootLayer WL_timeRulerLayer];
     CGPoint scrollPoint = [timeRuler pointForHour:floorf(r.startHour)];
-    scrollPoint.y -= [timeRuler maximumHeightOfHourLabel] / 2;
-    scrollPoint.x = floorf(scrollPoint.x);
-    scrollPoint.y = floorf(scrollPoint.y);
+    scrollPoint.y -= [timeRuler maximumHeightOfHourLabel] / 2.0f;
+    scrollPoint.x = roundf(scrollPoint.x);
+    scrollPoint.y = roundf(scrollPoint.y);
     for (WLCalendarDayEventsLayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])
         [l scrollPoint:scrollPoint];
     [timeRuler scrollPoint:scrollPoint];
@@ -571,14 +571,14 @@ static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLine
 
     // Center _hour whenever possible
     CGFloat visibleHeight = timeRulerScrollLayer.bounds.size.height;
-    newScrollPoint = CGPointMake(0.0f, floorf(newScrollPoint.y - visibleHeight / 2.0));
+    newScrollPoint = CGPointMake(0.0f, floorf(newScrollPoint.y - visibleHeight / 2.0f));
     CGFloat topLimit = CGRectGetMinY(timeRulerLayer.bounds);
     CGFloat bottomLimit = CGRectGetMaxY(timeRulerLayer.bounds) - visibleHeight;
     newScrollPoint.y = floorf(fminf(fmaxf(newScrollPoint.y, topLimit), bottomLimit));
 
-    newScrollPoint.y -= [timeRulerLayer maximumHeightOfHourLabel] / 2;
-    newScrollPoint.x = floorf(newScrollPoint.x);
-    newScrollPoint.y = floorf(newScrollPoint.y);
+    newScrollPoint.y -= [timeRulerLayer maximumHeightOfHourLabel] / 2.0f;
+    newScrollPoint.x = roundf(newScrollPoint.x);
+    newScrollPoint.y = roundf(newScrollPoint.y);
     for (WLCalendarDayEventsLayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])
         [l scrollPoint:newScrollPoint];
     [timeRulerLayer scrollPoint:newScrollPoint];
@@ -741,7 +741,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
 - (CGRect)dayBackgroundFrame
 {
     CGFloat allDayHeightAndMargin = 0.0f;
-    if (self.showAllDayEvents)
+    if (self.showAllDayEvents && fabsf(self.heightOfAllDayPartOfColumn - 0.0f) > FLT_EPSILON)
         allDayHeightAndMargin = self.heightOfAllDayPartOfColumn + _WLYMarginBetweenAllDayAndDayPartsOfColumn;
     return CGRectIntegral(CGRectMake(0.0f,
                                      allDayHeightAndMargin,
@@ -757,6 +757,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     // Height of the day must be less than time ruler by half of of the first hour.
     CGFloat hourLabelYPadding = [[_timeRulerRootLayer WL_timeRulerLayer] maximumHeightOfHourLabel] / 2;
     CGRect dayBackgroundFrame = [self dayBackgroundFrame];
+    // Background has 1px stroke
     return CGRectIntegral(CGRectInset(CGRectMake(0.0f,
                                                  titleHeightAndMargin + hourLabelYPadding,
                                                  dayBackgroundFrame.size.width,
@@ -812,8 +813,6 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     dayBackground.frame = [self dayBackgroundFrame];
 
     CAScrollLayer *dayScroll = [aColumnLayer WL_dayScrollLayer];
-
-    // Background has 1px stroke
     dayScroll.frame = [self dayScrollFrame];
 }
 
