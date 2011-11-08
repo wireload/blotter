@@ -854,6 +854,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
 - (CALayer *)setupRootLayer
 {
     CALayer *l = [CALayer layer];
+    l.masksToBounds = YES;
     l.name = _WLRootLayerName;
     l.layoutManager = self;
     return l;
