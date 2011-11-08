@@ -280,10 +280,13 @@ const NSSize BLMinimumSize = {280, 215};
 
 @implementation  WLCalendarWindowController (Layout)
 
+// Belongs to the right now view.
 static const CGFloat _WLYMarginBetweenTasksAndRightNow = 10.0f;
 
+// Belongs to the calendar view.
 static const CGFloat _WLXMarginBetweenInfoAndWeek = 17.0f;
 
+// Belongs to the date view.
 static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
 
 - (void)_applyWindowSizeToViews
@@ -421,14 +424,33 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     [contentView addSubview:weekView];
 }
 
+- (CGFloat)fixedInfoViewsWidth
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    CGFloat infoViewWidth = [defaults floatForKey:@"InfoViewsWidth"];
+    CGFloat minWeekWidth = [defaults floatForKey:@"MinimumWeekViewWidth"];
+    NSRect bounds = [[window contentView] bounds];
+    CGFloat weekWidth = NSWidth(bounds) - infoViewWidth;
+    if (weekWidth > minWeekWidth)
+        return infoViewWidth;
+    else if (weekWidth < minWeekWidth / 2.0f)
+        return NSWidth(bounds);
+    else
+        return NSWidth(bounds) - minWeekWidth;
+}
+
 - (NSRect)dateViewFrame
 {
     NSRect bounds = [[window contentView] bounds];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    return [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
-                                                           NSMinY(bounds) + _WLYMarginBetweenBoundsAndDate,
-                                                           [defaults floatForKey:@"InfoViewsWidth"],
-                                                           [defaults floatForKey:@"DateViewHeight"] - _WLYMarginBetweenBoundsAndDate)];
+    NSRect r = [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
+                                                               NSMinY(bounds) + _WLYMarginBetweenBoundsAndDate,
+                                                               [self fixedInfoViewsWidth],
+                                                               [[NSUserDefaults standardUserDefaults] floatForKey:@"DateViewHeight"] - _WLYMarginBetweenBoundsAndDate)];
+    r.origin.x = fmaxf(NSMinX(bounds), fminf(NSMaxX(bounds), r.origin.x));
+    r.origin.y = fmaxf(NSMinY(bounds) + _WLYMarginBetweenBoundsAndDate, fminf(NSMaxY(bounds), r.origin.y));
+    r.size.width = fmaxf(NSMinX(bounds), fminf(NSMaxX(bounds) - r.origin.x, r.size.width));
+    r.size.height = fmaxf(NSMinY(bounds), fminf(NSMaxY(bounds) - r.origin.y, r.size.height));
+    return r;
 }
 
 - (NSRect)tasksViewFrame
@@ -437,42 +459,56 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     // By default tasks and right now have the same height. Since window size is unknown until user start blotter
     // set the default value here.
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:@"TasksViewHeight"] == nil)
+    if ([defaults objectForKey:@"TasksViewHeight"] == nil || [defaults integerForKey:@"CalendarLayout"] == WLCalendarNormalLayout)
+    {
+        [defaults removeObserver:self forKeyPath:@"TasksViewHeight"];
         [defaults setFloat:[self defaultTasksViewHeight] forKey:@"TasksViewHeight"];
-    return [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
-                                                           NSMaxY([self dateViewFrame]),
-                                                           [defaults floatForKey:@"InfoViewsWidth"],
-                                                           [defaults floatForKey:@"TasksViewHeight"])];
+        [defaults addObserver:self forKeyPath:@"TasksViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
+    }
+    NSRect r = [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
+                                                               NSMaxY([self dateViewFrame]),
+                                                               [self fixedInfoViewsWidth],
+                                                               [defaults floatForKey:@"TasksViewHeight"])];
+    r.origin.x = fmaxf(NSMinX(bounds), fminf(NSMaxX(bounds), r.origin.x));
+    r.origin.y = fmaxf(NSMinY(bounds), fminf(NSMaxY(bounds), r.origin.y));
+    r.size.width = fmaxf(NSMinX(bounds), fminf(NSMaxX(bounds) - r.origin.x, r.size.width));
+    r.size.height = fmaxf(NSMinY(bounds), fminf(NSMaxY(bounds) - r.origin.y, r.size.height));
+    return r;
 }
 
 - (NSRect)rightNowViewFrame
 {
     NSRect tasksViewFrame = [self tasksViewFrame];
     CGFloat margin = 0.0f;
-    if (tasksViewFrame.size.height == 0.0f || fabsf(tasksViewFrame.size.height - 0.0f) < FLT_EPSILON)
-        margin = 0.0f;
-    else
+    if (fabsf(tasksViewFrame.size.height - 0.0f) > FLT_EPSILON)
         margin = _WLYMarginBetweenTasksAndRightNow;
     NSRect bounds = [[self.window contentView] bounds];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    CGFloat height = NSHeight(bounds) - NSMaxY([self tasksViewFrame]) - margin;
-    return [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
-                                                           NSMaxY([self tasksViewFrame]) + margin,
-                                                           [defaults floatForKey:@"InfoViewsWidth"],
-                                                           height)];
+    NSRect r = [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
+                                                               NSMaxY(tasksViewFrame) + margin,
+                                                               [[NSUserDefaults standardUserDefaults] floatForKey:@"InfoViewsWidth"],
+                                                               NSHeight(bounds) - NSMaxY([self tasksViewFrame]) - margin)];
+    r.origin.x = fmaxf(NSMinX(bounds), fminf(NSMaxX(bounds), r.origin.x));
+    r.origin.y = fmaxf(NSMinY(bounds) + margin, fminf(NSMaxY(bounds), r.origin.y));
+    r.size.width = fmaxf(NSMinX(bounds), fminf(NSMaxX(bounds) - r.origin.x, r.size.width));
+    r.size.height = fmaxf(NSMinY(bounds), fminf(NSMaxY(bounds) - r.origin.y, r.size.height));
+    return r;
 }
 
 - (NSRect)weekViewFrame
 {
     NSRect bounds = [[window contentView] bounds];
-    CGFloat infoViewWidth = [[NSUserDefaults standardUserDefaults] floatForKey:@"InfoViewsWidth"];
-    CGFloat width = NSWidth(bounds) - infoViewWidth;
-    if (infoViewWidth > 0.0f && fabsf(infoViewWidth - 0.0f) >= FLT_EPSILON)
-        width -= _WLXMarginBetweenInfoAndWeek;
-    return [[window contentView] centerScanRect:NSMakeRect(NSMaxX(bounds) - width,
-                                                           NSMinY(bounds),
-                                                           width,
-                                                           NSHeight(bounds))];
+    CGFloat infoViewWidth = [self fixedInfoViewsWidth];
+    if (fabsf(infoViewWidth - 0.0f) > FLT_EPSILON)
+        infoViewWidth += _WLXMarginBetweenInfoAndWeek;
+    NSRect r = [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds) + infoViewWidth,
+                                                               NSMinY(bounds),
+                                                               NSMaxX(bounds) - NSMinX(bounds) - infoViewWidth,
+                                                               NSHeight(bounds))];
+    r.origin.x = fmaxf(NSMinX(bounds), fminf(NSMaxX(bounds), r.origin.x));
+    r.origin.y = fmaxf(NSMinY(bounds), fminf(NSMaxY(bounds), r.origin.y));
+    r.size.width = fmaxf(NSMinX(bounds), fminf(NSMaxX(bounds) - r.origin.x, r.size.width));
+    r.size.height = fmaxf(NSMinY(bounds), fminf(NSMaxY(bounds) - r.origin.y, r.size.height));
+    return r;
 }
 
 - (CGFloat)defaultTasksViewHeight

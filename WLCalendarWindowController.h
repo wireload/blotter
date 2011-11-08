@@ -129,6 +129,8 @@ extern NSSize const BLNormalMinimumSize;
  */
 - (void)_placeViews;
 
+- (CGFloat)fixedInfoViewsWidth;
+
 - (NSRect)dateViewFrame;
 
 - (NSRect)tasksViewFrame;

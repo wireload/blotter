@@ -11,7 +11,7 @@
 	<key>AutoFadeSeconds</key>
 	<integer>60</integer>
 	<key>CalendarSize</key>
-	<string>1</string>
+	<integer>1</integer>
 	<key>Calendars</key>
 	<array/>
 	<key>DisplayAllCalendars</key>
@@ -32,5 +32,7 @@
 	<true/>
 	<key>MinimumWeekViewHeight</key>
 	<real>350</real>
+    <key>CalendarLayout</key>
+    <integer>0</integer>
 </dict>
 </plist>
