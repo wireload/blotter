@@ -292,6 +292,7 @@
 - (void)_screenFrameDidChange
 {
     _mainView.preferredFrameSize = [self preferredFrameSizeOfPaneView];
+    [self _adjustCalendarWindowViewFrame];
 }
 
 - (void)_calendarWindowSizeDidChange
