@@ -7,6 +7,7 @@
 //
 
 #import "WLLayoutDayView.h"
+#import "WLLayoutCalednarWindowView.h"
 
 
 @implementation WLLayoutDayView
@@ -18,5 +19,11 @@
     [[NSColor darkGrayColor] setFill];
     NSRectFill([self bounds]);
 }
+
+- (NSInteger)tag
+{
+    return WLLayoutDayViewTag;
+}
+
 
 @end

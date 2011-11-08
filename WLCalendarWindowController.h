@@ -68,6 +68,12 @@ typedef enum BLPosition {
 } BLPosition;
 
 
+typedef enum {
+    WLCalendarNormalLayout = 0,
+    WLCalendarCustomLayout
+} WLCalendarLayout;
+
+
 extern NSSize const BLNarrowMinimumSize;
 
 extern NSSize const BLNormalMinimumSize;

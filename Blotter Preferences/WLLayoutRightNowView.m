@@ -7,6 +7,7 @@
 //
 
 #import "WLLayoutRightNowView.h"
+#import "WLLayoutCalednarWindowView.h"
 
 
 @implementation WLLayoutRightNowView
@@ -18,5 +19,11 @@
     [[NSColor darkGrayColor] setFill];
     NSRectFill([self bounds]);
 }
+
+- (NSInteger)tag
+{
+    return WLLayoutRightNowViewTag;
+}
+
 
 @end

@@ -8,43 +8,71 @@
 
 #import <Foundation/Foundation.h>
 #import "SS_PreferencePaneProtocol.h"
+#import "WLLayoutSplitView.h"
 
 
 @class WLPrefPaneView;
 
 
-typedef enum
-{
-    WLCalendarNormalLayout = 0,
-    WLCalendarCustomLayout = 1
-} WLCalendarLayout;
-
-
-@interface LayoutPrefController : NSObject <SS_PreferencePaneProtocol, NSSplitViewDelegate> {
+@interface LayoutPrefController : NSObject <SS_PreferencePaneProtocol, WLLayoutSplitViewDelegate> {
     IBOutlet WLPrefPaneView *_mainView;
-    IBOutlet NSSplitView *_infoWidthSplitView;
-    IBOutlet NSSplitView *_allDayHeightSplitView;
-    IBOutlet NSSplitView *_dateHeightSplitView;
-    IBOutlet NSSplitView *_tasksHeightSplitView;
-    IBOutlet NSView *_layoutView;
+    IBOutlet WLLayoutSplitView *_rootSplitView;
+    IBOutlet WLLayoutSplitView *_weekSplitView;
+    IBOutlet WLLayoutSplitView *_infoSplitView;
+    IBOutlet NSView *_calendarWindowView;
     IBOutlet NSView *_layoutControl;
-    NSAffineTransform *_blotterWindowToInfoWidthSplitViewTransform;
-    NSAffineTransform *_infoWidthSplitViewToBlotterWindowTransform;
-    NSAffineTransform *_blotterWindowToAllDayHeightSplitViewTransform;
-    NSAffineTransform *_allDayHeightSplitViewToBlotterWindowTransform;
-    NSAffineTransform *_blotterWindowToDateHeightSplitViewTransform;
-    NSAffineTransform *_dateHeightSplitViewToBlotterWindowTransform;
-    NSAffineTransform *_blotterWindowToTasksHeightSplitViewTransform;
-    NSAffineTransform *_tasksHeightSplitViewToBlotterWindowTransform;
-    BOOL _areSplitViewsBeenInitializing;
-    BOOL _areSplitViewsBeenResettingToDefault;
-    NSSize _defaultFrameSize;
+    NSAffineTransform *_blotterWindowToRootSplitViewTransform;
+    NSAffineTransform *_rootSplitViewToBlotterWindowTransform;
+    NSAffineTransform *_blotterWindowToWeekSplitViewTransform;
+    NSAffineTransform *_weekSplitViewToBlotterWindowTransform;
+    NSAffineTransform *_blotterWindowToInfoSplitViewTransform;
+    NSAffineTransform *_infoSplitViewToBlotterWindowTransform;
+    BOOL _areSplitViewsResizedUsingMouse;
 }
 
-- (void)layoutSplitViewWithParameters:(id)aParameters;
+- (NSSize)preferredFrameSizeOfPaneView;
 
-- (void)transformsDidChange;
 
-- (void)updatePreferredFrameSizeOfPaneView;
+@property (retain) NSAffineTransform *_blotterWindowToRootSplitViewTransform;
+
+@property (retain) NSAffineTransform *_rootSplitViewToBlotterWindowTransform;
+
+@property (retain) NSAffineTransform *_blotterWindowToWeekSplitViewTransform;
+
+@property (retain) NSAffineTransform *_weekSplitViewToBlotterWindowTransform;
+
+@property (retain) NSAffineTransform *_blotterWindowToInfoSplitViewTransform;
+
+@property (retain) NSAffineTransform *_infoSplitViewToBlotterWindowTransform;
+
+/*!
+ @abstract  Updates transformers according to current frame size of _mainView. Updates split views.
+ */
+- (void)_recalculateTransforms;
+
+/*!
+ @abstract  Updates preferred size of the _mainView.
+ */
+- (void)_screenFrameDidChange;
+
+/*!
+ @abstract  Adjusts frame of the _calendarWindowView to match new aspect ratio and size.
+ @see       _adjustCalendarWindowViewFrame
+ */
+- (void)_calendarWindowSizeDidChange;
+
+- (void)_adjustCalendarWindowViewFrame;
+
+- (void)_layoutSplitViewsWithParameters:(NSDictionary *)aParameters;
+
+- (void)_layoutRootSplitViewWithParameters:(NSDictionary *)aParameters;
+
+- (void)_layoutWeekSplitViewWithParameters:(NSDictionary *)aParameters;
+
+- (void)_layoutInfoSplitViewWithParameters:(NSDictionary *)aParameters;
+
+- (NSDictionary *)_parameters;
+
+- (NSDictionary *)_defaultParameters;
 
 @end

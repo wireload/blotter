@@ -30,9 +30,11 @@
 		28F6993D129B723900D4BB97 /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */; };
 		28F69A29129C587F00D4BB97 /* WLCalendarWindowArrangement.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69A28129C587F00D4BB97 /* WLCalendarWindowArrangement.m */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		E20840511466D31700FE050A /* WLLayoutInfoSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = E20840501466D31700FE050A /* WLLayoutInfoSplitView.m */; };
+		E20840551466D59D00FE050A /* WLLayoutWeekSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = E20840541466D59C00FE050A /* WLLayoutWeekSplitView.m */; };
+		E20840581467230C00FE050A /* WLLayoutSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = E20840571467230C00FE050A /* WLLayoutSplitView.m */; };
 		E21BC9C814161EF700A91662 /* LayoutPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E21BC9C714161EF700A91662 /* LayoutPrefPaneView.xib */; };
 		E21BC9D1141625E700A91662 /* LayoutPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = E21BC9D0141625E700A91662 /* LayoutPrefController.m */; };
-		E21BC9D61416374A00A91662 /* WLLayoutRootView.m in Sources */ = {isa = PBXBuildFile; fileRef = E21BC9D51416374A00A91662 /* WLLayoutRootView.m */; };
 		E21BC9D9141638C500A91662 /* WLLayoutDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = E21BC9D8141638C500A91662 /* WLLayoutDateView.m */; };
 		E21BC9DC1416391700A91662 /* WLLayoutTasksView.m in Sources */ = {isa = PBXBuildFile; fileRef = E21BC9DB1416391700A91662 /* WLLayoutTasksView.m */; };
 		E21BC9E51416396200A91662 /* WLLayoutRightNowView.m in Sources */ = {isa = PBXBuildFile; fileRef = E21BC9E41416396100A91662 /* WLLayoutRightNowView.m */; };
@@ -40,7 +42,7 @@
 		E21BC9EC1416399800A91662 /* WLLayoutDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = E21BC9EB1416399800A91662 /* WLLayoutDayView.m */; };
 		E2435B2814539E090052D9A3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2435B2714539E080052D9A3 /* QuartzCore.framework */; };
 		E259D3B21450370A000B2E0C /* chkbxColormask_10_7.png in Resources */ = {isa = PBXBuildFile; fileRef = E2E8267714501BD8007035E5 /* chkbxColormask_10_7.png */; };
-		E262E5E9142C199800715C02 /* WLLayoutBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = E262E5E8142C199700715C02 /* WLLayoutBackgroundView.m */; };
+		E262E5E9142C199800715C02 /* WLLayoutCalednarWindowView.m in Sources */ = {isa = PBXBuildFile; fileRef = E262E5E8142C199700715C02 /* WLLayoutCalednarWindowView.m */; };
 		E2730E361349BC1000A84433 /* WLRecorderControl.m in Sources */ = {isa = PBXBuildFile; fileRef = E2730E351349BC1000A84433 /* WLRecorderControl.m */; };
 		E2794F9F131A6425008AE1DA /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2794F9E131A6425008AE1DA /* Carbon.framework */; };
 		E28640971305C7C9004CFC9D /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2863FDB1305C741004CFC9D /* IOKit.framework */; };
@@ -165,11 +167,15 @@
 		8D5B49B6048680CD000E48DA /* Blotter Preferences.preferencePane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Blotter Preferences.preferencePane"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
 		E206EB1E1461CA160053A279 /* WLCalendarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WLCalendarController.h; path = ../WLCalendarController.h; sourceTree = "<group>"; };
+		E208404F1466D31700FE050A /* WLLayoutInfoSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutInfoSplitView.h; sourceTree = "<group>"; };
+		E20840501466D31700FE050A /* WLLayoutInfoSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutInfoSplitView.m; sourceTree = "<group>"; };
+		E20840531466D59C00FE050A /* WLLayoutWeekSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutWeekSplitView.h; sourceTree = "<group>"; };
+		E20840541466D59C00FE050A /* WLLayoutWeekSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutWeekSplitView.m; sourceTree = "<group>"; };
+		E20840561467230C00FE050A /* WLLayoutSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutSplitView.h; sourceTree = "<group>"; };
+		E20840571467230C00FE050A /* WLLayoutSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutSplitView.m; sourceTree = "<group>"; };
 		E21BC9C714161EF700A91662 /* LayoutPrefPaneView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LayoutPrefPaneView.xib; sourceTree = "<group>"; };
 		E21BC9CF141625E700A91662 /* LayoutPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayoutPrefController.h; sourceTree = "<group>"; };
 		E21BC9D0141625E700A91662 /* LayoutPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayoutPrefController.m; sourceTree = "<group>"; };
-		E21BC9D41416374A00A91662 /* WLLayoutRootView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutRootView.h; sourceTree = "<group>"; };
-		E21BC9D51416374A00A91662 /* WLLayoutRootView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutRootView.m; sourceTree = "<group>"; };
 		E21BC9D7141638C500A91662 /* WLLayoutDateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutDateView.h; sourceTree = "<group>"; };
 		E21BC9D8141638C500A91662 /* WLLayoutDateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutDateView.m; sourceTree = "<group>"; };
 		E21BC9DA1416391700A91662 /* WLLayoutTasksView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutTasksView.h; sourceTree = "<group>"; };
@@ -186,8 +192,8 @@
 		E2435B2A1453ACDE0052D9A3 /* NSColor+CGColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSColor+CGColor.h"; path = "../NSColor+CGColor.h"; sourceTree = "<group>"; };
 		E2451BD51456D53A001907C6 /* CATransaction+WLBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CATransaction+WLBlocks.h"; path = "../CATransaction+WLBlocks.h"; sourceTree = "<group>"; };
 		E262E5E5142BF83600715C02 /* NSColor+WLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSColor+WLCalendar.h"; path = "../NSColor+WLCalendar.h"; sourceTree = "<group>"; };
-		E262E5E7142C199700715C02 /* WLLayoutBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutBackgroundView.h; sourceTree = "<group>"; };
-		E262E5E8142C199700715C02 /* WLLayoutBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutBackgroundView.m; sourceTree = "<group>"; };
+		E262E5E7142C199700715C02 /* WLLayoutCalednarWindowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutCalednarWindowView.h; sourceTree = "<group>"; };
+		E262E5E8142C199700715C02 /* WLLayoutCalednarWindowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutCalednarWindowView.m; sourceTree = "<group>"; };
 		E2730E341349BC1000A84433 /* WLRecorderControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLRecorderControl.h; sourceTree = "<group>"; };
 		E2730E351349BC1000A84433 /* WLRecorderControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLRecorderControl.m; sourceTree = "<group>"; };
 		E27310351349CD2C00A84433 /* ShortcutRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShortcutRecorder.xcodeproj; path = ../ShortcutRecorder/ShortcutRecorder.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -400,8 +406,8 @@
 		E21BC9D3141635AD00A91662 /* Layout Pref Pane Views */ = {
 			isa = PBXGroup;
 			children = (
-				E21BC9D41416374A00A91662 /* WLLayoutRootView.h */,
-				E21BC9D51416374A00A91662 /* WLLayoutRootView.m */,
+				E262E5E7142C199700715C02 /* WLLayoutCalednarWindowView.h */,
+				E262E5E8142C199700715C02 /* WLLayoutCalednarWindowView.m */,
 				E21BC9D7141638C500A91662 /* WLLayoutDateView.h */,
 				E21BC9D8141638C500A91662 /* WLLayoutDateView.m */,
 				E21BC9DA1416391700A91662 /* WLLayoutTasksView.h */,
@@ -412,8 +418,12 @@
 				E21BC9E71416397D00A91662 /* WLLayoutAllDayView.m */,
 				E21BC9EA1416399800A91662 /* WLLayoutDayView.h */,
 				E21BC9EB1416399800A91662 /* WLLayoutDayView.m */,
-				E262E5E7142C199700715C02 /* WLLayoutBackgroundView.h */,
-				E262E5E8142C199700715C02 /* WLLayoutBackgroundView.m */,
+				E208404F1466D31700FE050A /* WLLayoutInfoSplitView.h */,
+				E20840501466D31700FE050A /* WLLayoutInfoSplitView.m */,
+				E20840531466D59C00FE050A /* WLLayoutWeekSplitView.h */,
+				E20840541466D59C00FE050A /* WLLayoutWeekSplitView.m */,
+				E20840561467230C00FE050A /* WLLayoutSplitView.h */,
+				E20840571467230C00FE050A /* WLLayoutSplitView.m */,
 			);
 			name = "Layout Pref Pane Views";
 			sourceTree = "<group>";
@@ -594,16 +604,18 @@
 				E2DC7DDD130810F00065CEAD /* WLScreensController.m in Sources */,
 				E2730E361349BC1000A84433 /* WLRecorderControl.m in Sources */,
 				E21BC9D1141625E700A91662 /* LayoutPrefController.m in Sources */,
-				E21BC9D61416374A00A91662 /* WLLayoutRootView.m in Sources */,
 				E21BC9D9141638C500A91662 /* WLLayoutDateView.m in Sources */,
 				E21BC9DC1416391700A91662 /* WLLayoutTasksView.m in Sources */,
 				E21BC9E51416396200A91662 /* WLLayoutRightNowView.m in Sources */,
 				E21BC9E81416397D00A91662 /* WLLayoutAllDayView.m in Sources */,
 				E21BC9EC1416399800A91662 /* WLLayoutDayView.m in Sources */,
-				E262E5E9142C199800715C02 /* WLLayoutBackgroundView.m in Sources */,
+				E262E5E9142C199800715C02 /* WLLayoutCalednarWindowView.m in Sources */,
 				280A24E31459EE08001B82C8 /* WLRecessedBoxShadowLayer.m in Sources */,
 				28CB5085145DB3E200810395 /* WLBlockLayoutManager.m in Sources */,
 				28CB5089145E22B900810395 /* NSCursor+ResizeAdditions.m in Sources */,
+				E20840511466D31700FE050A /* WLLayoutInfoSplitView.m in Sources */,
+				E20840551466D59D00FE050A /* WLLayoutWeekSplitView.m in Sources */,
+				E20840581467230C00FE050A /* WLLayoutSplitView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
