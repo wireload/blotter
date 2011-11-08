@@ -1,4 +1,4 @@
-    //
+//
 //  LayoutPrefController.m
 //  Blotter Preferences
 //
@@ -15,7 +15,8 @@
 
 @implementation LayoutPrefController
 
-- (void)dealloc {
+- (void)dealloc
+{
     [_blotterWindowToRootSplitViewTransform release];
     [_rootSplitViewToBlotterWindowTransform release];
     [_blotterWindowToWeekSplitViewTransform release];
@@ -83,7 +84,6 @@
 }
 
 
-
 - (NSString *)paneName
 {
     return NSLocalizedStringFromTableInBundle(@"Layout", nil, [NSBundle bundleForClass:[self class]], @"Layout pref pane title");
@@ -114,12 +114,14 @@
 
 - (void)splitViewWillTrackMouse:(WLLayoutSplitView *)aSplitView
 {
+    _resizedSplitView = aSplitView;
     _areSplitViewsResizedUsingMouse = YES;
 }
 
 - (void)splitViewDidTrackMouse:(WLLayoutSplitView *)aSplitView
 {
     _areSplitViewsResizedUsingMouse = NO;
+    _resizedSplitView = nil;
 }
 
 
@@ -127,16 +129,14 @@
 
 - (void)splitViewDidResizeSubviews:(NSNotification *)aNotification
 {
-    if (!_areSplitViewsResizedUsingMouse)
-    {
-        // Don't modify user settings
+    NSSplitView *splitView = [aNotification object];
+    if (!_areSplitViewsResizedUsingMouse || splitView != _resizedSplitView)
         return;
-    }
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults integerForKey:@"CalendarLayout"] == WLCalendarNormalLayout)
         [defaults setInteger:WLCalendarCustomLayout forKey:@"CalendarLayout"];
-    
-    NSSplitView *splitView = [aNotification object];
+
     // A User shouldn't be able to rewrite defaults of info section while calendar size is Narrow.
     // E.g. before setting calendar size to Narrow size was 600. After setting calendar size to Narrow
     // width will be forced to a specific value (@see -[WLCalendarWindowController _applyNarrowSizeToViews),
@@ -158,7 +158,8 @@
     {
         for (NSView *v in [[aNotification object] subviews])
         {
-            switch ([v tag]) {
+            switch ([v tag])
+            {
                 case WLLayoutDateViewTag:
                 {
                     CGFloat height = 0.0f;
@@ -310,7 +311,7 @@
     NSRect layoutViewFrame = [_rootSplitView frame];
     DeskboardAppDelegate *delegate = (DeskboardAppDelegate *)[[NSApplication sharedApplication] delegate];
     NSRect blotterViewFrame = [[delegate.calendarWindowController.window contentView] frame];
-    CGFloat rootSplitViewXDividersThickness =[_rootSplitView dividerThickness];
+    CGFloat rootSplitViewXDividersThickness = [_rootSplitView dividerThickness];
     CGFloat rootSplitViewYDividersThickness = 0.0f;
     CGFloat weekSplitViewXDividerThickness = 0.0f;
     CGFloat weekSplitViewYDividerThickness = [_weekSplitView dividerThickness];
@@ -320,15 +321,15 @@
         rootSplitViewXDividersThickness = 0.0f;
 
     [self._blotterWindowToRootSplitViewTransform scaleXBy:(NSWidth(layoutViewFrame) - rootSplitViewXDividersThickness) / NSWidth(blotterViewFrame)
-                                                           yBy:(NSHeight(layoutViewFrame) - rootSplitViewYDividersThickness) / NSHeight(blotterViewFrame)];
+                                                      yBy:(NSHeight(layoutViewFrame) - rootSplitViewYDividersThickness) / NSHeight(blotterViewFrame)];
     [self._rootSplitViewToBlotterWindowTransform scaleXBy:NSWidth(blotterViewFrame) / (NSWidth(layoutViewFrame) - rootSplitViewXDividersThickness)
-                                                           yBy:NSHeight(blotterViewFrame) / (NSHeight(layoutViewFrame) - rootSplitViewYDividersThickness)];
+                                                      yBy:NSHeight(blotterViewFrame) / (NSHeight(layoutViewFrame) - rootSplitViewYDividersThickness)];
 
     [self._blotterWindowToWeekSplitViewTransform scaleXBy:(NSWidth(layoutViewFrame) - weekSplitViewXDividerThickness) / NSWidth(blotterViewFrame)
                                                       yBy:(NSHeight(layoutViewFrame) - weekSplitViewYDividerThickness) / NSHeight(blotterViewFrame)];
     [self._weekSplitViewToBlotterWindowTransform scaleXBy:NSWidth(blotterViewFrame) / (NSWidth(layoutViewFrame) - weekSplitViewXDividerThickness)
                                                       yBy:NSHeight(blotterViewFrame) / (NSHeight(layoutViewFrame) - weekSplitViewYDividerThickness)];
-    
+
     [self._blotterWindowToInfoSplitViewTransform scaleXBy:(NSWidth(layoutViewFrame) - infoSplitViewXDividerThickness) / NSWidth(blotterViewFrame)
                                                       yBy:(NSHeight(layoutViewFrame) - infoSplitViewYDividerThickness) / NSHeight(blotterViewFrame)];
     [self._infoSplitViewToBlotterWindowTransform scaleXBy:NSWidth(blotterViewFrame) / (NSWidth(layoutViewFrame) - infoSplitViewXDividerThickness)
@@ -342,14 +343,14 @@
     NSRect screenFrame = [[delegate.calendarWindowController windowScreen] visibleFrame];
     NSRect bounds = [_layoutControl bounds];
     NSSize viewFrameSize = NSMakeSize(bounds.size.width * windowFrame.size.width / screenFrame.size.width,
-                                         bounds.size.height * windowFrame.size.height / screenFrame.size.height);
+                                      bounds.size.height * windowFrame.size.height / screenFrame.size.height);
     NSRect viewFrame = NSMakeRect((bounds.size.width - viewFrameSize.width) / 2.0f,
                                   (bounds.size.height - viewFrameSize.height) / 2.0f,
                                   viewFrameSize.width,
                                   viewFrameSize.height);
     [_calendarWindowView setFrame:[_layoutControl centerScanRect:viewFrame]];
 }
-    
+
 - (void)_layoutRootSplitViewWithParameters:(NSDictionary *)aParameters
 {
     [_rootSplitView adjustSubviews];

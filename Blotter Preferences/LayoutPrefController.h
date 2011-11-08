@@ -28,6 +28,7 @@
     NSAffineTransform *_blotterWindowToInfoSplitViewTransform;
     NSAffineTransform *_infoSplitViewToBlotterWindowTransform;
     BOOL _areSplitViewsResizedUsingMouse;
+    WLLayoutSplitView *_resizedSplitView;
 }
 
 - (NSSize)preferredFrameSizeOfPaneView;
