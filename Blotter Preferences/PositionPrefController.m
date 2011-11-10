@@ -69,8 +69,7 @@
         if ([NSBundle loadNibNamed:@"PositionPrefPaneView" owner:self])
         {
             [_arrangement createLayers];
-            NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"Recreated-Aqua" ofType:@"jpg"];
-            NSImage *backgroundImage = [[NSImage alloc] initWithContentsOfFile:path];
+            NSImage *backgroundImage = [[NSImage alloc] initWithContentsOfURL:[[NSBundle bundleForClass:[self class]] URLForImageResource:@"Recreated-Aqua"]];
             _arrangement.backgroundImage = backgroundImage;
             [backgroundImage release];
             switch ([[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"]) {
