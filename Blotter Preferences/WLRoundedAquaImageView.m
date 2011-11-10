@@ -20,6 +20,7 @@
         l.contents = [[NSImage alloc] initWithContentsOfURL:[[NSBundle bundleForClass:[self class]] URLForImageResource:@"Recreated-Aqua"]];
         l.cornerRadius = 1.25f;
         l.masksToBounds = YES;
+        l.opaque = YES;
         [self setLayer:l];
         [self setWantsLayer:YES];
     }
