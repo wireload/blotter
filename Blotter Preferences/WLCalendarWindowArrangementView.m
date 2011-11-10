@@ -1,5 +1,5 @@
 //
-//  WLCalendarWindowArrangement.m
+//  WLCalendarWindowArrangementView.m
 //  Blotter Preferences
 //
 //  Created by Ilya Kulakov on 27.10.11.
@@ -7,14 +7,14 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
-#import "WLCalendarWindowArrangement.h"
+#import "WLCalendarWindowArrangementView.h"
 #import "WLBlockLayer.h"
 #import "WLNinePartBlockLayer.h"
 #import "NSColor+CGColor.h"
 #import "CATransaction+WLBlocks.h"
-#import "WLRecessedBoxShadowLayer.h"
 #import "WLBlockLayoutManager.h"
 #import "NSCursor+ResizeAdditions.h"
+#import "WLGraphics.h"
 
 
 static NSString *_WLPositionKey = @"position";
@@ -47,7 +47,7 @@ static const NSSize _WLDefaultEdgeSize = {.width = 20.0f, .height = 20.0f};
 static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f};
 
 
-@implementation WLCalendarWindowArrangement
+@implementation WLCalendarWindowArrangementView
 
 - (void)dealloc
 {
@@ -144,7 +144,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     }
     NSRect windowFrame = NSRectFromCGRect(_calendarWindowLayer.frame);
     if (self.arrangementMode & WLCalendarWindowResizingArrangement)
-        windowFrame = [self alignCalendarWindowFrame:windowFrame];
+        windowFrame = [self alignCalendarWindowViewFrame:windowFrame];
     [_calendarWindowLayer setValue:[NSValue valueWithRect:NSIntegralRect(windowFrame)] forKey:_WLOriginalFrame];
     _navigationLayer.hidden = NO;
 }
@@ -199,7 +199,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 - (void)startResizingAtPoint:(NSPoint)aPoint edge:(WLCalendarWindowEdge)anEdge
 {
     NSRect windowFrame = NSRectFromCGRect(_calendarWindowLayer.frame);
-    windowFrame = [self alignCalendarWindowFrame:windowFrame];
+    windowFrame = [self alignCalendarWindowViewFrame:windowFrame];
     [_calendarWindowLayer setValue:[NSValue valueWithRect:windowFrame] forKey:_WLOriginalFrame];
     _navigationLayer.hidden = NO;
     [_resizeHandlesLayer.sublayers makeObjectsPerformSelector:@selector(setNeedsDisplay)];
@@ -387,7 +387,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
             newFrame.size.width = effectiveMinimumFrameSize.width + 2 * self.edgeSize.width;
         if (newFrame.size.height < (effectiveMinimumFrameSize.height + 2 * self.edgeSize.height))
             newFrame.size.height = effectiveMinimumFrameSize.height + 2 * self.edgeSize.height;
-        _calendarWindowLayer.frame = NSRectToCGRect([self alignCalendarWindowFrame:NSRectFromCGRect(newFrame)]);;
+        _calendarWindowLayer.frame = NSRectToCGRect([self alignCalendarWindowViewFrame:NSRectFromCGRect(newFrame)]);;
         // Force an immediate layout within this disabled actions block so that we don't get a resize animation when the parts of the 9-part image realise they need to move later.
         [_calendarWindowLayer layoutIfNeeded];
     }];
@@ -436,7 +436,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     return [self centerScanRect:NSMakeRect(px, py, pWidth, pHeight)];
 }
 
-- (NSRect)alignCalendarWindowFrame:(NSRect)aFrame
+- (NSRect)alignCalendarWindowViewFrame:(NSRect)aFrame
 {
     aFrame.origin.x = floorf(aFrame.origin.x / 10.0f) * 10.0f;
     aFrame.origin.y = floorf(aFrame.origin.y / 10.0f) * 10.0f;
@@ -475,10 +475,10 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
                                              [self bounds].size.width,
                                              [self bounds].size.height - 1);
         }
-        NSRect windowFrame = [self.delegate windowFrameOfCalendarWindowArrangement:self];
+        NSRect windowFrame = [self.delegate calendarWindowViewFrameOfCalendarWindowArrangement:self];
         windowFrame = NSInsetRect(windowFrame, -self.edgeSize.width, -self.edgeSize.height);
         if (self.arrangementMode & WLCalendarWindowResizingArrangement && ![self inLiveResize])
-            windowFrame = [self alignCalendarWindowFrame:windowFrame];
+            windowFrame = [self alignCalendarWindowViewFrame:windowFrame];
         _calendarWindowLayer.frame = NSRectToCGRect(windowFrame);
     }
 }
@@ -792,7 +792,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 @end
 
 
-@implementation WLCalendarWindowArrangement (Layers)
+@implementation WLCalendarWindowArrangementView (Layers)
 
 - (void)createLayers
 {
@@ -859,7 +859,16 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
 - (CALayer *)setupShadowLayer
 {
-    CALayer *l = [WLRecessedBoxShadowLayer layer];
+    WLBlockLayer *l = [NSClassFromString(@"WLBlockLayer") layer];
+    l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect)
+    {
+        [NSGraphicsContext saveGraphicsState];
+        NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:NO];
+        [NSGraphicsContext setCurrentContext:c];
+        WLRecessedBoxShadow(NSRectFromCGRect(aLayer.bounds));
+        [NSGraphicsContext restoreGraphicsState];
+         
+    };
     l.opaque = NO;
     return l;
 }
@@ -868,7 +877,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 {
     WLBlockLayer *l = [NSClassFromString(@"WLBlockLayer") layer];
     l.needsDisplayOnBoundsChange = YES;
-    __block WLCalendarWindowArrangement *selfBlock = self;
+    __block WLCalendarWindowArrangementView *selfBlock = self;
     l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect)
     {
         CGContextSetAllowsAntialiasing(aContext, NO);
@@ -1021,7 +1030,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         sublayer.actions = newActions;
         [newActions release];
 
-        __block WLCalendarWindowArrangement *selfBlock = self;
+        __block WLCalendarWindowArrangementView *selfBlock = self;
         sublayer.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect)
         {
             /* The corner handles look like L shapes and the side handles look like I shapes. */

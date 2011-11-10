@@ -43,7 +43,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="453662770">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -52,16 +52,14 @@
 						<int key="NSvFlags">274</int>
 						<string key="NSFrame">{{20, 20}, {400, 251}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
-						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:1192</string>
-						<string key="NSClassName">WLCalendarWindowArrangement</string>
+						<string key="NSClassName">WLCalendarWindowArrangementView</string>
 					</object>
 					<object class="NSPopUpButton" id="738986184">
 						<reference key="NSNextResponder" ref="453662770"/>
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{126, 287}, {297, 26}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="238193824"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="769130927">
@@ -104,7 +102,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{18, 293}, {107, 17}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="738986184"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="389274649">
@@ -138,7 +135,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 323}, {107, 17}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="138711095"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="202913726">
@@ -156,7 +152,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{126, 317}, {141, 26}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="219358551"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="608658124">
@@ -241,8 +236,6 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{440, 361}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="551017980"/>
 				<string key="NSClassName">WLPrefPaneView</string>
 			</object>

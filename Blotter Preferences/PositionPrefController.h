@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "SS_PreferencePaneProtocol.h"
-#import "WLCalendarWindowArrangement.h"
+#import "WLCalendarWindowArrangementView.h"
 
 @class WLPrefPaneView;
 
@@ -17,7 +17,7 @@
 
 @interface PositionPrefController : NSObject <SS_PreferencePaneProtocol, WLCalendarWindowArrangementDelegate> {
     IBOutlet WLPrefPaneView *_mainView;
-    IBOutlet WLCalendarWindowArrangement *_arrangement;
+    IBOutlet WLCalendarWindowArrangementView *_arrangement;
     IBOutlet WLScreensController *_screensController;
     NSSize _defaultFrameSize;
 }

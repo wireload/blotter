@@ -62,6 +62,8 @@
  */
 - (void)_calendarWindowSizeDidChange;
 
+- (void)_layoutFrameDidChange;
+
 - (void)_adjustCalendarWindowViewFrame;
 
 - (void)_layoutSplitViewsWithParameters:(NSDictionary *)aParameters;

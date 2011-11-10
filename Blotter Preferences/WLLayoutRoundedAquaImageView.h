@@ -10,10 +10,8 @@
 
 
 /*!
- @abstract  Layer-backed view 
+ @abstract  Layer-backed view that draws aqua image and recessed box shadow.
  */
-@interface WLRoundedAquaImageView : NSView {
-
-}
+@interface WLLayoutRoundedAquaImageView : NSView
 
 @end

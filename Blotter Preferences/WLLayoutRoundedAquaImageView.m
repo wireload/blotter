@@ -6,11 +6,11 @@
 //  Copyright (c) 2011 WireLoad. All rights reserved.
 //
 
-#import "WLRoundedAquaImageView.h"
+#import "WLLayoutRoundedAquaImageView.h"
 #import "WLGraphics.h"
 
 
-@implementation WLRoundedAquaImageView
+@implementation WLLayoutRoundedAquaImageView
 
 - (id)initWithFrame:(NSRect)aFrameRect
 {

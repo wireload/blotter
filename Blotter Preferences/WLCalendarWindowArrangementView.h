@@ -1,5 +1,5 @@
 //
-//  WLCalendarWindowArrangement.h
+//  WLCalendarWindowArrangementView.h
 //  Blotter Preferences
 //
 //  Created by Ilya Kulakov on 27.10.11.
@@ -35,7 +35,7 @@ typedef enum {
 @protocol WLCalendarWindowArrangementDelegate;
 
 
-@interface WLCalendarWindowArrangement : NSView /*<CALayerDelegate, CALayoutManager>*/ {
+@interface WLCalendarWindowArrangementView : NSView /*<CALayerDelegate, CALayoutManager>*/ {
     NSInteger arrangementMode;
     IBOutlet NSObject<WLCalendarWindowArrangementDelegate> *delegate;
 
@@ -79,7 +79,7 @@ typedef enum {
 
 - (NSRect)positionerBounds;
 
-- (NSRect)alignCalendarWindowFrame:(NSRect)aFrame;
+- (NSRect)alignCalendarWindowViewFrame:(NSRect)aFrame;
 
 
 /*!
@@ -90,7 +90,26 @@ typedef enum {
 @end
 
 
-@interface WLCalendarWindowArrangement (Layers)
+@protocol WLCalendarWindowArrangementDelegate
+
+/*!
+ @abstract  Returns frame of the calendar window view.
+ */
+- (NSRect)calendarWindowViewFrameOfCalendarWindowArrangement:(WLCalendarWindowArrangementView *)anArrangement;
+
+- (NSRect)calendarWindowArrangement:(WLCalendarWindowArrangementView *)anArrangement setFrame:(NSRect)aFrame;
+
+- (NSRect)calendarWindowArrangement:(WLCalendarWindowArrangementView *)anArrangement setPosition:(BLPosition)aPosition;
+
+/*!
+ @abstract  Returns the smallest size the positioner proxy should be allowed to become in the given WLCalendarWindowArrangement.
+ */
+- (NSSize)minimumSizeForCalendarWindowArrangement:(WLCalendarWindowArrangementView *)anArrangement;
+
+@end
+
+
+@interface WLCalendarWindowArrangementView (Layers)
 
 - (void)createLayers;
 
@@ -105,19 +124,6 @@ typedef enum {
 - (CALayer *)setupNavigationHelperLayer;
 
 - (CALayer *)setupResizeHandlesLayer;
-
-@end
-
-
-@protocol WLCalendarWindowArrangementDelegate
-
-- (NSRect)windowFrameOfCalendarWindowArrangement:(WLCalendarWindowArrangement *)anArrangement;
-
-- (NSRect)calendarWindowArrangement:(WLCalendarWindowArrangement *)anArrangement setFrame:(NSRect)aFrame;
-
-- (NSRect)calendarWindowArrangement:(WLCalendarWindowArrangement *)anArrangement setPosition:(BLPosition)aPosition;
-
-- (NSSize)minimumSizeForCalendarWindowArrangement:(WLCalendarWindowArrangement *)anArrangement;
 
 @end
 

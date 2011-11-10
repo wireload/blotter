@@ -128,7 +128,7 @@
 
 #pragma mark WLCalendarWindowArrangementDelegate
 
-- (NSRect)windowFrameOfCalendarWindowArrangement:(WLCalendarWindowArrangement *)anArrangement
+- (NSRect)calendarWindowViewFrameOfCalendarWindowArrangement:(WLCalendarWindowArrangementView *)anArrangement
 {
     WLCalendarWindowController *w = [(DeskboardAppDelegate *)[NSApp delegate] calendarWindowController];
     NSRect windowFrame = [w windowFrame];
@@ -148,10 +148,7 @@
         return NSZeroRect;
 }
 
-/**
-    The smallest size the positioner proxy should be allowed to become in the given WLCalendarWindowArrangement.
-*/
-- (NSSize)minimumSizeForCalendarWindowArrangement:(WLCalendarWindowArrangement *)anArrangement
+- (NSSize)minimumSizeForCalendarWindowArrangement:(WLCalendarWindowArrangementView *)anArrangement
 {
     WLCalendarWindowController *w = [(DeskboardAppDelegate *)[NSApp delegate] calendarWindowController];
     NSRect screenFrame = [[w windowScreen] visibleFrame];
@@ -166,7 +163,7 @@
 
 }
 
-- (NSRect)calendarWindowArrangement:(WLCalendarWindowArrangement *)anArrangement setFrame:(NSRect)aFrame
+- (NSRect)calendarWindowArrangement:(WLCalendarWindowArrangementView *)anArrangement setFrame:(NSRect)aFrame
 {
     NSRect bounds = [anArrangement positionerBounds];
 
@@ -200,7 +197,7 @@
     return aFrame;
 }
 
-- (NSRect)calendarWindowArrangement:(WLCalendarWindowArrangement *)anArrangement setPosition:(BLPosition)aPosition
+- (NSRect)calendarWindowArrangement:(WLCalendarWindowArrangementView *)anArrangement setPosition:(BLPosition)aPosition
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setInteger:aPosition forKey:@"CalendarPosition"];

@@ -18,12 +18,12 @@
 		28CB50B7145E277800810395 /* Resize-Cursor-Up-Right.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50B3145E277800810395 /* Resize-Cursor-Up-Right.png */; };
 		28CB50B8145E277800810395 /* Resize-Cursor-Up-Left.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50B4145E277800810395 /* Resize-Cursor-Up-Left.png */; };
 		28F6993D129B723900D4BB97 /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */; };
-		28F69A29129C587F00D4BB97 /* WLCalendarWindowArrangement.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69A28129C587F00D4BB97 /* WLCalendarWindowArrangement.m */; };
+		28F69A29129C587F00D4BB97 /* WLCalendarWindowArrangementView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69A28129C587F00D4BB97 /* WLCalendarWindowArrangementView.m */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		E20840511466D31700FE050A /* WLLayoutInfoSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = E20840501466D31700FE050A /* WLLayoutInfoSplitView.m */; };
 		E20840551466D59D00FE050A /* WLLayoutWeekSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = E20840541466D59C00FE050A /* WLLayoutWeekSplitView.m */; };
 		E20840581467230C00FE050A /* WLLayoutSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = E20840571467230C00FE050A /* WLLayoutSplitView.m */; };
-		E20C2DEA146BDA8200D6B815 /* WLRoundedAquaImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E20C2DE9146BDA8200D6B815 /* WLRoundedAquaImageView.m */; };
+		E20C2DEA146BDA8200D6B815 /* WLLayoutRoundedAquaImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E20C2DE9146BDA8200D6B815 /* WLLayoutRoundedAquaImageView.m */; };
 		E20C2E16146C0BA400D6B815 /* WLGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = E20C2E15146C0BA400D6B815 /* WLGraphics.m */; };
 		E21BC9C814161EF700A91662 /* LayoutPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E21BC9C714161EF700A91662 /* LayoutPrefPaneView.xib */; };
 		E21BC9D1141625E700A91662 /* LayoutPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = E21BC9D0141625E700A91662 /* LayoutPrefController.m */; };
@@ -142,8 +142,8 @@
 		28CB50B4145E277800810395 /* Resize-Cursor-Up-Left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Resize-Cursor-Up-Left.png"; sourceTree = "<group>"; };
 		28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAtLoginController.m; sourceTree = "<group>"; };
 		28F6993C129B723900D4BB97 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
-		28F69A27129C587F00D4BB97 /* WLCalendarWindowArrangement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowArrangement.h; sourceTree = "<group>"; };
-		28F69A28129C587F00D4BB97 /* WLCalendarWindowArrangement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindowArrangement.m; sourceTree = "<group>"; };
+		28F69A27129C587F00D4BB97 /* WLCalendarWindowArrangementView.h */ = {isa = PBXFileReference; fileEncoding = 4; path = WLCalendarWindowArrangementView.h; sourceTree = "<group>"; };
+		28F69A28129C587F00D4BB97 /* WLCalendarWindowArrangementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindowArrangementView.m; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* Blotter Preferences_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Blotter Preferences_Prefix.pch"; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Blotter Preferences.preferencePane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Blotter Preferences.preferencePane"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
@@ -154,8 +154,8 @@
 		E20840541466D59C00FE050A /* WLLayoutWeekSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutWeekSplitView.m; sourceTree = "<group>"; };
 		E20840561467230C00FE050A /* WLLayoutSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutSplitView.h; sourceTree = "<group>"; };
 		E20840571467230C00FE050A /* WLLayoutSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutSplitView.m; sourceTree = "<group>"; };
-		E20C2DE8146BDA8200D6B815 /* WLRoundedAquaImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLRoundedAquaImageView.h; sourceTree = "<group>"; };
-		E20C2DE9146BDA8200D6B815 /* WLRoundedAquaImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLRoundedAquaImageView.m; sourceTree = "<group>"; };
+		E20C2DE8146BDA8200D6B815 /* WLLayoutRoundedAquaImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutRoundedAquaImageView.h; sourceTree = "<group>"; };
+		E20C2DE9146BDA8200D6B815 /* WLLayoutRoundedAquaImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutRoundedAquaImageView.m; sourceTree = "<group>"; };
 		E20C2E14146C06CB00D6B815 /* WLGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WLGraphics.h; path = ../WLGraphics.h; sourceTree = "<group>"; };
 		E20C2E15146C0BA400D6B815 /* WLGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WLGraphics.m; path = ../WLGraphics.m; sourceTree = "<group>"; };
 		E21BC9C714161EF700A91662 /* LayoutPrefPaneView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LayoutPrefPaneView.xib; sourceTree = "<group>"; };
@@ -306,8 +306,8 @@
 				E21BC9D2141625F200A91662 /* Pref Controllers */,
 				28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */,
 				28F6993C129B723900D4BB97 /* LaunchAtLoginController.h */,
-				28F69A27129C587F00D4BB97 /* WLCalendarWindowArrangement.h */,
-				28F69A28129C587F00D4BB97 /* WLCalendarWindowArrangement.m */,
+				28F69A27129C587F00D4BB97 /* WLCalendarWindowArrangementView.h */,
+				28F69A28129C587F00D4BB97 /* WLCalendarWindowArrangementView.m */,
 				283A5EE41306CDA2006B916A /* WLCountGreaterThanOneTransformer.h */,
 				283A5EE51306CDA2006B916A /* WLCountGreaterThanOneTransformer.m */,
 				E2DC7DDB130810F00065CEAD /* WLScreensController.h */,
@@ -320,8 +320,6 @@
 				28CB5084145DB3E200810395 /* WLBlockLayoutManager.m */,
 				28CB5087145E22B900810395 /* NSCursor+ResizeAdditions.h */,
 				28CB5088145E22B900810395 /* NSCursor+ResizeAdditions.m */,
-				E20C2DE8146BDA8200D6B815 /* WLRoundedAquaImageView.h */,
-				E20C2DE9146BDA8200D6B815 /* WLRoundedAquaImageView.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -402,6 +400,8 @@
 				E20840541466D59C00FE050A /* WLLayoutWeekSplitView.m */,
 				E20840561467230C00FE050A /* WLLayoutSplitView.h */,
 				E20840571467230C00FE050A /* WLLayoutSplitView.m */,
+				E20C2DE8146BDA8200D6B815 /* WLLayoutRoundedAquaImageView.h */,
+				E20C2DE9146BDA8200D6B815 /* WLLayoutRoundedAquaImageView.m */,
 			);
 			name = "Layout Pref Pane Views";
 			sourceTree = "<group>";
@@ -566,7 +566,7 @@
 				28B54D5E12839B8D0037BF53 /* GeneralPrefController.m in Sources */,
 				28B54D7A1283AEEE0037BF53 /* PositionPrefController.m in Sources */,
 				28F6993D129B723900D4BB97 /* LaunchAtLoginController.m in Sources */,
-				28F69A29129C587F00D4BB97 /* WLCalendarWindowArrangement.m in Sources */,
+				28F69A29129C587F00D4BB97 /* WLCalendarWindowArrangementView.m in Sources */,
 				E2FE5ED112D74F5E00003E48 /* CalendarsPrefController.m in Sources */,
 				E2FE5EF712D75C7700003E48 /* WLColorCheckboxCell.m in Sources */,
 				283A5EE61306CDA2006B916A /* WLCountGreaterThanOneTransformer.m in Sources */,
@@ -584,7 +584,7 @@
 				E20840511466D31700FE050A /* WLLayoutInfoSplitView.m in Sources */,
 				E20840551466D59D00FE050A /* WLLayoutWeekSplitView.m in Sources */,
 				E20840581467230C00FE050A /* WLLayoutSplitView.m in Sources */,
-				E20C2DEA146BDA8200D6B815 /* WLRoundedAquaImageView.m in Sources */,
+				E20C2DEA146BDA8200D6B815 /* WLLayoutRoundedAquaImageView.m in Sources */,
 				E20C2E16146C0BA400D6B815 /* WLGraphics.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

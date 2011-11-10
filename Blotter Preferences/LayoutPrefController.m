@@ -78,11 +78,15 @@
                                                      selector:@selector(_screenFrameDidChange)
                                                          name:NSApplicationDidChangeScreenParametersNotification
                                                        object:NSApp];
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(_layoutFrameDidChange)
+                                                         name:NSViewFrameDidChangeNotification
+                                                       object:_layoutControl];
+            [_layoutControl setPostsFrameChangedNotifications:YES];
         }
     }
     return _mainView;
 }
-
 
 - (NSString *)paneName
 {
@@ -292,10 +296,14 @@
 - (void)_screenFrameDidChange
 {
     _mainView.preferredFrameSize = [self preferredFrameSizeOfPaneView];
-    [self _adjustCalendarWindowViewFrame];
 }
 
 - (void)_calendarWindowSizeDidChange
+{
+    [self _adjustCalendarWindowViewFrame];
+}
+
+- (void)_layoutFrameDidChange
 {
     [self _adjustCalendarWindowViewFrame];
 }
@@ -341,12 +349,19 @@
 {
     DeskboardAppDelegate *delegate = (DeskboardAppDelegate *)[[NSApplication sharedApplication] delegate];
     NSRect windowFrame = [delegate.calendarWindowController windowFrame];
-    NSRect screenFrame = [[delegate.calendarWindowController windowScreen] visibleFrame];
     NSRect bounds = [_layoutControl bounds];
-    NSSize viewFrameSize = NSMakeSize(bounds.size.width * windowFrame.size.width / screenFrame.size.width,
-                                      bounds.size.height * windowFrame.size.height / screenFrame.size.height);
-    NSRect viewFrame = NSMakeRect((bounds.size.width - viewFrameSize.width) / 2.0f,
-                                  (bounds.size.height - viewFrameSize.height) / 2.0f,
+    // WLRecessedBoxShadow draws 1px horizontal white line at the bottom.
+    bounds.size.height -= 1.0f;
+    bounds.origin.y += 1.0f;
+    NSSize viewFrameSize = NSMakeSize(NSHeight(bounds) * windowFrame.size.width / windowFrame.size.height,
+                                      NSHeight(bounds));
+    // Scale view Frame
+    CGFloat scaleFactor = fminf(NSWidth(bounds) / viewFrameSize.width, NSHeight(bounds) / viewFrameSize.height);
+    viewFrameSize.width *= scaleFactor;
+    viewFrameSize.height *= scaleFactor;
+    
+    NSRect viewFrame = NSMakeRect(NSMinX(bounds) + (NSWidth(bounds) - viewFrameSize.width) / 2.0f,
+                                  NSMinY(bounds) + (NSHeight(bounds) - viewFrameSize.height) / 2.0f,
                                   viewFrameSize.width,
                                   viewFrameSize.height);
     [_calendarWindowView setFrame:[_layoutControl centerScanRect:viewFrame]];
