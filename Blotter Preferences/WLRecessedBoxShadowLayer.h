@@ -8,8 +8,9 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+
 @interface WLRecessedBoxShadowLayer : CALayer {
-    NSArray *backgroundImages;   
+    NSMutableArray *_backgroundImages;
 }
 
 @end
