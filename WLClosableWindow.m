@@ -12,21 +12,22 @@
 
 @implementation WLClosableWindow
 
-- (BOOL)performKeyEquivalent:(NSEvent *)theEvent {
-    NSUInteger flags = [theEvent modifierFlags];
-    if (!(flags & NSControlKeyMask)
-        && !(flags & NSAlternateKeyMask)
-        && (flags & NSCommandKeyMask)
-        && [theEvent keyCode] == kVK_ANSI_W)
+- (BOOL)performKeyEquivalent:(NSEvent *)anEvent
+{
+    NSUInteger flags = [anEvent modifierFlags];
+    if ((!(flags & NSControlKeyMask) && !(flags & NSAlternateKeyMask) && (flags & NSCommandKeyMask) && [anEvent keyCode] == kVK_ANSI_W) ||
+        [anEvent keyCode] == kVK_Escape)
     {
         [self makeFirstResponder:nil];
-        [self performClose:theEvent];
+        [self performClose:anEvent];
         return YES;
     }
-    return [super performKeyEquivalent:theEvent];
+    else
+        return [super performKeyEquivalent:anEvent];
 }
 
-- (void)close {
+- (void)close
+{
     [self makeFirstResponder:nil];
     [super close];
 }
