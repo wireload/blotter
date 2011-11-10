@@ -50,10 +50,9 @@
 					<object class="NSCustomView" id="238193824">
 						<reference key="NSNextResponder" ref="453662770"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrame">{{21, 20}, {400, 251}}</string>
+						<string key="NSFrame">{{20, 20}, {400, 251}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:1192</string>
 						<string key="NSClassName">WLCalendarWindowArrangement</string>
 					</object>
