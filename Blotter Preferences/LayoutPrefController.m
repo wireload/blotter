@@ -353,6 +353,8 @@
     // WLRecessedBoxShadow draws 1px horizontal white line at the bottom.
     bounds.size.height -= 1.0f;
     bounds.origin.y += 1.0f;
+    // Add margin around calendar window view like on the position pref pane.
+    bounds = NSInsetRect(bounds, 3.0f, 3.0f);
     NSSize viewFrameSize = NSMakeSize(NSHeight(bounds) * windowFrame.size.width / windowFrame.size.height,
                                       NSHeight(bounds));
     // Scale view Frame
