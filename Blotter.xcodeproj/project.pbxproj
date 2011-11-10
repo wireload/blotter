@@ -26,6 +26,16 @@
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		E206EB1D14618D2F0053A279 /* NSArray+WLDelta.m in Sources */ = {isa = PBXBuildFile; fileRef = E206EB1C14618D2F0053A279 /* NSArray+WLDelta.m */; };
+		E20C2E08146C054200D6B815 /* recessed-box-shadow-bottom-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E20C2DFF146C054200D6B815 /* recessed-box-shadow-bottom-left.png */; };
+		E20C2E09146C054200D6B815 /* recessed-box-shadow-bottom-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E20C2E00146C054200D6B815 /* recessed-box-shadow-bottom-right.png */; };
+		E20C2E0A146C054200D6B815 /* recessed-box-shadow-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = E20C2E01146C054200D6B815 /* recessed-box-shadow-bottom.png */; };
+		E20C2E0B146C054200D6B815 /* recessed-box-shadow-middle-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E20C2E02146C054200D6B815 /* recessed-box-shadow-middle-left.png */; };
+		E20C2E0C146C054200D6B815 /* recessed-box-shadow-middle-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E20C2E03146C054200D6B815 /* recessed-box-shadow-middle-right.png */; };
+		E20C2E0D146C054200D6B815 /* recessed-box-shadow-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = E20C2E04146C054200D6B815 /* recessed-box-shadow-middle.png */; };
+		E20C2E0E146C054200D6B815 /* recessed-box-shadow-top-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E20C2E05146C054200D6B815 /* recessed-box-shadow-top-left.png */; };
+		E20C2E0F146C054200D6B815 /* recessed-box-shadow-top-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E20C2E06146C054200D6B815 /* recessed-box-shadow-top-right.png */; };
+		E20C2E10146C054200D6B815 /* recessed-box-shadow-top.png in Resources */ = {isa = PBXBuildFile; fileRef = E20C2E07146C054200D6B815 /* recessed-box-shadow-top.png */; };
+		E20C2E13146C055900D6B815 /* WLGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = E20C2E12146C055800D6B815 /* WLGraphics.m */; };
 		E20DAC4F1428FF0B00EF65EA /* info-middle-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E20DAC4D1428FF0B00EF65EA /* info-middle-left.png */; };
 		E20DAC501428FF0B00EF65EA /* info-middle-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E20DAC4E1428FF0B00EF65EA /* info-middle-right.png */; };
 		E20DAC5614294D8800EF65EA /* NSAttributedString+WLStringDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = E20DAC5514294D8700EF65EA /* NSAttributedString+WLStringDrawing.m */; };
@@ -269,6 +279,17 @@
 		8D1107320486CEB800E47090 /* Blotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E206EB1B14618D2F0053A279 /* NSArray+WLDelta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+WLDelta.h"; sourceTree = "<group>"; };
 		E206EB1C14618D2F0053A279 /* NSArray+WLDelta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+WLDelta.m"; sourceTree = "<group>"; };
+		E20C2DFF146C054200D6B815 /* recessed-box-shadow-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-bottom-left.png"; sourceTree = "<group>"; };
+		E20C2E00146C054200D6B815 /* recessed-box-shadow-bottom-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-bottom-right.png"; sourceTree = "<group>"; };
+		E20C2E01146C054200D6B815 /* recessed-box-shadow-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-bottom.png"; sourceTree = "<group>"; };
+		E20C2E02146C054200D6B815 /* recessed-box-shadow-middle-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-middle-left.png"; sourceTree = "<group>"; };
+		E20C2E03146C054200D6B815 /* recessed-box-shadow-middle-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-middle-right.png"; sourceTree = "<group>"; };
+		E20C2E04146C054200D6B815 /* recessed-box-shadow-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-middle.png"; sourceTree = "<group>"; };
+		E20C2E05146C054200D6B815 /* recessed-box-shadow-top-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-top-left.png"; sourceTree = "<group>"; };
+		E20C2E06146C054200D6B815 /* recessed-box-shadow-top-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-top-right.png"; sourceTree = "<group>"; };
+		E20C2E07146C054200D6B815 /* recessed-box-shadow-top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-top.png"; sourceTree = "<group>"; };
+		E20C2E11146C055800D6B815 /* WLGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGraphics.h; sourceTree = "<group>"; };
+		E20C2E12146C055800D6B815 /* WLGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGraphics.m; sourceTree = "<group>"; };
 		E20DAC4D1428FF0B00EF65EA /* info-middle-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-middle-left.png"; sourceTree = "<group>"; };
 		E20DAC4E1428FF0B00EF65EA /* info-middle-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-middle-right.png"; sourceTree = "<group>"; };
 		E20DAC5414294D8700EF65EA /* NSAttributedString+WLStringDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+WLStringDrawing.h"; sourceTree = "<group>"; };
@@ -539,6 +560,8 @@
 				E262E5E2142BD2C400715C02 /* WLCopyCompositingFilter.m */,
 				E23F746D14434DE40055D6CE /* WLHourRange.h */,
 				E23F746E14434DE40055D6CE /* WLHourRange.m */,
+				E20C2E11146C055800D6B815 /* WLGraphics.h */,
+				E20C2E12146C055800D6B815 /* WLGraphics.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -589,6 +612,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E20C2DFE146C049B00D6B815 /* recessed-box-shadow */,
 				E2E826C7145023A6007035E5 /* Localizable.strings */,
 				E2E826C9145023A6007035E5 /* MainMenu.xib */,
 				E2E826CB145023A6007035E5 /* NewEventWindow.xib */,
@@ -612,6 +636,22 @@
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E20C2DFE146C049B00D6B815 /* recessed-box-shadow */ = {
+			isa = PBXGroup;
+			children = (
+				E20C2DFF146C054200D6B815 /* recessed-box-shadow-bottom-left.png */,
+				E20C2E00146C054200D6B815 /* recessed-box-shadow-bottom-right.png */,
+				E20C2E01146C054200D6B815 /* recessed-box-shadow-bottom.png */,
+				E20C2E02146C054200D6B815 /* recessed-box-shadow-middle-left.png */,
+				E20C2E03146C054200D6B815 /* recessed-box-shadow-middle-right.png */,
+				E20C2E04146C054200D6B815 /* recessed-box-shadow-middle.png */,
+				E20C2E05146C054200D6B815 /* recessed-box-shadow-top-left.png */,
+				E20C2E06146C054200D6B815 /* recessed-box-shadow-top-right.png */,
+				E20C2E07146C054200D6B815 /* recessed-box-shadow-top.png */,
+			);
+			path = "recessed-box-shadow";
 			sourceTree = "<group>";
 		};
 		E2678AB214048AB400ABB89B /* background */ = {
@@ -1032,6 +1072,15 @@
 				28CB50F714603CEC00810395 /* glass-hud-top-left.png in Resources */,
 				28CB50F814603CEC00810395 /* glass-hud-top-middle.png in Resources */,
 				28CB50F914603CEC00810395 /* glass-hud-top-right.png in Resources */,
+				E20C2E08146C054200D6B815 /* recessed-box-shadow-bottom-left.png in Resources */,
+				E20C2E09146C054200D6B815 /* recessed-box-shadow-bottom-right.png in Resources */,
+				E20C2E0A146C054200D6B815 /* recessed-box-shadow-bottom.png in Resources */,
+				E20C2E0B146C054200D6B815 /* recessed-box-shadow-middle-left.png in Resources */,
+				E20C2E0C146C054200D6B815 /* recessed-box-shadow-middle-right.png in Resources */,
+				E20C2E0D146C054200D6B815 /* recessed-box-shadow-middle.png in Resources */,
+				E20C2E0E146C054200D6B815 /* recessed-box-shadow-top-left.png in Resources */,
+				E20C2E0F146C054200D6B815 /* recessed-box-shadow-top-right.png in Resources */,
+				E20C2E10146C054200D6B815 /* recessed-box-shadow-top.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1092,6 +1141,7 @@
 				E2435B1A145057620052D9A3 /* WLPrefPaneView.m in Sources */,
 				E2CBD792145C642700CF2630 /* WLNinePartBlockLayer.m in Sources */,
 				E206EB1D14618D2F0053A279 /* NSArray+WLDelta.m in Sources */,
+				E20C2E13146C055900D6B815 /* WLGraphics.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

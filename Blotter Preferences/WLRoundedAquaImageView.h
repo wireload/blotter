@@ -10,8 +10,10 @@
 
 
 /*!
- @abstract  View that hosts rounded layer which contents is the Recreated-Aqua image.
+ @abstract  Layer-backed view 
  */
-@interface WLRoundedAquaImageView : NSView
+@interface WLRoundedAquaImageView : NSView {
+
+}
 
 @end
