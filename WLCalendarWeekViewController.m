@@ -387,7 +387,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
         NSDate *columnDate = [[self dateRangeForColumnAtIndex:anIndex] startDate];
         NSParameterAssert(columnDate != nil);
         NSDateComponents *c = [calendar components:NSWeekdayCalendarUnit fromDate:columnDate];
-        isWeekend = [calendar isWeekend:(NSUInteger)[c weekday]];
+        isWeekend = [calendar WL_isWeekend:(NSUInteger)[c weekday]];
     }
 
     if (isWeekend)

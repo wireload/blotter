@@ -11,6 +11,6 @@
 
 @interface NSCalendar (WLWeekend)
 
-- (BOOL)isWeekend:(NSUInteger)aWeekday;
+- (BOOL)WL_isWeekend:(NSUInteger)aWeekday;
 
 @end

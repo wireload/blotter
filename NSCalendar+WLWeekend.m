@@ -11,7 +11,7 @@
 
 @implementation NSCalendar (WLWeekend)
 
-- (BOOL)isWeekend:(NSUInteger)aWeekday
+- (BOOL)WL_isWeekend:(NSUInteger)aWeekday
 {
     NSAssert(aWeekday > 0, @"The weekday units are the numbers 1 through N (where for the Gregorian calendar N=7 and 1 is Sunday). See NSCalendar docs.");
     NSUInteger numberOfWeekdays = [self maximumRangeOfUnit:NSWeekdayCalendarUnit].length;
