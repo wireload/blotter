@@ -43,7 +43,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="453662770">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -52,14 +52,17 @@
 						<int key="NSvFlags">274</int>
 						<string key="NSFrame">{{20, 20}, {400, 251}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:1192</string>
 						<string key="NSClassName">WLCalendarWindowArrangementView</string>
 					</object>
 					<object class="NSPopUpButton" id="738986184">
 						<reference key="NSNextResponder" ref="453662770"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{126, 287}, {297, 26}}</string>
+						<string key="NSFrame">{{129, 287}, {294, 26}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="238193824"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="769130927">
@@ -100,8 +103,9 @@
 					<object class="NSTextField" id="219358551">
 						<reference key="NSNextResponder" ref="453662770"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{18, 293}, {107, 17}}</string>
+						<string key="NSFrame">{{18, 293}, {110, 17}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="738986184"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="389274649">
@@ -133,8 +137,9 @@
 					<object class="NSTextField" id="551017980">
 						<reference key="NSNextResponder" ref="453662770"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{17, 323}, {107, 17}}</string>
+						<string key="NSFrame">{{17, 323}, {110, 17}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="138711095"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="202913726">
@@ -150,8 +155,9 @@
 					<object class="NSPopUpButton" id="138711095">
 						<reference key="NSNextResponder" ref="453662770"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{126, 317}, {141, 26}}</string>
+						<string key="NSFrame">{{129, 317}, {141, 26}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="219358551"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="608658124">
@@ -236,6 +242,8 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{440, 361}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="551017980"/>
 				<string key="NSClassName">WLPrefPaneView</string>
 			</object>
@@ -443,11 +451,11 @@
 						<reference key="object" ref="453662770"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="138711095"/>
-							<reference ref="551017980"/>
 							<reference ref="219358551"/>
 							<reference ref="738986184"/>
 							<reference ref="238193824"/>
+							<reference ref="551017980"/>
+							<reference ref="138711095"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Position View</string>
@@ -662,7 +670,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>WLCalendarWindowArrangement</string>
+							<string>WLCalendarWindowArrangementView</string>
 							<string>WLPrefPaneView</string>
 							<string>WLScreensController</string>
 						</object>
@@ -679,7 +687,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBToOneOutletInfo">
 								<string key="name">_arrangement</string>
-								<string key="candidateClassName">WLCalendarWindowArrangement</string>
+								<string key="candidateClassName">WLCalendarWindowArrangementView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">_mainView</string>
@@ -697,7 +705,7 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">WLCalendarWindowArrangement</string>
+					<string key="className">WLCalendarWindowArrangementView</string>
 					<string key="superclassName">NSView</string>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">delegate</string>
@@ -712,7 +720,7 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/WLCalendarWindowArrangement.h</string>
+						<string key="minorKey">./Classes/WLCalendarWindowArrangementView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
