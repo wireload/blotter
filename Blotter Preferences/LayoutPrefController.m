@@ -137,7 +137,7 @@
         return;
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults integerForKey:@"CalendarLayout"] == WLCalendarNormalLayout)
+    if ([defaults integerForKey:@"CalendarLayout"] != WLCalendarCustomLayout)
         [defaults setInteger:WLCalendarCustomLayout forKey:@"CalendarLayout"];
 
     // A User shouldn't be able to rewrite defaults of info section while calendar size is Narrow.
@@ -427,7 +427,7 @@
 
 - (NSDictionary *)_parameters
 {
-    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarLayout"] == WLCalendarNormalLayout)
+    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarLayout"] != WLCalendarCustomLayout)
         return [self _defaultParameters];
     else
         return [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
@@ -436,10 +436,24 @@
 - (NSDictionary *)_defaultParameters
 {
     NSURL *defaultsURL = [[NSBundle mainBundle] URLForResource:@"defaults" withExtension:@"plist"];
+
     NSMutableDictionary *defaults = [NSMutableDictionary dictionaryWithContentsOfURL:defaultsURL];
     DeskboardAppDelegate *delegate = (DeskboardAppDelegate *)[[NSApplication sharedApplication] delegate];
-    [defaults setObject:[NSNumber numberWithFloat:[delegate.calendarWindowController defaultTasksViewHeight]]
-                 forKey:@"TasksViewHeight"];
+    
+    CGFloat taskViewHeight = 0;
+    switch ([[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarLayout"])
+    {
+        case WLCalendarRightNowLayout:
+            taskViewHeight = 0;
+            break;
+        case WLCalendarToDoLayout:
+            taskViewHeight = [delegate.calendarWindowController fullTasksViewHeight];
+            break;
+        default:
+            taskViewHeight = [delegate.calendarWindowController defaultTasksViewHeight];
+    }       
+    [defaults setObject:[NSNumber numberWithFloat:taskViewHeight] forKey:@"TasksViewHeight"];
+
     return defaults;
 }
 
@@ -450,7 +464,8 @@
 {
     if ([aKeyPath isEqualToString:@"CalendarLayout"])
     {
-        if ([[aChange objectForKey:NSKeyValueChangeNewKey] integerValue] == WLCalendarNormalLayout)
+        int calendarLayout = [[aChange objectForKey:NSKeyValueChangeNewKey] integerValue];
+        if (calendarLayout != WLCalendarCustomLayout)
         {
             NSDictionary *defaultParameters = [self _defaultParameters];
             [[NSUserDefaults standardUserDefaults] setObject:[defaultParameters objectForKey:@"TasksViewHeight"]

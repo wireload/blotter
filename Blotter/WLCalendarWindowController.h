@@ -69,8 +69,10 @@ typedef enum BLPosition {
 
 
 typedef enum {
+    WLCalendarCustomLayout = 1,
     WLCalendarNormalLayout = 0,
-    WLCalendarCustomLayout
+    WLCalendarToDoLayout = 2,
+    WLCalendarRightNowLayout = 3
 } WLCalendarLayout;
 
 
@@ -140,6 +142,7 @@ extern NSSize const BLNormalMinimumSize;
 - (NSRect)weekViewFrame;
 
 - (CGFloat)defaultTasksViewHeight;
+- (CGFloat)fullTasksViewHeight;
 
 - (NSSize)minimumSize;
 

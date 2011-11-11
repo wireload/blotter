@@ -463,6 +463,12 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
         [defaults removeObserver:self forKeyPath:@"TasksViewHeight"];
         [defaults setFloat:[self defaultTasksViewHeight] forKey:@"TasksViewHeight"];
         [defaults addObserver:self forKeyPath:@"TasksViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
+    } 
+    else if ([defaults integerForKey:@"CalendarLayout"] == WLCalendarToDoLayout)
+    {
+        [defaults removeObserver:self forKeyPath:@"TasksViewHeight"];
+        [defaults setFloat:[self fullTasksViewHeight] forKey:@"TasksViewHeight"];
+        [defaults addObserver:self forKeyPath:@"TasksViewHeight" options:NSKeyValueObservingOptionNew context:NULL];        
     }
     NSRect r = [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
                                                                NSMaxY([self dateViewFrame]),
@@ -516,6 +522,14 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     NSURL *defaultsURL = [[NSBundle mainBundle] URLForResource:@"defaults" withExtension:@"plist"];
     NSDictionary *defaults = [NSDictionary dictionaryWithContentsOfURL:defaultsURL];
     return roundf((NSHeight(bounds) - ([[defaults objectForKey:@"DateViewHeight"] floatValue]) - _WLYMarginBetweenTasksAndRightNow) / 2);
+}
+
+- (CGFloat)fullTasksViewHeight
+{
+    NSRect bounds = [[self.window contentView] bounds];
+    NSURL *defaultsURL = [[NSBundle mainBundle] URLForResource:@"defaults" withExtension:@"plist"];
+    NSDictionary *defaults = [NSDictionary dictionaryWithContentsOfURL:defaultsURL];
+    return roundf(NSHeight(bounds) - ([[defaults objectForKey:@"DateViewHeight"] floatValue]));
 }
 
 - (NSSize)minimumSize
