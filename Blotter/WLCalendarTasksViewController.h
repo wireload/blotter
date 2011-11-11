@@ -7,8 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLCalendarTasksView.h"
-#import "WLCalendarController.h"
 
 
 @interface WLCalendarTasksViewController : NSViewController <WLCalendarTasksViewDataSource> {

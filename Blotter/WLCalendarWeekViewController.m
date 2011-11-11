@@ -6,10 +6,10 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
+#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLCalendarWeekViewController.h"
 #import "NSDate+WLDayBoundaries.h"
 #import "NSColor+WLCalendar.h"
-#import "NSColor+CGColor.h"
 #import "NSCalendar+WLWeekend.h"
 
 

@@ -6,8 +6,8 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
+#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLCalendarTimeIndicatorLayer.h"
-#import "NSColor+CGColor.h"
 #import "NSColor+WLCalendar.h"
 
 

@@ -7,7 +7,6 @@
 //
 
 #import "PositionPrefController.h"
-#import "WLPrefPaneView.h"
 #import "DeskboardAppDelegate.h"
 
 

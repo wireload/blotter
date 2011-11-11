@@ -6,11 +6,9 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
+#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLCalendarEventLayer.h"
-#import "NSColor+CGColor.h"
-#import "CoreText+Additions.h"
 #import "NSColor+WLCalendar.h"
-#import "NSAttributedString+WLStringDrawing.h"
 
 
 const CGFloat _WLYPadding = 6.0f;

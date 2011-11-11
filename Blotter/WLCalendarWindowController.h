@@ -7,9 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLCalendarWindow.h"
 #import "WLViewFade.h"
-#import "WLCalendarController.h"
 
 
 @class WLCalendarWeekViewController;

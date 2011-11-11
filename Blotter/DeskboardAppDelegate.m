@@ -14,7 +14,6 @@
 #import "PTHotKey+ShortcutRecorder.h"
 #import "WLCalendarWindow.h"
 #import "WLCalendarWindowController.h"
-#import "SS_PrefsController.h"
 
 
 extern NSString* const SRShortcutCodeKey;

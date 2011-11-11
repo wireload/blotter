@@ -8,9 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import <CalendarStore/CalendarStore.h>
-#import "WLDateRange.h"
+#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLCalendarWeekView.h"
-#import "WLCalendarController.h"
 
 
 typedef enum

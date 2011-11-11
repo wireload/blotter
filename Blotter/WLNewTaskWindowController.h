@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "WLCalendarController.h"
+#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 
 
 @class WLGlassHudTextView;

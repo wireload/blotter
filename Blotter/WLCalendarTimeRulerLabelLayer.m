@@ -6,10 +6,9 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
+#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLCalendarTimeRulerLabelLayer.h"
-#import "NSColor+CGColor.h"
 #import "NSColor+WLCalendar.h"
-#import "NSAttributedString+WLStringDrawing.h"
 
 
 @implementation WLCalendarTimeRulerLabelLayer

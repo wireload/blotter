@@ -6,8 +6,7 @@
 //  Copyright (c) 2011 WireLoad. All rights reserved.
 //
 
-#import "WLBlockLayer.h"
-
+#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 
 
 @interface WLNinePartBlockLayer : WLBlockLayer {

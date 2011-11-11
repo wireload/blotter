@@ -9,8 +9,6 @@
 #import <CalendarStore/CalendarStore.h>
 #import "CalendarsPrefController.h"
 #import "WLColorCheckboxCell.h"
-#import "WLPrefPaneView.h"
-#import "WLCalendarController.h"
 
 
 @implementation CalendarsPrefController
@@ -238,9 +236,9 @@
         [calCalendars sortUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"title"
                                                                                                   ascending:YES
                                                                                                    selector:@selector(localizedCaseInsensitiveCompare:)]]];
-        self._cachedEventCalCalendars = [[[[NSClassFromString(@"WLCalendarController") sharedController] calEventCalendarsFromCalCalendars:calCalendars] mutableCopy] autorelease];
+        self._cachedEventCalCalendars = [[[[WLCalendarController sharedController] calEventCalendarsFromCalCalendars:calCalendars] mutableCopy] autorelease];
         [_eventsTableView reloadData];
-        self._cachedReminderCalCalendars = [[[[NSClassFromString(@"WLCalendarController") sharedController] calReminderCalendarsFromCalCalendars:calCalendars] mutableCopy] autorelease];
+        self._cachedReminderCalCalendars = [[[[WLCalendarController sharedController] calReminderCalendarsFromCalCalendars:calCalendars] mutableCopy] autorelease];
         [_remindersTableView reloadData];
     }
     else

@@ -6,9 +6,8 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
+#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLSoftEdgeLayer.h"
-#import "NSColor+CGColor.h"
-#import "CATransaction+WLBlocks.h"
 
 
 static NSString* const _WLTopEdgeLayerKey = @"top";

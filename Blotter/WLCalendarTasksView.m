@@ -6,11 +6,10 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
+#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLCalendarTasksView.h"
-#import "NSColor+CGColor.h"
 #import "NSFont+WLCalendar.h"
 #import "NSColor+WLCalendar.h"
-#import "CATransaction+WLBlocks.h"
 
 
 static NSString* const _WLTasksLayerName = @"task";

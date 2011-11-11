@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "WLGlassHudDatePicker.h"
-#import "WLCalendarController.h"
+#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 
 
 @class WLGlassHudTextView;

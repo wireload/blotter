@@ -6,11 +6,10 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
+#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLCalendarTaskLayer.h"
-#import "NSColor+CGColor.h"
 #import "NSFont+WLCalendar.h"
 #import "NSColor+WLCalendar.h"
-#import "NSAttributedString+WLStringDrawing.h"
 
 
 static const CGFloat _WLMarkTailIndent = 6.0f;

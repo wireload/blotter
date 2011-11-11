@@ -859,7 +859,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
 - (CALayer *)setupShadowLayer
 {
-    WLBlockLayer *l = [NSClassFromString(@"WLBlockLayer") layer];
+    WLBlockLayer *l = [WLBlockLayer layer];
     l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect)
     {
         [NSGraphicsContext saveGraphicsState];
@@ -875,7 +875,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
 - (CALayer *)setupNavigationLayer
 {
-    WLBlockLayer *l = [NSClassFromString(@"WLBlockLayer") layer];
+    WLBlockLayer *l = [WLBlockLayer layer];
     l.needsDisplayOnBoundsChange = YES;
     __block WLCalendarWindowArrangementView *selfBlock = self;
     l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect)
@@ -941,7 +941,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 - (CALayer *)setupCalendarWindowLayer
 {
     static const CGFloat CalendarWindowFrameLineWidth = 5.0f;
-    WLNinePartBlockLayer *l = [NSClassFromString(@"WLNinePartBlockLayer") layer];
+    WLNinePartBlockLayer *l = [WLNinePartBlockLayer layer];
     l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect)
     {
         [NSGraphicsContext saveGraphicsState];
@@ -1018,7 +1018,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     for (NSInteger i = 0; i < WLCalendarWindowNumberOfEdges; i++) {
         if (i == WLCalendarWindowCenterCenterEdge)
             continue;
-        WLBlockLayer *sublayer = [NSClassFromString(@"WLBlockLayer") layer];
+        WLBlockLayer *sublayer = [WLBlockLayer layer];
 
         sublayer.autoresizingMask = 0;
 

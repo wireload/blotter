@@ -20,7 +20,6 @@
 		287BA28B146D3CD300F4189B /* layout-area-8.png in Resources */ = {isa = PBXBuildFile; fileRef = 287BA282146D3CD300F4189B /* layout-area-8.png */; };
 		287BA28C146D3CD300F4189B /* layout-area-9.png in Resources */ = {isa = PBXBuildFile; fileRef = 287BA283146D3CD300F4189B /* layout-area-9.png */; };
 		287BA28E146D418C00F4189B /* layout-noise.png in Resources */ = {isa = PBXBuildFile; fileRef = 287BA28D146D418C00F4189B /* layout-noise.png */; };
-		28B54DB61283BABF0037BF53 /* SS_PrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54DB51283BABF0037BF53 /* SS_PrefsController.m */; };
 		28CB50F114603CEC00810395 /* glass-hud-bottom-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50E814603CEC00810395 /* glass-hud-bottom-left.png */; };
 		28CB50F214603CEC00810395 /* glass-hud-bottom-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50E914603CEC00810395 /* glass-hud-bottom-middle.png */; };
 		28CB50F314603CEC00810395 /* glass-hud-bottom-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50EA14603CEC00810395 /* glass-hud-bottom-right.png */; };
@@ -35,33 +34,15 @@
 		28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 28F69CF4129CC12100D4BB97 /* Licenses.rtf */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		E206EB1D14618D2F0053A279 /* NSArray+WLDelta.m in Sources */ = {isa = PBXBuildFile; fileRef = E206EB1C14618D2F0053A279 /* NSArray+WLDelta.m */; };
-		E20C2E08146C054200D6B815 /* recessed-box-shadow-bottom-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E20C2DFF146C054200D6B815 /* recessed-box-shadow-bottom-left.png */; };
-		E20C2E09146C054200D6B815 /* recessed-box-shadow-bottom-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E20C2E00146C054200D6B815 /* recessed-box-shadow-bottom-right.png */; };
-		E20C2E0A146C054200D6B815 /* recessed-box-shadow-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = E20C2E01146C054200D6B815 /* recessed-box-shadow-bottom.png */; };
-		E20C2E0B146C054200D6B815 /* recessed-box-shadow-middle-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E20C2E02146C054200D6B815 /* recessed-box-shadow-middle-left.png */; };
-		E20C2E0C146C054200D6B815 /* recessed-box-shadow-middle-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E20C2E03146C054200D6B815 /* recessed-box-shadow-middle-right.png */; };
-		E20C2E0D146C054200D6B815 /* recessed-box-shadow-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = E20C2E04146C054200D6B815 /* recessed-box-shadow-middle.png */; };
-		E20C2E0E146C054200D6B815 /* recessed-box-shadow-top-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E20C2E05146C054200D6B815 /* recessed-box-shadow-top-left.png */; };
-		E20C2E0F146C054200D6B815 /* recessed-box-shadow-top-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E20C2E06146C054200D6B815 /* recessed-box-shadow-top-right.png */; };
-		E20C2E10146C054200D6B815 /* recessed-box-shadow-top.png in Resources */ = {isa = PBXBuildFile; fileRef = E20C2E07146C054200D6B815 /* recessed-box-shadow-top.png */; };
-		E20C2E13146C055900D6B815 /* WLGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = E20C2E12146C055800D6B815 /* WLGraphics.m */; };
 		E20DAC4F1428FF0B00EF65EA /* info-middle-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E20DAC4D1428FF0B00EF65EA /* info-middle-left.png */; };
 		E20DAC501428FF0B00EF65EA /* info-middle-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E20DAC4E1428FF0B00EF65EA /* info-middle-right.png */; };
-		E20DAC5614294D8800EF65EA /* NSAttributedString+WLStringDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = E20DAC5514294D8700EF65EA /* NSAttributedString+WLStringDrawing.m */; };
-		E214525313FF9550009FEEB8 /* WLCalendarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E214525213FF9550009FEEB8 /* WLCalendarController.m */; };
 		E214582C13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E214582B13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m */; };
 		E21A5F451403D2A4000B6634 /* WLCalendarTaskLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E21A5F441403D2A4000B6634 /* WLCalendarTaskLayer.m */; };
-		E221B3A313EC5C2F00F9B392 /* CATransaction+WLBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = E221B3A213EC5C2F00F9B392 /* CATransaction+WLBlocks.m */; };
 		E22C78AB13FFCD9F00EE44C0 /* NSColor+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */; };
-		E23779EF1312AD6000F46E7D /* WLClosableWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E23779D71312AD6000F46E7D /* WLClosableWindow.m */; };
 		E23F746F14434DE40055D6CE /* WLHourRange.m in Sources */ = {isa = PBXBuildFile; fileRef = E23F746E14434DE40055D6CE /* WLHourRange.m */; };
-		E2435B1A145057620052D9A3 /* WLPrefPaneView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2435B19145057620052D9A3 /* WLPrefPaneView.m */; };
 		E253575013DC884D0010A2ED /* NSDate+WLDayBoundaries.m in Sources */ = {isa = PBXBuildFile; fileRef = E253574F13DC884D0010A2ED /* NSDate+WLDayBoundaries.m */; };
-		E2535B8713DCA88B0010A2ED /* WLDateRange.m in Sources */ = {isa = PBXBuildFile; fileRef = E2535B8613DCA88B0010A2ED /* WLDateRange.m */; };
 		E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */; };
 		E262E586142B917400715C02 /* calendar-background-middle-gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = E262E585142B917400715C02 /* calendar-background-middle-gradient.png */; };
-		E262E5E3142BD2C500715C02 /* WLCopyCompositingFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = E262E5E2142BD2C400715C02 /* WLCopyCompositingFilter.m */; };
 		E267035A132CA21F003FBFC2 /* glass-hud-button-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E2670357132CA21F003FBFC2 /* glass-hud-button-right.png */; };
 		E267035B132CA21F003FBFC2 /* glass-hud-button-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = E2670358132CA21F003FBFC2 /* glass-hud-button-middle.png */; };
 		E267035C132CA21F003FBFC2 /* glass-hud-button-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E2670359132CA21F003FBFC2 /* glass-hud-button-left.png */; };
@@ -102,10 +83,6 @@
 		E271E508133762A300BF7F2B /* glass-hud-button-pressed-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E271E505133762A300BF7F2B /* glass-hud-button-pressed-left.png */; };
 		E271E5B513377E6100BF7F2B /* blotter-status-bar.png in Resources */ = {isa = PBXBuildFile; fileRef = E271E5B313377E6100BF7F2B /* blotter-status-bar.png */; };
 		E271E5B613377E6100BF7F2B /* blotter-status-bar-active.png in Resources */ = {isa = PBXBuildFile; fileRef = E271E5B413377E6100BF7F2B /* blotter-status-bar-active.png */; };
-		E27311471349D76700A84433 /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2730FA01349C4A500A84433 /* ShortcutRecorder.framework */; };
-		E27311631349D81900A84433 /* ShortcutRecorder.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E2730FA01349C4A500A84433 /* ShortcutRecorder.framework */; };
-		E27313171349F0E200A84433 /* PTHotKey.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E27312321349EC9000A84433 /* PTHotKey.framework */; };
-		E27313181349F0EB00A84433 /* PTHotKey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E27312321349EC9000A84433 /* PTHotKey.framework */; };
 		E27313C51349F41200A84433 /* PTHotKey+ShortcutRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = E27313C41349F41200A84433 /* PTHotKey+ShortcutRecorder.m */; };
 		E27433BE13CB3E1B00F531B6 /* WLCalendarWeekViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E27433BD13CB3E1B00F531B6 /* WLCalendarWeekViewController.m */; };
 		E278ECF413C8B73D00B327EB /* WLCalendarTasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E278ECF313C8B73D00B327EB /* WLCalendarTasksViewController.m */; };
@@ -116,7 +93,6 @@
 		E27DE06A13CF18B1003E8E9A /* WLCalendarAllDayEventsLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E27DE06913CF18B1003E8E9A /* WLCalendarAllDayEventsLayer.m */; };
 		E27DE07613D03E19003E8E9A /* WLCalendarEventLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E27DE07513D03E19003E8E9A /* WLCalendarEventLayer.m */; };
 		E27DE46E13D0B3EC003E8E9A /* WLCalendarLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E27DE46D13D0B3EC003E8E9A /* WLCalendarLayer.m */; };
-		E282E06C14043FAF0007C401 /* WLBlockLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E282E06B14043FAF0007C401 /* WLBlockLayer.m */; };
 		E282E0781404494E0007C401 /* allday-top-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E282E06F1404494E0007C401 /* allday-top-left.png */; };
 		E282E0791404494E0007C401 /* allday-top.png in Resources */ = {isa = PBXBuildFile; fileRef = E282E0701404494E0007C401 /* allday-top.png */; };
 		E282E07A1404494E0007C401 /* allday-top-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E282E0711404494E0007C401 /* allday-top-right.png */; };
@@ -152,43 +128,21 @@
 		E2A701ED13EFE4C500A4BF3A /* WLCalendarDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A701EC13EFE4C500A4BF3A /* WLCalendarDateView.m */; };
 		E2A7085E13F0427800A4BF3A /* WLCalendarDateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A7085D13F0427800A4BF3A /* WLCalendarDateViewController.m */; };
 		E2B16FDE13D57F52005F8973 /* WLCalendarTimeRulerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B16FDD13D57F52005F8973 /* WLCalendarTimeRulerLayer.m */; };
-		E2B223E813E16AF600890042 /* CoreText+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B223E713E16AF600890042 /* CoreText+Additions.m */; };
 		E2BA531A13C5A873005F0045 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2BA531913C5A873005F0045 /* QuartzCore.framework */; };
-		E2BA565E13C5E4C4005F0045 /* NSColor+CGColor.m in Sources */ = {isa = PBXBuildFile; fileRef = E2BA565D13C5E4C4005F0045 /* NSColor+CGColor.m */; };
 		E2C774C413D1C02A0067102F /* WLCalendarDayEventsLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2C774C313D1C02A0067102F /* WLCalendarDayEventsLayer.m */; };
-		E2CBD792145C642700CF2630 /* WLNinePartBlockLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CBD791145C642700CF2630 /* WLNinePartBlockLayer.m */; };
-		E2D6488E1441060F00A03FAD /* IKPowerSources.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D6488D1441060F00A03FAD /* IKPowerSources.m */; };
 		E2D648901441062300A03FAD /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2D6488F1441062300A03FAD /* IOKit.framework */; };
 		E2E64B4E1402483500912A92 /* WLSoftEdgeLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E64B4D1402483500912A92 /* WLSoftEdgeLayer.m */; };
 		E2E826CF145023A6007035E5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C7145023A6007035E5 /* Localizable.strings */; };
 		E2E826D0145023A6007035E5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C9145023A6007035E5 /* MainMenu.xib */; };
 		E2E826D1145023A6007035E5 /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CB145023A6007035E5 /* NewEventWindow.xib */; };
 		E2E826D2145023A6007035E5 /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CD145023A6007035E5 /* NewTaskWindow.xib */; };
-		E2E826D7145023B4007035E5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C7145023A6007035E5 /* Localizable.strings */; };
-		E2E826D8145023B4007035E5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C9145023A6007035E5 /* MainMenu.xib */; };
-		E2E826D9145023B4007035E5 /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CB145023A6007035E5 /* NewEventWindow.xib */; };
-		E2E826DA145023B4007035E5 /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CD145023A6007035E5 /* NewTaskWindow.xib */; };
-		E2E826DF145023BE007035E5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C7145023A6007035E5 /* Localizable.strings */; };
-		E2E826E0145023BE007035E5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C9145023A6007035E5 /* MainMenu.xib */; };
-		E2E826E1145023BE007035E5 /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CB145023A6007035E5 /* NewEventWindow.xib */; };
-		E2E826E2145023BE007035E5 /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CD145023A6007035E5 /* NewTaskWindow.xib */; };
-		E2E826E7145023CD007035E5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C7145023A6007035E5 /* Localizable.strings */; };
-		E2E826E8145023CD007035E5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C9145023A6007035E5 /* MainMenu.xib */; };
-		E2E826E9145023CD007035E5 /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CB145023A6007035E5 /* NewEventWindow.xib */; };
-		E2E826EA145023CD007035E5 /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CD145023A6007035E5 /* NewTaskWindow.xib */; };
-		E2E826EF145023DA007035E5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C7145023A6007035E5 /* Localizable.strings */; };
-		E2E826F0145023DA007035E5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C9145023A6007035E5 /* MainMenu.xib */; };
-		E2E826F1145023DA007035E5 /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CB145023A6007035E5 /* NewEventWindow.xib */; };
-		E2E826F2145023DA007035E5 /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CD145023A6007035E5 /* NewTaskWindow.xib */; };
-		E2E826F7145023E5007035E5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C7145023A6007035E5 /* Localizable.strings */; };
-		E2E826F8145023E5007035E5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C9145023A6007035E5 /* MainMenu.xib */; };
-		E2E826F9145023E5007035E5 /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CB145023A6007035E5 /* NewEventWindow.xib */; };
-		E2E826FA145023E5007035E5 /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CD145023A6007035E5 /* NewTaskWindow.xib */; };
-		E2E826FF145023EF007035E5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C7145023A6007035E5 /* Localizable.strings */; };
-		E2E82700145023EF007035E5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C9145023A6007035E5 /* MainMenu.xib */; };
-		E2E82701145023EF007035E5 /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CB145023A6007035E5 /* NewEventWindow.xib */; };
-		E2E82702145023EF007035E5 /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CD145023A6007035E5 /* NewTaskWindow.xib */; };
-		E2E827031450256F007035E5 /* Blotter Preferences.preferencePane in Resources */ = {isa = PBXBuildFile; fileRef = E2E8267014500E11007035E5 /* Blotter Preferences.preferencePane */; };
+		E2EB28C9146D8E7400E975F6 /* PTHotKey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2EB2896146D8E1100E975F6 /* PTHotKey.framework */; };
+		E2EB28CA146D8E7400E975F6 /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2EB2892146D8E1100E975F6 /* ShortcutRecorder.framework */; };
+		E2EB28CB146D8E7400E975F6 /* WireloadClassesAndResources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2EB28C6146D8E6500E975F6 /* WireloadClassesAndResources.framework */; };
+		E2EB28CC146D8E8000E975F6 /* WireloadClassesAndResources.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = E2EB28C6146D8E6500E975F6 /* WireloadClassesAndResources.framework */; };
+		E2EB28CD146D8E8800E975F6 /* ShortcutRecorder.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = E2EB2892146D8E1100E975F6 /* ShortcutRecorder.framework */; };
+		E2EB28CE146D8E8800E975F6 /* PTHotKey.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = E2EB2896146D8E1100E975F6 /* PTHotKey.framework */; };
+		E2EB28D0146D8ED900E975F6 /* Blotter Preferences.preferencePane in Copy Blotter Preferences */ = {isa = PBXBuildFile; fileRef = E2EB289C146D8E1700E975F6 /* Blotter Preferences.preferencePane */; };
 		E2F112DD13E6E263001C2B7B /* WLCalendarWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F112DC13E6E263001C2B7B /* WLCalendarWindow.m */; };
 		E2F1133D13E70B4F001C2B7B /* WLCalendarWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F1133C13E70B4F001C2B7B /* WLCalendarWindowController.m */; };
 		E2FCE09D133F9264006E713F /* WLGlassHudDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FCE09C133F9264006E713F /* WLGlassHudDatePicker.m */; };
@@ -196,67 +150,94 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		E2730F9F1349C4A500A84433 /* PBXContainerItemProxy */ = {
+		E2EB2891146D8E1100E975F6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = E2730F961349C4A500A84433 /* ShortcutRecorder.xcodeproj */;
+			containerPortal = E2EB288B146D8E1100E975F6 /* ShortcutRecorder.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 939837800DA42965007F53F3;
-			remoteInfo = "ShortcutRecorder.framework - with embedded ibplugin";
-		};
-		E2730FA51349C4A500A84433 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E2730F961349C4A500A84433 /* ShortcutRecorder.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 342E00CF109CCBF5009AD8CA;
-			remoteInfo = "ShortcutRecorder.ibplugin - standalone";
-		};
-		E27312311349EC9000A84433 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E2730F961349C4A500A84433 /* ShortcutRecorder.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E273122E1349EC9000A84433;
-			remoteInfo = PTHotKey;
-		};
-		E294887D1361BA6500FA83B8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E2730F961349C4A500A84433 /* ShortcutRecorder.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = E273122D1349EC9000A84433;
-			remoteInfo = PTHotKey.framework;
-		};
-		E294887F1361BA6D00FA83B8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E2730F961349C4A500A84433 /* ShortcutRecorder.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 9398377F0DA42965007F53F3;
 			remoteInfo = ShortcutRecorder.framework;
 		};
-		E2E8266F14500E11007035E5 /* PBXContainerItemProxy */ = {
+		E2EB2893146D8E1100E975F6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = E27311741349D86200A84433 /* Blotter Preferences.xcodeproj */;
+			containerPortal = E2EB288B146D8E1100E975F6 /* ShortcutRecorder.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 342E00CF109CCBF5009AD8CA;
+			remoteInfo = ShortcutRecorder.ibplugin;
+		};
+		E2EB2895146D8E1100E975F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2EB288B146D8E1100E975F6 /* ShortcutRecorder.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E273122E1349EC9000A84433;
+			remoteInfo = PTHotKey.framework;
+		};
+		E2EB289B146D8E1700E975F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2EB2897146D8E1700E975F6 /* Blotter Preferences.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = "Blotter Preferences";
 		};
-		E2E8270414502600007035E5 /* PBXContainerItemProxy */ = {
+		E2EB289D146D8E1E00E975F6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = E27311741349D86200A84433 /* Blotter Preferences.xcodeproj */;
+			containerPortal = E2EB2897146D8E1700E975F6 /* Blotter Preferences.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = "Blotter Preferences";
 		};
+		E2EB289F146D8E2300E975F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2EB288B146D8E1100E975F6 /* ShortcutRecorder.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9398377F0DA42965007F53F3;
+			remoteInfo = ShortcutRecorder.framework;
+		};
+		E2EB28A1146D8E2300E975F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2EB288B146D8E1100E975F6 /* ShortcutRecorder.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E273122D1349EC9000A84433;
+			remoteInfo = PTHotKey.framework;
+		};
+		E2EB28C5146D8E6500E975F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2EB28C1146D8E6500E975F6 /* WireloadClassesAndResources.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E29A624E146D672900EDDA1B;
+			remoteInfo = WireloadClassesAndResources;
+		};
+		E2EB28C7146D8E6900E975F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2EB28C1146D8E6500E975F6 /* WireloadClassesAndResources.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E29A624D146D672900EDDA1B;
+			remoteInfo = WireloadClassesAndResources;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		2840647F12833643000816FF /* CopyFiles */ = {
+		2840647F12833643000816FF /* Copy Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E27313171349F0E200A84433 /* PTHotKey.framework in CopyFiles */,
-				E27311631349D81900A84433 /* ShortcutRecorder.framework in CopyFiles */,
+				E2EB28CD146D8E8800E975F6 /* ShortcutRecorder.framework in Copy Frameworks */,
+				E2EB28CE146D8E8800E975F6 /* PTHotKey.framework in Copy Frameworks */,
+				E2EB28CC146D8E8000E975F6 /* WireloadClassesAndResources.framework in Copy Frameworks */,
 			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2EB28CF146D8ED200E975F6 /* Copy Blotter Preferences */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				E2EB28D0146D8ED900E975F6 /* Blotter Preferences.preferencePane in Copy Blotter Preferences */,
+			);
+			name = "Copy Blotter Preferences";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -278,9 +259,6 @@
 		287BA282146D3CD300F4189B /* layout-area-8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "layout-area-8.png"; sourceTree = "<group>"; };
 		287BA283146D3CD300F4189B /* layout-area-9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "layout-area-9.png"; sourceTree = "<group>"; };
 		287BA28D146D418C00F4189B /* layout-noise.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "layout-noise.png"; sourceTree = "<group>"; };
-		28B54DB31283BABF0037BF53 /* SS_PreferencePaneProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SS_PreferencePaneProtocol.h; sourceTree = "<group>"; };
-		28B54DB41283BABF0037BF53 /* SS_PrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SS_PrefsController.h; sourceTree = "<group>"; };
-		28B54DB51283BABF0037BF53 /* SS_PrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SS_PrefsController.m; sourceTree = "<group>"; };
 		28CB50E814603CEC00810395 /* glass-hud-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-bottom-left.png"; sourceTree = "<group>"; };
 		28CB50E914603CEC00810395 /* glass-hud-bottom-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-bottom-middle.png"; sourceTree = "<group>"; };
 		28CB50EA14603CEC00810395 /* glass-hud-bottom-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-bottom-right.png"; sourceTree = "<group>"; };
@@ -297,48 +275,21 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Blotter-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Blotter-Info.plist"; path = "../Blotter-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Blotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E206EB1B14618D2F0053A279 /* NSArray+WLDelta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+WLDelta.h"; sourceTree = "<group>"; };
-		E206EB1C14618D2F0053A279 /* NSArray+WLDelta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+WLDelta.m"; sourceTree = "<group>"; };
-		E20C2DFF146C054200D6B815 /* recessed-box-shadow-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-bottom-left.png"; sourceTree = "<group>"; };
-		E20C2E00146C054200D6B815 /* recessed-box-shadow-bottom-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-bottom-right.png"; sourceTree = "<group>"; };
-		E20C2E01146C054200D6B815 /* recessed-box-shadow-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-bottom.png"; sourceTree = "<group>"; };
-		E20C2E02146C054200D6B815 /* recessed-box-shadow-middle-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-middle-left.png"; sourceTree = "<group>"; };
-		E20C2E03146C054200D6B815 /* recessed-box-shadow-middle-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-middle-right.png"; sourceTree = "<group>"; };
-		E20C2E04146C054200D6B815 /* recessed-box-shadow-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-middle.png"; sourceTree = "<group>"; };
-		E20C2E05146C054200D6B815 /* recessed-box-shadow-top-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-top-left.png"; sourceTree = "<group>"; };
-		E20C2E06146C054200D6B815 /* recessed-box-shadow-top-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-top-right.png"; sourceTree = "<group>"; };
-		E20C2E07146C054200D6B815 /* recessed-box-shadow-top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-top.png"; sourceTree = "<group>"; };
-		E20C2E11146C055800D6B815 /* WLGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGraphics.h; sourceTree = "<group>"; };
-		E20C2E12146C055800D6B815 /* WLGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGraphics.m; sourceTree = "<group>"; };
 		E20DAC4D1428FF0B00EF65EA /* info-middle-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-middle-left.png"; sourceTree = "<group>"; };
 		E20DAC4E1428FF0B00EF65EA /* info-middle-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-middle-right.png"; sourceTree = "<group>"; };
-		E20DAC5414294D8700EF65EA /* NSAttributedString+WLStringDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+WLStringDrawing.h"; sourceTree = "<group>"; };
-		E20DAC5514294D8700EF65EA /* NSAttributedString+WLStringDrawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+WLStringDrawing.m"; sourceTree = "<group>"; };
-		E214525113FF9550009FEEB8 /* WLCalendarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarController.h; sourceTree = "<group>"; };
-		E214525213FF9550009FEEB8 /* WLCalendarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarController.m; sourceTree = "<group>"; };
 		E214582A13D5AE7F00B21398 /* WLCalendarBackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarBackgroundLayer.h; sourceTree = "<group>"; };
 		E214582B13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarBackgroundLayer.m; sourceTree = "<group>"; };
 		E21A5F431403D2A4000B6634 /* WLCalendarTaskLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTaskLayer.h; sourceTree = "<group>"; };
 		E21A5F441403D2A4000B6634 /* WLCalendarTaskLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarTaskLayer.m; sourceTree = "<group>"; };
-		E221B3A113EC5C2F00F9B392 /* CATransaction+WLBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CATransaction+WLBlocks.h"; sourceTree = "<group>"; };
-		E221B3A213EC5C2F00F9B392 /* CATransaction+WLBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CATransaction+WLBlocks.m"; sourceTree = "<group>"; };
 		E22C78A913FFCD9F00EE44C0 /* NSColor+WLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+WLCalendar.h"; sourceTree = "<group>"; };
 		E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+WLCalendar.m"; sourceTree = "<group>"; };
-		E23779D61312AD6000F46E7D /* WLClosableWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLClosableWindow.h; sourceTree = "<group>"; };
-		E23779D71312AD6000F46E7D /* WLClosableWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLClosableWindow.m; sourceTree = "<group>"; };
 		E23F746D14434DE40055D6CE /* WLHourRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLHourRange.h; sourceTree = "<group>"; };
 		E23F746E14434DE40055D6CE /* WLHourRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLHourRange.m; sourceTree = "<group>"; };
-		E2435B18145057620052D9A3 /* WLPrefPaneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLPrefPaneView.h; sourceTree = "<group>"; };
-		E2435B19145057620052D9A3 /* WLPrefPaneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLPrefPaneView.m; sourceTree = "<group>"; };
 		E253574E13DC884D0010A2ED /* NSDate+WLDayBoundaries.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+WLDayBoundaries.h"; sourceTree = "<group>"; };
 		E253574F13DC884D0010A2ED /* NSDate+WLDayBoundaries.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+WLDayBoundaries.m"; sourceTree = "<group>"; };
-		E2535B8513DCA88B0010A2ED /* WLDateRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDateRange.h; sourceTree = "<group>"; };
-		E2535B8613DCA88B0010A2ED /* WLDateRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDateRange.m; sourceTree = "<group>"; };
 		E2596D711316C8C100A8B15E /* WLNewEventWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNewEventWindowController.h; sourceTree = "<group>"; };
 		E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNewEventWindowController.m; sourceTree = "<group>"; };
 		E262E585142B917400715C02 /* calendar-background-middle-gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar-background-middle-gradient.png"; sourceTree = "<group>"; };
-		E262E5E1142BD2C400715C02 /* WLCopyCompositingFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCopyCompositingFilter.h; sourceTree = "<group>"; };
-		E262E5E2142BD2C400715C02 /* WLCopyCompositingFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCopyCompositingFilter.m; sourceTree = "<group>"; };
 		E2670357132CA21F003FBFC2 /* glass-hud-button-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-right.png"; sourceTree = "<group>"; };
 		E2670358132CA21F003FBFC2 /* glass-hud-button-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-middle.png"; sourceTree = "<group>"; };
 		E2670359132CA21F003FBFC2 /* glass-hud-button-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-left.png"; sourceTree = "<group>"; };
@@ -383,10 +334,8 @@
 		E271E505133762A300BF7F2B /* glass-hud-button-pressed-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-pressed-left.png"; sourceTree = "<group>"; };
 		E271E5B313377E6100BF7F2B /* blotter-status-bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blotter-status-bar.png"; sourceTree = "<group>"; };
 		E271E5B413377E6100BF7F2B /* blotter-status-bar-active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blotter-status-bar-active.png"; sourceTree = "<group>"; };
-		E2730F961349C4A500A84433 /* ShortcutRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShortcutRecorder.xcodeproj; path = ShortcutRecorder/ShortcutRecorder.xcodeproj; sourceTree = "<group>"; };
-		E27311741349D86200A84433 /* Blotter Preferences.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Blotter Preferences.xcodeproj"; path = "Blotter Preferences/Blotter Preferences.xcodeproj"; sourceTree = "<group>"; };
-		E27313C31349F41200A84433 /* PTHotKey+ShortcutRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PTHotKey+ShortcutRecorder.h"; path = "ShortcutRecorder/Demo/HotKey/PTHotKey+ShortcutRecorder.h"; sourceTree = "<group>"; };
-		E27313C41349F41200A84433 /* PTHotKey+ShortcutRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "PTHotKey+ShortcutRecorder.m"; path = "ShortcutRecorder/Demo/HotKey/PTHotKey+ShortcutRecorder.m"; sourceTree = "<group>"; };
+		E27313C31349F41200A84433 /* PTHotKey+ShortcutRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PTHotKey+ShortcutRecorder.h"; path = "../ShortcutRecorder/Demo/HotKey/PTHotKey+ShortcutRecorder.h"; sourceTree = "<group>"; };
+		E27313C41349F41200A84433 /* PTHotKey+ShortcutRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "PTHotKey+ShortcutRecorder.m"; path = "../ShortcutRecorder/Demo/HotKey/PTHotKey+ShortcutRecorder.m"; sourceTree = "<group>"; };
 		E27433BC13CB3E1B00F531B6 /* WLCalendarWeekViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWeekViewController.h; sourceTree = "<group>"; };
 		E27433BD13CB3E1B00F531B6 /* WLCalendarWeekViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWeekViewController.m; sourceTree = "<group>"; };
 		E278ECF213C8B73D00B327EB /* WLCalendarTasksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTasksViewController.h; sourceTree = "<group>"; };
@@ -404,8 +353,6 @@
 		E27DE07513D03E19003E8E9A /* WLCalendarEventLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarEventLayer.m; sourceTree = "<group>"; };
 		E27DE46C13D0B3EC003E8E9A /* WLCalendarLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarLayer.h; sourceTree = "<group>"; };
 		E27DE46D13D0B3EC003E8E9A /* WLCalendarLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarLayer.m; sourceTree = "<group>"; };
-		E282E06A14043FAF0007C401 /* WLBlockLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLBlockLayer.h; sourceTree = "<group>"; };
-		E282E06B14043FAF0007C401 /* WLBlockLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLBlockLayer.m; sourceTree = "<group>"; };
 		E282E06F1404494E0007C401 /* allday-top-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "allday-top-left.png"; sourceTree = "<group>"; };
 		E282E0701404494E0007C401 /* allday-top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "allday-top.png"; sourceTree = "<group>"; };
 		E282E0711404494E0007C401 /* allday-top-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "allday-top-right.png"; sourceTree = "<group>"; };
@@ -449,18 +396,10 @@
 		E2A7085D13F0427800A4BF3A /* WLCalendarDateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarDateViewController.m; sourceTree = "<group>"; };
 		E2B16FDC13D57F52005F8973 /* WLCalendarTimeRulerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTimeRulerLayer.h; sourceTree = "<group>"; };
 		E2B16FDD13D57F52005F8973 /* WLCalendarTimeRulerLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarTimeRulerLayer.m; sourceTree = "<group>"; };
-		E2B223E613E16AF600890042 /* CoreText+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreText+Additions.h"; sourceTree = "<group>"; };
-		E2B223E713E16AF600890042 /* CoreText+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CoreText+Additions.m"; sourceTree = "<group>"; };
 		E2BA531913C5A873005F0045 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		E2BA565C13C5E4C4005F0045 /* NSColor+CGColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+CGColor.h"; sourceTree = "<group>"; };
-		E2BA565D13C5E4C4005F0045 /* NSColor+CGColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+CGColor.m"; sourceTree = "<group>"; };
 		E2C774C213D1C02A0067102F /* WLCalendarDayEventsLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarDayEventsLayer.h; sourceTree = "<group>"; };
 		E2C774C313D1C02A0067102F /* WLCalendarDayEventsLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarDayEventsLayer.m; sourceTree = "<group>"; };
 		E2C776E413D20A970067102F /* WLCalendarTimeRuler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTimeRuler.h; sourceTree = "<group>"; };
-		E2CBD790145C642700CF2630 /* WLNinePartBlockLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNinePartBlockLayer.h; sourceTree = "<group>"; };
-		E2CBD791145C642700CF2630 /* WLNinePartBlockLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNinePartBlockLayer.m; sourceTree = "<group>"; };
-		E2D6488C1441060F00A03FAD /* IKPowerSources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IKPowerSources.h; path = IKPowerSources/IKPowerSources.h; sourceTree = "<group>"; };
-		E2D6488D1441060F00A03FAD /* IKPowerSources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IKPowerSources.m; path = IKPowerSources/IKPowerSources.m; sourceTree = "<group>"; };
 		E2D6488F1441062300A03FAD /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		E2E64B4C1402483500912A92 /* WLSoftEdgeLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLSoftEdgeLayer.h; sourceTree = "<group>"; };
 		E2E64B4D1402483500912A92 /* WLSoftEdgeLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLSoftEdgeLayer.m; sourceTree = "<group>"; };
@@ -492,6 +431,9 @@
 		E2E826FC145023EF007035E5 /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = sv.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		E2E826FD145023EF007035E5 /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = sv.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
 		E2E826FE145023EF007035E5 /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = sv.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
+		E2EB288B146D8E1100E975F6 /* ShortcutRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShortcutRecorder.xcodeproj; path = ../ShortcutRecorder/ShortcutRecorder.xcodeproj; sourceTree = "<group>"; };
+		E2EB2897146D8E1700E975F6 /* Blotter Preferences.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Blotter Preferences.xcodeproj"; path = "../Blotter Preferences/Blotter Preferences.xcodeproj"; sourceTree = "<group>"; };
+		E2EB28C1146D8E6500E975F6 /* WireloadClassesAndResources.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WireloadClassesAndResources.xcodeproj; path = ../WireloadClassesAndResources/WireloadClassesAndResources.xcodeproj; sourceTree = "<group>"; };
 		E2F112DB13E6E263001C2B7B /* WLCalendarWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindow.h; sourceTree = "<group>"; };
 		E2F112DC13E6E263001C2B7B /* WLCalendarWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindow.m; sourceTree = "<group>"; };
 		E2F1133B13E70B4F001C2B7B /* WLCalendarWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowController.h; sourceTree = "<group>"; };
@@ -507,9 +449,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2EB28C9146D8E7400E975F6 /* PTHotKey.framework in Frameworks */,
+				E2EB28CA146D8E7400E975F6 /* ShortcutRecorder.framework in Frameworks */,
+				E2EB28CB146D8E7400E975F6 /* WireloadClassesAndResources.framework in Frameworks */,
 				E2D648901441062300A03FAD /* IOKit.framework in Frameworks */,
-				E27313181349F0EB00A84433 /* PTHotKey.framework in Frameworks */,
-				E27311471349D76700A84433 /* ShortcutRecorder.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				284064FC12834B98000816FF /* CalendarStore.framework in Frameworks */,
 				E27951BB131AA060008AE1DA /* Carbon.framework in Frameworks */,
@@ -525,76 +468,34 @@
 			children = (
 				E27196B713C5A19E008E5C43 /* WLCalendar */,
 				E27936431324F6BD00BC5224 /* WLGlassHud */,
-				E2D6488C1441060F00A03FAD /* IKPowerSources.h */,
-				E2D6488D1441060F00A03FAD /* IKPowerSources.m */,
-				E221B3A113EC5C2F00F9B392 /* CATransaction+WLBlocks.h */,
-				E221B3A213EC5C2F00F9B392 /* CATransaction+WLBlocks.m */,
 				256AC3D80F4B6AC300CF3369 /* DeskboardAppDelegate.h */,
 				256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */,
 				E27313C31349F41200A84433 /* PTHotKey+ShortcutRecorder.h */,
 				E27313C41349F41200A84433 /* PTHotKey+ShortcutRecorder.m */,
-				E23779D61312AD6000F46E7D /* WLClosableWindow.h */,
-				E23779D71312AD6000F46E7D /* WLClosableWindow.m */,
-				28B54DB31283BABF0037BF53 /* SS_PreferencePaneProtocol.h */,
-				28B54DB41283BABF0037BF53 /* SS_PrefsController.h */,
-				28B54DB51283BABF0037BF53 /* SS_PrefsController.m */,
-				E2435B18145057620052D9A3 /* WLPrefPaneView.h */,
-				E2435B19145057620052D9A3 /* WLPrefPaneView.m */,
 				28F699E2129C0EBC00D4BB97 /* WLViewFade.h */,
 				28F699E3129C0EBC00D4BB97 /* WLViewFade.m */,
 				E2596D711316C8C100A8B15E /* WLNewEventWindowController.h */,
 				E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */,
 				E29F38EC1319694C00A865D9 /* WLNewTaskWindowController.h */,
 				E29F38ED1319694C00A865D9 /* WLNewTaskWindowController.m */,
-				E2BA565C13C5E4C4005F0045 /* NSColor+CGColor.h */,
-				E2BA565D13C5E4C4005F0045 /* NSColor+CGColor.m */,
 				E278ECF213C8B73D00B327EB /* WLCalendarTasksViewController.h */,
 				E278ECF313C8B73D00B327EB /* WLCalendarTasksViewController.m */,
 				E27433BC13CB3E1B00F531B6 /* WLCalendarWeekViewController.h */,
 				E27433BD13CB3E1B00F531B6 /* WLCalendarWeekViewController.m */,
 				E253574E13DC884D0010A2ED /* NSDate+WLDayBoundaries.h */,
 				E253574F13DC884D0010A2ED /* NSDate+WLDayBoundaries.m */,
-				E2535B8513DCA88B0010A2ED /* WLDateRange.h */,
-				E2535B8613DCA88B0010A2ED /* WLDateRange.m */,
-				E2B223E613E16AF600890042 /* CoreText+Additions.h */,
-				E2B223E713E16AF600890042 /* CoreText+Additions.m */,
 				E2F1133B13E70B4F001C2B7B /* WLCalendarWindowController.h */,
 				E2F1133C13E70B4F001C2B7B /* WLCalendarWindowController.m */,
 				E2A7085C13F0427800A4BF3A /* WLCalendarDateViewController.h */,
 				E2A7085D13F0427800A4BF3A /* WLCalendarDateViewController.m */,
-				E214525113FF9550009FEEB8 /* WLCalendarController.h */,
-				E214525213FF9550009FEEB8 /* WLCalendarController.m */,
-				E206EB1B14618D2F0053A279 /* NSArray+WLDelta.h */,
-				E206EB1C14618D2F0053A279 /* NSArray+WLDelta.m */,
 				E2948D921401484B007122BC /* NSCalendar+WLWeekend.h */,
 				E2948D931401484B007122BC /* NSCalendar+WLWeekend.m */,
 				E2E64B4C1402483500912A92 /* WLSoftEdgeLayer.h */,
 				E2E64B4D1402483500912A92 /* WLSoftEdgeLayer.m */,
-				E282E06A14043FAF0007C401 /* WLBlockLayer.h */,
-				E282E06B14043FAF0007C401 /* WLBlockLayer.m */,
-				E2CBD790145C642700CF2630 /* WLNinePartBlockLayer.h */,
-				E2CBD791145C642700CF2630 /* WLNinePartBlockLayer.m */,
-				E20DAC5414294D8700EF65EA /* NSAttributedString+WLStringDrawing.h */,
-				E20DAC5514294D8700EF65EA /* NSAttributedString+WLStringDrawing.m */,
-				E262E5E1142BD2C400715C02 /* WLCopyCompositingFilter.h */,
-				E262E5E2142BD2C400715C02 /* WLCopyCompositingFilter.m */,
 				E23F746D14434DE40055D6CE /* WLHourRange.h */,
 				E23F746E14434DE40055D6CE /* WLHourRange.m */,
-				E20C2E11146C055800D6B815 /* WLGraphics.h */,
-				E20C2E12146C055800D6B815 /* WLGraphics.m */,
 			);
 			name = Classes;
-			sourceTree = "<group>";
-		};
-		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
-				284064FB12834B98000816FF /* CalendarStore.framework */,
-				E27951BA131AA060008AE1DA /* Carbon.framework */,
-				E2BA531913C5A873005F0045 /* QuartzCore.framework */,
-			);
-			name = "Linked Frameworks";
 			sourceTree = "<group>";
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
@@ -625,13 +526,17 @@
 		29B97314FDCFA39411CA2CEA /* Deskboard */ = {
 			isa = PBXGroup;
 			children = (
+				E2EB28C1146D8E6500E975F6 /* WireloadClassesAndResources.xcodeproj */,
+				E2EB2897146D8E1700E975F6 /* Blotter Preferences.xcodeproj */,
+				E2EB288B146D8E1100E975F6 /* ShortcutRecorder.xcodeproj */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+				284064FB12834B98000816FF /* CalendarStore.framework */,
+				E27951BA131AA060008AE1DA /* Carbon.framework */,
+				E2BA531913C5A873005F0045 /* QuartzCore.framework */,
 				E2D6488F1441062300A03FAD /* IOKit.framework */,
-				E27311741349D86200A84433 /* Blotter Preferences.xcodeproj */,
-				E2730F961349C4A500A84433 /* ShortcutRecorder.xcodeproj */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
-				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
 			name = Deskboard;
@@ -650,13 +555,12 @@
 			isa = PBXGroup;
 			children = (
 				287BA27A146D3CBE00F4189B /* layout-area */,
-				E20C2DFE146C049B00D6B815 /* recessed-box-shadow */,
+				E282E06D140448CF0007C401 /* calendar */,
+				E2F9E1D71322A4F4007598E2 /* glass-hud */,
 				E2E826C7145023A6007035E5 /* Localizable.strings */,
 				E2E826C9145023A6007035E5 /* MainMenu.xib */,
 				E2E826CB145023A6007035E5 /* NewEventWindow.xib */,
 				E2E826CD145023A6007035E5 /* NewTaskWindow.xib */,
-				E282E06D140448CF0007C401 /* calendar */,
-				E2F9E1D71322A4F4007598E2 /* glass-hud */,
 				E28C418C13F081A1005789DD /* defaults.plist */,
 				8D1107310486CEB800E47090 /* Blotter-Info.plist */,
 				E271E5B313377E6100BF7F2B /* blotter-status-bar.png */,
@@ -666,30 +570,6 @@
 				28F69CF4129CC12100D4BB97 /* Licenses.rtf */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		E20C2DFE146C049B00D6B815 /* recessed-box-shadow */ = {
-			isa = PBXGroup;
-			children = (
-				E20C2DFF146C054200D6B815 /* recessed-box-shadow-bottom-left.png */,
-				E20C2E00146C054200D6B815 /* recessed-box-shadow-bottom-right.png */,
-				E20C2E01146C054200D6B815 /* recessed-box-shadow-bottom.png */,
-				E20C2E02146C054200D6B815 /* recessed-box-shadow-middle-left.png */,
-				E20C2E03146C054200D6B815 /* recessed-box-shadow-middle-right.png */,
-				E20C2E04146C054200D6B815 /* recessed-box-shadow-middle.png */,
-				E20C2E05146C054200D6B815 /* recessed-box-shadow-top-left.png */,
-				E20C2E06146C054200D6B815 /* recessed-box-shadow-top-right.png */,
-				E20C2E07146C054200D6B815 /* recessed-box-shadow-top.png */,
-			);
-			path = "recessed-box-shadow";
 			sourceTree = "<group>";
 		};
 		E2678AB214048AB400ABB89B /* background */ = {
@@ -751,16 +631,6 @@
 				E286C00214068703008C0CDB /* NSFont+WLCalendar.m */,
 			);
 			name = WLCalendar;
-			sourceTree = "<group>";
-		};
-		E2730F971349C4A500A84433 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E2730FA01349C4A500A84433 /* ShortcutRecorder.framework */,
-				E2730FA61349C4A500A84433 /* ShortcutRecorder.ibplugin */,
-				E27312321349EC9000A84433 /* PTHotKey.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		E27936431324F6BD00BC5224 /* WLGlassHud */ = {
@@ -856,10 +726,28 @@
 			name = info;
 			sourceTree = "<group>";
 		};
-		E2E8266C14500E11007035E5 /* Products */ = {
+		E2EB288C146D8E1100E975F6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E2E8267014500E11007035E5 /* Blotter Preferences.preferencePane */,
+				E2EB2892146D8E1100E975F6 /* ShortcutRecorder.framework */,
+				E2EB2894146D8E1100E975F6 /* ShortcutRecorder.ibplugin */,
+				E2EB2896146D8E1100E975F6 /* PTHotKey.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E2EB2898146D8E1700E975F6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E2EB289C146D8E1700E975F6 /* Blotter Preferences.preferencePane */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E2EB28C2146D8E6500E975F6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E2EB28C6146D8E6500E975F6 /* WireloadClassesAndResources.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -905,14 +793,16 @@
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
-				2840647F12833643000816FF /* CopyFiles */,
+				2840647F12833643000816FF /* Copy Frameworks */,
+				E2EB28CF146D8ED200E975F6 /* Copy Blotter Preferences */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				E2E8270514502600007035E5 /* PBXTargetDependency */,
-				E294887E1361BA6500FA83B8 /* PBXTargetDependency */,
-				E29488801361BA6D00FA83B8 /* PBXTargetDependency */,
+				E2EB28C8146D8E6900E975F6 /* PBXTargetDependency */,
+				E2EB28A0146D8E2300E975F6 /* PBXTargetDependency */,
+				E2EB28A2146D8E2300E975F6 /* PBXTargetDependency */,
+				E2EB289E146D8E1E00E975F6 /* PBXTargetDependency */,
 			);
 			name = Blotter;
 			productInstallPath = "$(HOME)/Applications";
@@ -952,12 +842,16 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = E2E8266C14500E11007035E5 /* Products */;
-					ProjectRef = E27311741349D86200A84433 /* Blotter Preferences.xcodeproj */;
+					ProductGroup = E2EB2898146D8E1700E975F6 /* Products */;
+					ProjectRef = E2EB2897146D8E1700E975F6 /* Blotter Preferences.xcodeproj */;
 				},
 				{
-					ProductGroup = E2730F971349C4A500A84433 /* Products */;
-					ProjectRef = E2730F961349C4A500A84433 /* ShortcutRecorder.xcodeproj */;
+					ProductGroup = E2EB288C146D8E1100E975F6 /* Products */;
+					ProjectRef = E2EB288B146D8E1100E975F6 /* ShortcutRecorder.xcodeproj */;
+				},
+				{
+					ProductGroup = E2EB28C2146D8E6500E975F6 /* Products */;
+					ProjectRef = E2EB28C1146D8E6500E975F6 /* WireloadClassesAndResources.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -968,32 +862,39 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		E2730FA01349C4A500A84433 /* ShortcutRecorder.framework */ = {
+		E2EB2892146D8E1100E975F6 /* ShortcutRecorder.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = ShortcutRecorder.framework;
-			remoteRef = E2730F9F1349C4A500A84433 /* PBXContainerItemProxy */;
+			remoteRef = E2EB2891146D8E1100E975F6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		E2730FA61349C4A500A84433 /* ShortcutRecorder.ibplugin */ = {
+		E2EB2894146D8E1100E975F6 /* ShortcutRecorder.ibplugin */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = ShortcutRecorder.ibplugin;
-			remoteRef = E2730FA51349C4A500A84433 /* PBXContainerItemProxy */;
+			remoteRef = E2EB2893146D8E1100E975F6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		E27312321349EC9000A84433 /* PTHotKey.framework */ = {
+		E2EB2896146D8E1100E975F6 /* PTHotKey.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = PTHotKey.framework;
-			remoteRef = E27312311349EC9000A84433 /* PBXContainerItemProxy */;
+			remoteRef = E2EB2895146D8E1100E975F6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		E2E8267014500E11007035E5 /* Blotter Preferences.preferencePane */ = {
+		E2EB289C146D8E1700E975F6 /* Blotter Preferences.preferencePane */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = "Blotter Preferences.preferencePane";
-			remoteRef = E2E8266F14500E11007035E5 /* PBXContainerItemProxy */;
+			remoteRef = E2EB289B146D8E1700E975F6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E2EB28C6146D8E6500E975F6 /* WireloadClassesAndResources.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = WireloadClassesAndResources.framework;
+			remoteRef = E2EB28C5146D8E6500E975F6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1076,31 +977,6 @@
 				E2E826D0145023A6007035E5 /* MainMenu.xib in Resources */,
 				E2E826D1145023A6007035E5 /* NewEventWindow.xib in Resources */,
 				E2E826D2145023A6007035E5 /* NewTaskWindow.xib in Resources */,
-				E2E826D7145023B4007035E5 /* Localizable.strings in Resources */,
-				E2E826D8145023B4007035E5 /* MainMenu.xib in Resources */,
-				E2E826D9145023B4007035E5 /* NewEventWindow.xib in Resources */,
-				E2E826DA145023B4007035E5 /* NewTaskWindow.xib in Resources */,
-				E2E826DF145023BE007035E5 /* Localizable.strings in Resources */,
-				E2E826E0145023BE007035E5 /* MainMenu.xib in Resources */,
-				E2E826E1145023BE007035E5 /* NewEventWindow.xib in Resources */,
-				E2E826E2145023BE007035E5 /* NewTaskWindow.xib in Resources */,
-				E2E826E7145023CD007035E5 /* Localizable.strings in Resources */,
-				E2E826E8145023CD007035E5 /* MainMenu.xib in Resources */,
-				E2E826E9145023CD007035E5 /* NewEventWindow.xib in Resources */,
-				E2E826EA145023CD007035E5 /* NewTaskWindow.xib in Resources */,
-				E2E826EF145023DA007035E5 /* Localizable.strings in Resources */,
-				E2E826F0145023DA007035E5 /* MainMenu.xib in Resources */,
-				E2E826F1145023DA007035E5 /* NewEventWindow.xib in Resources */,
-				E2E826F2145023DA007035E5 /* NewTaskWindow.xib in Resources */,
-				E2E826F7145023E5007035E5 /* Localizable.strings in Resources */,
-				E2E826F8145023E5007035E5 /* MainMenu.xib in Resources */,
-				E2E826F9145023E5007035E5 /* NewEventWindow.xib in Resources */,
-				E2E826FA145023E5007035E5 /* NewTaskWindow.xib in Resources */,
-				E2E826FF145023EF007035E5 /* Localizable.strings in Resources */,
-				E2E82700145023EF007035E5 /* MainMenu.xib in Resources */,
-				E2E82701145023EF007035E5 /* NewEventWindow.xib in Resources */,
-				E2E827031450256F007035E5 /* Blotter Preferences.preferencePane in Resources */,
-				E2E82702145023EF007035E5 /* NewTaskWindow.xib in Resources */,
 				28CB50F114603CEC00810395 /* glass-hud-bottom-left.png in Resources */,
 				28CB50F214603CEC00810395 /* glass-hud-bottom-middle.png in Resources */,
 				28CB50F314603CEC00810395 /* glass-hud-bottom-right.png in Resources */,
@@ -1110,15 +986,6 @@
 				28CB50F714603CEC00810395 /* glass-hud-top-left.png in Resources */,
 				28CB50F814603CEC00810395 /* glass-hud-top-middle.png in Resources */,
 				28CB50F914603CEC00810395 /* glass-hud-top-right.png in Resources */,
-				E20C2E08146C054200D6B815 /* recessed-box-shadow-bottom-left.png in Resources */,
-				E20C2E09146C054200D6B815 /* recessed-box-shadow-bottom-right.png in Resources */,
-				E20C2E0A146C054200D6B815 /* recessed-box-shadow-bottom.png in Resources */,
-				E20C2E0B146C054200D6B815 /* recessed-box-shadow-middle-left.png in Resources */,
-				E20C2E0C146C054200D6B815 /* recessed-box-shadow-middle-right.png in Resources */,
-				E20C2E0D146C054200D6B815 /* recessed-box-shadow-middle.png in Resources */,
-				E20C2E0E146C054200D6B815 /* recessed-box-shadow-top-left.png in Resources */,
-				E20C2E0F146C054200D6B815 /* recessed-box-shadow-top-right.png in Resources */,
-				E20C2E10146C054200D6B815 /* recessed-box-shadow-top.png in Resources */,
 				287BA284146D3CD300F4189B /* layout-area-1.png in Resources */,
 				287BA285146D3CD300F4189B /* layout-area-2.png in Resources */,
 				287BA286146D3CD300F4189B /* layout-area-3.png in Resources */,
@@ -1141,9 +1008,7 @@
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				256AC3DA0F4B6AC300CF3369 /* DeskboardAppDelegate.m in Sources */,
-				28B54DB61283BABF0037BF53 /* SS_PrefsController.m in Sources */,
 				28F699E4129C0EBC00D4BB97 /* WLViewFade.m in Sources */,
-				E23779EF1312AD6000F46E7D /* WLClosableWindow.m in Sources */,
 				E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */,
 				E29F38EE1319694C00A865D9 /* WLNewTaskWindowController.m in Sources */,
 				E279363A1324F05800BC5224 /* WLGlassHudWindow.m in Sources */,
@@ -1153,7 +1018,6 @@
 				E2FCE09D133F9264006E713F /* WLGlassHudDatePicker.m in Sources */,
 				E27313C51349F41200A84433 /* PTHotKey+ShortcutRecorder.m in Sources */,
 				E27196BB13C5A1C3008E5C43 /* WLCalendarTasksView.m in Sources */,
-				E2BA565E13C5E4C4005F0045 /* NSColor+CGColor.m in Sources */,
 				E278ECF413C8B73D00B327EB /* WLCalendarTasksViewController.m in Sources */,
 				E278F19E13C9EA6700B327EB /* WLCalendarWeekView.m in Sources */,
 				E27433BE13CB3E1B00F531B6 /* WLCalendarWeekViewController.m in Sources */,
@@ -1164,52 +1028,45 @@
 				E2B16FDE13D57F52005F8973 /* WLCalendarTimeRulerLayer.m in Sources */,
 				E214582C13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m in Sources */,
 				E253575013DC884D0010A2ED /* NSDate+WLDayBoundaries.m in Sources */,
-				E2535B8713DCA88B0010A2ED /* WLDateRange.m in Sources */,
-				E2B223E813E16AF600890042 /* CoreText+Additions.m in Sources */,
 				E2F112DD13E6E263001C2B7B /* WLCalendarWindow.m in Sources */,
 				E2F1133D13E70B4F001C2B7B /* WLCalendarWindowController.m in Sources */,
 				E2FCE09D133F9264006E7141 /* WLCalendarTimeIndicatorLayer.m in Sources */,
 				E292D7E013E9DCEA00433262 /* WLCalendarWindowBackgroundView.m in Sources */,
-				E221B3A313EC5C2F00F9B392 /* CATransaction+WLBlocks.m in Sources */,
 				E2A701ED13EFE4C500A4BF3A /* WLCalendarDateView.m in Sources */,
 				E2A7085E13F0427800A4BF3A /* WLCalendarDateViewController.m in Sources */,
-				E214525313FF9550009FEEB8 /* WLCalendarController.m in Sources */,
 				E22C78AB13FFCD9F00EE44C0 /* NSColor+WLCalendar.m in Sources */,
 				E2948D941401484B007122BC /* NSCalendar+WLWeekend.m in Sources */,
 				E2E64B4E1402483500912A92 /* WLSoftEdgeLayer.m in Sources */,
 				E21A5F451403D2A4000B6634 /* WLCalendarTaskLayer.m in Sources */,
-				E282E06C14043FAF0007C401 /* WLBlockLayer.m in Sources */,
 				E2678AD114050FCF00ABB89B /* WLCalendarTimeRulerLabelLayer.m in Sources */,
 				E286C00314068703008C0CDB /* NSFont+WLCalendar.m in Sources */,
 				E2A61A80140745FC0059F201 /* WLCalendarBoxView.m in Sources */,
-				E20DAC5614294D8800EF65EA /* NSAttributedString+WLStringDrawing.m in Sources */,
-				E262E5E3142BD2C500715C02 /* WLCopyCompositingFilter.m in Sources */,
-				E2D6488E1441060F00A03FAD /* IKPowerSources.m in Sources */,
 				E23F746F14434DE40055D6CE /* WLHourRange.m in Sources */,
-				E2435B1A145057620052D9A3 /* WLPrefPaneView.m in Sources */,
-				E2CBD792145C642700CF2630 /* WLNinePartBlockLayer.m in Sources */,
-				E206EB1D14618D2F0053A279 /* NSArray+WLDelta.m in Sources */,
-				E20C2E13146C055900D6B815 /* WLGraphics.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		E294887E1361BA6500FA83B8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = PTHotKey.framework;
-			targetProxy = E294887D1361BA6500FA83B8 /* PBXContainerItemProxy */;
-		};
-		E29488801361BA6D00FA83B8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ShortcutRecorder.framework;
-			targetProxy = E294887F1361BA6D00FA83B8 /* PBXContainerItemProxy */;
-		};
-		E2E8270514502600007035E5 /* PBXTargetDependency */ = {
+		E2EB289E146D8E1E00E975F6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Blotter Preferences";
-			targetProxy = E2E8270414502600007035E5 /* PBXContainerItemProxy */;
+			targetProxy = E2EB289D146D8E1E00E975F6 /* PBXContainerItemProxy */;
+		};
+		E2EB28A0146D8E2300E975F6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ShortcutRecorder.framework;
+			targetProxy = E2EB289F146D8E2300E975F6 /* PBXContainerItemProxy */;
+		};
+		E2EB28A2146D8E2300E975F6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PTHotKey.framework;
+			targetProxy = E2EB28A1146D8E2300E975F6 /* PBXContainerItemProxy */;
+		};
+		E2EB28C8146D8E6900E975F6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = WireloadClassesAndResources;
+			targetProxy = E2EB28C7146D8E6900E975F6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1277,6 +1134,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/Blotter-afmungwxoqbjsjgrcljlthbrsuzt/Build/Products/Debug\"",
+				);
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
@@ -1288,6 +1150,11 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/Blotter-afmungwxoqbjsjgrcljlthbrsuzt/Build/Products/Debug\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
 				INFOPLIST_FILE = "Blotter-Info.plist";
@@ -1298,13 +1165,9 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					i386,
-					x86_64,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: WireLoad, LLC";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1317,26 +1180,20 @@
 					"\"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers\"",
 					"\"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers\"",
 				);
-				IBC_OTHER_FLAGS = "";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					i386,
-					x86_64,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: WireLoad, LLC";
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_UNROLL_LOOPS = YES;
@@ -1355,12 +1212,10 @@
 					"\"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers\"",
 					"\"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers\"",
 				);
-				IBC_OTHER_FLAGS = "";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
 		};
