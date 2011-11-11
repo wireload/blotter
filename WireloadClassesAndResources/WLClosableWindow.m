@@ -8,15 +8,15 @@
 
 #import <Carbon/Carbon.h>
 #import "WLClosableWindow.h"
+#import "WLEvents.h"
 
 
 @implementation WLClosableWindow
 
 - (BOOL)performKeyEquivalent:(NSEvent *)anEvent
 {
-    NSUInteger flags = [anEvent modifierFlags];
-    if ((!(flags & NSControlKeyMask) && !(flags & NSAlternateKeyMask) && (flags & NSCommandKeyMask) && [anEvent keyCode] == kVK_ANSI_W) ||
-        [anEvent keyCode] == kVK_Escape)
+    if (WLDoesEventContainShortcut(anEvent, NSCommandKeyMask, kVK_ANSI_W) ||
+        WLDoesEventContainShortcut(anEvent, 0, kVK_Escape))
     {
         [self makeFirstResponder:nil];
         [self performClose:anEvent];

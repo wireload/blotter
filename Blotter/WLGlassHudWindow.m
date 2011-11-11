@@ -7,19 +7,9 @@
 //
 
 #import <Carbon/Carbon.h>
+#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLGlassHudWindow.h"
 #import "WLGlassHudView.h"
-
-
-BOOL _WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int shortcutKey)
-{
-    static NSUInteger FlagsMask = NSShiftKeyMask | NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask;
-
-    NSUInteger eventFlags = [event modifierFlags];
-    unsigned short eventKeyCode = [event keyCode];
-
-    return (eventFlags & (FlagsMask ^ shortcutFlags)) == 0 && (eventFlags & shortcutFlags) && eventKeyCode == shortcutKey;
-}
 
 
 @implementation WLGlassHudWindow
@@ -137,19 +127,19 @@ BOOL _WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int s
 - (BOOL)performKeyEquivalent:(NSEvent *)theEvent
 {
     // Close
-    if (_WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_W))
+    if (WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_W))
     {
         [self close:theEvent];
         return YES;
     }
     // Select All
-    if (_WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_A))
+    if (WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_A))
     {
         [[self firstResponder] selectAll:self];
         return YES;
     }
     // Cut/Copy/Paste
-    else if (_WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_X))
+    else if (WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_X))
     {
         id firstResponder = [self firstResponder];
         if ([firstResponder respondsToSelector:@selector(cut:)])
@@ -158,7 +148,7 @@ BOOL _WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int s
             return YES;
         }
     }
-    else if (_WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_C))
+    else if (WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_C))
     {
         id firstResponder = [self firstResponder];
         if ([firstResponder respondsToSelector:@selector(copy:)])
@@ -167,7 +157,7 @@ BOOL _WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int s
             return YES;
         }
     }
-    else if (_WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_V))
+    else if (WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_V))
     {
         id firstResponder = [self firstResponder];
         if ([firstResponder respondsToSelector:@selector(paste:)])
@@ -177,12 +167,12 @@ BOOL _WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int s
         }
     }
     // Undo/Redo
-    else if (_WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_Z))
+    else if (WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_Z))
     {
         [[[self firstResponder] undoManager] undo];
         return YES;
     }
-    else if (_WLDoesEventContainShortcut(theEvent, NSCommandKeyMask | NSShiftKeyMask, kVK_ANSI_Z))
+    else if (WLDoesEventContainShortcut(theEvent, NSCommandKeyMask | NSShiftKeyMask, kVK_ANSI_Z))
     {
         [[[self firstResponder] undoManager] redo];
         return YES;

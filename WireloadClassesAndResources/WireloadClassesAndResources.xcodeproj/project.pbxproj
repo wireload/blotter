@@ -50,6 +50,8 @@
 		E2A18CAE146D7462004B727B /* IKPowerSources.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A18CAC146D7462004B727B /* IKPowerSources.m */; };
 		E2A18CB0146D74B1004B727B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2A18CAF146D74B1004B727B /* IOKit.framework */; };
 		E2A18CB2146D74C4004B727B /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2A18CB1146D74C4004B727B /* CalendarStore.framework */; };
+		E2EB28ED146D984400E975F6 /* WLEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = E2EB28EB146D984400E975F6 /* WLEvents.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E2EB28EE146D984400E975F6 /* WLEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = E2EB28EC146D984400E975F6 /* WLEvents.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +101,8 @@
 		E2A18CAC146D7462004B727B /* IKPowerSources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IKPowerSources.m; path = IKPowerSources/IKPowerSources.m; sourceTree = "<group>"; };
 		E2A18CAF146D74B1004B727B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		E2A18CB1146D74C4004B727B /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = System/Library/Frameworks/CalendarStore.framework; sourceTree = SDKROOT; };
+		E2EB28EB146D984400E975F6 /* WLEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLEvents.h; sourceTree = "<group>"; };
+		E2EB28EC146D984400E975F6 /* WLEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLEvents.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +174,8 @@
 				E29A62A8146D68AB00EDDA1B /* WLGraphics.m */,
 				E29A62A9146D68AB00EDDA1B /* WLPrefPaneView.h */,
 				E29A62AA146D68AB00EDDA1B /* WLPrefPaneView.m */,
+				E2EB28EB146D984400E975F6 /* WLEvents.h */,
+				E2EB28EC146D984400E975F6 /* WLEvents.m */,
 				E29A62E0146D699300EDDA1B /* WireloadClassesAndResources.h */,
 			);
 			name = Classes;
@@ -231,6 +237,7 @@
 				E29A62E1146D699300EDDA1B /* WireloadClassesAndResources.h in Headers */,
 				E2A18CA8146D7435004B727B /* WLCalendarController.h in Headers */,
 				E2A18CAD146D7462004B727B /* IKPowerSources.h in Headers */,
+				E2EB28ED146D984400E975F6 /* WLEvents.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +326,7 @@
 				E29A62C3146D68AB00EDDA1B /* WLPrefPaneView.m in Sources */,
 				E2A18CA9146D7435004B727B /* WLCalendarController.m in Sources */,
 				E2A18CAE146D7462004B727B /* IKPowerSources.m in Sources */,
+				E2EB28EE146D984400E975F6 /* WLEvents.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

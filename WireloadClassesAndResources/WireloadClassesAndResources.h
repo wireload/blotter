@@ -23,5 +23,7 @@
 #import <WireloadClassesAndResources/WLCalendarController.h>
 #import <WireloadClassesAndResources/IKPowerSources.h>
 #import <WireloadClassesAndResources/CATransaction+WLBlocks.h>
+#import <WireloadClassesAndResources/WLGraphics.h>
+#import <WireloadClassesAndResources/WLEvents.h>
 
 #endif
