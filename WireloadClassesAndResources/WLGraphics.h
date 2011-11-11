@@ -14,3 +14,17 @@
  @discussion    Draws 1px horizontal white line at the bottom. You may want to inset your content to not overlap this line.
  */
 void WLRecessedBoxShadow(NSRect frame);
+
+void WLDrawScaledNinePartImage(NSRect bounds,
+                               NSImage *topLeftCorner,
+                               NSImage *topEdgeFill,
+                               NSImage *topRightCorner,
+                               NSImage *leftEdgeFill,
+                               NSImage *centerFill,
+                               NSImage *rightEdgeFill,
+                               NSImage *bottomLeftCorner,
+                               NSImage *bottomEdgeFill,
+                               NSImage *bottomRightCorner,
+                               NSCompositingOperation op,
+                               CGFloat alphaFraction,
+                               BOOL flipped);
