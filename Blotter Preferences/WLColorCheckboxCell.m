@@ -20,9 +20,11 @@
         [imagesCache setName:@"WLColorCheckboxCell cache"];
     });
 
-    NSImage *checkboxImage = [[[[imagesCache objectForKey:aColor] objectForKey:[NSNumber numberWithInteger:aState]] retain] autorelease];
+    NSDictionary *imagesPair = [[[imagesCache objectForKey:aColor] retain] autorelease];
+    NSImage *checkboxImage = [imagesPair objectForKey:[NSNumber numberWithInteger:aState]];
     if (checkboxImage == nil)
     {
+        NSBundle *bundle = [NSBundle bundleForClass:[self class]];
         if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
         {
             NSRect checkboxRect = NSMakeRect(0.0f, 0.0f, 14.0f, 16.0f);
@@ -31,28 +33,27 @@
             [aColor set];
             [NSBezierPath fillRect:checkboxRect];
             [overlayImage unlockFocus];
-            
-            NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"chkbxColormask_10_6" ofType:@"png"];
-            NSImage *colormaskImage = [[NSImage alloc] initWithContentsOfFile:path];
-            
-            path = [[NSBundle bundleForClass:[self class]] pathForResource:@"chkbxBackground_10_6" ofType:@"png"];
-            NSImage *backgroundImage = [[NSImage alloc] initWithContentsOfFile:path];
-            
+
+            NSImage *colormaskImage = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"chkbxColormask_10_6"]];
+
+            NSImage *backgroundImage = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"chkbxBackground_10_6"]];
+
             [colormaskImage lockFocus];
             [overlayImage drawInRect:checkboxRect fromRect:checkboxRect operation:NSCompositeSourceIn fraction:1.0];
             [colormaskImage unlockFocus];
             [overlayImage release];
-            
+
             checkboxImage = [[[NSImage alloc] initWithSize:checkboxRect.size] autorelease];
             [checkboxImage lockFocus];
             [colormaskImage drawInRect:checkboxRect fromRect:checkboxRect operation:NSCompositeSourceOver fraction:1.0];
             [colormaskImage release];
             [backgroundImage drawInRect:checkboxRect fromRect:checkboxRect operation:NSCompositeSourceOver fraction:1.0];
             [backgroundImage release];
-            if (aState == NSOnState) {
-                path = [[NSBundle bundleForClass:[self class]] pathForResource:@"chkbxCheck_10_6" ofType:@"png"];
-                NSImage *checkImage = [[NSImage alloc] initWithContentsOfFile:path];
+            if (aState == NSOnState)
+            {
+                NSImage *checkImage = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"chkbxCheck_10_6"]];
                 [checkImage drawInRect:checkboxRect fromRect:checkboxRect operation:NSCompositeSourceOver fraction:1.0];
+                [checkImage release];
             }
             [checkboxImage unlockFocus];
         }
@@ -64,51 +65,55 @@
             [[aColor colorWithAlphaComponent:0.4f] set];
             [NSBezierPath fillRect:checkboxRect];
             [overlayImage unlockFocus];
-            
-            NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"chkbxColormask_10_7" ofType:@"png"];
-            NSImage *colormaskImage = [[NSImage alloc] initWithContentsOfFile:path];
-            
+
+            NSImage *colormaskImage = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"chkbxColormask_10_7"]];
+
             [colormaskImage lockFocus];
             [overlayImage drawInRect:checkboxRect fromRect:checkboxRect operation:NSCompositeSourceIn fraction:1.0];
             [colormaskImage unlockFocus];
             [overlayImage release];
-            
+
             checkboxImage = [[[NSImage alloc] initWithSize:checkboxRect.size] autorelease];
             [checkboxImage lockFocus];
             [colormaskImage drawInRect:checkboxRect fromRect:checkboxRect operation:NSCompositeSourceOver fraction:1.0];
             [colormaskImage release];
-            switch (aState) {
+            switch (aState)
+            {
                 case NSOnState:
-                    path = [[NSBundle bundleForClass:[self class]] pathForResource:@"chkbxCheck_10_7" ofType:@"png"];
-                    NSImage *checkImage = [[NSImage alloc] initWithContentsOfFile:path];
+                {
+                    NSImage *checkImage = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"chkbxCheck_10_7"]];
                     [checkImage drawInRect:checkboxRect fromRect:checkboxRect operation:NSCompositeSourceOver fraction:1.0];
                     [checkImage release];
                     break;
+                }
                 case NSOffState:
-                    path = [[NSBundle bundleForClass:[self class]] pathForResource:@"chkbxBackground_10_7" ofType:@"png"];
-                    NSImage *backgroundImage = [[NSImage alloc] initWithContentsOfFile:path];
+                {
+                    NSImage *backgroundImage = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"chkbxBackground_10_7"]];
                     [backgroundImage drawInRect:checkboxRect fromRect:checkboxRect operation:NSCompositeSourceOver fraction:1.0];
                     [backgroundImage release];
                     break;
+                }
                 default:
                     break;
             }
             [checkboxImage unlockFocus];
         }
 
-        NSMutableDictionary *imagesPair = [imagesCache objectForKey:aColor];
-        if (imagesPair == nil) {
-            imagesPair = [NSMutableDictionary dictionary];
-            [imagesCache setObject:imagesPair forKey:aColor];
+        NSMutableDictionary *newImagesPair = [imagesCache objectForKey:aColor];
+        if (newImagesPair == nil)
+        {
+            newImagesPair = [NSMutableDictionary dictionary];
+            [imagesCache setObject:newImagesPair forKey:aColor];
         }
-        [imagesPair setObject:checkboxImage forKey:[NSNumber numberWithInteger:aState]];
+        [newImagesPair setObject:checkboxImage forKey:[NSNumber numberWithInteger:aState]];
     }
     return checkboxImage;
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
-    if (self = [super initWithCoder:aDecoder])
+    self = [super initWithCoder:aDecoder];
+    if (self != nil)
     {
         // NSButtonCell
         [self setButtonType:NSSwitchButton];
