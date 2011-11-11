@@ -1,0 +1,430 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E29A6252146D672900EDDA1B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29A6251146D672900EDDA1B /* Cocoa.framework */; };
+		E29A62AB146D68AB00EDDA1B /* CATransaction+WLBlocks.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A6292146D68AB00EDDA1B /* CATransaction+WLBlocks.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E29A62AC146D68AB00EDDA1B /* CATransaction+WLBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = E29A6293146D68AB00EDDA1B /* CATransaction+WLBlocks.m */; };
+		E29A62AD146D68AB00EDDA1B /* CoreText+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A6294146D68AB00EDDA1B /* CoreText+Additions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E29A62AE146D68AB00EDDA1B /* CoreText+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = E29A6295146D68AB00EDDA1B /* CoreText+Additions.m */; };
+		E29A62AF146D68AB00EDDA1B /* NSArray+WLDelta.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A6296146D68AB00EDDA1B /* NSArray+WLDelta.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E29A62B0146D68AB00EDDA1B /* NSArray+WLDelta.m in Sources */ = {isa = PBXBuildFile; fileRef = E29A6297146D68AB00EDDA1B /* NSArray+WLDelta.m */; };
+		E29A62B1146D68AB00EDDA1B /* NSAttributedString+WLStringDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A6298146D68AB00EDDA1B /* NSAttributedString+WLStringDrawing.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E29A62B2146D68AB00EDDA1B /* NSAttributedString+WLStringDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = E29A6299146D68AB00EDDA1B /* NSAttributedString+WLStringDrawing.m */; };
+		E29A62B3146D68AB00EDDA1B /* NSColor+CGColor.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A629A146D68AB00EDDA1B /* NSColor+CGColor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E29A62B4146D68AB00EDDA1B /* NSColor+CGColor.m in Sources */ = {isa = PBXBuildFile; fileRef = E29A629B146D68AB00EDDA1B /* NSColor+CGColor.m */; };
+		E29A62B5146D68AB00EDDA1B /* SS_PreferencePaneProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A629C146D68AB00EDDA1B /* SS_PreferencePaneProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E29A62B6146D68AB00EDDA1B /* SS_PrefsController.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A629D146D68AB00EDDA1B /* SS_PrefsController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E29A62B7146D68AB00EDDA1B /* SS_PrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = E29A629E146D68AB00EDDA1B /* SS_PrefsController.m */; };
+		E29A62B8146D68AB00EDDA1B /* WLBlockLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A629F146D68AB00EDDA1B /* WLBlockLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E29A62B9146D68AB00EDDA1B /* WLBlockLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E29A62A0146D68AB00EDDA1B /* WLBlockLayer.m */; };
+		E29A62BA146D68AB00EDDA1B /* WLClosableWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A62A1146D68AB00EDDA1B /* WLClosableWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E29A62BB146D68AB00EDDA1B /* WLClosableWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E29A62A2146D68AB00EDDA1B /* WLClosableWindow.m */; };
+		E29A62BC146D68AB00EDDA1B /* WLCopyCompositingFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A62A3146D68AB00EDDA1B /* WLCopyCompositingFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E29A62BD146D68AB00EDDA1B /* WLCopyCompositingFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = E29A62A4146D68AB00EDDA1B /* WLCopyCompositingFilter.m */; };
+		E29A62BE146D68AB00EDDA1B /* WLDateRange.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A62A5146D68AB00EDDA1B /* WLDateRange.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E29A62BF146D68AB00EDDA1B /* WLDateRange.m in Sources */ = {isa = PBXBuildFile; fileRef = E29A62A6146D68AB00EDDA1B /* WLDateRange.m */; };
+		E29A62C0146D68AB00EDDA1B /* WLGraphics.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A62A7146D68AB00EDDA1B /* WLGraphics.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E29A62C1146D68AB00EDDA1B /* WLGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = E29A62A8146D68AB00EDDA1B /* WLGraphics.m */; };
+		E29A62C2146D68AB00EDDA1B /* WLPrefPaneView.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A62A9146D68AB00EDDA1B /* WLPrefPaneView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E29A62C3146D68AB00EDDA1B /* WLPrefPaneView.m in Sources */ = {isa = PBXBuildFile; fileRef = E29A62AA146D68AB00EDDA1B /* WLPrefPaneView.m */; };
+		E29A62CE146D68DD00EDDA1B /* recessed-box-shadow-bottom-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62C5146D68DD00EDDA1B /* recessed-box-shadow-bottom-left.png */; };
+		E29A62CF146D68DD00EDDA1B /* recessed-box-shadow-bottom-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62C6146D68DD00EDDA1B /* recessed-box-shadow-bottom-right.png */; };
+		E29A62D0146D68DD00EDDA1B /* recessed-box-shadow-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62C7146D68DD00EDDA1B /* recessed-box-shadow-bottom.png */; };
+		E29A62D1146D68DD00EDDA1B /* recessed-box-shadow-middle-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62C8146D68DD00EDDA1B /* recessed-box-shadow-middle-left.png */; };
+		E29A62D2146D68DD00EDDA1B /* recessed-box-shadow-middle-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62C9146D68DD00EDDA1B /* recessed-box-shadow-middle-right.png */; };
+		E29A62D3146D68DD00EDDA1B /* recessed-box-shadow-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62CA146D68DD00EDDA1B /* recessed-box-shadow-middle.png */; };
+		E29A62D4146D68DD00EDDA1B /* recessed-box-shadow-top-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62CB146D68DD00EDDA1B /* recessed-box-shadow-top-left.png */; };
+		E29A62D5146D68DD00EDDA1B /* recessed-box-shadow-top-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62CC146D68DD00EDDA1B /* recessed-box-shadow-top-right.png */; };
+		E29A62D6146D68DD00EDDA1B /* recessed-box-shadow-top.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62CD146D68DD00EDDA1B /* recessed-box-shadow-top.png */; };
+		E29A62E1146D699300EDDA1B /* WireloadClassesAndResources.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A62E0146D699300EDDA1B /* WireloadClassesAndResources.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E29A62E4146D6B2600EDDA1B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29A62E3146D6B2600EDDA1B /* QuartzCore.framework */; };
+		E2A18CA8146D7435004B727B /* WLCalendarController.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A18CA6146D7435004B727B /* WLCalendarController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E2A18CA9146D7435004B727B /* WLCalendarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A18CA7146D7435004B727B /* WLCalendarController.m */; };
+		E2A18CAD146D7462004B727B /* IKPowerSources.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A18CAB146D7462004B727B /* IKPowerSources.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E2A18CAE146D7462004B727B /* IKPowerSources.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A18CAC146D7462004B727B /* IKPowerSources.m */; };
+		E2A18CB0146D74B1004B727B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2A18CAF146D74B1004B727B /* IOKit.framework */; };
+		E2A18CB2146D74C4004B727B /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2A18CB1146D74C4004B727B /* CalendarStore.framework */; };
+		E2EB28ED146D984400E975F6 /* WLEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = E2EB28EB146D984400E975F6 /* WLEvents.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E2EB28EE146D984400E975F6 /* WLEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = E2EB28EC146D984400E975F6 /* WLEvents.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E29A624E146D672900EDDA1B /* WireloadClassesAndResources.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WireloadClassesAndResources.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E29A6251146D672900EDDA1B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		E29A6269146D678800EDDA1B /* WireloadClassesAndResources-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WireloadClassesAndResources-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		E29A626B146D679000EDDA1B /* WireloadClassesAndResources-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "WireloadClassesAndResources-Info.plist"; sourceTree = SOURCE_ROOT; };
+		E29A6292146D68AB00EDDA1B /* CATransaction+WLBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CATransaction+WLBlocks.h"; sourceTree = "<group>"; };
+		E29A6293146D68AB00EDDA1B /* CATransaction+WLBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CATransaction+WLBlocks.m"; sourceTree = "<group>"; };
+		E29A6294146D68AB00EDDA1B /* CoreText+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreText+Additions.h"; sourceTree = "<group>"; };
+		E29A6295146D68AB00EDDA1B /* CoreText+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CoreText+Additions.m"; sourceTree = "<group>"; };
+		E29A6296146D68AB00EDDA1B /* NSArray+WLDelta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+WLDelta.h"; sourceTree = "<group>"; };
+		E29A6297146D68AB00EDDA1B /* NSArray+WLDelta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+WLDelta.m"; sourceTree = "<group>"; };
+		E29A6298146D68AB00EDDA1B /* NSAttributedString+WLStringDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+WLStringDrawing.h"; sourceTree = "<group>"; };
+		E29A6299146D68AB00EDDA1B /* NSAttributedString+WLStringDrawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+WLStringDrawing.m"; sourceTree = "<group>"; };
+		E29A629A146D68AB00EDDA1B /* NSColor+CGColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+CGColor.h"; sourceTree = "<group>"; };
+		E29A629B146D68AB00EDDA1B /* NSColor+CGColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+CGColor.m"; sourceTree = "<group>"; };
+		E29A629C146D68AB00EDDA1B /* SS_PreferencePaneProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SS_PreferencePaneProtocol.h; sourceTree = "<group>"; };
+		E29A629D146D68AB00EDDA1B /* SS_PrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SS_PrefsController.h; sourceTree = "<group>"; };
+		E29A629E146D68AB00EDDA1B /* SS_PrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SS_PrefsController.m; sourceTree = "<group>"; };
+		E29A629F146D68AB00EDDA1B /* WLBlockLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLBlockLayer.h; sourceTree = "<group>"; };
+		E29A62A0146D68AB00EDDA1B /* WLBlockLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLBlockLayer.m; sourceTree = "<group>"; };
+		E29A62A1146D68AB00EDDA1B /* WLClosableWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLClosableWindow.h; sourceTree = "<group>"; };
+		E29A62A2146D68AB00EDDA1B /* WLClosableWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLClosableWindow.m; sourceTree = "<group>"; };
+		E29A62A3146D68AB00EDDA1B /* WLCopyCompositingFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCopyCompositingFilter.h; sourceTree = "<group>"; };
+		E29A62A4146D68AB00EDDA1B /* WLCopyCompositingFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCopyCompositingFilter.m; sourceTree = "<group>"; };
+		E29A62A5146D68AB00EDDA1B /* WLDateRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDateRange.h; sourceTree = "<group>"; };
+		E29A62A6146D68AB00EDDA1B /* WLDateRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDateRange.m; sourceTree = "<group>"; };
+		E29A62A7146D68AB00EDDA1B /* WLGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGraphics.h; sourceTree = "<group>"; };
+		E29A62A8146D68AB00EDDA1B /* WLGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGraphics.m; sourceTree = "<group>"; };
+		E29A62A9146D68AB00EDDA1B /* WLPrefPaneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLPrefPaneView.h; sourceTree = "<group>"; };
+		E29A62AA146D68AB00EDDA1B /* WLPrefPaneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLPrefPaneView.m; sourceTree = "<group>"; };
+		E29A62C5146D68DD00EDDA1B /* recessed-box-shadow-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-bottom-left.png"; sourceTree = "<group>"; };
+		E29A62C6146D68DD00EDDA1B /* recessed-box-shadow-bottom-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-bottom-right.png"; sourceTree = "<group>"; };
+		E29A62C7146D68DD00EDDA1B /* recessed-box-shadow-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-bottom.png"; sourceTree = "<group>"; };
+		E29A62C8146D68DD00EDDA1B /* recessed-box-shadow-middle-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-middle-left.png"; sourceTree = "<group>"; };
+		E29A62C9146D68DD00EDDA1B /* recessed-box-shadow-middle-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-middle-right.png"; sourceTree = "<group>"; };
+		E29A62CA146D68DD00EDDA1B /* recessed-box-shadow-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-middle.png"; sourceTree = "<group>"; };
+		E29A62CB146D68DD00EDDA1B /* recessed-box-shadow-top-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-top-left.png"; sourceTree = "<group>"; };
+		E29A62CC146D68DD00EDDA1B /* recessed-box-shadow-top-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-top-right.png"; sourceTree = "<group>"; };
+		E29A62CD146D68DD00EDDA1B /* recessed-box-shadow-top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-top.png"; sourceTree = "<group>"; };
+		E29A62E0146D699300EDDA1B /* WireloadClassesAndResources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WireloadClassesAndResources.h; sourceTree = "<group>"; };
+		E29A62E3146D6B2600EDDA1B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E2A18CA6146D7435004B727B /* WLCalendarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarController.h; sourceTree = "<group>"; };
+		E2A18CA7146D7435004B727B /* WLCalendarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarController.m; sourceTree = "<group>"; };
+		E2A18CAB146D7462004B727B /* IKPowerSources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IKPowerSources.h; path = IKPowerSources/IKPowerSources.h; sourceTree = "<group>"; };
+		E2A18CAC146D7462004B727B /* IKPowerSources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IKPowerSources.m; path = IKPowerSources/IKPowerSources.m; sourceTree = "<group>"; };
+		E2A18CAF146D74B1004B727B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		E2A18CB1146D74C4004B727B /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = System/Library/Frameworks/CalendarStore.framework; sourceTree = SDKROOT; };
+		E2EB28EB146D984400E975F6 /* WLEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLEvents.h; sourceTree = "<group>"; };
+		E2EB28EC146D984400E975F6 /* WLEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLEvents.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E29A624A146D672900EDDA1B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2A18CB2146D74C4004B727B /* CalendarStore.framework in Frameworks */,
+				E2A18CB0146D74B1004B727B /* IOKit.framework in Frameworks */,
+				E29A62E4146D6B2600EDDA1B /* QuartzCore.framework in Frameworks */,
+				E29A6252146D672900EDDA1B /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E29A6242146D672900EDDA1B = {
+			isa = PBXGroup;
+			children = (
+				E2A18CB1146D74C4004B727B /* CalendarStore.framework */,
+				E2A18CAF146D74B1004B727B /* IOKit.framework */,
+				E29A62E3146D6B2600EDDA1B /* QuartzCore.framework */,
+				E29A6251146D672900EDDA1B /* Cocoa.framework */,
+				E29A6266146D672F00EDDA1B /* Classes */,
+				E29A6267146D673700EDDA1B /* Other Sources */,
+				E29A6268146D673E00EDDA1B /* Resources */,
+				E29A624F146D672900EDDA1B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E29A624F146D672900EDDA1B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E29A624E146D672900EDDA1B /* WireloadClassesAndResources.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E29A6266146D672F00EDDA1B /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				E2A18CAB146D7462004B727B /* IKPowerSources.h */,
+				E2A18CAC146D7462004B727B /* IKPowerSources.m */,
+				E2A18CA6146D7435004B727B /* WLCalendarController.h */,
+				E2A18CA7146D7435004B727B /* WLCalendarController.m */,
+				E29A6292146D68AB00EDDA1B /* CATransaction+WLBlocks.h */,
+				E29A6293146D68AB00EDDA1B /* CATransaction+WLBlocks.m */,
+				E29A6294146D68AB00EDDA1B /* CoreText+Additions.h */,
+				E29A6295146D68AB00EDDA1B /* CoreText+Additions.m */,
+				E29A6296146D68AB00EDDA1B /* NSArray+WLDelta.h */,
+				E29A6297146D68AB00EDDA1B /* NSArray+WLDelta.m */,
+				E29A6298146D68AB00EDDA1B /* NSAttributedString+WLStringDrawing.h */,
+				E29A6299146D68AB00EDDA1B /* NSAttributedString+WLStringDrawing.m */,
+				E29A629A146D68AB00EDDA1B /* NSColor+CGColor.h */,
+				E29A629B146D68AB00EDDA1B /* NSColor+CGColor.m */,
+				E29A629C146D68AB00EDDA1B /* SS_PreferencePaneProtocol.h */,
+				E29A629D146D68AB00EDDA1B /* SS_PrefsController.h */,
+				E29A629E146D68AB00EDDA1B /* SS_PrefsController.m */,
+				E29A629F146D68AB00EDDA1B /* WLBlockLayer.h */,
+				E29A62A0146D68AB00EDDA1B /* WLBlockLayer.m */,
+				E29A62A1146D68AB00EDDA1B /* WLClosableWindow.h */,
+				E29A62A2146D68AB00EDDA1B /* WLClosableWindow.m */,
+				E29A62A3146D68AB00EDDA1B /* WLCopyCompositingFilter.h */,
+				E29A62A4146D68AB00EDDA1B /* WLCopyCompositingFilter.m */,
+				E29A62A5146D68AB00EDDA1B /* WLDateRange.h */,
+				E29A62A6146D68AB00EDDA1B /* WLDateRange.m */,
+				E29A62A7146D68AB00EDDA1B /* WLGraphics.h */,
+				E29A62A8146D68AB00EDDA1B /* WLGraphics.m */,
+				E29A62A9146D68AB00EDDA1B /* WLPrefPaneView.h */,
+				E29A62AA146D68AB00EDDA1B /* WLPrefPaneView.m */,
+				E2EB28EB146D984400E975F6 /* WLEvents.h */,
+				E2EB28EC146D984400E975F6 /* WLEvents.m */,
+				E29A62E0146D699300EDDA1B /* WireloadClassesAndResources.h */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		E29A6267146D673700EDDA1B /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				E29A6269146D678800EDDA1B /* WireloadClassesAndResources-Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		E29A6268146D673E00EDDA1B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E29A62C4146D68DD00EDDA1B /* recessed-box-shadow */,
+				E29A626B146D679000EDDA1B /* WireloadClassesAndResources-Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E29A62C4146D68DD00EDDA1B /* recessed-box-shadow */ = {
+			isa = PBXGroup;
+			children = (
+				E29A62C5146D68DD00EDDA1B /* recessed-box-shadow-bottom-left.png */,
+				E29A62C6146D68DD00EDDA1B /* recessed-box-shadow-bottom-right.png */,
+				E29A62C7146D68DD00EDDA1B /* recessed-box-shadow-bottom.png */,
+				E29A62C8146D68DD00EDDA1B /* recessed-box-shadow-middle-left.png */,
+				E29A62C9146D68DD00EDDA1B /* recessed-box-shadow-middle-right.png */,
+				E29A62CA146D68DD00EDDA1B /* recessed-box-shadow-middle.png */,
+				E29A62CB146D68DD00EDDA1B /* recessed-box-shadow-top-left.png */,
+				E29A62CC146D68DD00EDDA1B /* recessed-box-shadow-top-right.png */,
+				E29A62CD146D68DD00EDDA1B /* recessed-box-shadow-top.png */,
+			);
+			path = "recessed-box-shadow";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		E29A624B146D672900EDDA1B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E29A62AB146D68AB00EDDA1B /* CATransaction+WLBlocks.h in Headers */,
+				E29A62AD146D68AB00EDDA1B /* CoreText+Additions.h in Headers */,
+				E29A62AF146D68AB00EDDA1B /* NSArray+WLDelta.h in Headers */,
+				E29A62B1146D68AB00EDDA1B /* NSAttributedString+WLStringDrawing.h in Headers */,
+				E29A62B3146D68AB00EDDA1B /* NSColor+CGColor.h in Headers */,
+				E29A62B5146D68AB00EDDA1B /* SS_PreferencePaneProtocol.h in Headers */,
+				E29A62B6146D68AB00EDDA1B /* SS_PrefsController.h in Headers */,
+				E29A62B8146D68AB00EDDA1B /* WLBlockLayer.h in Headers */,
+				E29A62BA146D68AB00EDDA1B /* WLClosableWindow.h in Headers */,
+				E29A62BC146D68AB00EDDA1B /* WLCopyCompositingFilter.h in Headers */,
+				E29A62BE146D68AB00EDDA1B /* WLDateRange.h in Headers */,
+				E29A62C0146D68AB00EDDA1B /* WLGraphics.h in Headers */,
+				E29A62C2146D68AB00EDDA1B /* WLPrefPaneView.h in Headers */,
+				E29A62E1146D699300EDDA1B /* WireloadClassesAndResources.h in Headers */,
+				E2A18CA8146D7435004B727B /* WLCalendarController.h in Headers */,
+				E2A18CAD146D7462004B727B /* IKPowerSources.h in Headers */,
+				E2EB28ED146D984400E975F6 /* WLEvents.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		E29A624D146D672900EDDA1B /* WireloadClassesAndResources */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E29A6263146D672900EDDA1B /* Build configuration list for PBXNativeTarget "WireloadClassesAndResources" */;
+			buildPhases = (
+				E29A6249146D672900EDDA1B /* Sources */,
+				E29A624A146D672900EDDA1B /* Frameworks */,
+				E29A624B146D672900EDDA1B /* Headers */,
+				E29A624C146D672900EDDA1B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WireloadClassesAndResources;
+			productName = WireloadClassesAndResources;
+			productReference = E29A624E146D672900EDDA1B /* WireloadClassesAndResources.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E29A6244146D672900EDDA1B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "kulakov.ilya@gmail.com";
+			};
+			buildConfigurationList = E29A6247146D672900EDDA1B /* Build configuration list for PBXProject "WireloadClassesAndResources" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E29A6242146D672900EDDA1B;
+			productRefGroup = E29A624F146D672900EDDA1B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E29A624D146D672900EDDA1B /* WireloadClassesAndResources */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E29A624C146D672900EDDA1B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E29A62CE146D68DD00EDDA1B /* recessed-box-shadow-bottom-left.png in Resources */,
+				E29A62CF146D68DD00EDDA1B /* recessed-box-shadow-bottom-right.png in Resources */,
+				E29A62D0146D68DD00EDDA1B /* recessed-box-shadow-bottom.png in Resources */,
+				E29A62D1146D68DD00EDDA1B /* recessed-box-shadow-middle-left.png in Resources */,
+				E29A62D2146D68DD00EDDA1B /* recessed-box-shadow-middle-right.png in Resources */,
+				E29A62D3146D68DD00EDDA1B /* recessed-box-shadow-middle.png in Resources */,
+				E29A62D4146D68DD00EDDA1B /* recessed-box-shadow-top-left.png in Resources */,
+				E29A62D5146D68DD00EDDA1B /* recessed-box-shadow-top-right.png in Resources */,
+				E29A62D6146D68DD00EDDA1B /* recessed-box-shadow-top.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E29A6249146D672900EDDA1B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E29A62AC146D68AB00EDDA1B /* CATransaction+WLBlocks.m in Sources */,
+				E29A62AE146D68AB00EDDA1B /* CoreText+Additions.m in Sources */,
+				E29A62B0146D68AB00EDDA1B /* NSArray+WLDelta.m in Sources */,
+				E29A62B2146D68AB00EDDA1B /* NSAttributedString+WLStringDrawing.m in Sources */,
+				E29A62B4146D68AB00EDDA1B /* NSColor+CGColor.m in Sources */,
+				E29A62B7146D68AB00EDDA1B /* SS_PrefsController.m in Sources */,
+				E29A62B9146D68AB00EDDA1B /* WLBlockLayer.m in Sources */,
+				E29A62BB146D68AB00EDDA1B /* WLClosableWindow.m in Sources */,
+				E29A62BD146D68AB00EDDA1B /* WLCopyCompositingFilter.m in Sources */,
+				E29A62BF146D68AB00EDDA1B /* WLDateRange.m in Sources */,
+				E29A62C1146D68AB00EDDA1B /* WLGraphics.m in Sources */,
+				E29A62C3146D68AB00EDDA1B /* WLPrefPaneView.m in Sources */,
+				E2A18CA9146D7435004B727B /* WLCalendarController.m in Sources */,
+				E2A18CAE146D7462004B727B /* IKPowerSources.m in Sources */,
+				E2EB28EE146D984400E975F6 /* WLEvents.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		E29A6261146D672900EDDA1B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		E29A6262146D672900EDDA1B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		E29A6264146D672900EDDA1B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WireloadClassesAndResources-Prefix.pch";
+				INFOPLIST_FILE = "WireloadClassesAndResources-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		E29A6265146D672900EDDA1B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WireloadClassesAndResources-Prefix.pch";
+				INFOPLIST_FILE = "WireloadClassesAndResources-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E29A6247146D672900EDDA1B /* Build configuration list for PBXProject "WireloadClassesAndResources" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E29A6261146D672900EDDA1B /* Debug */,
+				E29A6262146D672900EDDA1B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E29A6263146D672900EDDA1B /* Build configuration list for PBXNativeTarget "WireloadClassesAndResources" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E29A6264146D672900EDDA1B /* Debug */,
+				E29A6265146D672900EDDA1B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E29A6244146D672900EDDA1B /* Project object */;
+}

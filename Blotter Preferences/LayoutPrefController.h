@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SS_PreferencePaneProtocol.h"
+#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLLayoutSplitView.h"
 
 

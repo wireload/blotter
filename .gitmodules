@@ -3,5 +3,5 @@
 	url = git://github.com/Kentzo/ShortcutRecorder.git
 
 [submodule "IKPowerSources"]
-	path = IKPowerSources
+	path = WireloadClassesAndResources/IKPowerSources
 	url = git://github.com/Kentzo/IKPowerSources.git

@@ -7,18 +7,14 @@
 //
 
 #import "WLLayoutAllDayView.h"
-#import "WLLayoutCalednarWindowView.h"
+#import "WLLayoutCalendarWindowView.h"
 
 
 @implementation WLLayoutAllDayView
 
 #pragma mark NSView
 
-- (void)drawRect:(NSRect)aDirtyRect
-{
-    [[NSColor darkGrayColor] setFill];
-    NSRectFill([self bounds]);
-}
+
 
 - (NSInteger)tag
 {

@@ -7,8 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "WLLayoutView.h"
 
 
-@interface WLLayoutDateView : NSView
+@interface WLLayoutDateView : WLLayoutView
 
 @end

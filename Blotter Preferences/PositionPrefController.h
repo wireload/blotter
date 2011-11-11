@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "SS_PreferencePaneProtocol.h"
+#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLCalendarWindowArrangementView.h"
 
 @class WLPrefPaneView;

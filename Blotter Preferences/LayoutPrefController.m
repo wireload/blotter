@@ -7,10 +7,9 @@
 //
 
 #import "LayoutPrefController.h"
-#import "WLLayoutCalednarWindowView.h"
+#import "WLLayoutCalendarWindowView.h"
 #import "DeskboardAppDelegate.h"
 #import "WLCalendarWindowController.h"
-#import "WLPrefPaneView.h"
 
 
 @implementation LayoutPrefController

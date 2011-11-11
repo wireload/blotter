@@ -11,7 +11,6 @@
 #import "PositionPrefController.h"
 #import "CalendarsPrefController.h"
 #import "LayoutPrefController.h"
-#import "WLPrefPaneView.h"
 
 
 @implementation GeneralPrefController
