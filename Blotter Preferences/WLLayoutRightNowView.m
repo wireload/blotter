@@ -14,12 +14,6 @@
 
 #pragma mark NSView
 
-- (void)drawRect:(NSRect)dirtyRect
-{
-    [[NSColor darkGrayColor] setFill];
-    NSRectFill([self bounds]);
-}
-
 - (NSInteger)tag
 {
     return WLLayoutRightNowViewTag;
