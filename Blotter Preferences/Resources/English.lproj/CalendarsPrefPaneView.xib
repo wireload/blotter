@@ -471,6 +471,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 								<string key="NSFrame">{{1, 119}, {223, 15}}</string>
 								<reference key="NSSuperview" ref="994392920"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<int key="NSsFlags">1</int>
 								<reference key="NSTarget" ref="994392920"/>
 								<string key="NSAction">_doScroller:</string>
@@ -634,7 +635,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<bytes key="NSScrollAmts">QSAAAEEgAABBsAAAQbAAAA</bytes>
 					</object>
 				</object>
-				<string key="NSFrameSize">{440, 478}</string>
+				<string key="NSFrameSize">{440, 474}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="804758204"/>
