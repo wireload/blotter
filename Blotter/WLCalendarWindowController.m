@@ -151,7 +151,7 @@ const NSSize BLMinimumSize = {280, 215};
              [aKeyPath isEqualToString:@"ScreenIdentifier"] ||
              [aKeyPath isEqualToString:@"CustomFrameFactors"])
     {
-        BLSize calendarSize = [[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"];
+        BLSize calendarSize = (BLSize)[[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"];
         if (![aKeyPath isEqualToString:@"CustomFrameFactors"] ||
             ([aKeyPath isEqualToString:@"CustomFrameFactors"] && calendarSize == BLCustomSize))
         {
@@ -172,8 +172,8 @@ const NSSize BLMinimumSize = {280, 215};
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     return [self windowFrameOnScreen:[self windowScreen]
-                        withPosition:[defaults integerForKey:@"CalendarPosition"]
-                                size:[defaults integerForKey:@"CalendarSize"]];
+                        withPosition:(BLPosition)[defaults integerForKey:@"CalendarPosition"]
+                                size:(BLSize)[defaults integerForKey:@"CalendarSize"]];
 }
 
 - (NSRect)windowFrameOnScreen:(NSScreen *)aScreen withPosition:(BLPosition)aPosition size:(BLSize)aSize
