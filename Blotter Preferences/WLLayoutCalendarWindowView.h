@@ -1,5 +1,5 @@
 //
-//  WLLayoutBackgroundView.h
+//  WLLayoutCalendarWindowView.h
 //  Blotter Preferences
 //
 //  Created by Ilya Kulakov on 23.09.11.
@@ -21,6 +21,6 @@ enum
 };
 
 
-@interface WLLayoutCalednarWindowView : NSView
+@interface WLLayoutCalendarWindowView : NSView
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "WLLayoutRightNowView.h"
-#import "WLLayoutCalednarWindowView.h"
+#import "WLLayoutCalendarWindowView.h"
 
 
 @implementation WLLayoutRightNowView

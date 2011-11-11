@@ -1,16 +1,16 @@
 //
-//  WLLayoutBackgroundView.m
+//  WLLayoutCalendarWindowView.m
 //  Blotter Preferences
 //
 //  Created by Ilya Kulakov on 23.09.11.
 //  Copyright 2011 Wireload. All rights reserved.
 //
 
-#import "WLLayoutCalednarWindowView.h"
+#import "WLLayoutCalendarWindowView.h"
 #import "NSColor+WLCalendar.h"
 
 
-@implementation WLLayoutCalednarWindowView
+@implementation WLLayoutCalendarWindowView
 
 #pragma mark NSView
 

@@ -7,7 +7,7 @@
 //
 
 #import "WLLayoutAllDayView.h"
-#import "WLLayoutCalednarWindowView.h"
+#import "WLLayoutCalendarWindowView.h"
 
 
 @implementation WLLayoutAllDayView
