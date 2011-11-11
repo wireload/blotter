@@ -1144,6 +1144,7 @@
 				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
 				INFOPLIST_FILE = "Blotter-Info.plist";
 				PRODUCT_NAME = Blotter;
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../WireloadClassesAndResources/**";
 			};
 			name = Debug;
 		};
