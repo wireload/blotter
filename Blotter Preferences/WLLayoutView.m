@@ -7,6 +7,7 @@
 //
 
 #import "WLLayoutView.h"
+#import "WLGraphics.h"
 
 
 @implementation WLLayoutView
@@ -46,7 +47,7 @@
     });
     [NSGraphicsContext saveGraphicsState];
     [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
-    NSDrawNinePartImage([self bounds],
+    WLDrawScaledNinePartImage([self bounds],
                         Images[0],
                         Images[1],
                         Images[2],
