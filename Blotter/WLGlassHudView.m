@@ -27,18 +27,18 @@ static const CGFloat _WLRightPadding = 18.0;
     NSRectFill(dirtyRect);
     NSRect bounds = [self bounds];
 
-    WLDrawScaledNinePartImage(bounds, 
-                        [NSImage imageNamed:@"glass-hud-top-left"], 
-                        [NSImage imageNamed:@"glass-hud-top-middle"], 
-                        [NSImage imageNamed:@"glass-hud-top-right"], 
-                        [NSImage imageNamed:@"glass-hud-middle-left"], 
-                        [NSImage imageNamed:@"glass-hud-middle-middle"], 
-                        [NSImage imageNamed:@"glass-hud-middle-right"], 
-                        [NSImage imageNamed:@"glass-hud-bottom-left"], 
-                        [NSImage imageNamed:@"glass-hud-bottom-middle"], 
-                        [NSImage imageNamed:@"glass-hud-bottom-right"], 
-                        NSCompositeSourceOver, 
-                        1.0, 
+    WLDrawScaledNinePartImage(bounds,
+                        [NSImage imageNamed:@"glass-hud-top-left"],
+                        [NSImage imageNamed:@"glass-hud-top"],
+                        [NSImage imageNamed:@"glass-hud-top-right"],
+                        [NSImage imageNamed:@"glass-hud-middle-left"],
+                        [NSImage imageNamed:@"glass-hud-middle"],
+                        [NSImage imageNamed:@"glass-hud-middle-right"],
+                        [NSImage imageNamed:@"glass-hud-bottom-left"],
+                        [NSImage imageNamed:@"glass-hud-bottom"],
+                        [NSImage imageNamed:@"glass-hud-bottom-right"],
+                        NSCompositeSourceOver,
+                        1.0,
                         NO);
 }
 
