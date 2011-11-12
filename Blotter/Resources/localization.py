@@ -68,7 +68,7 @@ def Sources():
     files is a list of paths to sources
     """
     sources = [{'output': join(BLOTTER_DIR, "Resources"),
-                'files': [join(BLOTTER_DIR, "DesktopView.m"),
+                'files': [join(BLOTTER_DIR, "WLCalendarWindowController.m"),
                           join(BLOTTER_DIR, "WLNewEventWindowController.m"),
                           join(BLOTTER_DIR, "WLNewTaskWindowController.m")]},
                {'output': BLOTTER_PREFS_DIR,
