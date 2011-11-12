@@ -10,7 +10,7 @@ import argparse
 from codecs import open
 
 BLOTTER_DIR = join(dirname(abspath(__file__)), pardir)
-BLOTTER_PREFS_DIR = join(BLOTTER_DIR, "auxiliary", "Blotter Preferences")
+BLOTTER_PREFS_DIR = join(BLOTTER_DIR, "../", "Blotter Preferences", "Resources")
 
 
 def Strings(name, output_path):
@@ -29,7 +29,7 @@ def Lproj(lang, output_path):
 
 def Xibs():
     """
-    Returs a list of dicts of the following format:
+    Returns a list of dicts of the following format:
     {'output' : output_path, 'file' : xib_path, 'old' : old_xib_path}
     Where output is the path to a root dir for all localizations,
     file is the path to a xib,
@@ -52,7 +52,11 @@ def Xibs():
              'old': join(BLOTTER_PREFS_DIR, "English.lproj", "GeneralPrefPaneView.old.xib")},
             {'output': BLOTTER_PREFS_DIR,
              'file': join(BLOTTER_PREFS_DIR, "English.lproj", "PositionPrefPaneView.xib"),
-             'old': join(BLOTTER_PREFS_DIR, "English.lproj", "PositionPrefPaneView.old.xib")}]
+             'old': join(BLOTTER_PREFS_DIR, "English.lproj", "PositionPrefPaneView.old.xib")},
+            {'output': BLOTTER_PREFS_DIR,
+             'file': join(BLOTTER_PREFS_DIR, "English.lproj", "LayoutPrefPaneView.xib"),
+             'old': join(BLOTTER_PREFS_DIR, "English.lproj", "LayoutPrefPaneView.old.xib")},
+            ]
     return xibs
 
 
