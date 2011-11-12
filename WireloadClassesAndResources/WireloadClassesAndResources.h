@@ -3,7 +3,7 @@
 //  WireloadClassesAndResources
 //
 //  Created by Ilya Kulakov on 11.11.11.
-//  Copyright (c) 2011 WireLoad Inc. All rights reserved.
+//  Copyright (c) 2011 kulakov.ilya@gmail.com. All rights reserved.
 //
 
 #ifndef WireloadClassesAndResources_WireloadClassesAndResources_h
@@ -25,8 +25,5 @@
 #import <WireloadClassesAndResources/CATransaction+WLBlocks.h>
 #import <WireloadClassesAndResources/WLGraphics.h>
 #import <WireloadClassesAndResources/WLEvents.h>
-
-@interface WireLoadClassesAndResourcesClass : NSObject
-@end
 
 #endif

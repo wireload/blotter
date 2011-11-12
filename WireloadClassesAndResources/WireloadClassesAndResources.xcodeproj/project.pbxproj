@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		28F93F9B146DE3C50012F07A /* WireloadClassesAndResources.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F93F9A146DE3C50012F07A /* WireloadClassesAndResources.m */; };
 		E29A6252146D672900EDDA1B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29A6251146D672900EDDA1B /* Cocoa.framework */; };
 		E29A62AB146D68AB00EDDA1B /* CATransaction+WLBlocks.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A6292146D68AB00EDDA1B /* CATransaction+WLBlocks.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E29A62AC146D68AB00EDDA1B /* CATransaction+WLBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = E29A6293146D68AB00EDDA1B /* CATransaction+WLBlocks.m */; };
@@ -34,15 +33,15 @@
 		E29A62C1146D68AB00EDDA1B /* WLGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = E29A62A8146D68AB00EDDA1B /* WLGraphics.m */; };
 		E29A62C2146D68AB00EDDA1B /* WLPrefPaneView.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A62A9146D68AB00EDDA1B /* WLPrefPaneView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E29A62C3146D68AB00EDDA1B /* WLPrefPaneView.m in Sources */ = {isa = PBXBuildFile; fileRef = E29A62AA146D68AB00EDDA1B /* WLPrefPaneView.m */; };
-		E29A62CE146D68DD00EDDA1B /* recessed-box-shadow-7.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62C5146D68DD00EDDA1B /* recessed-box-shadow-7.png */; };
-		E29A62CF146D68DD00EDDA1B /* recessed-box-shadow-8.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62C6146D68DD00EDDA1B /* recessed-box-shadow-8.png */; };
-		E29A62D0146D68DD00EDDA1B /* recessed-box-shadow-9.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62C7146D68DD00EDDA1B /* recessed-box-shadow-9.png */; };
-		E29A62D1146D68DD00EDDA1B /* recessed-box-shadow-4.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62C8146D68DD00EDDA1B /* recessed-box-shadow-4.png */; };
-		E29A62D2146D68DD00EDDA1B /* recessed-box-shadow-6.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62C9146D68DD00EDDA1B /* recessed-box-shadow-6.png */; };
-		E29A62D3146D68DD00EDDA1B /* recessed-box-shadow-5.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62CA146D68DD00EDDA1B /* recessed-box-shadow-5.png */; };
-		E29A62D4146D68DD00EDDA1B /* recessed-box-shadow-1.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62CB146D68DD00EDDA1B /* recessed-box-shadow-1.png */; };
-		E29A62D5146D68DD00EDDA1B /* recessed-box-shadow-3.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62CC146D68DD00EDDA1B /* recessed-box-shadow-3.png */; };
-		E29A62D6146D68DD00EDDA1B /* recessed-box-shadow-2.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62CD146D68DD00EDDA1B /* recessed-box-shadow-2.png */; };
+		E29A62CE146D68DD00EDDA1B /* recessed-box-shadow-bottom-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62C5146D68DD00EDDA1B /* recessed-box-shadow-bottom-left.png */; };
+		E29A62CF146D68DD00EDDA1B /* recessed-box-shadow-bottom-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62C6146D68DD00EDDA1B /* recessed-box-shadow-bottom-right.png */; };
+		E29A62D0146D68DD00EDDA1B /* recessed-box-shadow-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62C7146D68DD00EDDA1B /* recessed-box-shadow-bottom.png */; };
+		E29A62D1146D68DD00EDDA1B /* recessed-box-shadow-middle-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62C8146D68DD00EDDA1B /* recessed-box-shadow-middle-left.png */; };
+		E29A62D2146D68DD00EDDA1B /* recessed-box-shadow-middle-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62C9146D68DD00EDDA1B /* recessed-box-shadow-middle-right.png */; };
+		E29A62D3146D68DD00EDDA1B /* recessed-box-shadow-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62CA146D68DD00EDDA1B /* recessed-box-shadow-middle.png */; };
+		E29A62D4146D68DD00EDDA1B /* recessed-box-shadow-top-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62CB146D68DD00EDDA1B /* recessed-box-shadow-top-left.png */; };
+		E29A62D5146D68DD00EDDA1B /* recessed-box-shadow-top-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62CC146D68DD00EDDA1B /* recessed-box-shadow-top-right.png */; };
+		E29A62D6146D68DD00EDDA1B /* recessed-box-shadow-top.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62CD146D68DD00EDDA1B /* recessed-box-shadow-top.png */; };
 		E29A62E1146D699300EDDA1B /* WireloadClassesAndResources.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A62E0146D699300EDDA1B /* WireloadClassesAndResources.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E29A62E4146D6B2600EDDA1B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29A62E3146D6B2600EDDA1B /* QuartzCore.framework */; };
 		E2A18CA8146D7435004B727B /* WLCalendarController.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A18CA6146D7435004B727B /* WLCalendarController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -56,7 +55,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		28F93F9A146DE3C50012F07A /* WireloadClassesAndResources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WireloadClassesAndResources.m; sourceTree = "<group>"; };
 		E29A624E146D672900EDDA1B /* WireloadClassesAndResources.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WireloadClassesAndResources.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E29A6251146D672900EDDA1B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E29A6269146D678800EDDA1B /* WireloadClassesAndResources-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WireloadClassesAndResources-Prefix.pch"; sourceTree = SOURCE_ROOT; };
@@ -86,15 +84,15 @@
 		E29A62A8146D68AB00EDDA1B /* WLGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGraphics.m; sourceTree = "<group>"; };
 		E29A62A9146D68AB00EDDA1B /* WLPrefPaneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLPrefPaneView.h; sourceTree = "<group>"; };
 		E29A62AA146D68AB00EDDA1B /* WLPrefPaneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLPrefPaneView.m; sourceTree = "<group>"; };
-		E29A62C5146D68DD00EDDA1B /* recessed-box-shadow-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-7.png"; sourceTree = "<group>"; };
-		E29A62C6146D68DD00EDDA1B /* recessed-box-shadow-8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-8.png"; sourceTree = "<group>"; };
-		E29A62C7146D68DD00EDDA1B /* recessed-box-shadow-9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-9.png"; sourceTree = "<group>"; };
-		E29A62C8146D68DD00EDDA1B /* recessed-box-shadow-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-4.png"; sourceTree = "<group>"; };
-		E29A62C9146D68DD00EDDA1B /* recessed-box-shadow-6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-6.png"; sourceTree = "<group>"; };
-		E29A62CA146D68DD00EDDA1B /* recessed-box-shadow-5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-5.png"; sourceTree = "<group>"; };
-		E29A62CB146D68DD00EDDA1B /* recessed-box-shadow-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-1.png"; sourceTree = "<group>"; };
-		E29A62CC146D68DD00EDDA1B /* recessed-box-shadow-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-3.png"; sourceTree = "<group>"; };
-		E29A62CD146D68DD00EDDA1B /* recessed-box-shadow-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-2.png"; sourceTree = "<group>"; };
+		E29A62C5146D68DD00EDDA1B /* recessed-box-shadow-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-bottom-left.png"; sourceTree = "<group>"; };
+		E29A62C6146D68DD00EDDA1B /* recessed-box-shadow-bottom-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-bottom-right.png"; sourceTree = "<group>"; };
+		E29A62C7146D68DD00EDDA1B /* recessed-box-shadow-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-bottom.png"; sourceTree = "<group>"; };
+		E29A62C8146D68DD00EDDA1B /* recessed-box-shadow-middle-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-middle-left.png"; sourceTree = "<group>"; };
+		E29A62C9146D68DD00EDDA1B /* recessed-box-shadow-middle-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-middle-right.png"; sourceTree = "<group>"; };
+		E29A62CA146D68DD00EDDA1B /* recessed-box-shadow-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-middle.png"; sourceTree = "<group>"; };
+		E29A62CB146D68DD00EDDA1B /* recessed-box-shadow-top-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-top-left.png"; sourceTree = "<group>"; };
+		E29A62CC146D68DD00EDDA1B /* recessed-box-shadow-top-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-top-right.png"; sourceTree = "<group>"; };
+		E29A62CD146D68DD00EDDA1B /* recessed-box-shadow-top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-top.png"; sourceTree = "<group>"; };
 		E29A62E0146D699300EDDA1B /* WireloadClassesAndResources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WireloadClassesAndResources.h; sourceTree = "<group>"; };
 		E29A62E3146D6B2600EDDA1B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E2A18CA6146D7435004B727B /* WLCalendarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarController.h; sourceTree = "<group>"; };
@@ -179,7 +177,6 @@
 				E2EB28EB146D984400E975F6 /* WLEvents.h */,
 				E2EB28EC146D984400E975F6 /* WLEvents.m */,
 				E29A62E0146D699300EDDA1B /* WireloadClassesAndResources.h */,
-				28F93F9A146DE3C50012F07A /* WireloadClassesAndResources.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -204,15 +201,15 @@
 		E29A62C4146D68DD00EDDA1B /* recessed-box-shadow */ = {
 			isa = PBXGroup;
 			children = (
-				E29A62CB146D68DD00EDDA1B /* recessed-box-shadow-1.png */,
-				E29A62CD146D68DD00EDDA1B /* recessed-box-shadow-2.png */,
-				E29A62CC146D68DD00EDDA1B /* recessed-box-shadow-3.png */,
-				E29A62C8146D68DD00EDDA1B /* recessed-box-shadow-4.png */,
-				E29A62CA146D68DD00EDDA1B /* recessed-box-shadow-5.png */,
-				E29A62C9146D68DD00EDDA1B /* recessed-box-shadow-6.png */,
-				E29A62C5146D68DD00EDDA1B /* recessed-box-shadow-7.png */,
-				E29A62C6146D68DD00EDDA1B /* recessed-box-shadow-8.png */,
-				E29A62C7146D68DD00EDDA1B /* recessed-box-shadow-9.png */,
+				E29A62C5146D68DD00EDDA1B /* recessed-box-shadow-bottom-left.png */,
+				E29A62C6146D68DD00EDDA1B /* recessed-box-shadow-bottom-right.png */,
+				E29A62C7146D68DD00EDDA1B /* recessed-box-shadow-bottom.png */,
+				E29A62C8146D68DD00EDDA1B /* recessed-box-shadow-middle-left.png */,
+				E29A62C9146D68DD00EDDA1B /* recessed-box-shadow-middle-right.png */,
+				E29A62CA146D68DD00EDDA1B /* recessed-box-shadow-middle.png */,
+				E29A62CB146D68DD00EDDA1B /* recessed-box-shadow-top-left.png */,
+				E29A62CC146D68DD00EDDA1B /* recessed-box-shadow-top-right.png */,
+				E29A62CD146D68DD00EDDA1B /* recessed-box-shadow-top.png */,
 			);
 			path = "recessed-box-shadow";
 			sourceTree = "<group>";
@@ -296,15 +293,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E29A62CE146D68DD00EDDA1B /* recessed-box-shadow-7.png in Resources */,
-				E29A62CF146D68DD00EDDA1B /* recessed-box-shadow-8.png in Resources */,
-				E29A62D0146D68DD00EDDA1B /* recessed-box-shadow-9.png in Resources */,
-				E29A62D1146D68DD00EDDA1B /* recessed-box-shadow-4.png in Resources */,
-				E29A62D2146D68DD00EDDA1B /* recessed-box-shadow-6.png in Resources */,
-				E29A62D3146D68DD00EDDA1B /* recessed-box-shadow-5.png in Resources */,
-				E29A62D4146D68DD00EDDA1B /* recessed-box-shadow-1.png in Resources */,
-				E29A62D5146D68DD00EDDA1B /* recessed-box-shadow-3.png in Resources */,
-				E29A62D6146D68DD00EDDA1B /* recessed-box-shadow-2.png in Resources */,
+				E29A62CE146D68DD00EDDA1B /* recessed-box-shadow-bottom-left.png in Resources */,
+				E29A62CF146D68DD00EDDA1B /* recessed-box-shadow-bottom-right.png in Resources */,
+				E29A62D0146D68DD00EDDA1B /* recessed-box-shadow-bottom.png in Resources */,
+				E29A62D1146D68DD00EDDA1B /* recessed-box-shadow-middle-left.png in Resources */,
+				E29A62D2146D68DD00EDDA1B /* recessed-box-shadow-middle-right.png in Resources */,
+				E29A62D3146D68DD00EDDA1B /* recessed-box-shadow-middle.png in Resources */,
+				E29A62D4146D68DD00EDDA1B /* recessed-box-shadow-top-left.png in Resources */,
+				E29A62D5146D68DD00EDDA1B /* recessed-box-shadow-top-right.png in Resources */,
+				E29A62D6146D68DD00EDDA1B /* recessed-box-shadow-top.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,7 +327,6 @@
 				E2A18CA9146D7435004B727B /* WLCalendarController.m in Sources */,
 				E2A18CAE146D7462004B727B /* IKPowerSources.m in Sources */,
 				E2EB28EE146D984400E975F6 /* WLEvents.m in Sources */,
-				28F93F9B146DE3C50012F07A /* WireloadClassesAndResources.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
