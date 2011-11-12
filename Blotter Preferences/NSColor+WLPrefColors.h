@@ -19,4 +19,6 @@
 
 + (NSColor *)WL_dotShadowColor;
 
++ (NSColor *)WL_layoutViewTileColor;
+
 @end

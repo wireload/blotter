@@ -31,4 +31,11 @@
     return [[NSColor blackColor] colorWithAlphaComponent:0.2f];
 }
 
++ (NSColor *)WL_layoutViewTileColor
+{
+    NSBundle *bundle = [NSBundle bundleWithIdentifier:@"net.wireload.blotter.mac.preferences"];
+    NSImage *pattern = [[[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"layout-noise"]] autorelease];
+    return [NSColor colorWithPatternImage:pattern];
+}
+
 @end

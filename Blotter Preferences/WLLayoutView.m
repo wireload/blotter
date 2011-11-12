@@ -6,8 +6,9 @@
 //  Copyright (c) 2011 WireLoad. All rights reserved.
 //
 
+#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLLayoutView.h"
-#import "WLGraphics.h"
+#import "NSColor+WLPrefColors.h"
 
 
 @implementation WLLayoutView
@@ -41,9 +42,7 @@
         Images[6] = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"layout-area-bottom-left"]];
         Images[7] = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"layout-area-bottom"]];
         Images[8] = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"layout-area-bottom-right"]];
-        NSImage *pattern = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"layout-noise"]];
-        Tile = [[NSColor colorWithPatternImage:pattern] retain];
-        [pattern release];
+        Tile = [[NSColor WL_layoutViewTileColor] retain];
     });
     [NSGraphicsContext saveGraphicsState];
     [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];

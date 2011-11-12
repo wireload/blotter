@@ -14,15 +14,16 @@ void WLRecessedBoxShadow(NSRect frame)
     static dispatch_once_t onceToken;
     static NSImage *Images[9];
     dispatch_once(&onceToken, ^{
-        Images[0] = [NSImage imageNamed:@"recessed-box-shadow-top-left"];
-        Images[1] = [NSImage imageNamed:@"recessed-box-shadow-top"];
-        Images[2] = [NSImage imageNamed:@"recessed-box-shadow-top-right"];
-        Images[3] = [NSImage imageNamed:@"recessed-box-shadow-middle-left"];
-        Images[4] = [NSImage imageNamed:@"recessed-box-shadow-middle"];
-        Images[5] = [NSImage imageNamed:@"recessed-box-shadow-middle-right"];
-        Images[6] = [NSImage imageNamed:@"recessed-box-shadow-bottom-left"];
-        Images[7] = [NSImage imageNamed:@"recessed-box-shadow-bottom"];
-        Images[8] = [NSImage imageNamed:@"recessed-box-shadow-bottom-right"];
+        NSBundle *bundle = [NSBundle bundleWithIdentifier:@"net.wireload.blotter.mac.framework"];
+        Images[0] = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"recessed-box-shadow-top-left"]];
+        Images[1] = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"recessed-box-shadow-top"]];
+        Images[2] = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"recessed-box-shadow-top-right"]];
+        Images[3] = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"recessed-box-shadow-middle-left"]];
+        Images[4] = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"recessed-box-shadow-middle"]];
+        Images[5] = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"recessed-box-shadow-middle-right"]];
+        Images[6] = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"recessed-box-shadow-bottom-left"]];
+        Images[7] = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"recessed-box-shadow-bottom"]];
+        Images[8] = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"recessed-box-shadow-bottom-right"]];
     });
 
     [NSGraphicsContext saveGraphicsState];
