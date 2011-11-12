@@ -51,7 +51,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{421, 311}, {269, 185}}</string>
 				<int key="NSWTFlags">1685586944</int>
-				<string key="NSWindowTitle">New Task</string>
+				<string key="NSWindowTitle">New Reminder</string>
 				<string key="NSWindowClass">WLGlassHudWindow</string>
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
@@ -77,7 +77,7 @@
 								<object class="NSButton" id="447760508">
 									<reference key="NSNextResponder" ref="577727828"/>
 									<int key="NSvFlags">289</int>
-									<string key="NSFrame">{{96, 11}, {60, 18}}</string>
+									<string key="NSFrame">{{75, 11}, {60, 18}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="143960448"/>
@@ -103,7 +103,7 @@
 								<object class="NSButton" id="143960448">
 									<reference key="NSNextResponder" ref="577727828"/>
 									<int key="NSvFlags">289</int>
-									<string key="NSFrame">{{166, 11}, {94, 18}}</string>
+									<string key="NSFrame">{{145, 11}, {115, 18}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="903219286"/>
@@ -111,7 +111,7 @@
 									<object class="NSButtonCell" key="NSCell" id="705130045">
 										<int key="NSCellFlags">67239424</int>
 										<int key="NSCellFlags2">134217728</int>
-										<string key="NSContents">Create Task</string>
+										<string key="NSContents">Create Reminder</string>
 										<reference key="NSSupport" ref="26464426"/>
 										<reference key="NSControlView" ref="143960448"/>
 										<int key="NSButtonFlags">-2036580097</int>
