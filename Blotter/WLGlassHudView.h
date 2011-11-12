@@ -10,7 +10,8 @@
 
 
 @interface WLGlassHudView : NSView {
-    NSPoint _draggingPoint;
+    NSPoint _initialPoint;
+    NSRect _initialWindowFrame;
 }
 
 @end

@@ -21,12 +21,12 @@ static const CGFloat _WLRightPadding = 18.0;
 
 @implementation WLGlassHudView
 
+
+#pragma mark NSView
+
 - (void)drawRect:(NSRect)dirtyRect
 {
-    [[NSColor clearColor] setFill];
-    NSRectFill(dirtyRect);
     NSRect bounds = [self bounds];
-
     WLDrawScaledNinePartImage(bounds,
                         [NSImage imageNamed:@"glass-hud-top-left"],
                         [NSImage imageNamed:@"glass-hud-top"],
@@ -44,17 +44,18 @@ static const CGFloat _WLRightPadding = 18.0;
 
 - (void)mouseDown:(NSEvent *)anEvent
 {
-    _draggingPoint = [[self window] convertBaseToScreen:[anEvent locationInWindow]];
+    _initialPoint = [[self window] convertBaseToScreen:[anEvent locationInWindow]];
+    _initialWindowFrame = [[self window] frame];
 }
 
 - (void)mouseDragged:(NSEvent *)anEvent
 {
     NSWindow *window = [self window];
     NSPoint newPoint = [window convertBaseToScreen:[anEvent locationInWindow]];
-    NSSize delta = NSMakeSize(newPoint.x - _draggingPoint.x, newPoint.y - _draggingPoint.y);
-    NSRect newFrame = NSOffsetRect([window frame], delta.width, delta.height);
+    NSSize delta = NSMakeSize(newPoint.x - _initialPoint.x,
+                              newPoint.y - _initialPoint.y);
+    NSRect newFrame = NSOffsetRect(_initialWindowFrame, delta.width, delta.height);
     [window setFrame:newFrame display:YES animate:NO];
-    _draggingPoint = newPoint;
 }
 
 @end
