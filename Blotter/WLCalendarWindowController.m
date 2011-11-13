@@ -490,7 +490,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     NSRect bounds = [[self.window contentView] bounds];
     NSRect r = [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
                                                                NSMaxY(tasksViewFrame) + margin,
-                                                               [[NSUserDefaults standardUserDefaults] floatForKey:@"InfoViewsWidth"],
+                                                               [self fixedInfoViewsWidth],
                                                                NSHeight(bounds) - NSMaxY([self tasksViewFrame]) - margin)];
     r.origin.x = fmaxf(NSMinX(bounds), fminf(NSMaxX(bounds), r.origin.x));
     r.origin.y = fmaxf(NSMinY(bounds) + margin, fminf(NSMaxY(bounds), r.origin.y));
