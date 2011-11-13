@@ -47,7 +47,6 @@ typedef enum {
     CALayer *_resizeHandlesLayer;
     CALayer *_shadowLayer;
     NSTrackingArea *_navigationHelperAreas[9];
-    NSRect _resizingAreas[WLCalendarWindowNumberOfEdges];
     CALayer *_navigationHelperLayers[9];
     BOOL _isPositioning;
     BOOL _isResizing;
@@ -82,11 +81,11 @@ typedef enum {
 
 - (NSRect)alignCalendarWindowViewFrame:(NSRect)aFrame;
 
-
 /*!
- @abstract  Returns edge for current mouse location or -1 if mouse doesn't point to any edge.
+ @abstract  Returns edge for a given location or -1 if no edge corresponds to it.
+ @see       WLCalendarWindowEdge
  */
-- (NSInteger)_edgeForCurrentMouseLocation;
+- (NSInteger)edgeForLocationInView:(NSPoint)aLocation;
 
 @end
 
