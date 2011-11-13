@@ -48,6 +48,7 @@
 		E26CCAAC146DB9F3002F2CC2 /* layout-noise.png in Resources */ = {isa = PBXBuildFile; fileRef = E26CCAAB146DB9F3002F2CC2 /* layout-noise.png */; };
 		E2730E361349BC1000A84433 /* WLRecorderControl.m in Sources */ = {isa = PBXBuildFile; fileRef = E2730E351349BC1000A84433 /* WLRecorderControl.m */; };
 		E2794F9F131A6425008AE1DA /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2794F9E131A6425008AE1DA /* Carbon.framework */; };
+		E27C5E21146FEFA400B809F6 /* WLPositioningPaneView.m in Sources */ = {isa = PBXBuildFile; fileRef = E27C5E20146FEFA400B809F6 /* WLPositioningPaneView.m */; };
 		E28640971305C7C9004CFC9D /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2863FDB1305C741004CFC9D /* IOKit.framework */; };
 		E29A6214146D653500EDDA1B /* PositionPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826911450217B007035E5 /* PositionPrefPaneView.xib */; };
 		E29A6215146D653500EDDA1B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2E8268F1450217A007035E5 /* Localizable.strings */; };
@@ -194,6 +195,8 @@
 		E2730E341349BC1000A84433 /* WLRecorderControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLRecorderControl.h; sourceTree = "<group>"; };
 		E2730E351349BC1000A84433 /* WLRecorderControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLRecorderControl.m; sourceTree = "<group>"; };
 		E2794F9E131A6425008AE1DA /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		E27C5E1F146FEFA400B809F6 /* WLPositioningPaneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLPositioningPaneView.h; sourceTree = "<group>"; };
+		E27C5E20146FEFA400B809F6 /* WLPositioningPaneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLPositioningPaneView.m; sourceTree = "<group>"; };
 		E2863FDB1305C741004CFC9D /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		E2A01DC51455634C0008BDF2 /* Recreated-Aqua.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Recreated-Aqua.jpg"; sourceTree = "<group>"; };
 		E2A18CA5146D73A4004B727B /* DeskboardAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeskboardAppDelegate.h; path = ../Blotter/DeskboardAppDelegate.h; sourceTree = "<group>"; };
@@ -323,12 +326,11 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E27C5E1D146FEF5B00B809F6 /* Positioning Prev Pane Views */,
 				E21BC9D3141635AD00A91662 /* Layout Pref Pane Views */,
 				E21BC9D2141625F200A91662 /* Pref Controllers */,
 				28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */,
 				28F6993C129B723900D4BB97 /* LaunchAtLoginController.h */,
-				28F69A27129C587F00D4BB97 /* WLCalendarWindowArrangementView.h */,
-				28F69A28129C587F00D4BB97 /* WLCalendarWindowArrangementView.m */,
 				283A5EE41306CDA2006B916A /* WLCountGreaterThanOneTransformer.h */,
 				283A5EE51306CDA2006B916A /* WLCountGreaterThanOneTransformer.m */,
 				E2DC7DDB130810F00065CEAD /* WLScreensController.h */,
@@ -410,6 +412,17 @@
 				E26CCA97146DB2AA002F2CC2 /* WLLayoutView.m */,
 			);
 			name = "Layout Pref Pane Views";
+			sourceTree = "<group>";
+		};
+		E27C5E1D146FEF5B00B809F6 /* Positioning Prev Pane Views */ = {
+			isa = PBXGroup;
+			children = (
+				28F69A27129C587F00D4BB97 /* WLCalendarWindowArrangementView.h */,
+				28F69A28129C587F00D4BB97 /* WLCalendarWindowArrangementView.m */,
+				E27C5E1F146FEFA400B809F6 /* WLPositioningPaneView.h */,
+				E27C5E20146FEFA400B809F6 /* WLPositioningPaneView.m */,
+			);
+			name = "Positioning Prev Pane Views";
 			sourceTree = "<group>";
 		};
 		E2EB28A4146D8E2900E975F6 /* Products */ = {
@@ -600,6 +613,7 @@
 				E2A18CB7146D7560004B727B /* WLNinePartBlockLayer.m in Sources */,
 				E26CCA94146DABA0002F2CC2 /* NSColor+WLPrefColors.m in Sources */,
 				E26CCA98146DB2AA002F2CC2 /* WLLayoutView.m in Sources */,
+				E27C5E21146FEFA400B809F6 /* WLPositioningPaneView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

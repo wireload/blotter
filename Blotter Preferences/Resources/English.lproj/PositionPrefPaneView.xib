@@ -245,7 +245,7 @@
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="551017980"/>
-				<string key="NSClassName">WLPrefPaneView</string>
+				<string key="NSClassName">WLPositioningPaneView</string>
 			</object>
 			<object class="NSUserDefaultsController" id="670922412">
 				<bool key="NSSharedInstance">YES</bool>
@@ -293,6 +293,14 @@
 						<reference key="destination" ref="238193824"/>
 					</object>
 					<int key="connectionID">142</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_calendarWindowArrangementView</string>
+						<reference key="source" ref="453662770"/>
+						<reference key="destination" ref="238193824"/>
+					</object>
+					<int key="connectionID">143</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -652,7 +660,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">142</int>
+			<int key="maxID">143</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -721,6 +729,25 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/WLCalendarWindowArrangementView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">WLPositioningPaneView</string>
+					<string key="superclassName">WLPrefPaneView</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">_calendarWindowArrangementView</string>
+						<string key="NS.object.0">NSView</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">_calendarWindowArrangementView</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">_calendarWindowArrangementView</string>
+							<string key="candidateClassName">NSView</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/WLPositioningPaneView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
