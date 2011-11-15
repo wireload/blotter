@@ -110,7 +110,7 @@
     CGRect sliceFrame = [sublayer frame];
     if (!self.geometryFlipped)
         sliceFrame.origin.y = self.bounds.size.height - sliceFrame.size.height - sliceFrame.origin.y;
-    CGImageRef sliceImage = CGImageCreateWithImageInRect(_contents, sliceFrame); //CGBitmapContextCreateImage(sliceImageContext);
+    CGImageRef sliceImage = CGImageCreateWithImageInRect(_contents, sliceFrame);
     if (sliceImage != NULL)
     {
         sublayer.contents = (id)sliceImage;
@@ -125,11 +125,12 @@
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     if (colorSpace != NULL)
     {
+        CGRect bounds = CGRectIntegral(self.bounds);
         CGContextRef imageContext = CGBitmapContextCreate(NULL,
-                                                          self.bounds.size.width,
-                                                          self.bounds.size.height,
+                                                          bounds.size.width,
+                                                          bounds.size.height,
                                                           8,
-                                                          4 * self.bounds.size.width,
+                                                          4 * bounds.size.width,
                                                           colorSpace,
                                                           kCGImageAlphaPremultipliedFirst);
         if (imageContext != NULL)
