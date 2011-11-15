@@ -16,7 +16,7 @@
 
 static NSString *_WLPositionKey = @"position";
 
-static NSString *_WLOriginalFrame = @"originalFrame";
+static NSString *_WLStartFrame = @"startFrame";
 
 static NSString *_WLTopLeftEdgeFrameKey = @"topLeft";
 
@@ -139,29 +139,23 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         }
         [CATransaction commit];
     }
-    NSRect windowFrame = NSRectFromCGRect(_calendarWindowLayer.frame);
-    if (self.arrangementMode & WLCalendarWindowResizingArrangement)
-        windowFrame = [self alignCalendarWindowViewFrame:windowFrame];
-    [_calendarWindowLayer setValue:[NSValue valueWithRect:NSIntegralRect(windowFrame)] forKey:_WLOriginalFrame];
+    NSRect windowFrame = [self centerScanRect:NSRectFromCGRect(_calendarWindowLayer.frame)];
+    [_calendarWindowLayer setValue:[NSValue valueWithRect:windowFrame] forKey:_WLStartFrame];
     _navigationLayer.hidden = NO;
 }
 
 - (void)continuePositioningAtPoint:(NSPoint)aPoint startPoint:(NSPoint)aStartPoint
 {
     [CATransaction WL_performWithDisabledActions:^{
-        CGRect newFrame = NSRectToCGRect([[_calendarWindowLayer valueForKey:_WLOriginalFrame] rectValue]);
-        if (self.arrangementMode == WLCalendarWindowPositioningArrangement)
-        {
-            newFrame.origin.x += aPoint.x - aStartPoint.x;
-            newFrame.origin.y += aPoint.y - aStartPoint.y;
-        }
+        NSRect startFrame = [[_calendarWindowLayer valueForKey:_WLStartFrame] rectValue];
+        NSRect newFrame = NSOffsetRect(startFrame,
+                                       aPoint.x - aStartPoint.x,
+                                       aPoint.y - aStartPoint.y);
+        if ([self shouldSnapToGrid])
+            newFrame = [self snapCalendarWindowViewFrameToGrid:newFrame];
         else
-        {
-            newFrame.origin.x = roundf((newFrame.origin.x + aPoint.x - aStartPoint.x) / 10.0f) * 10.0f;
-            newFrame.origin.y = roundf((newFrame.origin.y + aPoint.y - aStartPoint.y) / 10.0f) * 10.0f;
-        }
-        _calendarWindowLayer.frame = newFrame;
-
+            newFrame = [self centerScanRect:newFrame];
+        _calendarWindowLayer.frame = NSRectToCGRect(newFrame);
     }];
 }
 
@@ -182,7 +176,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
             _navigationHelperLayers[i].hidden = YES;
         }
         if (!isPositionSelected)
-            _calendarWindowLayer.frame = NSRectToCGRect([[_calendarWindowLayer valueForKey:_WLOriginalFrame] rectValue]);
+            _calendarWindowLayer.frame = NSRectToCGRect([[_calendarWindowLayer valueForKey:_WLStartFrame] rectValue]);
     }
     else
     {
@@ -195,9 +189,8 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
 - (void)startResizingAtPoint:(NSPoint)aPoint edge:(WLCalendarWindowEdge)anEdge
 {
-    NSRect windowFrame = NSRectFromCGRect(_calendarWindowLayer.frame);
-    windowFrame = [self alignCalendarWindowViewFrame:windowFrame];
-    [_calendarWindowLayer setValue:[NSValue valueWithRect:windowFrame] forKey:_WLOriginalFrame];
+    NSRect windowFrame = [self centerScanRect:NSRectFromCGRect(_calendarWindowLayer.frame)];
+    [_calendarWindowLayer setValue:[NSValue valueWithRect:windowFrame] forKey:_WLStartFrame];
     _navigationLayer.hidden = NO;
     [_resizeHandlesLayer.sublayers makeObjectsPerformSelector:@selector(setNeedsDisplay)];
 }
@@ -205,81 +198,66 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 - (void)continueResizingAtPoint:(NSPoint)aPoint startPoint:(NSPoint)aStartPoint edge:(WLCalendarWindowEdge)anEdge
 {
     [CATransaction WL_performWithDisabledActions:^{
-        NSPoint currentPoint = aPoint;
-        BOOL isShiftPressed = NO;
-        if ([NSEvent modifierFlags] & NSShiftKeyMask)
-        {
-            isShiftPressed = YES;
-            currentPoint = aStartPoint;
-            switch (anEdge) {
-                case WLCalendarWindowTopLeftEdge:
-                {
-                    CGFloat offset = fminf(aStartPoint.x - aPoint.x, aPoint.y - aStartPoint.y);
-                    currentPoint.x -= offset;
-                    currentPoint.y += offset;
-                    break;
-                }
-                case WLCalendarWindowTopRightEdge:
-                {
-                    CGFloat offset = fminf(aPoint.x - aStartPoint.x, aPoint.y - aStartPoint.y);
-                    currentPoint.x += offset;
-                    currentPoint.y += offset;
-                    break;
-                }
-                case WLCalendarWindowBottomLeftEdge:
-                {
-                    CGFloat offset = fminf(aStartPoint.x - aPoint.x, aStartPoint.y - aPoint.y);
-                    currentPoint.x -= offset;
-                    currentPoint.y -= offset;
-                    break;
-                }
-                case WLCalendarWindowBottomRightEdge:
-                {
-                    CGFloat offset = fminf(aPoint.x - aStartPoint.x, aStartPoint.y - aPoint.y);
-                    currentPoint.x += offset;
-                    currentPoint.y -= offset;
-                    break;
-                }
-                default:
-                    currentPoint = aPoint;
-                    break;
-            }
-        }
-
+        NSRect startFrame = [[_calendarWindowLayer valueForKey:_WLStartFrame] rectValue];
         /*
               ^
+              |     @ - aStartPoint
               |
-              |     S - start point
-              |     E - current point
+              |     0 - WLCalendarWindowTopLeftEdge
+              |     1 - WLCalendarWindowTopCenterEdge
+              |     2 - WLCalendarWindowTopRightEdge
+              |     3 - WLCalendarWindowCenterLeftEdge
+              |     4 - WLCalendarWindowCenterCenterEdge (not used)
+              |     5 - WLCalendarWindowCenterRightEdge
+              |     6 - WLCalendarWindowBottomLeftEdge
+              |     7 - WLCalendarWindowBottomCenterEdge
+              |     8 - WLCalendarWindowBottomRightEdge
               |
-              |
-              |             +--+--------------------+--+
-              |             |  |                    |  |
+              |             ^            ^             ^
+              |             | yOffset    |     yOffset |
+              |     xOffset |            |             | xOffset
+              |     <-------@--+---------@----------+--@------->
+              |             | 0|         1          | 2|
               |             +--------------------------+
               |             |  |                    |  |
               |             |  |                    |  |
               |             |  |                    |  |
-              |             |  |                    |  |
+              |     <-------@ 3|         4          | 5@------->
               |             |  |                    |  |
               |             |  |                    |  |
               |             |  |                    |  |
               |             |  |                    |  |
               |             +-----------------------|--+
-              |     xOffset |  |                    |  |
-              |   <--------+S--+--------------------+--+
-              |             +
-              |             | yOffset
-              |   E         v
+              |     xOffset | 6|         7          | 8| xOffset
+              |     <-------@--+---------@----------+--@------->
+              |             |            |             |
+              |             | yOffset    |             | yOffset
+              |             v            v             v
               +------------------------------------------------>
         */
-        CGRect originalFrame = NSRectToCGRect([[_calendarWindowLayer valueForKey:_WLOriginalFrame] rectValue]);
-        CGRect newFrame = originalFrame;
+        NSPoint currentPoint = aPoint;
         CGRect offsets = CGRectZero;
-        switch (anEdge) {
+        switch (anEdge)
+        {
             case WLCalendarWindowTopLeftEdge:
             {
-                CGFloat xOffset = currentPoint.x - aStartPoint.x;
-                CGFloat yOffset = currentPoint.y - aStartPoint.y;
+                CGFloat xOffset = 0.0f;
+                CGFloat yOffset = 0.0f;
+                if ([self shouldResizeProportionally])
+                {
+                    CGFloat offset = fminf(-(currentPoint.x - aStartPoint.x), currentPoint.y - aStartPoint.y);
+                    xOffset = -offset;
+                    yOffset = offset;
+                    if (xOffset < 0.0f)
+                        xOffset = NSWidth(startFrame) / NSHeight(startFrame) * -yOffset;
+                    else
+                        yOffset = NSHeight(startFrame) / NSWidth(startFrame) * -xOffset;
+                }
+                else
+                {
+                    xOffset = currentPoint.x - aStartPoint.x;
+                    yOffset = currentPoint.y - aStartPoint.y;
+                }
                 offsets.origin.x = xOffset;
                 offsets.size.width = -xOffset;
                 offsets.size.height = yOffset;
@@ -289,18 +267,33 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
             {
                 CGFloat yOffset = currentPoint.y - aStartPoint.y;
                 offsets.size.height = yOffset;
-                if (isShiftPressed)
+                if ([self shouldResizeProportionally])
                 {
-                    yOffset = roundf(yOffset / 10.0f) * 10.0f;
-                    offsets.origin.x = -roundf((yOffset / 2.0f) / 10.0f) * 10.0f;
-                    offsets.size.width = yOffset;
+                    CGFloat xOffset = NSWidth(startFrame) / NSHeight(startFrame) * yOffset;
+                    offsets.origin.x = -xOffset / 2.0f;
+                    offsets.size.width = xOffset;
                 }
                 break;
             }
             case WLCalendarWindowTopRightEdge:
             {
-                CGFloat xOffset = currentPoint.x - aStartPoint.x;
-                CGFloat yOffset = currentPoint.y - aStartPoint.y;
+                CGFloat xOffset = 0.0f;
+                CGFloat yOffset = 0.0f;
+                if ([self shouldResizeProportionally])
+                {
+                    CGFloat offset = fminf(currentPoint.x - aStartPoint.x, currentPoint.y - aStartPoint.y);
+                    xOffset = offset;
+                    yOffset = offset;
+                    if (xOffset < 0.0f)
+                        xOffset = NSWidth(startFrame) / NSHeight(startFrame) * xOffset;
+                    else
+                        yOffset = NSHeight(startFrame) / NSWidth(startFrame) * yOffset;
+                }
+                else
+                {   
+                    xOffset = currentPoint.x - aStartPoint.x;
+                    yOffset = currentPoint.y - aStartPoint.y;
+                }
                 offsets.size.width = xOffset;
                 offsets.size.height = yOffset;
                 break;
@@ -310,11 +303,11 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
                 CGFloat xOffset = currentPoint.x - aStartPoint.x;
                 offsets.origin.x = xOffset;
                 offsets.size.width = -xOffset;
-                if (isShiftPressed)
+                if ([self shouldResizeProportionally])
                 {
-                    xOffset = roundf(xOffset / 10.0f) * 10.0f;
-                    offsets.origin.y = roundf((xOffset / 2.0f) / 10.0f) * 10.0f;
-                    offsets.size.height = -xOffset;
+                    CGFloat yOffset = NSHeight(startFrame) / NSWidth(startFrame) * xOffset;
+                    offsets.origin.y = yOffset / 2.0f;
+                    offsets.size.height = -yOffset;
                 }
                 break;
             }
@@ -322,18 +315,33 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
             {
                 CGFloat xOffset = currentPoint.x - aStartPoint.x;
                 offsets.size.width = xOffset;
-                if (isShiftPressed)
+                if ([self shouldResizeProportionally])
                 {
-                    xOffset = roundf(xOffset / 10.0f) * 10.0f;
-                    offsets.origin.y = -roundf((xOffset / 2.0f) / 10.0f) * 10.0f;
-                    offsets.size.height = xOffset;
+                    CGFloat yOffset = NSHeight(startFrame) / NSWidth(startFrame) * xOffset;
+                    offsets.origin.y = -yOffset / 2.0f;
+                    offsets.size.height = yOffset;
                 }
                 break;
             }
             case WLCalendarWindowBottomLeftEdge:
             {
-                CGFloat xOffset = currentPoint.x - aStartPoint.x;
-                CGFloat yOffset = currentPoint.y - aStartPoint.y;
+                CGFloat xOffset = 0.0f;
+                CGFloat yOffset = 0.0f;
+                if ([self shouldResizeProportionally])
+                {
+                    CGFloat offset = fminf(-(currentPoint.x - aStartPoint.x), -(currentPoint.y - aStartPoint.y));
+                    xOffset = -offset;
+                    yOffset = -offset;
+                    if (xOffset < 0.0f)
+                        xOffset = NSWidth(startFrame) / NSHeight(startFrame) * yOffset;
+                    else
+                        yOffset = NSHeight(startFrame) / NSWidth(startFrame) * xOffset;
+                }
+                else
+                {
+                    xOffset = currentPoint.x - aStartPoint.x;
+                    yOffset = currentPoint.y - aStartPoint.y;
+                }
                 offsets.origin.x = xOffset;
                 offsets.origin.y = yOffset;
                 offsets.size.width = -xOffset;
@@ -345,18 +353,33 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
                 CGFloat yOffset = currentPoint.y - aStartPoint.y;
                 offsets.origin.y = yOffset;
                 offsets.size.height = -yOffset;
-                if (isShiftPressed)
+                if ([self shouldResizeProportionally])
                 {
-                    yOffset = roundf(yOffset / 10.0f) * 10.0f;
-                    offsets.origin.x = roundf((yOffset / 2.0f) / 10.0f) * 10.0f;
-                    offsets.size.width = -yOffset;
+                    CGFloat xOffset = NSWidth(startFrame) / NSHeight(startFrame) * yOffset;
+                    offsets.origin.x = xOffset / 2.0f;
+                    offsets.size.width = -xOffset;
                 }
                 break;
             }
             case WLCalendarWindowBottomRightEdge:
             {
-                CGFloat xOffset = currentPoint.x - aStartPoint.x;
-                CGFloat yOffset =  currentPoint.y - aStartPoint.y;
+                CGFloat xOffset = 0.0f;
+                CGFloat yOffset = 0.0f;
+                if ([self shouldResizeProportionally])
+                {
+                    CGFloat offset = fminf(currentPoint.x - aStartPoint.x, -(currentPoint.y - aStartPoint.y));
+                    xOffset = offset;
+                    yOffset = -offset;
+                    if (xOffset < 0.0f)
+                        xOffset = NSWidth(startFrame) / NSHeight(startFrame) * -yOffset;
+                    else
+                        yOffset = NSHeight(startFrame) / NSWidth(startFrame) * -xOffset;
+                }
+                else
+                {
+                    xOffset = currentPoint.x - aStartPoint.x;
+                    yOffset = currentPoint.y - aStartPoint.y;
+                }
                 offsets.origin.y = yOffset;
                 offsets.size.width = xOffset;
                 offsets.size.height = -yOffset;
@@ -365,26 +388,113 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
             default:
                 break;
         }
+        if ([self shouldKeepMiddleWhileResize])
+        {
+            offsets.origin.x *= 2.0f;
+            offsets.origin.y *= 2.0f;
+            offsets.size.width *= 2.0f;
+            offsets.size.height *= 2.0f;
+        }
+        NSRect newFrame = startFrame;
         newFrame.origin.x += offsets.origin.x;
         newFrame.origin.y += offsets.origin.y;
         newFrame.size.width += offsets.size.width;
         newFrame.size.height += offsets.size.height;
+        if ([self shouldKeepMiddleWhileResize])
+        {
+            newFrame = NSOffsetRect(newFrame,
+                                    NSMidX(startFrame) - NSMidX(newFrame),
+                                    NSMidY(startFrame) - NSMidY(newFrame));
+        }
 
-        // Don't allow a custom size so small that Blotter would be useless or look buggy.
+        NSRect maxFrame = NSRectFromCGRect(_calendarWindowLayer.superlayer.bounds);
+        maxFrame = NSInsetRect(maxFrame, -self.edgeSize.width, -self.edgeSize.height);
         NSSize effectiveMinimumFrameSize = _WLMinimumWindowFrameSize;
         NSSize blotterMinimum = [self.delegate minimumSizeForCalendarWindowArrangement:self];
-        effectiveMinimumFrameSize.width = fmaxf(effectiveMinimumFrameSize.width, blotterMinimum.width);
-        effectiveMinimumFrameSize.height = fmaxf(effectiveMinimumFrameSize.height, blotterMinimum.height);
+        effectiveMinimumFrameSize.width = fmaxf(effectiveMinimumFrameSize.width, blotterMinimum.width) + 2.0f * self.edgeSize.width;
+        effectiveMinimumFrameSize.height = fmaxf(effectiveMinimumFrameSize.height, blotterMinimum.height) + 2.0f * self.edgeSize.height;
+        NSRect minFrame = NSZeroRect;
+        if ([self shouldKeepMiddleWhileResize])
+        {
+            minFrame = NSMakeRect(NSMidX(startFrame) - effectiveMinimumFrameSize.width / 2.0f,
+                                  NSMidY(startFrame) - effectiveMinimumFrameSize.height / 2.0f,
+                                  effectiveMinimumFrameSize.width,
+                                  effectiveMinimumFrameSize.height);
+        }
+        else
+        {
+            switch (anEdge)
+            {
+                case WLCalendarWindowCenterLeftEdge:
+                case WLCalendarWindowTopLeftEdge:
+                {
+                    minFrame = NSMakeRect(NSMaxX(startFrame) - effectiveMinimumFrameSize.width,
+                                          NSMinY(startFrame),
+                                          effectiveMinimumFrameSize.width,
+                                          effectiveMinimumFrameSize.height);
+                    break;
+                }
+                case WLCalendarWindowTopRightEdge:
+                case WLCalendarWindowTopCenterEdge:
+                case WLCalendarWindowCenterRightEdge:
+                {
+                    minFrame = NSMakeRect(NSMinX(startFrame),
+                                          NSMinY(startFrame),
+                                          effectiveMinimumFrameSize.width,
+                                          effectiveMinimumFrameSize.height);
+                    break;
+                }
+                case WLCalendarWindowBottomLeftEdge:
+                case WLCalendarWindowBottomCenterEdge:
+                {
+                    minFrame = NSMakeRect(NSMaxX(startFrame) - effectiveMinimumFrameSize.width,
+                                          NSMaxY(startFrame) - effectiveMinimumFrameSize.height,
+                                          effectiveMinimumFrameSize.width,
+                                          effectiveMinimumFrameSize.height);
+                    break;
+                }
+                case WLCalendarWindowBottomRightEdge:
+                {
+                    minFrame = NSMakeRect(NSMinX(startFrame),
+                                          NSMaxY(startFrame) - effectiveMinimumFrameSize.height,
+                                          effectiveMinimumFrameSize.width,
+                                          effectiveMinimumFrameSize.height);
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+        newFrame.origin.x = fminf(NSMinX(minFrame), newFrame.origin.x);
+        if (NSMinX(newFrame) < NSMinX(maxFrame))
+        {
+            newFrame.size.width -= NSMinX(maxFrame) - NSMinX(newFrame);
+            newFrame.origin.x = NSMinX(maxFrame);
+        }
+        newFrame.origin.y = fminf(NSMinY(minFrame), newFrame.origin.y);
+        if (NSMinY(newFrame) < NSMinY(maxFrame))
+        {
+            newFrame.size.height -= NSMinY(maxFrame) - NSMinY(newFrame);
+            newFrame.origin.y = NSMinY(maxFrame);
+        }
+        newFrame.size.width = fminf(NSMaxX(maxFrame) - NSMinX(newFrame), newFrame.size.width);
+        if (newFrame.size.width < effectiveMinimumFrameSize.width)
+        {
+            newFrame.origin.x = minFrame.origin.x;
+            newFrame.size.width = effectiveMinimumFrameSize.width;
+        }
+        newFrame.size.height = fminf(NSMaxY(maxFrame) - NSMinY(newFrame), newFrame.size.height);
+        if (newFrame.size.height < effectiveMinimumFrameSize.height)
+        {
+            newFrame.origin.y = minFrame.origin.y;
+            newFrame.size.height = effectiveMinimumFrameSize.height;
+        }
 
-        if (newFrame.origin.x > (CGRectGetMaxX(originalFrame) - effectiveMinimumFrameSize.width - 2 * self.edgeSize.width))
-            newFrame.origin.x = CGRectGetMaxX(originalFrame) - effectiveMinimumFrameSize.width - 2 * self.edgeSize.width;
-        if (newFrame.origin.y > (CGRectGetMaxY(originalFrame) - effectiveMinimumFrameSize.height - 2 * self.edgeSize.height))
-            newFrame.origin.y = CGRectGetMaxY(originalFrame) - effectiveMinimumFrameSize.height - 2 * self.edgeSize.height;
-        if (newFrame.size.width < (effectiveMinimumFrameSize.width + 2 * self.edgeSize.width))
-            newFrame.size.width = effectiveMinimumFrameSize.width + 2 * self.edgeSize.width;
-        if (newFrame.size.height < (effectiveMinimumFrameSize.height + 2 * self.edgeSize.height))
-            newFrame.size.height = effectiveMinimumFrameSize.height + 2 * self.edgeSize.height;
-        _calendarWindowLayer.frame = NSRectToCGRect([self alignCalendarWindowViewFrame:NSRectFromCGRect(newFrame)]);;
+        if ([self shouldSnapToGrid])
+            _calendarWindowLayer.frame = NSRectToCGRect([self snapCalendarWindowViewFrameToGrid:newFrame]);
+        else
+            _calendarWindowLayer.frame = NSRectToCGRect([self centerScanRect:newFrame]);
+
         // Force an immediate layout within this disabled actions block so that we don't get a resize animation when the parts of the 9-part image realise they need to move later.
         [_calendarWindowLayer layoutIfNeeded];
     }];
@@ -433,13 +543,63 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     return [self centerScanRect:NSMakeRect(px, py, pWidth, pHeight)];
 }
 
-- (NSRect)alignCalendarWindowViewFrame:(NSRect)aFrame
+- (NSRect)snapCalendarWindowViewFrameToGrid:(NSRect)aFrame
 {
-    aFrame.origin.x = floorf(aFrame.origin.x / 10.0f) * 10.0f;
-    aFrame.origin.y = floorf(aFrame.origin.y / 10.0f) * 10.0f;
-    aFrame.size.width = ceilf(aFrame.size.width / 10.0f) * 10.0f;
-    aFrame.size.height = ceilf(aFrame.size.height / 10.0f) * 10.0f;
+    aFrame.origin.x = roundf(aFrame.origin.x / 10.0f) * 10.0f;
+    aFrame.origin.y = roundf(aFrame.origin.y / 10.0f) * 10.0f;
+    aFrame.size.width = roundf(aFrame.size.width / 10.0f) * 10.0f;
+    aFrame.size.height = roundf(aFrame.size.height / 10.0f) * 10.0f;
     return [self centerScanRect:aFrame];
+}
+
+- (NSInteger)edgeForLocationInView:(NSPoint)aLocation
+{
+    NSPoint locationInCalendarLayer = NSPointFromCGPoint([[self layer] convertPoint:NSPointToCGPoint(aLocation) toLayer:_calendarWindowLayer]);
+    if (self.arrangementMode & WLCalendarWindowResizingArrangement)
+    {
+        if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLTopLeftEdgeFrameKey] rectValue]))
+            return WLCalendarWindowTopLeftEdge;
+        else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLTopCenterEdgeFrameKey] rectValue]))
+            return WLCalendarWindowTopCenterEdge;
+        else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLTopRightEdgeFrameKey] rectValue]))
+            return WLCalendarWindowTopRightEdge;
+        else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLCenterLeftEdgeFrameKey] rectValue]))
+            return WLCalendarWindowCenterLeftEdge;
+        else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLCenterCenterEdgeFrameKey] rectValue]))
+            return WLCalendarWindowCenterCenterEdge;
+        else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLCenterRightEdgeFrameKey] rectValue]))
+            return WLCalendarWindowCenterRightEdge;
+        else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLBottomLeftEdgeKey] rectValue]))
+            return WLCalendarWindowBottomLeftEdge;
+        else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLBottomCenterEdgeKey] rectValue]))
+            return WLCalendarWindowBottomCenterEdge;
+        else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLBottomRightEdgeKey] rectValue]))
+            return WLCalendarWindowBottomRightEdge;
+        else
+            return -1;
+    }
+    else
+    {
+        if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLCenterCenterEdgeFrameKey] rectValue]))
+            return WLCalendarWindowCenterCenterEdge;
+        else
+            return -1;
+    }
+}
+
+- (BOOL)shouldSnapToGrid
+{
+    return !([NSEvent modifierFlags] & NSControlKeyMask) && self.arrangementMode & WLCalendarWindowResizingArrangement;
+}
+
+- (BOOL)shouldResizeProportionally
+{
+    return ([NSEvent modifierFlags] & NSShiftKeyMask) && self.arrangementMode & WLCalendarWindowResizingArrangement;
+}
+
+- (BOOL)shouldKeepMiddleWhileResize
+{
+    return ([NSEvent modifierFlags] & NSAlternateKeyMask) && self.arrangementMode & WLCalendarWindowResizingArrangement;
 }
 
 
@@ -474,35 +634,8 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         }
         NSRect windowFrame = [self.delegate calendarWindowViewFrameOfCalendarWindowArrangement:self];
         windowFrame = NSInsetRect(windowFrame, -self.edgeSize.width, -self.edgeSize.height);
-        if (self.arrangementMode & WLCalendarWindowResizingArrangement && ![self inLiveResize])
-            windowFrame = [self alignCalendarWindowViewFrame:windowFrame];
         _calendarWindowLayer.frame = NSRectToCGRect(windowFrame);
     }
-}
-
-- (NSInteger)edgeForLocationInView:(NSPoint)aLocation
-{
-    NSPoint locationInCalendarLayer = NSPointFromCGPoint([[self layer] convertPoint:NSPointToCGPoint(aLocation) toLayer:_calendarWindowLayer]);
-    if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLTopLeftEdgeFrameKey] rectValue]))
-        return WLCalendarWindowTopLeftEdge;
-    else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLTopCenterEdgeFrameKey] rectValue]))
-        return WLCalendarWindowTopCenterEdge;
-    else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLTopRightEdgeFrameKey] rectValue]))
-        return WLCalendarWindowTopRightEdge;
-    else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLCenterLeftEdgeFrameKey] rectValue]))
-        return WLCalendarWindowCenterLeftEdge;
-    else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLCenterCenterEdgeFrameKey] rectValue]))
-        return WLCalendarWindowCenterCenterEdge;
-    else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLCenterRightEdgeFrameKey] rectValue]))
-        return WLCalendarWindowCenterRightEdge;
-    else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLBottomLeftEdgeKey] rectValue]))
-        return WLCalendarWindowBottomLeftEdge;
-    else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLBottomCenterEdgeKey] rectValue]))
-        return WLCalendarWindowBottomCenterEdge;
-    else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLBottomRightEdgeKey] rectValue]))
-        return WLCalendarWindowBottomRightEdge;
-    else
-        return -1;
 }
 
 
@@ -962,7 +1095,6 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
                                            nil];
         sublayer.actions = newActions;
         [newActions release];
-
         __block WLCalendarWindowArrangementView *selfBlock = self;
         sublayer.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect)
         {

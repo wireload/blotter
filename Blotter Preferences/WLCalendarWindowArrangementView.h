@@ -79,13 +79,19 @@ typedef enum {
 
 - (NSRect)positionerBounds;
 
-- (NSRect)alignCalendarWindowViewFrame:(NSRect)aFrame;
+- (NSRect)snapCalendarWindowViewFrameToGrid:(NSRect)aFrame;
 
 /*!
  @abstract  Returns edge for a given location or -1 if no edge corresponds to it.
  @see       WLCalendarWindowEdge
  */
 - (NSInteger)edgeForLocationInView:(NSPoint)aLocation;
+
+- (BOOL)shouldSnapToGrid;
+
+- (BOOL)shouldResizeProportionally;
+
+- (BOOL)shouldKeepMiddleWhileResize;
 
 @end
 
