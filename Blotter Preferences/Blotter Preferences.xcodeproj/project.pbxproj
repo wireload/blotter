@@ -19,12 +19,12 @@
 		28CB50B8145E277800810395 /* Resize-Cursor-Up-Left.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50B4145E277800810395 /* Resize-Cursor-Up-Left.png */; };
 		28F6993D129B723900D4BB97 /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */; };
 		28F69A29129C587F00D4BB97 /* WLCalendarWindowArrangementView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69A28129C587F00D4BB97 /* WLCalendarWindowArrangementView.m */; };
+		28F93FC6146EEF6A0012F07A /* LayoutPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28F93FC8146EEF6A0012F07A /* LayoutPrefPaneView.xib */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		E20840511466D31700FE050A /* WLLayoutInfoSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = E20840501466D31700FE050A /* WLLayoutInfoSplitView.m */; };
 		E20840551466D59D00FE050A /* WLLayoutWeekSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = E20840541466D59C00FE050A /* WLLayoutWeekSplitView.m */; };
 		E20840581467230C00FE050A /* WLLayoutSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = E20840571467230C00FE050A /* WLLayoutSplitView.m */; };
 		E20C2DEA146BDA8200D6B815 /* WLLayoutRoundedAquaImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E20C2DE9146BDA8200D6B815 /* WLLayoutRoundedAquaImageView.m */; };
-		E21BC9C814161EF700A91662 /* LayoutPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E21BC9C714161EF700A91662 /* LayoutPrefPaneView.xib */; };
 		E21BC9D1141625E700A91662 /* LayoutPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = E21BC9D0141625E700A91662 /* LayoutPrefController.m */; };
 		E21BC9D9141638C500A91662 /* WLLayoutDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = E21BC9D8141638C500A91662 /* WLLayoutDateView.m */; };
 		E21BC9DC1416391700A91662 /* WLLayoutTasksView.m in Sources */ = {isa = PBXBuildFile; fileRef = E21BC9DB1416391700A91662 /* WLLayoutTasksView.m */; };
@@ -151,6 +151,13 @@
 		28F6993C129B723900D4BB97 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
 		28F69A27129C587F00D4BB97 /* WLCalendarWindowArrangementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowArrangementView.h; sourceTree = "<group>"; };
 		28F69A28129C587F00D4BB97 /* WLCalendarWindowArrangementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindowArrangementView.m; sourceTree = "<group>"; };
+		28F93FC7146EEF6A0012F07A /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/LayoutPrefPaneView.xib; sourceTree = "<group>"; };
+		28F93FCA146EEF770012F07A /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/LayoutPrefPaneView.xib; sourceTree = "<group>"; };
+		28F93FCB146EEF7A0012F07A /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/LayoutPrefPaneView.xib; sourceTree = "<group>"; };
+		28F93FCC146EEF7D0012F07A /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/LayoutPrefPaneView.xib; sourceTree = "<group>"; };
+		28F93FCD146EEF7F0012F07A /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = ko.lproj/LayoutPrefPaneView.xib; sourceTree = "<group>"; };
+		28F93FCE146EEF820012F07A /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/LayoutPrefPaneView.xib; sourceTree = "<group>"; };
+		28F93FCF146EEF850012F07A /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = sv.lproj/LayoutPrefPaneView.xib; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* Blotter Preferences_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Blotter Preferences_Prefix.pch"; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Blotter Preferences.preferencePane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Blotter Preferences.preferencePane"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
@@ -162,7 +169,6 @@
 		E20840571467230C00FE050A /* WLLayoutSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutSplitView.m; sourceTree = "<group>"; };
 		E20C2DE8146BDA8200D6B815 /* WLLayoutRoundedAquaImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutRoundedAquaImageView.h; sourceTree = "<group>"; };
 		E20C2DE9146BDA8200D6B815 /* WLLayoutRoundedAquaImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutRoundedAquaImageView.m; sourceTree = "<group>"; };
-		E21BC9C714161EF700A91662 /* LayoutPrefPaneView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LayoutPrefPaneView.xib; sourceTree = "<group>"; };
 		E21BC9CF141625E700A91662 /* LayoutPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayoutPrefController.h; sourceTree = "<group>"; };
 		E21BC9D0141625E700A91662 /* LayoutPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayoutPrefController.m; sourceTree = "<group>"; };
 		E21BC9D7141638C500A91662 /* WLLayoutDateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutDateView.h; sourceTree = "<group>"; };
@@ -309,7 +315,7 @@
 				E2E8268B1450217A007035E5 /* CalendarsPrefPaneView.xib */,
 				E2E8268D1450217A007035E5 /* GeneralPrefPaneView.xib */,
 				E2E826911450217B007035E5 /* PositionPrefPaneView.xib */,
-				E21BC9C714161EF700A91662 /* LayoutPrefPaneView.xib */,
+				28F93FC8146EEF6A0012F07A /* LayoutPrefPaneView.xib */,
 				E2E8268F1450217A007035E5 /* Localizable.strings */,
 				E2E8267214501BD8007035E5 /* chkbxBackground_10_6.png */,
 				E2E8267314501BD8007035E5 /* chkbxBackground_10_7.png */,
@@ -556,7 +562,7 @@
 				E29A6217146D653500EDDA1B /* CalendarsPrefPaneView.xib in Resources */,
 				E29A6216146D653500EDDA1B /* GeneralPrefPaneView.xib in Resources */,
 				E2BADDC0134DF2FB00F65E14 /* exclamation.png in Resources */,
-				E21BC9C814161EF700A91662 /* LayoutPrefPaneView.xib in Resources */,
+				28F93FC6146EEF6A0012F07A /* LayoutPrefPaneView.xib in Resources */,
 				E2E8267814501BD8007035E5 /* chkbxBackground_10_6.png in Resources */,
 				E2E8267914501BD8007035E5 /* chkbxBackground_10_7.png in Resources */,
 				E2E8267A14501BD8007035E5 /* chkbxCheck_10_6.png in Resources */,
@@ -643,6 +649,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		28F93FC8146EEF6A0012F07A /* LayoutPrefPaneView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				28F93FC7146EEF6A0012F07A /* English */,
+				28F93FCA146EEF770012F07A /* de */,
+				28F93FCB146EEF7A0012F07A /* es */,
+				28F93FCC146EEF7D0012F07A /* fr */,
+				28F93FCD146EEF7F0012F07A /* ko */,
+				28F93FCE146EEF820012F07A /* ru */,
+				28F93FCF146EEF850012F07A /* sv */,
+			);
+			name = LayoutPrefPaneView.xib;
+			sourceTree = "<group>";
+		};
 		E2E8268B1450217A007035E5 /* CalendarsPrefPaneView.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

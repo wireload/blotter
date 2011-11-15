@@ -80,7 +80,7 @@ static WLNewTaskWindowController *_sharedInstance;
 
 - (void)reset
 {
-    [(NSTextView *)_titleView setString:NSLocalizedString(@"New Task", @"Default text for title field on the New Task panel")];
+    [(NSTextView *)_titleView setString:NSLocalizedString(@"New Reminder", @"Default text for title field of the New Reminder panel")];
     [_isDueDate setState:NSOffState];
     [_dueDatePicker setDateValue:[NSDate date]];
     [_priorityPopUp selectItemWithTag:CalPriorityNone];

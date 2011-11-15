@@ -6,12 +6,12 @@ from tempfile import mkdtemp
 from subprocess import check_call
 from shutil import copy, rmtree
 from re import findall
-import sys
 import argparse
 from codecs import open
 
 BLOTTER_DIR = join(dirname(abspath(__file__)), pardir)
-BLOTTER_PREFS_DIR = join(BLOTTER_DIR, "auxiliary", "Blotter Preferences")
+BLOTTER_PREFS_DIR = join(BLOTTER_DIR, "../", "Blotter Preferences", "Resources")
+
 
 def Strings(name, output_path):
     """
@@ -19,15 +19,17 @@ def Strings(name, output_path):
     """
     return join(output_path, splitext(basename(name))[0] + ".strings")
 
+
 def Lproj(lang, output_path):
     """
     Returns path to a dir for localized files for given lang and output path.
     """
     return join(output_path, lang + ".lproj")
 
+
 def Xibs():
     """
-    Returs a list of dicts of the following format:
+    Returns a list of dicts of the following format:
     {'output' : output_path, 'file' : xib_path, 'old' : old_xib_path}
     Where output is the path to a root dir for all localizations,
     file is the path to a xib,
@@ -50,8 +52,13 @@ def Xibs():
              'old': join(BLOTTER_PREFS_DIR, "English.lproj", "GeneralPrefPaneView.old.xib")},
             {'output': BLOTTER_PREFS_DIR,
              'file': join(BLOTTER_PREFS_DIR, "English.lproj", "PositionPrefPaneView.xib"),
-             'old': join(BLOTTER_PREFS_DIR, "English.lproj", "PositionPrefPaneView.old.xib")}]
+             'old': join(BLOTTER_PREFS_DIR, "English.lproj", "PositionPrefPaneView.old.xib")},
+            {'output': BLOTTER_PREFS_DIR,
+             'file': join(BLOTTER_PREFS_DIR, "English.lproj", "LayoutPrefPaneView.xib"),
+             'old': join(BLOTTER_PREFS_DIR, "English.lproj", "LayoutPrefPaneView.old.xib")},
+            ]
     return xibs
+
 
 def Sources():
     """
@@ -61,7 +68,7 @@ def Sources():
     files is a list of paths to sources
     """
     sources = [{'output': join(BLOTTER_DIR, "Resources"),
-                'files': [join(BLOTTER_DIR, "DesktopView.m"),
+                'files': [join(BLOTTER_DIR, "WLCalendarWindowController.m"),
                           join(BLOTTER_DIR, "WLNewEventWindowController.m"),
                           join(BLOTTER_DIR, "WLNewTaskWindowController.m")]},
                {'output': BLOTTER_PREFS_DIR,
@@ -72,17 +79,20 @@ def Sources():
                           join(BLOTTER_PREFS_DIR, "WLScreensController.m")]}]
     return sources
 
+
 def Langs():
     """
     Returns list of supported languages excluding development language.
     """
     return ["de", "es", "fr", "ko", "sv", "ru"]
 
+
 def DevLang():
     """
     Returns development language.
     """
     return "English"
+
 
 def MergeStrings(src_path, dst_path):
     """
@@ -97,8 +107,9 @@ def MergeStrings(src_path, dst_path):
         for i in range(0, len(l), 2):
             comment = l[i].strip()
             key, value = findall("\"(?:[^\"\\\\]|\\\\.)*\"", l[i + 1])
-            parsed.append({'key' : key, 'value' : value, 'comment' : comment})
-        return sorted(parsed, key=lambda x : x['key'])
+            parsed.append({'key': key, 'value': value, 'comment': comment})
+        return sorted(parsed, key=lambda x: x['key'])
+
     def Write(src_list, dst_file):
         for item in src_list:
             dst_file.write("\n".join([item['comment'], item['key'] + " = " + item['value'] + ";", "\n"]))
@@ -139,6 +150,7 @@ def MergeStrings(src_path, dst_path):
         src.close()
         dst.close()
 
+
 def LocalizeXib(xib_path, old_xib_path, output_path, langs):
     """
     Localizes xib for given langs using "--localize-incremental" flag.
@@ -169,7 +181,8 @@ def LocalizeXib(xib_path, old_xib_path, output_path, langs):
                 xib_path]
         check_call(args)
 
-    copy(xib['file'], xib['old']) # changes are applied, mark original xib as old
+    copy(xib['file'], xib['old'])  # changes are applied, mark original xib as old
+
 
 def GenerateXibStrings(xib_path, output_path, langs):
     """
@@ -189,6 +202,7 @@ def GenerateXibStrings(xib_path, output_path, langs):
         l_strings_path = Strings(name, l_dir_path)
         MergeStrings(t_strings_path, l_strings_path)
     rmtree(t_dir_path)
+
 
 def GenerateSourcesStrings(sources_paths, output_path, langs):
     """
@@ -213,7 +227,7 @@ if __name__ == '__main__':
     parser.add_argument('--sources', action='store_true', help="When in strings mode, generate strings for sources. If neither --sources nor --xibs is specified, both are generated.")
     parser.add_argument('--xibs', action='store_true', help="When in strings mode, generate strings for xibs. If neither --sources nor --xibs is specified, both are generated.")
 
-    args  = parser.parse_args()
+    args = parser.parse_args()
 
     if 'xibs' in args.mode:
         for xib in Xibs():
