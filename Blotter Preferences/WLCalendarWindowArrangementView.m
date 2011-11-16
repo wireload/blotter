@@ -413,58 +413,72 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         NSSize blotterMinimum = [self.delegate minimumSizeForCalendarWindowArrangement:self];
         effectiveMinimumFrameSize.width = fmaxf(effectiveMinimumFrameSize.width, blotterMinimum.width) + 2.0f * self.edgeSize.width;
         effectiveMinimumFrameSize.height = fmaxf(effectiveMinimumFrameSize.height, blotterMinimum.height) + 2.0f * self.edgeSize.height;
-        NSRect minFrame = NSZeroRect;
+        NSPoint effectiveMinimumFrameOrigin = NSZeroPoint;
         if ([self shouldKeepMiddleWhileResize])
         {
-            minFrame = NSMakeRect(NSMidX(startFrame) - effectiveMinimumFrameSize.width / 2.0f,
-                                  NSMidY(startFrame) - effectiveMinimumFrameSize.height / 2.0f,
-                                  effectiveMinimumFrameSize.width,
-                                  effectiveMinimumFrameSize.height);
+            effectiveMinimumFrameOrigin.x = NSMidX(startFrame) - effectiveMinimumFrameSize.width / 2.0f;
+            effectiveMinimumFrameOrigin.y = NSMidY(startFrame) - effectiveMinimumFrameSize.height / 2.0f;
         }
         else
         {
             switch (anEdge)
             {
-                case WLCalendarWindowCenterLeftEdge:
                 case WLCalendarWindowTopLeftEdge:
                 {
-                    minFrame = NSMakeRect(NSMaxX(startFrame) - effectiveMinimumFrameSize.width,
-                                          NSMinY(startFrame),
-                                          effectiveMinimumFrameSize.width,
-                                          effectiveMinimumFrameSize.height);
+                    effectiveMinimumFrameOrigin.x = NSMaxX(startFrame) - effectiveMinimumFrameSize.width;
+                    effectiveMinimumFrameOrigin.y = NSMinY(startFrame);
+                    break;
+                }
+                case WLCalendarWindowTopCenterEdge:
+                {
+                    effectiveMinimumFrameOrigin.x = NSMidX(startFrame) - effectiveMinimumFrameSize.width / 2.0f;
+                    effectiveMinimumFrameOrigin.y = NSMinY(startFrame);
                     break;
                 }
                 case WLCalendarWindowTopRightEdge:
-                case WLCalendarWindowTopCenterEdge:
+                {
+                    effectiveMinimumFrameOrigin.x = NSMinX(startFrame);
+                    effectiveMinimumFrameOrigin.y = NSMinY(startFrame);
+                    break;
+                }
+                case WLCalendarWindowCenterLeftEdge:
+                {
+                    effectiveMinimumFrameOrigin.x = NSMaxX(startFrame) - effectiveMinimumFrameSize.width;
+                    effectiveMinimumFrameOrigin.y = NSMidY(startFrame) - effectiveMinimumFrameSize.height / 2.0f;
+                    break;
+                }
                 case WLCalendarWindowCenterRightEdge:
                 {
-                    minFrame = NSMakeRect(NSMinX(startFrame),
-                                          NSMinY(startFrame),
-                                          effectiveMinimumFrameSize.width,
-                                          effectiveMinimumFrameSize.height);
+                    effectiveMinimumFrameOrigin.x = NSMinX(startFrame);
+                    effectiveMinimumFrameOrigin.y = NSMidY(startFrame) - effectiveMinimumFrameSize.height / 2.0f;
                     break;
                 }
                 case WLCalendarWindowBottomLeftEdge:
+                {
+                    effectiveMinimumFrameOrigin.x = NSMaxX(startFrame) - effectiveMinimumFrameSize.width;
+                    effectiveMinimumFrameOrigin.y = NSMaxY(startFrame) - effectiveMinimumFrameSize.height;
+                    break;
+                }
                 case WLCalendarWindowBottomCenterEdge:
                 {
-                    minFrame = NSMakeRect(NSMaxX(startFrame) - effectiveMinimumFrameSize.width,
-                                          NSMaxY(startFrame) - effectiveMinimumFrameSize.height,
-                                          effectiveMinimumFrameSize.width,
-                                          effectiveMinimumFrameSize.height);
+                    effectiveMinimumFrameOrigin.x = NSMidX(startFrame) - effectiveMinimumFrameSize.width / 2.0f;
+                    effectiveMinimumFrameOrigin.y = NSMaxY(startFrame) - effectiveMinimumFrameSize.height;
                     break;
                 }
                 case WLCalendarWindowBottomRightEdge:
                 {
-                    minFrame = NSMakeRect(NSMinX(startFrame),
-                                          NSMaxY(startFrame) - effectiveMinimumFrameSize.height,
-                                          effectiveMinimumFrameSize.width,
-                                          effectiveMinimumFrameSize.height);
+                    effectiveMinimumFrameOrigin.x = NSMinX(startFrame);
+                    effectiveMinimumFrameOrigin.y = NSMaxY(startFrame) - effectiveMinimumFrameSize.height;
                     break;
                 }
                 default:
                     break;
             }
         }
+        NSRect minFrame = NSMakeRect(effectiveMinimumFrameOrigin.x,
+                                     effectiveMinimumFrameOrigin.y,
+                                     effectiveMinimumFrameSize.width,
+                                     effectiveMinimumFrameSize.height);
         newFrame.origin.x = fminf(NSMinX(minFrame), newFrame.origin.x);
         if (NSMinX(newFrame) < NSMinX(maxFrame))
         {
