@@ -124,12 +124,6 @@ static const CGFloat _WLMysteriousExtraBottomSpace = 4.0f;
     [context setShouldAntialias:YES];
     [context setImageInterpolation:NSImageInterpolationHigh];
 
-    if ([self wantsLayer])
-    {
-        [[NSColor WL_windowFrameBackgroundColor] set];
-        NSRectFill(aDirtyRect);
-    }
-
     NSRect bounds = [self bounds];
     NSSize bottomSize = NSMakeSize(bounds.size.width, [[NSImage imageNamed:@"info-bottom"] size].height);
     NSSize topSize = NSMakeSize(bounds.size.width, [[NSImage imageNamed:@"info-top"] size].height);

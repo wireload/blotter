@@ -392,20 +392,14 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     NSView *contentView = [self.window contentView];
     [contentView setAutoresizesSubviews:NO];
 
-    [WLCopyCompositingFilter class];
-    CIFilter *f = [CIFilter filterWithName:@"WLCopyCompositing"];
-    [f setDefaults];
-
     NSView *dateView = [_dateViewController view];
     [dateView setWantsLayer:YES];
-    [dateView setCompositingFilter:f];
     [contentView addSubview:dateView];
 
     _tasksViewBox = [[WLCalendarBoxView alloc] initWithFrame:NSZeroRect];
     _tasksViewBox.title = NSLocalizedString(@"To Do", @"Header of To Do items list");
     _tasksViewBox.contentView = [_tasksViewController view];
     [_tasksViewBox setWantsLayer:YES];
-    [_tasksViewBox setCompositingFilter:f];
     [contentView addSubview:_tasksViewBox];
     [_tasksViewBox release];
 
@@ -414,7 +408,6 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     _rightNowViewBox.contentView = [_rightNowViewController view];
     _rightNowViewBox.softEdges = YES;
     [_rightNowViewBox setWantsLayer:YES];
-    [_rightNowViewBox setCompositingFilter:f];
     [contentView addSubview:_rightNowViewBox];
     [_rightNowViewBox release];
 

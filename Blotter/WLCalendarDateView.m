@@ -40,12 +40,6 @@
     CGContextSetShouldAntialias(cgContext, YES);
     CGContextSetAllowsFontSmoothing(cgContext, NO);
     
-    if ([self wantsLayer])
-    {
-        [[NSColor WL_windowFrameBackgroundColor] set];
-        NSRectFill(aDirtyRect);
-    }
-
     NSShadow *s = [[NSShadow alloc] init];
     [s setShadowColor:[NSColor WL_dateViewTextShadowColor]];
     [s setShadowBlurRadius:0.0f];
