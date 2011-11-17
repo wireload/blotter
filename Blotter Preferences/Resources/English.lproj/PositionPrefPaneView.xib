@@ -53,7 +53,6 @@
 						<string key="NSFrame">{{20, 20}, {400, 251}}</string>
 						<reference key="NSSuperview" ref="453662770"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:1192</string>
 						<string key="NSClassName">WLCalendarWindowArrangementView</string>
 					</object>
