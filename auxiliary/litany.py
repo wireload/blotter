@@ -28,6 +28,7 @@ COMPLEX_TEST = u'''
 /* App Store Keywords */
 "App Store Keywords" = "calendar, to do";'''
 
+
 def tokenize_strings(data):
   ur"""
 
@@ -73,8 +74,10 @@ def tokenize_strings(data):
   # Tokenize
   while True:
       tok = lexer.token()
-      if not tok: break      # No more input
+      if not tok:
+        break      # No more input
       yield tok
+
 
 def pairs_of_strings(file_name, data):
   preceeding_comments = []
@@ -106,11 +109,12 @@ def pairs_of_strings(file_name, data):
         raise "Expected ';' at %s:%d" % (file_name, token.lineno)
 
       bare_key = last_key[1:-1]
-      yield { 'key': bare_key, 'comments': preceeding_comments, 'value': unicode(last_value) }
+      yield {'key': bare_key, 'comments': preceeding_comments, 'value': unicode(last_value)}
       preceeding_comments = []
       expected = 'key'
   if expected != 'key':
     raise u"Unexpected EOF after key %s" % last_key
+
 
 class Litany(object):
   def __init__(self, config_file):
@@ -193,7 +197,7 @@ if __name__ == '__main__':
   parser.add_argument('strings_file', action='store', nargs=1, help="The output (when using create_global) or input (when using process_global) .strings file.")
   parser.add_argument('language', action='store', help="The language code to work with. When in create_global, this language will be used as the basis. When in process_global, this language will be used as the destination.")
 
-  args  = parser.parse_args()
+  args = parser.parse_args()
 
   litany = Litany(args.config or codecs.open('litany.yml', 'r', 'utf-8'))
   if args.action[0] == 'create_global':
