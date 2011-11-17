@@ -1,0 +1,46 @@
+project:
+  comment: |
+    /*
+         Combined Blotter.strings
+         Blotter
+         Copyright 2011 WireLoad. All rights reserved.
+    */
+
+strings:
+  -
+    id:       'General Preferences'
+    comment:  "Options shown on the General preferences page."
+    path:     "auxiliary/Blotter Preferences/%(lang)s.lproj/GeneralPrefPaneView.strings"
+    skip:     ['82.title']
+  -
+    id:       'Position Preferences'
+    path:     "auxiliary/Blotter Preferences/%(lang)s.lproj/PositionPrefPaneView.strings"
+    skip:     ['10.title', '66.title']
+  -
+    id:       'Calendar Preferences'
+    path:     "auxiliary/Blotter Preferences/%(lang)s.lproj/CalendarsPrefPaneView.strings"
+    skip:     ['14.title', '76.title']
+  -
+    id:       'Other Preferences'
+    path:     "auxiliary/Blotter Preferences/%(lang)s.lproj/Localizable.strings"
+    skip:     ["%.0f x %.0f", "%@, %@"]
+  -
+    id:       'New Event'
+    comment:  'A window for creating a new calendar event.'
+    path:     "Resources/%(lang)s.lproj/NewEventWindow.strings"
+    skip:     ["103.title"]
+  -
+    id:       'New Task'
+    comment:  'A window for creating a new calendar task.'
+    path:     "Resources/%(lang)s.lproj/NewTaskWindow.strings"
+    skip:     ["815.title", "834.title"]
+  -
+    id:   'main menu'
+    path: "Resources/%(lang)s.lproj/MainMenu.strings"
+    skip:     ['29.title']
+  -
+    id:   'other'
+    path: "Resources/%(lang)s.lproj/Localizable.strings"
+  -
+    id:   'store description'
+    path: "Resources/%(lang)s.lproj/Meta.strings"
