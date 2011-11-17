@@ -2,10 +2,11 @@
 # -*- coding: utf8 -*-
 
 import argparse
+import codecs
+import os
+import ply.lex as lex
 import sys
 import yaml
-import codecs
-import ply.lex as lex
 
 COMPLEX_TEST = u'''
 /*
@@ -199,7 +200,7 @@ if __name__ == '__main__':
 
   args = parser.parse_args()
 
-  litany = Litany(args.config or codecs.open('litany.yml', 'r', 'utf-8'))
+  litany = Litany(args.config or codecs.open(os.path.join(os.path.dirname(__file__), 'litany.yml'), 'r', 'utf-8'))
   if args.action[0] == 'create_global':
     of = args.strings_file[0]
     output = sys.stdout if of == '-' else codecs.open(of, 'wb', 'utf-16')
