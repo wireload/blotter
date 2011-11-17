@@ -172,7 +172,7 @@
 							<int key="NSPeriodicInterval">75</int>
 							<object class="NSMenuItem" key="NSMenuItem" id="310524277">
 								<reference key="NSMenu" ref="514710584"/>
-								<string key="NSTitle">Personnalisation</string>
+								<string key="NSTitle">Personnalisée</string>
 								<string key="NSKeyEquiv"/>
 								<int key="NSMnemonicLoc">2147483647</int>
 								<int key="NSState">1</int>
@@ -195,7 +195,7 @@
 									<bool key="EncodedWithXMLCoder">YES</bool>
 									<object class="NSMenuItem" id="474883905">
 										<reference key="NSMenu" ref="514710584"/>
-										<string key="NSTitle">Réduit</string>
+										<string key="NSTitle">Réduite</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
@@ -206,7 +206,7 @@
 									</object>
 									<object class="NSMenuItem" id="1015351341">
 										<reference key="NSMenu" ref="514710584"/>
-										<string key="NSTitle">Normal</string>
+										<string key="NSTitle">Normale</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
@@ -218,7 +218,7 @@
 									</object>
 									<object class="NSMenuItem" id="356211315">
 										<reference key="NSMenu" ref="514710584"/>
-										<string key="NSTitle">Entier</string>
+										<string key="NSTitle">Entière</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
