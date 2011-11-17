@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-from os.path import join, abspath, pardir, dirname, basename, splitext, isfile
+from os.path import join, abspath, dirname, basename, splitext, isfile
 from os import listdir
 from tempfile import mkdtemp
 from subprocess import check_call
@@ -9,7 +9,7 @@ from re import findall
 import argparse
 from codecs import open
 
-BLOTTER_DIR = join(dirname(abspath(__file__)), pardir)
+BLOTTER_DIR = join(dirname(abspath(__file__)), "..", "Blotter")
 BLOTTER_PREFS_DIR = join(BLOTTER_DIR, "../", "Blotter Preferences", "Resources")
 
 
