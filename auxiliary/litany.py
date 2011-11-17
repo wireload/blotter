@@ -176,7 +176,7 @@ class Litany(object):
           source_key = "%s.%s" % (id, pair['key'])
           for source_pair in pairs:
             if source_pair['key'] == source_key:
-              value = source_pair['value']
+              value = source_pair['value'].replace('\\n', '\n')
               matches += 1
               if value != pair['value']:
                 new_values += 1
