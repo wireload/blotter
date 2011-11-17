@@ -49,7 +49,7 @@ def tokenize_strings(data):
 
   t_COMMENT = ur'/\*([^*]+|\*[^/])*\*/'
   t_EQUALS = ur'='
-  t_QUOTED_STRING = ur'''"([^\\"]+|\\"|\\\\)*"'''
+  t_QUOTED_STRING = ur'''"([^\\"]+|\\n|\\"|\\\\)*"'''
   t_SEMICOLON = ur';'
 
   # Define a rule so we can track line numbers
