@@ -3,7 +3,7 @@
 //  General Preferences
 //
 //  Created by Alexander Ljungberg on 04/11/2010.
-//  Copyright 2010 SlevenBits. All rights reserved.
+//  Copyright 2010 WireLoad, Inc. All rights reserved.
 //
 
 #import <ShortcutRecorder/ShortcutRecorder.h>
@@ -27,8 +27,8 @@
 {
     return [NSArray arrayWithObjects:[[[GeneralPrefController alloc] init] autorelease],
             [[[PositionPrefController alloc] init] autorelease],
-            [[[CalendarsPrefController alloc] init] autorelease],
             [[[LayoutPrefController alloc] init] autorelease],
+            [[[CalendarsPrefController alloc] init] autorelease],
             nil];
 }
 
