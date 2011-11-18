@@ -35,6 +35,8 @@
             _mainView.preferredFrameSize = [_mainView frame].size;
             [_eventsTableView setIntercellSpacing:NSMakeSize(3.0f, 0.0f)];
             [_eventsTableView setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
+            [_remindersTableView setIntercellSpacing:NSMakeSize(3.0f, 0.0f)];
+            [_remindersTableView setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
             [[NSUserDefaults standardUserDefaults] addObserver:self
                                                     forKeyPath:@"Calendars"
                                                        options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
