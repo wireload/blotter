@@ -389,6 +389,13 @@
     
     [prefsToolbar setSelectedItemIdentifier:name];
     
+    // Find first view that accepts first responder.
+    NSView *currentView = [currentPrefsView nextKeyView];
+    while (![currentView acceptsFirstResponder] && currentView != nil && currentView != currentPrefsView)
+        currentView = [currentView nextKeyView];
+    if ([currentView acceptsFirstResponder])
+        [prefsWindow makeFirstResponder:currentView];
+
     return YES;
 }
 
