@@ -65,7 +65,6 @@
 							<string key="NSFrame">{{33, 164}, {201, 28}}</string>
 							<reference key="NSSuperview" ref="675070131"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSClassName">WLGlassHudTextView</string>
 						</object>
 						<object class="NSCustomView" id="690297653">
@@ -707,9 +706,9 @@
 							<reference ref="456489716"/>
 							<reference ref="211563046"/>
 							<reference ref="619627054"/>
+							<reference ref="187184368"/>
 							<reference ref="689527520"/>
 							<reference ref="408232026"/>
-							<reference ref="187184368"/>
 						</object>
 						<reference key="parent" ref="675070131"/>
 					</object>
