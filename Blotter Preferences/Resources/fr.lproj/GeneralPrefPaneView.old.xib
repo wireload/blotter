@@ -21,6 +21,7 @@
     </object>
     <object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
       <bool key="EncodedWithXMLCoder">YES</bool>
+      <integer value="1"/>
     </object>
     <object class="NSArray" key="IBDocument.PluginDependencies">
       <bool key="EncodedWithXMLCoder">YES</bool>
@@ -48,7 +49,7 @@
         <string key="NSClassName">NSApplication</string>
       </object>
       <object class="NSCustomView" id="1005">
-        <nil key="NSNextResponder"/>
+        <reference key="NSNextResponder"/>
         <int key="NSvFlags">274</int>
         <object class="NSMutableArray" key="NSSubviews">
           <bool key="EncodedWithXMLCoder">YES</bool>
@@ -87,7 +88,7 @@
           <object class="NSTextField" id="875333223">
             <reference key="NSNextResponder" ref="1005"/>
             <int key="NSvFlags">268</int>
-            <string key="NSFrame">{{154, 137}, {345, 14}}</string>
+            <string key="NSFrame">{{153, 137}, {345, 14}}</string>
             <reference key="NSSuperview" ref="1005"/>
             <bool key="NSEnabled">YES</bool>
             <object class="NSTextFieldCell" key="NSCell" id="430143409">
@@ -129,7 +130,7 @@
             <object class="NSTextFieldCell" key="NSCell" id="491983833">
               <int key="NSCellFlags">68288064</int>
               <int key="NSCellFlags2">71304192</int>
-              <string key="NSContents">Nouvelle tâche :</string>
+              <string key="NSContents">Nouveau rappel :</string>
               <object class="NSFont" key="NSSupport" id="129810539">
                 <string key="NSName">LucidaGrande</string>
                 <double key="NSSize">13</double>
@@ -167,7 +168,7 @@
           <object class="SRRecorderControl" id="335876334">
             <reference key="NSNextResponder" ref="1005"/>
             <int key="NSvFlags">298</int>
-            <string key="NSFrame">{{156, 107}, {200, 22}}</string>
+            <string key="NSFrame">{{156, 106}, {200, 22}}</string>
             <reference key="NSSuperview" ref="1005"/>
             <bool key="NSEnabled">YES</bool>
             <object class="SRRecorderCell" key="NSCell" id="121929858">
@@ -187,7 +188,7 @@
           <object class="SRRecorderControl" id="654507568">
             <reference key="NSNextResponder" ref="1005"/>
             <int key="NSvFlags">298</int>
-            <string key="NSFrame">{{156, 77}, {200, 22}}</string>
+            <string key="NSFrame">{{156, 76}, {200, 22}}</string>
             <reference key="NSSuperview" ref="1005"/>
             <bool key="NSEnabled">YES</bool>
             <object class="SRRecorderCell" key="NSCell" id="475977160">
@@ -322,7 +323,7 @@
           <object class="NSTextField" id="942139524">
             <reference key="NSNextResponder" ref="1005"/>
             <int key="NSvFlags">268</int>
-            <string key="NSFrame">{{153, 181}, {347, 14}}</string>
+            <string key="NSFrame">{{153, 182}, {347, 14}}</string>
             <reference key="NSSuperview" ref="1005"/>
             <bool key="NSEnabled">YES</bool>
             <object class="NSTextFieldCell" key="NSCell" id="202400882">
@@ -540,6 +541,7 @@
           </object>
         </object>
         <string key="NSFrameSize">{517, 328}</string>
+        <reference key="NSSuperview"/>
         <string key="NSClassName">WLPrefPaneView</string>
       </object>
       <object class="NSUserDefaultsController" id="282032805">
@@ -831,12 +833,12 @@
               <reference ref="389516795"/>
               <reference ref="39277589"/>
               <reference ref="343803889"/>
-              <reference ref="942139524"/>
               <reference ref="189155685"/>
-              <reference ref="875333223"/>
+              <reference ref="617490363"/>
               <reference ref="335876334"/>
               <reference ref="654507568"/>
-              <reference ref="617490363"/>
+              <reference ref="942139524"/>
+              <reference ref="875333223"/>
             </object>
             <reference key="parent" ref="0"/>
             <string key="objectName">General View</string>
@@ -1195,14 +1197,14 @@
         </object>
         <object class="NSMutableArray" key="dict.values">
           <bool key="EncodedWithXMLCoder">YES</bool>
-          <string>{{622, 585}, {360, 332}}</string>
+          <string>{{622, 585}, {517, 328}}</string>
           <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
           <object class="NSAffineTransform"/>
           <string>{628, 654}</string>
           <string>{{217, 442}, {480, 272}}</string>
           <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
           <object class="NSAffineTransform">
-            <bytes key="NSTransformStruct">P4AAAL+AAABCxgAAwxkAAA</bytes>
+            <bytes key="NSTransformStruct">P4AAAL+AAABDGgAAwxUAAA</bytes>
           </object>
           <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
           <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1251,7 +1253,7 @@
           <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
           <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
           <object class="NSAffineTransform">
-            <bytes key="NSTransformStruct">P4AAAL+AAABCwgAAw0UAAA</bytes>
+            <bytes key="NSTransformStruct">P4AAAL+AAABDGQAAw0EAAA</bytes>
           </object>
           <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
           <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1289,12 +1291,12 @@
           <string>WLRecorderControl</string>
           <string>net.wafflesoftware.ShortcutRecorder.IB.Leopard</string>
           <object class="NSAffineTransform">
-            <bytes key="NSTransformStruct">AULIAABCogAAA</bytes>
+            <bytes key="NSTransformStruct">AUMeAABCmgAAA</bytes>
           </object>
           <string>WLRecorderControl</string>
           <string>net.wafflesoftware.ShortcutRecorder.IB.Leopard</string>
           <object class="NSAffineTransform">
-            <bytes key="NSTransformStruct">AULIAABC3gAAA</bytes>
+            <bytes key="NSTransformStruct">AUMeAABC1gAAA</bytes>
           </object>
           <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
           <object class="NSAffineTransform">
@@ -1327,6 +1329,83 @@
       <int key="maxID">122</int>
     </object>
     <object class="IBClassDescriber" key="IBDocument.Classes">
+      <object class="NSMutableArray" key="referencedPartialClassDescriptions">
+        <bool key="EncodedWithXMLCoder">YES</bool>
+        <object class="IBPartialClassDescription">
+          <string key="className">GeneralPrefController</string>
+          <string key="superclassName">NSObject</string>
+          <object class="NSMutableDictionary" key="actions">
+            <string key="NS.key.0">quitBlotter:</string>
+            <string key="NS.object.0">id</string>
+          </object>
+          <object class="NSMutableDictionary" key="actionInfosByName">
+            <string key="NS.key.0">quitBlotter:</string>
+            <object class="IBActionInfo" key="NS.object.0">
+              <string key="name">quitBlotter:</string>
+              <string key="candidateClassName">id</string>
+            </object>
+          </object>
+          <object class="NSMutableDictionary" key="outlets">
+            <bool key="EncodedWithXMLCoder">YES</bool>
+            <object class="NSArray" key="dict.sortedKeys">
+              <bool key="EncodedWithXMLCoder">YES</bool>
+              <string>newEventRecorderControl</string>
+              <string>newTaskRecorderControl</string>
+              <string>prefsView</string>
+            </object>
+            <object class="NSMutableArray" key="dict.values">
+              <bool key="EncodedWithXMLCoder">YES</bool>
+              <string>SRRecorderControl</string>
+              <string>SRRecorderControl</string>
+              <string>NSView</string>
+            </object>
+          </object>
+          <object class="NSMutableDictionary" key="toOneOutletInfosByName">
+            <bool key="EncodedWithXMLCoder">YES</bool>
+            <object class="NSArray" key="dict.sortedKeys">
+              <bool key="EncodedWithXMLCoder">YES</bool>
+              <string>newEventRecorderControl</string>
+              <string>newTaskRecorderControl</string>
+              <string>prefsView</string>
+            </object>
+            <object class="NSMutableArray" key="dict.values">
+              <bool key="EncodedWithXMLCoder">YES</bool>
+              <object class="IBToOneOutletInfo">
+                <string key="name">newEventRecorderControl</string>
+                <string key="candidateClassName">SRRecorderControl</string>
+              </object>
+              <object class="IBToOneOutletInfo">
+                <string key="name">newTaskRecorderControl</string>
+                <string key="candidateClassName">SRRecorderControl</string>
+              </object>
+              <object class="IBToOneOutletInfo">
+                <string key="name">prefsView</string>
+                <string key="candidateClassName">NSView</string>
+              </object>
+            </object>
+          </object>
+          <object class="IBClassDescriptionSource" key="sourceIdentifier">
+            <string key="majorKey">IBProjectSource</string>
+            <string key="minorKey">GeneralPrefController.h</string>
+          </object>
+        </object>
+        <object class="IBPartialClassDescription">
+          <string key="className">LaunchAtLoginController</string>
+          <string key="superclassName">NSObject</string>
+          <object class="IBClassDescriptionSource" key="sourceIdentifier">
+            <string key="majorKey">IBProjectSource</string>
+            <string key="minorKey">LaunchAtLoginController.h</string>
+          </object>
+        </object>
+        <object class="IBPartialClassDescription">
+          <string key="className">WLRecorderControl</string>
+          <string key="superclassName">SRRecorderControl</string>
+          <object class="IBClassDescriptionSource" key="sourceIdentifier">
+            <string key="majorKey">IBProjectSource</string>
+            <string key="minorKey">WLRecorderControl.h</string>
+          </object>
+        </object>
+      </object>
       <object class="NSMutableArray" key="referencedPartialClassDescriptionsV3.1+">
         <bool key="EncodedWithXMLCoder">YES</bool>
         <object class="IBPartialClassDescription">
@@ -1394,6 +1473,62 @@
             <string key="majorKey">IBDocumentRelativeSource</string>
             <string key="minorKey">../../WLRecorderControl.h</string>
           </object>
+        </object>
+      </object>
+      <object class="NSMutableArray" key="referencedPartialClassDescriptionsV3.2+">
+        <bool key="EncodedWithXMLCoder">YES</bool>
+        <object class="IBPartialClassDescription">
+          <string key="className">NSObject</string>
+          <object class="IBClassDescriptionSource" key="sourceIdentifier" id="788302316">
+            <string key="majorKey">IBFrameworkSource</string>
+            <string key="minorKey">ShortcutRecorder.framework/Headers/SRRecorderCell.h</string>
+          </object>
+        </object>
+        <object class="IBPartialClassDescription">
+          <string key="className">NSObject</string>
+          <object class="IBClassDescriptionSource" key="sourceIdentifier" id="807208681">
+            <string key="majorKey">IBFrameworkSource</string>
+            <string key="minorKey">ShortcutRecorder.framework/Headers/SRRecorderControl.h</string>
+          </object>
+        </object>
+        <object class="IBPartialClassDescription">
+          <string key="className">NSObject</string>
+          <object class="IBClassDescriptionSource" key="sourceIdentifier">
+            <string key="majorKey">IBFrameworkSource</string>
+            <string key="minorKey">ShortcutRecorder.framework/Headers/SRValidator.h</string>
+          </object>
+        </object>
+        <object class="IBPartialClassDescription">
+          <string key="className">SRRecorderCell</string>
+          <string key="superclassName">NSActionCell</string>
+          <object class="NSMutableDictionary" key="outlets">
+            <string key="NS.key.0">delegate</string>
+            <string key="NS.object.0">id</string>
+          </object>
+          <object class="NSMutableDictionary" key="toOneOutletInfosByName">
+            <string key="NS.key.0">delegate</string>
+            <object class="IBToOneOutletInfo" key="NS.object.0">
+              <string key="name">delegate</string>
+              <string key="candidateClassName">id</string>
+            </object>
+          </object>
+          <reference key="sourceIdentifier" ref="788302316"/>
+        </object>
+        <object class="IBPartialClassDescription">
+          <string key="className">SRRecorderControl</string>
+          <string key="superclassName">NSControl</string>
+          <object class="NSMutableDictionary" key="outlets">
+            <string key="NS.key.0">delegate</string>
+            <string key="NS.object.0">id</string>
+          </object>
+          <object class="NSMutableDictionary" key="toOneOutletInfosByName">
+            <string key="NS.key.0">delegate</string>
+            <object class="IBToOneOutletInfo" key="NS.object.0">
+              <string key="name">delegate</string>
+              <string key="candidateClassName">id</string>
+            </object>
+          </object>
+          <reference key="sourceIdentifier" ref="807208681"/>
         </object>
       </object>
     </object>

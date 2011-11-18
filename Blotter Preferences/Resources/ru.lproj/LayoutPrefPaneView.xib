@@ -50,7 +50,7 @@
 					<object class="NSTextField" id="322597722">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{17, 289}, {251, 17}}</string>
+						<string key="NSFrame">{{17, 289}, {120, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="655890231"/>
@@ -58,8 +58,8 @@
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="96627044">
 							<int key="NSCellFlags">68288064</int>
-							<int key="NSCellFlags2">272630784</int>
-							<string key="NSContents">Расположение элементов календаря:</string>
+							<int key="NSCellFlags2">71304192</int>
+							<string key="NSContents">Макет календаря:</string>
 							<object class="NSFont" key="NSSupport" id="724121852">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">13</double>
@@ -90,7 +90,7 @@
 					<object class="NSPopUpButton" id="655890231">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{270, 283}, {153, 26}}</string>
+						<string key="NSFrame">{{139, 283}, {188, 26}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="729899837"/>
@@ -106,22 +106,22 @@
 							<string key="NSKeyEquivalent"/>
 							<int key="NSPeriodicDelay">400</int>
 							<int key="NSPeriodicInterval">75</int>
-							<object class="NSMenuItem" key="NSMenuItem" id="194107820">
+							<object class="NSMenuItem" key="NSMenuItem" id="262675738">
 								<reference key="NSMenu" ref="234424734"/>
-								<string key="NSTitle">Показывать все элементы</string>
+								<string key="NSTitle">Собственная настройка</string>
 								<string key="NSKeyEquiv"/>
-								<int key="NSKeyEquivModMask">1048576</int>
 								<int key="NSMnemonicLoc">2147483647</int>
 								<int key="NSState">1</int>
-								<object class="NSCustomResource" key="NSOnImage" id="690968072">
+								<object class="NSCustomResource" key="NSOnImage" id="362014758">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">NSMenuCheckmark</string>
 								</object>
-								<object class="NSCustomResource" key="NSMixedImage" id="149459913">
+								<object class="NSCustomResource" key="NSMixedImage" id="392336207">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">NSMenuMixedState</string>
 								</object>
 								<string key="NSAction">_popUpItemAction:</string>
+								<int key="NSTag">1</int>
 								<reference key="NSTarget" ref="183428051"/>
 							</object>
 							<bool key="NSMenuItemRespectAlignment">YES</bool>
@@ -129,45 +129,46 @@
 								<string key="NSTitle">OtherViews</string>
 								<object class="NSMutableArray" key="NSMenuItems">
 									<bool key="EncodedWithXMLCoder">YES</bool>
-									<reference ref="194107820"/>
-									<object class="NSMenuItem" id="351558779">
+									<object class="NSMenuItem" id="194107820">
 										<reference key="NSMenu" ref="234424734"/>
-										<string key="NSTitle">Показывать только "Напоминания"</string>
+										<string key="NSTitle">Все элементы</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSOnImage" ref="690968072"/>
-										<reference key="NSMixedImage" ref="149459913"/>
+										<reference key="NSOnImage" ref="362014758"/>
+										<reference key="NSMixedImage" ref="392336207"/>
+										<string key="NSAction">_popUpItemAction:</string>
+										<reference key="NSTarget" ref="183428051"/>
+									</object>
+									<object class="NSMenuItem" id="351558779">
+										<reference key="NSMenu" ref="234424734"/>
+										<string key="NSTitle">Напоминания</string>
+										<string key="NSKeyEquiv"/>
+										<int key="NSKeyEquivModMask">1048576</int>
+										<int key="NSMnemonicLoc">2147483647</int>
+										<reference key="NSOnImage" ref="362014758"/>
+										<reference key="NSMixedImage" ref="392336207"/>
 										<string key="NSAction">_popUpItemAction:</string>
 										<int key="NSTag">2</int>
 										<reference key="NSTarget" ref="183428051"/>
 									</object>
 									<object class="NSMenuItem" id="349651646">
 										<reference key="NSMenu" ref="234424734"/>
-										<string key="NSTitle">Показывать только "Сейчас"</string>
+										<string key="NSTitle">Сейчас</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSOnImage" ref="690968072"/>
-										<reference key="NSMixedImage" ref="149459913"/>
+										<reference key="NSOnImage" ref="362014758"/>
+										<reference key="NSMixedImage" ref="392336207"/>
 										<string key="NSAction">_popUpItemAction:</string>
 										<int key="NSTag">3</int>
 										<reference key="NSTarget" ref="183428051"/>
 									</object>
-									<object class="NSMenuItem" id="262675738">
-										<reference key="NSMenu" ref="234424734"/>
-										<string key="NSTitle">Собственная настройка</string>
-										<string key="NSKeyEquiv"/>
-										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSOnImage" ref="690968072"/>
-										<reference key="NSMixedImage" ref="149459913"/>
-										<string key="NSAction">_popUpItemAction:</string>
-										<int key="NSTag">1</int>
-										<reference key="NSTarget" ref="183428051"/>
-									</object>
+									<reference ref="262675738"/>
 								</object>
 								<reference key="NSMenuFont" ref="724121852"/>
 							</object>
+							<int key="NSSelectedIndex">3</int>
 							<int key="NSPreferredEdge">1</int>
 							<bool key="NSUsesItemFromMenu">YES</bool>
 							<bool key="NSAltersState">YES</bool>
@@ -377,11 +378,35 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
+						<string key="label">nextKeyView</string>
+						<reference key="source" ref="1005"/>
+						<reference key="destination" ref="322597722"/>
+					</object>
+					<int key="connectionID">98</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">nextKeyView</string>
+						<reference key="source" ref="307974184"/>
+						<reference key="destination" ref="413383031"/>
+					</object>
+					<int key="connectionID">89</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="413383031"/>
 						<reference key="destination" ref="1001"/>
 					</object>
 					<int key="connectionID">38</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">nextKeyView</string>
+						<reference key="source" ref="413383031"/>
+						<reference key="destination" ref="732422139"/>
+					</object>
+					<int key="connectionID">90</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -393,11 +418,51 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
+						<string key="label">nextKeyView</string>
+						<reference key="source" ref="209585813"/>
+						<reference key="destination" ref="557101213"/>
+					</object>
+					<int key="connectionID">95</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">nextKeyView</string>
+						<reference key="source" ref="557101213"/>
+						<reference key="destination" ref="286032300"/>
+					</object>
+					<int key="connectionID">96</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">nextKeyView</string>
+						<reference key="source" ref="286032300"/>
+						<reference key="destination" ref="1005"/>
+					</object>
+					<int key="connectionID">102</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="732422139"/>
 						<reference key="destination" ref="1001"/>
 					</object>
 					<int key="connectionID">39</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">nextKeyView</string>
+						<reference key="source" ref="732422139"/>
+						<reference key="destination" ref="1052202239"/>
+					</object>
+					<int key="connectionID">91</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">nextKeyView</string>
+						<reference key="source" ref="1052202239"/>
+						<reference key="destination" ref="822486296"/>
+					</object>
+					<int key="connectionID">92</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -414,6 +479,54 @@
 						</object>
 					</object>
 					<int key="connectionID">70</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">nextKeyView</string>
+						<reference key="source" ref="655890231"/>
+						<reference key="destination" ref="729899837"/>
+					</object>
+					<int key="connectionID">101</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">nextKeyView</string>
+						<reference key="source" ref="322597722"/>
+						<reference key="destination" ref="655890231"/>
+					</object>
+					<int key="connectionID">99</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">nextKeyView</string>
+						<reference key="source" ref="729899837"/>
+						<reference key="destination" ref="393265673"/>
+					</object>
+					<int key="connectionID">87</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">nextKeyView</string>
+						<reference key="source" ref="822486296"/>
+						<reference key="destination" ref="83856410"/>
+					</object>
+					<int key="connectionID">93</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">nextKeyView</string>
+						<reference key="source" ref="83856410"/>
+						<reference key="destination" ref="209585813"/>
+					</object>
+					<int key="connectionID">94</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">nextKeyView</string>
+						<reference key="source" ref="393265673"/>
+						<reference key="destination" ref="307974184"/>
+					</object>
+					<int key="connectionID">88</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -703,7 +816,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">82</int>
+			<int key="maxID">102</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
