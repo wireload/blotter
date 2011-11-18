@@ -10,7 +10,7 @@ import argparse
 from codecs import open
 
 BLOTTER_DIR = join(dirname(abspath(__file__)), "..", "Blotter")
-BLOTTER_PREFS_DIR = join(BLOTTER_DIR, "../", "Blotter Preferences", "Resources")
+BLOTTER_PREFS_DIR = join(BLOTTER_DIR, "../", "Blotter Preferences")
 
 
 def Strings(name, output_path):
@@ -45,17 +45,17 @@ def Xibs():
              'file': join(BLOTTER_DIR, "Resources", "English.lproj", "NewTaskWindow.xib"),
              'old': join(BLOTTER_DIR, "Resources", "English.lproj", "NewTaskWindow.old.xib")},
             {'output': BLOTTER_PREFS_DIR,
-             'file': join(BLOTTER_PREFS_DIR, "English.lproj", "CalendarsPrefPaneView.xib"),
-             'old': join(BLOTTER_PREFS_DIR, "English.lproj", "CalendarsPrefPaneView.old.xib")},
+             'file': join(BLOTTER_PREFS_DIR, "English.lproj", "Resources/CalendarsPrefPaneView.xib"),
+             'old': join(BLOTTER_PREFS_DIR, "English.lproj", "Resources/CalendarsPrefPaneView.old.xib")},
             {'output': BLOTTER_PREFS_DIR,
-             'file': join(BLOTTER_PREFS_DIR, "English.lproj", "GeneralPrefPaneView.xib"),
-             'old': join(BLOTTER_PREFS_DIR, "English.lproj", "GeneralPrefPaneView.old.xib")},
+             'file': join(BLOTTER_PREFS_DIR, "English.lproj", "Resources/GeneralPrefPaneView.xib"),
+             'old': join(BLOTTER_PREFS_DIR, "English.lproj", "Resources/GeneralPrefPaneView.old.xib")},
             {'output': BLOTTER_PREFS_DIR,
-             'file': join(BLOTTER_PREFS_DIR, "English.lproj", "PositionPrefPaneView.xib"),
-             'old': join(BLOTTER_PREFS_DIR, "English.lproj", "PositionPrefPaneView.old.xib")},
+             'file': join(BLOTTER_PREFS_DIR, "English.lproj", "Resources/PositionPrefPaneView.xib"),
+             'old': join(BLOTTER_PREFS_DIR, "English.lproj", "Resources/PositionPrefPaneView.old.xib")},
             {'output': BLOTTER_PREFS_DIR,
-             'file': join(BLOTTER_PREFS_DIR, "English.lproj", "LayoutPrefPaneView.xib"),
-             'old': join(BLOTTER_PREFS_DIR, "English.lproj", "LayoutPrefPaneView.old.xib")},
+             'file': join(BLOTTER_PREFS_DIR, "English.lproj", "Resources/LayoutPrefPaneView.xib"),
+             'old': join(BLOTTER_PREFS_DIR, "English.lproj", "Resources/LayoutPrefPaneView.old.xib")},
             ]
     return xibs
 
@@ -71,9 +71,10 @@ def Sources():
                 'files': [join(BLOTTER_DIR, "WLCalendarWindowController.m"),
                           join(BLOTTER_DIR, "WLNewEventWindowController.m"),
                           join(BLOTTER_DIR, "WLNewTaskWindowController.m")]},
-               {'output': BLOTTER_PREFS_DIR,
+               {'output': join(BLOTTER_PREFS_DIR, "Resources"),
                 'files': [join(BLOTTER_PREFS_DIR, "GeneralPrefController.m"),
                           join(BLOTTER_PREFS_DIR, "PositionPrefController.m"),
+                          join(BLOTTER_PREFS_DIR, "LayoutPrefController.m"),
                           join(BLOTTER_PREFS_DIR, "CalendarsPrefController.m"),
                           join(BLOTTER_PREFS_DIR, "NSScreen+WLScreenName.m"),
                           join(BLOTTER_PREFS_DIR, "WLScreensController.m")]}]
@@ -101,6 +102,7 @@ def MergeStrings(src_path, dst_path):
     if string exist both in the src_path file and in the dst_path file, only its comment will be updated
     if string doesn't exist in the src_path file but exist in the dst_path file, it will be removed
     """
+
     def Parse(file):
         l = filter(lambda x: len(x.strip()), file.readlines())
         parsed = []
