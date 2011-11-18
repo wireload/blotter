@@ -393,7 +393,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 										<reference key="NSSupport" ref="26"/>
 										<reference key="NSControlView" ref="758771597"/>
 										<double key="NSTimeInterval">0.0</double>
-										<int key="NSDatePickerElements">236</int>
+										<int key="NSDatePickerElements">224</int>
 										<int key="NSDatePickerType">0</int>
 										<bool key="NSSuppressStepper">YES</bool>
 										<bool key="NSDrawsBackground">NO</bool>
