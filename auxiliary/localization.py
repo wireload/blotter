@@ -35,6 +35,8 @@ def Xibs():
     file is the path to a xib,
     old is the path to the previous version of the xib.
     """
+
+    prefsResources = join(BLOTTER_PREFS_DIR, "Resources")
     xibs = [{'output': join(BLOTTER_DIR, "Resources"),
              'file': join(BLOTTER_DIR, "Resources", "English.lproj", "MainMenu.xib"),
              'old': join(BLOTTER_DIR, "Resources", "English.lproj", "MainMenu.old.xib")},
@@ -44,18 +46,18 @@ def Xibs():
             {'output': join(BLOTTER_DIR, "Resources"),
              'file': join(BLOTTER_DIR, "Resources", "English.lproj", "NewTaskWindow.xib"),
              'old': join(BLOTTER_DIR, "Resources", "English.lproj", "NewTaskWindow.old.xib")},
-            {'output': BLOTTER_PREFS_DIR,
-             'file': join(BLOTTER_PREFS_DIR, "English.lproj", "Resources/CalendarsPrefPaneView.xib"),
-             'old': join(BLOTTER_PREFS_DIR, "English.lproj", "Resources/CalendarsPrefPaneView.old.xib")},
-            {'output': BLOTTER_PREFS_DIR,
-             'file': join(BLOTTER_PREFS_DIR, "English.lproj", "Resources/GeneralPrefPaneView.xib"),
-             'old': join(BLOTTER_PREFS_DIR, "English.lproj", "Resources/GeneralPrefPaneView.old.xib")},
-            {'output': BLOTTER_PREFS_DIR,
-             'file': join(BLOTTER_PREFS_DIR, "English.lproj", "Resources/PositionPrefPaneView.xib"),
-             'old': join(BLOTTER_PREFS_DIR, "English.lproj", "Resources/PositionPrefPaneView.old.xib")},
-            {'output': BLOTTER_PREFS_DIR,
-             'file': join(BLOTTER_PREFS_DIR, "English.lproj", "Resources/LayoutPrefPaneView.xib"),
-             'old': join(BLOTTER_PREFS_DIR, "English.lproj", "Resources/LayoutPrefPaneView.old.xib")},
+            {'output': prefsResources,
+             'file': join(prefsResources, "English.lproj", "CalendarsPrefPaneView.xib"),
+             'old': join(prefsResources, "English.lproj", "CalendarsPrefPaneView.old.xib")},
+            {'output': prefsResources,
+             'file': join(prefsResources, "English.lproj", "GeneralPrefPaneView.xib"),
+             'old': join(prefsResources, "English.lproj", "GeneralPrefPaneView.old.xib")},
+            {'output': prefsResources,
+             'file': join(prefsResources, "English.lproj", "PositionPrefPaneView.xib"),
+             'old': join(prefsResources, "English.lproj", "PositionPrefPaneView.old.xib")},
+            {'output': prefsResources,
+             'file': join(prefsResources, "English.lproj", "LayoutPrefPaneView.xib"),
+             'old': join(prefsResources, "English.lproj", "LayoutPrefPaneView.old.xib")},
             ]
     return xibs
 
