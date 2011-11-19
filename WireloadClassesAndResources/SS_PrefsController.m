@@ -5,8 +5,6 @@
 
 #define Last_Pane_Defaults_Key	[[[NSBundle mainBundle] bundleIdentifier] stringByAppendingString:@"_Preferences_Last_Pane_Defaults_Key"]
 
-#define USE_CROSS_FADES 0
-
 // ************************************************
 // version/init/dealloc/constructors
 // ************************************************
@@ -321,8 +319,6 @@
     
     // Prepare to crossfade. Delete any old views we previously faded out.
     NSView *contentView = [self nonResizingContentView];
-    if (currentPrefsView)
-        [contentView setSubviews:[NSArray arrayWithObject:currentPrefsView]];
     
     // Preserve upper left point of window during resize.
     NSRect newFrame = [prefsWindow frame];
@@ -337,30 +333,24 @@
     [prefsView setFrameSize:[prefsWindow contentRectForFrameRect:newFrame].size];
     [prefsView setAutoresizingMask:0];
     [self setShouldAutoResize:NO];
-
+    [prefsWindow makeFirstResponder:nil];
     if (disp)
     {
-#if USE_CROSS_FADES
-        // Fade out the old view, while fading in the new view and resizing the whole window.
-        [prefsView setAlphaValue:0.0];
-        [contentView addSubview:prefsView];
-        [[currentPrefsView animator] setAlphaValue:0.0];
-        [[prefsView animator] setAlphaValue:1.0];
-#else       
-        // The animation above doesn't work well with layers.
+        [contentView setHidden:YES];
+        [prefsWindow setFrame:newFrame display:disp animate:disp];
         [contentView replaceSubview:currentPrefsView with:prefsView];
-#endif
-        [[prefsWindow animator] setFrame:newFrame display:disp];
+        [contentView setHidden:NO];
     }
     else
     {
         // Just install the new view immediately.
-        [prefsView setAlphaValue:1.0];
         [contentView setSubviews:[NSArray arrayWithObject:prefsView]];
         [prefsWindow setFrame:newFrame display:NO animate:NO];        
     }
-    
     currentPrefsView = prefsView;
+    // Find first view that accepts first responder.
+    NSView *currentView = [currentPrefsView nextValidKeyView];
+    [prefsWindow makeFirstResponder:currentView];
     
     // Set appropriate resizing on window.
     NSSize theSize = [prefsWindow frame].size;
@@ -388,13 +378,6 @@
     [defaults setObject:name forKey:Last_Pane_Defaults_Key];
     
     [prefsToolbar setSelectedItemIdentifier:name];
-    
-    // Find first view that accepts first responder.
-    NSView *currentView = [currentPrefsView nextKeyView];
-    while (![currentView acceptsFirstResponder] && currentView != nil && currentView != currentPrefsView)
-        currentView = [currentView nextKeyView];
-    if ([currentView acceptsFirstResponder])
-        [prefsWindow makeFirstResponder:currentView];
 
     return YES;
 }

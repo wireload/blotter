@@ -26,6 +26,11 @@
         return [super performKeyEquivalent:anEvent];
 }
 
+- (NSTimeInterval)animationResizeTime:(NSRect)newFrame
+{
+    return 0.20f;
+}
+
 - (void)close
 {
     [self makeFirstResponder:nil];
