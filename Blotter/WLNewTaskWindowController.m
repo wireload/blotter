@@ -7,9 +7,9 @@
 //
 
 #import <CalendarStore/CalendarStore.h>
-#import "WLNewTaskWindowController.h"
+#import "NSDate+WLDayBoundaries.h"
 #import "WLGlassHudTextView.h"
-
+#import "WLNewTaskWindowController.h"
 
 static WLNewTaskWindowController *_sharedInstance;
 
@@ -82,7 +82,9 @@ static WLNewTaskWindowController *_sharedInstance;
 {
     [(NSTextView *)_titleView setString:NSLocalizedString(@"New Reminder", @"Default text for title field of the New Reminder panel")];
     [_isDueDate setState:NSOffState];
-    [_dueDatePicker setDateValue:[NSDate date]];
+    // The due date is an 'all day' date, but we still base it on the next hour so that if you create an
+    // event at 23:XX, the suggested due date is tomorrow instead of the same day which is more helpful.
+    [_dueDatePicker setDateValue:[[NSDate date] WL_nextHourDate]];
     [_priorityPopUp selectItemWithTag:CalPriorityNone];
     [(NSTextView *)_titleView selectAll:self];
 }

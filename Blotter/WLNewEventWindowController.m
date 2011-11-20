@@ -7,8 +7,9 @@
 //
 
 #import <CalendarStore/CalendarStore.h>
-#import "WLNewEventWindowController.h"
+#import "NSDate+WLDayBoundaries.h"
 #import "WLGlassHudTextView.h"
+#import "WLNewEventWindowController.h"
 
 
 static const NSTimeInterval _WLDefaultTimeDiff = 3600; // seconds
@@ -92,7 +93,7 @@ static WLNewEventWindowController *_sharedInstance;
     [(NSTextView *)_locationView setString:@""];
     [(NSTextView *)_titleView setString:NSLocalizedString(@"New Event", @"Default text for title field on the New Event panel")];
     [_isAllDayButton setState:NSOffState];
-    [_startDatePicker setDateValue:[NSDate date]];
+    [_startDatePicker setDateValue:[[NSDate date] WL_nextHourDate]];    
     [_endDatePicker setDateValue:[[_startDatePicker dateValue] dateByAddingTimeInterval:_WLDefaultTimeDiff]];
     [(NSTextView *)_titleView selectAll:self];
     [_datePickerValueBackup release], _datePickerValueBackup = nil;

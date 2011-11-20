@@ -15,4 +15,6 @@
 
 - (NSDate *)WL_endOfDay:(NSCalendar *)aCalendar;
 
+- (NSDate *)WL_nextHourDate;
+
 @end
