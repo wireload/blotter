@@ -329,19 +329,39 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
 
 - (void)_applyNormalOrCustomSizeToViews
 {
-    [[_dateViewController view] setFrame:[self dateViewFrame]];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    NSRect dateViewFrame = [self dateViewFrame];
+    NSSize minimumDateViewSize = NSMakeSize([defaults floatForKey:@"MinimumDateViewWidth"],
+                                            [defaults floatForKey:@"MinimumDateViewHeight"]);
+    BOOL showDateView = (dateViewFrame.size.width >= minimumDateViewSize.width &&
+                         dateViewFrame.size.height >= minimumDateViewSize.height);
+    [[_dateViewController view] setHidden:!showDateView];
+    [[_dateViewController view] setFrame:dateViewFrame];
     [[_dateViewController view] setNeedsDisplay:YES];
 
-    [_tasksViewBox setFrame:[self tasksViewFrame]];
+    NSRect tasksViewFrame = [self tasksViewFrame];
+    NSSize minimumTasksViewSize = NSMakeSize([defaults floatForKey:@"MinimumTasksViewWidth"],
+                                             [defaults floatForKey:@"MinimumTasksViewHeight"]);
+    BOOL showTasksView = (tasksViewFrame.size.width >= minimumTasksViewSize.width &&
+                          tasksViewFrame.size.height >= minimumTasksViewSize.height);
+    [_tasksViewBox setHidden:!showTasksView];
+    [_tasksViewBox setFrame:tasksViewFrame];
     [_tasksViewBox setNeedsDisplay:YES];
 
-    [_rightNowViewBox setFrame:[self rightNowViewFrame]];
+    NSRect rightNowViewFrame = [self rightNowViewFrame];
+    NSSize minimumRightNowViewSize = NSMakeSize([defaults floatForKey:@"MinimumRightNowViewWidth"],
+                                                [defaults floatForKey:@"MinimumRightNowViewHeight"]);
+    BOOL showRightNowView = (rightNowViewFrame.size.width >= minimumRightNowViewSize.width &&
+                             rightNowViewFrame.size.height >= minimumRightNowViewSize.height);
+    [_rightNowViewBox setHidden:!showRightNowView];
+    [_rightNowViewBox setFrame:rightNowViewFrame];
     [_rightNowViewBox setNeedsDisplay:YES];
 
     NSRect weekViewFrame = [self weekViewFrame];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [_weekViewController view].heightOfAllDayPartOfColumn = [defaults floatForKey:@"AllDayViewHeight"];
     [[_weekViewController view] setFrame:weekViewFrame];
+    
     // Sizes in defaults know nothing about margins. Take care of them here.
     NSSize minimumWeekViewSize = NSMakeSize([defaults floatForKey:@"MinimumWeekViewWidth"] - _WLXMarginBetweenInfoAndWeek,
                                             [defaults floatForKey:@"MinimumWeekViewHeight"]);
@@ -353,20 +373,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
 
 - (void)_applyFullSizeToViews
 {
-    [[_dateViewController view] setFrame:[self dateViewFrame]];
-    [[_dateViewController view] setNeedsDisplay:YES];
-
-    [_tasksViewBox setFrame:[self tasksViewFrame]];
-    [_tasksViewBox setNeedsDisplay:YES];
-
-    [_rightNowViewBox setFrame:[self rightNowViewFrame]];
-    [_rightNowViewBox setNeedsDisplay:YES];
-
-    NSRect weekViewFrame = [self weekViewFrame];
-    [_weekViewController view].heightOfAllDayPartOfColumn = [[NSUserDefaults standardUserDefaults] floatForKey:@"AllDayViewHeight"];
-    [[_weekViewController view] setFrame:weekViewFrame];
-    [[_weekViewController view] setHidden:NO];
-    [[_weekViewController view] setNeedsDisplay:YES];
+    [self _applyNormalOrCustomSizeToViews];
 }
 
 - (void)_updateFrame
