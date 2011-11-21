@@ -24,6 +24,9 @@ static NSString* const _WLEndHourKey = @"endHour";
 static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 
 
+static const CGFloat XSpaceBetweenEvents = 2.0f;
+
+
 #define IS_EQ_F(a, b) (BOOL)(fabsf((b) - (a)) < FLT_EPSILON)
 
 #define IS_LESS_OR_EQ_F(a, b) (BOOL)((a) <= (b) || IS_EQ_F(a, b))
@@ -126,7 +129,7 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 
 - (NSUInteger)maximumNumberOfColumns
 {
-    NSUInteger n = self.bounds.size.width / [WLCalendarEventLayer minimumHumanVisibleWidth];
+    NSUInteger n = (self.bounds.size.width + XSpaceBetweenEvents) / ([WLCalendarEventLayer minimumHumanVisibleWidth] + XSpaceBetweenEvents);
     n = MAX(n, (NSUInteger)1); // at least 1 column
     return n;
 }
@@ -566,13 +569,12 @@ static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
     // Traverse tree and calculate frames.
     for (NSTreeNode *rowNode in [_eventsLayoutTreeRootNode childNodes])
     {
-        static const CGFloat XSpaceBetweenEvents = 2.0f;
         static const CGFloat CornerRadius = 5.0f;
 
         NSArray *columnNodes = [rowNode childNodes];
         NSUInteger n = [columnNodes count];
-        CGFloat columnWidth = fmaxf((self.bounds.size.width - XSpaceBetweenEvents * (n - 1)) / n,
-                                    [WLCalendarEventLayer minimumHumanVisibleWidth]);
+        CGFloat columnWidth = floorf(fmaxf((self.bounds.size.width - XSpaceBetweenEvents * (n - 1)) / n,
+                                    [WLCalendarEventLayer minimumHumanVisibleWidth]));
         BOOL shouldRoundCorners = [columnNodes count] > 1;
         [columnNodes enumerateObjectsUsingBlock:^(NSTreeNode *columnNode, NSUInteger columnIdx, BOOL *stop)
         {
