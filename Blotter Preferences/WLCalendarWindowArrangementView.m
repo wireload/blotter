@@ -571,23 +571,23 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     NSPoint locationInCalendarLayer = NSPointFromCGPoint([[self layer] convertPoint:NSPointToCGPoint(aLocation) toLayer:_calendarWindowLayer]);
     if (self.arrangementMode & WLCalendarWindowResizingArrangement)
     {
-        if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLTopLeftEdgeFrameKey] rectValue]))
+        if (NSPointInRect(locationInCalendarLayer, NSOffsetRect([[_calendarWindowLayer valueForKey:_WLTopLeftEdgeFrameKey] rectValue], 0.0f, -1.0f)))
             return WLCalendarWindowTopLeftEdge;
-        else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLTopCenterEdgeFrameKey] rectValue]))
+        else if (NSPointInRect(locationInCalendarLayer, NSOffsetRect([[_calendarWindowLayer valueForKey:_WLTopCenterEdgeFrameKey] rectValue], 0.0f, -1.0f)))
             return WLCalendarWindowTopCenterEdge;
-        else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLTopRightEdgeFrameKey] rectValue]))
+        else if (NSPointInRect(locationInCalendarLayer, NSOffsetRect([[_calendarWindowLayer valueForKey:_WLTopRightEdgeFrameKey] rectValue], 0.0f, -1.0f)))
             return WLCalendarWindowTopRightEdge;
-        else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLCenterLeftEdgeFrameKey] rectValue]))
+        else if (NSPointInRect(locationInCalendarLayer, NSOffsetRect([[_calendarWindowLayer valueForKey:_WLCenterLeftEdgeFrameKey] rectValue], 0.0f, -1.0f)))
             return WLCalendarWindowCenterLeftEdge;
-        else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLCenterCenterEdgeFrameKey] rectValue]))
+        else if (NSPointInRect(locationInCalendarLayer, NSOffsetRect([[_calendarWindowLayer valueForKey:_WLCenterCenterEdgeFrameKey] rectValue], 0.0f, -1.0f)))
             return WLCalendarWindowCenterCenterEdge;
-        else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLCenterRightEdgeFrameKey] rectValue]))
+        else if (NSPointInRect(locationInCalendarLayer, NSOffsetRect([[_calendarWindowLayer valueForKey:_WLCenterRightEdgeFrameKey] rectValue], 0.0f, -1.0f)))
             return WLCalendarWindowCenterRightEdge;
-        else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLBottomLeftEdgeKey] rectValue]))
+        else if (NSPointInRect(locationInCalendarLayer, NSOffsetRect([[_calendarWindowLayer valueForKey:_WLBottomLeftEdgeKey] rectValue], 0.0f, -1.0f)))
             return WLCalendarWindowBottomLeftEdge;
-        else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLBottomCenterEdgeKey] rectValue]))
+        else if (NSPointInRect(locationInCalendarLayer, NSOffsetRect([[_calendarWindowLayer valueForKey:_WLBottomCenterEdgeKey] rectValue], 0.0f, -1.0f)))
             return WLCalendarWindowBottomCenterEdge;
-        else if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLBottomRightEdgeKey] rectValue]))
+        else if (NSPointInRect(locationInCalendarLayer, NSOffsetRect([[_calendarWindowLayer valueForKey:_WLBottomRightEdgeKey] rectValue], 0.0f, -1.0f)))
             return WLCalendarWindowBottomRightEdge;
         else
             return -1;
