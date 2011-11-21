@@ -45,7 +45,7 @@ static WLNewEventWindowController *_sharedInstance;
 
 - (void)setSelectedCalCalendarIndex:(NSUInteger)newSelectedCalCalendarIndex
 {
-    [[NSUserDefaults standardUserDefaults] setObject:[[self.calendarController.calCalendars objectAtIndex:newSelectedCalCalendarIndex] uid] forKey:@"uidOfLastSelectedCalendarInEvents"];
+    [[NSUserDefaults standardUserDefaults] setObject:[[self.calendarController.calEventCalendars objectAtIndex:newSelectedCalCalendarIndex] uid] forKey:@"uidOfLastSelectedCalendarInEvents"];
 }
 
 - (NSUInteger)selectedCalCalendarIndex
@@ -54,7 +54,7 @@ static WLNewEventWindowController *_sharedInstance;
     NSString *lastSelectedCalendar = [[NSUserDefaults standardUserDefaults] objectForKey:@"uidOfLastSelectedCalendarInEvents"];
     if (lastSelectedCalendar != nil)
     {
-        selectedCalCalendarIndex = [self.calendarController.calCalendars indexOfObjectPassingTest:^BOOL(CalCalendar *calCalendar, NSUInteger idx, BOOL *stop) {
+        selectedCalCalendarIndex = [self.calendarController.calEventCalendars indexOfObjectPassingTest:^BOOL(CalCalendar *calCalendar, NSUInteger idx, BOOL *stop) {
             return [calCalendar.uid isEqualToString:lastSelectedCalendar];
         }];
         if (selectedCalCalendarIndex == NSNotFound)
@@ -82,7 +82,7 @@ static WLNewEventWindowController *_sharedInstance;
 
 - (BOOL)canCreateEvent
 {
-    return ([self.calendarController.calCalendars count] > 0);
+    return ([self.calendarController.calEventCalendars count] > 0);
 }
 
 - (void)reset
@@ -108,7 +108,7 @@ static WLNewEventWindowController *_sharedInstance;
     event.startDate = [_startDatePicker dateValue];
     event.endDate = [_endDatePicker dateValue];
 
-    event.calendar = [self.calendarController.calCalendars objectAtIndex:self.selectedCalCalendarIndex];
+    event.calendar = [self.calendarController.calEventCalendars objectAtIndex:self.selectedCalCalendarIndex];
 
     NSError *error = nil;
     if ([[CalCalendarStore defaultCalendarStore] saveEvent:event span:CalSpanThisEvent error:&error])
