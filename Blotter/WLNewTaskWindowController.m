@@ -38,7 +38,7 @@ static WLNewTaskWindowController *_sharedInstance;
 
 - (void)setSelectedCalCalendarIndex:(NSUInteger)newSelectedCalCalendarIndex
 {
-    [[NSUserDefaults standardUserDefaults] setObject:[[self.calendarController.calCalendars objectAtIndex:newSelectedCalCalendarIndex] uid] forKey:@"uidOfLastSelectedCalendarInTasks"];
+    [[NSUserDefaults standardUserDefaults] setObject:[[self.calendarController.calReminderCalendars objectAtIndex:newSelectedCalCalendarIndex] uid] forKey:@"uidOfLastSelectedCalendarInTasks"];
 }
 
 - (NSUInteger)selectedCalCalendarIndex
@@ -47,7 +47,7 @@ static WLNewTaskWindowController *_sharedInstance;
     NSString *lastSelectedCalendar = [[NSUserDefaults standardUserDefaults] objectForKey:@"uidOfLastSelectedCalendarInTasks"];
     if (lastSelectedCalendar != nil)
     {
-        selectedCalCalendarIndex = [self.calendarController.calCalendars indexOfObjectPassingTest:^BOOL(CalCalendar *calCalendar, NSUInteger idx, BOOL *stop) {
+        selectedCalCalendarIndex = [self.calendarController.calReminderCalendars indexOfObjectPassingTest:^BOOL(CalCalendar *calCalendar, NSUInteger idx, BOOL *stop) {
             return [calCalendar.uid isEqualToString:lastSelectedCalendar];
         }];
         if (selectedCalCalendarIndex == NSNotFound)
@@ -75,7 +75,7 @@ static WLNewTaskWindowController *_sharedInstance;
 
 - (BOOL)canCreateTask
 {
-    return ([self.calendarController.calCalendars count] > 0);
+    return ([self.calendarController.calReminderCalendars count] > 0);
 }
 
 - (void)reset
@@ -97,7 +97,7 @@ static WLNewTaskWindowController *_sharedInstance;
         task.dueDate = [_dueDatePicker dateValue];
     task.priority = [[_priorityPopUp selectedItem] tag];
 
-    task.calendar = [self.calendarController.calCalendars objectAtIndex:self.selectedCalCalendarIndex];
+    task.calendar = [self.calendarController.calReminderCalendars objectAtIndex:self.selectedCalCalendarIndex];
 
     NSError *error = nil;
     if ([[CalCalendarStore defaultCalendarStore] saveTask:task error:&error])

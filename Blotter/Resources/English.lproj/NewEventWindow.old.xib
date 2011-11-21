@@ -61,7 +61,7 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSCustomView" id="1015655719">
 							<reference key="NSNextResponder" ref="675070131"/>
-							<int key="NSvFlags">4386</int>
+							<int key="NSvFlags">4370</int>
 							<string key="NSFrame">{{33, 164}, {201, 28}}</string>
 							<reference key="NSSuperview" ref="675070131"/>
 							<reference key="NSWindow"/>
@@ -532,36 +532,36 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">content: calendarController.calCalendars</string>
+						<string key="label">content: calendarController.calEventCalendars</string>
 						<reference key="source" ref="408232026"/>
 						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector" id="432498570">
+						<object class="NSNibBindingConnector" key="connector" id="311845233">
 							<reference key="NSSource" ref="408232026"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">content: calendarController.calCalendars</string>
+							<string key="NSLabel">content: calendarController.calEventCalendars</string>
 							<string key="NSBinding">content</string>
-							<string key="NSKeyPath">calendarController.calCalendars</string>
+							<string key="NSKeyPath">calendarController.calEventCalendars</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">327</int>
+					<int key="connectionID">347</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">contentValues: calendarController.calCalendars.title</string>
+						<string key="label">contentValues: calendarController.calEventCalendars.title</string>
 						<reference key="source" ref="408232026"/>
 						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector" id="152407274">
+						<object class="NSNibBindingConnector" key="connector" id="467866692">
 							<reference key="NSSource" ref="408232026"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">contentValues: calendarController.calCalendars.title</string>
+							<string key="NSLabel">contentValues: calendarController.calEventCalendars.title</string>
 							<string key="NSBinding">contentValues</string>
-							<string key="NSKeyPath">calendarController.calCalendars.title</string>
-							<reference key="NSPreviousConnector" ref="432498570"/>
+							<string key="NSKeyPath">calendarController.calEventCalendars.title</string>
+							<reference key="NSPreviousConnector" ref="311845233"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">332</int>
+					<int key="connectionID">348</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -574,11 +574,11 @@
 							<string key="NSLabel">selectedIndex: selectedCalCalendarIndex</string>
 							<string key="NSBinding">selectedIndex</string>
 							<string key="NSKeyPath">selectedCalCalendarIndex</string>
-							<reference key="NSPreviousConnector" ref="152407274"/>
+							<reference key="NSPreviousConnector" ref="467866692"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">335</int>
+					<int key="connectionID">349</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -987,7 +987,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">335</int>
+			<int key="maxID">349</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
