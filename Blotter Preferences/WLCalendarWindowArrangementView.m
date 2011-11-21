@@ -789,8 +789,10 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 {
     if (_isPositioning)
         [self continuePositioningAtPoint:[self convertPoint:[anEvent locationInWindow] fromView:nil] startPoint:_startPoint];
-    else if (_isResizing)
+    else if (_isResizing) {
         [self continueResizingAtPoint:[self convertPoint:[anEvent locationInWindow] fromView:nil] startPoint:_startPoint edge:_resizedEdge];
+        [self cursorUpdate:anEvent];
+    }
 }
 
 - (void)mouseUp:(NSEvent *)anEvent
@@ -811,15 +813,48 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
 - (void)cursorUpdate:(NSEvent *)anEvent
 {
+    static const CGFloat testDelta = 9999.00;
+    
     NSPoint locationInView = [self convertPoint:[anEvent locationInWindow] fromView:nil];
     WLCalendarWindowEdge edge = [self edgeForLocationInView:locationInView];
-    // Are we constrained any direction?
-    BOOL canMoveLeft = YES;
-    BOOL canMoveRight = YES;
-    if (edge == WLCalendarWindowCenterLeftEdge) {
-        
+
+    NSRect oldFrame = NSRectFromCGRect(_calendarWindowLayer.frame);
+
+    NSPoint comparisonPoint = [self convertPoint:[anEvent locationInWindow] fromView:nil];
+    comparisonPoint.x -= testDelta;
+    BOOL canMoveLeft = _isResizing && !NSEqualRects(oldFrame, [self frameAfterResizingAtPoint:comparisonPoint startPoint:_startPoint edge:_resizedEdge]);
+    comparisonPoint.x += 2 * testDelta;                                                
+    BOOL canMoveRight = _isResizing && !NSEqualRects(oldFrame, [self frameAfterResizingAtPoint:comparisonPoint startPoint:_startPoint edge:_resizedEdge]);
+    comparisonPoint.x -= testDelta;
+    comparisonPoint.y -= testDelta;
+    BOOL canMoveDown = _isResizing && !NSEqualRects(oldFrame, [self frameAfterResizingAtPoint:comparisonPoint startPoint:_startPoint edge:_resizedEdge]);
+    comparisonPoint.y += 2 * testDelta;
+    BOOL canMoveUp = _isResizing && !NSEqualRects(oldFrame, [self frameAfterResizingAtPoint:comparisonPoint startPoint:_startPoint edge:_resizedEdge]);
+
+    BOOL canMoveDiagonal = (canMoveUp || canMoveDown) && (canMoveLeft || canMoveRight);
+    
+    NSCursor *aCursor = nil;
+    if (!canMoveDiagonal) {
+        if (canMoveLeft && canMoveRight)
+            aCursor = [NSCursor resizeLeftRightCursor];
+        else if (canMoveLeft)
+            aCursor = [NSCursor resizeLeftCursor];
+        else if (canMoveRight)
+            aCursor = [NSCursor resizeRightCursor];
+        else if (canMoveUp && canMoveDown)
+            aCursor = [NSCursor resizeUpDownCursor];
+        else if (canMoveUp)
+            aCursor = [NSCursor resizeUpCursor];
+        else if (canMoveDown)
+            aCursor = [NSCursor resizeDownCursor];
     }
-    [[NSCursor WL_cursorForEdge:(WLCalendarWindowEdge)edge] set];
+    
+    // Diagonal cursors, or some reasonable default cursor if for some reason we can't resize in
+    // any direction.
+    if (aCursor == nil)
+        aCursor = [NSCursor WL_cursorForEdge:(WLCalendarWindowEdge)edge];   
+    
+    [aCursor set];
 }
 
 
