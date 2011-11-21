@@ -41,7 +41,12 @@ const CGFloat _WLXPadding = 10.0f;
 {
     // At least 2 side-by-side events should be visible on 1280x800.
     // Width of column depends on user's locale. The widest locale is South Korea.
-    return _WLXPadding + 20.0f;
+    // return _WLXPadding + 20.0f;
+    
+    // ...actually overlapping events look like a bug because their colours and text
+    // mix. It's better to keep trying to render them side by side, no matter how 
+    // small.
+    return 1.0;
 }
 
 - (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth
