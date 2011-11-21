@@ -50,7 +50,7 @@
 					<object class="NSTextField" id="322597722">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{17, 289}, {110, 17}}</string>
+						<string key="NSFrame">{{17, 289}, {251, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="655890231"/>
@@ -59,7 +59,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="96627044">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272630784</int>
-							<string key="NSContents">Calendar Layout:</string>
+							<string key="NSContents">Расположение элементов календаря:</string>
 							<object class="NSFont" key="NSSupport" id="724121852">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">13</double>
@@ -90,13 +90,13 @@
 					<object class="NSPopUpButton" id="655890231">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{129, 283}, {141, 26}}</string>
+						<string key="NSFrame">{{270, 283}, {153, 26}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="729899837"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="183428051">
-							<int key="NSCellFlags">-2076049856</int>
+							<int key="NSCellFlags">-2080244160</int>
 							<int key="NSCellFlags2">2048</int>
 							<reference key="NSSupport" ref="724121852"/>
 							<reference key="NSControlView" ref="655890231"/>
@@ -108,7 +108,7 @@
 							<int key="NSPeriodicInterval">75</int>
 							<object class="NSMenuItem" key="NSMenuItem" id="194107820">
 								<reference key="NSMenu" ref="234424734"/>
-								<string key="NSTitle">Normal</string>
+								<string key="NSTitle">Показывать все элементы</string>
 								<string key="NSKeyEquiv"/>
 								<int key="NSKeyEquivModMask">1048576</int>
 								<int key="NSMnemonicLoc">2147483647</int>
@@ -132,7 +132,7 @@
 									<reference ref="194107820"/>
 									<object class="NSMenuItem" id="351558779">
 										<reference key="NSMenu" ref="234424734"/>
-										<string key="NSTitle">To Do</string>
+										<string key="NSTitle">Показывать только "Напоминания"</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
@@ -144,7 +144,7 @@
 									</object>
 									<object class="NSMenuItem" id="349651646">
 										<reference key="NSMenu" ref="234424734"/>
-										<string key="NSTitle">Right Now</string>
+										<string key="NSTitle">Показывать только "Сейчас"</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
@@ -156,7 +156,7 @@
 									</object>
 									<object class="NSMenuItem" id="262675738">
 										<reference key="NSMenu" ref="234424734"/>
-										<string key="NSTitle">Custom</string>
+										<string key="NSTitle">Собственная настройка</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSMnemonicLoc">2147483647</int>
 										<reference key="NSOnImage" ref="690968072"/>
@@ -262,7 +262,6 @@
 																<string key="NSFrame">{{0, 117}, {263, 114}}</string>
 																<reference key="NSSuperview" ref="209585813"/>
 																<reference key="NSWindow"/>
-																<reference key="NSNextKeyView"/>
 																<int key="NSViewLayerContentsRedrawPolicy">2</int>
 																<string key="NSReuseIdentifierKey">_NS:549</string>
 																<string key="NSClassName">WLLayoutDayView</string>
