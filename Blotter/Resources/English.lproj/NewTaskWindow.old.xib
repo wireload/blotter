@@ -534,36 +534,36 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">content: calendarController.calCalendars</string>
+						<string key="label">content: calendarController.calReminderCalendars</string>
 						<reference key="source" ref="93078503"/>
 						<reference key="destination" ref="1021"/>
-						<object class="NSNibBindingConnector" key="connector" id="93525183">
+						<object class="NSNibBindingConnector" key="connector" id="536831807">
 							<reference key="NSSource" ref="93078503"/>
 							<reference key="NSDestination" ref="1021"/>
-							<string key="NSLabel">content: calendarController.calCalendars</string>
+							<string key="NSLabel">content: calendarController.calReminderCalendars</string>
 							<string key="NSBinding">content</string>
-							<string key="NSKeyPath">calendarController.calCalendars</string>
+							<string key="NSKeyPath">calendarController.calReminderCalendars</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">895</int>
+					<int key="connectionID">916</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">contentValues: calendarController.calCalendars.title</string>
+						<string key="label">contentValues: calendarController.calReminderCalendars.title</string>
 						<reference key="source" ref="93078503"/>
 						<reference key="destination" ref="1021"/>
-						<object class="NSNibBindingConnector" key="connector" id="577651886">
+						<object class="NSNibBindingConnector" key="connector" id="767662037">
 							<reference key="NSSource" ref="93078503"/>
 							<reference key="NSDestination" ref="1021"/>
-							<string key="NSLabel">contentValues: calendarController.calCalendars.title</string>
+							<string key="NSLabel">contentValues: calendarController.calReminderCalendars.title</string>
 							<string key="NSBinding">contentValues</string>
-							<string key="NSKeyPath">calendarController.calCalendars.title</string>
-							<reference key="NSPreviousConnector" ref="93525183"/>
+							<string key="NSKeyPath">calendarController.calReminderCalendars.title</string>
+							<reference key="NSPreviousConnector" ref="536831807"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">902</int>
+					<int key="connectionID">917</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -576,11 +576,11 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<string key="NSLabel">selectedIndex: selectedCalCalendarIndex</string>
 							<string key="NSBinding">selectedIndex</string>
 							<string key="NSKeyPath">selectedCalCalendarIndex</string>
-							<reference key="NSPreviousConnector" ref="577651886"/>
+							<reference key="NSPreviousConnector" ref="767662037"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">911</int>
+					<int key="connectionID">918</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -983,7 +983,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">911</int>
+			<int key="maxID">918</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
