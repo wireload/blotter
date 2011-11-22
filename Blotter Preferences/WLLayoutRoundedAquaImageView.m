@@ -27,14 +27,19 @@
 
 - (void)drawRect:(NSRect)aDirtyRect
 {
+    static const CGFloat RoundRadius = 1.25f;
+
     [NSGraphicsContext saveGraphicsState];
     NSRect imageFrame = [self bounds];
     // WLRecessedBoxShadow draws 1px horizontal white line at the bottom.
     imageFrame.origin.y += 1.0f;
     imageFrame.size.height -= 1.0f;
-    [[NSBezierPath bezierPathWithRoundedRect:imageFrame
-                                     xRadius:1.25f
-                                     yRadius:1.25] addClip];
+    if (NSWidth(imageFrame) >= RoundRadius && NSHeight(imageFrame) >= RoundRadius)
+    {
+        [[NSBezierPath bezierPathWithRoundedRect:imageFrame
+                                         xRadius:RoundRadius
+                                         yRadius:RoundRadius] setClip];
+    }
     NSURL *url = [[NSBundle bundleForClass:[self class]] URLForImageResource:@"Recreated-Aqua"];
     NSImage *img = [[NSImage alloc] initWithContentsOfURL:url];
     [img drawInRect:imageFrame
