@@ -31,6 +31,7 @@
     static dispatch_once_t onceToken;
     static NSImage *Images[9];
     static NSColor *Tile = nil;
+    static const CGFloat RoundRadius = 2.0f;
     dispatch_once(&onceToken, ^{
         NSBundle *bundle = [NSBundle bundleForClass:[self class]];
         Images[0] = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"layout-area-top-left"]];
@@ -63,9 +64,12 @@
 
     [NSGraphicsContext saveGraphicsState];
     NSRect tileFrame = NSInsetRect([self bounds], 2.0f, 1.0f);
-    [[NSBezierPath bezierPathWithRoundedRect:tileFrame
-                                     xRadius:2.0f
-                                     yRadius:2.0] addClip];
+    if (NSWidth(tileFrame) >= RoundRadius && NSHeight(tileFrame) >= RoundRadius)
+    {
+        [[NSBezierPath bezierPathWithRoundedRect:tileFrame
+                                         xRadius:RoundRadius
+                                         yRadius:RoundRadius] setClip];
+    }
     [Tile setFill];
     NSRectFillUsingOperation(tileFrame, NSCompositeSourceOver);
     [NSGraphicsContext restoreGraphicsState];
