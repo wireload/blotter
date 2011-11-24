@@ -178,6 +178,7 @@
     [nonResizingContentView setAutoresizingMask:(NSViewMaxYMargin | NSViewMaxXMargin)];
     [nonResizingContentView setFrameOrigin:NSMakePoint(0, 0)];
     [[prefsWindow contentView] addSubview:nonResizingContentView];
+    [nonResizingContentView release];
     
     [prefsWindow center];
     [self createPrefsToolbar];
