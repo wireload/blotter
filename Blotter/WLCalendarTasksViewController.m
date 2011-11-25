@@ -16,6 +16,7 @@
     [sortDescriptors release];
     [_tasks release];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self removeObserver:self forKeyPath:@"representedObject.calReminderCalendarsToDisplay"];
     [super dealloc];
 }
 
@@ -39,7 +40,7 @@
     NSParameterAssert([sortDescriptors count] > 0);
 
     [_tasks release];
-    NSPredicate *p = [CalCalendarStore taskPredicateWithUncompletedTasks:[[self representedObject] calReminderCalendars]];
+    NSPredicate *p = [CalCalendarStore taskPredicateWithUncompletedTasks:[[self representedObject] calReminderCalendarsToDisplay]];
     _tasks = [[[CalCalendarStore defaultCalendarStore] tasksWithPredicate:p] mutableCopy];
     [_tasks makeObjectsPerformSelector:@selector(WL_fixPriorityAndDueDate)];
     [_tasks sortUsingDescriptors:self.sortDescriptors];
@@ -56,7 +57,7 @@
     NSMutableArray *insertedTaskUIDs = [NSMutableArray arrayWithArray:[[aNotification userInfo] objectForKey:CalInsertedRecordsKey]];
     NSArray *updatedTaskUIDs = [[aNotification userInfo] objectForKey:CalUpdatedRecordsKey];
     NSMutableArray *deletedTaskUIDs = [NSMutableArray arrayWithArray:[[aNotification userInfo] objectForKey:CalDeletedRecordsKey]];
-    NSPredicate *calendarPredicate = [NSPredicate predicateWithFormat:@"(calendar in %@) AND (isCompleted == NO)", [[self representedObject] calReminderCalendars]];
+    NSPredicate *calendarPredicate = [NSPredicate predicateWithFormat:@"(calendar in %@) AND (isCompleted == NO)", [[self representedObject] calReminderCalendarsToDisplay]];
 
     [CATransaction begin];
     static const NSInteger CurrentCalendarIsChecked = 1 << 0;
@@ -185,7 +186,7 @@
     [v createLayers];
     [v release];
     [self fetchTasksAndReloadViewDataAnimated:NO];
-    [self addObserver:self forKeyPath:@"representedObject.calReminderCalendars" options:NSKeyValueObservingOptionNew context:NULL];
+    [self addObserver:self forKeyPath:@"representedObject.calReminderCalendarsToDisplay" options:NSKeyValueObservingOptionNew context:NULL];
     NSNotificationCenter *n = [NSNotificationCenter defaultCenter];
     [n addObserver:self
           selector:@selector(_calTasksDidChange:)

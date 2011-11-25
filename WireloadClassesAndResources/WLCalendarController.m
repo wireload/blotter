@@ -18,11 +18,17 @@
 
 @property (nonatomic, retain) NSDate *date;
 
-@property (nonatomic, copy) NSArray *calCalendars;
+@property (nonatomic, copy) NSArray *calCalendarsToDisplay;
 
-@property (nonatomic, copy) NSArray *calEventCalendars;
+@property (nonatomic, copy) NSArray *calEventCalendarsToDisplay;
 
-@property (nonatomic, copy) NSArray *calReminderCalendars;
+@property (nonatomic, copy) NSArray *calReminderCalendarsToDisplay;
+
+@property(nonatomic, copy) NSArray *calCalendars;
+
+@property(nonatomic, copy) NSArray *calEventCalendars;
+
+@property(nonatomic, copy) NSArray *calReminderCalendars;
 
 @end
 
@@ -102,7 +108,10 @@
 
         calendar = [[NSCalendar autoupdatingCurrentCalendar] retain];
         date = [[NSDate date] retain];
-        calCalendars = [[self _calCalendarsToDisplay] mutableCopy];
+        calCalendarsToDisplay = [[self _calCalendarsToDisplay] mutableCopy];
+        calEventCalendarsToDisplay = [[self calEventCalendarsFromCalCalendars:calCalendarsToDisplay] mutableCopy];
+        calReminderCalendarsToDisplay = [[self calReminderCalendarsFromCalCalendars:calCalendarsToDisplay] mutableCopy];
+        calCalendars = [[self _calCalendars] mutableCopy];
         calEventCalendars = [[self calEventCalendarsFromCalCalendars:calCalendars] mutableCopy];
         calReminderCalendars = [[self calReminderCalendarsFromCalCalendars:calCalendars] mutableCopy];
 
@@ -149,6 +158,9 @@
 {
     [calendar release];
     [date release];
+    [calCalendarsToDisplay release];
+    [calEventCalendarsToDisplay release];
+    [calReminderCalendarsToDisplay release];
     [calCalendars release];
     [calEventCalendars release];
     [calReminderCalendars release];
@@ -166,9 +178,27 @@
 #pragma mark Properties
 @synthesize calendar;
 @synthesize date;
+@synthesize calCalendarsToDisplay;
+@synthesize calEventCalendarsToDisplay;
+@synthesize calReminderCalendarsToDisplay;
 @synthesize calCalendars;
 @synthesize calEventCalendars;
 @synthesize calReminderCalendars;
+
++ (BOOL)automaticallyNotifiesObserversOfCalCalendarsToDisplay
+{
+    return NO;
+}
+
++ (BOOL)automaticallyNotifiesObserversOfCalEventCalendarsToDisplay
+{
+    return NO;
+}
+
++ (BOOL)automaticallyNotifiesObserversOfCalReminderCalendarsToDisplay
+{
+    return NO;
+}
 
 + (BOOL)automaticallyNotifiesObserversOfCalCalendars
 {
@@ -211,7 +241,7 @@
         NSUInteger index = [calCalendarDicts indexOfObject:c
                                              inSortedRange:NSMakeRange(0, [calCalendarDicts count])
                                                    options:NSBinarySearchingFirstEqual
-                                           usingComparator:^(id left, id right)
+                                           usingComparator:^(CalCalendar *left, CalCalendar *right)
         {
             return [[left valueForKey:@"uid"] compare:[right valueForKey:@"uid"]];
         }];
@@ -257,7 +287,7 @@
         NSUInteger index = [calCalendarDicts indexOfObject:c
                                              inSortedRange:NSMakeRange(0, [calCalendarDicts count])
                                                    options:NSBinarySearchingFirstEqual
-                                           usingComparator:^(id left, id right)
+                                           usingComparator:^(CalCalendar *left, CalCalendar *right)
     {
         return [[left valueForKey:@"uid"] compare:[right valueForKey:@"uid"]];
     }];
@@ -294,6 +324,46 @@
     }
     return reminderCalendars;
 }
+
+- (void)setCheck:(BOOL)newCheck forCalendarWithUID:(NSString *)anUID
+{
+    NSMutableArray *calendars = [[[[NSUserDefaults standardUserDefaults] objectForKey:@"Calendars"] mutableCopy] autorelease];
+
+    NSUInteger index = [calendars indexOfObject:[NSDictionary dictionaryWithObject:anUID forKey:@"uid"]
+                                  inSortedRange:NSMakeRange(0, [calendars count])
+                                        options:NSBinarySearchingFirstEqual
+                                usingComparator:^(id left, id right) {
+                                    return [[left objectForKey:@"uid"] compare:[right objectForKey:@"uid"]];
+                                }];
+    if (index != NSNotFound)
+    {
+        NSMutableDictionary *newCalendar = [[calendars objectAtIndex:index] mutableCopy];
+        [newCalendar setObject:[NSNumber numberWithBool:newCheck] forKey:@"check"];
+        [calendars replaceObjectAtIndex:index withObject:newCalendar];
+        [[NSUserDefaults standardUserDefaults] setObject:calendars forKey:@"Calendars"];
+        [newCalendar release];
+    }
+    else
+        NSLog(@"Cannot find calendar with UID %@. Please, contact the developers.", anUID);
+}
+
+- (BOOL)checkForCalendarWithUID:(NSString *)anUID
+{
+    NSArray *calendars = [[NSUserDefaults standardUserDefaults] objectForKey:@"Calendars"];
+    NSUInteger index = [calendars indexOfObject:[NSDictionary dictionaryWithObject:anUID forKey:@"uid"]
+                                  inSortedRange:NSMakeRange(0, [calendars count])
+                                        options:NSBinarySearchingFirstEqual
+                                usingComparator:^(id left, id right) {
+                                    return [[left objectForKey:@"uid"] compare:[right objectForKey:@"uid"]];
+                                }];
+    if (index != NSNotFound)
+        return [[[calendars objectAtIndex:index] objectForKey:@"check"] boolValue];
+    else
+    {
+        return NO;
+    }
+}
+
 
 
 #pragma mark Private
@@ -416,7 +486,7 @@
 - (NSArray *)_calCalendarsToDisplay
 {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"DisplayAllCalendars"])
-        return [[[CalCalendarStore defaultCalendarStore] calendars] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"uid" ascending:YES]]];
+        return [self _calCalendars];
     else
     {
         NSArray *selectedCalCalendarDicts = [[NSUserDefaults standardUserDefaults] arrayForKey:@"Calendars"];
@@ -434,6 +504,19 @@
     }
 }
 
+- (NSArray *)_calCalendars
+{
+    NSArray *selectedCalCalendarDicts = [[NSUserDefaults standardUserDefaults] arrayForKey:@"Calendars"];
+    NSMutableArray *calendars = [NSMutableArray arrayWithCapacity:[selectedCalCalendarDicts count]];
+    for (NSDictionary *d in selectedCalCalendarDicts)
+    {
+        CalCalendar *c = [[CalCalendarStore defaultCalendarStore] calendarWithUID:[d objectForKey:@"uid"]];
+        if (c != nil)
+            [calendars addObject:c];
+    }
+    return calendars;
+}
+
 
 #pragma mark NSObject
 
@@ -444,118 +527,63 @@
 {
     if ([aKeyPath isEqualToString:@"DisplayAllCalendars"] || [aKeyPath isEqualToString:@"Calendars"])
     {
-        NSIndexSet *inserted = nil;
-        NSIndexSet *deleted = nil;
-        NSIndexSet *updated = nil;
-        NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"uid" ascending:YES]];
-
-        // Update calCalendars
-        NSArray *calCalendarsToDisplay = [self _calCalendarsToDisplay];
-        [calCalendars WL_indexesOfDeletedObject:&deleted
-                       indexesOfInsertedObjects:&inserted
-                        indexesOfUpdatedObjects:&updated
-                                  toSortedArray:calCalendarsToDisplay
-                                sortDescriptors:sortDescriptors
-                                  updateChecker:^BOOL(CalCalendar *aFromArrayObject, CalCalendar *aToArrayObject)
+        static void (^UpdateCalendars)(WLCalendarController *aSelf, NSMutableArray *aProperty, NSString *aPropertyName, NSArray *aNewCalendars) = ^(WLCalendarController *aSelf, NSMutableArray *aProperty, NSString *aPropertyName, NSArray *aNewCalendars)
         {
-            return (![aFromArrayObject.color isEqual:aToArrayObject.color] ||
-                    ![aFromArrayObject.title isEqual:aToArrayObject.title]);
-        }];
+            NSIndexSet *inserted = nil;
+            NSIndexSet *deleted = nil;
+            NSIndexSet *updated = nil;
+            NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"uid" ascending:YES]];
 
-        if ([deleted count] > 0)
-        {
-            [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:deleted forKey:@"calCalendars"];
-            [calCalendars removeObjectsAtIndexes:deleted];
-            [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:deleted forKey:@"calCalendars"];
-        }
+            [aProperty WL_indexesOfDeletedObject:&deleted
+                        indexesOfInsertedObjects:&inserted
+                         indexesOfUpdatedObjects:&updated
+                                   toSortedArray:aNewCalendars
+                                 sortDescriptors:sortDescriptors
+                                   updateChecker:^BOOL(CalCalendar *aFromArrayObject, CalCalendar *aToArrayObject)
+                                                 {
+                                                     return (![aFromArrayObject.color isEqual:aToArrayObject.color] ||
+                                                             ![aFromArrayObject.title isEqual:aToArrayObject.title]);
+                                                 }];
 
-        if ([inserted count] > 0)
-        {
-            [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:inserted forKey:@"calCalendars"];
-            [calCalendars insertObjects:[calCalendarsToDisplay objectsAtIndexes:inserted] atIndexes:inserted];
-            [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:inserted forKey:@"calCalendars"];
-        }
+            if ([deleted count] > 0)
+            {
+                [aSelf willChange:NSKeyValueChangeRemoval valuesAtIndexes:deleted forKey:aPropertyName];
+                [aProperty removeObjectsAtIndexes:deleted];
+                [aSelf didChange:NSKeyValueChangeRemoval valuesAtIndexes:deleted forKey:aPropertyName];
+            }
 
-        if ([updated count] > 0)
-        {
-            [self willChange:NSKeyValueChangeReplacement valuesAtIndexes:updated forKey:@"calCalendars"];
-            [calCalendars replaceObjectsAtIndexes:updated withObjects:[calCalendarsToDisplay objectsAtIndexes:updated]];
-            [self didChange:NSKeyValueChangeReplacement valuesAtIndexes:updated forKey:@"calCalendars"];
-        }
+            if ([inserted count] > 0)
+            {
+                [aSelf willChange:NSKeyValueChangeInsertion valuesAtIndexes:inserted forKey:aPropertyName];
+                [aProperty insertObjects:[aNewCalendars objectsAtIndexes:inserted] atIndexes:inserted];
+                [aSelf didChange:NSKeyValueChangeInsertion valuesAtIndexes:inserted forKey:aPropertyName];
+            }
 
-        // Update calEventCalendars
-        inserted = nil;
-        deleted = nil;
-        updated = nil;
-        NSArray *calEventCalendarsToDisplay = [self calEventCalendarsFromCalCalendars:calCalendarsToDisplay];
-        [calEventCalendars WL_indexesOfDeletedObject:&deleted
-                            indexesOfInsertedObjects:&inserted
-                             indexesOfUpdatedObjects:&updated
-                                       toSortedArray:calEventCalendarsToDisplay
-                                     sortDescriptors:sortDescriptors
-                                       updateChecker:^BOOL(CalCalendar *aFromArrayObject, CalCalendar *aToArrayObject)
-        {
-            return (![aFromArrayObject.color isEqual:aToArrayObject.color] ||
-                    ![aFromArrayObject.title isEqual:aToArrayObject.title]);
-        }];
+            if ([updated count] > 0)
+            {
+                [aSelf willChange:NSKeyValueChangeReplacement valuesAtIndexes:updated forKey:aPropertyName];
+                [aProperty replaceObjectsAtIndexes:updated withObjects:[aNewCalendars objectsAtIndexes:updated]];
+                [aSelf didChange:NSKeyValueChangeReplacement valuesAtIndexes:updated forKey:aPropertyName];
+            }
+        };
 
-        if ([deleted count] > 0)
-        {
-            [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:deleted forKey:@"calEventCalendars"];
-            [calEventCalendars removeObjectsAtIndexes:deleted];
-            [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:deleted forKey:@"calEventCalendars"];
-        }
+        NSArray *newCalCalendarsToDisplay = [self _calCalendarsToDisplay];
+        UpdateCalendars(self, calCalendarsToDisplay, @"calCalendarsToDisplay", newCalCalendarsToDisplay);
 
-        if ([inserted count] > 0)
-        {
-            [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:inserted forKey:@"calEventCalendars"];
-            [calEventCalendars insertObjects:[calEventCalendarsToDisplay objectsAtIndexes:inserted] atIndexes:inserted];
-            [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:inserted forKey:@"calEventCalendars"];
-        }
+        NSArray *newCalEventCalendarsToDisplay = [self calEventCalendarsFromCalCalendars:newCalCalendarsToDisplay];
+        UpdateCalendars(self, calEventCalendarsToDisplay, @"calEventCalendarsToDisplay", newCalEventCalendarsToDisplay);
 
-        if ([updated count] > 0)
-        {
-            [self willChange:NSKeyValueChangeReplacement valuesAtIndexes:updated forKey:@"calEventCalendars"];
-            [calEventCalendars replaceObjectsAtIndexes:updated withObjects:[calEventCalendarsToDisplay objectsAtIndexes:updated]];
-            [self didChange:NSKeyValueChangeReplacement valuesAtIndexes:updated forKey:@"calEventCalendars"];
-        }
+        NSArray *newCalReminderCalendarsToDisplay = [self calReminderCalendarsFromCalCalendars:newCalCalendarsToDisplay];
+        UpdateCalendars(self, calReminderCalendarsToDisplay, @"calReminderCalendarsToDisplay", newCalReminderCalendarsToDisplay);
 
-        // Update calReminderCalendars
-        inserted = nil;
-        deleted = nil;
-        updated = nil;
-        NSArray *calReminderCalendarsToDisplay = [self calReminderCalendarsFromCalCalendars:calCalendarsToDisplay];
-        [calReminderCalendars WL_indexesOfDeletedObject:&deleted
-                                    indexesOfInsertedObjects:&inserted
-                                     indexesOfUpdatedObjects:&updated
-                                               toSortedArray:calReminderCalendarsToDisplay
-                                             sortDescriptors:sortDescriptors
-                                               updateChecker:^BOOL(CalCalendar *aFromArrayObject, CalCalendar *aToArrayObject)
-        {
-            return (![aFromArrayObject.color isEqual:aToArrayObject.color] ||
-                    ![aFromArrayObject.title isEqual:aToArrayObject.title]);
-        }];
+        NSArray *newCalCalendars = [self _calCalendars];
+        UpdateCalendars(self, calCalendars, @"calCalendars", newCalCalendars);
 
-        if ([deleted count] > 0)
-        {
-            [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:deleted forKey:@"calReminderCalendars"];
-            [calReminderCalendars removeObjectsAtIndexes:deleted];
-            [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:deleted forKey:@"calReminderCalendars"];
-        }
+        NSArray *newCalEventCalendars = [self calEventCalendarsFromCalCalendars:newCalCalendars];
+        UpdateCalendars(self, calEventCalendars, @"calEventCalendars", newCalEventCalendars);
 
-        if ([inserted count] > 0)
-        {
-            [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:inserted forKey:@"calReminderCalendars"];
-            [calReminderCalendars insertObjects:[calReminderCalendarsToDisplay objectsAtIndexes:inserted] atIndexes:inserted];
-            [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:inserted forKey:@"calReminderCalendars"];
-        }
-
-        if ([updated count] > 0)
-        {
-            [self willChange:NSKeyValueChangeReplacement valuesAtIndexes:updated forKey:@"calReminderCalendars"];
-            [calReminderCalendars replaceObjectsAtIndexes:updated withObjects:[calReminderCalendarsToDisplay objectsAtIndexes:updated]];
-            [self didChange:NSKeyValueChangeReplacement valuesAtIndexes:updated forKey:@"calReminderCalendars"];
-        }
+        NSArray *newCalReminderCalendars = [self calReminderCalendarsFromCalCalendars:newCalCalendars];
+        UpdateCalendars(self, calReminderCalendars, @"calReminderCalendars", newCalReminderCalendars);
     }
     else
         [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];
