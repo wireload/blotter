@@ -48,7 +48,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     [_columnsData release];
     [self removeObserver:self forKeyPath:@"representedObject.date"];
     [self removeObserver:self forKeyPath:@"representedObject.calendar"];
-    [self removeObserver:self forKeyPath:@"representedObject.calEventCalendars"];
+    [self removeObserver:self forKeyPath:@"representedObject.calEventCalendarsToDisplay"];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
@@ -223,7 +223,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     NSParameterAssert([self representedObject] != nil);
 
     NSCalendar *calendar = [[self representedObject] calendar];
-    NSArray *calEventCalendars = [[self representedObject] calEventCalendars];
+    NSArray *calEventCalendars = [[self representedObject] calEventCalendarsToDisplay];
     NSDateComponents *offset = [[NSDateComponents alloc] init];
     [offset setDay:[anIndexSet firstIndex]];
     NSDate *startDate = [[calendar dateByAddingComponents:offset toDate:aFirstDate options:0] WL_startOfDay:calendar];
@@ -466,7 +466,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     [v release];
     [self addObserver:self forKeyPath:@"representedObject.date" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:NULL];
     [self addObserver:self forKeyPath:@"representedObject.calendar" options:NSKeyValueObservingOptionNew context:NULL];
-    [self addObserver:self forKeyPath:@"representedObject.calEventCalendars" options:NSKeyValueObservingOptionNew context:NULL];
+    [self addObserver:self forKeyPath:@"representedObject.calEventCalendarsToDisplay" options:NSKeyValueObservingOptionNew context:NULL];
     NSNotificationCenter *n = [NSNotificationCenter defaultCenter];
     [n addObserver:self
           selector:@selector(_calEventsDidChange:)
@@ -494,7 +494,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 
 - (void)observeValueForKeyPath:(NSString *)aKeyPath ofObject:(id)anObject change:(NSDictionary *)aChange context:(void *)aContext
 {
-    if ([aKeyPath isEqual:@"representedObject.calendar"] || [aKeyPath isEqual:@"representedObject.calEventCalendars"])
+    if ([aKeyPath isEqual:@"representedObject.calendar"] || [aKeyPath isEqual:@"representedObject.calEventCalendarsToDisplay"])
     {
         [[self view] reloadDataAnimated:YES];
         [self highlightCurrentDayIfNeeded];

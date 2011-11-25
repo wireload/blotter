@@ -22,6 +22,9 @@ typedef enum
 @interface WLCalendarController : NSObject {
     NSCalendar *calendar;
     NSDate *date;
+    NSMutableArray *calCalendarsToDisplay;
+    NSMutableArray *calEventCalendarsToDisplay;
+    NSMutableArray *calReminderCalendarsToDisplay;
     NSMutableArray *calCalendars;
     NSMutableArray *calEventCalendars;
     NSMutableArray *calReminderCalendars;
@@ -35,23 +38,41 @@ typedef enum
 @property (nonatomic, retain, readonly) NSDate *date;
 
 /*!
+ @abstract      Returns calendars that are set to by a user to display.
  @discussion    Sorted by uid.
  You may observe it for insertion, deletion and replacement.
  Calendar is replaced if color or title of the new one do not match to the old one.
+ */
+@property (nonatomic, copy, readonly) NSArray *calCalendarsToDisplay;
+
+/*!
+ @abstract      Returns event calendars that are set to by a user to display.
+ @discussion    Sorted by uid.
+ You may observe it for insertion, deletion and replacement.
+ Calendar is replaced if color or title of the new one do not match to the old one.
+ */
+@property (nonatomic, copy, readonly) NSArray *calEventCalendarsToDisplay;
+
+/*!
+ @abstract      Returns reminder calendars that are set to by a user to display.
+ @discussion    Sorted by uid.
+ You may observe it for insertion, deletion and replacement.
+ Calendar is replaced if color or title of the new one do not match to the old one.
+ */
+@property (nonatomic, copy, readonly) NSArray *calReminderCalendarsToDisplay;
+
+/*!
+ @abstract      Returns all calendars represented by the Calendars setting.
  */
 @property (nonatomic, copy, readonly) NSArray *calCalendars;
 
 /*!
- @discussion    Sorted by uid.
- You may observe it for insertion, deletion and replacement.
- Calendar is replaced if color or title of the new one do not match to the old one.
+ @abstract      Returns all event calendars represented by the Calendars setting.
  */
 @property (nonatomic, copy, readonly) NSArray *calEventCalendars;
 
 /*!
- @discussion    Sorted by uid.
- You may observe it for insertion, deletion and replacement.
- Calendar is replaced if color or title of the new one do not match to the old one.
+ @abstract      Returns all reminder calendars represented by the Calendars setting.
  */
 @property (nonatomic, copy, readonly) NSArray *calReminderCalendars;
 
@@ -64,6 +85,10 @@ typedef enum
 - (NSArray *)calEventCalendarsFromCalCalendars:(NSArray *)aCalCalendars;
 
 - (NSArray *)calReminderCalendarsFromCalCalendars:(NSArray *)aCalCalendars;
+
+- (void)setCheck:(BOOL)newCheck forCalendarWithUID:(NSString *)anUID;
+
+- (BOOL)checkForCalendarWithUID:(NSString *)anUID;
 
 
 - (void)_scheduleNextMinuteTimer;
@@ -94,7 +119,15 @@ typedef enum
  */
 - (void)_calCalendarsDidChange:(NSNotification *)aNotification;
 
+/*!
+ @abstract  Returns calendars represented by the Calendars setting which "check" setting set to YES.
+ */
 - (NSArray *)_calCalendarsToDisplay;
+
+/*!
+ @abstract  Returns calendars represented by the Calendars setting.
+ */
+- (NSArray *)_calCalendars;
 
 @end
 
@@ -107,9 +140,9 @@ extern NSString* const WLTempTaskNotes;
 @interface CalCalendar (WLCalendarController)
 
 /*
- @discussion May cause to CalCalendarsChangedNotification, CalEventsChangedNotification, CalTasksChangedNotification,
- CalCalendarsChangedExternallyNotification, CalEventsChangedExternallyNotification, CalTasksChangedExternallyNotification.
- Ensure you remove observers before sending this method.
+ @discussion May cause CalCalendarsChangedNotification, CalEventsChangedNotification, CalTasksChangedNotification,
+ CalCalendarsChangedExternallyNotification, CalEventsChangedExternallyNotification or CalTasksChangedExternallyNotification to be posted.
+ Ensure you remove observers before sending this message.
  */
 - (WLCalendarType)WL_type;
 

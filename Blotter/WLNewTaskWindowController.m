@@ -17,7 +17,8 @@ static WLNewTaskWindowController *_sharedInstance;
 
 - (id)initWithWindow:(NSWindow *)window
 {
-    if (self = [super initWithWindow:window])
+    self = [super initWithWindow:window];
+    if (self != nil)
     {
     }
     return self;
@@ -38,7 +39,7 @@ static WLNewTaskWindowController *_sharedInstance;
 
 - (void)setSelectedCalCalendarIndex:(NSUInteger)newSelectedCalCalendarIndex
 {
-    [[NSUserDefaults standardUserDefaults] setObject:[[self.calendarController.calReminderCalendars objectAtIndex:newSelectedCalCalendarIndex] uid] forKey:@"uidOfLastSelectedCalendarInTasks"];
+    [[NSUserDefaults standardUserDefaults] setObject:[[self.calendarController.calReminderCalendarsToDisplay objectAtIndex:newSelectedCalCalendarIndex] uid] forKey:@"uidOfLastSelectedCalendarInTasks"];
 }
 
 - (NSUInteger)selectedCalCalendarIndex
@@ -47,7 +48,7 @@ static WLNewTaskWindowController *_sharedInstance;
     NSString *lastSelectedCalendar = [[NSUserDefaults standardUserDefaults] objectForKey:@"uidOfLastSelectedCalendarInTasks"];
     if (lastSelectedCalendar != nil)
     {
-        selectedCalCalendarIndex = [self.calendarController.calReminderCalendars indexOfObjectPassingTest:^BOOL(CalCalendar *calCalendar, NSUInteger idx, BOOL *stop) {
+        selectedCalCalendarIndex = [self.calendarController.calReminderCalendarsToDisplay indexOfObjectPassingTest:^BOOL(CalCalendar *calCalendar, NSUInteger idx, BOOL *stop) {
             return [calCalendar.uid isEqualToString:lastSelectedCalendar];
         }];
         if (selectedCalCalendarIndex == NSNotFound)
@@ -75,7 +76,18 @@ static WLNewTaskWindowController *_sharedInstance;
 
 - (BOOL)canCreateTask
 {
-    return ([self.calendarController.calReminderCalendars count] > 0);
+    if ([self.calendarController.calReminderCalendarsToDisplay count] > 0)
+    {
+        NSUInteger indexOfEditableCalendar = [self.calendarController.calReminderCalendarsToDisplay indexOfObjectPassingTest:^(CalCalendar *c, NSUInteger index, BOOL *stop)
+                                                                                                                             {
+                                                                                                                                 return c.isEditable;
+                                                                                                                             }];
+        return indexOfEditableCalendar != NSNotFound;
+    }
+    else
+    {
+        return NO;
+    }
 }
 
 - (void)reset
@@ -97,7 +109,7 @@ static WLNewTaskWindowController *_sharedInstance;
         task.dueDate = [_dueDatePicker dateValue];
     task.priority = [[_priorityPopUp selectedItem] tag];
 
-    task.calendar = [self.calendarController.calReminderCalendars objectAtIndex:self.selectedCalCalendarIndex];
+    task.calendar = [self.calendarController.calReminderCalendarsToDisplay objectAtIndex:self.selectedCalCalendarIndex];
 
     NSError *error = nil;
     if ([[CalCalendarStore defaultCalendarStore] saveTask:task error:&error])
@@ -146,12 +158,12 @@ static WLNewTaskWindowController *_sharedInstance;
 
 + (NSSet *)keyPathsForValuesAffectingCanCreateTask
 {
-    return [NSSet setWithObject:@"calendarController"];
+    return [NSSet setWithObject:@"calendarController.calReminderCalendarsToDisplay"];
 }
 
 + (NSSet *)keyPathsForValuesAffectingSelectedCalCalendarIndex
 {
-    return [NSSet setWithObject:@"calendarController"];
+    return [NSSet setWithObject:@"calendarController.calReminderCalendarsToDisplay"];
 }
 
 @end

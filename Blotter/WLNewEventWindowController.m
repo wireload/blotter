@@ -21,7 +21,8 @@ static WLNewEventWindowController *_sharedInstance;
 
 - (id)initWithWindow:(NSWindow *)window
 {
-    if (self = [super initWithWindow:window])
+    self = [super initWithWindow:window];
+    if (self != nil)
     {
     }
     return self;
@@ -35,6 +36,7 @@ static WLNewEventWindowController *_sharedInstance;
     if (_locationViewObserver != nil)
         [[NSNotificationCenter defaultCenter] removeObserver:_locationViewObserver];
     [_datePickerValueBackup release];
+    [calendarController release];
     [super dealloc];
 }
 
@@ -45,7 +47,7 @@ static WLNewEventWindowController *_sharedInstance;
 
 - (void)setSelectedCalCalendarIndex:(NSUInteger)newSelectedCalCalendarIndex
 {
-    [[NSUserDefaults standardUserDefaults] setObject:[[self.calendarController.calEventCalendars objectAtIndex:newSelectedCalCalendarIndex] uid] forKey:@"uidOfLastSelectedCalendarInEvents"];
+    [[NSUserDefaults standardUserDefaults] setObject:[[self.calendarController.calEventCalendarsToDisplay objectAtIndex:newSelectedCalCalendarIndex] uid] forKey:@"uidOfLastSelectedCalendarInEvents"];
 }
 
 - (NSUInteger)selectedCalCalendarIndex
@@ -54,7 +56,7 @@ static WLNewEventWindowController *_sharedInstance;
     NSString *lastSelectedCalendar = [[NSUserDefaults standardUserDefaults] objectForKey:@"uidOfLastSelectedCalendarInEvents"];
     if (lastSelectedCalendar != nil)
     {
-        selectedCalCalendarIndex = [self.calendarController.calEventCalendars indexOfObjectPassingTest:^BOOL(CalCalendar *calCalendar, NSUInteger idx, BOOL *stop) {
+        selectedCalCalendarIndex = [self.calendarController.calEventCalendarsToDisplay indexOfObjectPassingTest:^BOOL(CalCalendar *calCalendar, NSUInteger idx, BOOL *stop) {
             return [calCalendar.uid isEqualToString:lastSelectedCalendar];
         }];
         if (selectedCalCalendarIndex == NSNotFound)
@@ -82,7 +84,18 @@ static WLNewEventWindowController *_sharedInstance;
 
 - (BOOL)canCreateEvent
 {
-    return ([self.calendarController.calEventCalendars count] > 0);
+    if ([self.calendarController.calEventCalendarsToDisplay count] > 0)
+    {
+        NSUInteger indexOfEditableCalendar = [self.calendarController.calEventCalendarsToDisplay indexOfObjectPassingTest:^(CalCalendar *c, NSUInteger index, BOOL *stop)
+                                                                                                                          {
+                                                                                                                              return c.isEditable;
+                                                                                                                          }];
+        return indexOfEditableCalendar != NSNotFound;
+    }
+    else
+    {
+        return NO;
+    }
 }
 
 - (void)reset
@@ -93,7 +106,7 @@ static WLNewEventWindowController *_sharedInstance;
     [(NSTextView *)_locationView setString:@""];
     [(NSTextView *)_titleView setString:NSLocalizedString(@"New Event", @"Default text for title field on the New Event panel")];
     [_isAllDayButton setState:NSOffState];
-    [_startDatePicker setDateValue:[[NSDate date] WL_nextHourDate]];    
+    [_startDatePicker setDateValue:[[NSDate date] WL_nextHourDate]];
     [_endDatePicker setDateValue:[[_startDatePicker dateValue] dateByAddingTimeInterval:_WLDefaultTimeDiff]];
     [(NSTextView *)_titleView selectAll:self];
     [_datePickerValueBackup release], _datePickerValueBackup = nil;
@@ -108,7 +121,7 @@ static WLNewEventWindowController *_sharedInstance;
     event.startDate = [_startDatePicker dateValue];
     event.endDate = [_endDatePicker dateValue];
 
-    event.calendar = [self.calendarController.calEventCalendars objectAtIndex:self.selectedCalCalendarIndex];
+    event.calendar = [self.calendarController.calEventCalendarsToDisplay objectAtIndex:self.selectedCalCalendarIndex];
 
     NSError *error = nil;
     if ([[CalCalendarStore defaultCalendarStore] saveEvent:event span:CalSpanThisEvent error:&error])
@@ -211,12 +224,12 @@ validateProposedDateValue:(NSDate **)proposedDateValue
 
 + (NSSet *)keyPathsForValuesAffectingCanCreateEvent
 {
-    return [NSSet setWithObject:@"calendarController"];
+    return [NSSet setWithObject:@"calendarController.calEventCalendarsToDisplay"];
 }
 
 + (NSSet *)keyPathsForValuesAffectingSelectedCalCalendarIndex
 {
-    return [NSSet setWithObject:@"calendarController"];
+    return [NSSet setWithObject:@"calendarController.calEventCalendarsToDisplay"];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
