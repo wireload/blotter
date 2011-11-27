@@ -129,7 +129,7 @@ static const CGFloat _WLTopMargin = 10.0f;
     WLCalendarEventLayer *l = [WLCalendarEventLayer layer];
     l.needsDisplayOnBoundsChange = YES;
 #ifndef DEBUG_LAYERS
-    l.contentsBackgroundOpacity = 0.2;
+    l.contentsBackgroundOpacity = 0.45;
 #endif
     return l;
 }

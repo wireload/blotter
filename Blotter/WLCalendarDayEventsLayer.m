@@ -177,7 +177,7 @@ static const CGFloat XSpaceBetweenEvents = 2.0f;
     l.anchorPoint = CGPointMake(0.0f, 0.0f);
     l.keepTextVisible = self.keepTextOfEventsVisible;
 #ifndef DEBUG_LAYERS
-    l.contentsBackgroundOpacity = 0.3f;
+    l.contentsBackgroundOpacity = 0.45f;
 #endif
     return l;
 }

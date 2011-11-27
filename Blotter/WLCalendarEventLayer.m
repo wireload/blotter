@@ -75,7 +75,9 @@ const CGFloat _WLXPadding = 10.0f;
 {
     CGContextSaveGState(aContext);
     CGColorRef backgroundColor = CGColorCreateCopyWithAlpha(self.contentsBackgroundColor, self.contentsBackgroundOpacity);
-    CGContextSetFillColorWithColor(aContext, backgroundColor);
+    NSColor *nsBackgroundColor = [NSColor WL_NSColorFromCGColor:backgroundColor];
+    nsBackgroundColor = [NSColor colorWithCalibratedHue:[nsBackgroundColor hueComponent] saturation:fminf(1.0, [nsBackgroundColor saturationComponent] * 1.05) brightness:fminf(1.0, [nsBackgroundColor brightnessComponent] * 1.05) alpha:self.contentsBackgroundOpacity];
+    CGContextSetFillColorWithColor(aContext, [nsBackgroundColor WL_CGColor]);
     if (self.cornerRadius == 0.0f)
         CGContextFillRect(aContext, CGRectMake(self.bounds.origin.x, self.bounds.origin.y + 1.0f, self.bounds.size.width, self.bounds.size.height - 2.0f) );
     else
@@ -85,13 +87,15 @@ const CGFloat _WLXPadding = 10.0f;
     CGContextSaveGState(aContext);
     CGColorSpaceRef colorSpace = CGColorGetColorSpace(self.contentsBackgroundColor);
     CGFloat locations[2] = {0.0f, 1.0f};
-    CGFloat components[8] = {1.0f, 1.0f, 1.0f, 0.6f * self.contentsBackgroundOpacity,
-        0.0f, 0.0f, 0.0f, 0.0f};
+    CGFloat components[8] = {
+        0.0f, 0.0f, 0.0f, 0.0f,
+        0.0f, 0.0f, 0.0f, 0.15f
+    };
     CGGradientRef whiteToTransparent = CGGradientCreateWithColorComponents(colorSpace,
                                                                            components,
                                                                            locations,
                                                                            sizeof(locations) / sizeof(CGFloat));
-    CGContextSetBlendMode(aContext, kCGBlendModeOverlay);
+    CGContextSetBlendMode(aContext, kCGBlendModeMultiply);
     CGContextDrawLinearGradient(aContext,
                                 whiteToTransparent,
                                 CGPointMake(self.bounds.origin.x, self.bounds.origin.y + 1.0f),
@@ -197,7 +201,7 @@ const CGFloat _WLXPadding = 10.0f;
 
 - (CGColorRef)_lineColor
 {
-    CGColorRef lineColor = CGColorCreateCopyWithAlpha([[NSColor whiteColor] WL_CGColor], self.contentsBackgroundOpacity);
+    CGColorRef lineColor = CGColorCreateCopyWithAlpha([[NSColor whiteColor] WL_CGColor], 0.25);
     return (CGColorRef)[(id)lineColor autorelease];
 }
 
