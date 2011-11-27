@@ -170,16 +170,14 @@ static const CGFloat XSpaceBetweenEvents = 2.0f;
 - (WLCalendarEventLayer *)_setupEventLayer
 {
     WLCalendarEventLayer *l = [WLCalendarEventLayer layer];
-    [CATransaction WL_performWithDisabledActions:^{
-        l.needsDisplayOnBoundsChange = YES;
-        l.masksToBounds = YES;
-        l.contentsGravity = kCAGravityBottom;
-        l.anchorPoint = CGPointMake(0.0f, 0.0f);
-        l.keepTextVisible = self.keepTextOfEventsVisible;
+    l.needsDisplayOnBoundsChange = YES;
+    l.masksToBounds = YES;
+    l.contentsGravity = kCAGravityBottom;
+    l.anchorPoint = CGPointMake(0.0f, 0.0f);
+    l.keepTextVisible = self.keepTextOfEventsVisible;
 #ifndef DEBUG_LAYERS
-        l.contentsBackgroundOpacity = 0.3f;
+    l.contentsBackgroundOpacity = 0.3f;
 #endif
-    }];
     return l;
 }
 
