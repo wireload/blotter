@@ -71,9 +71,9 @@
 
 + (NSColor *)WL_eventTextShadowColor
 {
-    return [NSColor colorWithCalibratedRed:47.0f / 255.0f
-                                     green:47.0f / 255.0f
-                                      blue:47.0f / 255.0f
+    return [NSColor colorWithCalibratedRed:0.0f / 255.0f
+                                     green:0.0f / 255.0f
+                                      blue:0.0f / 255.0f
                                      alpha:0.3f];
 }
 
