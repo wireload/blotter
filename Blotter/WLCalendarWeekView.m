@@ -641,7 +641,7 @@ static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLine
 
 #pragma mark Time Ruler
 
-static const CGFloat _WLYMarginBetweenTitleAndColumn = 5.0f;
+static const CGFloat _WLYMarginBetweenTitleAndColumn = 0.0f;
 
 static const CGFloat _WLYMarginBetweenAllDayAndDayPartsOfColumn = 8.0f;
 
@@ -672,7 +672,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndTimeRulerRoot = 5.0f;
 {
     CGFloat columnTitleHeightAndMargin = 0.0f;
     if (self.showTitle)
-    columnTitleHeightAndMargin = [self columnTitleFrame].size.height + _WLYMarginBetweenTitleAndColumn;
+        columnTitleHeightAndMargin = [self columnTitleFrame].size.height + _WLYMarginBetweenTitleAndColumn;
     return _timeRulerRootLayer.frame.size.height - columnTitleHeightAndMargin;
 }
 
@@ -780,7 +780,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
         height = fmaxf(height, r.size.height);
     }
     return NSIntegralRect(NSMakeRect(0.0f,
-                                     _WLYMarginBetweenTitleAndColumn,
+                                     0.0f,
                                      width,
                                      height));
 }
@@ -1298,9 +1298,19 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
                                  angle:90];
 
         NSString *dayName = [aLayer valueForKey:_WLDayBackgroundLayerTitleKey];
-        [dayName drawWithRect:[selfBlock columnTitleFrame]
+        NSDictionary *dayAttributes = [self _titleAttributesForColumnDayBackgroundLayer:aLayer];
+
+        // Vertically centre the title.
+        NSSize size = [dayName sizeWithAttributes:dayAttributes];
+        NSRect dayTextRect = [selfBlock columnTitleFrame];
+        // ...but push it 2px more downwards because it looks better given the way the first event
+        // in the day is half the height of an hour label down.
+        const CGFloat mysteriousExtraOffset = 2.0;
+        CGFloat verticalOffset = mysteriousExtraOffset + dayTextRect.size.height / 2.0 - size.height / 2.0;
+        dayTextRect.origin.y += verticalOffset;
+        [dayName drawWithRect:dayTextRect
                       options:_WLDayBackgroundTitleAttributes
-                   attributes:[self _titleAttributesForColumnDayBackgroundLayer:aLayer]];
+                   attributes:dayAttributes];
 
         [NSGraphicsContext restoreGraphicsState];
     };

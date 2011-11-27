@@ -31,6 +31,8 @@
 + (NSColor *)WL_timelineLineShadowColor;
 
 
++ (NSColor *)WL_eventLocationColor;
+
 + (NSColor *)WL_eventTextShadowColor;
 
 

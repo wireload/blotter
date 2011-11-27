@@ -13,12 +13,12 @@
 
 + (CTFontRef)WL_columnTitleFont
 {
-    return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica Neue"), 11.0f, NULL) autorelease];
+    return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("HelveticaNeue"), 11.0f, NULL) autorelease];
 }
 
 + (CTFontRef)WL_columnBoldTitleFont
 {
-    return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica Neue BOLD"), 11.0f, NULL) autorelease];
+    return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("HelveticaNeue-Bold"), 11.0f, NULL) autorelease];
 }
 
 + (NSFont *)WL_dateViewMonthDayFont
@@ -43,7 +43,7 @@
 
 + (CTFontRef)WL_eventTitleFont
 {
-    return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica Neue"), 10.0f, nil) autorelease];
+    return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("HelveticaNeue-Medium"), 10.0f, nil) autorelease];
 }
 
 + (CTFontRef)WL_eventLocationFont
@@ -53,12 +53,12 @@
 
 + (CTFontRef)WL_taskFont
 {
-    return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica Neue"), 15.0f, nil) autorelease];
+    return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("HelveticaNeue"), 15.0f, nil) autorelease];
 }
 
 + (CTFontRef)WL_timeRulerLabelFont
 {
-    return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("Helvetica Neue"), 10.0f, nil) autorelease];
+    return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("HelveticaNeue"), 10.0f, nil) autorelease];
 }
 
 @end

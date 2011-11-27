@@ -64,6 +64,11 @@
                                      alpha:1.0f];
 }
 
++ (NSColor *)WL_eventLocationColor
+{
+    return [NSColor colorWithCalibratedWhite:210.0f / 255.0f alpha:1.0f];
+}
+
 + (NSColor *)WL_eventTextShadowColor
 {
     return [NSColor colorWithCalibratedRed:47.0f / 255.0f

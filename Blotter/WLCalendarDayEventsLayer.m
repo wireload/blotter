@@ -11,6 +11,7 @@
 #import "WLCalendarDayEventsLayer.h"
 #import "WLCalendarEventLayer.h"
 #import "NSFont+WLCalendar.h"
+#import "NSColor+WLCalendar.h"
 
 
 static NSString* const _WLStartDateKey = @"startDate";
@@ -198,6 +199,8 @@ static const CGFloat XSpaceBetweenEvents = 2.0f;
     if ([[anEvent location] length])
     {
         [attr setObject:(id)[NSFont WL_eventLocationFont] forKey:(id)kCTFontAttributeName];
+        [attr setObject:(id)[[NSColor WL_eventLocationColor] WL_CGColor] forKey:(id)kCTForegroundColorAttributeName];
+
         aLayer.location = [[[NSAttributedString alloc] initWithString:[anEvent location] attributes:attr] autorelease];
     }
     else
@@ -592,7 +595,7 @@ static const CGFloat XSpaceBetweenEvents = 2.0f;
                 else
                     l.cornerRadius = 0.0f;
                 if (self.keepTextOfEventsVisible)
-                        [l setNeedsDisplay];
+                    [l setNeedsDisplay];
             }
         }];
     }

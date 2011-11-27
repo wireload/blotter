@@ -11,7 +11,7 @@
 #import "WLCalendarAllDayEventsLayer.h"
 #import "WLCalendarEventLayer.h"
 #import "NSFont+WLCalendar.h"
-
+#import "NSColor+WLCalendar.h"
 
 static NSString* const _WLCalendarKey = @"calendar";
 
@@ -152,6 +152,8 @@ static const CGFloat _WLTopMargin = 10.0f;
     if ([[anEvent location] length])
     {
         [attr setObject:(id)[NSFont WL_eventLocationFont] forKey:(id)kCTFontAttributeName];
+        [attr setObject:(id)[[NSColor WL_eventLocationColor] WL_CGColor] forKey:(id)kCTForegroundColorAttributeName];
+
         aLayer.location = [[[NSAttributedString alloc] initWithString:[anEvent location] attributes:attr] autorelease];
     }
     else
