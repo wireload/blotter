@@ -208,10 +208,11 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 
 - (void)setFrameSize:(NSSize)newSize
 {
-    [CATransaction WL_performWithDisabledActions:^{
-        [super setFrameSize:newSize];
-        [[self layer] layoutIfNeeded];
-    }];
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    [super setFrameSize:newSize];
+    [[self layer] layoutIfNeeded];
+    [CATransaction commit];
 }
 
 @end
