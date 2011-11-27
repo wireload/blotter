@@ -79,9 +79,9 @@ const CGFloat _WLXPadding = 10.0f;
     nsBackgroundColor = [NSColor colorWithCalibratedHue:[nsBackgroundColor hueComponent] saturation:fminf(1.0, [nsBackgroundColor saturationComponent] * 1.05) brightness:fminf(1.0, [nsBackgroundColor brightnessComponent] * 1.05) alpha:self.contentsBackgroundOpacity];
     CGContextSetFillColorWithColor(aContext, [nsBackgroundColor WL_CGColor]);
     if (self.cornerRadius == 0.0f)
-        CGContextFillRect(aContext, CGRectMake(self.bounds.origin.x, self.bounds.origin.y + 1.0f, self.bounds.size.width, self.bounds.size.height - 2.0f) );
+        CGContextFillRect(aContext, CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height) );
     else
-        CGContextFillRect(aContext, CGRectMake(self.bounds.origin.x + 1.0f, self.bounds.origin.y + 1.0f, self.bounds.size.width - 2.0f, self.bounds.size.height - 2.0f) );
+        CGContextFillRect(aContext, CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height) );
     CGColorRelease(backgroundColor);
 
     CGContextSaveGState(aContext);
@@ -98,8 +98,8 @@ const CGFloat _WLXPadding = 10.0f;
     CGContextSetBlendMode(aContext, kCGBlendModeMultiply);
     CGContextDrawLinearGradient(aContext,
                                 whiteToTransparent,
-                                CGPointMake(self.bounds.origin.x, self.bounds.origin.y + 1.0f),
-                                CGPointMake(CGRectGetMinX(self.bounds), CGRectGetMaxY(self.bounds) - 1.0f),
+                                CGPointMake(self.bounds.origin.x, self.bounds.origin.y),
+                                CGPointMake(CGRectGetMinX(self.bounds), CGRectGetMaxY(self.bounds)),
                                 kCGGradientDrawsBeforeStartLocation);
     CGGradientRelease(whiteToTransparent);
     CGContextRestoreGState(aContext);
@@ -112,8 +112,8 @@ const CGFloat _WLXPadding = 10.0f;
         CGContextSetShouldAntialias(aContext, NO);
         CGContextSetStrokeColorWithColor(aContext, [self _lineColor]);
         CGContextBeginPath(aContext);
-        CGContextMoveToPoint(aContext, self.bounds.origin.x + 1.0f, self.bounds.origin.y + 1.0f);
-        CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), self.bounds.origin.y);
+        CGContextMoveToPoint(aContext, self.bounds.origin.x, self.bounds.origin.y + 1.0f);
+        CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), self.bounds.origin.y + 1.0f);
         CGContextMoveToPoint(aContext, self.bounds.origin.x, CGRectGetMaxY(self.bounds));
         CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), CGRectGetMaxY(self.bounds));
         CGContextStrokePath(aContext);
