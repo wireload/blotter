@@ -22,14 +22,6 @@
     return YES;
 }
 
-- (void)drawRect:(NSRect)aDirtyRect
-{
-    [NSGraphicsContext saveGraphicsState];
-    [[NSColor WL_windowFrameBackgroundColor] set];
-    NSRectFill([self bounds]);
-    [NSGraphicsContext restoreGraphicsState];
-}
-
 @end
 
 
