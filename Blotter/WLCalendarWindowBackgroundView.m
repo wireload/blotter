@@ -86,4 +86,18 @@
     return YES;
 }
 
+- (void)addSubview:(NSView *)aView
+{
+    NSAssert([[self subviews] count] == 0, @"WLCalendarWindowBackgroundView can have only one subview");
+    [super addSubview:aView];
+}
+
+- (void)setFrameSize:(NSSize)newSize
+{
+    [super setFrameSize:newSize];
+    NSWindow *w = [self window];
+    NSView *realContentView = [[self subviews] lastObject];
+    [realContentView setFrame:[w contentRectForFrameRect:[w frame]]];
+}
+
 @end

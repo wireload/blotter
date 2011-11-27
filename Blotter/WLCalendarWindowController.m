@@ -384,9 +384,9 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     [CATransaction setDisableActions:YES];
     [CATransaction setCompletionBlock:^(void) {
         NSEnableScreenUpdates();
-        [window displayIfNeeded];
+        [self.window displayIfNeeded];
     }];
-    [window setFrame:windowFrame display:NO];
+    [self.window setFrame:windowFrame display:NO];
     [self _applyWindowSizeToViews];
     [CATransaction commit];
 }
@@ -447,8 +447,8 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
                                                                [[NSUserDefaults standardUserDefaults] floatForKey:@"DateViewHeight"] - _WLYMarginBetweenBoundsAndDate)];
     r.origin.x = fmaxf(NSMinX(bounds), fminf(NSMaxX(bounds), r.origin.x));
     r.origin.y = fmaxf(NSMinY(bounds) + _WLYMarginBetweenBoundsAndDate, fminf(NSMaxY(bounds), r.origin.y));
-    r.size.width = fmaxf(NSMinX(bounds), fminf(NSMaxX(bounds) - r.origin.x, r.size.width));
-    r.size.height = fmaxf(NSMinY(bounds), fminf(NSMaxY(bounds) - r.origin.y, r.size.height));
+    r.size.width = fminf(NSMaxX(bounds) - r.origin.x, r.size.width);
+    r.size.height = fminf(NSMaxY(bounds) - r.origin.y, r.size.height);
     return r;
 }
 
@@ -476,8 +476,8 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
                                                                [defaults floatForKey:@"TasksViewHeight"])];
     r.origin.x = fmaxf(NSMinX(bounds), fminf(NSMaxX(bounds), r.origin.x));
     r.origin.y = fmaxf(NSMinY(bounds), fminf(NSMaxY(bounds), r.origin.y));
-    r.size.width = fmaxf(NSMinX(bounds), fminf(NSMaxX(bounds) - r.origin.x, r.size.width));
-    r.size.height = fmaxf(NSMinY(bounds), fminf(NSMaxY(bounds) - r.origin.y, r.size.height));
+    r.size.width = fminf(NSMaxX(bounds) - r.origin.x, r.size.width);
+    r.size.height = fminf(NSMaxY(bounds) - r.origin.y, r.size.height);
     return r;
 }
 
@@ -494,8 +494,8 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
                                                                NSHeight(bounds) - NSMaxY([self tasksViewFrame]) - margin)];
     r.origin.x = fmaxf(NSMinX(bounds), fminf(NSMaxX(bounds), r.origin.x));
     r.origin.y = fmaxf(NSMinY(bounds) + margin, fminf(NSMaxY(bounds), r.origin.y));
-    r.size.width = fmaxf(NSMinX(bounds), fminf(NSMaxX(bounds) - r.origin.x, r.size.width));
-    r.size.height = fmaxf(NSMinY(bounds), fminf(NSMaxY(bounds) - r.origin.y, r.size.height));
+    r.size.width = fminf(NSMaxX(bounds) - r.origin.x, r.size.width);
+    r.size.height = fminf(NSMaxY(bounds) - r.origin.y, r.size.height);
     return r;
 }
 
@@ -507,12 +507,12 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
         infoViewWidth += _WLXMarginBetweenInfoAndWeek;
     NSRect r = [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds) + infoViewWidth,
                                                                NSMinY(bounds),
-                                                               NSMaxX(bounds) - NSMinX(bounds) - infoViewWidth,
+                                                               NSWidth(bounds) - infoViewWidth,
                                                                NSHeight(bounds))];
     r.origin.x = fmaxf(NSMinX(bounds), fminf(NSMaxX(bounds), r.origin.x));
     r.origin.y = fmaxf(NSMinY(bounds), fminf(NSMaxY(bounds), r.origin.y));
-    r.size.width = fmaxf(NSMinX(bounds), fminf(NSMaxX(bounds) - r.origin.x, r.size.width));
-    r.size.height = fmaxf(NSMinY(bounds), fminf(NSMaxY(bounds) - r.origin.y, r.size.height));
+    r.size.width = fminf(NSMaxX(bounds) - r.origin.x, r.size.width);
+    r.size.height = fminf(NSMaxY(bounds) - r.origin.y, r.size.height);
     return r;
 }
 

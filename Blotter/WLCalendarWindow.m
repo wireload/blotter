@@ -22,14 +22,6 @@
     return YES;
 }
 
-- (void)drawRect:(NSRect)aDirtyRect
-{
-    [NSGraphicsContext saveGraphicsState];
-    [[NSColor WL_windowFrameBackgroundColor] set];
-    NSRectFill([self bounds]);
-    [NSGraphicsContext restoreGraphicsState];
-}
-
 @end
 
 
@@ -120,7 +112,6 @@
         [_realContentView removeFromSuperview];
         _realContentView = aView;
         [_realContentView setFrame:[self contentRectForFrameRect:bounds]];
-        [_realContentView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
         [_realContentView setNeedsDisplay:YES];
         [frameView addSubview:_realContentView];
     }
