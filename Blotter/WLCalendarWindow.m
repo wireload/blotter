@@ -112,7 +112,6 @@
         [_realContentView removeFromSuperview];
         _realContentView = aView;
         [_realContentView setFrame:[self contentRectForFrameRect:bounds]];
-        [_realContentView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
         [_realContentView setNeedsDisplay:YES];
         [frameView addSubview:_realContentView];
     }

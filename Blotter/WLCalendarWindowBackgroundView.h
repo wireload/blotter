@@ -9,6 +9,12 @@
 #import <Cocoa/Cocoa.h>
 
 
+/*!
+ @abstract      Draws background of WLCalendarWindow.
+ @discussion    The role of this class is similar to the role of the private NSThemeFrame class.
+ CAN have only 1 subview.
+ @ownership     WLCalendarWindow
+ */
 @interface WLCalendarWindowBackgroundView : NSView
 
 + (CGFloat)borderWidth;
