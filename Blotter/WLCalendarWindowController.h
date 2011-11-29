@@ -117,9 +117,11 @@ extern NSSize const BLNormalMinimumSize;
 
 - (void)_applyNarrowSizeToViews;
 
-- (void)_applyNormalOrCustomSizeToViews;
+- (void)_applyNormalSizeToViews;
 
 - (void)_applyFullSizeToViews;
+
+- (void)_applyCustomSizeToViews;
 
 /*!
  @abstract Updates the controller's window frame.

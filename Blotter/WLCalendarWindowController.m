@@ -296,8 +296,10 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
             [self _applyNarrowSizeToViews];
             break;
         case BLCustomSize:
+            [self _applyCustomSizeToViews];
+            break;
         case BLNormalSize:
-            [self _applyNormalOrCustomSizeToViews];
+            [self _applyNormalSizeToViews];
             break;
         case BLFullSize:
             [self _applyFullSizeToViews];
@@ -310,24 +312,27 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     // Ignore width for info section, but don't overwrite it in user defaults.
     CGFloat width = [[self.window contentView] bounds].size.width;
 
-    NSRect r = [self dateViewFrame];
+    [self _applyCustomSizeToViews];
+
+    NSRect r = [[_dateViewController view] frame];
     r.size.width = width;
     [[_dateViewController view] setFrame:r];
     [[_dateViewController view] setNeedsDisplay:YES];
 
-    r = [self tasksViewFrame];
+    r = [_tasksViewBox frame];
     r.size.width = width;
     [_tasksViewBox setFrame:r];
     [_tasksViewBox setNeedsDisplay:YES];
 
-    r = [self rightNowViewFrame];
+    r = [_rightNowViewBox frame];
     r.size.width = width;
     [_rightNowViewBox setFrame:r];
     [_rightNowViewBox setNeedsDisplay:YES];
+
     [[_weekViewController view] setHidden:YES];
 }
 
-- (void)_applyNormalOrCustomSizeToViews
+- (void)_applyCustomSizeToViews
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
@@ -361,7 +366,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     NSRect weekViewFrame = [self weekViewFrame];
     [_weekViewController view].heightOfAllDayPartOfColumn = [defaults floatForKey:@"AllDayViewHeight"];
     [[_weekViewController view] setFrame:weekViewFrame];
-    
+
     // Sizes in defaults know nothing about margins. Take care of them here.
     NSSize minimumWeekViewSize = NSMakeSize([defaults floatForKey:@"MinimumWeekViewWidth"] - _WLXMarginBetweenInfoAndWeek,
                                             [defaults floatForKey:@"MinimumWeekViewHeight"]);
@@ -371,9 +376,14 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     [[_weekViewController view] setNeedsDisplay:YES];
 }
 
+- (void)_applyNormalSizeToViews
+{
+    [self _applyCustomSizeToViews];
+}
+
 - (void)_applyFullSizeToViews
 {
-    [self _applyNormalOrCustomSizeToViews];
+    [self _applyCustomSizeToViews];
 }
 
 - (void)_updateFrame
@@ -463,12 +473,12 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
         [defaults removeObserver:self forKeyPath:@"TasksViewHeight"];
         [defaults setFloat:[self defaultTasksViewHeight] forKey:@"TasksViewHeight"];
         [defaults addObserver:self forKeyPath:@"TasksViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
-    } 
+    }
     else if ([defaults integerForKey:@"CalendarLayout"] == WLCalendarToDoLayout)
     {
         [defaults removeObserver:self forKeyPath:@"TasksViewHeight"];
         [defaults setFloat:[self fullTasksViewHeight] forKey:@"TasksViewHeight"];
-        [defaults addObserver:self forKeyPath:@"TasksViewHeight" options:NSKeyValueObservingOptionNew context:NULL];        
+        [defaults addObserver:self forKeyPath:@"TasksViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
     }
     NSRect r = [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
                                                                NSMaxY([self dateViewFrame]),
