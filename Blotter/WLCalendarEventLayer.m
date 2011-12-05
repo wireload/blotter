@@ -75,7 +75,7 @@ const CGFloat _WLXPadding = 10.0f;
 {
     CGContextSaveGState(aContext);
     CGColorRef backgroundColor = CGColorCreateCopyWithAlpha(self.contentsBackgroundColor, self.contentsBackgroundOpacity);
-    NSColor *nsBackgroundColor = [NSColor WL_NSColorFromCGColor:backgroundColor];
+    NSColor *nsBackgroundColor = [[NSColor WL_NSColorFromCGColor:backgroundColor] colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
     nsBackgroundColor = [NSColor colorWithCalibratedHue:[nsBackgroundColor hueComponent] saturation:fminf(1.0, [nsBackgroundColor saturationComponent] * 1.05) brightness:fminf(1.0, [nsBackgroundColor brightnessComponent] * 1.05) alpha:self.contentsBackgroundOpacity];
     CGContextSetFillColorWithColor(aContext, [nsBackgroundColor WL_CGColor]);
     if (self.cornerRadius == 0.0f)
