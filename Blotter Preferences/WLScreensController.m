@@ -47,10 +47,11 @@ NSString* const WLScreenIdentifier = @"ScreenIdentifier";
     if (selectedScreenID != nil &&
         ![[screens valueForKey:WLScreenIdentifier] containsObject:selectedScreenID])
     {
+        NSString *screenName = NSLocalizedStringFromTableInBundle(@"Unplugged", nil, [NSBundle bundleForClass:[self class]], @"Name of unplugged monitor");
         NSDictionary *unpluggedScreen = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         selectedScreenID,                                              WLScreenIdentifier,
-                                         NSLocalizedString(@"Unplugged", @"Name of unplugged monitor"), WLScreenLocalizedName,
-                                         nil];
+                                                          selectedScreenID,   WLScreenIdentifier,
+                                                          screenName,         WLScreenLocalizedName,
+                                                          nil];
         [screens insertObject:unpluggedScreen atIndex:0];
     }
     return screens;
@@ -91,7 +92,7 @@ NSString* const WLScreenIdentifier = @"ScreenIdentifier";
     CGDirectDisplayID displayID = [[[self deviceDescription] objectForKey:@"NSScreenNumber"] unsignedIntValue];
     NSDictionary *deviceInfo = (NSDictionary *)IODisplayCreateInfoDictionary(CGDisplayIOServicePort(displayID), kIODisplayOnlyPreferredName);
     NSDictionary *localizedNames = [deviceInfo objectForKey:[NSString stringWithUTF8String:kDisplayProductName]];
-    
+
     NSString *deviceName = nil;
     if ([localizedNames count] > 0) {
         deviceName = [[[localizedNames objectForKey:[[localizedNames allKeys] objectAtIndex:0]] copy] autorelease];
@@ -99,7 +100,7 @@ NSString* const WLScreenIdentifier = @"ScreenIdentifier";
     else {
         deviceName = NSLocalizedString(@"Unknown screen", @"Placeholder when name of the screen cannot be given");
     }
-    
+
     [deviceInfo release];
     return deviceName;
 }
