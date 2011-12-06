@@ -59,7 +59,7 @@
     {
 #ifdef DEBUG_LAYERS
         [[NSColor greenColor] set];
-        NSRectFill(monthDayRect);
+        NSRectFill(monthDayFrame);
 #endif
         [self.monthDay drawInRect:monthDayFrame withAttributes:attributes];
     }
@@ -69,7 +69,7 @@
     {
 #ifdef DEBUG_LAYERS
         [[NSColor greenColor] set];
-        NSRectFill(monthAndYearRect);
+        NSRectFill(monthAndYearFrame);
 #endif
         [attributes setObject:[NSFont WL_dateViewMonthAndYearFont] forKey:NSFontAttributeName];
         [self.monthAndYear drawInRect:monthAndYearFrame withAttributes:attributes];
@@ -80,7 +80,7 @@
     {
 #ifdef DEBUG_LAYERS
         [[NSColor greenColor] set];
-        NSRectFill(weekdayRect);
+        NSRectFill(weekdayFrame);
 #endif
         [attributes setObject:[NSFont WL_dateViewWeekdayFont] forKey:NSFontAttributeName];
         [self.weekday drawInRect:weekdayFrame withAttributes:attributes];
