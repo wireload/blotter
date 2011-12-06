@@ -689,7 +689,9 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndTimeRulerRoot = 5.0f;
 {
     // It's important to layout time ruler root before scroll.
     _timeRulerRootLayer.frame = [self timeRulerRootFrame];
+    [_timeRulerRootLayer setNeedsLayout];
     [_timeRulerRootLayer WL_timeRulerScrollLayer].frame = [self timeRulerScrollFrame];
+    [[_timeRulerRootLayer WL_timeRulerScrollLayer] setNeedsLayout];
 }
 
 - (void)layoutTimeRulerLayer:(WLCalendarTimeRulerLayer *)aTimeRulerLayer
@@ -798,24 +800,29 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
 - (void)layoutColumnLayer:(CALayer *)aColumnLayer atIndex:(NSInteger)anIndex
 {
     aColumnLayer.frame = [self columnFrameAtIndex:anIndex];
+    [aColumnLayer setNeedsLayout];
 
     CALayer *allDayBackground = [aColumnLayer WL_allDayBackgroundLayer];
     if (self.showAllDayEvents)
     {
         allDayBackground.hidden = NO;
         allDayBackground.frame = [self allDayBackgroundFrame];
+        [allDayBackground setNeedsLayout];
         CALayer *allDay = [aColumnLayer WL_allDayLayer];
         // Background has 1px stroke
         allDay.frame = CGRectIntegral(CGRectInset(allDayBackground.bounds, 1.0f, 0.0f));
+        [allDay setNeedsLayout];
     }
     else
         allDayBackground.hidden = YES;
 
     CALayer *dayBackground = [aColumnLayer WL_dayBackgroundLayer];
     dayBackground.frame = [self dayBackgroundFrame];
+    [dayBackground setNeedsLayout];
 
     CAScrollLayer *dayScroll = [aColumnLayer WL_dayScrollLayer];
     dayScroll.frame = [self dayScrollFrame];
+    [dayScroll setNeedsLayout];
 }
 
 
@@ -837,6 +844,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
                                                               timeRulerRootFrame.origin.y,
                                                               _rootLayer.bounds.size.width - _timeRulerRootLayer.frame.size.width - _WLXMarginBetweenTimeRulerAndColumns,
                                                               [self dayScrollFrame].size.height));
+    [_timeIndicatorRootLayer setNeedsLayout];
 }
 
 - (void)layoutTimeIndicatorLayer
