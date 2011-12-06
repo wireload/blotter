@@ -135,7 +135,10 @@ const CGFloat _WLXPadding = 10.0f;
         CGContextSetAllowsFontSmoothing(aContext, YES);
         CGContextSetShouldAntialias(aContext, YES);
         CGContextSetAllowsAntialiasing(aContext, YES);
-        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0f), 0.0f, [[NSColor WL_eventTextShadowColor] WL_CGColor]);
+        if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
+            CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, -1.0f), 0.0f, [[NSColor WL_eventTextShadowColor] WL_CGColor]);
+        else
+            CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0f), 0.0f, [[NSColor WL_eventTextShadowColor] WL_CGColor]);
 
         CGFloat preferredTitleHeight = [self.title WL_preferredHeightWithWidth:self.bounds.size.width - _WLXPadding];
         if (preferredTitleHeight < titleAndLocationFrame.size.height)
