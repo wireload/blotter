@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		256AC3DA0F4B6AC300CF3369 /* DeskboardAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */; };
 		284064FC12834B98000816FF /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 284064FB12834B98000816FF /* CalendarStore.framework */; };
-		285B840913C0C6150042C813 /* Blotter-B9.icns in Resources */ = {isa = PBXBuildFile; fileRef = 285B840813C0C6150042C813 /* Blotter-B9.icns */; };
+		2898BE4F148E6FB5002C68EB /* Blotter-B10.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2898BE4E148E6FB5002C68EB /* Blotter-B10.icns */; };
 		28CB50F114603CEC00810395 /* glass-hud-bottom-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50E814603CEC00810395 /* glass-hud-bottom-left.png */; };
 		28CB50F214603CEC00810395 /* glass-hud-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50E914603CEC00810395 /* glass-hud-bottom.png */; };
 		28CB50F314603CEC00810395 /* glass-hud-bottom-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50EA14603CEC00810395 /* glass-hud-bottom-right.png */; };
@@ -238,7 +238,7 @@
 		256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeskboardAppDelegate.m; sourceTree = "<group>"; };
 		256AC3F00F4B6AF500CF3369 /* Deskboard_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deskboard_Prefix.pch; sourceTree = "<group>"; };
 		284064FB12834B98000816FF /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = System/Library/Frameworks/CalendarStore.framework; sourceTree = SDKROOT; };
-		285B840813C0C6150042C813 /* Blotter-B9.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Blotter-B9.icns"; sourceTree = "<group>"; };
+		2898BE4E148E6FB5002C68EB /* Blotter-B10.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Blotter-B10.icns"; sourceTree = "<group>"; };
 		28CB50E814603CEC00810395 /* glass-hud-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-bottom-left.png"; sourceTree = "<group>"; };
 		28CB50E914603CEC00810395 /* glass-hud-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-bottom.png"; sourceTree = "<group>"; };
 		28CB50EA14603CEC00810395 /* glass-hud-bottom-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-bottom-right.png"; sourceTree = "<group>"; };
@@ -517,6 +517,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2898BE4E148E6FB5002C68EB /* Blotter-B10.icns */,
 				E282E06D140448CF0007C401 /* calendar */,
 				E2F9E1D71322A4F4007598E2 /* glass-hud */,
 				E2E826C7145023A6007035E5 /* Localizable.strings */,
@@ -527,7 +528,6 @@
 				8D1107310486CEB800E47090 /* Blotter-Info.plist */,
 				E271E5B313377E6100BF7F2B /* blotter-status-bar.png */,
 				E271E5B413377E6100BF7F2B /* blotter-status-bar-active.png */,
-				285B840813C0C6150042C813 /* Blotter-B9.icns */,
 				28F69A1A129C1CAA00D4BB97 /* Credits.rtf */,
 				28F69CF4129CC12100D4BB97 /* Licenses.rtf */,
 			);
@@ -885,7 +885,6 @@
 				E27021A2133BA7610098CD79 /* glass-hud-textview-top-left.png in Resources */,
 				E27021A3133BA7610098CD79 /* glass-hud-textview-top-right.png in Resources */,
 				E27021A4133BA7610098CD79 /* glass-hud-textview-top.png in Resources */,
-				285B840913C0C6150042C813 /* Blotter-B9.icns in Resources */,
 				E28C418D13F081A1005789DD /* defaults.plist in Resources */,
 				E282E0781404494E0007C401 /* allday-top-left.png in Resources */,
 				E282E0791404494E0007C401 /* allday-top.png in Resources */,
@@ -948,6 +947,7 @@
 				28CB50F714603CEC00810395 /* glass-hud-top-left.png in Resources */,
 				28CB50F814603CEC00810395 /* glass-hud-top.png in Resources */,
 				28CB50F914603CEC00810395 /* glass-hud-top-right.png in Resources */,
+				2898BE4F148E6FB5002C68EB /* Blotter-B10.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
