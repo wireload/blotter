@@ -366,6 +366,7 @@
                                   viewFrameSize.width,
                                   viewFrameSize.height);
     [_calendarWindowView setFrame:[_layoutControl centerScanRect:viewFrame]];
+    [[_calendarWindowView layer] setNeedsLayout];
 }
 
 - (void)_layoutRootSplitViewWithParameters:(NSDictionary *)aParameters

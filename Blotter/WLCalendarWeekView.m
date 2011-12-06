@@ -696,6 +696,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndTimeRulerRoot = 5.0f;
 {
     CGSize timeRulerSize = [aTimeRulerLayer preferredFrameSize];
     [aTimeRulerLayer setValue:[NSNumber numberWithFloat:timeRulerSize.height] forKeyPath:@"frame.size.height"];
+    [aTimeRulerLayer setNeedsLayout];
 }
 
 
@@ -823,6 +824,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     WLCalendarTimeRulerLayer *timeRuler = [_timeRulerRootLayer WL_timeRulerLayer];
     CGFloat height = [timeRuler preferredFrameSize].height;
     [aDayLayer setValue:[NSNumber numberWithFloat:height] forKeyPath:@"frame.size.height"];
+    [aDayLayer setNeedsLayout];
 }
 
 

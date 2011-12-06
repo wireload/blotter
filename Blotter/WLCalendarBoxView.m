@@ -225,7 +225,9 @@ static const CGFloat _WLMysteriousExtraBottomSpace = 4.0f;
     [super setFrame:newFrameRect];
     [self.contentView setFrame:[self _contentFrame]];
     [self.contentView layer].mask.frame = NSRectToCGRect([self.contentView bounds]);
+    [[self.contentView layer] setNeedsLayout];
     [[self.contentView layer] layoutIfNeeded];
+    [[self.contentView layer].mask setNeedsLayout];
     [[self.contentView layer].mask layoutIfNeeded];
     [CATransaction commit];
 }

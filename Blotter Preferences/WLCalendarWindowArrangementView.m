@@ -131,6 +131,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
             [_navigationHelperAreas[i] release];
             [CATransaction WL_performWithDisabledActions:^{
                 _navigationHelperLayers[i].frame = NSRectToCGRect(f);
+                [_navigationHelperLayers[i] setNeedsLayout];
             }];
             if (NSPointInRect(aPoint, f))
                 _navigationHelperLayers[i].hidden = NO;
@@ -156,6 +157,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         else
             newFrame = [self centerScanRect:newFrame];
         _calendarWindowLayer.frame = NSRectToCGRect(newFrame);
+        [_calendarWindowLayer setNeedsLayout];
     }];
 }
 
@@ -170,19 +172,24 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
             {
                 isPositionSelected = YES;
                 _calendarWindowLayer.frame = NSRectToCGRect([self.delegate calendarWindowArrangement:self setPosition:i]);
+                [_calendarWindowLayer setNeedsLayout];
             }
             [self removeTrackingArea:_navigationHelperAreas[i]];
             _navigationHelperAreas[i] = nil;
             _navigationHelperLayers[i].hidden = YES;
         }
         if (!isPositionSelected)
+        {
             _calendarWindowLayer.frame = NSRectToCGRect([[_calendarWindowLayer valueForKey:_WLStartFrame] rectValue]);
+            [_calendarWindowLayer setNeedsLayout];
+        }
     }
     else
     {
         CGRect windowFrame = CGRectInset(_calendarWindowLayer.frame, self.edgeSize.width, self.edgeSize.height);
         windowFrame = NSRectToCGRect([self.delegate calendarWindowArrangement:self setFrame:NSRectFromCGRect(windowFrame)]);
         _calendarWindowLayer.frame = CGRectInset(windowFrame, -self.edgeSize.width, -self.edgeSize.height);
+        [_calendarWindowLayer setNeedsLayout];
     }
     _navigationLayer.hidden = YES;
 }
@@ -513,7 +520,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 {
     [CATransaction WL_performWithDisabledActions:^{
         _calendarWindowLayer.frame = NSRectToCGRect([self frameAfterResizingAtPoint:aPoint startPoint:aStartPoint edge:anEdge]);       
-
+        [_calendarWindowLayer setNeedsLayout];
         // Force an immediate layout within this disabled actions block so that we don't get a resize animation when the parts of the 9-part image realise they need to move later.
         [_calendarWindowLayer layoutIfNeeded];
     }];
@@ -524,6 +531,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
     CGRect windowFrame = CGRectInset(_calendarWindowLayer.frame, self.edgeSize.width, self.edgeSize.height);
     windowFrame = NSRectToCGRect([self.delegate calendarWindowArrangement:self setFrame:NSRectFromCGRect(windowFrame)]);
     _calendarWindowLayer.frame = CGRectInset(windowFrame, -self.edgeSize.width, -self.edgeSize.height);
+    [_calendarWindowLayer setNeedsLayout];
     _navigationLayer.hidden = YES;
     [_resizeHandlesLayer.sublayers makeObjectsPerformSelector:@selector(setNeedsDisplay)];
 }
@@ -650,10 +658,12 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
                                              1,
                                              [self bounds].size.width,
                                              [self bounds].size.height - 1);
+            [recessedLayer setNeedsLayout];
         }
         NSRect windowFrame = [self.delegate calendarWindowViewFrameOfCalendarWindowArrangement:self];
         windowFrame = NSInsetRect(windowFrame, -self.edgeSize.width, -self.edgeSize.height);
         _calendarWindowLayer.frame = NSRectToCGRect(windowFrame);
+        [_calendarWindowLayer setNeedsLayout];
     }
 }
 
@@ -957,6 +967,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
         _resizeHandlesLayer = [self setupResizeHandlesLayer];
         [_calendarWindowLayer addSublayer:_resizeHandlesLayer];
         _resizeHandlesLayer.frame = _calendarWindowLayer.bounds;
+        [_resizeHandlesLayer setNeedsLayout];
         _resizeHandlesLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
         _resizeHandlesLayer.opacity = 0.0;
 
@@ -1139,6 +1150,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
                 frame.origin.y = size.height - Margin.height - DotSpace - DotWidth - 1;
 
             sublayer.frame = frame;
+            [sublayer setNeedsLayout];
         }
     }] autorelease];
 
