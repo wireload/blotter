@@ -171,6 +171,8 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults removeObserver:self forKeyPath:@"Calendars"];
     [userDefaults removeObserver:self forKeyPath:@"DisplayAllCalendars"];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateCalendar) object:nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateDate) object:nil];
     [super dealloc];
 }
 
