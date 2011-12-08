@@ -55,7 +55,7 @@
             if (index != NSNotFound)
             {
                 NSDictionary *calDict = [[[calCalendarDicts objectAtIndex:index] retain] autorelease];
-                if ([calDict objectForKey:@"type"] == nil)
+                if ([[calDict objectForKey:@"type"] integerValue] == WLCalendarUnknownType)
                 {
                     // Add type to the dictionary.
                     NSMutableDictionary *d = [calDict mutableCopy];
@@ -171,6 +171,8 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults removeObserver:self forKeyPath:@"Calendars"];
     [userDefaults removeObserver:self forKeyPath:@"DisplayAllCalendars"];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateCalendar) object:nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateDate) object:nil];
     [super dealloc];
 }
 
@@ -269,10 +271,11 @@
         {
             case WLCalendarEventType:
             case WLCalendarBothType:
-                [eventCalendars addObject:c];
             case WLCalendarUnknownType:
-            case WLCalendarReminderType:
-                continue;
+                [eventCalendars addObject:c];
+                break;
+            default:
+                break;
         }
     }
     return eventCalendars;
@@ -316,10 +319,11 @@
         {
             case WLCalendarReminderType:
             case WLCalendarBothType:
-                [reminderCalendars addObject:c];
-            case WLCalendarEventType:
             case WLCalendarUnknownType:
-                continue;
+                [reminderCalendars addObject:c];
+                break;
+            default:
+                break;
         }
     }
     return reminderCalendars;
@@ -606,8 +610,23 @@ NSString* const WLTempTaskNotes = @"net.wireload.blotter.temptask";
 
     WLCalendarType type = WLCalendarUnknownType;
 
-    NSPredicate *allEventsPredicate = [CalCalendarStore eventPredicateWithStartDate:[NSDate distantPast]
-                                                                            endDate:[NSDate distantFuture]
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDate *startOfYear = nil;
+    NSDate *endOfYear = nil;
+    NSTimeInterval yearInterval = 0.0;
+    if ([calendar rangeOfUnit:NSYearCalendarUnit startDate:&startOfYear interval:&yearInterval forDate:[NSDate date]])
+    {
+        endOfYear = [startOfYear dateByAddingTimeInterval:yearInterval];
+    }
+    else
+    {
+        startOfYear = [NSDate distantPast];
+        endOfYear = [NSDate distantFuture];
+    }
+    [calendar release];
+
+    NSPredicate *allEventsPredicate = [CalCalendarStore eventPredicateWithStartDate:startOfYear
+                                                                            endDate:endOfYear
                                                                           calendars:[NSArray arrayWithObject:self]];
     NSArray *events = [[CalCalendarStore defaultCalendarStore] eventsWithPredicate:allEventsPredicate];
     if ([events count] > 0)
