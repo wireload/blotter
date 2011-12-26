@@ -423,10 +423,11 @@ static const NSUInteger _WLNumberOfDaysInWeek = 7;
     NSString *f = [[[_cache objectForKey:_WLColumnTitleFormatCacheKey] retain] autorelease];
     if (f == nil)
     {
+        NSCalendar *calendar = [[self representedObject] calendar];
         if (titleFormat == WLCalendarWeekViewWeekdayAndMonthdayTitleFormat)
-            f = [NSDateFormatter dateFormatFromTemplate:@"eeedMMM" options:0 locale:[NSLocale autoupdatingCurrentLocale]];
+            f = [NSDateFormatter dateFormatFromTemplate:@"eeedMMM" options:0 locale:[calendar locale]];
         else
-            f = [NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:[NSLocale autoupdatingCurrentLocale]];
+            f = [NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:[calendar locale]];
         [_cache setObject:f forKey:_WLColumnTitleFormatCacheKey];
     }
     return f;
@@ -540,6 +541,11 @@ static const NSUInteger _WLNumberOfDaysInWeek = 7;
 {
     if ([aKeyPath isEqual:@"representedObject.calendar"] || [aKeyPath isEqual:@"representedObject.calEventCalendarsToDisplay"])
     {
+        if ([aKeyPath isEqual:@"representedObject.calendar"])
+        {
+            self._columnTitleFormat = nil;
+            self._timeFormat = nil;
+        }
         [[self view] reloadDataAnimated:YES];
         [self highlightCurrentDayIfNeeded];
     }
