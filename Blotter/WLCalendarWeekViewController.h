@@ -69,6 +69,8 @@ typedef enum
 
 @property (nonatomic, retain) NSString *_columnTitleFormat;
 
+@property (nonatomic, retain) NSString *_timeFormat;
+
 /*!
  @abstract  Reloads data if there are only updated events.
  */

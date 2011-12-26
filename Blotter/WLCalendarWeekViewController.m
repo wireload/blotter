@@ -17,6 +17,8 @@ static NSString* const _WLDateFormatterCacheKey = @"dateFormatter";
 
 static NSString* const _WLColumnTitleFormatCacheKey = @"titleFormat";
 
+static NSString* const _WLTimeFormatCacheKey = @"timeFormat";
+
 
 static NSString* const _WLTitleKey = @"title";
 
@@ -267,9 +269,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
     [hourComponents setHour:aHour];
 
     NSDateFormatter *f = self._dateFormatter;
-    [f setCalendar:calendar];
-    [f setDateStyle:NSDateFormatterNoStyle];
-    [f setTimeStyle:NSDateFormatterShortStyle];
+    [f setDateFormat:self._timeFormat];
     return [f stringFromDate:[calendar dateFromComponents:hourComponents]];
 }
 
@@ -400,6 +400,7 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 #pragma mark Private
 @dynamic _dateFormatter;
 @dynamic _columnTitleFormat;
+@dynamic _timeFormat;
 
 - (NSDateFormatter *)_dateFormatter
 {
@@ -435,6 +436,49 @@ static const NSInteger _WLNumberOfDaysInWeek = 7;
 {
     NSParameterAssert(newFormat == nil);
     [_cache removeObjectForKey:_WLColumnTitleFormatCacheKey];
+}
+
+- (NSString *)_timeFormat
+{
+    NSString *f = [[[_cache objectForKey:_WLTimeFormatCacheKey] retain] autorelease];
+    if (f == nil)
+    {
+        NSCalendar *calendar = [[self representedObject] calendar];
+        NSDateFormatter *formatter = self._dateFormatter;
+        // A user may put anything into time formatting field: year, month, day etc.
+        // But we are only interested in showing hour, minute, second, AM/PM, time zone (whatever is set) and according delimiters.
+        // The idea is to get the standard date format for the user specified Short Time Style and remove all other format strings, like y, M or d.
+        [formatter setCalendar:calendar];
+        [formatter setDateStyle:NSDateFormatterNoStyle];
+        [formatter setTimeStyle:NSDateFormatterShortStyle];
+        NSMutableString *fixedFormat = [[[formatter dateFormat] mutableCopy] autorelease];
+        [fixedFormat replaceOccurrencesOfString:@"G" withString:@"" options:0 range:NSMakeRange(0, [fixedFormat length])];
+        [fixedFormat replaceOccurrencesOfString:@"y" withString:@"" options:0 range:NSMakeRange(0, [fixedFormat length])];
+        [fixedFormat replaceOccurrencesOfString:@"Y" withString:@"" options:0 range:NSMakeRange(0, [fixedFormat length])];
+        [fixedFormat replaceOccurrencesOfString:@"u" withString:@"" options:0 range:NSMakeRange(0, [fixedFormat length])];
+        [fixedFormat replaceOccurrencesOfString:@"Q" withString:@"" options:0 range:NSMakeRange(0, [fixedFormat length])];
+        [fixedFormat replaceOccurrencesOfString:@"q" withString:@"" options:0 range:NSMakeRange(0, [fixedFormat length])];
+        [fixedFormat replaceOccurrencesOfString:@"M" withString:@"" options:0 range:NSMakeRange(0, [fixedFormat length])];
+        [fixedFormat replaceOccurrencesOfString:@"L" withString:@"" options:0 range:NSMakeRange(0, [fixedFormat length])];
+        [fixedFormat replaceOccurrencesOfString:@"w" withString:@"" options:0 range:NSMakeRange(0, [fixedFormat length])];
+        [fixedFormat replaceOccurrencesOfString:@"W" withString:@"" options:0 range:NSMakeRange(0, [fixedFormat length])];
+        [fixedFormat replaceOccurrencesOfString:@"d" withString:@"" options:0 range:NSMakeRange(0, [fixedFormat length])];
+        [fixedFormat replaceOccurrencesOfString:@"D" withString:@"" options:0 range:NSMakeRange(0, [fixedFormat length])];
+        [fixedFormat replaceOccurrencesOfString:@"F" withString:@"" options:0 range:NSMakeRange(0, [fixedFormat length])];
+        [fixedFormat replaceOccurrencesOfString:@"g" withString:@"" options:0 range:NSMakeRange(0, [fixedFormat length])];
+        [fixedFormat replaceOccurrencesOfString:@"E" withString:@"" options:0 range:NSMakeRange(0, [fixedFormat length])];
+        [fixedFormat replaceOccurrencesOfString:@"e" withString:@"" options:0 range:NSMakeRange(0, [fixedFormat length])];
+        [fixedFormat replaceOccurrencesOfString:@"c" withString:@"" options:0 range:NSMakeRange(0, [fixedFormat length])];
+        f = [fixedFormat stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        [_cache setObject:f forKey:_WLTimeFormatCacheKey];
+    }
+    return f;
+}
+
+- (void)set_timeFormat:(NSString *)newFormat
+{
+    NSParameterAssert(newFormat == nil);
+    [_cache removeObjectForKey:_WLTimeFormatCacheKey];
 }
 
 - (void)_calEventsDidChange:(NSNotification *)aNotification
