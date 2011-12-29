@@ -129,7 +129,7 @@
         [self setShowsStateBy:NSContentsCellMask];
 
         // NSCell
-        [self setAlignment:NSLeftTextAlignment];
+        [self setAlignment:NSNaturalTextAlignment];
         [self setAllowsEditingTextAttributes:NO];
         [self setAllowsMixedState:NO];
         [self setAllowsUndo:YES];
