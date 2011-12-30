@@ -63,9 +63,9 @@
                                                                                               tokenAttributes);
                             truncationToken = CTLineCreateWithAttributedString(truncationString);
                             CFRelease(truncationString);
-                            // In case when adding truncation symbol to the end of line make it to exceed aRect.
+                            // In case when adding truncation symbol to the end of the line make it to exceed aRect.
                             CTLineRef truncatedTruncatedLine = CTLineCreateTruncatedLine(truncatedLine,
-                                                                                         aRect.size.width,
+                                                                                         aRect.size.width - origin.x,
                                                                                          kCTLineTruncationEnd,
                                                                                          truncationToken);
                             CFRelease(truncationToken);
