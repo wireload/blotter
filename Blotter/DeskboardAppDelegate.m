@@ -252,6 +252,8 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         [self showPreferences:self];
         [userDefaults setBool:NO forKey:@"ShowPreferencesAtStartUp"];
     }
+
+    [self.calendarWindowController.fadeController scheduleFadeOutTimer];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)aNotification
