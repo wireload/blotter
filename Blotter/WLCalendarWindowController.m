@@ -390,8 +390,8 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
     [CATransaction setCompletionBlock:^(void) {
-        NSEnableScreenUpdates();
         [self.window displayIfNeeded];
+        NSEnableScreenUpdates();
     }];
     [self.window setFrame:windowFrame display:NO];
     [self _applyWindowSizeToViews];
