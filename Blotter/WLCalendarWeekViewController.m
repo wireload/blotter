@@ -235,7 +235,23 @@ static const NSUInteger _WLNumberOfDaysInWeek = 7;
     NSPredicate *p = [CalCalendarStore eventPredicateWithStartDate:startDate
                                                            endDate:endDate
                                                          calendars:calEventCalendars];
-    return [[CalCalendarStore defaultCalendarStore] eventsWithPredicate:p];
+    // Assume there are a few calendars which events have the same UID.
+    // We need to remove duplicates and do that consistently, so that the events from only 1 calendar will appear.
+    NSMutableSet *eventUIDsToReturn = [NSMutableSet set];
+    NSMutableArray *events = [[[[CalCalendarStore defaultCalendarStore] eventsWithPredicate:p] mutableCopy] autorelease];
+    [events sortUsingComparator:^NSComparisonResult(CalEvent *e1, CalEvent *e2) {
+        return [e1.calendar.uid compare:e2.calendar.uid];
+    }];
+    // Since events are sorted by calendar UID, by getting the first event with unique UID we will both remove duplicates and achieve consistent.
+    NSMutableIndexSet *indexesOfEventsToDelete = [NSMutableIndexSet indexSet];
+    [events enumerateObjectsUsingBlock:^(CalEvent *e, NSUInteger idx, BOOL *stop) {
+        if (![eventUIDsToReturn containsObject:e.uid])
+            [eventUIDsToReturn addObject:e.uid];
+        else
+            [indexesOfEventsToDelete addIndex:idx];
+    }];
+    [events removeObjectsAtIndexes:indexesOfEventsToDelete];
+    return events;
 }
 
 
