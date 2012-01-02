@@ -73,7 +73,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 @synthesize calendarWindowController;
 
 
-#pragma mark Methodsj
+#pragma mark Methods
 
 - (IBAction)showPreferences:(id)aSender
 {
