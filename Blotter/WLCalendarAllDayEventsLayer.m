@@ -47,7 +47,8 @@ static const CGFloat _WLTopMargin = 10.0f;
     {
         NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:
                                eventLayer.name,             @"uid",
-                               [eventLayer.title string],  @"title", nil];
+                               [eventLayer.title string],   @"title",
+                               nil];
         [events addObject:event];
     }
     return events;
