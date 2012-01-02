@@ -186,53 +186,50 @@ const NSSize BLMinimumSize = {280, 215};
     if (aSize != BLCustomSize)
     {
         static const NSSize Margin = {.width = 14.0f, .height = 14.0f};
-        NSSize fullScreenSizeWithMargin = NSMakeSize(screenFrame.size.width - Margin.width * 2,
-                                                     screenFrame.size.height - Margin.height * 2);
+        screenFrame = NSInsetRect(screenFrame, Margin.width, Margin.height);
         switch (aSize) {
             case BLNarrowSize:
                 windowFrame.size.width = BLNarrowMinimumSize.width;
-                windowFrame.size.height = fminf(BLNarrowMinimumSize.height, fullScreenSizeWithMargin.height);
+                windowFrame.size.height = fminf(BLNarrowMinimumSize.height, NSHeight(screenFrame));
                 break;
             case BLNormalSize:
-                windowFrame.size.width = fmaxf(BLNormalMinimumSize.width, screenFrame.size.width / 2);
-                windowFrame.size.height = fminf(fmaxf(BLNormalMinimumSize.height, screenFrame.size.height / 2), fullScreenSizeWithMargin.height);
+                windowFrame.size.width = fmaxf(BLNormalMinimumSize.width, NSWidth(screenFrame) / 2);
+                windowFrame.size.height = fmaxf(BLNormalMinimumSize.height, NSHeight(screenFrame) / 2);
                 break;
             case BLFullSize:
-                windowFrame.size = fullScreenSizeWithMargin;
+                windowFrame.size = screenFrame.size;
                 break;
             default:
                 break;
         }
 
-        CGFloat px = Margin.width;
-        CGFloat py = Margin.height;
+        CGFloat px = 0.0f;
+        CGFloat py = 0.0f;
 
         if (aPosition == BLPositionTopCenter ||
             aPosition == BLPositionCenterCenter ||
             aPosition == BLPositionBottomCenter)
         {
-            px = floor(screenFrame.size.width / 2.0 - windowFrame.size.width / 2.0);
+            px = floor(NSWidth(screenFrame) / 2.0f - NSWidth(windowFrame) / 2.0f);
         }
-
-        if (aPosition == BLPositionTopRight ||
+        else if (aPosition == BLPositionTopRight ||
             aPosition == BLPositionCenterRight ||
             aPosition == BLPositionBottomRight)
         {
-            px = screenFrame.size.width - windowFrame.size.width - Margin.width;
+            px = NSWidth(screenFrame) - NSWidth(windowFrame);
         }
 
         if (aPosition == BLPositionTopLeft ||
             aPosition == BLPositionTopCenter ||
             aPosition == BLPositionTopRight)
         {
-            py = screenFrame.size.height - windowFrame.size.height - Margin.height;
+            py = NSHeight(screenFrame) - NSHeight(windowFrame);
         }
-
-        if (aPosition == BLPositionCenterLeft ||
+        else if (aPosition == BLPositionCenterLeft ||
             aPosition == BLPositionCenterCenter ||
             aPosition == BLPositionCenterRight)
         {
-            py = screenFrame.size.height / 2.0 - windowFrame.size.height / 2.0;
+            py = NSHeight(screenFrame) / 2.0f - NSHeight(windowFrame) / 2.0f;
         }
         windowFrame.origin = NSMakePoint(screenFrame.origin.x + px, screenFrame.origin.y + py);
     }
