@@ -73,6 +73,11 @@ const NSSize BLMinimumSize = {280, 215};
         [defaults addObserver:self forKeyPath:@"DateViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
         [defaults addObserver:self forKeyPath:@"TasksViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
         [defaults addObserver:self forKeyPath:@"AllDayViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
+
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(_updateFrame)
+                                                     name:NSApplicationDidChangeScreenParametersNotification
+                                                   object:NSApp];
     }
     return self;
 }
@@ -122,15 +127,6 @@ const NSSize BLMinimumSize = {280, 215};
         [self.window orderBack:aSender];
         _isWindowShowed = YES;
     }
-}
-
-
-#pragma mark NSWindowDelegate
-
-- (void)windowDidChangeScreen:(NSNotification *)aNotification
-{
-    if (_isWindowShowed)
-        [self _updateFrame];
 }
 
 
