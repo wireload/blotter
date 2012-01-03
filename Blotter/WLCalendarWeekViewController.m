@@ -338,9 +338,9 @@ static const NSUInteger _WLNumberOfDaysInWeek = 7;
                 BOOL intresects = [columnDateRange intersectsRange:eventRange position:&position];
                 if (intresects)
                 {
+                    // If an event takes more than 1 day, divide it into multiple events for each column.
                     if (position == WLWithinRange)
                         [columnEvents addObject:event];
-                            // If an event takes more than 1 day, divide it into multiple events for each column.
                     else if (position == WLEarlierThanRange && [eventRange.endDate compare:columnDateRange.startDate] != NSOrderedSame)
                     {
                         CalEvent *partEvent = [event copy];
