@@ -13,6 +13,7 @@
 
 
 @class WLCalendarWeekViewController;
+@class WLCalendarRightNowViewController;
 @class WLCalendarTasksViewController;
 @class WLCalendarDateViewController;
 @class WLCalendarBoxView;
@@ -29,7 +30,7 @@
     WLViewFade *fadeController;
 
     WLCalendarWeekViewController *_weekViewController;
-    WLCalendarWeekViewController *_rightNowViewController;
+    WLCalendarRightNowViewController *_rightNowViewController;
     WLCalendarTasksViewController *_tasksViewController;
     WLCalendarDateViewController *_dateViewController;
     WLCalendarBoxView *_tasksViewBox;

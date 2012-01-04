@@ -8,6 +8,7 @@
 
 #import "WLCalendarWindowController.h"
 #import "WLCalendarWeekViewController.h"
+#import "WLCalendarRightNowViewController.h"
 #import "WLCalendarTasksViewController.h"
 #import "WLCalendarDateViewController.h"
 #import "WLCalendarBoxView.h"
@@ -47,9 +48,9 @@ const NSSize BLMinimumSize = {280, 215};
         [_weekViewController bind:@"titleFormat" toObject:defaults withKeyPath:@"PerDayDate" options:nil];
         _weekViewController.highlightWeekends = YES;
 
-        _rightNowViewController = [[WLCalendarWeekViewController alloc] init];
+        _rightNowViewController = [[WLCalendarRightNowViewController alloc] init];
         [_rightNowViewController setRepresentedObject:[WLCalendarController sharedController]];
-        _rightNowViewController.mode = WLCalendarWeekViewRightNowMode;
+        _rightNowViewController.mode = WLCalendarWeekViewDayMode;
 
         _tasksViewController = [[WLCalendarTasksViewController alloc] initWithNibName:nil bundle:nil];
         [_tasksViewController setRepresentedObject:[WLCalendarController sharedController]];

@@ -15,8 +15,7 @@
 typedef enum
 {
     WLCalendarWeekViewWeekMode,
-    WLCalendarWeekViewDayMode,
-    WLCalendarWeekViewRightNowMode
+    WLCalendarWeekViewDayMode
 } WLCalendarWeekViewMode;
 
 
@@ -52,7 +51,7 @@ typedef enum
 
 - (NSUInteger)indexOfColumnForCurrentDay;
 
-- (void)highlightCurrentDayIfNeeded;
+- (void)highlightCurrentDay;
 
 - (NSDate *)firstColumnDate;
 

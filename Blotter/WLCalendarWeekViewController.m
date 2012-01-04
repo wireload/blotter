@@ -69,20 +69,8 @@ static const NSUInteger _WLNumberOfDaysInWeek = 7;
     if (isViewLoaded)
     {
         WLCalendarWeekView *v = [self view];
-        if (mode == WLCalendarWeekViewRightNowMode)
-        {
-            v.showTitle = NO;
-            v.fitDayEvents = NO;
-            v.showAllDayEvents = NO;
-        }
-        else
-        {
-            v.showTitle = YES;
-            v.fitDayEvents = YES;
-            v.showAllDayEvents = YES;
-        }
         [v reloadDataAnimated:YES];
-        [self highlightCurrentDayIfNeeded];
+        [self highlightCurrentDay];
     }
 }
 
@@ -111,14 +99,14 @@ static const NSUInteger _WLNumberOfDaysInWeek = 7;
 - (void)showNextDayAndScroll
 {
     [[self view] showNextDay];
-    [self highlightCurrentDayIfNeeded];
+    [self highlightCurrentDay];
     [self scrollToCurrentHour];
 }
 
 - (void)showNextWeekAndScroll
 {
     [[self view] showNextWeek];
-    [self highlightCurrentDayIfNeeded];
+    [self highlightCurrentDay];
     [self scrollToCurrentHour];
 }
 
@@ -145,7 +133,7 @@ static const NSUInteger _WLNumberOfDaysInWeek = 7;
 {
     NSParameterAssert([self representedObject] != nil);
 
-    if (self.mode == WLCalendarWeekViewDayMode || self.mode == WLCalendarWeekViewRightNowMode)
+    if (self.mode == WLCalendarWeekViewDayMode)
         return 0;
     else
     {
@@ -173,10 +161,9 @@ static const NSUInteger _WLNumberOfDaysInWeek = 7;
     }
 }
 
-- (void)highlightCurrentDayIfNeeded
+- (void)highlightCurrentDay
 {
-    if (self.mode != WLCalendarWeekViewRightNowMode)
-        [[self view] setIndexOfHighlightedColumn:[self indexOfColumnForCurrentDay]];
+    [[self view] setIndexOfHighlightedColumn:[self indexOfColumnForCurrentDay]];
 }
 
 - (NSDate *)firstColumnDate
@@ -187,7 +174,6 @@ static const NSUInteger _WLNumberOfDaysInWeek = 7;
     NSDate *date = [[self representedObject] date];
     switch (mode) {
         case WLCalendarWeekViewDayMode:
-        case WLCalendarWeekViewRightNowMode:
         {
             NSDateComponents *dateNoonComponents = [calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:date];
             NSRange hoursRange = [calendar rangeOfUnit:NSHourCalendarUnit inUnit:NSDayCalendarUnit forDate:date];
@@ -303,8 +289,6 @@ static const NSUInteger _WLNumberOfDaysInWeek = 7;
         }
         case WLCalendarWeekViewDayMode:
             return _WLNumberOfDaysInWeek;
-        case WLCalendarWeekViewRightNowMode:
-            return 1;
     }
 }
 
@@ -513,14 +497,7 @@ static const NSUInteger _WLNumberOfDaysInWeek = 7;
     WLCalendarWeekView *v = [[WLCalendarWeekView alloc] init];
     [self setView:v];
     v.dataSource = self;
-    if (self.mode == WLCalendarWeekViewRightNowMode)
-    {
-        v.fitDayEvents = NO;
-        v.showTitle = NO;
-        v.showAllDayEvents = NO;
-    }
-    else
-        v.fitDayEvents = YES;
+    v.fitDayEvents = YES;
     [v scrollHour:[self currentHour] animated:NO];
     [v createLayers];
     v.indexOfHighlightedColumn = [self indexOfColumnForCurrentDay];
@@ -563,7 +540,7 @@ static const NSUInteger _WLNumberOfDaysInWeek = 7;
             self._timeFormat = nil;
         }
         [[self view] reloadDataAnimated:YES];
-        [self highlightCurrentDayIfNeeded];
+        [self highlightCurrentDay];
     }
     else if ([aKeyPath isEqual:@"representedObject.date"])
     {
@@ -583,12 +560,10 @@ static const NSUInteger _WLNumberOfDaysInWeek = 7;
                 [self showNextWeekAndScroll];
             else if (self.mode == WLCalendarWeekViewDayMode && [oldComponents day] != [newComponents day])
                 [self showNextDayAndScroll];
-            else if (self.mode == WLCalendarWeekViewRightNowMode && [oldComponents day] != [newComponents day])
-                [self showNextDayAndScroll];
             else
                 [self scrollToCurrentHour];
         }
-        [self highlightCurrentDayIfNeeded];
+        [self highlightCurrentDay];
     }
     else
         [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];
