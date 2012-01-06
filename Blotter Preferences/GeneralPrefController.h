@@ -21,6 +21,7 @@
     IBOutlet WLPrefPaneView *_mainView;
     IBOutlet SRRecorderControl *newEventRecorderControl;
     IBOutlet SRRecorderControl *newTaskRecorderControl;
+    IBOutlet SRRecorderControl *showNextWeekControl;
 }
 
 - (IBAction)quitBlotter:(id)sender;

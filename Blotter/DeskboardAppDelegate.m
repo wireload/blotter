@@ -64,6 +64,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     [userDefaults removeObserver:self forKeyPath:@"ShowInMenuBar"];
     [userDefaults removeObserver:self forKeyPath:@"shortcutNewEvent"];
     [userDefaults removeObserver:self forKeyPath:@"shortcutNewTask"];
+    [userDefaults removeObserver:self forKeyPath:@"shortcutNewTask"];
     [_preferencesController release];
     [super dealloc];
 }
@@ -128,6 +129,14 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     return [self _isOnlyCalendarWindowVisible:[NSApp windows]];
 }
 
+- (IBAction)showNextWeek:(id)aSender
+{
+    if (self.calendarWindowController.isNextWeekHidden)
+        [self.calendarWindowController showNextWeekView:aSender];
+    else
+        [self.calendarWindowController hideNextWeekView:aSender];
+}
+
 
 #pragma mark NSWindowDelegate
 
@@ -189,7 +198,6 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 }
 
 
-
 #pragma mark Private
 
 - (void)_addStatusItem
@@ -229,17 +237,26 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
     // Configure shortcuts
     NSDictionary *newEventShortcut = [userDefaults dictionaryForKey:@"shortcutNewEvent"];
-    if (newEventShortcut != nil) {
+    if (newEventShortcut != nil)
+    {
         PTHotKey *hotKey = [PTHotKey hotKeyWithIdentifier:@"shortcutNewEvent" keyCombo:newEventShortcut target:self action:@selector(newEvent:)];
         [[PTHotKeyCenter sharedCenter] registerHotKey:hotKey];
     }
     NSDictionary *newTaskShortcut = [userDefaults dictionaryForKey:@"shortcutNewTask"];
-    if (newTaskShortcut != nil) {
+    if (newTaskShortcut != nil)
+    {
         PTHotKey *hotKey = [PTHotKey hotKeyWithIdentifier:@"shortcutNewTask" keyCombo:newTaskShortcut target:self action:@selector(newTask:)];
+        [[PTHotKeyCenter sharedCenter] registerHotKey:hotKey];
+    }
+    NSDictionary *showNextWeekShortcut = [userDefaults dictionaryForKey:@"shortcutShowNextWeek"];
+    if (showNextWeekShortcut != nil)
+    {
+        PTHotKey *hotKey = [PTHotKey hotKeyWithIdentifier:@"shortcutNewTask" keyCombo:showNextWeekShortcut target:self action:@selector(showNextWeek:)];
         [[PTHotKeyCenter sharedCenter] registerHotKey:hotKey];
     }
     [userDefaults addObserver:self forKeyPath:@"shortcutNewEvent" options:NSKeyValueObservingOptionNew context:NULL];
     [userDefaults addObserver:self forKeyPath:@"shortcutNewTask" options:NSKeyValueObservingOptionNew context:NULL];
+    [userDefaults addObserver:self forKeyPath:@"shortcutShowNextWeek" options:NSKeyValueObservingOptionNew context:NULL];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillClose:) name:NSWindowWillCloseNotification object:nil];
 
@@ -291,21 +308,22 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
             [_statusItem release], _statusItem = nil;
         }
     }
-    else if ([aKeyPath isEqualToString:@"shortcutNewEvent"] || [aKeyPath isEqualToString:@"shortcutNewTask"])
+    else if ([aKeyPath isEqualToString:@"shortcutNewEvent"] || [aKeyPath isEqualToString:@"shortcutNewTask"] || [aKeyPath isEqualToString:@"shortcutShowNextWeek"])
     {
         PTHotKeyCenter *hotKeyCenter = [PTHotKeyCenter sharedCenter];
         PTHotKey *oldHotKey = [hotKeyCenter hotKeyWithIdentifier:aKeyPath];
         [hotKeyCenter unregisterHotKey:oldHotKey];
 
         NSDictionary *newHotKeyDict = [aChange objectForKey:NSKeyValueChangeNewKey];
-        if (newHotKeyDict != nil && (id)newHotKeyDict != [NSNull null]) {
+        if (newHotKeyDict != nil && (id)newHotKeyDict != [NSNull null])
+        {
             PTHotKey *newHotKey = nil;
-            if ([aKeyPath isEqualToString:@"shortcutNewEvent"]) {
+            if ([aKeyPath isEqualToString:@"shortcutNewEvent"])
                 newHotKey = [PTHotKey hotKeyWithIdentifier:aKeyPath keyCombo:newHotKeyDict target:self action:@selector(newEvent:)];
-            }
-            else {
+            else if ([aKeyPath isEqualToString:@"shortcutNewTask"])
                 newHotKey = [PTHotKey hotKeyWithIdentifier:aKeyPath keyCombo:newHotKeyDict target:self action:@selector(newTask:)];
-            }
+            else
+                newHotKey = [PTHotKey hotKeyWithIdentifier:aKeyPath keyCombo:newHotKeyDict target:self action:@selector(showNextWeek:)];
             [hotKeyCenter registerHotKey:newHotKey];
         }
     }

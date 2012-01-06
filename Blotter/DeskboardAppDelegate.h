@@ -34,6 +34,8 @@
 
 - (IBAction)showAbout:(id)aSender;
 
+- (IBAction)showNextWeek:(id)aSender;
+
 /*!
  @abstract Determines whether only calendar window is visible.
  */
