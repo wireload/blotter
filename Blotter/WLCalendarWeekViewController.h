@@ -26,6 +26,12 @@ typedef enum
 } WLCalendarWeekViewTitleFormat;
 
 
+/*!
+ @discussion Used when mode is WLCalendarWeekViewDayMode.
+ */
+static const NSUInteger WLNumberOfDaysInWeek = 7;
+
+
 @interface WLCalendarWeekViewController : NSViewController <WLCalendarWeekViewDataSource> {
     WLCalendarWeekViewMode mode;
     WLCalendarWeekViewTitleFormat titleFormat;

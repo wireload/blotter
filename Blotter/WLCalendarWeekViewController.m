@@ -25,12 +25,6 @@ static NSString* const _WLTitleKey = @"title";
 static NSString* const _WLEventsKey = @"events";
 
 
-/*!
- @discussion Used when mode is WLCalendarWeekViewDayMode.
- */
-static const NSUInteger _WLNumberOfDaysInWeek = 7;
-
-
 @implementation WLCalendarWeekViewController
 
 - (id)init
@@ -288,7 +282,7 @@ static const NSUInteger _WLNumberOfDaysInWeek = 7;
             return weekdaysRange.length;
         }
         case WLCalendarWeekViewDayMode:
-            return _WLNumberOfDaysInWeek;
+            return WLNumberOfDaysInWeek;
     }
 }
 
