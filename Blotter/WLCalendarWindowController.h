@@ -14,6 +14,7 @@
 
 @class WLCalendarWeekViewController;
 @class WLCalendarRightNowViewController;
+@class WLCalendarNextWeekViewController;
 @class WLCalendarTasksViewController;
 @class WLCalendarDateViewController;
 @class WLCalendarBoxView;
@@ -28,9 +29,11 @@
 @interface WLCalendarWindowController : NSObject <NSWindowDelegate> {
     WLCalendarWindow *window;
     WLViewFade *fadeController;
+    BOOL isNextWeekHidden;
 
     WLCalendarWeekViewController *_weekViewController;
     WLCalendarRightNowViewController *_rightNowViewController;
+    WLCalendarNextWeekViewController *_nextWeekViewController;
     WLCalendarTasksViewController *_tasksViewController;
     WLCalendarDateViewController *_dateViewController;
     WLCalendarBoxView *_tasksViewBox;
@@ -43,7 +46,17 @@
 
 @property (readonly) WLViewFade *fadeController;
 
+/*!
+ @abstract      Determines whether view was hidden or showed by using either -showNextWeekView: or -hideNextWeekView:.
+ @discussion    View may be hidden due to the small window size, so the view may be hidden even if value is NO.
+ */
+@property (assign, readonly) BOOL isNextWeekHidden;
+
 - (IBAction)showWindow:(id)aSender;
+
+- (IBAction)showNextWeekView:(id)aSender;
+
+- (IBAction)hideNextWeekView:(id)aSender;
 
 @end
 

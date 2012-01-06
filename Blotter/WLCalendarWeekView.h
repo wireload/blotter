@@ -57,6 +57,9 @@
  */
 @property (nonatomic) BOOL fitDayEvents;
 
+/*!
+ @discussion Pass NSNotFound if you want no columns to be highlighted.
+ */
 @property (nonatomic) NSUInteger indexOfHighlightedColumn;
 
 /*!

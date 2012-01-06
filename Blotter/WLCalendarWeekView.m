@@ -85,6 +85,8 @@ static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLine
 - (void)setIndexOfHighlightedColumn:(NSUInteger)newIndexOfHighlightedColumn
 {
     NSAssert([self wantsLayer], @"You MUST call -createLayers before.");
+    NSAssert(newIndexOfHighlightedColumn < [_columnLayers count] || newIndexOfHighlightedColumn == NSNotFound,
+             @"You must pass either value that less than the number of columns or NSNotFound if you want no columns to be highlighted.");
 
     indexOfHighlightedColumn = newIndexOfHighlightedColumn;
     if ([self wantsLayer])

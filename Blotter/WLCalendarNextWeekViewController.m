@@ -65,7 +65,7 @@
 
 - (NSUInteger)indexOfColumnForCurrentDay
 {
-    return NSUIntegerMax;
+    return NSNotFound;
 }
 
 
