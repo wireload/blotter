@@ -124,17 +124,36 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     [NSApp activateIgnoringOtherApps:YES];
 }
 
+- (IBAction)showNextWeek:(id)aSender
+{
+    if (self.calendarWindowController.isNextWeekHidden)
+    {
+        [self.calendarWindowController showNextWeekView:aSender];
+        [[calendarWindowController fadeController] fadeIn];
+    }
+    else
+    {
+        [self.calendarWindowController hideNextWeekView:aSender];
+        [self autohideCalendarWindowIfAllConditionsAreMet];
+    }
+}
+
 - (BOOL)isOnlyCalendarWindowVisible
 {
     return [self _isOnlyCalendarWindowVisible:[NSApp windows]];
 }
 
-- (IBAction)showNextWeek:(id)aSender
+- (void)autohideCalendarWindowIfAllConditionsAreMet
 {
-    if (self.calendarWindowController.isNextWeekHidden)
-        [self.calendarWindowController showNextWeekView:aSender];
-    else
-        [self.calendarWindowController hideNextWeekView:aSender];
+    BOOL isBlotterActive = [NSApp isActive];
+    BOOL areThereUtilityWindows = ![self isOnlyCalendarWindowVisible];
+    BOOL isNextWeekShowed = !self.calendarWindowController.isNextWeekHidden;
+    if ((!isBlotterActive && !areThereUtilityWindows && !isNextWeekShowed) ||
+        (!isBlotterActive && areThereUtilityWindows && !isNextWeekShowed) ||
+        (isBlotterActive && !areThereUtilityWindows && !isNextWeekShowed))
+    {
+        [self.calendarWindowController.fadeController scheduleFadeOutTimer];
+    }
 }
 
 
@@ -193,8 +212,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (void)menuDidClose:(NSMenu *)aMenu
 {
-    if ([self isOnlyCalendarWindowVisible])
-        [self.calendarWindowController.fadeController scheduleFadeOutTimer];
+    [self autohideCalendarWindowIfAllConditionsAreMet];
 }
 
 
@@ -270,7 +288,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         [userDefaults setBool:NO forKey:@"ShowPreferencesAtStartUp"];
     }
 
-    [self.calendarWindowController.fadeController scheduleFadeOutTimer];
+    [self autohideCalendarWindowIfAllConditionsAreMet];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)aNotification
@@ -283,7 +301,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (void)applicationDidResignActive:(NSNotification *)aNotification
 {
-    [self.calendarWindowController.fadeController scheduleFadeOutTimer];
+    [self autohideCalendarWindowIfAllConditionsAreMet];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)anApplication hasVisibleWindows:(BOOL)aFlag

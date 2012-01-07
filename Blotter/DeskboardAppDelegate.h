@@ -41,6 +41,12 @@
  */
 - (BOOL)isOnlyCalendarWindowVisible;
 
+/*!
+ @abstract Autohides the calendar window if all conditions are met.
+ @see https://tracker.wireload.net/projects/blotter/wiki/Autohide
+ */
+- (void)autohideCalendarWindowIfAllConditionsAreMet;
+
 
 - (BOOL)_isOnlyCalendarWindowVisible:(NSArray *)aVisibleWindows;
 
