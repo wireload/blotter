@@ -153,14 +153,11 @@ const NSSize BLMinimumSize = {280, 215};
     if (_isWindowShowed && self.isNextWeekHidden)
     {
         WLCalendarWeekView *v = [_nextWeekViewController view];
-        [v setHidden:NO];
         [CATransaction begin];
-        [CATransaction setCompletionBlock:^{
-            self.isNextWeekHidden = NO;
-        }];
         [[v layer] setValue:[NSNumber numberWithBool:YES] forKeyPath:@"backgroundFilters.blur.enabled"];
         [v layer].opacity = 1.0f;
         [CATransaction commit];
+        self.isNextWeekHidden = NO;
     }
 }
 
@@ -170,13 +167,10 @@ const NSSize BLMinimumSize = {280, 215};
     {
         WLCalendarWeekView *v = [_nextWeekViewController view];
         [CATransaction begin];
-        [CATransaction setCompletionBlock:^{
-            [v setHidden:YES];
-            self.isNextWeekHidden = YES;
-        }];
         [[v layer] setValue:[NSNumber numberWithBool:NO] forKeyPath:@"backgroundFilters.blur.enabled"];
         [v layer].opacity = 0.0f;
         [CATransaction commit];
+        self.isNextWeekHidden = YES;
     }
 }
 
@@ -423,7 +417,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     [_nextWeekViewController view].heightOfAllDayPartOfColumn = [defaults floatForKey:@"AllDayViewHeight"];
     [[_nextWeekViewController view] setFrame:weekViewFrame];
     [[_nextWeekViewController view] setNeedsDisplay:YES];
-    [[_nextWeekViewController view] setHidden:self.isNextWeekHidden || isTooSmall];
+    [[_nextWeekViewController view] setHidden:isTooSmall];
 }
 
 - (void)_applyNormalSizeToViews
@@ -486,7 +480,6 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     [filter setDefaults];
     [filter setValue:[NSNumber numberWithFloat:2.0f] forKey:kCIInputRadiusKey];
     WLCalendarWeekView *nextWeekView = [_nextWeekViewController view];
-    [nextWeekView setHidden:YES];
     [nextWeekView layer].backgroundFilters = [NSArray arrayWithObject:filter];
     [nextWeekView layer].opacity = 0.0f;
     [contentView addSubview:nextWeekView];
