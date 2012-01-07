@@ -135,8 +135,12 @@
     // Select All
     if (WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_A))
     {
-        [[self firstResponder] selectAll:self];
-        return YES;
+        id firstResponder = [self firstResponder];
+        if ([firstResponder respondsToSelector:@selector(selectAll:)])
+        {
+            [firstResponder selectAll:self];
+            return YES;
+        }
     }
     // Cut/Copy/Paste
     else if (WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_X))
@@ -169,19 +173,28 @@
     // Undo/Redo
     else if (WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_Z))
     {
-        [[[self firstResponder] undoManager] undo];
-        return YES;
+        id firstResponder = [self firstResponder];
+        if ([firstResponder respondsToSelector:@selector(undoManager)])
+        {
+            [[firstResponder undoManager] undo];
+            return YES;
+        }
     }
     else if (WLDoesEventContainShortcut(theEvent, NSCommandKeyMask | NSShiftKeyMask, kVK_ANSI_Z))
     {
-        [[[self firstResponder] undoManager] redo];
-        return YES;
+        id firstResponder = [self firstResponder];
+        if ([firstResponder respondsToSelector:@selector(undoManager)])
+        {
+            [[[self firstResponder] undoManager] redo];
+            return YES;
+        }
     }
 
     return [super performKeyEquivalent:theEvent];
 }
 
-- (IBAction)close:(id)sender {
+- (IBAction)close:(id)sender
+{
     [super close];
 }
 
