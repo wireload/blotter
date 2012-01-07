@@ -31,7 +31,7 @@
 {
     [super loadView];
     [self view].fitDayEvents = NO;
-    [self view].showTitle = NO;
+    [self view].showsDayColumnTitle = NO;
     [self view].showAllDayEvents = NO;
 }
 

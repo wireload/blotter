@@ -32,7 +32,7 @@
     BOOL fitDayEvents;
     NSUInteger indexOfHighlightedColumn;
     BOOL showAllDayEvents;
-    BOOL showTitle;
+    BOOL showsDayColumnTitle;
     WLHourRange rangeOfAlwaysVisibleHours;
 
     CALayer *_rootLayer;
@@ -70,7 +70,7 @@
 /*!
  @discussion Default value is YES.
  */
-@property (nonatomic) BOOL showTitle;
+@property (nonatomic) BOOL showsDayColumnTitle;
 
 /*!
  @discussion Default value is [09:00, 17:00].

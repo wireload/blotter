@@ -58,7 +58,7 @@ static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLine
         heightOfAllDayPartOfColumn = 114.0f;
         _columnLayers = [[NSMutableArray alloc] init];
         showTimeIndicator = YES;
-        showTitle = YES;
+        showsDayColumnTitle = YES;
         showAllDayEvents = YES;
         rangeOfAlwaysVisibleHours = (WLHourRange){.startHour = 9.0f, .endHour = 17.0f};
     }
@@ -79,7 +79,7 @@ static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLine
 @synthesize fitDayEvents;
 @synthesize indexOfHighlightedColumn;
 @synthesize showAllDayEvents;
-@synthesize showTitle;
+@synthesize showsDayColumnTitle;
 @synthesize rangeOfAlwaysVisibleHours;
 
 - (void)setIndexOfHighlightedColumn:(NSUInteger)newIndexOfHighlightedColumn
@@ -133,9 +133,9 @@ static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLine
         [_rootLayer setNeedsLayout];
 }
 
-- (void)setShowTitle:(BOOL)newShowTitle
+- (void)setShowsDayColumnTitle:(BOOL)newShowsDayColumnTitle
 {
-    showTitle = newShowTitle;
+    showsDayColumnTitle = newShowsDayColumnTitle;
     if ([self wantsLayer])
         [_rootLayer setNeedsLayout];
 }
@@ -464,7 +464,7 @@ static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLine
     if ([dataSource respondsToSelector:@selector(weekView:willAskForData:forColumnsAtIndexes:)])
     {
         NSUInteger data = 0;
-        if (self.showTitle)
+        if (self.showsDayColumnTitle)
             data = WLCalendarWeekViewTitleDataUnit | WLCalendarWeekViewEventsDataUnit | WLCalendarWeekViewColorDataUnit;
         else
             data = WLCalendarWeekViewEventsDataUnit | WLCalendarWeekViewColorDataUnit;
@@ -528,7 +528,7 @@ static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLine
     NSAssert([self wantsLayer], @"You MUST call -createLayers before.");
 
     [self _updateEventsOfColumnAtIndex:anIndex];
-    if (self.showTitle)
+    if (self.showsDayColumnTitle)
         [self _updateTitleOfColumnAtIndex:anIndex];
     [CATransaction WL_performWithDisabledActions:^{
         [self _updateColorOfColumnAtIndex:anIndex];
@@ -674,7 +674,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndTimeRulerRoot = 5.0f;
 - (CGFloat)timerRulerScrollHeight
 {
     CGFloat columnTitleHeightAndMargin = 0.0f;
-    if (self.showTitle)
+    if (self.showsDayColumnTitle)
         columnTitleHeightAndMargin = [self columnTitleFrame].size.height + _WLYMarginBetweenTitleAndColumn;
     return _timeRulerRootLayer.frame.size.height - columnTitleHeightAndMargin;
 }
@@ -758,7 +758,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
 - (CGRect)dayScrollFrame
 {
     CGFloat titleHeightAndMargin = 0;
-    if (self.showTitle)
+    if (self.showsDayColumnTitle)
         titleHeightAndMargin = [self columnTitleFrame].size.height + _WLYMarginBetweenTitleAndColumn;
     // Height of the day must be less than time ruler by half of of the first hour.
     CGFloat hourLabelYPadding = [[_timeRulerRootLayer WL_timeRulerLayer] maximumHeightOfHourLabel] / 2;
@@ -1309,22 +1309,23 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
                                                    1.0f,
                                                    1.0f)
                                  angle:90];
+        if (selfBlock.showsDayColumnTitle)
+        {
+            NSString *dayName = [aLayer valueForKey:_WLDayBackgroundLayerTitleKey];
+            NSDictionary *dayAttributes = [self _titleAttributesForColumnDayBackgroundLayer:aLayer];
 
-        NSString *dayName = [aLayer valueForKey:_WLDayBackgroundLayerTitleKey];
-        NSDictionary *dayAttributes = [self _titleAttributesForColumnDayBackgroundLayer:aLayer];
-
-        // Vertically centre the title.
-        NSSize size = [dayName sizeWithAttributes:dayAttributes];
-        NSRect dayTextRect = [selfBlock columnTitleFrame];
-        // ...but push it 2px more downwards because it looks better given the way the first event
-        // in the day is half the height of an hour label down.
-        const CGFloat mysteriousExtraOffset = 2.0;
-        CGFloat verticalOffset = mysteriousExtraOffset + dayTextRect.size.height / 2.0 - size.height / 2.0;
-        dayTextRect.origin.y += verticalOffset;
-        [dayName drawWithRect:dayTextRect
-                      options:_WLDayBackgroundTitleAttributes
-                   attributes:dayAttributes];
-
+            // Vertically center the title.
+            NSSize size = [dayName sizeWithAttributes:dayAttributes];
+            NSRect dayTextRect = [selfBlock columnTitleFrame];
+            // ...but push it 2px more downwards because it looks better given the way the first event
+            // in the day is half the height of an hour label down.
+            const CGFloat mysteriousExtraOffset = 2.0;
+            CGFloat verticalOffset = mysteriousExtraOffset + dayTextRect.size.height / 2.0 - size.height / 2.0;
+            dayTextRect.origin.y += verticalOffset;
+            [dayName drawWithRect:dayTextRect
+                          options:_WLDayBackgroundTitleAttributes
+                       attributes:dayAttributes];
+        }
         [NSGraphicsContext restoreGraphicsState];
     };
 #else
