@@ -14,26 +14,37 @@
 
 
 @interface WLNewTaskWindowController : NSWindowController {
-    WLCalendarController *calendarController;
+    BOOL isDueDate;
+    NSDate *dueDate;
+    NSString *title;
+    NSInteger priority;
 
+    WLCalendarController *_calendarController;
     IBOutlet WLGlassHudTextView *_titleView;
     id _titleViewObserver;
-    IBOutlet NSButton *_isDueDate;
-    IBOutlet NSDatePicker *_dueDatePicker;
-    IBOutlet NSPopUpButton *_priorityPopUp;
     IBOutlet NSButton *_createButton;
 }
 
-@property (retain) WLCalendarController *calendarController;
+@property BOOL isDueDate;
 
-@property (nonatomic) NSUInteger selectedCalCalendarIndex;
+@property (copy) NSDate *dueDate;
+
+@property (copy) NSString *title;
+
+@property NSInteger priority;
+
+@property (nonatomic, readonly) NSArray *taskCalCalendars;
+
+@property (nonatomic) NSUInteger selectedTaskCalCalendarIndex;
+
+@property (nonatomic, readonly) BOOL canCreateTask;
 
 + (id)sharedWindowController;
 
-- (void)reset;
+- (id)initWithCalendarController:(WLCalendarController *)aCalendarController;
+
+- (IBAction)setDefaults:(id)aSender;
 
 - (IBAction)create:(id)aSender;
-
-- (BOOL)canCreateTask;
 
 @end

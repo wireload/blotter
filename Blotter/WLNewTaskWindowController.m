@@ -11,52 +11,71 @@
 #import "WLGlassHudTextView.h"
 #import "WLNewTaskWindowController.h"
 
-static WLNewTaskWindowController *_sharedInstance;
 
 @implementation WLNewTaskWindowController
 
-- (id)initWithWindow:(NSWindow *)window
+- (id)initWithCalendarController:(WLCalendarController *)aCalendarController
 {
-    self = [super initWithWindow:window];
+    self = [self initWithWindowNibName:@"NewTaskWindow"];
     if (self != nil)
     {
+        _calendarController = [aCalendarController retain];
     }
     return self;
 }
+
 
 - (void)dealloc
 {
     if (_titleViewObserver != nil)
         [[NSNotificationCenter defaultCenter] removeObserver:_titleViewObserver];
-    [calendarController release];
+    [_calendarController release];
+    [dueDate release];
+    [title release];
     [super dealloc];
 }
 
 
 #pragma mark Properties
-@synthesize calendarController;
-@dynamic selectedCalCalendarIndex;
+@synthesize isDueDate;
+@synthesize dueDate;
+@synthesize title;
+@synthesize priority;
+@dynamic taskCalCalendars;
+@dynamic selectedTaskCalCalendarIndex;
+@dynamic canCreateTask;
 
-- (void)setSelectedCalCalendarIndex:(NSUInteger)newSelectedCalCalendarIndex
+- (NSArray *)taskCalCalendars
 {
-    [[NSUserDefaults standardUserDefaults] setObject:[[self.calendarController.calReminderCalendarsToDisplay objectAtIndex:newSelectedCalCalendarIndex] uid] forKey:@"uidOfLastSelectedCalendarInTasks"];
+    return [_calendarController.calReminderCalendarsToDisplay filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isEditable == YES"]];
 }
 
-- (NSUInteger)selectedCalCalendarIndex
+- (void)setSelectedTaskCalCalendarIndex:(NSUInteger)newSelectedTaskCalCalendarIndex
 {
-    NSUInteger selectedCalCalendarIndex = NSNotFound;
-    NSString *lastSelectedCalendar = [[NSUserDefaults standardUserDefaults] objectForKey:@"uidOfLastSelectedCalendarInTasks"];
-    if (lastSelectedCalendar != nil)
+    CalCalendar *c = [self.taskCalCalendars objectAtIndex:newSelectedTaskCalCalendarIndex];
+    [[NSUserDefaults standardUserDefaults] setObject:[c uid] forKey:@"uidOfLastSelectedCalendarInTasks"];
+}
+
+- (NSUInteger)selectedTaskCalCalendarIndex
+{
+    NSUInteger index = NSNotFound;
+    NSString *lastSelectedCalendarUID = [[NSUserDefaults standardUserDefaults] objectForKey:@"uidOfLastSelectedCalendarInTasks"];
+    if (lastSelectedCalendarUID != nil)
     {
-        selectedCalCalendarIndex = [self.calendarController.calReminderCalendarsToDisplay indexOfObjectPassingTest:^BOOL(CalCalendar *calCalendar, NSUInteger idx, BOOL *stop) {
-            return [calCalendar.uid isEqualToString:lastSelectedCalendar];
+        index = [self.taskCalCalendars indexOfObjectPassingTest:^BOOL(CalCalendar *calCalendar, NSUInteger idx, BOOL *stop) {
+            return [calCalendar.uid isEqualToString:lastSelectedCalendarUID];
         }];
-        if (selectedCalCalendarIndex == NSNotFound)
-            selectedCalCalendarIndex = 0;
+        if (index == NSNotFound)
+            index = 0;
     }
     else
-        selectedCalCalendarIndex = 0;
-    return selectedCalCalendarIndex;
+        index = 0;
+    return index;
+}
+
+- (BOOL)canCreateTask
+{
+    return [self.taskCalCalendars count] > 0;
 }
 
 
@@ -64,52 +83,34 @@ static WLNewTaskWindowController *_sharedInstance;
 
 + (id)sharedWindowController
 {
-    @synchronized (self)
-    {
-        if (_sharedInstance == nil) {
-            _sharedInstance = [[self alloc] initWithWindowNibName:@"NewTaskWindow"];
-            _sharedInstance.calendarController = [WLCalendarController sharedController];
-        }
-    }
-    return _sharedInstance;
+    static dispatch_once_t onceToken;
+    static WLNewTaskWindowController *controller = nil;
+    dispatch_once(&onceToken, ^{
+        controller = [[self alloc] initWithCalendarController:[WLCalendarController sharedController]];
+    });
+    return controller;
 }
 
-- (BOOL)canCreateTask
+- (IBAction)setDefaults:(id)aSender
 {
-    if ([self.calendarController.calReminderCalendarsToDisplay count] > 0)
-    {
-        NSUInteger indexOfEditableCalendar = [self.calendarController.calReminderCalendarsToDisplay indexOfObjectPassingTest:^(CalCalendar *c, NSUInteger index, BOOL *stop)
-                                                                                                                             {
-                                                                                                                                 return c.isEditable;
-                                                                                                                             }];
-        return indexOfEditableCalendar != NSNotFound;
-    }
-    else
-    {
-        return NO;
-    }
-}
-
-- (void)reset
-{
-    [(NSTextView *)_titleView setString:NSLocalizedString(@"New Reminder", @"Default text for title field of the New Reminder panel")];
-    [_isDueDate setState:NSOffState];
+    self.title = NSLocalizedString(@"New Reminder", @"Default text for title field of the New Reminder panel");
+    self.isDueDate = NO;
     // The due date is an 'all day' date, but we still base it on the next hour so that if you create an
     // event at 23:XX, the suggested due date is tomorrow instead of the same day which is more helpful.
-    [_dueDatePicker setDateValue:[[NSDate date] WL_nextHourDate]];
-    [_priorityPopUp selectItemWithTag:CalPriorityNone];
+    self.dueDate = [[NSDate date] WL_nextHourDate];
+    self.priority = CalPriorityNone;
+
     [(NSTextView *)_titleView selectAll:self];
 }
 
 - (IBAction)create:(id)aSender
 {
     CalTask *task = [CalTask task];
-    task.title = [(NSTextView *)_titleView string];
-    if ([_isDueDate state] == NSOnState)
-        task.dueDate = [_dueDatePicker dateValue];
-    task.priority = [[_priorityPopUp selectedItem] tag];
-
-    task.calendar = [self.calendarController.calReminderCalendarsToDisplay objectAtIndex:self.selectedCalCalendarIndex];
+    task.title = self.title;
+    if (self.isDueDate)
+        task.dueDate = self.dueDate;
+    task.priority = self.priority;
+    task.calendar = [self.taskCalCalendars objectAtIndex:self.selectedTaskCalCalendarIndex];
 
     NSError *error = nil;
     if ([[CalCalendarStore defaultCalendarStore] saveTask:task error:&error])
@@ -129,12 +130,8 @@ static WLNewTaskWindowController *_sharedInstance;
     unichar keyEquiv = NSEnterCharacter;
     NSString *equivString = [NSString stringWithCharacters:&keyEquiv length:1];
     [_createButton setKeyEquivalent:equivString];
+
     [(NSTextView *)_titleView setFont:[NSFont boldSystemFontOfSize:16]];
-    [_dueDatePicker bind:@"hidden"
-                toObject:_isDueDate
-             withKeyPath:@"cell.state"
-                 options:[NSDictionary dictionaryWithObject:[NSValueTransformer valueTransformerForName:NSNegateBooleanTransformerName]
-                                                     forKey:NSValueTransformerBindingOption]];
 
     _titleViewObserver = [[NSNotificationCenter defaultCenter] addObserverForName:WLViewSizeDidChangeNotification
                                                                            object:_titleView
@@ -150,7 +147,12 @@ static WLNewTaskWindowController *_sharedInstance;
     }];
     _titleView.postsSizeChangedNotifications = YES;
 
-    [self reset];
+    [[_titleView valueForKey:@"_textView"] bind:@"value"
+                                       toObject:self
+                                    withKeyPath:@"title"
+                                        options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:NSContinuouslyUpdatesValueBindingOption]];
+
+    [self setDefaults:nil];
 }
 
 
@@ -158,12 +160,12 @@ static WLNewTaskWindowController *_sharedInstance;
 
 + (NSSet *)keyPathsForValuesAffectingCanCreateTask
 {
-    return [NSSet setWithObject:@"calendarController.calReminderCalendarsToDisplay"];
+    return [NSSet setWithObject:@"taskCalCalendars"];
 }
 
-+ (NSSet *)keyPathsForValuesAffectingSelectedCalCalendarIndex
++ (NSSet *)keyPathsForValuesAffectingTaskCalCalendars
 {
-    return [NSSet setWithObject:@"calendarController.calReminderCalendarsToDisplay"];
+    return [NSSet setWithObject:@"_calendarController.calReminderCalendarsToDisplay"];
 }
 
 @end
