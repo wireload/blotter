@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E268AAB514C03F4700A24284 /* WLCountGreaterThanOneTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = E268AAB314C03F4700A24284 /* WLCountGreaterThanOneTransformer.h */; };
+		E268AAB614C03F4700A24284 /* WLCountGreaterThanOneTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = E268AAB414C03F4700A24284 /* WLCountGreaterThanOneTransformer.m */; };
 		E29A6252146D672900EDDA1B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29A6251146D672900EDDA1B /* Cocoa.framework */; };
 		E29A62AB146D68AB00EDDA1B /* CATransaction+WLBlocks.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A6292146D68AB00EDDA1B /* CATransaction+WLBlocks.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E29A62AC146D68AB00EDDA1B /* CATransaction+WLBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = E29A6293146D68AB00EDDA1B /* CATransaction+WLBlocks.m */; };
@@ -55,6 +57,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E268AAB314C03F4700A24284 /* WLCountGreaterThanOneTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCountGreaterThanOneTransformer.h; sourceTree = "<group>"; };
+		E268AAB414C03F4700A24284 /* WLCountGreaterThanOneTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCountGreaterThanOneTransformer.m; sourceTree = "<group>"; };
 		E29A624E146D672900EDDA1B /* WireloadClassesAndResources.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WireloadClassesAndResources.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E29A6251146D672900EDDA1B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E29A6269146D678800EDDA1B /* WireloadClassesAndResources-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WireloadClassesAndResources-Prefix.pch"; sourceTree = SOURCE_ROOT; };
@@ -145,6 +149,8 @@
 		E29A6266146D672F00EDDA1B /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E268AAB314C03F4700A24284 /* WLCountGreaterThanOneTransformer.h */,
+				E268AAB414C03F4700A24284 /* WLCountGreaterThanOneTransformer.m */,
 				E2A18CAB146D7462004B727B /* IKPowerSources.h */,
 				E2A18CAC146D7462004B727B /* IKPowerSources.m */,
 				E2A18CA6146D7435004B727B /* WLCalendarController.h */,
@@ -238,6 +244,7 @@
 				E2A18CA8146D7435004B727B /* WLCalendarController.h in Headers */,
 				E2A18CAD146D7462004B727B /* IKPowerSources.h in Headers */,
 				E2EB28ED146D984400E975F6 /* WLEvents.h in Headers */,
+				E268AAB514C03F4700A24284 /* WLCountGreaterThanOneTransformer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +334,7 @@
 				E2A18CA9146D7435004B727B /* WLCalendarController.m in Sources */,
 				E2A18CAE146D7462004B727B /* IKPowerSources.m in Sources */,
 				E2EB28EE146D984400E975F6 /* WLEvents.m in Sources */,
+				E268AAB614C03F4700A24284 /* WLCountGreaterThanOneTransformer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

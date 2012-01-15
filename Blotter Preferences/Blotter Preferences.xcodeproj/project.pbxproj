@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		280A24DB14588519001B82C8 /* Layout-Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 280A24DA14588519001B82C8 /* Layout-Icon.png */; };
-		283A5EE61306CDA2006B916A /* WLCountGreaterThanOneTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 283A5EE51306CDA2006B916A /* WLCountGreaterThanOneTransformer.m */; };
 		28B54D5E12839B8D0037BF53 /* GeneralPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54D5D12839B8D0037BF53 /* GeneralPrefController.m */; };
 		28B54D7A1283AEEE0037BF53 /* PositionPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54D791283AEEE0037BF53 /* PositionPrefController.m */; };
 		28CB5085145DB3E200810395 /* WLBlockLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CB5084145DB3E200810395 /* WLBlockLayoutManager.m */; };
@@ -133,8 +132,6 @@
 /* Begin PBXFileReference section */
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		280A24DA14588519001B82C8 /* Layout-Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Layout-Icon.png"; sourceTree = "<group>"; };
-		283A5EE41306CDA2006B916A /* WLCountGreaterThanOneTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCountGreaterThanOneTransformer.h; sourceTree = "<group>"; };
-		283A5EE51306CDA2006B916A /* WLCountGreaterThanOneTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCountGreaterThanOneTransformer.m; sourceTree = "<group>"; };
 		28B54D5C12839B8D0037BF53 /* GeneralPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralPrefController.h; sourceTree = "<group>"; };
 		28B54D5D12839B8D0037BF53 /* GeneralPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralPrefController.m; sourceTree = "<group>"; wrapsLines = 1; };
 		28B54D781283AEEE0037BF53 /* PositionPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PositionPrefController.h; sourceTree = "<group>"; };
@@ -337,8 +334,6 @@
 				E21BC9D2141625F200A91662 /* Pref Controllers */,
 				28F6993B129B723900D4BB97 /* LaunchAtLoginController.m */,
 				28F6993C129B723900D4BB97 /* LaunchAtLoginController.h */,
-				283A5EE41306CDA2006B916A /* WLCountGreaterThanOneTransformer.h */,
-				283A5EE51306CDA2006B916A /* WLCountGreaterThanOneTransformer.m */,
 				E2DC7DDB130810F00065CEAD /* WLScreensController.h */,
 				E2DC7DDC130810F00065CEAD /* WLScreensController.m */,
 				E2730E341349BC1000A84433 /* WLRecorderControl.h */,
@@ -600,7 +595,6 @@
 				28F69A29129C587F00D4BB97 /* WLCalendarWindowArrangementView.m in Sources */,
 				E2FE5ED112D74F5E00003E48 /* CalendarsPrefController.m in Sources */,
 				E2FE5EF712D75C7700003E48 /* WLColorCheckboxCell.m in Sources */,
-				283A5EE61306CDA2006B916A /* WLCountGreaterThanOneTransformer.m in Sources */,
 				E2DC7DDD130810F00065CEAD /* WLScreensController.m in Sources */,
 				E2730E361349BC1000A84433 /* WLRecorderControl.m in Sources */,
 				E21BC9D1141625E700A91662 /* LayoutPrefController.m in Sources */,
