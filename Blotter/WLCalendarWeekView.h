@@ -186,6 +186,8 @@
 
 - (void)layoutDayLayer:(WLCalendarDayEventsLayer *)aDayLayer;
 
+- (BOOL)isAllDayPartOfColumnVisible;
+
 
 - (void)layoutTimeIndicatorRootLayer;
 

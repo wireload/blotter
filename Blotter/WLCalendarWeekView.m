@@ -663,8 +663,8 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndTimeRulerRoot = 5.0f;
 - (CGRect)timeRulerRootFrame
 {
     CGFloat allDayHeightAndMargin = 0.0f;
-    if (self.showAllDayEvents)
-    allDayHeightAndMargin = self.heightOfAllDayPartOfColumn + _WLYMarginBetweenAllDayAndDayPartsOfColumn;
+    if ([self isAllDayPartOfColumnVisible])
+        allDayHeightAndMargin = self.heightOfAllDayPartOfColumn + _WLYMarginBetweenAllDayAndDayPartsOfColumn;
     return CGRectIntegral(CGRectMake(0.0f,
                                      0.0f,
                                      [self timeRulerRootWidth],
@@ -747,7 +747,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
 - (CGRect)dayBackgroundFrame
 {
     CGFloat allDayHeightAndMargin = 0.0f;
-    if (self.showAllDayEvents && fabsf(self.heightOfAllDayPartOfColumn - 0.0f) > FLT_EPSILON)
+    if ([self isAllDayPartOfColumnVisible])
         allDayHeightAndMargin = self.heightOfAllDayPartOfColumn + _WLYMarginBetweenAllDayAndDayPartsOfColumn;
     return CGRectIntegral(CGRectMake(0.0f,
                                      allDayHeightAndMargin,
@@ -805,7 +805,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     [aColumnLayer setNeedsLayout];
 
     CALayer *allDayBackground = [aColumnLayer WL_allDayBackgroundLayer];
-    if (self.showAllDayEvents)
+    if ([self isAllDayPartOfColumnVisible])
     {
         allDayBackground.hidden = NO;
         allDayBackground.frame = [self allDayBackgroundFrame];
@@ -834,6 +834,11 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     CGFloat height = [timeRuler preferredFrameSize].height;
     [aDayLayer setValue:[NSNumber numberWithFloat:height] forKeyPath:@"frame.size.height"];
     [aDayLayer setNeedsLayout];
+}
+
+- (BOOL)isAllDayPartOfColumnVisible
+{
+    return self.showAllDayEvents && fabsf(self.heightOfAllDayPartOfColumn - 0.0f) > FLT_EPSILON;
 }
 
 
