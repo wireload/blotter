@@ -58,16 +58,10 @@ const CGFloat _WLXPadding = 10.0f;
 
 - (CGFloat)minimumHumanVisibleHeight
 {
-    if (!_shouldUpdateMinimumHeightCache)
-        return _cachedMinimumHeight;
-    else
-    {
-        NSAttributedString *visibleString = [self.title length] > 0 ? self.title : self.location;
-        _cachedMinimumHeight = [visibleString WL_firstLineHeightWithWidth:self.bounds.size.width - _WLXPadding];
-        _cachedMinimumHeight += _WLYPadding;
-        _shouldUpdateMinimumHeightCache = NO;
-        return _cachedMinimumHeight;
-    }
+    NSAttributedString *visibleString = [self.title length] > 0 ? self.title : self.location;
+    CGFloat minHeight = [visibleString WL_firstLineHeightWithWidth:self.bounds.size.width - _WLXPadding];
+    minHeight += _WLYPadding;
+    return minHeight;
 }
 
 
@@ -279,16 +273,6 @@ const CGFloat _WLXPadding = 10.0f;
     CGSize preferredLocationSize = [self.location WL_preferredSize];
     return CGSizeMake(ceilf(fmaxf(preferredTitleSize.width, preferredLocationSize.width) + _WLXPadding),
                       ceilf(preferredTitleSize.height + preferredLocationSize.height + _WLYPadding));
-}
-
-
-#pragma mark NSObject
-
-- (void)didChangeValueForKey:(NSString *)aKey
-{
-    if ([aKey isEqualToString:@"title"] || [aKey isEqualToString:@"location"])
-        _shouldUpdateMinimumHeightCache = YES;
-    [super didChangeValueForKey:aKey];
 }
 
 @end

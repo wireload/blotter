@@ -13,8 +13,6 @@
  @classdesign One of superlayers must be flipped (that is, geometryFlipped is set to YES) so the origin would be top left.
  */
 @interface WLCalendarEventLayer : CALayer {
-    CGFloat _cachedMinimumHeight;
-    BOOL _shouldUpdateMinimumHeightCache;
 }
 
 @property (copy) NSAttributedString *title;
