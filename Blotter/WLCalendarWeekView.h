@@ -52,7 +52,8 @@
 @property (nonatomic) BOOL showTimeIndicator;
 
 /*!
- @discussion Default value is NO.
+ @abstract      Determines whether view tries to fit all events.
+ @discussion    Default value is NO.
  When set to NO, the view focuses on current hour (tries to center it) and keeps text of events visible.
  */
 @property (nonatomic) BOOL fitDayEvents;

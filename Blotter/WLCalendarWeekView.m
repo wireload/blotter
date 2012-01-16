@@ -112,14 +112,14 @@ static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLine
         if (fitDayEvents)
         {
             for (WLCalendarDayEventsLayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])
-                l.keepTextOfEventsVisible = NO;
+                l.keepsTextOfEventsVisible = NO;
             [_timeRulerRootLayer WL_timeRulerLayer].shouldHideHalfVisibleHourLabels = YES;
             [self setNeedsUpdateHeightOfHour];
         }
         else
         {
             for (WLCalendarDayEventsLayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])
-                l.keepTextOfEventsVisible = YES;
+                l.keepsTextOfEventsVisible = YES;
             [_timeRulerRootLayer WL_timeRulerLayer].shouldHideHalfVisibleHourLabels = NO;
             [self _focusOnHour];
         }
@@ -374,10 +374,17 @@ static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLine
                 r.endHour = fmaxf(r.endHour, columnHourRange.endHour);
             }
         }
-        return ([self dayScrollFrame].size.height) / (ceilf(r.endHour) - floorf(r.startHour));
+        CGFloat frameHeight = [self dayScrollFrame].size.height;
+        CGFloat numberOfHours = ceilf(r.endHour) - floorf(r.startHour);
+        return frameHeight / numberOfHours;
     }
     else
-        return fmaxf([self dayScrollFrame].size.height / [self numberOfHours], 40.0f);
+    {
+        CGFloat frameHeight = [self dayScrollFrame].size.height;
+        CGFloat numberOfHours = [self numberOfHours];
+        static const CGFloat MinimumHeightOfHour = 40.0f;
+        return fmaxf(frameHeight / numberOfHours, MinimumHeightOfHour);
+    }
 }
 
 
@@ -827,11 +834,10 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     [dayScroll setNeedsLayout];
 }
 
-
 - (void)layoutDayLayer:(WLCalendarDayEventsLayer *)aDayLayer
 {
     WLCalendarTimeRulerLayer *timeRuler = [_timeRulerRootLayer WL_timeRulerLayer];
-    CGFloat height = [timeRuler preferredFrameSize].height;
+    CGFloat height = fmaxf([timeRuler preferredFrameSize].height, aDayLayer.superlayer.bounds.size.height);
     [aDayLayer setValue:[NSNumber numberWithFloat:height] forKeyPath:@"frame.size.height"];
     [aDayLayer setNeedsLayout];
 }
@@ -1013,6 +1019,9 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     __block WLCalendarTimeRulerLayer *l = [WLCalendarTimeRulerLayer layer];
     l.name = _WLTimeRulerLayerName;
     l.timeRuler = self;
+#ifdef DEBUG_LAYERS
+    l.backgroundColor = [[NSColor blueColor] WL_CGColor];
+#endif
     return l;
 }
 
@@ -1201,9 +1210,10 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     __block WLCalendarDayEventsLayer *l = [WLCalendarDayEventsLayer layer];
     l.name = _WLDayLayerName;
     l.timeRuler = self;
-    l.keepTextOfEventsVisible = !self.fitDayEvents;
+    l.keepsTextOfEventsVisible = !self.fitDayEvents;
 #ifdef DEBUG_LAYERS
     l.needsDisplayOnBoundsChange = YES;
+    l.backgroundColor = [[NSColor blueColor] WL_CGColor];
 #endif
     return l;
 }
@@ -1223,7 +1233,6 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     __block WLBlockLayer *l = [WLBlockLayer layer];
     l.name = _WLDayBackgroundLayerName;
     l.needsDisplayOnBoundsChange = YES;
-#ifndef DEBUG_LAYERS
     NSGradient *whiteToTransparentGradient = [[NSGradient alloc] initWithStartingColor:[[NSColor whiteColor] colorWithAlphaComponent:0.1f]
                                                                    endingColor:[NSColor clearColor]];
     [whiteToTransparentGradient autorelease];
@@ -1235,7 +1244,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
         [c setShouldAntialias:YES];
         [NSGraphicsContext saveGraphicsState];
         [NSGraphicsContext setCurrentContext:c];
-
+#ifndef DEBUG_LAYERS
         NSSize bottomSize = NSMakeSize(aLayer.bounds.size.width,
                                        [[NSImage imageNamed:@"day-bottom"] size].height);
         NSSize topSize = NSMakeSize(aLayer.bounds.size.width,
@@ -1317,6 +1326,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
                                                    1.0f,
                                                    1.0f)
                                  angle:90];
+#endif
         if (selfBlock.showsDayColumnTitle)
         {
             NSString *dayName = [aLayer valueForKey:_WLDayBackgroundLayerTitleKey];
@@ -1330,13 +1340,17 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
             const CGFloat mysteriousExtraOffset = 2.0;
             CGFloat verticalOffset = mysteriousExtraOffset + dayTextRect.size.height / 2.0 - size.height / 2.0;
             dayTextRect.origin.y += verticalOffset;
+#ifdef DEBUG_LAYERS
+            [[NSColor greenColor] setFill];
+            NSRectFill(dayTextRect);
+#endif
             [dayName drawWithRect:dayTextRect
                           options:_WLDayBackgroundTitleAttributes
                        attributes:dayAttributes];
         }
         [NSGraphicsContext restoreGraphicsState];
     };
-#else
+#ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
 #endif
     return l;
@@ -1392,6 +1406,8 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
 
 @end
 
+
+#pragma mark -
 
 @implementation CALayer (WLCalendarWeekView)
 
