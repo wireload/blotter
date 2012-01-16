@@ -101,21 +101,27 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 - (IBAction)newEvent:(id)aSender
 {
     WLNewEventWindowController *controller = [WLNewEventWindowController sharedWindowController];
-    [controller setDefaults:aSender];
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:_WLNewEventWindowAutosaveName] == nil)
-        [[controller window] center];
-    [controller showWindow:aSender];
-    [NSApp activateIgnoringOtherApps:YES];
+    if ([controller canCreateEvent])
+    {
+        [controller setDefaults:aSender];
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:_WLNewEventWindowAutosaveName] == nil)
+            [[controller window] center];
+        [controller showWindow:aSender];
+        [NSApp activateIgnoringOtherApps:YES];
+    }
 }
 
 - (IBAction)newTask:(id)aSender
 {
     WLNewTaskWindowController *controller = [WLNewTaskWindowController sharedWindowController];
-    [controller setDefaults:aSender];
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:_WLNewTaskWindowAutosaveName] == nil)
-        [[controller window] center];
-    [controller showWindow:aSender];
-    [NSApp activateIgnoringOtherApps:YES];
+    if ([controller canCreateTask])
+    {
+        [controller setDefaults:aSender];
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:_WLNewTaskWindowAutosaveName] == nil)
+            [[controller window] center];
+        [controller showWindow:aSender];
+        [NSApp activateIgnoringOtherApps:YES];
+    }
 }
 
 - (IBAction)showAbout:(id)aSender
