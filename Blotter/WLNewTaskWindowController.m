@@ -147,7 +147,7 @@
     }];
     _titleView.postsSizeChangedNotifications = YES;
 
-    [[_titleView valueForKey:@"_textView"] bind:@"value"
+    [[_titleView valueForKey:@"_textView"] bind:NSValueBinding
                                        toObject:self
                                     withKeyPath:@"title"
                                         options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:NSContinuouslyUpdatesValueBindingOption]];
