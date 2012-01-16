@@ -120,11 +120,12 @@ static const CGFloat _WLMysteriousExtraBottomSpace = 4.0f;
 {
     // (0, 0) is top left.
     [NSGraphicsContext saveGraphicsState];
+    NSRect bounds = [self bounds];
+#ifndef DEBUG_LAYERS
     NSGraphicsContext *context = [NSGraphicsContext currentContext];
     [context setShouldAntialias:YES];
     [context setImageInterpolation:NSImageInterpolationHigh];
 
-    NSRect bounds = [self bounds];
     NSSize bottomSize = NSMakeSize(bounds.size.width, [[NSImage imageNamed:@"info-bottom"] size].height);
     NSSize topSize = NSMakeSize(bounds.size.width, [[NSImage imageNamed:@"info-top"] size].height);
     NSSize middleSize = NSMakeSize(bounds.size.width, bounds.size.height - bottomSize.height - topSize.height);
@@ -201,11 +202,15 @@ static const CGFloat _WLMysteriousExtraBottomSpace = 4.0f;
     [whiteToTransparentGradient release];
     [NSGraphicsContext restoreGraphicsState];
 
+#else
+    [[NSColor blackColor] setFill];
+    NSRectFill(aDirtyRect);
+#endif
     CGContextRef cgContext = [[NSGraphicsContext currentContext] graphicsPort];
     CGContextSetAllowsAntialiasing(cgContext, YES);
     CGContextSetShouldAntialias(cgContext, YES);
     CGContextSetAllowsFontSmoothing(cgContext, NO);
-
+    
     NSRect titleFrame = [self _titleFrame];
     if (NSIntersectsRect(titleFrame, aDirtyRect) && NSContainsRect(bounds, titleFrame))
         [self.title drawInRect:titleFrame withAttributes:[self _titleAttributes]];

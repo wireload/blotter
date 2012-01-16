@@ -26,6 +26,7 @@
 {
     [NSGraphicsContext saveGraphicsState];
     [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
+#ifndef DEBUG_LAYERS
     NSRect topFrame = NSMakeRect(0.0f,
                                  0.0f,
                                  [self bounds].size.width,
@@ -78,6 +79,10 @@
                             1.0f,
                             YES);
     }
+#else
+    [[NSColor lightGrayColor] setFill];
+    NSRectFill(aDirtyRect);
+#endif
     [NSGraphicsContext restoreGraphicsState];
 }
 

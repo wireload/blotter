@@ -34,7 +34,10 @@
     [NSGraphicsContext saveGraphicsState];
     [[NSGraphicsContext currentContext] setShouldAntialias:YES];
     NSRect bounds = [self bounds];
-
+#ifdef DEBUG_LAYERS
+    [[NSColor blackColor] setFill];
+    NSRectFill(aDirtyRect);
+#endif
     CGContextRef cgContext = [[NSGraphicsContext currentContext] graphicsPort];
     CGContextSetAllowsAntialiasing(cgContext, YES);
     CGContextSetShouldAntialias(cgContext, YES);

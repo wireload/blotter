@@ -869,6 +869,9 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     CALayer *l = [CALayer layer];
     l.masksToBounds = YES;
     l.name = _WLRootLayerName;
+#ifdef DEBUG_LAYERS
+    l.backgroundColor = [[NSColor blackColor] WL_CGColor];
+#endif
     l.layoutManager = self;
     return l;
 }
