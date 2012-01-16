@@ -12,7 +12,6 @@
 #import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLCalendarTimeRuler.h"
 #import "WLCalendarTimeRulerLayer.h"
-#import "WLCalendarBackgroundLayer.h"
 #import "WLCalendarDayEventsLayer.h"
 #import "WLCalendarAllDayEventsLayer.h"
 #import "WLCalendarTimeIndicatorLayer.h"
@@ -235,7 +234,7 @@
 
 @interface CALayer (WLCalendarWeekView)
 
-- (WLCalendarBackgroundLayer *)WL_allDayBackgroundLayer;
+- (WLBlockLayer *)WL_allDayBackgroundLayer;
 
 - (WLCalendarAllDayEventsLayer *)WL_allDayLayer;
 

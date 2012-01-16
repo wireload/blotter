@@ -8,12 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
-#import "WLCalendarLayer.h"
 
 /*!
  @classdesign One of superlayers must be flipped (that is, geometryFlipped is set to YES) so the origin would be top left.
  */
-@interface WLCalendarEventLayer : WLCalendarLayer {
+@interface WLCalendarEventLayer : CALayer {
     CGFloat _cachedMinimumHeight;
     BOOL _shouldUpdateMinimumHeightCache;
 }
@@ -28,6 +27,10 @@
  If set to YES, while drawing content uses visibleRect to determine frames of title and location to keep them visible.
  */
 @property BOOL keepTextVisible;
+
+@property CGFloat contentsBackgroundOpacity;
+
+@property CGColorRef contentsBackgroundColor;
 
 + (CGFloat)minimumHumanVisibleWidth;
 

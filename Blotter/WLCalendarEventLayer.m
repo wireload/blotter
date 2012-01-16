@@ -21,6 +21,8 @@ const CGFloat _WLXPadding = 10.0f;
 @dynamic title;
 @dynamic location;
 @dynamic keepTextVisible;
+@dynamic contentsBackgroundOpacity;
+@dynamic contentsBackgroundColor;
 
 - (void)setCornerRadius:(CGFloat)newCornerRadius
 {
@@ -42,9 +44,9 @@ const CGFloat _WLXPadding = 10.0f;
     // At least 2 side-by-side events should be visible on 1280x800.
     // Width of column depends on user's locale. The widest locale is South Korea.
     // return _WLXPadding + 20.0f;
-    
+
     // ...actually overlapping events look like a bug because their colours and text
-    // mix. It's better to keep trying to render them side by side, no matter how 
+    // mix. It's better to keep trying to render them side by side, no matter how
     // small.
     return 1.0;
 }
@@ -219,6 +221,10 @@ const CGFloat _WLXPadding = 10.0f;
         return YES;
     else if ([aKey isEqualToString:@"keepTextVisible"])
         return YES;
+    else if ([aKey isEqualToString:@"contentsBackgroundOpacity"])
+        return YES;
+    else if ([aKey isEqualToString:@"contentsBackgroundColor"])
+        return YES;
     else
         return [super needsDisplayForKey:aKey];
 }
@@ -226,10 +232,33 @@ const CGFloat _WLXPadding = 10.0f;
 + (id)defaultValueForKey:(NSString *)aKey {
     if ([aKey isEqualToString:@"keepTextVisible"])
         return [NSNumber numberWithBool:NO];
+    else if ([aKey isEqualToString:@"contentsBackgroundOpacity"])
+        return [NSNumber numberWithFloat:1.0f];
+    else if ([aKey isEqualToString:@"contentsBackgroundColor"])
+        return (id)[[NSColor clearColor] WL_CGColor];
     else
         return [super defaultValueForKey:aKey];
 }
 
++ (id<CAAction>)defaultActionForKey:(NSString *)aKey
+{
+    if ([aKey isEqualToString:@"contentsBackgroundOpacity"])
+        return [CABasicAnimation animationWithKeyPath:@"contentsBackgroundOpacity"];
+    else if ([aKey isEqualToString:@"contentsBackgroundColor"])
+        return [CABasicAnimation animationWithKeyPath:@"contentsBackgroundColor"];
+    else
+        return [super defaultActionForKey:aKey];
+}
+
+- (id<CAAction>)actionForKey:(NSString *)aKey
+{
+    id<CAAction> action = [super actionForKey:aKey];
+    if ([aKey isEqualToString:@"contentsBackgroundOpacity"])
+        [(CABasicAnimation *)action setFromValue:[[self presentationLayer] valueForKeyPath:@"contentsBackgroundOpacity"]];
+    else if ([aKey isEqualToString:@"contentsBackgroundColor"])
+        [(CABasicAnimation *)action setFromValue:[[self presentationLayer] valueForKeyPath:@"contentsBackgroundColor"]];
+    return action;
+}
 
 - (void)drawInContext:(CGContextRef)aContext
 {
