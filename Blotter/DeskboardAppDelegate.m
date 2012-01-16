@@ -101,7 +101,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 - (IBAction)newEvent:(id)aSender
 {
     WLNewEventWindowController *controller = [WLNewEventWindowController sharedWindowController];
-    [controller reset];
+    [controller setDefaults:aSender];
     if ([[NSUserDefaults standardUserDefaults] objectForKey:_WLNewEventWindowAutosaveName] == nil)
         [[controller window] center];
     [controller showWindow:aSender];

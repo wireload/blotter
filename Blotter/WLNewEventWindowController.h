@@ -15,30 +15,50 @@
 
 
 @interface WLNewEventWindowController : NSWindowController <NSWindowDelegate, WLGlassHudDatePickerCellDelegate> {
-    WLCalendarController *calendarController;
-
+    NSString *title;
+    NSString *location;
+    BOOL isAllDay;
+    NSDate *startDate;
+    NSDate *endDate;
+    
+    
+    WLCalendarController *_calendarController;
+    NSDate *_datePickerValueBackup;
     IBOutlet WLGlassHudTextView *_titleView;
     id _titleViewObserver;
     IBOutlet WLGlassHudTextView *_locationView;
     IBOutlet NSView *_locationViewContainer;
     id _locationViewObserver;
-    IBOutlet NSButton *_isAllDayButton;
     IBOutlet WLGlassHudDatePicker *_startDatePicker;
     IBOutlet WLGlassHudDatePicker *_endDatePicker;
-    NSDate *_datePickerValueBackup;
     IBOutlet NSButton *_createButton;
 }
 
-@property (retain) WLCalendarController *calendarController;
+@property (copy) NSString *title;
 
-@property (nonatomic) NSUInteger selectedCalCalendarIndex;
+@property (copy) NSString *location;
+
+@property BOOL isAllDay;
+
+@property (copy) NSDate *startDate;
+
+@property (copy) NSDate *endDate;
+
+@property (nonatomic, readonly) NSArray *eventCalCalendars;
+
+@property (nonatomic) NSUInteger selectedEventCalCalendarIndex;
+
+@property (nonatomic, readonly) BOOL canCreateEvent;
 
 + (id)sharedWindowController;
 
-- (BOOL)canCreateEvent;
+- (id)initWithCalendarController:(WLCalendarController *)aCalendarController;
 
-- (void)reset;
+- (IBAction)setDefaults:(id)aSender;
 
 - (IBAction)create:(id)aSender;
+
+
+@property (nonatomic, readonly) NSInteger _datePickerElements;
 
 @end

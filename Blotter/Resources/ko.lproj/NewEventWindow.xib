@@ -15,6 +15,7 @@
 			<string>NSDatePicker</string>
 			<string>NSTextField</string>
 			<string>NSPopUpButton</string>
+			<string>NSUserDefaultsController</string>
 			<string>NSButton</string>
 			<string>NSMenu</string>
 			<string>NSButtonCell</string>
@@ -382,6 +383,9 @@
 				<string key="NSFrameAutosaveName">NewEventWindow</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
+			<object class="NSUserDefaultsController" id="806834075">
+				<bool key="NSSharedInstance">YES</bool>
+			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<object class="NSMutableArray" key="connectionRecords">
@@ -393,14 +397,6 @@
 						<reference key="destination" ref="1032099916"/>
 					</object>
 					<int key="connectionID">54</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">_isAllDayButton</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="456489716"/>
-					</object>
-					<int key="connectionID">92</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -491,6 +487,22 @@
 					<int key="connectionID">307</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: self.startDate</string>
+						<reference key="source" ref="211563046"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="211563046"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: self.startDate</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">self.startDate</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">362</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">nextKeyView</string>
 						<reference key="source" ref="689527520"/>
@@ -499,12 +511,44 @@
 					<int key="connectionID">313</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: self.endDate</string>
+						<reference key="source" ref="689527520"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="689527520"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: self.endDate</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">self.endDate</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">363</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">nextKeyView</string>
 						<reference key="source" ref="456489716"/>
 						<reference key="destination" ref="211563046"/>
 					</object>
 					<int key="connectionID">306</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: self.isAllDay</string>
+						<reference key="source" ref="456489716"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="456489716"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: self.isAllDay</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">self.isAllDay</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">357</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -532,53 +576,84 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">content: calendarController.calEventCalendarsToDisplay</string>
+						<string key="label">content: self.eventCalCalendars</string>
 						<reference key="source" ref="408232026"/>
 						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector" id="141302556">
+						<object class="NSNibBindingConnector" key="connector" id="741251807">
 							<reference key="NSSource" ref="408232026"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">content: calendarController.calEventCalendarsToDisplay</string>
+							<string key="NSLabel">content: self.eventCalCalendars</string>
 							<string key="NSBinding">content</string>
-							<string key="NSKeyPath">calendarController.calEventCalendarsToDisplay</string>
+							<string key="NSKeyPath">self.eventCalCalendars</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">350</int>
+					<int key="connectionID">364</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">contentValues: calendarController.calEventCalendarsToDisplay.title</string>
+						<string key="label">contentValues: self.eventCalCalendars.title</string>
 						<reference key="source" ref="408232026"/>
 						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector" id="989205409">
+						<object class="NSNibBindingConnector" key="connector" id="120183097">
 							<reference key="NSSource" ref="408232026"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">contentValues: calendarController.calEventCalendarsToDisplay.title</string>
+							<string key="NSLabel">contentValues: self.eventCalCalendars.title</string>
 							<string key="NSBinding">contentValues</string>
-							<string key="NSKeyPath">calendarController.calEventCalendarsToDisplay.title</string>
-							<reference key="NSPreviousConnector" ref="141302556"/>
+							<string key="NSKeyPath">self.eventCalCalendars.title</string>
+							<reference key="NSPreviousConnector" ref="741251807"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">355</int>
+					<int key="connectionID">367</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedIndex: selectedCalCalendarIndex</string>
+						<string key="label">selectedIndex: self.selectedEventCalCalendarIndex</string>
 						<reference key="source" ref="408232026"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="408232026"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">selectedIndex: selectedCalCalendarIndex</string>
+							<string key="NSLabel">selectedIndex: self.selectedEventCalCalendarIndex</string>
 							<string key="NSBinding">selectedIndex</string>
-							<string key="NSKeyPath">selectedCalCalendarIndex</string>
-							<reference key="NSPreviousConnector" ref="989205409"/>
+							<string key="NSKeyPath">self.selectedEventCalCalendarIndex</string>
+							<reference key="NSPreviousConnector" ref="120183097"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">356</int>
+					<int key="connectionID">369</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: self.eventCalCalendars</string>
+						<reference key="source" ref="408232026"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="408232026"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">enabled: self.eventCalCalendars</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">self.eventCalCalendars</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSNullPlaceholder</string>
+									<string>NSValueTransformerName</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<integer value="1"/>
+									<integer value="0"/>
+									<string>WLCountGreaterThanOneTransformer</string>
+								</object>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">375</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -590,19 +665,19 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: canCreateEvent</string>
+						<string key="label">enabled: self.canCreateEvent</string>
 						<reference key="source" ref="1026362590"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="1026362590"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">enabled: canCreateEvent</string>
+							<string key="NSLabel">enabled: self.canCreateEvent</string>
 							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">canCreateEvent</string>
+							<string key="NSKeyPath">self.canCreateEvent</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">323</int>
+					<int key="connectionID">373</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -884,6 +959,11 @@
 						<reference key="object" ref="246916745"/>
 						<reference key="parent" ref="689527520"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">359</int>
+						<reference key="object" ref="806834075"/>
+						<reference key="parent" ref="0"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -919,6 +999,7 @@
 					<string>3.IBPluginDependency</string>
 					<string>3.IBWindowTemplateEditedContentRect</string>
 					<string>3.NSWindowTemplate.visibleAtLaunch</string>
+					<string>359.IBPluginDependency</string>
 					<string>4.IBPluginDependency</string>
 					<string>81.CustomClassName</string>
 					<string>81.IBPluginDependency</string>
@@ -965,6 +1046,7 @@
 					<string>{{921, 933}, {285, 230}}</string>
 					<boolean value="NO"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>WLGlassHudDatePicker</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>WLGlassHudDatePicker</string>
@@ -987,7 +1069,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">356</int>
+			<int key="maxID">375</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1039,14 +1121,35 @@
 					<string key="className">WLNewEventWindowController</string>
 					<string key="superclassName">NSWindowController</string>
 					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">create:</string>
-						<string key="NS.object.0">id</string>
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>create:</string>
+							<string>setDefaults:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">create:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">create:</string>
-							<string key="candidateClassName">id</string>
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>create:</string>
+							<string>setDefaults:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">create:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">setDefaults:</string>
+								<string key="candidateClassName">id</string>
+							</object>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
@@ -1055,7 +1158,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>_createButton</string>
 							<string>_endDatePicker</string>
-							<string>_isAllDayButton</string>
 							<string>_locationView</string>
 							<string>_locationViewContainer</string>
 							<string>_startDatePicker</string>
@@ -1065,7 +1167,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSButton</string>
 							<string>WLGlassHudDatePicker</string>
-							<string>NSButton</string>
 							<string>WLGlassHudTextView</string>
 							<string>NSView</string>
 							<string>WLGlassHudDatePicker</string>
@@ -1078,7 +1179,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>_createButton</string>
 							<string>_endDatePicker</string>
-							<string>_isAllDayButton</string>
 							<string>_locationView</string>
 							<string>_locationViewContainer</string>
 							<string>_startDatePicker</string>
@@ -1093,10 +1193,6 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">_endDatePicker</string>
 								<string key="candidateClassName">WLGlassHudDatePicker</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_isAllDayButton</string>
-								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">_locationView</string>
