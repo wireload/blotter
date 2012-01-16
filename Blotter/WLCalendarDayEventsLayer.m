@@ -18,14 +18,10 @@ static NSString* const _WLStartDateKey = @"startDate";
 
 static NSString* const _WLEndDateKey = @"endDate";
 
-static NSString* const _WLStartHourKey = @"startHour";
-
-static NSString* const _WLEndHourKey = @"endHour";
-
 static NSString* const _WLNumberOfColumnsToSkipKey = @"skipColumns";
 
 
-static const CGFloat XSpaceBetweenEvents = 2.0f;
+static const CGFloat _XSpaceBetweenEvents = 2.0f;
 
 
 #define IS_EQ_F(a, b) (BOOL)(fabsf((b) - (a)) < FLT_EPSILON)
@@ -60,7 +56,7 @@ static const CGFloat XSpaceBetweenEvents = 2.0f;
 #pragma mark Properties
 @dynamic timeRuler;
 @dynamic events;
-@synthesize keepTextOfEventsVisible;
+@synthesize keepsTextOfEventsVisible;
 @dynamic heightOfHour;
 
 - (NSSet *)events
@@ -69,8 +65,9 @@ static const CGFloat XSpaceBetweenEvents = 2.0f;
     for (WLCalendarEventLayer *eventLayer in _sortedByUIDEventLayers)
     {
         NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:
-                               eventLayer.name,             @"uid",
-                               [eventLayer.title string],   @"title",
+                               eventLayer.name,                 @"uid",
+                               [eventLayer.title string],       @"title",
+                               [eventLayer.location string],    @"location",
                                nil];
         [events addObject:event];
     }
@@ -84,7 +81,7 @@ static const CGFloat XSpaceBetweenEvents = 2.0f;
     for (id event in newEvents)
     {
         BOOL isFound = NO;
-        NSUInteger idxByUID = [self _indexOfEventLayerWithUID:[event uid] isFound:&isFound];
+        NSUInteger idxByUID = [self _indexForInsertionOfEventLayerWithUID:[event uid] isFound:&isFound];
         WLCalendarEventLayer *layer = nil;
         if (isFound)
         {
@@ -111,11 +108,11 @@ static const CGFloat XSpaceBetweenEvents = 2.0f;
     _areEventsChanged = YES;
 }
 
-- (void)setKeepTextOfEventsVisible:(BOOL)newKeepTextOfEventsVisible
+- (void)setKeepsTextOfEventsVisible:(BOOL)newKeepTextOfEventsVisible
 {
-    keepTextOfEventsVisible = newKeepTextOfEventsVisible;
+    keepsTextOfEventsVisible = newKeepTextOfEventsVisible;
     for (WLCalendarEventLayer *l in _sortedByUIDEventLayers)
-        l.keepTextVisible = keepTextOfEventsVisible;
+        l.keepTextVisible = keepsTextOfEventsVisible;
 }
 
 - (void)setBounds:(CGRect)newBounds
@@ -130,7 +127,7 @@ static const CGFloat XSpaceBetweenEvents = 2.0f;
 
 - (NSUInteger)maximumNumberOfColumns
 {
-    NSUInteger n = (self.bounds.size.width + XSpaceBetweenEvents) / ([WLCalendarEventLayer minimumHumanVisibleWidth] + XSpaceBetweenEvents);
+    NSUInteger n = (self.bounds.size.width + _XSpaceBetweenEvents) / ([WLCalendarEventLayer minimumHumanVisibleWidth] + _XSpaceBetweenEvents);
     n = MAX(n, (NSUInteger)1); // at least 1 column
     return n;
 }
@@ -155,13 +152,23 @@ static const CGFloat XSpaceBetweenEvents = 2.0f;
     if ([_sortedByStartDateEventLayers count] == 0)
         return WLHourRangeZero;
 
-    WLCalendarEventLayer *lastEventLayer = [_sortedByStartDateEventLayers lastObject];
-    CGFloat t = [self _minYOfEventLayer:lastEventLayer forHeightOfHour:aHeightOfHour];
-    CGFloat b = [self _maxYOfEventLayer:lastEventLayer forHeightOfHour:aHeightOfHour minY:t];
-    WLHourRange actualHourRange = [self hourRangeOfEvents];
+    WLCalendarEventLayer *minYLayer = [_sortedByStartDateEventLayers objectAtIndex:0];
+    WLCalendarEventLayer *maxYLayer = nil;
+    CGFloat maxYLayerBottom = 0.0f;
+    for (WLCalendarEventLayer *e in _sortedByStartDateEventLayers)
+    {
+        CGFloat t = [self _minYOfEventLayer:e forHeightOfHour:aHeightOfHour];
+        CGFloat b = [self _maxYOfEventLayer:e forHeightOfHour:aHeightOfHour minY:t];
+        if (b >= maxYLayerBottom)
+        {
+            maxYLayer = e;
+            maxYLayerBottom = b;
+        }
+    }
+    WLHourRange hourRange = [self hourRangeOfEvents];
     return (WLHourRange) {
-        .startHour = actualHourRange.startHour,
-        .endHour = fmaxf(actualHourRange.endHour, b / aHeightOfHour)
+        .startHour = fminf(hourRange.startHour, [self _minYOfEventLayer:minYLayer forHeightOfHour:aHeightOfHour] / aHeightOfHour),
+        .endHour = fmaxf(hourRange.endHour, maxYLayerBottom / aHeightOfHour)
     };
 }
 
@@ -175,7 +182,7 @@ static const CGFloat XSpaceBetweenEvents = 2.0f;
     l.masksToBounds = YES;
     l.contentsGravity = kCAGravityBottom;
     l.anchorPoint = CGPointMake(0.0f, 0.0f);
-    l.keepTextVisible = self.keepTextOfEventsVisible;
+    l.keepTextVisible = self.keepsTextOfEventsVisible;
 #ifndef DEBUG_LAYERS
     l.contentsBackgroundOpacity = 0.45f;
 #endif
@@ -206,8 +213,6 @@ static const CGFloat XSpaceBetweenEvents = 2.0f;
 
     [aLayer setValue:[anEvent startDate] forKey:_WLStartDateKey];
     [aLayer setValue:[anEvent endDate] forKey:_WLEndDateKey];
-    [aLayer setValue:nil forKey:_WLStartHourKey];
-    [aLayer setValue:nil forKey:_WLEndHourKey];
     [aLayer setValue:nil forKey:_WLNumberOfColumnsToSkipKey];
 #ifdef DEBUG_LAYERS
     aLayer.backgroundColor = [[(CalCalendar *)[anEvent calendar] color] WL_CGColor];
@@ -229,7 +234,7 @@ static const CGFloat XSpaceBetweenEvents = 2.0f;
     return i;
 }
 
-- (NSUInteger)_indexOfEventLayerWithUID:(NSString *)anUID isFound:(out BOOL *)outIsFound
+- (NSUInteger)_indexForInsertionOfEventLayerWithUID:(NSString *)anUID isFound:(out BOOL *)outIsFound
 {
     NSArray *layerNames = [_sortedByUIDEventLayers valueForKey:@"name"];
     NSUInteger idx = [layerNames indexOfObject:anUID
@@ -257,6 +262,18 @@ static const CGFloat XSpaceBetweenEvents = 2.0f;
         }];
     }
     return idx;
+}
+
+- (void)_buildEventsLayoutTreeIfNeeded
+{
+    NSUInteger newMaximumNumberOfColumns = [self maximumNumberOfColumns];
+    if (_areEventsChanged || _isHeightChanged || _maximumNumberOfColumns != newMaximumNumberOfColumns)
+    {
+        _areEventsChanged = NO;
+        _isHeightChanged = NO;
+        _maximumNumberOfColumns = newMaximumNumberOfColumns;
+        [self _buildEventsLayoutTree];
+    }
 }
 
 - (void)_buildEventsLayoutTree
@@ -515,24 +532,12 @@ static const CGFloat XSpaceBetweenEvents = 2.0f;
 
 - (CGFloat)_startHourOfEventLayer:(WLCalendarEventLayer *)aLayer
 {
-    NSNumber *startHour = [aLayer valueForKey:_WLStartHourKey];
-    if (startHour == nil)
-    {
-        startHour = [NSNumber numberWithFloat:[self.timeRuler hourForDate:[aLayer valueForKey:_WLStartDateKey]]];
-        [aLayer setValue:startHour forKey:_WLStartHourKey];
-    }
-    return [startHour floatValue];
+    return [self.timeRuler hourForDate:[aLayer valueForKey:_WLStartDateKey]];
 }
 
 - (CGFloat)_endHourOfEventLayer:(WLCalendarEventLayer *)aLayer
 {
-    NSNumber *endHour = [aLayer valueForKey:_WLEndHourKey];
-    if (endHour == nil)
-    {
-        endHour = [NSNumber numberWithFloat:[self.timeRuler hourForDate:[aLayer valueForKey:_WLEndDateKey]]];
-        [aLayer setValue:endHour forKey:_WLEndHourKey];
-    }
-    return [endHour floatValue];
+    return [self.timeRuler hourForDate:[aLayer valueForKey:_WLEndDateKey]];
 }
 
 - (CGFloat)_minYOfEventLayer:(WLCalendarEventLayer *)aLayer forHeightOfHour:(CGFloat)aHeightOfHour
@@ -552,6 +557,14 @@ static const CGFloat XSpaceBetweenEvents = 2.0f;
 
 #pragma mark CALayer
 
++ (id)defaultValueForKey:(NSString *)aKey
+{
+    if ([aKey isEqualToString:@"masksToBounds"])
+        return [NSNumber numberWithBool:YES];
+    else
+        return [super defaultValueForKey:aKey];
+}
+
 - (void)layoutSublayers
 {
     NSAssert(self.layoutManager == nil, @"You cannot use custom layout managers with this class");
@@ -559,42 +572,44 @@ static const CGFloat XSpaceBetweenEvents = 2.0f;
     if ([_sortedByStartDateEventLayers count] == 0)
         return;
 
-    if (_areEventsChanged || _isHeightChanged || _maximumNumberOfColumns != [self maximumNumberOfColumns])
-    {
-        _areEventsChanged = NO;
-        _isHeightChanged = NO;
-        _maximumNumberOfColumns = [self maximumNumberOfColumns];
-        [self _buildEventsLayoutTree];
-    }
+    [self _buildEventsLayoutTreeIfNeeded];
 
+    static const CGFloat CornerRadius = 5.0f;
+    CGFloat lastHourY = self.timeRuler.numberOfHours * self.heightOfHour;
     // Traverse tree and calculate frames.
     for (NSTreeNode *rowNode in [_eventsLayoutTreeRootNode childNodes])
     {
-        static const CGFloat CornerRadius = 5.0f;
-
         NSArray *columnNodes = [rowNode childNodes];
-        NSUInteger n = [columnNodes count];
-        CGFloat columnWidth = floorf(fmaxf((self.bounds.size.width - XSpaceBetweenEvents * (n - 1)) / n,
-                                    [WLCalendarEventLayer minimumHumanVisibleWidth]));
+        NSUInteger numberOfColumnsInRow = [columnNodes count];
+        CGFloat columnWidth = fmaxf((self.bounds.size.width - _XSpaceBetweenEvents * (numberOfColumnsInRow - 1)) / numberOfColumnsInRow,
+                                    [WLCalendarEventLayer minimumHumanVisibleWidth]);
         BOOL shouldRoundCorners = [columnNodes count] > 1;
         [columnNodes enumerateObjectsUsingBlock:^(NSTreeNode *columnNode, NSUInteger columnIdx, BOOL *stop)
         {
-            for (WLCalendarEventLayer *l in [columnNode representedObject])
-            {
+
+            NSArray *eventLayers = [columnNode representedObject];
+            [eventLayers enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger layerIdx, BOOL *stop) {
                 CGFloat t = [self _minYOfEventLayer:l forHeightOfHour:self.heightOfHour];
                 CGFloat b = [self _maxYOfEventLayer:l forHeightOfHour:self.heightOfHour minY:t];
+                // If bottom of the event is equal or greater than Y of last hour, we should extend it to match bottom of the column.
+                if (IS_LESS_OR_EQ_F(floorf(lastHourY), ceilf(b)))
+                    b = CGRectGetMaxY(self.bounds) - 1.0f;
+
                 NSUInteger numberOfColumnsToSkip = [[l valueForKey:_WLNumberOfColumnsToSkipKey] unsignedIntegerValue];
-                l.frame = CGRectMake(roundf(CGRectGetMinX(self.bounds) + columnIdx * (columnWidth + XSpaceBetweenEvents)),
-                                     roundf(t),
-                                     roundf(columnWidth + (columnWidth + XSpaceBetweenEvents) * numberOfColumnsToSkip),
-                                     floorf(b - t));
+                CGFloat x = roundf(CGRectGetMinX(self.bounds) + columnIdx * (columnWidth + _XSpaceBetweenEvents));
+                CGFloat y = roundf(t);
+                CGFloat width = fminf(CGRectGetWidth(self.bounds) - x, roundf(columnWidth + (columnWidth + _XSpaceBetweenEvents) * numberOfColumnsToSkip));
+                CGFloat height = fminf(CGRectGetHeight(self.bounds) - y, roundf(b) - y);
+                l.frame = CGRectMake(x, y, width, height);
+
                 if (shouldRoundCorners)
                     l.cornerRadius = CornerRadius;
                 else
                     l.cornerRadius = 0.0f;
-                if (self.keepTextOfEventsVisible)
+
+                if (self.keepsTextOfEventsVisible)
                     [l setNeedsDisplay];
-            }
+            }];
         }];
     }
 }
@@ -603,11 +618,9 @@ static const CGFloat XSpaceBetweenEvents = 2.0f;
 {
     CGSize s = CGSizeMake(0.0f, 0.0f);
     for (WLCalendarEventLayer *l in _sortedByStartDateEventLayers)
-    {
-        CGSize ls = [l preferredFrameSize];
-        s.width = ceilf(fmaxf(s.width, ls.width));
-    }
-    s.height = ceilf(self.timeRuler.numberOfHours * self.heightOfHour);
+        s.width = fmaxf(s.width, [l preferredFrameSize].width);
+    s.width = ceilf(s.width);
+    s.height = ceilf(WLHourRangeLength([self visibleHourRangeOfEventsForHeightOfHour:self.heightOfHour]) * self.heightOfHour);
     return s;
 }
 
@@ -618,18 +631,32 @@ static const CGFloat XSpaceBetweenEvents = 2.0f;
     CGContextSaveGState(aContext);
     CGContextSetFillColorWithColor(aContext, [[NSColor clearColor] WL_CGColor]);
     CGContextFillRect(aContext, CGContextGetClipBoundingBox(aContext));
+    CGContextSetAllowsAntialiasing(aContext, NO);
 
+    // Draw "real" hours.
     CGContextBeginPath(aContext);
-    CGFloat hourHeight = self.heightOfHour;
-    for (NSUInteger i=0, numberOfHours=self.timeRuler.numberOfHours; i<numberOfHours; ++i)
+    for (NSUInteger i = 0, numberOfHours = self.timeRuler.numberOfHours; i < numberOfHours; ++i)
     {
-        CGFloat y = self.bounds.origin.y + hourHeight * i;
+        CGFloat y = roundf(self.bounds.origin.y + self.heightOfHour * i);
         CGContextMoveToPoint(aContext, self.bounds.origin.x, y);
         CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), y);
     }
     CGColorRef lineColor = [[NSColor blackColor] WL_CGColor];
     CGContextSetStrokeColorWithColor(aContext, lineColor);
     CGContextStrokePath(aContext);
+
+    // Draw "virtual" visible hours.
+    CGContextBeginPath(aContext);
+    for (NSUInteger i = self.timeRuler.numberOfHours, numberOfHours = ceilf([self visibleHourRangeOfEventsForHeightOfHour:self.heightOfHour].endHour); i <= numberOfHours; ++i)
+    {
+        CGFloat y = roundf(self.bounds.origin.y + self.heightOfHour * i);
+        CGContextMoveToPoint(aContext, self.bounds.origin.x, y);
+        CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), y);
+    }
+    lineColor = [[NSColor whiteColor] WL_CGColor];
+    CGContextSetStrokeColorWithColor(aContext, lineColor);
+    CGContextStrokePath(aContext);
+
     CGContextRestoreGState(aContext);
 }
 #endif
@@ -637,14 +664,14 @@ static const CGFloat XSpaceBetweenEvents = 2.0f;
 - (void)scrollPoint:(CGPoint)aPoint
 {
     [super scrollPoint:aPoint];
-    if (self.keepTextOfEventsVisible)
+    if (self.keepsTextOfEventsVisible)
         [_sortedByUIDEventLayers makeObjectsPerformSelector:@selector(setNeedsDisplay)];
 }
 
 - (void)scrollRectToVisible:(CGRect)aRect
 {
     [super scrollRectToVisible:aRect];
-    if (self.keepTextOfEventsVisible)
+    if (self.keepsTextOfEventsVisible)
         [_sortedByUIDEventLayers makeObjectsPerformSelector:@selector(setNeedsDisplay)];
 }
 
