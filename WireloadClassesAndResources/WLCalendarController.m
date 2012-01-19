@@ -631,7 +631,7 @@ NSString* const WLTempTaskNotes = @"net.wireload.blotter.temptask";
     NSArray *events = [[CalCalendarStore defaultCalendarStore] eventsWithPredicate:allEventsPredicate];
     if ([events count] > 0)
         type |= WLCalendarEventType;
-    else
+    else if ([[NSUserDefaults standardUserDefaults] boolForKey:@"AllowsAdvancedCalendarTypeCheck"])
     {
         CalEvent *tmpEvent = [CalEvent event];
         tmpEvent.calendar = self;
@@ -673,7 +673,7 @@ NSString* const WLTempTaskNotes = @"net.wireload.blotter.temptask";
     NSArray *reminders = [[CalCalendarStore defaultCalendarStore] tasksWithPredicate:allRemindersPredicate];
     if ([reminders count] > 0)
         type |= WLCalendarReminderType;
-    else
+    else if ([[NSUserDefaults standardUserDefaults] boolForKey:@"AllowsAdvancedCalendarTypeCheck"])
     {
         CalTask *tmpReminder = [CalTask task];
         tmpReminder.notes = WLTempTaskNotes;
