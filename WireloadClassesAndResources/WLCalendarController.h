@@ -13,10 +13,13 @@
 typedef enum
 {
     WLCalendarUnknownType = 0,
-    WLCalendarEventType = 1,
-    WLCalendarReminderType = 2,
-    WLCalendarBothType = 3
+    WLCalendarEventType = 1 << 0,
+    WLCalendarReminderType = 1 << 1,
+    WLCalendarBothType = WLCalendarEventType | WLCalendarReminderType
 } WLCalendarType;
+
+
+NSString * WLStringFromCalendarType(WLCalendarType aCalendarType);
 
 
 @interface WLCalendarController : NSObject {
@@ -129,6 +132,10 @@ typedef enum
  */
 - (NSArray *)_calCalendars;
 
+- (WLCalendarType)_typeForCalCalendar:(CalCalendar *)aCalCalendar;
+
++ (WLCalendarType)_typeForCalCalendar:(CalCalendar *)aCalCalendar;
+
 @end
 
 
@@ -140,9 +147,9 @@ extern NSString* const WLTempTaskNotes;
 @interface CalCalendar (WLCalendarController)
 
 /*
- @discussion May cause CalCalendarsChangedNotification, CalEventsChangedNotification, CalTasksChangedNotification,
+ @discussion If AllowsAdvancedCalendarTypeCheck is set to YES in user defaults, may cause CalCalendarsChangedNotification, CalEventsChangedNotification, CalTasksChangedNotification,
  CalCalendarsChangedExternallyNotification, CalEventsChangedExternallyNotification or CalTasksChangedExternallyNotification to be posted.
- Ensure you remove observers before sending this message.
+ Ensure you properly update observers before sending this message.
  */
 - (WLCalendarType)WL_type;
 

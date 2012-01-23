@@ -12,6 +12,23 @@
 #import "NSArray+WLDelta.h"
 
 
+NSString * WLStringFromCalendarType(WLCalendarType aCalendarType)
+{
+    switch (aCalendarType) {
+        case WLCalendarUnknownType:
+            return @"Unknown";
+        case WLCalendarEventType:
+            return @"Event";
+        case WLCalendarReminderType:
+            return @"Reminder";
+        case WLCalendarBothType:
+            return @"Both";
+        default:
+            return [NSString stringWithFormat:@"%d", aCalendarType];
+    }
+}
+
+
 @interface WLCalendarController (/*Private*/)
 
 @property (nonatomic, retain) NSCalendar *calendar;
@@ -59,7 +76,9 @@
                 {
                     // Add type to the dictionary.
                     NSMutableDictionary *d = [calDict mutableCopy];
-                    [d setObject:[NSNumber numberWithUnsignedInteger:[c WL_type]] forKey:@"type"];
+                    WLCalendarType type = [self _typeForCalCalendar:c];
+
+                    [d setObject:[NSNumber numberWithUnsignedInteger:type] forKey:@"type"];
                     [calCalendarDicts replaceObjectAtIndex:index withObject:d];
                     [d release];
                 }
@@ -67,14 +86,15 @@
             }
             else
             {
+                WLCalendarType type = [self _typeForCalCalendar:c];
                 NSDictionary *d = [NSDictionary dictionaryWithObjectsAndKeys:
                                    c.uid,                                               @"uid",
                                    [NSNumber numberWithBool:YES],                       @"check",
-                                   [NSNumber numberWithUnsignedInteger:[c WL_type]],    @"type",
+                                   [NSNumber numberWithUnsignedInteger:type],           @"type",
                                    nil];
                 index = [calCalendarDicts indexOfObject:d
                                           inSortedRange:NSMakeRange(0, [calCalendarDicts count])
-                                                options:NSBinarySearchingFirstEqual | NSBinarySearchingInsertionIndex
+                                                options:NSBinarySearchingInsertionIndex
                                         usingComparator:^(id left, id right)
                 {
                     return [[left valueForKey:@"uid"] compare:[right valueForKey:@"uid"]];;
@@ -254,18 +274,7 @@
         if (type == WLCalendarUnknownType)
         {
             // Calendar may be changed since last time we updated user defaults it.
-            NSNotificationCenter *n = [NSNotificationCenter defaultCenter];
-            [n removeObserver:self name:CalCalendarsChangedNotification object:[CalCalendarStore defaultCalendarStore]];
-            [n removeObserver:self name:CalCalendarsChangedExternallyNotification object:[CalCalendarStore defaultCalendarStore]];
-            type = [c WL_type];
-            [n addObserver:self
-                  selector:@selector(_calCalendarsDidChange:)
-                      name:CalCalendarsChangedNotification
-                    object:[CalCalendarStore defaultCalendarStore]];
-            [n addObserver:self
-                  selector:@selector(_calCalendarsDidChange:)
-                      name:CalCalendarsChangedExternallyNotification
-                    object:[CalCalendarStore defaultCalendarStore]];
+            type = [self _typeForCalCalendar:c];
         }
         switch (type)
         {
@@ -301,19 +310,7 @@
         if (type == WLCalendarUnknownType)
         {
             // Calendar may be changed since last time we updated user defaults it.
-            NSNotificationCenter *n = [NSNotificationCenter defaultCenter];
-            // We don't want blotter to be notified of any changes applied in WL_type.
-            [n removeObserver:self name:CalCalendarsChangedNotification object:[CalCalendarStore defaultCalendarStore]];
-            [n removeObserver:self name:CalCalendarsChangedExternallyNotification object:[CalCalendarStore defaultCalendarStore]];
-            type = [c WL_type];
-            [n addObserver:self
-                  selector:@selector(_calCalendarsDidChange:)
-                      name:CalCalendarsChangedNotification
-                    object:[CalCalendarStore defaultCalendarStore]];
-            [n addObserver:self
-                  selector:@selector(_calCalendarsDidChange:)
-                      name:CalCalendarsChangedExternallyNotification
-                    object:[CalCalendarStore defaultCalendarStore]];
+            type = [self _typeForCalCalendar:c];
         }
         switch (type)
         {
@@ -477,10 +474,11 @@
                                 return [[obj1 objectForKey:@"uid"] compare:[obj2 objectForKey:@"uid"]];
                             }];
         CalCalendar *c = [[CalCalendarStore defaultCalendarStore] calendarWithUID:uid];
+        WLCalendarType type = [self _typeForCalCalendar:c];
         NSDictionary *d = [NSDictionary dictionaryWithObjectsAndKeys:
                            c.uid,                                               @"uid",
                            [NSNumber numberWithBool:YES],                       @"check",
-                           [NSNumber numberWithUnsignedInteger:[c WL_type]],    @"type",
+                           [NSNumber numberWithUnsignedInteger:type],    @"type",
                            nil];
         [calCalendarDicts insertObject:d atIndex:index];
     }
@@ -519,6 +517,53 @@
             [calendars addObject:c];
     }
     return calendars;
+}
+
+- (WLCalendarType)_typeForCalCalendar:(CalCalendar *)aCalCalendar
+{
+    WLCalendarType type = WLCalendarUnknownType;
+    NSNotificationCenter *n = [NSNotificationCenter defaultCenter];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"AllowsAdvancedCalendarTypeCheck"])
+        [n removeObserver:self name:CalCalendarsChangedNotification object:[CalCalendarStore defaultCalendarStore]];
+    @try
+    {
+        type = [aCalCalendar WL_type];
+    }
+    @catch (...)
+    {
+        NSLog(@"Unable to get type of calendar with UID %@.", aCalCalendar.uid);
+    }
+    @finally
+    {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"AllowsAdvancedCalendarTypeCheck"])
+        {
+            [n addObserver:self
+                  selector:@selector(_calCalendarsDidChange:)
+                      name:CalCalendarsChangedNotification
+                    object:[CalCalendarStore defaultCalendarStore]];
+        }
+    }
+#ifdef DEBUG
+    NSLog(@"Type of calendar %@(%@) is %@", aCalCalendar.title, aCalCalendar.uid, WLStringFromCalendarType(type));
+#endif
+    return type;
+}
+
++ (WLCalendarType)_typeForCalCalendar:(CalCalendar *)aCalCalendar
+{
+    WLCalendarType type = WLCalendarUnknownType;
+    @try
+    {
+        type = [aCalCalendar WL_type];
+    }
+    @catch (...)
+    {
+        NSLog(@"Unable to get type of calendar with UID %@.", aCalCalendar.uid);
+    }
+#ifdef DEBUG
+    NSLog(@"Type of calendar %@(%@) is %@", aCalCalendar.title, aCalCalendar.uid, WLStringFromCalendarType(type));
+#endif
+    return type;
 }
 
 
