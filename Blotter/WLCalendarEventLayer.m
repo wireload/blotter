@@ -174,23 +174,31 @@ const CGFloat _WLXPadding = 10.0f;
             else
                 locationHeight = titleAndLocationFrame.size.height - titleHeight;
 
-#ifdef DEBUG_LAYERS
-            CGContextSetFillColorWithColor(aContext, [[NSColor greenColor] WL_CGColor]);
-            CGContextFillRect(aContext, titleAndLocationFrame);
-#endif
             CGRect titleFrame = CGRectIntegral(CGRectMake(titleAndLocationFrame.origin.x,
                                                           CGRectGetMaxY(titleAndLocationFrame) - titleHeight,
                                                           titleAndLocationFrame.size.width,
                                                           titleHeight));
+#ifdef DEBUG_LAYERS
+            CGContextSetFillColorWithColor(aContext, [[NSColor greenColor] WL_CGColor]);
+            CGContextFillRect(aContext, titleFrame);
+#endif
             [self.title WL_drawWithRect:titleFrame context:aContext];
             CGRect locationFrame = CGRectIntegral(CGRectMake(titleAndLocationFrame.origin.x,
                                                              CGRectGetMinY(titleFrame) - locationHeight,
                                                              titleAndLocationFrame.size.width,
                                                              locationHeight));
+#ifdef DEBUG_LAYERS
+            CGContextSetFillColorWithColor(aContext, [[[NSColor greenColor] colorWithAlphaComponent:0.8f] WL_CGColor]);
+            CGContextFillRect(aContext, locationFrame);
+#endif
             [self.location WL_drawWithRect:locationFrame context:aContext];
         }
         else
         {
+#ifdef DEBUG_LAYERS
+            CGContextSetFillColorWithColor(aContext, [[[NSColor greenColor] colorWithAlphaComponent:0.3f] WL_CGColor]);
+            CGContextFillRect(aContext, titleAndLocationFrame);
+#endif
             // Layer cannot fit title, so there is no need to draw location.
             [self.title WL_drawWithRect:titleAndLocationFrame context:aContext];
         }
