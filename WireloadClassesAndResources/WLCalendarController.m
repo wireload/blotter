@@ -497,9 +497,18 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType)
         {
             if ([[d objectForKey:@"check"] boolValue])
             {
-                CalCalendar *c = [[CalCalendarStore defaultCalendarStore] calendarWithUID:[d objectForKey:@"uid"]];
-                if (c != nil)
-                    [calendars addObject:c];
+                NSString *uid = [d objectForKey:@"uid"];
+                if ([uid length] > 0)
+                {
+                    CalCalendar *c = [[CalCalendarStore defaultCalendarStore] calendarWithUID:uid];
+                    if (c != nil)
+                        [calendars addObject:c];
+                }
+                else
+                {
+                    NSLog(@"UID of a calendar of the Calendars setting is invalid. It MUST me set to non-empty string.\
+                          If you don't know how to modify app's settings plist, please contact us.");
+                }
             }
         }
         return calendars;
