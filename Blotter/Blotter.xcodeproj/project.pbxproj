@@ -26,7 +26,6 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		E20DAC4F1428FF0B00EF65EA /* info-middle-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E20DAC4D1428FF0B00EF65EA /* info-middle-left.png */; };
 		E20DAC501428FF0B00EF65EA /* info-middle-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E20DAC4E1428FF0B00EF65EA /* info-middle-right.png */; };
-		E214582C13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E214582B13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m */; };
 		E21A5F451403D2A4000B6634 /* WLCalendarTaskLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E21A5F441403D2A4000B6634 /* WLCalendarTaskLayer.m */; };
 		E22C78AB13FFCD9F00EE44C0 /* NSColor+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */; };
 		E23F746F14434DE40055D6CE /* WLHourRange.m in Sources */ = {isa = PBXBuildFile; fileRef = E23F746E14434DE40055D6CE /* WLHourRange.m */; };
@@ -82,7 +81,6 @@
 		E27951BB131AA060008AE1DA /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E27951BA131AA060008AE1DA /* Carbon.framework */; };
 		E27DE06A13CF18B1003E8E9A /* WLCalendarAllDayEventsLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E27DE06913CF18B1003E8E9A /* WLCalendarAllDayEventsLayer.m */; };
 		E27DE07613D03E19003E8E9A /* WLCalendarEventLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E27DE07513D03E19003E8E9A /* WLCalendarEventLayer.m */; };
-		E27DE46E13D0B3EC003E8E9A /* WLCalendarLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E27DE46D13D0B3EC003E8E9A /* WLCalendarLayer.m */; };
 		E282E0781404494E0007C401 /* allday-top-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E282E06F1404494E0007C401 /* allday-top-left.png */; };
 		E282E0791404494E0007C401 /* allday-top.png in Resources */ = {isa = PBXBuildFile; fileRef = E282E0701404494E0007C401 /* allday-top.png */; };
 		E282E07A1404494E0007C401 /* allday-top-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E282E0711404494E0007C401 /* allday-top-right.png */; };
@@ -259,8 +257,6 @@
 		8D1107320486CEB800E47090 /* Blotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E20DAC4D1428FF0B00EF65EA /* info-middle-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-middle-left.png"; sourceTree = "<group>"; };
 		E20DAC4E1428FF0B00EF65EA /* info-middle-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-middle-right.png"; sourceTree = "<group>"; };
-		E214582A13D5AE7F00B21398 /* WLCalendarBackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarBackgroundLayer.h; sourceTree = "<group>"; };
-		E214582B13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarBackgroundLayer.m; sourceTree = "<group>"; };
 		E21A5F431403D2A4000B6634 /* WLCalendarTaskLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTaskLayer.h; sourceTree = "<group>"; };
 		E21A5F441403D2A4000B6634 /* WLCalendarTaskLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarTaskLayer.m; sourceTree = "<group>"; };
 		E22C78A913FFCD9F00EE44C0 /* NSColor+WLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+WLCalendar.h"; sourceTree = "<group>"; };
@@ -333,8 +329,6 @@
 		E27DE06913CF18B1003E8E9A /* WLCalendarAllDayEventsLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarAllDayEventsLayer.m; sourceTree = "<group>"; };
 		E27DE07413D03E19003E8E9A /* WLCalendarEventLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarEventLayer.h; sourceTree = "<group>"; };
 		E27DE07513D03E19003E8E9A /* WLCalendarEventLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarEventLayer.m; sourceTree = "<group>"; };
-		E27DE46C13D0B3EC003E8E9A /* WLCalendarLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarLayer.h; sourceTree = "<group>"; };
-		E27DE46D13D0B3EC003E8E9A /* WLCalendarLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarLayer.m; sourceTree = "<group>"; };
 		E282E06F1404494E0007C401 /* allday-top-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "allday-top-left.png"; sourceTree = "<group>"; };
 		E282E0701404494E0007C401 /* allday-top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "allday-top.png"; sourceTree = "<group>"; };
 		E282E0711404494E0007C401 /* allday-top-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "allday-top-right.png"; sourceTree = "<group>"; };
@@ -586,15 +580,11 @@
 				E27DE07513D03E19003E8E9A /* WLCalendarEventLayer.m */,
 				E21A5F431403D2A4000B6634 /* WLCalendarTaskLayer.h */,
 				E21A5F441403D2A4000B6634 /* WLCalendarTaskLayer.m */,
-				E27DE46C13D0B3EC003E8E9A /* WLCalendarLayer.h */,
-				E27DE46D13D0B3EC003E8E9A /* WLCalendarLayer.m */,
 				E2C774C213D1C02A0067102F /* WLCalendarDayEventsLayer.h */,
 				E2C774C313D1C02A0067102F /* WLCalendarDayEventsLayer.m */,
 				E2C776E413D20A970067102F /* WLCalendarTimeRuler.h */,
 				E2B16FDC13D57F52005F8973 /* WLCalendarTimeRulerLayer.h */,
 				E2B16FDD13D57F52005F8973 /* WLCalendarTimeRulerLayer.m */,
-				E214582A13D5AE7F00B21398 /* WLCalendarBackgroundLayer.h */,
-				E214582B13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m */,
 				E2678ACF14050FCE00ABB89B /* WLCalendarTimeRulerLabelLayer.h */,
 				E2678AD014050FCE00ABB89B /* WLCalendarTimeRulerLabelLayer.m */,
 				E22C78A913FFCD9F00EE44C0 /* NSColor+WLCalendar.h */,
@@ -985,10 +975,8 @@
 				E27433BE13CB3E1B00F531B6 /* WLCalendarWeekViewController.m in Sources */,
 				E27DE06A13CF18B1003E8E9A /* WLCalendarAllDayEventsLayer.m in Sources */,
 				E27DE07613D03E19003E8E9A /* WLCalendarEventLayer.m in Sources */,
-				E27DE46E13D0B3EC003E8E9A /* WLCalendarLayer.m in Sources */,
 				E2C774C413D1C02A0067102F /* WLCalendarDayEventsLayer.m in Sources */,
 				E2B16FDE13D57F52005F8973 /* WLCalendarTimeRulerLayer.m in Sources */,
-				E214582C13D5AE7F00B21398 /* WLCalendarBackgroundLayer.m in Sources */,
 				E253575013DC884D0010A2ED /* NSDate+WLDayBoundaries.m in Sources */,
 				E2F112DD13E6E263001C2B7B /* WLCalendarWindow.m in Sources */,
 				E2F1133D13E70B4F001C2B7B /* WLCalendarWindowController.m in Sources */,
