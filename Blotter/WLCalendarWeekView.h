@@ -20,52 +20,57 @@
 
 @protocol WLCalendarWeekViewDataSource;
 
-@class WLCalendarTimeIndicatorLayer;
 
+typedef enum
+{
+    WLRightToLeftDirection,
+    WLLeftToRightDirection
+} WLDayAppearanceDirection;
 
 
 @interface WLCalendarWeekView : NSView <WLCalendarTimeRuler/*, CALayerManager*/> {
     IBOutlet NSObject<WLCalendarWeekViewDataSource> *dataSource;
     CGFloat heightOfAllDayPartOfColumn;
-    BOOL showTimeIndicator;
-    BOOL fitDayEvents;
+    BOOL showsTimeIndicator;
+    BOOL fitsDayEvents;
     NSUInteger indexOfHighlightedColumn;
-    BOOL showAllDayEvents;
+    BOOL showsAllDayEvents;
     BOOL showsDayColumnTitle;
-    WLHourRange rangeOfAlwaysVisibleHours;
+    WLHourRange alwaysVisibleHourRange;
 
-    CALayer *_rootLayer;
-    CALayer *_timeRulerRootLayer;
-    CALayer *_timeIndicatorRootLayer;
-    __block NSMutableArray *_columnLayers;
     CGFloat _hour;
+    NSUInteger _numberOfActiveShowDaysTransactions;
 }
 
 @property (assign) NSObject<WLCalendarWeekViewDataSource> *dataSource;
 
 /*!
- @discussion Default value is 114.0f.
+ @discussion    Default value is 114.0f.
  */
 @property (nonatomic) CGFloat heightOfAllDayPartOfColumn;
 
-@property (nonatomic) BOOL showTimeIndicator;
+/*!
+ @discussion    Default value is YES.
+ */
+@property (nonatomic) BOOL showsTimeIndicator;
 
 /*!
- @abstract      Determines whether view tries to fit all events.
+ @abstract      Determines whether view tries to fit all day events.
  @discussion    Default value is NO.
  When set to NO, the view focuses on current hour (tries to center it) and keeps text of events visible.
  */
-@property (nonatomic) BOOL fitDayEvents;
+@property (nonatomic) BOOL fitsDayEvents;
 
 /*!
- @discussion Pass NSNotFound if you want no columns to be highlighted.
+ @discussion    Pass NSNotFound if you want no columns to be highlighted.
+ Default value is NSNotFound
  */
 @property (nonatomic) NSUInteger indexOfHighlightedColumn;
 
 /*!
  @discussion Default value is YES.
  */
-@property (nonatomic) BOOL showAllDayEvents;
+@property (nonatomic) BOOL showsAllDayEvents;
 
 /*!
  @discussion Default value is YES.
@@ -73,133 +78,96 @@
 @property (nonatomic) BOOL showsDayColumnTitle;
 
 /*!
- @discussion Default value is [09:00, 17:00].
+ @abstract      Returns range of always visible hours when shouldFitAllDayEvents is set to YES.
+ @discussion    Default value is [09:00, 17:00].
+ Affects layout.
  */
-@property (nonatomic) WLHourRange rangeOfAlwaysVisibleHours;
-
-- (void)createLayers;
+@property (nonatomic) WLHourRange alwaysVisibleHourRange;
 
 - (void)reloadDataAnimated:(BOOL)isAnimated;
 
 - (void)scrollHour:(CGFloat)aHour animated:(BOOL)isAnimated;
 
-- (void)updateEventsOfColumnsAtIndexes:(NSIndexSet *)anIndexSet;
+- (void)updateEventsOfColumnsAtIndexes:(NSIndexSet *)anIndexSet animated:(BOOL)isAnimated;
 
-- (void)updateTitleOfColumnsAtIndexes:(NSIndexSet *)anIndexSet;
+- (void)updateTitleOfColumnsAtIndexes:(NSIndexSet *)anIndexSet animated:(BOOL)isAnimated;
 
-- (void)updateColorOfColumnsAtIndexes:(NSIndexSet *)anIndexSet;
+- (void)updateColorOfColumnsAtIndexes:(NSIndexSet *)anIndexSet animated:(BOOL)isAnimated;
 
-- (void)updateColumnsAtIndexes:(NSIndexSet *)anIndexSet;
+- (void)updateColumnsAtIndexes:(NSIndexSet *)anIndexSet animated:(BOOL)isAnimated;;
 
-- (void)showNextDay;
-
-- (void)showNextWeek;
-
-- (void)showNextDays:(NSUInteger)aNumberOfDays;
+- (void)showDays:(NSUInteger)aNumberOfDaysToShow
+        hideDays:(NSUInteger)aNumberOfDaysToHide
+       direction:(WLDayAppearanceDirection)aDirection
+        animated:(BOOL)isAnimated;
 
 - (void)stopAnimations;
 
-/*!
- @abstract  Returns maximum hour range of all day events presented in view.
- @see       rangeOfAlwaysVisibleHours
- */
-- (WLHourRange)rangeOfVisibleHours;
+- (void)pauseAnimations;
+
+- (void)resumeAnimations;
+
+- (NSUInteger)numberOfColumns;
 
 /*!
- @abstract Called when height of hour should be recalculated.
+ @abstract      Returns hour range that represents all events.
+ @discussion    Hour aligned. That is, if the "real" hour range is [9h 32m, 22h 13m], it will return [9h, 23h].
+ @see           visibleHourRange
  */
-- (void)setNeedsUpdateHeightOfHour;
+- (WLHourRange)hourRangeOfEvents;
 
 /*!
- @abstract      Height of hour on the view.
- @discussion    Returns not aligned value.
+ @see           alwaysVisibleHourRange
  */
-- (CGFloat)heightOfHour;
+- (WLHourRange)visibleHourRange;
 
-
-- (void)_updateEventsOfColumnsAtIndexes:(NSIndexSet *)anIndexSet;
-
-- (void)_updateTitleOfColumnsAtIndexes:(NSIndexSet *)anIndexSet;
-
-- (void)_updateColorOfColumnsAtIndexes:(NSIndexSet *)anIndexSet;
 
 - (void)_updateColumnsAtIndexes:(NSIndexSet *)anIndexSet;
 
+/*!
+ @discussion Sends setNeedsLayout to:
+    1. dayLayer
+    2. allDayLayer
+    3. dayScrollLayer
+    4. timeRulerScrollLayer
+    5. timeIndicatorRootLayer
+ @see dayLayers, allDayLayers, dayScrollLayers, timeRulerScrollLayer, timeIndicatorRootLayer
+ */
 - (void)_updateEventsOfColumnAtIndex:(NSUInteger)anIndex;
 
+/*!
+ @discussion Sends setNeedsLayout to:
+    1. timeRulerBackgroundLayer
+    2. dayBackgroundLayers
+    3. timeIndicatorRootLayer
+ @see timeRulerBackgroundLayer, dayBackgroundLayers, timeIndicatorRootLayer
+ */
 - (void)_updateTitleOfColumnAtIndex:(NSUInteger)anIndex;
 
 - (void)_updateColorOfColumnAtIndex:(NSUInteger)anIndex;
 
-- (void)_updateColumnAtIndex:(NSUInteger)anIndex;
-
-- (void)_updateTimeRuler;
-
-- (void)_focusOnDayEvents;
-
-- (void)_focusOnHour;
-
 - (NSDictionary *)_titleAttributesForColumnDayBackgroundLayer:(WLBlockLayer *)aLayer;
 
-@end
-
-
-@interface WLCalendarWeekView (Layout)
-
-- (CGFloat)timeRulerWidth;
-
-- (CGFloat)timeRulerRootWidth;
-
-- (CGRect)timeRulerRootFrame;
-
-- (CGFloat)timerRulerScrollHeight;
-
-- (CGRect)timeRulerScrollFrame;
-
-- (void)layoutTimeRulerRoot;
-
-- (void)layoutTimeRulerLayer:(WLCalendarTimeRulerLayer *)aTimeRulerLayer;
-
-
-- (CGFloat)columnWidth;
+- (NSArray *)_timeRulerMarkers;
 
 /*!
- @discussion    0 column is the column just after the time ruler.
- You may use negative values to animate disappearing of old columns.
+ @abstract  Updates the highlight property of day background layers and marks them needs display if needed.
  */
-- (CGRect)columnFrameAtIndex:(NSInteger)anIndex;
-
-- (CGRect)allDayBackgroundFrame;
-
-- (CGRect)dayBackgroundFrame;
-
-- (CGRect)dayScrollFrame;
-
-- (NSRect)columnTitleFrame;
-
-- (void)layoutColumnLayers;
-
-/*!
- @see columnFrameAtIndex:
- */
-- (void)layoutColumnLayer:(CALayer *)aColumnLayer atIndex:(NSInteger)anIndex;
-
-- (void)layoutDayLayer:(WLCalendarDayEventsLayer *)aDayLayer;
-
-- (BOOL)isAllDayPartOfColumnVisible;
-
-
-- (void)layoutTimeIndicatorRootLayer;
-
-- (void)layoutTimeIndicatorLayer;
+- (void)_updateHighlightColumnTitle;
 
 @end
 
+#pragma mark -
 
-@interface WLCalendarWeekView (SetupLayers)
+@interface WLCalendarWeekView (Layers)
+
+- (void)setupLayers;
+
+#pragma mark Root Layer
 
 - (CALayer *)setupRootLayer;
 
+#pragma mark Time Ruler Layers
 
 - (CALayer *)setupTimeRulerRootLayer;
 
@@ -209,49 +177,116 @@
 
 - (WLCalendarTimeRulerLayer *)setupTimeRulerLayer;
 
+#pragma mark Event Layers
+
+- (CALayer *)setupEventsRootLayer;
 
 - (CALayer *)setupColumnRootLayer;
 
-- (CALayer *)setupColumnLayer;
-
 - (WLBlockLayer *)setupAllDayBackgroundLayer;
-
-- (WLCalendarAllDayEventsLayer *)setupAllDayLayer;
-
-- (WLCalendarDayEventsLayer *)setupDayLayer;
-
-- (CAScrollLayer *)setupDayScrollLayer;
 
 - (WLBlockLayer *)setupDayBackgroundLayer;
 
+- (WLCalendarAllDayEventsLayer *)setupAllDayLayer;
+
+- (CAScrollLayer *)setupDayScrollLayer;
+
+- (WLCalendarDayEventsLayer *)setupDayLayer;
+
+#pragma mark Time Indicator Layers
 
 - (CALayer *)setupTimeIndicatorRootLayer;
 
 - (WLCalendarTimeIndicatorLayer *)setupTimeIndicatorLayer;
 
+#pragma mark Access Layers
+
+- (CALayer *)timeRulerRootLayer;
+
+- (WLBlockLayer *)timeRulerBackgroundLayer;
+
+- (CAScrollLayer *)timeRulerScrollLayer;
+
+- (WLCalendarTimeRulerLayer *)timeRulerLayer;
+
+- (CALayer *)eventsRootLayer;
+
+- (NSMutableArray *)columnRootLayers;
+
+- (NSArray *)dayBackgroundLayers;
+
+- (NSArray *)dayScrollLayers;
+
+- (NSArray *)dayLayers;
+
+- (NSArray *)allDayBackgroundLayers;
+
+- (NSArray *)allDayLayers;
+
+- (CALayer *)timeIndicatorRootLayer;
+
+- (WLCalendarTimeIndicatorLayer *)timeIndicatorLayer;
+
 @end
 
+#pragma mark -
 
-@interface CALayer (WLCalendarWeekView)
+@interface WLCalendarWeekView (Layout)
 
-- (WLBlockLayer *)WL_allDayBackgroundLayer;
+#pragma mark Root Layer
 
-- (WLCalendarAllDayEventsLayer *)WL_allDayLayer;
+- (void)layoutSublayersOfRootLayer:(CALayer *)aRootLayer;
 
+#pragma mark Time Ruler Layers
 
-- (WLBlockLayer *)WL_dayBackgroundLayer;
+- (void)layoutSublayersOfTimeRulerRootLayer:(CALayer *)aTimeRulerRootLayer;
 
-- (CAScrollLayer *)WL_dayScrollLayer;
+- (void)layoutSublayersOfTimeRulerBackgroundLayer:(WLBlockLayer *)aTimeRulerBackgroundLayer;
 
-- (WLCalendarDayEventsLayer *)WL_dayLayer;
+- (void)layoutSublayersOfTimeRulerScrollLayer:(CAScrollLayer *)aTimeRulerScrollLayer;
 
+#pragma mark Event Layers
 
-- (CAScrollLayer *)WL_timeRulerScrollLayer;
+- (void)layoutSublayersOfEventsRootLayer:(CALayer *)anEventsRootLayer;
 
-- (WLCalendarTimeRulerLayer *)WL_timeRulerLayer;
+- (void)layoutSublayersOfColumnRootLayer:(CALayer *)aColumnRootLayer;
 
+- (void)layoutSublayersOfAllDayBackgroundLayer:(WLBlockLayer *)anAllDayBackgroundLayer;
 
-- (WLCalendarTimeIndicatorLayer *)WL_timeIndicatorLayer;
+- (void)layoutSublayersOfDayBackgroundLayer:(WLBlockLayer *)aDayBackgroundLayer;
+
+- (void)layoutSublayersOfDayScrollLayer:(CAScrollLayer *)aDayScrollLayer;
+
+#pragma mark Time Indicator Layers
+
+- (void)layoutSublayersOfTimeIndicatorRootLayer:(CALayer *)aTimeIndicatorRootLayer;
+
+#pragma mark Layout Calculations
+
+- (CGFloat)heightAndMarginOfAllDayEventsPartOfColumn;
+
+/*!
+ @abstract  Returns frames for a given number of columns within current events root layer.
+ @see       eventsRootLayer
+ */
+- (NSArray *)framesForNumberOfColumns:(NSUInteger)aNumberOfColumns;
+
+/*!
+ @discussion    Frame of column title is general for all columns.
+ */
+- (NSRect)columnTitleFrame;
+
+- (CGPoint)scrollPoint;
+
+- (CGPoint)scrollPointToFocusOnDayEvents;
+
+- (CGPoint)scrollPointToFocusOnCurrentHour;
+
+- (BOOL)isAllDayPartOfColumnVisible;
+
+- (CGFloat)visibleHeightOfTimeRuler;
+
+- (CGFloat)positionForTimeIndicator;
 
 @end
 
@@ -263,10 +298,11 @@ enum
     WLCalendarWeekViewColorDataUnit = 1 << 2
 };
 
+#pragma mark -
 
 @protocol WLCalendarWeekViewDataSource
 
-- (NSUInteger)numberOfColumnsInWeekView:(WLCalendarWeekView *)aWeekView;
+- (WLHourRange)hourRangeOfColumnsInWeekView:(WLCalendarWeekView *)aWeekView;
 
 - (NSString *)weekView:(WLCalendarWeekView *)aWeekView titleForColumnAtIndex:(NSUInteger)anIndex;
 
@@ -274,15 +310,9 @@ enum
 
 - (CGColorRef)weekView:(WLCalendarWeekView *)aWeekView colorForColumnAtIndex:(NSUInteger)anIndex;
 
-/*!
- @see -[WLCalendarTimeRuler hourForDate:].
- */
 - (CGFloat)weekView:(WLCalendarWeekView *)aWeekView convertDateToHour:(NSDate *)aDate;
 
-/*!
- @see -[WLCalendarTimeRuler numberOfHours].
- */
-- (NSUInteger)numberOfHoursInWeekView:(WLCalendarWeekView *)aWeekView;
+- (NSUInteger)numberOfColumnsInWeekView:(WLCalendarWeekView *)aWeekView;
 
 - (NSString *)weekView:(WLCalendarWeekView *)aWeekView stringForHour:(NSUInteger)aHour;
 

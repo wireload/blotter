@@ -22,6 +22,8 @@
     IBOutlet SRRecorderControl *newEventRecorderControl;
     IBOutlet SRRecorderControl *newTaskRecorderControl;
     IBOutlet SRRecorderControl *showNextWeekControl;
+    IBOutlet SRRecorderControl *showPrevWeekControl;
+    IBOutlet SRRecorderControl *showCurrentWeekControl;
 }
 
 - (IBAction)quitBlotter:(id)sender;

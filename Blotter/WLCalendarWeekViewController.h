@@ -14,30 +14,16 @@
 
 typedef enum
 {
-    WLCalendarWeekViewWeekMode,
-    WLCalendarWeekViewDayMode
-} WLCalendarWeekViewMode;
-
-
-typedef enum
-{
     WLCalendarWeekViewWeekdayTitleFormat,
     WLCalendarWeekViewWeekdayAndMonthdayTitleFormat
 } WLCalendarWeekViewTitleFormat;
 
 
-/*!
- @discussion Used when mode is WLCalendarWeekViewDayMode.
- */
-static const NSUInteger WLNumberOfDaysInWeek = 7;
-
-
 @interface WLCalendarWeekViewController : NSViewController <WLCalendarWeekViewDataSource> {
-    WLCalendarWeekViewMode mode;
     WLCalendarWeekViewTitleFormat titleFormat;
     BOOL highlightWeekends;
-
     BOOL isViewLoaded;
+
     NSCache *_cache;
     // Lifetime of this object is limited to
     // weekView:willAskForDataForColumnsAtIndexes: -> weekView:titleForColumnAtIndex: &
@@ -45,29 +31,55 @@ static const NSUInteger WLNumberOfDaysInWeek = 7;
     NSMutableDictionary *_columnsData;
 }
 
-@property (nonatomic) WLCalendarWeekViewMode mode;
-
+/*!
+ @discussion    Default value is WLCalendarWeekViewWeekdayTitleFormat.
+ */
 @property (nonatomic) WLCalendarWeekViewTitleFormat titleFormat;
 
+/*!
+ @discussion    Default value is NO.
+ */
 @property (nonatomic) BOOL highlightWeekends;
 
-- (CGFloat)currentHour;
-
-- (void)scrollToCurrentHour;
-
-- (NSUInteger)indexOfColumnForCurrentDay;
-
-- (void)highlightCurrentDay;
-
-- (NSDate *)firstColumnDate;
-
-- (NSArray *)eventsForColumnsAtIndexes:(NSIndexSet *)anIndexSet firstDate:(NSDate *)aFirstDate;
+@property (assign, readonly) BOOL isViewLoaded;
 
 - (WLCalendarWeekView *)view;
 
 - (WLCalendarController *)representedObject;
 
+- (CGFloat)currentHour;
+
+/*!
+ @abstract      Returns events for columns at given indexes.
+ @param         aFirstDate is the day of the column at index 0.
+ @discussion    E.g. if want to get events for last 3 days of next week, pass the {4, 5, 6} index set and aFirstDate equal to the first date of the week.
+ */
+- (NSArray *)eventsForColumnsAtIndexes:(NSIndexSet *)anIndexSet firstDate:(NSDate *)aFirstDate;
+
+/*!
+ @abstract  Returns date range that column at a given index represents.
+ */
 - (WLDateRange *)dateRangeForColumnAtIndex:(NSUInteger)anIndex;
+
+/*!
+ @abstract   Subclass should implement this method.
+ */
+- (NSUInteger)indexOfColumnForToday;
+
+/*!
+ @abstract   Subclass should implement this method.
+ */
+- (NSDate *)firstColumnDate;
+
+/*!
+ @abstract   Subclass should implement this method to setup aView before it will receive -setupLayer.
+ */
+- (void)viewWillSetupLayers:(WLCalendarWeekView *)aView;
+
+/*!
+ @abstract   Subclass should implement this method and update week view appropriately.
+ */
+- (void)dateDidChangeFromDate:(NSDate *)anOldDate toDate:(NSDate *)aNewDate;
 
 
 @property (nonatomic, retain) NSDateFormatter *_dateFormatter;

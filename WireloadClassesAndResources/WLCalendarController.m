@@ -326,7 +326,7 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType)
     return reminderCalendars;
 }
 
-- (void)setCheck:(BOOL)newCheck forCalendarWithUID:(NSString *)anUID
+- (void)setDisplay:(BOOL)newCheck forCalendarWithUID:(NSString *)anUID
 {
     NSMutableArray *calendars = [[[[NSUserDefaults standardUserDefaults] objectForKey:@"Calendars"] mutableCopy] autorelease];
 

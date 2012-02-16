@@ -7,6 +7,7 @@
 //
 
 #import <WireloadClassesAndResources/WireloadClassesAndResources.h>
+#include <tgmath.h>
 #import "WLCalendarWeekView.h"
 #import "NSColor+WLCalendar.h"
 #import "NSFont+WLCalendar.h"
@@ -16,13 +17,15 @@
 // These strings may be used directly in the code, look through it if you are going to change values.
 static NSString* const _WLRootLayerName = @"root";
 
+static NSString* const _WLTimeRulerRootLayerName = @"timeRulerRoot";
+
 static NSString* const _WLTimeRulerBackgroundLayerName = @"timeRulerBackground";
 
 static NSString* const _WLTimeRulerScrollLayerName = @"timeRulerScroll";
 
 static NSString* const _WLTimeRulerLayerName = @"timeRuler";
 
-static NSString* const _WLColumnLayerName = @"weekdayEventsContent";
+static NSString* const _WLColumnRootLayerName = @"weekdayEventsContent";
 
 static NSString *const _WLAllDayBackgroundLayerName = @"weekdayEventsAllDayBackground";
 
@@ -38,6 +41,10 @@ static NSString* const _WLTimeIndicatorRootLayerName = @"timeIndicatorRoot";
 
 static NSString* const _WLTimeIndicatorLayerName = @"timeIndicator";
 
+static NSString* const _WLEventsRootLayerName = @"eventsRootLayer";
+
+
+static NSString* const _WLColumnLayersKey = @"columnLayers";
 
 static NSString* const _WLDayBackgroundLayerTitleKey = @"title";
 
@@ -45,6 +52,20 @@ static NSString* const _WLDayBackgroundLayerShouldHighlightTitleKey = @"highligh
 
 
 static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine;
+
+
+static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0;
+
+static const CGFloat _WLYMarginBetweenAllDayAndDayPartsOfColumn = 8.0;
+
+static const CGFloat _WLXMarginBetweenTimeRulerAndTimeRulerRoot = 5.0;
+
+static const CGFloat _WLXMarginBetweenColumns = 6.0;
+
+static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
+
+
+static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
 
 
 @implementation WLCalendarWeekView
@@ -55,19 +76,17 @@ static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLine
     if (self != nil)
     {
         indexOfHighlightedColumn = NSNotFound;
-        heightOfAllDayPartOfColumn = 114.0f;
-        _columnLayers = [[NSMutableArray alloc] init];
-        showTimeIndicator = YES;
+        heightOfAllDayPartOfColumn = 114.0;
+        showsTimeIndicator = YES;
         showsDayColumnTitle = YES;
-        showAllDayEvents = YES;
-        rangeOfAlwaysVisibleHours = (WLHourRange){.startHour = 9.0f, .endHour = 17.0f};
+        showsAllDayEvents = YES;
+        alwaysVisibleHourRange = WLHourRangeMake(9.0, 17.0);
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [_columnLayers release];
     [super dealloc];
 }
 
@@ -75,351 +94,237 @@ static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLine
 #pragma mark Properties
 @synthesize dataSource;
 @synthesize heightOfAllDayPartOfColumn;
-@synthesize showTimeIndicator;
-@synthesize fitDayEvents;
+@synthesize showsTimeIndicator;
+@synthesize fitsDayEvents;
 @synthesize indexOfHighlightedColumn;
-@synthesize showAllDayEvents;
+@synthesize showsAllDayEvents;
 @synthesize showsDayColumnTitle;
-@synthesize rangeOfAlwaysVisibleHours;
+@synthesize alwaysVisibleHourRange;
 
 - (void)setIndexOfHighlightedColumn:(NSUInteger)newIndexOfHighlightedColumn
 {
-    NSAssert([self wantsLayer], @"You MUST call -createLayers before.");
-    NSAssert(newIndexOfHighlightedColumn < [_columnLayers count] || newIndexOfHighlightedColumn == NSNotFound,
+    NSAssert(newIndexOfHighlightedColumn < [self.dataSource numberOfColumnsInWeekView:self] || newIndexOfHighlightedColumn == NSNotFound,
              @"You must pass either value that less than the number of columns or NSNotFound if you want no columns to be highlighted.");
 
-    indexOfHighlightedColumn = newIndexOfHighlightedColumn;
-    if ([self wantsLayer])
+
+    if (newIndexOfHighlightedColumn != indexOfHighlightedColumn)
     {
-        [[_columnLayers valueForKey:@"WL_dayBackgroundLayer"] enumerateObjectsUsingBlock:^(CALayer *l, NSUInteger idx, BOOL *stop) {
-            [l setValue:[NSNumber numberWithBool:(idx == indexOfHighlightedColumn)] forKey:_WLDayBackgroundLayerShouldHighlightTitleKey];
-            [l setNeedsDisplay];
-        }];
+        indexOfHighlightedColumn = newIndexOfHighlightedColumn;
+
+        if ([self wantsLayer])
+            [self _updateHighlightColumnTitle];
     }
 }
 
-- (void)setShowTimeIndicator:(BOOL)newShowTimeIndicator
+- (void)setShowsTimeIndicator:(BOOL)newShowTimeIndicator
 {
-    showTimeIndicator = newShowTimeIndicator;
-    _timeIndicatorRootLayer.hidden = !showTimeIndicator;
+    if (newShowTimeIndicator != showsTimeIndicator)
+    {
+        showsTimeIndicator = newShowTimeIndicator;
+
+        [self timeIndicatorLayer].hidden = !showsTimeIndicator;
+    }
 }
 
-- (void)setFitDayEvents:(BOOL)newFitDayEvents
+- (void)setFitsDayEvents:(BOOL)newFitDayEvents
 {
-    fitDayEvents = newFitDayEvents;
-    if ([self wantsLayer])
+    if (newFitDayEvents != fitsDayEvents)
     {
-        if (fitDayEvents)
+        fitsDayEvents = newFitDayEvents;
+
+        if ([self wantsLayer])
         {
-            for (WLCalendarDayEventsLayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])
-                l.keepsTextOfEventsVisible = NO;
-            [_timeRulerRootLayer WL_timeRulerLayer].shouldHideHalfVisibleHourLabels = YES;
-            [self setNeedsUpdateHeightOfHour];
-        }
-        else
-        {
-            for (WLCalendarDayEventsLayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])
-                l.keepsTextOfEventsVisible = YES;
-            [_timeRulerRootLayer WL_timeRulerLayer].shouldHideHalfVisibleHourLabels = NO;
-            [self _focusOnHour];
+            NSArray *dayLayers = [self dayLayers];
+            NSParameterAssert(dayLayers != nil);
+            WLCalendarTimeRulerLayer *timeRulerLayer = [self timeRulerLayer];
+            NSParameterAssert(timeRulerLayer != nil);
+            if (fitsDayEvents)
+            {
+                [dayLayers makeObjectsPerformSelector:@selector(setKeepsTextOfEventsVisible:) withObject:[NSNumber numberWithBool:NO]];
+                timeRulerLayer.onlyCompletelyVisibleMarkersShown = YES;
+            }
+            else
+            {
+                [dayLayers makeObjectsPerformSelector:@selector(setKeepsTextOfEventsVisible:) withObject:[NSNumber numberWithBool:YES]];
+                timeRulerLayer.onlyCompletelyVisibleMarkersShown = YES;
+            }
+
+            CAScrollLayer *timeRulerScrollLayer = [self timeRulerScrollLayer];
+            NSParameterAssert(timeRulerScrollLayer != nil);
+            [timeRulerScrollLayer setNeedsLayout];
+
+            NSArray *dayScrollLayers = [self dayScrollLayers];
+            NSParameterAssert(dayScrollLayers != nil);
+            [dayScrollLayers makeObjectsPerformSelector:@selector(setNeedsLayout)];
+
+            CALayer *timeIndicatorRootLayer = [self timeIndicatorRootLayer];
+            NSParameterAssert(timeIndicatorRootLayer != nil);
+            [timeIndicatorRootLayer setNeedsLayout];
+
+            if ([CATransaction disableActions])
+            {
+                [timeRulerScrollLayer layoutIfNeeded];
+                [dayScrollLayers makeObjectsPerformSelector:@selector(layoutIfNeeded)];
+                [timeIndicatorRootLayer layoutIfNeeded];
+            }
         }
     }
 }
 
-- (void)setShowAllDayEvents:(BOOL)newShowAllDayEvents
+- (void)setShowsAllDayEvents:(BOOL)newShowAllDayEvents
 {
-    showAllDayEvents = newShowAllDayEvents;
+    showsAllDayEvents = newShowAllDayEvents;
+
     if ([self wantsLayer])
-        [_rootLayer setNeedsLayout];
+    {
+        CALayer *rootLayer = [self layer];
+        NSParameterAssert(rootLayer != nil);
+        [rootLayer setNeedsLayout];
+        if ([CATransaction disableActions])
+            [rootLayer layoutIfNeeded];
+    }
 }
 
 - (void)setShowsDayColumnTitle:(BOOL)newShowsDayColumnTitle
 {
     showsDayColumnTitle = newShowsDayColumnTitle;
+
     if ([self wantsLayer])
-        [_rootLayer setNeedsLayout];
+    {
+        CALayer *rootLayer = [self layer];
+        NSParameterAssert(rootLayer != nil);
+        [rootLayer setNeedsLayout];
+        if ([CATransaction disableActions])
+            [rootLayer layoutIfNeeded];
+    }
 }
 
-- (void)setRangeOfAlwaysVisibleHours:(WLHourRange)newHourRange
+- (void)setAlwaysVisibleHourRange:(WLHourRange)newHourRange
 {
-    rangeOfAlwaysVisibleHours = newHourRange;
-    if ([self wantsLayer] && self.fitDayEvents)
-        [self setNeedsUpdateHeightOfHour];
+    alwaysVisibleHourRange = newHourRange;
+
+    if ([self wantsLayer] && self.fitsDayEvents)
+    {
+        CAScrollLayer *timeRulerScrollLayer = [self timeRulerScrollLayer];
+        NSParameterAssert(timeRulerScrollLayer != nil);
+        [timeRulerScrollLayer setNeedsLayout];
+
+        NSArray *dayScrollLayers = [self dayScrollLayers];
+        NSParameterAssert(dayScrollLayers != nil);
+        [dayScrollLayers makeObjectsPerformSelector:@selector(setNeedsLayout)];
+
+        CALayer *timeIndicatorRootLayer = [self timeIndicatorRootLayer];
+        NSParameterAssert(timeIndicatorRootLayer != nil);
+        [timeIndicatorRootLayer setNeedsLayout];
+
+        if ([CATransaction disableActions])
+        {
+            [timeRulerScrollLayer layoutIfNeeded];
+            [dayScrollLayers makeObjectsPerformSelector:@selector(layoutIfNeeded)];
+            [timeIndicatorRootLayer layoutIfNeeded];
+        }
+    }
 }
 
 - (void)setHeightOfAllDayPartOfColumn:(CGFloat)newHeightOfAllDayPartOfColumn
 {
     heightOfAllDayPartOfColumn = newHeightOfAllDayPartOfColumn;
-    if ([self wantsLayer] && self.showAllDayEvents)
-        [_rootLayer setNeedsLayout];
+
+    if ([self wantsLayer] && self.showsAllDayEvents)
+    {
+        CALayer *rootLayer = [self layer];
+        NSParameterAssert(rootLayer != nil);
+        [rootLayer setNeedsLayout];
+        if ([CATransaction disableActions])
+            [rootLayer layoutIfNeeded];
+    }
 }
 
 
 #pragma mark Methods
 
-- (void)createLayers
-{
-    NSParameterAssert(![self wantsLayer]);
-
-    _rootLayer = [self setupRootLayer];
-    [self setLayer:_rootLayer];
-    [self setWantsLayer:YES];
-
-    _timeIndicatorRootLayer = [self setupTimeIndicatorRootLayer];
-    _timeIndicatorRootLayer.hidden = !showTimeIndicator;
-    [_rootLayer addSublayer:_timeIndicatorRootLayer];
-
-    NSUInteger numberOfColumns = [dataSource numberOfColumnsInWeekView:self];
-    for (NSUInteger i=0, size=numberOfColumns; i<size; ++i)
-    {
-        CALayer *c = [self setupColumnRootLayer];
-        [_columnLayers addObject:c];
-        [_rootLayer insertSublayer:c below:_timeIndicatorRootLayer];
-    }
-
-    _timeRulerRootLayer = [self setupTimeRulerRootLayer];
-    if (self.fitDayEvents)
-        [_timeRulerRootLayer WL_timeRulerLayer].shouldHideHalfVisibleHourLabels = YES;
-    [_rootLayer addSublayer:_timeRulerRootLayer];
-
-    [self _updateTimeRuler];
-    [self _updateColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, numberOfColumns)]];
-}
-
 - (void)reloadDataAnimated:(BOOL)isAnimated
 {
     NSParameterAssert([self wantsLayer]);
+
     [CATransaction begin];
     [CATransaction setDisableActions:!isAnimated];
     NSUInteger numberOfColumns = [dataSource numberOfColumnsInWeekView:self];
-    NSUInteger currentNumberOfColumns = [_columnLayers count];
+    NSMutableArray *columnRootLayers = [self columnRootLayers];
+    NSUInteger currentNumberOfColumns = [columnRootLayers count];
+    CALayer *eventsRootLayer = [self eventsRootLayer];
+    NSParameterAssert(eventsRootLayer != NULL);
     if (currentNumberOfColumns < numberOfColumns)
     {
-        for (NSUInteger i=0, size=numberOfColumns-currentNumberOfColumns; i<size; ++i)
+        for (NSUInteger i = 0, size = numberOfColumns - currentNumberOfColumns; i < size; ++i)
         {
-            CALayer *column = [self setupColumnRootLayer];
-            [_columnLayers addObject:column];
-            [_rootLayer insertSublayer:column below:_timeIndicatorRootLayer];
+            CALayer *c = [self setupColumnRootLayer];
+            [columnRootLayers addObject:c];
+            [eventsRootLayer addSublayer:c];
         }
     }
     else if (currentNumberOfColumns > numberOfColumns)
     {
-        for (NSUInteger i=0, size=currentNumberOfColumns-numberOfColumns; i<size; ++i)
+        for (NSUInteger i = 0, size = currentNumberOfColumns - numberOfColumns; i<size; ++i)
         {
-            CALayer *column = [_columnLayers lastObject];
+            CALayer *column = [columnRootLayers lastObject];
             [column removeFromSuperlayer];
-            [_columnLayers removeLastObject];
+            [columnRootLayers removeLastObject];
         }
     }
     [self _updateColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, numberOfColumns)]];
-    [self _updateTimeRuler];
-    [_rootLayer setNeedsLayout];
+    WLCalendarTimeRulerLayer *timeRulerLayer = [self timeRulerLayer];
+    timeRulerLayer.markers = [self _timeRulerMarkers];
+    [self _updateHighlightColumnTitle];
+
+    CALayer *rootLayer = [self layer];
+    NSParameterAssert(rootLayer != nil);
+    [rootLayer setNeedsLayout];
+
+    if ([CATransaction disableActions])
+        [rootLayer layoutIfNeeded];
+
     [CATransaction commit];
 }
 
 - (void)scrollHour:(CGFloat)aHour animated:(BOOL)isAnimated
 {
-    _hour = aHour;
-
-    if (![self wantsLayer])
-        return; // There is nothing to scroll.
-
     [CATransaction begin];
     [CATransaction setDisableActions:!isAnimated];
-    if (!self.fitDayEvents)
-        [self _focusOnHour];
-    // Scroll timeRuler and columns before positioning timeIndicator, since its position is relative to them.
-    [self layoutTimeIndicatorLayer];
+    _hour = aHour;
+
+    if ([self wantsLayer])
+    {
+        CALayer *timeIndicatorRootLayer = [self timeIndicatorRootLayer];
+        NSParameterAssert(timeIndicatorRootLayer != nil);
+        [timeIndicatorRootLayer setNeedsLayout];
+        CAScrollLayer *timeRulerScrollLayer = nil;
+        NSArray *dayScrollLayers = nil;
+        if (!self.fitsDayEvents)
+        {
+            timeRulerScrollLayer = [self timeRulerScrollLayer];
+            NSParameterAssert(timeRulerScrollLayer != nil);
+            [timeRulerScrollLayer setNeedsLayout];
+
+            dayScrollLayers = [self dayScrollLayers];
+            NSParameterAssert(dayScrollLayers != nil);
+            [dayScrollLayers makeObjectsPerformSelector:@selector(setNeedsLayout)];
+        }
+
+        if (!isAnimated)
+        {
+            [timeIndicatorRootLayer layoutIfNeeded];
+            [timeRulerScrollLayer layoutIfNeeded];
+            [dayScrollLayers makeObjectsPerformSelector:@selector(layoutIfNeeded)];
+        }
+    }
     [CATransaction commit];
 }
 
-- (void)updateEventsOfColumnsAtIndexes:(NSIndexSet *)anIndexSet
+- (void)updateEventsOfColumnsAtIndexes:(NSIndexSet *)anIndexSet animated:(BOOL)isAnimated
 {
-    [self _updateEventsOfColumnsAtIndexes:anIndexSet];
-    [self setNeedsUpdateHeightOfHour];
-}
-
-- (void)updateTitleOfColumnsAtIndexes:(NSIndexSet *)anIndexSet
-{
-    [self _updateTitleOfColumnsAtIndexes:anIndexSet];
-}
-
-- (void)updateColorOfColumnsAtIndexes:(NSIndexSet *)anIndexSet
-{
-    [self _updateColorOfColumnsAtIndexes:anIndexSet];
-}
-
-- (void)updateColumnsAtIndexes:(NSIndexSet *)anIndexSet
-{
-    [self _updateColumnsAtIndexes:anIndexSet];
-    [self setNeedsUpdateHeightOfHour];
-}
-
-- (void)showNextDay
-{
-    [self showNextDays:1];
-}
-
-- (void)showNextWeek
-{
-    [self showNextDays:[dataSource numberOfColumnsInWeekView:self]];
-}
-
-- (void)showNextDays:(NSUInteger)aNumberOfDays
-{
-    if ([self wantsLayer] && [_columnLayers count] > 0)
-    {
-        [CATransaction begin];
-        [CATransaction setAnimationDuration:5];
-        [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
-
-        [CATransaction setDisableActions:YES];
-        NSArray *old = [_columnLayers subarrayWithRange:NSMakeRange(0, MIN(aNumberOfDays, [_columnLayers count]))];
-        [CATransaction setCompletionBlock:^{
-            [CATransaction setDisableActions:YES];
-            [old makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
-        }];
-        [_columnLayers removeObjectsInRange:NSMakeRange(0, [old count])];
-        for (NSUInteger i=0; i<aNumberOfDays; ++i)
-        {
-            CALayer *c = [self setupColumnRootLayer];
-            [_columnLayers addObject:c];
-            [_rootLayer insertSublayer:c below:_timeIndicatorRootLayer];
-        }
-        NSIndexSet *newColumnIndexes = [NSIndexSet indexSetWithIndexesInRange:
-                                        NSMakeRange([_columnLayers count] - aNumberOfDays, aNumberOfDays)];
-        [self _updateColumnsAtIndexes:newColumnIndexes];
-
-        [_columnLayers enumerateObjectsUsingBlock:^(CALayer *c, NSUInteger idx, BOOL *stop)
-        {
-            CABasicAnimation *positionAnimation = [CABasicAnimation animationWithKeyPath:@"position.x"];
-            [CATransaction setDisableActions:YES];
-            CGRect fromFrame = [self columnFrameAtIndex:idx + MIN(aNumberOfDays, [old count])];
-            [positionAnimation setFromValue:[NSNumber numberWithFloat:fromFrame.origin.x]];
-            [self layoutColumnLayer:c atIndex:idx];
-            [positionAnimation setToValue:[NSNumber numberWithFloat:c.position.x]];
-            [c addAnimation:positionAnimation forKey:@"position.x"];
-        }];
-
-        [CATransaction setDisableActions:NO];
-        NSUInteger numberOfOldColumns = [old count];
-        [old enumerateObjectsUsingBlock:^(CALayer *c, NSUInteger idx, BOOL *stop)
-        {
-            [c setValue:[NSNumber numberWithFloat:[self columnFrameAtIndex:idx - numberOfOldColumns].origin.x] forKeyPath:@"position.x"];
-            c.opacity = 0.0f;
-        }];
-        [CATransaction commit];
-    }
-}
-
-- (void)stopAnimations
-{
-    for (CALayer *c in _columnLayers)
-        [[c WL_dayScrollLayer] removeAllAnimations];
-    [[_timeRulerRootLayer WL_timeRulerScrollLayer] removeAllAnimations];
-    [[_timeIndicatorRootLayer WL_timeIndicatorLayer] removeAllAnimations];
-}
-
-- (WLHourRange)rangeOfVisibleHours
-{
-    WLHourRange r = self.rangeOfAlwaysVisibleHours;
-    for (WLCalendarDayEventsLayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])
-    {
-        WLHourRange columnHourRange = [l hourRangeOfEvents];
-        if (!WLHourRangeEqualToHourRange(columnHourRange, WLHourRangeZero))
-        {
-            r.startHour = fminf(r.startHour, columnHourRange.startHour);
-            r.endHour = fmaxf(r.endHour, columnHourRange.endHour);
-        }
-    }
-    return r;
-}
-
-- (void)setNeedsUpdateHeightOfHour
-{
-    NSAssert([self wantsLayer], @"You MUST call -createLayers before.");
-
-    CGFloat heightOfHour = [self heightOfHour];
-    [_timeRulerRootLayer WL_timeRulerLayer].heightOfHour = heightOfHour;
-    [self layoutTimeRulerLayer:[_timeRulerRootLayer WL_timeRulerLayer]];
-    for (CALayer *c in _columnLayers)
-    {
-        [c WL_dayLayer].heightOfHour = heightOfHour;
-        [self layoutDayLayer:[c WL_dayLayer]];
-    }
-    if (self.fitDayEvents)
-        [self _focusOnDayEvents];
-    else
-        [self _focusOnHour];
-    // Scroll timeRuler and columns before positioning timeIndicator, since its position is relative to them.
-    [self layoutTimeIndicatorLayer];
-}
-
-- (CGFloat)heightOfHour
-{
-    NSAssert([self wantsLayer], @"You MUST call -createLayers before.");
-    NSParameterAssert([_columnLayers count] > 0);
-
-    if (self.fitDayEvents)
-    {
-        // Actual height of hour may be greater than calculated one.
-        WLHourRange r = [self rangeOfVisibleHours];
-        CGFloat minHeight = ([self dayScrollFrame].size.height) / (ceilf(r.endHour) - floorf(r.startHour));
-        for (WLCalendarDayEventsLayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])
-        {
-            WLHourRange columnHourRange = [l visibleHourRangeOfEventsForHeightOfHour:minHeight];
-            if (!WLHourRangeEqualToHourRange(columnHourRange, WLHourRangeZero))
-            {
-                r.startHour = fminf(r.startHour, columnHourRange.startHour);
-                r.endHour = fmaxf(r.endHour, columnHourRange.endHour);
-            }
-        }
-        CGFloat frameHeight = [self dayScrollFrame].size.height;
-        CGFloat numberOfHours = ceilf(r.endHour) - floorf(r.startHour);
-        return frameHeight / numberOfHours;
-    }
-    else
-    {
-        CGFloat frameHeight = [self dayScrollFrame].size.height;
-        CGFloat numberOfHours = [self numberOfHours];
-        static const CGFloat MinimumHeightOfHour = 40.0f;
-        return fmaxf(frameHeight / numberOfHours, MinimumHeightOfHour);
-    }
-}
-
-
-#pragma mark CALayoutManager
-
-- (void)layoutSublayersOfLayer:(CALayer *)aLayer
-{
-    NSParameterAssert([aLayer.name isEqualToString:_WLRootLayerName]);
-
-    [CATransaction WL_performWithDisabledActions:^(void) {
-        [self layoutTimeRulerRoot];
-        [self layoutColumnLayers];
-    }];
-    [self layoutTimeIndicatorRootLayer];
-    [self setNeedsUpdateHeightOfHour];
-}
-
-
-#pragma mark WLCalendarTimeRuler
-
-- (NSUInteger)numberOfHours
-{
-    return [dataSource numberOfHoursInWeekView:self];
-}
-
-- (CGFloat)hourForDate:(NSDate *)aDate
-{
-    return [dataSource weekView:self convertDateToHour:aDate];
-}
-
-
-#pragma mark Private
-
-- (void)_updateEventsOfColumnsAtIndexes:(NSIndexSet *)anIndexSet
-{
+    [CATransaction begin];
+    [CATransaction setDisableActions:!isAnimated];
     if ([dataSource respondsToSelector:@selector(weekView:willAskForData:forColumnsAtIndexes:)])
     {
         [dataSource weekView:self
@@ -427,15 +332,25 @@ static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLine
          forColumnsAtIndexes:anIndexSet];
     }
     [anIndexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop)
-     {
+    {
          [self _updateEventsOfColumnAtIndex:idx];
-     }];
+    }];
     if ([dataSource respondsToSelector:@selector(weekViewDidAskForData:)])
         [dataSource weekViewDidAskForData:self];
+
+    CALayer *rootLayer = [self layer];
+    NSParameterAssert(rootLayer != nil);
+    [rootLayer setNeedsLayout];
+
+    if (!isAnimated)
+        [rootLayer layoutIfNeeded];
+    [CATransaction commit];
 }
 
-- (void)_updateTitleOfColumnsAtIndexes:(NSIndexSet *)anIndexSet
+- (void)updateTitleOfColumnsAtIndexes:(NSIndexSet *)anIndexSet animated:(BOOL)isAnimated
 {
+    [CATransaction begin];
+    [CATransaction setDisableActions:!isAnimated];
     if ([dataSource respondsToSelector:@selector(weekView:willAskForData:forColumnsAtIndexes:)])
     {
         [dataSource weekView:self
@@ -443,28 +358,606 @@ static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLine
          forColumnsAtIndexes:anIndexSet];
     }
     [anIndexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop)
-     {
+    {
          [self _updateTitleOfColumnAtIndex:idx];
-     }];
+    }];
     if ([dataSource respondsToSelector:@selector(weekViewDidAskForData:)])
         [dataSource weekViewDidAskForData:self];
+
+    WLBlockLayer *timeRulerBackgroundLayer = [self timeRulerBackgroundLayer];
+    NSParameterAssert(timeRulerBackgroundLayer != nil);
+    [timeRulerBackgroundLayer setNeedsLayout];
+
+    NSArray *dayBackgroundLayers = [self dayBackgroundLayers];
+    NSParameterAssert(dayBackgroundLayers != nil);
+    [dayBackgroundLayers makeObjectsPerformSelector:@selector(setNeedsLayout)];
+
+    CALayer *timeIndicatorRootLayer = [self timeIndicatorRootLayer];
+    NSParameterAssert(timeIndicatorRootLayer != nil);
+    [timeIndicatorRootLayer setNeedsLayout];
+
+    if ([CATransaction disableActions])
+    {
+        [timeRulerBackgroundLayer layoutIfNeeded];
+        [dayBackgroundLayers makeObjectsPerformSelector:@selector(layoutIfNeeded)];
+        [timeIndicatorRootLayer layoutIfNeeded];
+    }
+    [CATransaction commit];
 }
 
-- (void)_updateColorOfColumnsAtIndexes:(NSIndexSet *)anIndexSet
+- (void)updateColorOfColumnsAtIndexes:(NSIndexSet *)anIndexSet animated:(BOOL)isAnimated;
 {
-    if ([dataSource respondsToSelector:@selector(weekView:willAskForData:forColumnsAtIndexes:)])
-    {
-        [dataSource weekView:self
-              willAskForData:WLCalendarWeekViewColorDataUnit
-         forColumnsAtIndexes:anIndexSet];
-    }
-    [anIndexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop)
-     {
-         [self _updateColorOfColumnAtIndex:idx];
-     }];
-    if ([dataSource respondsToSelector:@selector(weekViewDidAskForData:)])
-        [dataSource weekViewDidAskForData:self];
+//    [CATransaction begin];
+//    [CATransaction setDisableActions:!isAnimated];
+//    if ([dataSource respondsToSelector:@selector(weekView:willAskForData:forColumnsAtIndexes:)])
+//    {
+//        [dataSource weekView:self
+//              willAskForData:WLCalendarWeekViewColorDataUnit
+//         forColumnsAtIndexes:anIndexSet];
+//    }
+//    [anIndexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop)
+//    {
+//         [self _updateColorOfColumnAtIndex:idx];
+//    }];
+//    if ([dataSource respondsToSelector:@selector(weekViewDidAskForData:)])
+//        [dataSource weekViewDidAskForData:self];
+//    [CATransaction commit];
 }
+
+- (void)updateColumnsAtIndexes:(NSIndexSet *)anIndexSet animated:(BOOL)isAnimated
+{
+    [CATransaction begin];
+    [CATransaction setDisableActions:!isAnimated];
+    [self _updateColumnsAtIndexes:anIndexSet];
+    CALayer *rootLayer = [self layer];
+    NSParameterAssert(rootLayer != nil);
+    [rootLayer setNeedsLayout];
+
+    if ([CATransaction disableActions])
+        [rootLayer layoutIfNeeded];
+    [CATransaction commit];
+}
+
+- (void)showDays:(NSUInteger)aNumberOfDaysToShow
+        hideDays:(NSUInteger)aNumberOfDaysToHide
+       direction:(WLDayAppearanceDirection)aDirection
+        animated:(BOOL)isAnimated
+{
+    NSUInteger oldNumberOfColumns = [self numberOfColumns];
+    NSParameterAssert(aNumberOfDaysToHide <= oldNumberOfColumns);
+    NSParameterAssert(oldNumberOfColumns + aNumberOfDaysToShow - aNumberOfDaysToHide == [self.dataSource numberOfColumnsInWeekView:self]);
+    if ((aNumberOfDaysToShow == 0 && aNumberOfDaysToHide == 0) ||
+        (aNumberOfDaysToShow == 0 && oldNumberOfColumns == 0))
+    {
+        return;
+    }
+    ++_numberOfActiveShowDaysTransactions;
+    NSUInteger newNumberOfColumns = oldNumberOfColumns - aNumberOfDaysToHide + aNumberOfDaysToShow;
+
+    /*
+     Problem: since we want flow animation, when showing/hiding/moving columns we have to rely on current positions and current number of layers.
+     This message can be received in the middle of animation and we have to update animations and end state of columns.
+
+     Each receive of this message produces 2 groups of columns: h(iding)-columns and m(oving)-columns.
+     h-columns will be removed from superlayer at the end of transaction.
+
+     Initial layout:
+     |                        |
+     |---+  +---+  +---+  +---|
+     |t  |  |t  |  |t  |  |t  | — type of column
+     |   |  |   |  |   |  |   |
+     |   |  |   |  |   |  |   |
+     |   |  |   |  |   |  |   |
+     |   |  |   |  |   |  |   |
+     |   |  |   |  |   |  |   |
+     |10 |  |11 |  |12 |  |13 | — "monthday" of column
+     |---+  +---+  +---+  +---|
+     |                        |
+
+
+
+     Message was received with parameters:
+     aNumberOfDaysToShow = 2
+     aNumberOfDaysToHide = 2
+     aDirection = WLRightToLeftDirection
+     isAnimated = YES
+     Assume that 3/4 of animation duration did pass:
+              |                           |
+     +---+  +-|-+  +---+  +---+  +---+  +-|-+
+     |h  |  |h| |  |m  |  |m  |  |m  |  |m| |
+     |   |  | | |  |   |  |   |  |   |  | | |
+     |   |  | | |  |   |  |   |  |   |  | | |
+     |   |  | | |  |   |  |   |  |   |  | | |
+     |   |  | | |  |   |  |   |  |   |  | | |
+     |   |  | | |  |   |  |   |  |   |  | | |
+     |10 |  |11 |  |12 |  |13 |  |14 |  |15 |
+     +---+  +-|-+  +---+  +---+  +---+  +-|-+
+              |                           |
+     first two columns become h-columns
+     two m-columns were appended
+
+
+
+     Then message was received with parameters:
+     aNumberOfDaysToShow = 3
+     aNumberOfDaysToHide = 3
+     aDirection = WLLeftToRightDirection
+     isAnimated = YES
+                     |                           |
+     +---+  +---+  +-|-+  +---+  +---+  +---+  +-|-+
+     |m  |  |m  |  |m| |  |m  |  |h  |  |h  |  |h| |
+     |   |  |   |  | | |  |   |  |   |  |   |  | | |
+     |   |  |   |  | | |  |   |  |   |  |   |  | | |
+     |   |  |   |  | | |  |   |  |   |  |   |  | | |
+     |   |  |   |  | | |  |   |  |   |  |   |  | | |
+     |   |  |   |  | | |  |   |  |   |  |   |  | | |
+     |9  |  |10 |  |11 |  |12 |  |13 |  |14 |  |15 |
+     +---+  +---+  +-|-+  +---+  +---+  +---+  +-|-+
+                     |                           |
+     one m-column was inserted at index 0
+     both h-columns become m-columns
+     last 3 m-columns become h-columns
+
+
+
+     Then method was called with parameters:
+     aNumberOfDaysToShow = 1
+     aNumberOfDaysToHide = 1
+     aDirection = WLRightToLeftDirection
+     isAnimated = YES
+                     |                           |
+     +---+  +---+  +-|-+  +---+  +---+  +---+  +-|-+
+     |h  |  |m  |  |m| |  |m  |  |m  |  |h  |  |h| |
+     |   |  |   |  | | |  |   |  |   |  |   |  | | |
+     |   |  |   |  | | |  |   |  |   |  |   |  | | |
+     |   |  |   |  | | |  |   |  |   |  |   |  | | |
+     |   |  |   |  | | |  |   |  |   |  |   |  | | |
+     |   |  |   |  | | |  |   |  |   |  |   |  | | |
+     |9  |  |10 |  |11 |  |12 |  |13 |  |14 |  |15 |
+     +---+  +---+  +-|-+  +---+  +---+  +---+  +-|-+
+                     |                           |
+    first m-column becomes h-column
+    first h-column becomes m-column
+    Even if WLRightToLeftDirection is specified, the columns still go left-to-right
+
+
+     As stated above, h-layers will be removed from superlayer at the end of transaction. Since h-column can become m-column, we have to prevent removing. To do this, we assign number of interested transactions to the layer. When this value reaches 0, it's safe to remove column at the end of current transaction.
+     */
+
+    NSMutableArray *columnRootLayers = [[[self columnRootLayers] retain] autorelease];
+    NSParameterAssert(columnRootLayers != nil);
+    CALayer *eventsRootLayer = [self eventsRootLayer];
+    NSParameterAssert(eventsRootLayer != nil);
+    
+    [CATransaction begin];
+    [CATransaction setDisableActions:!isAnimated];
+    [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear]];
+    // Ensure you retain all sublayers before changing its properties or adding animations.
+    __block WLCalendarWeekView *selfBlock = self;
+    [CATransaction setCompletionBlock:^{
+        NSParameterAssert(selfBlock->_numberOfActiveShowDaysTransactions);
+        selfBlock->_numberOfActiveShowDaysTransactions -= 1;
+        if (selfBlock->_numberOfActiveShowDaysTransactions == 0)
+        {
+            [CATransaction setDisableActions:YES];
+            NSMutableArray *columnRootLayers = [selfBlock columnRootLayers];
+            NSParameterAssert(columnRootLayers != nil);
+            CALayer *eventsRootLayer = [selfBlock eventsRootLayer];
+            NSParameterAssert(eventsRootLayer != nil);
+            if ([columnRootLayers count] > 0)
+            {
+                NSUInteger indexOfFirstColumnRootLayer = [eventsRootLayer.sublayers indexOfObjectIdenticalTo:[columnRootLayers objectAtIndex:0]];
+                NSParameterAssert(indexOfFirstColumnRootLayer != NSNotFound);
+                NSRange rangeOfColumnRootLayers = NSMakeRange(indexOfFirstColumnRootLayer, [columnRootLayers count]);
+                NSRange rangeOfLeftHidingColumns = NSMakeRange(0, rangeOfColumnRootLayers.location);
+                NSRange rangeOfRightHidingColumns = NSMakeRange(NSMaxRange(rangeOfColumnRootLayers), [eventsRootLayer.sublayers count] - NSMaxRange(rangeOfColumnRootLayers));
+                NSArray *hidingColumns = [eventsRootLayer.sublayers subarrayWithRange:rangeOfLeftHidingColumns];
+                hidingColumns = [hidingColumns arrayByAddingObjectsFromArray:[eventsRootLayer.sublayers subarrayWithRange:rangeOfRightHidingColumns]];
+                [hidingColumns makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+            }
+            else
+                [eventsRootLayer.sublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+        }
+    }];
+    
+    NSUInteger indexOfFirstColumnRootLayer = [eventsRootLayer.sublayers indexOfObjectIdenticalTo:[columnRootLayers objectAtIndex:0]];
+    NSParameterAssert(indexOfFirstColumnRootLayer != NSNotFound);
+    __block NSRange rangeOfColumnRootLayers = NSMakeRange(indexOfFirstColumnRootLayer, oldNumberOfColumns);
+    
+    NSMutableArray *toFrames = [NSMutableArray arrayWithArray:[self framesForNumberOfColumns:newNumberOfColumns]];
+    NSParameterAssert([toFrames count] == newNumberOfColumns);
+    
+    // Insert new columns if number of sublayers cannot fit aNumberOfDaysToShow.
+    __block NSRange rangeOfInsertedColumns = NSMakeRange(NSNotFound, 0);
+    [CATransaction WL_performWithDisabledActions:^{
+        switch (aDirection) {
+            case WLLeftToRightDirection:
+            {
+                if (rangeOfColumnRootLayers.location < aNumberOfDaysToShow)
+                {
+                    CGFloat maxXOfLayer = CGFLOAT_MAX;
+                    if ([eventsRootLayer.sublayers count] > 0)
+                    {
+                        CALayer *leftmostLayer = [eventsRootLayer.sublayers objectAtIndex:0];
+                        maxXOfLayer = CGRectGetMinX([(CALayer *)[leftmostLayer presentationLayer] frame]) - _WLXMarginBetweenColumns;
+                    }
+                    else
+                        maxXOfLayer = CGRectGetMinX(eventsRootLayer.bounds) + _WLXMarginBetweenTimeRulerAndColumns - _WLXMarginBetweenColumns;
+                    NSUInteger numberOfColumnsToInsert = aNumberOfDaysToShow - rangeOfColumnRootLayers.location;
+                    for (NSUInteger i = numberOfColumnsToInsert; i > 0; --i)
+                    {
+                        CALayer *c = [self setupColumnRootLayer];
+                        CGRect toFrame = NSRectToCGRect([[toFrames objectAtIndex:i - 1] rectValue]);
+                        c.frame = CGRectMake(maxXOfLayer - CGRectGetWidth(toFrame),
+                                             CGRectGetMinY(toFrame),
+                                             CGRectGetWidth(toFrame),
+                                             CGRectGetHeight(toFrame));
+                        [eventsRootLayer insertSublayer:c atIndex:0];
+                        maxXOfLayer -= _WLXMarginBetweenColumns + CGRectGetWidth(toFrame);
+                    }
+                    rangeOfInsertedColumns = NSMakeRange(0, numberOfColumnsToInsert);
+                    rangeOfColumnRootLayers.location = 0;
+                }
+                else
+                    rangeOfColumnRootLayers.location -= aNumberOfDaysToShow;
+                rangeOfColumnRootLayers.length += (NSInteger)aNumberOfDaysToShow - aNumberOfDaysToHide;
+                break;
+            }
+            case WLRightToLeftDirection:
+            {
+                if ([eventsRootLayer.sublayers count] - NSMaxRange(rangeOfColumnRootLayers) < aNumberOfDaysToShow)
+                {
+                    CGFloat minXOfLayer = CGFLOAT_MAX;
+                    if ([eventsRootLayer.sublayers count] > 0)
+                    {
+                        CALayer *rightmostLayer = [eventsRootLayer.sublayers lastObject];
+                        minXOfLayer = CGRectGetMaxX([(CALayer *)[rightmostLayer presentationLayer] frame]) + _WLXMarginBetweenColumns;
+                    }
+                    else
+                        minXOfLayer = CGRectGetMaxX(eventsRootLayer.bounds) + _WLXMarginBetweenColumns;
+                    NSUInteger numberOfColumnsToInsert = aNumberOfDaysToShow - ([eventsRootLayer.sublayers count] - NSMaxRange(rangeOfColumnRootLayers));
+                    for (NSUInteger i = 0; i < numberOfColumnsToInsert; ++i)
+                    {
+                        CALayer *c = [self setupColumnRootLayer];
+                        CGRect toFrame = NSRectToCGRect([[toFrames objectAtIndex:[toFrames count] - numberOfColumnsToInsert + i] rectValue]);
+                        c.frame = CGRectMake(minXOfLayer,
+                                             CGRectGetMinY(toFrame),
+                                             CGRectGetWidth(toFrame),
+                                             CGRectGetHeight(toFrame));
+                        [eventsRootLayer addSublayer:c];
+                        minXOfLayer += _WLXMarginBetweenColumns + CGRectGetWidth(toFrame);
+                    }
+                    rangeOfInsertedColumns = NSMakeRange([eventsRootLayer.sublayers count] - numberOfColumnsToInsert, numberOfColumnsToInsert);
+                }
+                rangeOfColumnRootLayers.location += aNumberOfDaysToHide;
+                rangeOfColumnRootLayers.length += (NSInteger)aNumberOfDaysToShow - aNumberOfDaysToHide;
+                break;
+            }
+        }
+    }];
+    
+    NSParameterAssert(rangeOfInsertedColumns.location == NSNotFound || NSMaxRange(rangeOfInsertedColumns) <= [eventsRootLayer.sublayers count]);
+    NSParameterAssert(NSMaxRange(rangeOfColumnRootLayers) <= [eventsRootLayer.sublayers count]);
+    columnRootLayers = [NSMutableArray arrayWithArray:[eventsRootLayer.sublayers subarrayWithRange:rangeOfColumnRootLayers]];
+    [eventsRootLayer setValue:columnRootLayers forKey:_WLColumnLayersKey];
+    
+    [CATransaction WL_performWithDisabledActions:^{
+        NSRange rangeOfColumnsToUpdate = NSMakeRange(NSNotFound, 0);
+        switch (aDirection)
+        {
+            case WLLeftToRightDirection:
+                rangeOfColumnsToUpdate = NSMakeRange(0, aNumberOfDaysToShow);
+                break;
+            case WLRightToLeftDirection:
+                rangeOfColumnsToUpdate = NSMakeRange(newNumberOfColumns - aNumberOfDaysToShow, aNumberOfDaysToShow);
+                break;
+        }
+        [self _updateColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:rangeOfColumnsToUpdate]];
+        [self _updateHighlightColumnTitle];
+    }];
+    
+    NSRange rangeOfLeftHidingColumns = NSMakeRange(0, rangeOfColumnRootLayers.location);
+    NSParameterAssert(NSMaxRange(rangeOfLeftHidingColumns) <= [eventsRootLayer.sublayers count] || rangeOfLeftHidingColumns.length == 0);
+    NSRange rangeOfRightHidingColumns = NSMakeRange(NSMaxRange(rangeOfColumnRootLayers), [eventsRootLayer.sublayers count] - NSMaxRange(rangeOfColumnRootLayers));
+    NSParameterAssert(NSMaxRange(rangeOfRightHidingColumns) <= [eventsRootLayer.sublayers count] || rangeOfRightHidingColumns.length == 0);
+    
+    // Calculate toFrames for hiding columns.
+    if (rangeOfLeftHidingColumns.length > 0)
+    {
+        __block CGFloat maxXOfLayer = CGFLOAT_MAX;
+        if ([toFrames count] > 0)
+            maxXOfLayer = NSMinX([[toFrames objectAtIndex:0] rectValue]) - _WLXMarginBetweenColumns;
+        else
+            maxXOfLayer = CGRectGetMinX(eventsRootLayer.bounds) + _WLXMarginBetweenTimeRulerAndColumns - _WLXMarginBetweenColumns;
+        [eventsRootLayer.sublayers enumerateObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:rangeOfLeftHidingColumns]
+                                                     options:NSEnumerationReverse
+                                                  usingBlock:^(CALayer *l, NSUInteger idx, BOOL *stop)
+         {
+             CGRect toFrame = CGRectMake(maxXOfLayer - CGRectGetWidth(l.frame),
+                                         CGRectGetMinY(l.frame),
+                                         CGRectGetWidth(l.bounds),
+                                         CGRectGetHeight(l.bounds));
+             [toFrames insertObject:[NSValue valueWithRect:NSRectFromCGRect(toFrame)] atIndex:0];
+             maxXOfLayer -= _WLXMarginBetweenColumns + CGRectGetWidth(toFrame);
+         }];
+    }
+    if (rangeOfRightHidingColumns.length > 0)
+    {
+        __block CGFloat minXOfLayer = CGFLOAT_MAX;
+        if ([toFrames count] > 0)
+            minXOfLayer = NSMaxX([[toFrames lastObject] rectValue]) + _WLXMarginBetweenColumns;
+        else
+            minXOfLayer = CGRectGetMaxX(eventsRootLayer.bounds) + _WLXMarginBetweenColumns;
+        [eventsRootLayer.sublayers enumerateObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:rangeOfRightHidingColumns]
+                                                     options:0
+                                                  usingBlock:^(CALayer *l, NSUInteger idx, BOOL *stop)
+         {
+             CGRect toFrame = CGRectMake(minXOfLayer,
+                                         CGRectGetMinY(l.frame),
+                                         CGRectGetWidth(l.bounds),
+                                         CGRectGetHeight(l.bounds));
+             [toFrames addObject:[NSValue valueWithRect:NSRectFromCGRect(toFrame)]];
+             minXOfLayer += _WLXMarginBetweenColumns + CGRectGetWidth(toFrame);
+         }];
+    }
+    NSParameterAssert([toFrames count] == [eventsRootLayer.sublayers count]);
+    
+    // Add animations.
+    [eventsRootLayer.sublayers enumerateObjectsUsingBlock:^(CALayer *l, NSUInteger idx, BOOL *stop)
+    {
+        CGRect toFrame = NSRectToCGRect([[toFrames objectAtIndex:idx] rectValue]);
+        if (isAnimated)
+        {
+            CABasicAnimation *boundsAnimation = [CABasicAnimation animationWithKeyPath:@"bounds"];
+            boundsAnimation.toValue = [NSValue valueWithRect:NSRectFromCGRect(CGRectMake(0.0,
+                                                                                         0.0,
+                                                                                         CGRectGetWidth(toFrame),
+                                                                                         CGRectGetHeight(toFrame)))];
+            CABasicAnimation *positionXAnimation = [CABasicAnimation animationWithKeyPath:@"position.x"];
+            positionXAnimation.toValue = [NSNumber numberWithDouble:CGRectGetMinX(toFrame)];
+            if (idx >= rangeOfInsertedColumns.location && idx < NSMaxRange(rangeOfInsertedColumns))
+            {
+                CGRect fromFrame = [l frame];
+                boundsAnimation.fromValue = [NSValue valueWithRect:NSRectFromCGRect(CGRectMake(0.0,
+                                                                                               0.0,
+                                                                                               CGRectGetWidth(fromFrame),
+                                                                                               CGRectGetHeight(fromFrame)))];
+                positionXAnimation.fromValue = [NSNumber numberWithDouble:CGRectGetMinX(fromFrame)];
+            }
+            CAAnimationGroup *g = [CAAnimationGroup animation];
+            g.animations = [NSArray arrayWithObjects:boundsAnimation, positionXAnimation, nil];
+            [l addAnimation:g forKey:@"boundsAndPositionX"];
+        }
+        l.frame = toFrame;
+    }];
+    
+    CALayer *rootLayer = [self layer];
+    NSParameterAssert(rootLayer != nil);
+    [rootLayer setNeedsLayout];
+    if ([CATransaction disableActions])
+        [rootLayer layoutIfNeeded];
+    [CATransaction commit];
+}
+
+- (void)stopAnimations
+{
+    [[self layer] WL_applyBlockToTree:^(CALayer *aLayer)
+    {
+        [aLayer removeAllAnimations];
+    }];
+}
+
+- (void)pauseAnimations
+{
+    [[self layer] WL_applyBlockToTree:^(CALayer *aLayer)
+    {
+        CFTimeInterval pausedTime = [aLayer convertTime:CACurrentMediaTime() fromLayer:nil];
+        aLayer.speed = 0.0;
+        aLayer.timeOffset = pausedTime;
+    }];
+}
+
+- (void)resumeAnimations
+{
+    [[self layer] WL_applyBlockToTree:^(CALayer *aLayer)
+    {
+        CFTimeInterval pausedTime = aLayer.timeOffset;
+        aLayer.speed = 1.0;
+        aLayer.timeOffset = 0.0;
+        aLayer.beginTime = 0.0;
+        CFTimeInterval timeSincePause = [aLayer convertTime:CACurrentMediaTime() fromLayer:nil] - pausedTime;
+        aLayer.beginTime = timeSincePause;
+    }];
+}
+
+- (NSUInteger)numberOfColumns
+{
+    return [[self columnRootLayers] count];
+}
+
+- (WLHourRange)hourRangeOfEvents
+{
+    NSParameterAssert([self wantsLayer]);
+    WLHourRange r = WLHourRangeInvalid;
+    for (WLCalendarDayEventsLayer *l in [self dayLayers])
+    {
+        WLHourRange columnHourRange = [l hourRangeOfEvents];
+        if (!WLHourRangeEqualToHourRange(columnHourRange, WLHourRangeZero))
+        {
+            r.startHour = fmin(r.startHour, columnHourRange.startHour);
+            r.endHour = fmax(r.endHour, columnHourRange.endHour);
+        }
+    }
+    r.startHour = floor(r.startHour);
+    r.endHour = ceil(r.endHour);
+    return r;
+}
+
+- (WLHourRange)visibleHourRange
+{
+    WLHourRange visibleHourRange = [self hourRangeOfEvents];
+    visibleHourRange.startHour = fmin(visibleHourRange.startHour, self.alwaysVisibleHourRange.startHour);
+    visibleHourRange.endHour = fmax(visibleHourRange.endHour, self.alwaysVisibleHourRange.endHour);
+    return visibleHourRange;
+}
+
+
+#pragma mark CALayoutManager
+
+- (void)layoutSublayersOfLayer:(CALayer *)aLayer
+{
+    if ([aLayer.name isEqualToString:_WLRootLayerName])
+        [self layoutSublayersOfRootLayer:aLayer];
+    else if ([aLayer.name isEqualToString:_WLTimeRulerRootLayerName])
+        [self layoutSublayersOfTimeRulerRootLayer:aLayer];
+    else if ([aLayer.name isEqualToString:_WLTimeIndicatorRootLayerName])
+        [self layoutSublayersOfTimeIndicatorRootLayer:aLayer];
+    else if ([aLayer.name isEqualToString:_WLEventsRootLayerName])
+        [self layoutSublayersOfEventsRootLayer:aLayer];
+    else if ([aLayer.name isEqualToString:_WLTimeRulerBackgroundLayerName])
+        [self layoutSublayersOfTimeRulerBackgroundLayer:(WLBlockLayer *)aLayer];
+    else if ([aLayer.name isEqualToString:_WLTimeRulerScrollLayerName])
+        [self layoutSublayersOfTimeRulerScrollLayer:(CAScrollLayer *)aLayer];
+    else if ([aLayer.name isEqualToString:_WLColumnRootLayerName])
+        [self layoutSublayersOfColumnRootLayer:aLayer];
+    else if ([aLayer.name isEqualToString:_WLAllDayBackgroundLayerName])
+        [self layoutSublayersOfAllDayBackgroundLayer:(WLBlockLayer *)aLayer];
+    else if ([aLayer.name isEqualToString:_WLDayBackgroundLayerName])
+        [self layoutSublayersOfDayBackgroundLayer:(WLBlockLayer *)aLayer];
+    else if ([aLayer.name isEqualToString:_WLDayScrollLayerName])
+        [self layoutSublayersOfDayScrollLayer:(CAScrollLayer *)aLayer];
+}
+
+
+#pragma mark WLCalendarTimeRuler
+
+- (WLHourRange)hourRange
+{
+    return [dataSource hourRangeOfColumnsInWeekView:self];
+}
+
+- (CGFloat)originOffset
+{
+    return ceil([[self timeRulerLayer] maximumHeightOfMarker] / 2.0f);
+}
+
+- (CGFloat)positionForHour:(CGFloat)aHour
+{
+    WLHourRange r = WLHourRangeMake([self hourRange].startHour, aHour);
+    return [self originOffset] + [self heightForHourRange:r];
+}
+
+- (CGFloat)heightForHourRange:(WLHourRange)aHourRange
+{
+    static const CGFloat DefaultHeightOfHour = 40.0;
+
+    NSParameterAssert(WLHourRangeLength(aHourRange) >= 0.0);
+    WLHourRange maxHourRange = [self hourRange];
+    NSParameterAssert(WLHourRangeContainsHourRange(maxHourRange, aHourRange));
+
+    if (WLHourRangeLength(aHourRange) == 0.0)
+        return 0.0;
+    CGFloat availableHeight = fdim([self visibleHeightOfTimeRuler], [self originOffset]);
+    if (availableHeight == 0.0)
+        return 0.0;
+
+    if (self.fitsDayEvents)
+    {
+        WLHourRange visibleHourRange = [self visibleHourRange];
+        if (WLHourRangeLength(visibleHourRange) == 0.0)
+            return ceil(DefaultHeightOfHour * WLHourRangeLength(aHourRange));
+        CGFloat effectiveAvailableHeight = availableHeight;
+        WLHourRange effectiveVisibleHourRange = visibleHourRange;
+        CGFloat effectiveHeightOfHour = availableHeight / WLHourRangeLength(visibleHourRange);
+        NSArray *dayLayers = [self dayLayers];
+        NSParameterAssert(dayLayers != nil);
+        for (WLCalendarDayEventsLayer *l in dayLayers)
+        {
+            WLHourRange r = WLHourRangeZero;
+            CGFloat h = 0.0;
+            BOOL success = [l toFitAllEventsWithinLayerHeight:availableHeight
+                                             startingWithHour:visibleHourRange.startHour
+                                                    hourRange:&r
+                              shouldBePlacedWithinLayerHeight:&h];
+            if (success)
+            {
+                CGFloat newHeightOfHour = h / WLHourRangeLength(r);
+                if (newHeightOfHour < effectiveHeightOfHour)
+                {
+                    effectiveAvailableHeight = h;
+                    effectiveVisibleHourRange = r;
+                    effectiveHeightOfHour = newHeightOfHour;
+                }
+            }
+        }
+        CGFloat endVisibleHourBasedOnEffectiveHeightOfHour = visibleHourRange.startHour + availableHeight / effectiveHeightOfHour;
+        visibleHourRange.endHour = fmax(visibleHourRange.endHour, endVisibleHourBasedOnEffectiveHeightOfHour);
+        if (visibleHourRange.endHour < maxHourRange.endHour)
+            visibleHourRange.endHour = ceil(visibleHourRange.endHour);
+        else
+        {
+            visibleHourRange.endHour = effectiveVisibleHourRange.endHour;
+            availableHeight = effectiveAvailableHeight;
+        }
+
+        NSParameterAssert(WLHourRangeLength(visibleHourRange) > 0.0);
+        NSParameterAssert(WLHourRangeContainsHourRange(maxHourRange, visibleHourRange));
+        CGFloat heightOfHourRange = 0.0;
+        // Calculate height of out of event range hours.
+        CGFloat heightOfHourOutOfEventRange = round(availableHeight / WLHourRangeLength(visibleHourRange));
+        if (aHourRange.endHour < visibleHourRange.startHour)
+            return heightOfHourOutOfEventRange * WLHourRangeLength(aHourRange);
+        else if (aHourRange.startHour < visibleHourRange.startHour)
+        {
+            heightOfHourRange += heightOfHourOutOfEventRange * WLHourRangeLength(WLHourRangeMake(aHourRange.startHour, visibleHourRange.startHour));
+            aHourRange.startHour = visibleHourRange.startHour;
+        }
+        if (aHourRange.startHour > visibleHourRange.endHour)
+            return heightOfHourOutOfEventRange * WLHourRangeLength(aHourRange);
+        else if (aHourRange.endHour > visibleHourRange.endHour)
+        {
+            heightOfHourRange += heightOfHourOutOfEventRange * WLHourRangeLength(WLHourRangeMake(visibleHourRange.endHour, aHourRange.endHour));
+            aHourRange.endHour = visibleHourRange.endHour;
+        }
+        // Calculate height of inside of event range hours.
+        NSParameterAssert(WLHourRangeContainsHourRange(visibleHourRange, aHourRange));
+        CGFloat baseHeightOfHour = floor(availableHeight / WLHourRangeLength(visibleHourRange));
+        CGFloat extendedHeightOfHour = baseHeightOfHour + 1.0;
+        CGFloat lengthOfExtendedHourRange = round(fmod(availableHeight, WLHourRangeLength(visibleHourRange)));
+        WLHourRange extendedHourRange = WLHourRangeMake(visibleHourRange.startHour, visibleHourRange.startHour + lengthOfExtendedHourRange);
+        if (WLHourRangeContainsHourRange(extendedHourRange, aHourRange))
+            heightOfHourRange += extendedHeightOfHour * WLHourRangeLength(aHourRange);
+        else
+        {
+            if (aHourRange.startHour < extendedHourRange.endHour)
+            {
+                heightOfHourRange += extendedHeightOfHour * WLHourRangeLength(WLHourRangeMake(aHourRange.startHour, extendedHourRange.endHour));
+                aHourRange.startHour = extendedHourRange.endHour;
+            }
+            heightOfHourRange += baseHeightOfHour * WLHourRangeLength(aHourRange);
+        }
+        return round(heightOfHourRange);
+    }
+    else
+    {
+        CGFloat hourHeightBasedOnMaxHourRange = round(availableHeight / WLHourRangeLength(maxHourRange));
+        return ceil(fmax(DefaultHeightOfHour, hourHeightBasedOnMaxHourRange) * WLHourRangeLength(aHourRange));
+    }
+}
+
+- (CGFloat)hourForDate:(NSDate *)aDate
+{
+    return [dataSource weekView:self convertDateToHour:aDate];
+}
+
+- (NSString *)markerForHour:(CGFloat)aHour
+{
+    NSParameterAssert(aHour >= 0.0);
+    return [dataSource weekView:self stringForHour:(NSUInteger)floor(aHour)];
+}
+
+
+#pragma mark Private
 
 - (void)_updateColumnsAtIndexes:(NSIndexSet *)anIndexSet
 {
@@ -480,44 +973,45 @@ static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLine
          forColumnsAtIndexes:anIndexSet];
     }
     [anIndexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop)
-     {
-         [self _updateColumnAtIndex:idx];
-     }];
+    {
+        [self _updateEventsOfColumnAtIndex:idx];
+        if (self.showsDayColumnTitle)
+            [self _updateTitleOfColumnAtIndex:idx];
+        [self _updateColorOfColumnAtIndex:idx];
+    }];
     if ([dataSource respondsToSelector:@selector(weekViewDidAskForData:)])
         [dataSource weekViewDidAskForData:self];
 }
 
 - (void)_updateEventsOfColumnAtIndex:(NSUInteger)anIndex
 {
-    NSAssert([self wantsLayer], @"You MUST call -createLayers before.");
+    NSMutableArray *columnEvents = [[[dataSource weekView:self eventsForColumnAtIndex:anIndex] mutableCopy] autorelease];
+    NSIndexSet *allDayEventIndexes = [columnEvents indexesOfObjectsPassingTest:^BOOL(CalEvent *e, NSUInteger idx, BOOL *stop) {
+        return e.isAllDay;
+    }];
+    NSArray *allDayEvents = [[[columnEvents objectsAtIndexes:allDayEventIndexes] retain] autorelease];
+    [columnEvents removeObjectsAtIndexes:allDayEventIndexes];
+    NSSet *dayEvents = [NSSet setWithArray:columnEvents];
 
-    NSMutableArray *columnEvents = [[dataSource weekView:self eventsForColumnAtIndex:anIndex] mutableCopy];
-    NSArray *allDayEvents = [columnEvents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isAllDay == YES"]];
-    for (id event in allDayEvents)
-        [columnEvents removeObjectIdenticalTo:event];
-
-    CALayer *column = [_columnLayers objectAtIndex:anIndex];
-    WLCalendarDayEventsLayer *day = [column WL_dayLayer];
-    [day setEvents:[NSSet setWithArray:columnEvents]];
-    [day setNeedsLayout];
-    [columnEvents release];
-    WLCalendarAllDayEventsLayer *allDay = [column WL_allDayLayer];
-    [allDay setEvents:allDayEvents];
-    [allDay setNeedsLayout];
+    WLCalendarDayEventsLayer *dayLayer = [[self dayLayers] objectAtIndex:anIndex];
+    NSParameterAssert(dayLayer != nil);
+    [dayLayer setEvents:dayEvents];
+    WLCalendarAllDayEventsLayer *allDayLayer = [[self allDayLayers] objectAtIndex:anIndex];
+    NSParameterAssert(allDayLayer != nil);
+    [allDayLayer setEvents:allDayEvents];
 }
 
 - (void)_updateTitleOfColumnAtIndex:(NSUInteger)anIndex
 {
-    NSAssert([self wantsLayer], @"You MUST call -createLayers before.");
-
-    CALayer *l = [[_columnLayers objectAtIndex:anIndex] WL_dayBackgroundLayer];
+    CALayer *l = [[self dayBackgroundLayers] objectAtIndex:anIndex];
+    NSParameterAssert(l != nil);
     [l setValue:[dataSource weekView:self titleForColumnAtIndex:anIndex] forKey:_WLDayBackgroundLayerTitleKey];
     [l setNeedsDisplay];
 }
 
 - (void)_updateColorOfColumnAtIndex:(NSUInteger)anIndex
 {
-//    NSAssert([self wantsLayer], @"You MUST call -createLayers before.");
+//    NSAssert([self wantsLayer], @"You MUST call -setupLayers before.");
 //
 //    if ([dataSource respondsToSelector:@selector(weekView:colorForColumnAtIndex:)])
 //    {
@@ -530,75 +1024,12 @@ static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLine
 //    }
 }
 
-- (void)_updateColumnAtIndex:(NSUInteger)anIndex
-{
-    NSAssert([self wantsLayer], @"You MUST call -createLayers before.");
-
-    [self _updateEventsOfColumnAtIndex:anIndex];
-    if (self.showsDayColumnTitle)
-        [self _updateTitleOfColumnAtIndex:anIndex];
-    [CATransaction WL_performWithDisabledActions:^{
-        [self _updateColorOfColumnAtIndex:anIndex];
-    }];
-}
-
-- (void)_updateTimeRuler
-{
-    NSAssert([self wantsLayer], @"You MUST call -createLayers before.");
-
-    NSUInteger numberOfHours = [self numberOfHours];
-    NSMutableArray *h = [NSMutableArray arrayWithCapacity:numberOfHours];
-    for (NSUInteger i=0; i<numberOfHours; ++i)
-        [h addObject:[dataSource weekView:self stringForHour:i]];
-    [[_timeRulerRootLayer WL_timeRulerLayer] setHours:h];
-}
-
-- (void)_focusOnDayEvents
-{
-    WLHourRange r = [self rangeOfVisibleHours];
-    if (WLHourRangeEqualToHourRange(r, WLHourRangeZero))
-    {
-        [self _focusOnHour]; // No range to focus. Better focus on current hour rather than 0:00.
-        return;
-    }
-
-    WLCalendarTimeRulerLayer *timeRuler = [_timeRulerRootLayer WL_timeRulerLayer];
-    CGPoint scrollPoint = [timeRuler pointForHour:floorf(r.startHour)];
-    scrollPoint.y -= [timeRuler maximumHeightOfHourLabel] / 2.0f;
-    scrollPoint.x = roundf(scrollPoint.x);
-    scrollPoint.y = roundf(scrollPoint.y);
-    for (WLCalendarDayEventsLayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])
-        [l scrollPoint:scrollPoint];
-    [timeRuler scrollPoint:scrollPoint];
-}
-
-- (void)_focusOnHour
-{
-    CAScrollLayer *timeRulerScrollLayer = [_timeRulerRootLayer WL_timeRulerScrollLayer];
-    WLCalendarTimeRulerLayer *timeRulerLayer = [_timeRulerRootLayer WL_timeRulerLayer];
-    CGPoint newScrollPoint = [timeRulerLayer pointForHour:_hour];
-
-    // Center _hour whenever possible
-    CGFloat visibleHeight = timeRulerScrollLayer.bounds.size.height;
-    newScrollPoint = CGPointMake(0.0f, floorf(newScrollPoint.y - visibleHeight / 2.0f));
-    CGFloat topLimit = CGRectGetMinY(timeRulerLayer.bounds);
-    CGFloat bottomLimit = CGRectGetMaxY(timeRulerLayer.bounds) - visibleHeight;
-    newScrollPoint.y = floorf(fminf(fmaxf(newScrollPoint.y, topLimit), bottomLimit));
-
-    newScrollPoint.y -= [timeRulerLayer maximumHeightOfHourLabel] / 2.0f;
-    newScrollPoint.x = roundf(newScrollPoint.x);
-    newScrollPoint.y = roundf(newScrollPoint.y);
-    for (WLCalendarDayEventsLayer *l in [_columnLayers valueForKey:@"WL_dayLayer"])
-        [l scrollPoint:newScrollPoint];
-    [timeRulerLayer scrollPoint:newScrollPoint];
-}
-
 - (NSDictionary *)_titleAttributesForColumnDayBackgroundLayer:(WLBlockLayer *)aLayer
 {
     static NSDictionary *titleAttributes = nil;
     static NSMutableDictionary *boldTitleAttributes = nil;
-    if (titleAttributes == nil)
-    {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
         NSMutableParagraphStyle *p = [[NSMutableParagraphStyle alloc] init];
         [p setAlignment:NSCenterTextAlignment];
         [p setLineBreakMode:NSLineBreakByWordWrapping];
@@ -610,23 +1041,49 @@ static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLine
         else
             [s setShadowOffset:NSMakeSize(0.0f, 1.0f)];
         titleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                                    (id)[NSFont WL_columnTitleFont],  NSFontAttributeName,
-                                                    p,                                NSParagraphStyleAttributeName,
-                                                    [NSColor whiteColor],             NSForegroundColorAttributeName,
-                                                    s,                                NSShadowAttributeName,
-                                                    nil];
+                           (id)[NSFont WL_columnTitleFont],  NSFontAttributeName,
+                           p,                                NSParagraphStyleAttributeName,
+                           [NSColor whiteColor],             NSForegroundColorAttributeName,
+                           s,                                NSShadowAttributeName,
+                           nil];
         [s release];
         [p release];
-    }
-    if (boldTitleAttributes == nil)
-    {
+
         boldTitleAttributes = [titleAttributes mutableCopy];
         [boldTitleAttributes setObject:(id)[NSFont WL_columnBoldTitleFont] forKey:NSFontAttributeName];
-    }
+    });
+
     if ([[aLayer valueForKey:_WLDayBackgroundLayerShouldHighlightTitleKey] boolValue])
         return boldTitleAttributes;
     else
         return titleAttributes;
+}
+
+- (NSArray *)_timeRulerMarkers
+{
+    WLHourRange hourRange = [self hourRange];
+    NSUInteger numberOfHours = (NSUInteger)ceil(WLHourRangeLength(hourRange));
+    NSMutableArray *markers = [NSMutableArray arrayWithCapacity:numberOfHours];
+    for (NSUInteger hour = (NSUInteger)floor(hourRange.startHour); hour < numberOfHours; ++hour)
+        [markers addObject:[self markerForHour:hour]];
+    return markers;
+}
+
+- (void)_updateHighlightColumnTitle
+{
+    if (self.showsDayColumnTitle)
+    {
+        NSArray *dayBackgroundLayers = [self dayBackgroundLayers];
+        NSParameterAssert(dayBackgroundLayers != nil);
+        [dayBackgroundLayers enumerateObjectsUsingBlock:^(CALayer *l, NSUInteger idx, BOOL *stop)
+        {
+            id oldValue = [[l valueForKey:_WLDayBackgroundLayerShouldHighlightTitleKey] retain];
+            NSNumber *newValue = [NSNumber numberWithBool:(idx == indexOfHighlightedColumn)];
+            [l setValue:newValue forKey:_WLDayBackgroundLayerShouldHighlightTitleKey];
+            [l setNeedsDisplay];
+            [oldValue release];
+        }];
+    }
 }
 
 
@@ -635,11 +1092,16 @@ static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLine
 - (void)setFrameSize:(NSSize)newSize
 {
     [self stopAnimations];
-    [CATransaction begin];
-    [CATransaction setDisableActions:YES];
+#ifdef DEBUG_LAYERS
+    NSLog(@"set frame size: %@", NSStringFromSize(newSize));
+#endif
+    NSSize oldSize = [self frame].size;
     [super setFrameSize:newSize];
-    [[self layer] layoutIfNeeded];
-    [CATransaction commit];
+    CALayer *rootLayer = [self layer];
+    NSParameterAssert(rootLayer != nil);
+    if (!NSEqualSizes(oldSize, newSize))
+        [rootLayer setNeedsLayout];
+    [rootLayer layoutIfNeeded];
 }
 
 @end
@@ -647,291 +1109,76 @@ static const NSInteger _WLDayBackgroundTitleAttributes = NSStringDrawingUsesLine
 
 #pragma mark -
 
-@implementation WLCalendarWeekView (Layout)
+@implementation WLCalendarWeekView (Layers)
 
-#pragma mark Time Ruler
-
-static const CGFloat _WLYMarginBetweenTitleAndColumn = 0.0f;
-
-static const CGFloat _WLYMarginBetweenAllDayAndDayPartsOfColumn = 8.0f;
-
-static const CGFloat _WLXMarginBetweenTimeRulerAndTimeRulerRoot = 5.0f;
-
-- (CGFloat)timeRulerWidth
+- (void)setupLayers
 {
-    return [[_timeRulerRootLayer WL_timeRulerLayer] preferredFrameWidth];
-}
+    NSParameterAssert(![self wantsLayer]);
 
-- (CGFloat)timeRulerRootWidth
-{
-    return [self timeRulerWidth] + 2 * _WLXMarginBetweenTimeRulerAndTimeRulerRoot;
-}
-
-- (CGRect)timeRulerRootFrame
-{
-    CGFloat allDayHeightAndMargin = 0.0f;
-    if ([self isAllDayPartOfColumnVisible])
-        allDayHeightAndMargin = self.heightOfAllDayPartOfColumn + _WLYMarginBetweenAllDayAndDayPartsOfColumn;
-    return CGRectIntegral(CGRectMake(0.0f,
-                                     0.0f,
-                                     [self timeRulerRootWidth],
-                                     _rootLayer.frame.size.height - allDayHeightAndMargin));
-}
-
-- (CGFloat)timerRulerScrollHeight
-{
-    CGFloat columnTitleHeightAndMargin = 0.0f;
-    if (self.showsDayColumnTitle)
-        columnTitleHeightAndMargin = [self columnTitleFrame].size.height + _WLYMarginBetweenTitleAndColumn;
-    return _timeRulerRootLayer.frame.size.height - columnTitleHeightAndMargin;
-}
-
-- (CGRect)timeRulerScrollFrame
-{
-    return CGRectIntegral(CGRectMake(_WLXMarginBetweenTimeRulerAndTimeRulerRoot,
-                                     0.0f,
-                                     [self timeRulerWidth],
-                                     [self timerRulerScrollHeight]));
-}
-
-- (void)layoutTimeRulerRoot
-{
-    // It's important to layout time ruler root before scroll.
-    _timeRulerRootLayer.frame = [self timeRulerRootFrame];
-    [_timeRulerRootLayer setNeedsLayout];
-    [_timeRulerRootLayer WL_timeRulerScrollLayer].frame = [self timeRulerScrollFrame];
-    [[_timeRulerRootLayer WL_timeRulerScrollLayer] setNeedsLayout];
-}
-
-- (void)layoutTimeRulerLayer:(WLCalendarTimeRulerLayer *)aTimeRulerLayer
-{
-    CGSize timeRulerSize = [aTimeRulerLayer preferredFrameSize];
-    [aTimeRulerLayer setValue:[NSNumber numberWithFloat:timeRulerSize.height] forKeyPath:@"frame.size.height"];
-    [aTimeRulerLayer setNeedsLayout];
+    CALayer *rootLayer = [self setupRootLayer];
+    [self setLayer:rootLayer];
+    [self setWantsLayer:YES];
+    [self reloadDataAnimated:NO];
+    [rootLayer setNeedsLayout];
+    if ([CATransaction disableActions])
+        [rootLayer layoutIfNeeded];
 }
 
 
-#pragma mark Column
-
-static const CGFloat _WLXMarginBetweenColumns = 6.0f;
-
-static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
-
-- (CGFloat)columnWidth
-{
-    NSUInteger numberOfColumns = [_columnLayers count];
-    if (numberOfColumns == 0)
-        return 0.0f;
-    CGFloat width = _rootLayer.frame.size.width - [self timeRulerRootWidth] - _WLXMarginBetweenTimeRulerAndColumns -
-        numberOfColumns * _WLXMarginBetweenColumns;
-    width /= numberOfColumns;
-    return width;
-}
-
-- (CGRect)columnFrameAtIndex:(NSInteger)anIndex
-{
-    CGFloat width = [self columnWidth];
-    CGFloat x = [self timeRulerRootWidth] + _WLXMarginBetweenTimeRulerAndColumns + anIndex * (width + _WLXMarginBetweenColumns);
-    return CGRectIntegral(CGRectMake(x,
-                                     0.0f,
-                                     width,
-                                     _rootLayer.frame.size.height));
-}
-
-- (CGRect)allDayBackgroundFrame
-{
-    if (self.showAllDayEvents)
-    {
-        return CGRectIntegral(CGRectMake(0.0f,
-                                         0.0f,
-                                         [self columnWidth],
-                                         self.heightOfAllDayPartOfColumn));
-    }
-    else
-        return CGRectZero;
-}
-
-- (CGRect)dayBackgroundFrame
-{
-    CGFloat allDayHeightAndMargin = 0.0f;
-    if ([self isAllDayPartOfColumnVisible])
-        allDayHeightAndMargin = self.heightOfAllDayPartOfColumn + _WLYMarginBetweenAllDayAndDayPartsOfColumn;
-    return CGRectIntegral(CGRectMake(0.0f,
-                                     allDayHeightAndMargin,
-                                     [self columnWidth],
-                                     _rootLayer.frame.size.height - allDayHeightAndMargin));
-}
-
-- (CGRect)dayScrollFrame
-{
-    CGFloat titleHeightAndMargin = 0;
-    if (self.showsDayColumnTitle)
-        titleHeightAndMargin = [self columnTitleFrame].size.height + _WLYMarginBetweenTitleAndColumn;
-    // Height of the day must be less than time ruler by half of of the first hour.
-    CGFloat hourLabelYPadding = [[_timeRulerRootLayer WL_timeRulerLayer] maximumHeightOfHourLabel] / 2;
-    CGRect dayBackgroundFrame = [self dayBackgroundFrame];
-    // Background has 1px stroke
-    return CGRectIntegral(CGRectInset(CGRectMake(0.0f,
-                                                 titleHeightAndMargin + hourLabelYPadding,
-                                                 dayBackgroundFrame.size.width,
-                                                 dayBackgroundFrame.size.height - titleHeightAndMargin - hourLabelYPadding),
-                                      1.0f, 0.0f));
-}
-
-- (NSRect)columnTitleFrame
-{
-    CGFloat width = [self dayBackgroundFrame].size.width;
-    CGFloat height = 25.0f;
-    CGFloat maximumHeight = [[[_columnLayers lastObject] WL_dayBackgroundLayer] frame].size.height;
-    for (WLBlockLayer *l in [_columnLayers valueForKeyPath:@"WL_dayBackgroundLayer"])
-    {
-        NSString *title = [l valueForKey:_WLDayBackgroundLayerTitleKey];
-        NSDictionary *attributes = [self _titleAttributesForColumnDayBackgroundLayer:l];
-        NSRect r = [title boundingRectWithSize:NSMakeSize(width, maximumHeight)
-                                       options:_WLDayBackgroundTitleAttributes
-                                    attributes:attributes];
-        height = fmaxf(height, r.size.height);
-    }
-    return NSIntegralRect(NSMakeRect(0.0f,
-                                     0.0f,
-                                     width,
-                                     height));
-}
-
-- (void)layoutColumnLayers
-{
-    [_columnLayers enumerateObjectsUsingBlock:^(CALayer *l, NSUInteger idx, BOOL *stop)
-    {
-        [self layoutColumnLayer:l atIndex:idx];
-    }];
-}
-
-- (void)layoutColumnLayer:(CALayer *)aColumnLayer atIndex:(NSInteger)anIndex
-{
-    aColumnLayer.frame = [self columnFrameAtIndex:anIndex];
-    [aColumnLayer setNeedsLayout];
-
-    CALayer *allDayBackground = [aColumnLayer WL_allDayBackgroundLayer];
-    if ([self isAllDayPartOfColumnVisible])
-    {
-        allDayBackground.hidden = NO;
-        allDayBackground.frame = [self allDayBackgroundFrame];
-        [allDayBackground setNeedsLayout];
-        CALayer *allDay = [aColumnLayer WL_allDayLayer];
-        // Background has 1px stroke
-        allDay.frame = CGRectIntegral(CGRectInset(allDayBackground.bounds, 1.0f, 0.0f));
-        [allDay setNeedsLayout];
-    }
-    else
-        allDayBackground.hidden = YES;
-
-    CALayer *dayBackground = [aColumnLayer WL_dayBackgroundLayer];
-    dayBackground.frame = [self dayBackgroundFrame];
-    [dayBackground setNeedsLayout];
-
-    CAScrollLayer *dayScroll = [aColumnLayer WL_dayScrollLayer];
-    dayScroll.frame = [self dayScrollFrame];
-    [dayScroll setNeedsLayout];
-}
-
-- (void)layoutDayLayer:(WLCalendarDayEventsLayer *)aDayLayer
-{
-    WLCalendarTimeRulerLayer *timeRuler = [_timeRulerRootLayer WL_timeRulerLayer];
-    CGFloat height = fmaxf([timeRuler preferredFrameSize].height, aDayLayer.superlayer.bounds.size.height);
-    [aDayLayer setValue:[NSNumber numberWithFloat:height] forKeyPath:@"frame.size.height"];
-    [aDayLayer setNeedsLayout];
-}
-
-- (BOOL)isAllDayPartOfColumnVisible
-{
-    return self.showAllDayEvents && fabsf(self.heightOfAllDayPartOfColumn - 0.0f) > FLT_EPSILON;
-}
-
-
-#pragma mark Time Indicator
-
-- (void)layoutTimeIndicatorRootLayer
-{
-    CGRect timeRulerRootFrame = [self timeRulerRootFrame];
-    _timeIndicatorRootLayer.frame = CGRectIntegral(CGRectMake(timeRulerRootFrame.size.width,
-                                                              timeRulerRootFrame.origin.y,
-                                                              _rootLayer.bounds.size.width - _timeRulerRootLayer.frame.size.width - _WLXMarginBetweenTimeRulerAndColumns,
-                                                              [self dayScrollFrame].size.height));
-    [_timeIndicatorRootLayer setNeedsLayout];
-}
-
-- (void)layoutTimeIndicatorLayer
-{
-    WLCalendarTimeRulerLayer *timeRulerLayer = [_timeRulerRootLayer WL_timeRulerLayer];
-    CGPoint hourPoint = [timeRulerLayer pointForHour:_hour];
-    CGPoint newTimeIndicatorPoint = [_timeIndicatorRootLayer convertPoint:hourPoint fromLayer:timeRulerLayer];
-    [[_timeIndicatorRootLayer WL_timeIndicatorLayer] setValue:[NSNumber numberWithFloat:floorf(newTimeIndicatorPoint.y)] forKeyPath:@"position.y"];
-}
-
-@end
-
-
-#pragma mark -
-
-@implementation WLCalendarWeekView (SetupLayers)
+#pragma mark Root Layer
 
 - (CALayer *)setupRootLayer
 {
     CALayer *l = [CALayer layer];
     l.masksToBounds = YES;
     l.name = _WLRootLayerName;
+    l.layoutManager = self;
 #ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor blackColor] WL_CGColor];
 #endif
-    l.layoutManager = self;
+
+    CALayer *timeRulerRootLayer = [self setupTimeRulerRootLayer];
+    [l addSublayer:timeRulerRootLayer];
+    [l setValue:timeRulerRootLayer forKey:timeRulerRootLayer.name];
+
+    CALayer *timeIndicatorRootLayer = [self setupTimeIndicatorRootLayer];
+    [l addSublayer:timeIndicatorRootLayer];
+    [l setValue:timeIndicatorRootLayer forKey:timeIndicatorRootLayer.name];
+
+    CALayer *eventsRootLayer = [self setupEventsRootLayer];
+    [l addSublayer:eventsRootLayer];
+    [l setValue:eventsRootLayer forKey:eventsRootLayer.name];
+
     return l;
 }
 
 
-#pragma mark Time Ruler
-
-/*
- +--+ +--+ +--+
- |  | |  | |  |
- |  | |  | |  |
- |  | |  | |  |
- |  | |  | |  |
- |b | |s | |t |
- |a | |c | |i |
- |c | |r | |m |
- |k | |o | |e |
- |g | |l | |  |
- |r | |l | |r |
- |o | |  | |u |
- |u | |  | |l |
- |n | |  | |e |
- |d | |  | |r |
- |  | |  | |  |
- +--+ +--+ +--+
-
- <--depth-----+
- */
+#pragma mark Time Ruler Layers
 
 - (CALayer *)setupTimeRulerRootLayer
 {
-    __block WLBlockLayer *timeRulerBackground = [self setupTimeRulerBackgroundLayer];
-    CAScrollLayer *timeRulerScroll = [self setupTimeRulerScrollLayer];
-    [timeRulerBackground addSublayer:timeRulerScroll];
-    [timeRulerBackground setValue:timeRulerScroll forKey:timeRulerScroll.name];
+    CALayer *l = [CALayer layer];
+    l.name = _WLTimeRulerRootLayerName;
+    l.layoutManager = self;
+    l.masksToBounds = YES;
+    l.zPosition = 0;
+#ifdef DEBUG_LAYERS
+    l.backgroundColor = [[NSColor darkGrayColor] WL_CGColor];
+#endif
 
-    WLCalendarTimeRulerLayer *timeRuler = [self setupTimeRulerLayer];
-    timeRuler.autoresizingMask = kCALayerWidthSizable;
-    [timeRulerScroll addSublayer:timeRuler];
-    [timeRulerScroll setValue:timeRuler forKey:timeRuler.name];
-    return timeRulerBackground;
+    WLBlockLayer *timeRulerBackgroundLayer = [self setupTimeRulerBackgroundLayer];
+    [l addSublayer:timeRulerBackgroundLayer];
+    [l setValue:timeRulerBackgroundLayer forKey:timeRulerBackgroundLayer.name];
+
+    return l;
 }
 
 - (WLBlockLayer *)setupTimeRulerBackgroundLayer
 {
     __block WLBlockLayer *l = [WLBlockLayer layer];
     l.name = _WLTimeRulerBackgroundLayerName;
-    l.masksToBounds = YES;
     l.needsDisplayOnBoundsChange = YES;
+    l.layoutManager = self;
 #ifndef DEBUG_LAYERS
     l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
         NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:[aLayer contentsAreFlipped]];
@@ -999,26 +1246,39 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
 #else
     l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
 #endif
+
+    CAScrollLayer *timeRulerScrollLayer = [self setupTimeRulerScrollLayer];
+    [l addSublayer:timeRulerScrollLayer];
+    [l setValue:timeRulerScrollLayer forKey:timeRulerScrollLayer.name];
+
     return l;
 }
 
 - (CAScrollLayer *)setupTimeRulerScrollLayer
 {
-    __block CAScrollLayer *l = [CAScrollLayer layer];
+    CAScrollLayer *l = [CAScrollLayer layer];
     l.name = _WLTimeRulerScrollLayerName;
     l.scrollMode = kCAScrollVertically;
     l.geometryFlipped = YES;
+    l.layoutManager = self;
 #ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor orangeColor] WL_CGColor];
 #endif
+
+    WLCalendarTimeRulerLayer *timeRulerLayer = [self setupTimeRulerLayer];
+    [l addSublayer:timeRulerLayer];
+    [l setValue:timeRulerLayer forKey:timeRulerLayer.name];
+
     return l;
 }
 
 - (WLCalendarTimeRulerLayer *)setupTimeRulerLayer
 {
-    __block WLCalendarTimeRulerLayer *l = [WLCalendarTimeRulerLayer layer];
+    WLCalendarTimeRulerLayer *l = [WLCalendarTimeRulerLayer layer];
     l.name = _WLTimeRulerLayerName;
     l.timeRuler = self;
+    l.markers = [self _timeRulerMarkers];
+    l.onlyCompletelyVisibleMarkersShown = self.fitsDayEvents;
 #ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor blueColor] WL_CGColor];
 #endif
@@ -1026,76 +1286,54 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
 }
 
 
-#pragma mark Column
+#pragma mark Event Layers
 
-/*
-+---------+ +---------+ +---------+
-|         | |         | |         |
-|         | | back    | | all-day |
-|         | | ground  | | events  |
-|         | |         | |         |
-| content | |         | |         |
-|         | |         | |         |
-|         | +---------+ +---------+
-|         | +---------+ +---------+
-|         | | back    | | title   |
-|         | | ground  | +---------+
-|         | |         | +---------+ +---------+
-|         | |         | |         | |         |
-|         | |         | |         | |         |
-|         | |         | | scroll  | | day     |
-|         | |         | |         | | events  |
-|         | |         | |         | |         |
-|         | |         | |         | |         |
-|         | |         | |         | |         |
-|         | |         | |         | |         |
-|         | |         | |         | |         |
-|         | |         | |         | |         |
-|         | |         | |         | |         |
-|         | |         | |         | |         |
-|         | |         | |         | |         |
-|         | |         | |         | |         |
-|         | |         | |         | |         |
-+---------+ +---------+ +---------+ +---------+
+- (CALayer *)setupEventsRootLayer
+{
+    CALayer *l = [CALayer layer];
+    l.masksToBounds = YES;
+    l.name = _WLEventsRootLayerName;
+    l.zPosition = 1;
+    l.layoutManager = self;
+#ifdef DEBUG_LAYERS
+    l.backgroundColor = [[[NSColor darkGrayColor] colorWithAlphaComponent:0.5] WL_CGColor];
+#endif
 
-<--depth----------------------------------------
-*/
+    NSUInteger numberOfColumns = [dataSource numberOfColumnsInWeekView:self];
+    NSMutableArray *columnLayers = [NSMutableArray arrayWithCapacity:numberOfColumns];
+    for (NSUInteger i = 0; i < numberOfColumns; ++i)
+    {
+        CALayer *c = [self setupColumnRootLayer];
+        WLBlockLayer *dayBackgroundLayer = [c valueForKey:_WLDayBackgroundLayerName];
+        NSParameterAssert(dayBackgroundLayer != nil);
+        [dayBackgroundLayer setValue:[NSNumber numberWithBool:(i == self.indexOfHighlightedColumn)] forKey:_WLDayBackgroundLayerShouldHighlightTitleKey];
+        [columnLayers addObject:c];
+        [l addSublayer:c];
+    }
+    [l setValue:columnLayers forKey:_WLColumnLayersKey];
+
+    return l;
+}
 
 - (CALayer *)setupColumnRootLayer
 {
-    __block CALayer *root = [self setupColumnLayer];
-    WLBlockLayer *allDayBackground = [self setupAllDayBackgroundLayer];
-    [root addSublayer:allDayBackground];
-    [root setValue:allDayBackground forKey:allDayBackground.name];
-
-    WLCalendarAllDayEventsLayer *allDay = [self setupAllDayLayer];
-    [allDayBackground addSublayer:allDay];
-    [allDayBackground setValue:allDay forKey:allDay.name];
-
-    WLBlockLayer *dayBackground = [self setupDayBackgroundLayer];
-    [root addSublayer:dayBackground];
-    [root setValue:dayBackground forKey:dayBackground.name];
-
-    CAScrollLayer *scroll = [self setupDayScrollLayer];
-    [dayBackground addSublayer:scroll];
-    [dayBackground setValue:scroll forKey:scroll.name];
-
-    WLCalendarDayEventsLayer *day = [self setupDayLayer];
-    day.autoresizingMask = kCALayerWidthSizable;
-    [scroll addSublayer:day];
-    [scroll setValue:day forKey:day.name];
-    return root;
-}
-
-- (CALayer *)setupColumnLayer
-{
-    __block CALayer *l = [CALayer layer];
+    CALayer *l = [CALayer layer];
     l.geometryFlipped = YES;
-    l.name = _WLColumnLayerName;
+    l.name = _WLColumnRootLayerName;
     l.anchorPoint = CGPointMake(0.0f, 0.0f);
+    l.layoutManager = self;
 #ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor redColor] WL_CGColor];
 #endif
+
+    WLBlockLayer *allDayBackground = [self setupAllDayBackgroundLayer];
+    [l addSublayer:allDayBackground];
+    [l setValue:allDayBackground forKey:allDayBackground.name];
+
+    WLBlockLayer *dayBackground = [self setupDayBackgroundLayer];
+    [l addSublayer:dayBackground];
+    [l setValue:dayBackground forKey:dayBackground.name];
+
     return l;
 }
 
@@ -1105,6 +1343,7 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     l.name = _WLAllDayBackgroundLayerName;
     l.needsDisplayOnBoundsChange = YES;
     l.masksToBounds = YES;
+    l.layoutManager = self;
 #ifndef DEBUG_LAYERS
     NSGradient *whiteToTransparentGradient = [[NSGradient alloc] initWithStartingColor:[[NSColor whiteColor] colorWithAlphaComponent:0.13f]
                                                                            endingColor:[NSColor clearColor]];
@@ -1195,36 +1434,11 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
 #else
     l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
 #endif
-    return l;
-}
 
-- (WLCalendarAllDayEventsLayer *)setupAllDayLayer
-{
-    __block WLCalendarAllDayEventsLayer *l = [WLCalendarAllDayEventsLayer layer];
-    l.name = _WLAllDayLayerName;
-    return l;
-}
+    WLCalendarAllDayEventsLayer *allDay = [self setupAllDayLayer];
+    [l addSublayer:allDay];
+    [l setValue:allDay forKey:allDay.name];
 
-- (WLCalendarDayEventsLayer *)setupDayLayer
-{
-    __block WLCalendarDayEventsLayer *l = [WLCalendarDayEventsLayer layer];
-    l.name = _WLDayLayerName;
-    l.timeRuler = self;
-    l.keepsTextOfEventsVisible = !self.fitDayEvents;
-#ifdef DEBUG_LAYERS
-    l.needsDisplayOnBoundsChange = YES;
-    l.backgroundColor = [[NSColor blueColor] WL_CGColor];
-#endif
-    return l;
-}
-
-- (CAScrollLayer *)setupDayScrollLayer
-{
-    __block CAScrollLayer *l = [CAScrollLayer layer];
-    l.name = _WLDayScrollLayerName;
-#ifdef DEBUG_LAYERS
-    l.backgroundColor = [[NSColor purpleColor] WL_CGColor];
-#endif
     return l;
 }
 
@@ -1233,8 +1447,9 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
     __block WLBlockLayer *l = [WLBlockLayer layer];
     l.name = _WLDayBackgroundLayerName;
     l.needsDisplayOnBoundsChange = YES;
+    l.layoutManager = self;
     NSGradient *whiteToTransparentGradient = [[NSGradient alloc] initWithStartingColor:[[NSColor whiteColor] colorWithAlphaComponent:0.1f]
-                                                                   endingColor:[NSColor clearColor]];
+                                                                           endingColor:[NSColor clearColor]];
     [whiteToTransparentGradient autorelease];
     __block WLCalendarWeekView *selfBlock = self;
     l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
@@ -1323,85 +1538,183 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
 
         // Inset layer bounds, since images have 1px stroke.
         [whiteToTransparentGradient drawInRect:NSInsetRect(NSRectFromCGRect(aLayer.bounds),
-                                                   1.0f,
-                                                   1.0f)
-                                 angle:90];
+                                                           1.0f,
+                                                           1.0f)
+                                         angle:90];
 #endif
         if (selfBlock.showsDayColumnTitle)
         {
-            NSString *dayName = [aLayer valueForKey:_WLDayBackgroundLayerTitleKey];
-            NSDictionary *dayAttributes = [self _titleAttributesForColumnDayBackgroundLayer:aLayer];
+            NSString *title = [aLayer valueForKey:_WLDayBackgroundLayerTitleKey];
+            NSDictionary *titleAttributes = [self _titleAttributesForColumnDayBackgroundLayer:aLayer];
 
             // Vertically center the title.
-            NSSize size = [dayName sizeWithAttributes:dayAttributes];
-            NSRect dayTextRect = [selfBlock columnTitleFrame];
+            NSRect titleFrame = [selfBlock columnTitleFrame];
+            NSSize preferredTitleSize = [title boundingRectWithSize:titleFrame.size
+                                                            options:_WLDayBackgroundTitleAttributes
+                                                         attributes:titleAttributes].size;
             // ...but push it 2px more downwards because it looks better given the way the first event
             // in the day is half the height of an hour label down.
-            const CGFloat mysteriousExtraOffset = 2.0;
-            CGFloat verticalOffset = mysteriousExtraOffset + dayTextRect.size.height / 2.0 - size.height / 2.0;
-            dayTextRect.origin.y += verticalOffset;
+            CGFloat yOffset = ceil(_WLYColumnTitleFrameBottomOffset + fdim((titleFrame.size.height - _WLYColumnTitleFrameBottomOffset) / 2.0, preferredTitleSize.height / 2.0));
+            titleFrame.origin.y += yOffset;
 #ifdef DEBUG_LAYERS
             [[NSColor greenColor] setFill];
-            NSRectFill(dayTextRect);
+            NSRectFill(titleFrame);
 #endif
-            [dayName drawWithRect:dayTextRect
+            [title drawWithRect:titleFrame
                           options:_WLDayBackgroundTitleAttributes
-                       attributes:dayAttributes];
+                       attributes:titleAttributes];
         }
         [NSGraphicsContext restoreGraphicsState];
     };
 #ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
 #endif
+
+    CAScrollLayer *scroll = [self setupDayScrollLayer];
+    [l addSublayer:scroll];
+    [l setValue:scroll forKey:scroll.name];
+
+    return l;
+}
+
+- (WLCalendarAllDayEventsLayer *)setupAllDayLayer
+{
+    WLCalendarAllDayEventsLayer *l = [WLCalendarAllDayEventsLayer layer];
+    l.name = _WLAllDayLayerName;
+#ifdef DEBUG_LAYERS
+    l.backgroundColor = [[NSColor blueColor] WL_CGColor];
+#endif
+    return l;
+}
+
+- (CAScrollLayer *)setupDayScrollLayer
+{
+    CAScrollLayer *l = [CAScrollLayer layer];
+    l.name = _WLDayScrollLayerName;
+    l.layoutManager = self;
+#ifdef DEBUG_LAYERS
+    l.backgroundColor = [[NSColor orangeColor] WL_CGColor];
+#endif
+
+    WLCalendarDayEventsLayer *dayLayer = [self setupDayLayer];
+    [l addSublayer:dayLayer];
+    [l setValue:dayLayer forKey:dayLayer.name];
+
+    return l;
+}
+
+- (WLCalendarDayEventsLayer *)setupDayLayer
+{
+    WLCalendarDayEventsLayer *l = [WLCalendarDayEventsLayer layer];
+    l.name = _WLDayLayerName;
+    l.timeRuler = self;
+    l.keepsTextOfEventsVisible = !self.fitsDayEvents;
+#ifdef DEBUG_LAYERS
+    l.needsDisplayOnBoundsChange = YES;
+    l.backgroundColor = [[NSColor blueColor] WL_CGColor];
+#endif
     return l;
 }
 
 
-#pragma mark Time Indicator
-
-/*
- +---------+ +---------+
- |         | |         |
- |         | |         |
- |         | |         |
- |         | |         |
- | root    | |indicator|
- |         | |         |
- |         | |         |
- |         | |         |
- +---------+ +---------+
-
- <--depth---------------------------
- */
+#pragma mark Time Indicator Layers
 
 - (CALayer *)setupTimeIndicatorRootLayer
 {
     CALayer *l = [CALayer layer];
     l.name = _WLTimeIndicatorRootLayerName;
     l.masksToBounds = YES;
+    l.zPosition = 2;
+    l.layoutManager = self;
 #ifdef DEBUG_LAYERS
-    l.backgroundColor = [[NSColor magentaColor] WL_CGColor];
-    l.opacity = 0.3f;
+    l.backgroundColor = [[[NSColor darkGrayColor] colorWithAlphaComponent:0.7] WL_CGColor];
 #endif
-    WLCalendarTimeIndicatorLayer *timeIndicator = [self setupTimeIndicatorLayer];
-    CGSize preferredTimeIndicatorSize = [timeIndicator preferredFrameSize];
-    timeIndicator.frame = CGRectMake(0.0f, 0.0f, preferredTimeIndicatorSize.width, preferredTimeIndicatorSize.height);
-    timeIndicator.autoresizingMask = kCALayerWidthSizable;
-    [l addSublayer:timeIndicator];
-    [l setValue:timeIndicator forKey:timeIndicator.name];
+
+    WLCalendarTimeIndicatorLayer *timeIndicatorLayer = [self setupTimeIndicatorLayer];
+    [l addSublayer:timeIndicatorLayer];
+    [l setValue:timeIndicatorLayer forKey:timeIndicatorLayer.name];
+
     return l;
 }
 
 - (WLCalendarTimeIndicatorLayer *)setupTimeIndicatorLayer
 {
-    __block WLCalendarTimeIndicatorLayer *l = [WLCalendarTimeIndicatorLayer layer];
+    WLCalendarTimeIndicatorLayer *l = [WLCalendarTimeIndicatorLayer layer];
     l.name = _WLTimeIndicatorLayerName;
-    l.anchorPoint = CGPointMake(0.0f, 1.0f);
-    l.needsDisplayOnBoundsChange = YES;
+    l.anchorPoint = CGPointMake(0.0, 0.5);
+    l.hidden = !self.showsTimeIndicator;
 #ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor whiteColor] WL_CGColor];
 #endif
     return l;
+}
+
+
+#pragma mark Access Layers
+
+- (CALayer *)timeRulerRootLayer
+{
+    return [[self layer] valueForKey:_WLTimeRulerRootLayerName];
+}
+
+- (WLBlockLayer *)timeRulerBackgroundLayer
+{
+    return [[self timeRulerRootLayer] valueForKey:_WLTimeRulerBackgroundLayerName];
+}
+
+- (CAScrollLayer *)timeRulerScrollLayer
+{
+    return [[self timeRulerBackgroundLayer] valueForKey:_WLTimeRulerScrollLayerName];
+}
+
+- (WLCalendarTimeRulerLayer *)timeRulerLayer
+{
+    return [[self timeRulerScrollLayer] valueForKey:_WLTimeRulerLayerName];
+}
+
+- (CALayer *)eventsRootLayer
+{
+    return [[self layer] valueForKey:_WLEventsRootLayerName];
+}
+
+- (NSMutableArray *)columnRootLayers
+{
+    return [[self eventsRootLayer] valueForKey:_WLColumnLayersKey];
+}
+
+- (NSArray *)allDayBackgroundLayers
+{
+    return [[self columnRootLayers] valueForKey:_WLAllDayBackgroundLayerName];
+}
+
+- (NSArray *)dayBackgroundLayers
+{
+    return [[self columnRootLayers] valueForKey:_WLDayBackgroundLayerName];
+}
+
+- (NSArray *)allDayLayers
+{
+    return [[self allDayBackgroundLayers] valueForKey:_WLAllDayLayerName];
+}
+
+- (NSArray *)dayScrollLayers
+{
+    return [[self dayBackgroundLayers] valueForKey:_WLDayScrollLayerName];
+}
+
+- (NSArray *)dayLayers
+{
+    return [[self dayScrollLayers] valueForKey:_WLDayLayerName];
+}
+
+- (CALayer *)timeIndicatorRootLayer
+{
+    return [[self layer] valueForKey:_WLTimeIndicatorRootLayerName];
+}
+
+- (WLCalendarTimeIndicatorLayer *)timeIndicatorLayer
+{
+    return [[self timeIndicatorRootLayer] valueForKey:_WLTimeIndicatorLayerName];
 }
 
 @end
@@ -1409,50 +1722,388 @@ static const CGFloat _WLXMarginBetweenTimeRulerAndColumns = 6.0f;
 
 #pragma mark -
 
-@implementation CALayer (WLCalendarWeekView)
+@implementation WLCalendarWeekView (Layout)
 
-- (WLBlockLayer *)WL_allDayBackgroundLayer
+#pragma mark Root Layer
+
+- (void)layoutSublayersOfRootLayer:(CALayer *)aRootLayer
 {
-    NSParameterAssert([self.name isEqual:_WLColumnLayerName]);
-    return [self valueForKey:_WLAllDayBackgroundLayerName];
+    if (aRootLayer.bounds.size.width == 0.0 || aRootLayer.bounds.size.height == 0.0)
+        return;
+
+#ifdef DEBUG_LAYERS
+    NSLog(@"%@: %@", NSStringFromSelector(_cmd), NSStringFromRect(NSRectFromCGRect(aRootLayer.frame)));
+#endif
+    CALayer *timeRulerRootLayer = [aRootLayer valueForKey:_WLTimeRulerRootLayerName];
+    NSParameterAssert(timeRulerRootLayer != nil);
+    WLCalendarTimeRulerLayer *timeRulerLayer = [timeRulerRootLayer valueForKeyPath:[NSString stringWithFormat:@"%@.%@.%@",
+                                                                                    _WLTimeRulerBackgroundLayerName,
+                                                                                    _WLTimeRulerScrollLayerName,
+                                                                                    _WLTimeRulerLayerName]];
+    NSParameterAssert(timeRulerLayer != nil);
+    timeRulerRootLayer.frame = CGRectIntegral(CGRectMake(0.0,
+                                                         0.0,
+                                                         [timeRulerLayer preferredFrameWidth] + 2.0 * _WLXMarginBetweenTimeRulerAndTimeRulerRoot,
+                                                         fdim(aRootLayer.bounds.size.height, [self heightAndMarginOfAllDayEventsPartOfColumn])));
+    [timeRulerRootLayer setNeedsLayout];
+
+    CALayer *eventsRootLayer = [aRootLayer valueForKey:_WLEventsRootLayerName];
+    NSParameterAssert(eventsRootLayer != nil);
+    eventsRootLayer.frame = CGRectIntegral(CGRectMake(CGRectGetMaxX(timeRulerRootLayer.frame),
+                                                      0.0,
+                                                      fdim(aRootLayer.bounds.size.width, CGRectGetMaxX(timeRulerRootLayer.frame)),
+                                                      aRootLayer.bounds.size.height));
+    [eventsRootLayer setNeedsLayout];
+
+    CALayer *timeIndicatorRootLayer = [aRootLayer valueForKey:_WLTimeIndicatorRootLayerName];
+    NSParameterAssert(timeIndicatorRootLayer != nil);
+    timeIndicatorRootLayer.frame = CGRectIntegral(CGRectMake(CGRectGetMaxX(timeRulerRootLayer.frame),
+                                                             0.0,
+                                                             fdim(aRootLayer.bounds.size.width, CGRectGetMaxX(timeRulerRootLayer.frame)),
+                                                             [self visibleHeightOfTimeRuler]));
+    [timeIndicatorRootLayer setNeedsLayout];
+
+    if ([CATransaction disableActions])
+    {
+        [eventsRootLayer layoutIfNeeded];
+        [timeRulerRootLayer layoutIfNeeded];
+        [timeIndicatorRootLayer layoutIfNeeded];
+    }
 }
 
-- (WLCalendarAllDayEventsLayer *)WL_allDayLayer
+
+#pragma mark Time Ruler Layers
+
+- (void)layoutSublayersOfTimeRulerRootLayer:(CALayer *)aTimeRulerRootLayer
 {
-    return [[self WL_allDayBackgroundLayer] valueForKey:_WLAllDayLayerName];
+    if (aTimeRulerRootLayer.bounds.size.width == 0.0 || aTimeRulerRootLayer.bounds.size.height == 0.0)
+        return;
+
+#ifdef DEBUG_LAYERS
+    NSLog(@"%@: %@", NSStringFromSelector(_cmd), NSStringFromRect(NSRectFromCGRect(aTimeRulerRootLayer.frame)));
+#endif
+    WLBlockLayer *timeRulerBackgroundLayer = [aTimeRulerRootLayer valueForKey:_WLTimeRulerBackgroundLayerName];
+    NSParameterAssert(timeRulerBackgroundLayer != nil);
+    timeRulerBackgroundLayer.frame = aTimeRulerRootLayer.bounds;
+    [timeRulerBackgroundLayer setNeedsLayout];
+    if ([CATransaction disableActions])
+        [timeRulerBackgroundLayer layoutIfNeeded];
 }
 
-- (WLBlockLayer *)WL_dayBackgroundLayer
+- (void)layoutSublayersOfTimeRulerBackgroundLayer:(CALayer *)aTimeRulerBackgroundLayer
 {
-    NSParameterAssert([self.name isEqual:_WLColumnLayerName]);
-    return [self valueForKey:_WLDayBackgroundLayerName];
+    if (aTimeRulerBackgroundLayer.bounds.size.width == 0.0 || aTimeRulerBackgroundLayer.bounds.size.height == 0.0)
+        return;
+
+#ifdef DEBUG_LAYERS
+    NSLog(@"%@: %@", NSStringFromSelector(_cmd), NSStringFromRect(NSRectFromCGRect(aTimeRulerBackgroundLayer.frame)));
+#endif
+    CAScrollLayer *timeRulerScrollLayer = [aTimeRulerBackgroundLayer valueForKey:_WLTimeRulerScrollLayerName];
+    NSParameterAssert(timeRulerScrollLayer != nil);
+    CGRect f = aTimeRulerBackgroundLayer.bounds;
+    f.size.height -= NSMaxY([self columnTitleFrame]);
+    timeRulerScrollLayer.frame = f;
+    [timeRulerScrollLayer setNeedsLayout];
+    if ([CATransaction disableActions])
+        [timeRulerScrollLayer layoutIfNeeded];
 }
 
-- (CAScrollLayer *)WL_dayScrollLayer
+- (void)layoutSublayersOfTimeRulerScrollLayer:(CALayer *)aTimeRulerScrollLayer
 {
-    return [[self WL_dayBackgroundLayer] valueForKey:_WLDayScrollLayerName];
+    if (aTimeRulerScrollLayer.bounds.size.width == 0.0 || aTimeRulerScrollLayer.bounds.size.height == 0.0)
+        return;
+
+#ifdef DEBUG_LAYERS
+    NSLog(@"%@: %@", NSStringFromSelector(_cmd), NSStringFromRect(NSRectFromCGRect(aTimeRulerScrollLayer.frame)));
+#endif
+    WLCalendarTimeRulerLayer *timeRulerLayer = [aTimeRulerScrollLayer valueForKey:_WLTimeRulerLayerName];
+    NSParameterAssert(timeRulerLayer != nil);
+    CGSize preferredFrameSize = [timeRulerLayer preferredFrameSize];
+    CGPoint scrollPoint = [self scrollPoint];
+    timeRulerLayer.frame = CGRectIntegral(CGRectInset(CGRectMake(0.0,
+                                                                 -scrollPoint.y,
+                                                                 aTimeRulerScrollLayer.bounds.size.width,
+                                                                 preferredFrameSize.height),
+                                                      _WLXMarginBetweenTimeRulerAndTimeRulerRoot,
+                                                      0.0));
+    [timeRulerLayer setNeedsLayout];
+    if ([CATransaction disableActions])
+        [timeRulerLayer layoutIfNeeded];
 }
 
-- (WLCalendarDayEventsLayer *)WL_dayLayer
+
+#pragma mark Event Layers
+
+- (void)layoutSublayersOfEventsRootLayer:(CALayer *)anEventsRootLayer
 {
-    return [[self WL_dayScrollLayer] valueForKey:_WLDayLayerName];
+    if (anEventsRootLayer.bounds.size.width == 0.0 || anEventsRootLayer.bounds.size.height == 0.0)
+        return;
+
+#ifdef DEBUG_LAYERS
+    NSLog(@"%@: %@", NSStringFromSelector(_cmd), NSStringFromRect(NSRectFromCGRect(anEventsRootLayer.frame)));
+#endif
+    NSArray *columnLayers = [anEventsRootLayer valueForKey:_WLColumnLayersKey];
+
+    NSParameterAssert(columnLayers != nil);
+    NSUInteger numberOfColumns = [columnLayers count];
+    if (numberOfColumns == 0)
+        return;
+
+    NSArray *frames = [self framesForNumberOfColumns:numberOfColumns];
+    NSParameterAssert([frames count] == numberOfColumns);
+    [columnLayers enumerateObjectsUsingBlock:^(CALayer *c, NSUInteger idx, BOOL *stop) {
+        c.frame = NSRectToCGRect([[frames objectAtIndex:idx] rectValue]);
+        [c setNeedsLayout];
+    }];
+
+    if ([CATransaction disableActions])
+        [columnLayers makeObjectsPerformSelector:@selector(layoutIfNeeded)];
 }
 
-- (CAScrollLayer *)WL_timeRulerScrollLayer
+- (void)layoutSublayersOfColumnRootLayer:(CALayer *)aColumnRootLayer
 {
-    NSParameterAssert([self.name isEqual:_WLTimeRulerBackgroundLayerName]);
-    return [self valueForKey:_WLTimeRulerScrollLayerName];
+    if (aColumnRootLayer.bounds.size.width == 0.0 || aColumnRootLayer.bounds.size.height == 0.0)
+        return;
+
+#ifdef DEBUG_LAYERS
+    NSLog(@"%@: %@", NSStringFromSelector(_cmd), NSStringFromRect(NSRectFromCGRect(aColumnRootLayer.frame)));
+#endif
+    WLBlockLayer *allDayBackgroundLayer = [aColumnRootLayer valueForKey:_WLAllDayBackgroundLayerName];
+    NSParameterAssert(allDayBackgroundLayer != nil);
+    if (self.showsAllDayEvents)
+    {
+        allDayBackgroundLayer.hidden = NO;
+        allDayBackgroundLayer.frame = CGRectIntegral(CGRectMake(0.0,
+                                                                0.0,
+                                                                aColumnRootLayer.bounds.size.width,
+                                                                self.heightOfAllDayPartOfColumn));
+    }
+    else
+    {
+        allDayBackgroundLayer.hidden = YES;
+        allDayBackgroundLayer.frame = CGRectZero;
+    }
+    [allDayBackgroundLayer setNeedsLayout];
+
+    WLBlockLayer *dayBackgroundLayer = [aColumnRootLayer valueForKey:_WLDayBackgroundLayerName];
+    NSParameterAssert(dayBackgroundLayer != nil);
+    CGFloat heightAndMarginOfAllDayEventsPartOfColumn = [self heightAndMarginOfAllDayEventsPartOfColumn];
+    dayBackgroundLayer.frame = CGRectIntegral(CGRectMake(0.0,
+                                                         heightAndMarginOfAllDayEventsPartOfColumn,
+                                                         aColumnRootLayer.bounds.size.width,
+                                                         aColumnRootLayer.bounds.size.height - heightAndMarginOfAllDayEventsPartOfColumn));
+    [dayBackgroundLayer setNeedsLayout];
+
+    if ([CATransaction disableActions])
+    {
+        [allDayBackgroundLayer layoutIfNeeded];
+        [dayBackgroundLayer layoutIfNeeded];
+    }
 }
 
-- (WLCalendarTimeRulerLayer *)WL_timeRulerLayer
+- (void)layoutSublayersOfAllDayBackgroundLayer:(WLBlockLayer *)anAllDayBackgroundLayer
 {
-    return [[self WL_timeRulerScrollLayer] valueForKey:_WLTimeRulerLayerName];
+    if (anAllDayBackgroundLayer.bounds.size.width == 0.0 || anAllDayBackgroundLayer.bounds.size.height == 0.0)
+        return;
+
+#ifdef DEBUG_LAYERS
+    NSLog(@"%@: %@", NSStringFromSelector(_cmd), NSStringFromRect(NSRectFromCGRect(anAllDayBackgroundLayer.frame)));
+#endif
+    WLCalendarAllDayEventsLayer *allDayEventsLayer = [anAllDayBackgroundLayer valueForKey:_WLAllDayLayerName];
+    NSParameterAssert(allDayEventsLayer != nil);
+    allDayEventsLayer.frame = anAllDayBackgroundLayer.bounds;
+    [allDayEventsLayer setNeedsLayout];
+    if ([CATransaction disableActions])
+        [allDayEventsLayer layoutIfNeeded];
 }
 
-- (WLCalendarTimeIndicatorLayer *)WL_timeIndicatorLayer
+- (void)layoutSublayersOfDayBackgroundLayer:(WLBlockLayer *)aDayBackgroundLayer
 {
-    NSParameterAssert([self.name isEqual:_WLTimeIndicatorRootLayerName]);
-    return [self valueForKey:_WLTimeIndicatorLayerName];
+    if (aDayBackgroundLayer.bounds.size.width == 0.0 || aDayBackgroundLayer.bounds.size.height == 0.0)
+        return;
+
+#ifdef DEBUG_LAYERS
+    NSLog(@"%@: %@", NSStringFromSelector(_cmd), NSStringFromRect(NSRectFromCGRect(aDayBackgroundLayer.frame)));
+#endif
+    CAScrollLayer *dayScrollLayer = [aDayBackgroundLayer valueForKey:_WLDayScrollLayerName];
+    NSParameterAssert(dayScrollLayer != nil);
+    NSRect titleFrame = [self columnTitleFrame];
+
+    dayScrollLayer.frame = CGRectIntegral(CGRectInset(CGRectMake(0.0,
+                                                                 NSMaxY(titleFrame),
+                                                                 aDayBackgroundLayer.bounds.size.width,
+                                                                 aDayBackgroundLayer.bounds.size.height - NSMaxY(titleFrame)),
+                                                      1.0,
+                                                      0.0));
+    [dayScrollLayer setNeedsLayout];
+    if ([CATransaction disableActions])
+        [dayScrollLayer layoutIfNeeded];
+}
+
+- (void)layoutSublayersOfDayScrollLayer:(CAScrollLayer *)aDayScrollLayer
+{
+    if (aDayScrollLayer.bounds.size.width == 0.0 || aDayScrollLayer.bounds.size.height == 0.0)
+        return;
+
+#ifdef DEBUG_LAYERS
+    NSLog(@"%@: %@", NSStringFromSelector(_cmd), NSStringFromRect(NSRectFromCGRect(aDayScrollLayer.frame)));
+#endif
+    WLCalendarDayEventsLayer *dayLayer = [aDayScrollLayer valueForKey:_WLDayLayerName];
+    NSParameterAssert(dayLayer != nil);
+    CGPoint scrollPoint = [self scrollPoint];
+    dayLayer.frame = CGRectIntegral(CGRectMake(0.0,
+                                               -scrollPoint.y,
+                                               aDayScrollLayer.bounds.size.width,
+                                               [dayLayer preferredFrameSize].height));
+    [dayLayer setNeedsLayout];
+    if ([CATransaction disableActions])
+        [dayLayer layoutIfNeeded];
+}
+
+
+#pragma mark Time Indicator Layers
+
+- (void)layoutSublayersOfTimeIndicatorRootLayer:(CALayer *)aTimeIndicatorRootLayer
+{
+    if (aTimeIndicatorRootLayer.bounds.size.width == 0.0 || aTimeIndicatorRootLayer.bounds.size.height == 0.0)
+        return;
+
+#ifdef DEBUG_LAYERS
+    NSLog(@"%@: %@", NSStringFromSelector(_cmd), NSStringFromRect(NSRectFromCGRect(aTimeIndicatorRootLayer.frame)));
+#endif
+    WLCalendarTimeIndicatorLayer *timeIndicatorLayer = [aTimeIndicatorRootLayer valueForKey:_WLTimeIndicatorLayerName];
+    NSParameterAssert(timeIndicatorLayer != nil);
+    CGSize preferredTimeIndicatorLayerSize = [timeIndicatorLayer preferredFrameSize];
+    timeIndicatorLayer.bounds = CGRectIntegral(CGRectMake(0.0,
+                                                          0.0,
+                                                          aTimeIndicatorRootLayer.bounds.size.width,
+                                                          preferredTimeIndicatorLayerSize.height));
+    timeIndicatorLayer.position = CGPointMake(0.0,
+                                              [self positionForTimeIndicator]);
+}
+
+
+#pragma mark Layout Calculations
+
+- (CGFloat)heightAndMarginOfAllDayEventsPartOfColumn
+{
+    if ([self isAllDayPartOfColumnVisible])
+        return self.heightOfAllDayPartOfColumn + _WLYMarginBetweenAllDayAndDayPartsOfColumn;
+    else
+        return 0.0;
+}
+
+- (NSArray *)framesForNumberOfColumns:(NSUInteger)aNumberOfColumns;
+{
+    if (aNumberOfColumns == 0)
+        return [NSArray array];
+    
+    CALayer *eventsRootLayer = [self eventsRootLayer];
+    NSParameterAssert(eventsRootLayer != nil);
+    CGFloat effectiveEventsRootLayerWidth = fdim(eventsRootLayer.bounds.size.width, (aNumberOfColumns - 1) * _WLXMarginBetweenColumns + _WLXMarginBetweenTimeRulerAndColumns);
+    CGFloat baseColumnWidth = floor(effectiveEventsRootLayerWidth / aNumberOfColumns);
+    CGFloat extendedColumnWidth = baseColumnWidth + 1.0;
+    NSUInteger numberOfExtendedColumns = (NSUInteger)fmod(effectiveEventsRootLayerWidth, (CGFloat)aNumberOfColumns);
+    NSParameterAssert(numberOfExtendedColumns < aNumberOfColumns);
+
+    NSMutableArray *frames = [NSMutableArray arrayWithCapacity:aNumberOfColumns];
+    CGFloat x = _WLXMarginBetweenTimeRulerAndColumns;
+    for (NSUInteger i = 0; i < aNumberOfColumns; ++i)
+    {
+        CGFloat width = i < numberOfExtendedColumns ? extendedColumnWidth : baseColumnWidth;
+        NSRect frame = NSMakeRect(x,
+                                  0.0,
+                                  width,
+                                  eventsRootLayer.bounds.size.height);
+        [frames addObject:[NSValue valueWithRect:frame]];
+        x += width + _WLXMarginBetweenColumns;
+    }
+    return frames;
+}
+
+- (NSRect)columnTitleFrame
+{
+    NSUInteger numberOfColumns = [self numberOfColumns];
+    if (!self.showsDayColumnTitle || numberOfColumns == 0)
+        return NSZeroRect;
+
+    static const CGFloat MinimumTitleHeight = 25.0f;
+
+    CGFloat height = MinimumTitleHeight;
+    CGFloat width = CGFLOAT_MAX;
+    CGFloat maximumHeight = height;
+    NSArray *frames = [self framesForNumberOfColumns:numberOfColumns];
+    NSParameterAssert([frames count] == [frames count]);
+    for (NSValue *frame in frames)
+    {
+        NSRect rectValue = [frame rectValue];
+        width = fmin(width, rectValue.size.width);
+        maximumHeight = fmax(maximumHeight, rectValue.size.height);
+    }
+
+    NSArray *dayBackgroundLayers = [self dayBackgroundLayers];
+    NSParameterAssert(dayBackgroundLayers != nil);
+    for (WLBlockLayer *l in dayBackgroundLayers)
+    {
+        NSString *title = [l valueForKey:_WLDayBackgroundLayerName];
+        NSDictionary *attributes = [self _titleAttributesForColumnDayBackgroundLayer:l];
+        NSRect r = [title boundingRectWithSize:NSMakeSize(width, maximumHeight)
+                                       options:_WLDayBackgroundTitleAttributes
+                                    attributes:attributes];
+        height = fmax(height, r.size.height);
+    }
+    return NSIntegralRect(NSMakeRect(0.0f,
+                                     0.0f,
+                                     width,
+                                     height + _WLYColumnTitleFrameBottomOffset));
+}
+
+- (CGPoint)scrollPoint
+{
+    if (self.fitsDayEvents)
+        return [self scrollPointToFocusOnDayEvents];
+    else
+        return [self scrollPointToFocusOnCurrentHour];
+}
+
+- (CGPoint)scrollPointToFocusOnDayEvents
+{
+    return CGPointMake(0.0,
+                       floor(fdim([self positionForHour:[self visibleHourRange].startHour], [[self timeRulerLayer] maximumHeightOfMarker] / 2.0)));
+}
+
+- (CGPoint)scrollPointToFocusOnCurrentHour
+{
+    CGPoint p = CGPointMake(0.0,
+                            [self positionForHour:_hour]);
+    CGFloat visibleHeightOfTimeRuler = [self visibleHeightOfTimeRuler];
+    // Center _hour until bottom limit is reached.
+    p = CGPointMake(0.0,
+                    floor(p.y - visibleHeightOfTimeRuler / 2.0));
+    CGFloat topLimit = [self originOffset];
+    CGFloat bottomLimit = fdim([self positionForHour:[self hourRange].endHour], visibleHeightOfTimeRuler);
+    topLimit = fmin(topLimit, bottomLimit);
+    WLCalendarTimeRulerLayer *timeRuler = [self timeRulerLayer];
+    NSParameterAssert(timeRuler != nil);
+    p.y = floor(fmin(fmax(p.y - [timeRuler maximumHeightOfMarker] / 2.0, topLimit), bottomLimit));
+    return p;
+}
+
+- (BOOL)isAllDayPartOfColumnVisible
+{
+    return self.showsAllDayEvents && fabs(self.heightOfAllDayPartOfColumn - 0.0) > (CGFLOAT_IS_DOUBLE ? DBL_EPSILON : FLT_EPSILON);
+}
+
+- (CGFloat)visibleHeightOfTimeRuler
+{
+    return fdim([self frame].size.height, [self heightAndMarginOfAllDayEventsPartOfColumn] + NSMaxY([self columnTitleFrame]));
+}
+
+- (CGFloat)positionForTimeIndicator
+{
+    CGFloat hourPosition = [self positionForHour:_hour];
+    CGPoint scrollPoint = [self scrollPoint];
+    return [self visibleHeightOfTimeRuler] - (hourPosition - scrollPoint.y);
 }
 
 @end

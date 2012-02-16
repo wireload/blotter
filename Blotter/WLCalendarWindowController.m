@@ -9,7 +9,7 @@
 #import "WLCalendarWindowController.h"
 #import "WLCalendarWeekViewController.h"
 #import "WLCalendarRightNowViewController.h"
-#import "WLCalendarNextWeekViewController.h"
+#import "WLCalendarFloatingWeekViewController.h"
 #import "WLCalendarTasksViewController.h"
 #import "WLCalendarDateViewController.h"
 #import "WLCalendarBoxView.h"
@@ -25,13 +25,6 @@ const NSSize BLNormalMinimumSize = {950, 750};
     This is the overall smallest possible size for Blotter when using custom sizing.
 */
 const NSSize BLMinimumSize = {280, 215};
-
-
-@interface WLCalendarWindowController (/* Private */)
-
-@property (assign) BOOL isNextWeekHidden;
-
-@end
 
 
 @implementation WLCalendarWindowController
@@ -51,7 +44,7 @@ const NSSize BLMinimumSize = {280, 215};
 
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-        _weekViewController = [[WLCalendarWeekViewController alloc] init];
+        _weekViewController = [[WLCalendarFloatingWeekViewController alloc] init];
         [_weekViewController setRepresentedObject:[WLCalendarController sharedController]];
         [_weekViewController bind:@"mode" toObject:defaults withKeyPath:@"RollingCalendar" options:nil];
         [_weekViewController bind:@"titleFormat" toObject:defaults withKeyPath:@"PerDayDate" options:nil];
@@ -59,12 +52,6 @@ const NSSize BLMinimumSize = {280, 215};
 
         _rightNowViewController = [[WLCalendarRightNowViewController alloc] init];
         [_rightNowViewController setRepresentedObject:[WLCalendarController sharedController]];
-        _rightNowViewController.mode = WLCalendarWeekViewDayMode;
-
-        _nextWeekViewController = [[WLCalendarNextWeekViewController alloc] init];
-        [_nextWeekViewController setRepresentedObject:[WLCalendarController sharedController]];
-        [_nextWeekViewController bind:@"mode" toObject:_weekViewController withKeyPath:@"mode" options:nil];
-        [_nextWeekViewController bind:@"titleFormat" toObject:defaults withKeyPath:@"PerDayDate" options:nil];
 
         _tasksViewController = [[WLCalendarTasksViewController alloc] initWithNibName:nil bundle:nil];
         [_tasksViewController setRepresentedObject:[WLCalendarController sharedController]];
@@ -93,8 +80,6 @@ const NSSize BLMinimumSize = {280, 215};
                                                  selector:@selector(_updateFrame)
                                                      name:NSApplicationDidChangeScreenParametersNotification
                                                    object:NSApp];
-
-        isNextWeekHidden = YES;
     }
     return self;
 }
@@ -107,7 +92,6 @@ const NSSize BLMinimumSize = {280, 215};
 
     [_weekViewController release];
     [_rightNowViewController release];
-    [_nextWeekViewController release];
     [_tasksViewController release];
     [_dateViewController release];
     [_tasksViewBox release];
@@ -131,7 +115,6 @@ const NSSize BLMinimumSize = {280, 215};
 #pragma mark Properties
 @synthesize window;
 @synthesize fadeController;
-@synthesize isNextWeekHidden;
 
 
 #pragma mark Methods
@@ -148,30 +131,32 @@ const NSSize BLMinimumSize = {280, 215};
     }
 }
 
-- (IBAction)showNextWeekView:(id)aSender
+- (IBAction)showNextWeek:(id)aSender
 {
-    if (_isWindowShowed && self.isNextWeekHidden)
-    {
-        WLCalendarWeekView *v = [_nextWeekViewController view];
-        [CATransaction begin];
-        [[v layer] setValue:[NSNumber numberWithBool:YES] forKeyPath:@"backgroundFilters.blur.enabled"];
-        [v layer].opacity = 1.0f;
-        [CATransaction commit];
-        self.isNextWeekHidden = NO;
-    }
+    NSParameterAssert(_isWindowShowed);
+    
+    [_weekViewController showNextWeek:aSender];
 }
 
-- (IBAction)hideNextWeekView:(id)aSender
+- (IBAction)showPreviousWeek:(id)aSender
 {
-    if (_isWindowShowed && !self.isNextWeekHidden)
-    {
-        WLCalendarWeekView *v = [_nextWeekViewController view];
-        [CATransaction begin];
-        [[v layer] setValue:[NSNumber numberWithBool:NO] forKeyPath:@"backgroundFilters.blur.enabled"];
-        [v layer].opacity = 0.0f;
-        [CATransaction commit];
-        self.isNextWeekHidden = YES;
-    }
+    NSParameterAssert(_isWindowShowed);
+    
+    [_weekViewController showPreviousWeek:aSender];
+}
+
+- (IBAction)showCurrentWeek:(id)aSender
+{
+    NSParameterAssert(_isWindowShowed);
+    
+    [_weekViewController showCurrentWeek:aSender];
+}
+
+- (BOOL)isCurrentWeekShowed
+{
+    NSParameterAssert(_isWindowShowed);
+    
+    return _weekViewController.weeksOffset == 0;
 }
 
 
@@ -368,7 +353,6 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     [_rightNowViewBox setNeedsDisplay:YES];
 
     [[_weekViewController view] setHidden:YES];
-    [[_nextWeekViewController view] setHidden:YES];
 }
 
 - (void)_applyCustomSizeToViews
@@ -413,11 +397,6 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
                        weekViewFrame.size.height < minimumWeekViewSize.height);
     [[_weekViewController view] setHidden:isTooSmall];
     [[_weekViewController view] setNeedsDisplay:YES];
-
-    [_nextWeekViewController view].heightOfAllDayPartOfColumn = [defaults floatForKey:@"AllDayViewHeight"];
-    [[_nextWeekViewController view] setFrame:weekViewFrame];
-    [[_nextWeekViewController view] setNeedsDisplay:YES];
-    [[_nextWeekViewController view] setHidden:isTooSmall];
 }
 
 - (void)_applyNormalSizeToViews
@@ -473,16 +452,6 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     [_rightNowViewBox release];
 
     [contentView addSubview:[_weekViewController view]];
-
-    CIFilter *filter = [CIFilter filterWithName:@"CIDiscBlur"];
-    filter.name = @"blur";
-    filter.enabled = NO;
-    [filter setDefaults];
-    [filter setValue:[NSNumber numberWithFloat:2.0f] forKey:kCIInputRadiusKey];
-    WLCalendarWeekView *nextWeekView = [_nextWeekViewController view];
-    [nextWeekView layer].backgroundFilters = [NSArray arrayWithObject:filter];
-    [nextWeekView layer].opacity = 0.0f;
-    [contentView addSubview:nextWeekView];
 }
 
 - (CGFloat)fixedInfoViewsWidth

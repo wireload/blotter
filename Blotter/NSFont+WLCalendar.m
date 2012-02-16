@@ -56,7 +56,7 @@
     return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("HelveticaNeue"), 15.0f, nil) autorelease];
 }
 
-+ (CTFontRef)WL_timeRulerLabelFont
++ (CTFontRef)WL_timeRulerMarkerFont
 {
     return (CTFontRef)[(id)CTFontCreateWithName(CFSTR("HelveticaNeue"), 10.0f, nil) autorelease];
 }

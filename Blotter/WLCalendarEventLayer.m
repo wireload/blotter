@@ -7,12 +7,13 @@
 //
 
 #import <WireloadClassesAndResources/WireloadClassesAndResources.h>
+#include <tgmath.h>
 #import "WLCalendarEventLayer.h"
 #import "NSColor+WLCalendar.h"
 
 
-const CGFloat _WLYPadding = 6.0f;
-const CGFloat _WLXPadding = 10.0f;
+const CGFloat _WLYPadding = 6.0;
+const CGFloat _WLXPadding = 10.0;
 
 
 @implementation WLCalendarEventLayer
@@ -20,18 +21,18 @@ const CGFloat _WLXPadding = 10.0f;
 #pragma mark Properties
 @dynamic title;
 @dynamic location;
-@dynamic keepTextVisible;
+@dynamic keepsTextVisible;
 @dynamic contentsBackgroundOpacity;
 @dynamic contentsBackgroundColor;
 
 - (void)setCornerRadius:(CGFloat)newCornerRadius
 {
-    if (newCornerRadius == 0.0f)
-        self.borderWidth = 0.0f;
+    if (newCornerRadius == 0.0)
+        self.borderWidth = 0.0;
     else
     {
         self.borderColor = [self _lineColor];
-        self.borderWidth = 1.0f;
+        self.borderWidth = 1.0;
     }
     [super setCornerRadius:newCornerRadius];
 }
@@ -43,7 +44,7 @@ const CGFloat _WLXPadding = 10.0f;
 {
     // At least 2 side-by-side events should be visible on 1280x800.
     // Width of column depends on user's locale. The widest locale is South Korea.
-    // return _WLXPadding + 20.0f;
+    // return _WLXPadding + 20.0;
 
     // ...actually overlapping events look like a bug because their colours and text
     // mix. It's better to keep trying to render them side by side, no matter how
@@ -59,9 +60,15 @@ const CGFloat _WLXPadding = 10.0f;
 - (CGFloat)minimumHumanVisibleHeight
 {
     NSAttributedString *visibleString = [self.title length] > 0 ? self.title : self.location;
-    CGFloat minHeight = [visibleString WL_firstLineHeightWithWidth:self.bounds.size.width - _WLXPadding];
-    minHeight += _WLYPadding;
-    return minHeight;
+    if (![_minimumHumanVisibleString isEqualToAttributedString:visibleString] || _minimumHumanVisibleWidth != self.bounds.size.width)
+    {
+        _minimumHumanVisibleWidth = self.bounds.size.width;
+        [_minimumHumanVisibleString release];
+        _minimumHumanVisibleString = [visibleString retain];
+        minimumHumanVisibleHeight = [_minimumHumanVisibleString WL_firstLineHeightWithWidth:_minimumHumanVisibleWidth - _WLXPadding];
+        minimumHumanVisibleHeight += _WLYPadding;
+    }
+    return minimumHumanVisibleHeight;
 }
 
 
@@ -72,45 +79,45 @@ const CGFloat _WLXPadding = 10.0f;
     CGContextSaveGState(aContext);
     CGColorRef backgroundColor = CGColorCreateCopyWithAlpha(self.contentsBackgroundColor, self.contentsBackgroundOpacity);
     NSColor *nsBackgroundColor = [[NSColor WL_NSColorFromCGColor:backgroundColor] colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
-    nsBackgroundColor = [NSColor colorWithCalibratedHue:[nsBackgroundColor hueComponent] saturation:fminf(1.0, [nsBackgroundColor saturationComponent] * 1.05) brightness:fminf(1.0, [nsBackgroundColor brightnessComponent] * 1.05) alpha:self.contentsBackgroundOpacity];
+    nsBackgroundColor = [NSColor colorWithCalibratedHue:[nsBackgroundColor hueComponent]
+                                             saturation:fmin(1.0, [nsBackgroundColor saturationComponent] * 1.05)
+                                             brightness:fmin(1.0, [nsBackgroundColor brightnessComponent] * 1.05)
+                                                  alpha:self.contentsBackgroundOpacity];
     CGContextSetFillColorWithColor(aContext, [nsBackgroundColor WL_CGColor]);
-    if (self.cornerRadius == 0.0f)
-        CGContextFillRect(aContext, CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height) );
-    else
-        CGContextFillRect(aContext, CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height) );
+    CGContextFillRect(aContext, self.bounds);
     CGColorRelease(backgroundColor);
 
     CGContextSaveGState(aContext);
     CGColorSpaceRef colorSpace = CGColorGetColorSpace(self.contentsBackgroundColor);
-    CGFloat locations[2] = {0.0f, 1.0f};
-    CGFloat components[8] = {
-        0.0f, 0.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 0.0f, 0.15f
+    static const CGFloat WhiteToTransparentGradientLocations[2] = {0.0, 1.0};
+    static const CGFloat WhiteToTransparentGradientComponents[8] = {
+        0.0, 0.0, 0.0, 0.0,
+        0.0, 0.0, 0.0, 0.15
     };
     CGGradientRef whiteToTransparent = CGGradientCreateWithColorComponents(colorSpace,
-                                                                           components,
-                                                                           locations,
-                                                                           sizeof(locations) / sizeof(CGFloat));
+                                                                           WhiteToTransparentGradientComponents,
+                                                                           WhiteToTransparentGradientLocations,
+                                                                           sizeof(WhiteToTransparentGradientLocations) / sizeof(CGFloat));
     CGContextSetBlendMode(aContext, kCGBlendModeMultiply);
     CGContextDrawLinearGradient(aContext,
                                 whiteToTransparent,
-                                CGPointMake(self.bounds.origin.x, self.bounds.origin.y),
+                                self.bounds.origin,
                                 CGPointMake(CGRectGetMinX(self.bounds), CGRectGetMaxY(self.bounds)),
                                 kCGGradientDrawsBeforeStartLocation);
     CGGradientRelease(whiteToTransparent);
     CGContextRestoreGState(aContext);
 
 
-    if (self.cornerRadius == 0.0f)
+    if (self.cornerRadius == 0.0)
     {
-        self.borderWidth = 0.0f;
-        CGContextSetLineWidth(aContext, 1.0f);
+        self.borderWidth = 0.0;
+        CGContextSetLineWidth(aContext, 1.0);
         CGContextSetShouldAntialias(aContext, NO);
         CGContextSetStrokeColorWithColor(aContext, [self _lineColor]);
         CGContextBeginPath(aContext);
-        CGContextMoveToPoint(aContext, self.bounds.origin.x, self.bounds.origin.y + 1.0f);
-        CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), self.bounds.origin.y + 1.0f);
-        CGContextMoveToPoint(aContext, self.bounds.origin.x, CGRectGetMaxY(self.bounds));
+        CGContextMoveToPoint(aContext, CGRectGetMinX(self.bounds), CGRectGetMinY(self.bounds) + 1.0);
+        CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), CGRectGetMinY(self.bounds) + 1.0);
+        CGContextMoveToPoint(aContext, CGRectGetMinX(self.bounds), CGRectGetMaxY(self.bounds));
         CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), CGRectGetMaxY(self.bounds));
         CGContextStrokePath(aContext);
     }
@@ -120,21 +127,21 @@ const CGFloat _WLXPadding = 10.0f;
 - (void)_drawString:(CGContextRef)aContext
 {
     CGContextSaveGState(aContext);
-    CGRect titleAndLocationFrame = CGRectInset(self.bounds, _WLXPadding / 2, _WLYPadding / 2);
+    CGRect titleAndLocationFrame = CGRectInset(self.bounds, _WLXPadding / 2.0, _WLYPadding / 2.0);
     CGRect dirtyRect = CGContextGetClipBoundingBox(aContext);
     if (CGRectIntersectsRect(titleAndLocationFrame, dirtyRect))
     {
         CGContextSetTextMatrix(aContext, CGAffineTransformIdentity);
-        CGContextTranslateCTM(aContext, 0.0f, self.bounds.size.height);
-        CGContextScaleCTM(aContext, 1.0f, -1.0f);
+        CGContextTranslateCTM(aContext, 0.0, self.bounds.size.height);
+        CGContextScaleCTM(aContext, 1.0, -1.0);
         CGContextSetShouldSmoothFonts(aContext, YES);
         CGContextSetAllowsFontSmoothing(aContext, YES);
         CGContextSetShouldAntialias(aContext, YES);
         CGContextSetAllowsAntialiasing(aContext, YES);
         if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-            CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, -1.0f), 0.0f, [[NSColor WL_eventTextShadowColor] WL_CGColor]);
+            CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, -1.0), 0.0, [[NSColor WL_eventTextShadowColor] WL_CGColor]);
         else
-            CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0f), 0.0f, [[NSColor WL_eventTextShadowColor] WL_CGColor]);
+            CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0), 0.0, [[NSColor WL_eventTextShadowColor] WL_CGColor]);
 
         CGFloat preferredTitleHeight = [self.title WL_preferredHeightWithWidth:self.bounds.size.width - _WLXPadding];
         if (preferredTitleHeight < titleAndLocationFrame.size.height)
@@ -145,7 +152,7 @@ const CGFloat _WLXPadding = 10.0f;
             if (preferredTitleHeight + preferredLocationHeight < titleAndLocationFrame.size.height)
             {
                 locationHeight = preferredLocationHeight;
-                if (self.keepTextVisible)
+                if (self.keepsTextVisible)
                 {
                     // Make text visible as much as possible.
                     // Visible rect's origin is top left, while context's origin is bottom left. Convert to context's coordinates.
@@ -154,18 +161,18 @@ const CGFloat _WLXPadding = 10.0f;
                     CGFloat maxY = CGRectGetMaxY(titleAndLocationFrame) - titleHeight - locationHeight;
                     CGFloat minY = titleAndLocationFrame.origin.y;
                     // If the parent layer fits the whole event layer, draw text as usual, otherwise center it.
-                    CGFloat y = 0.0f;
+                    CGFloat y = 0.0;
                     BOOL isWholeEventLayerVisible = (visibleRectTop >= maxY && visibleRectBottom <= minY);
                     BOOL isEventLayerBecomeVisible = (visibleRectTop >= maxY && visibleRectBottom > minY);
                     if (isWholeEventLayerVisible || isEventLayerBecomeVisible)
                     {
                         y = visibleRectTop - titleHeight - locationHeight;
-                        y = fminf(maxY, fmaxf(minY, y));
+                        y = fmin(maxY, fmax(minY, y));
                     }
                     else
                     {
-                        y = visibleRectBottom + ((visibleRectTop - visibleRectBottom) - (titleHeight + locationHeight)) / 2.0f;
-                        y = fminf(maxY, fmaxf(minY, y));
+                        y = visibleRectBottom + ((visibleRectTop - visibleRectBottom) - (titleHeight + locationHeight)) / 2.0;
+                        y = fmin(maxY, fmax(minY, y));
                     }
                     titleAndLocationFrame.origin.y = y;
                     titleAndLocationFrame.size.height = titleHeight + locationHeight;
@@ -188,7 +195,7 @@ const CGFloat _WLXPadding = 10.0f;
                                                              titleAndLocationFrame.size.width,
                                                              locationHeight));
 #ifdef DEBUG_LAYERS
-            CGContextSetFillColorWithColor(aContext, [[[NSColor greenColor] colorWithAlphaComponent:0.8f] WL_CGColor]);
+            CGContextSetFillColorWithColor(aContext, [[[NSColor greenColor] colorWithAlphaComponent:0.8] WL_CGColor]);
             CGContextFillRect(aContext, locationFrame);
 #endif
             [self.location WL_drawWithRect:locationFrame context:aContext];
@@ -196,7 +203,7 @@ const CGFloat _WLXPadding = 10.0f;
         else
         {
 #ifdef DEBUG_LAYERS
-            CGContextSetFillColorWithColor(aContext, [[[NSColor greenColor] colorWithAlphaComponent:0.3f] WL_CGColor]);
+            CGContextSetFillColorWithColor(aContext, [[[NSColor greenColor] colorWithAlphaComponent:0.3] WL_CGColor]);
             CGContextFillRect(aContext, titleAndLocationFrame);
 #endif
             // Layer cannot fit title, so there is no need to draw location.
@@ -279,8 +286,8 @@ const CGFloat _WLXPadding = 10.0f;
 
     CGSize preferredTitleSize = [self.title WL_preferredSize];
     CGSize preferredLocationSize = [self.location WL_preferredSize];
-    return CGSizeMake(ceilf(fmaxf(preferredTitleSize.width, preferredLocationSize.width) + _WLXPadding),
-                      ceilf(preferredTitleSize.height + preferredLocationSize.height + _WLYPadding));
+    return CGSizeMake(fmax(preferredTitleSize.width, preferredLocationSize.width) + _WLXPadding,
+                      preferredTitleSize.height + preferredLocationSize.height + _WLYPadding);
 }
 
 @end

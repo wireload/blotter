@@ -7,6 +7,7 @@
 //
 
 #import <WireloadClassesAndResources/WireloadClassesAndResources.h>
+#include <tgmath.h>
 #import "WLCalendarTimeRulerLayer.h"
 #import "NSColor+WLCalendar.h"
 #import "NSFont+WLCalendar.h"
@@ -19,94 +20,96 @@
     self = [super init];
     if (self != nil)
     {
-        _sortedTimeLayers = [[NSMutableArray alloc] init];
+        _sortedMarkerLayers = [[NSMutableArray alloc] init];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [_sortedTimeLayers release];
+    [_sortedMarkerLayers release];
     [super dealloc];
 }
 
 
 #pragma mark Properties
 @dynamic timeRuler;
-@dynamic shouldHideHalfVisibleHourLabels;
-@dynamic heightOfHour;
-@dynamic hours;
+@dynamic onlyCompletelyVisibleMarkersShown;
+@dynamic markers;
 
-- (NSArray *)hours
+- (NSArray *)markers
 {
-    return [_sortedTimeLayers valueForKeyPath:@"string.string"];
+    return [_sortedMarkerLayers valueForKeyPath:@"marker.string"];
 }
 
-- (void)setHours:(NSArray *)aHours
+- (void)setMarkers:(NSArray *)aHours
 {
-    [_sortedTimeLayers removeAllObjects];
-    self.sublayers = nil;
-    for (NSString *hour in aHours)
+    if ([aHours count] > [_sortedMarkerLayers count])
     {
-        WLCalendarTimeRulerLabelLayer *timeLayer = [self _setupTimeLayerWithString:hour];
-        [self addSublayer:timeLayer];
-        [_sortedTimeLayers addObject:timeLayer];
+        for (NSUInteger i = 0, size = [aHours count] - [_sortedMarkerLayers count]; i < size; ++i)
+        {
+            WLCalendarTimeRulerMarkerLayer *markerLayer = [self setupMarkerLayer];
+            [_sortedMarkerLayers addObject:markerLayer];
+            [self addSublayer:markerLayer];
+        }
     }
-    _shouldUpdatePreferredFrameWidthCache = YES;
+    else if ([aHours count] < [_sortedMarkerLayers count])
+    {
+        NSRange rangeOfmarkerLayersToRemove = NSMakeRange(0, [_sortedMarkerLayers count] - [aHours count]);
+        NSArray *markerLayersToRemove = [_sortedMarkerLayers subarrayWithRange:rangeOfmarkerLayersToRemove];
+        [markerLayersToRemove makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+        [_sortedMarkerLayers removeObjectsInRange:rangeOfmarkerLayersToRemove];
+    }
+    
+    NSParameterAssert([aHours count] == [_sortedMarkerLayers count]);
+    
+    [aHours enumerateObjectsUsingBlock:^(NSString *marker, NSUInteger idx, BOOL *stop) {
+        WLCalendarTimeRulerMarkerLayer *l = [_sortedMarkerLayers objectAtIndex:idx];
+        if (![[l.marker string] isEqualToString:marker])
+        {
+            static dispatch_once_t onceToken;
+            static NSDictionary *attributes = nil;
+            dispatch_once(&onceToken, ^{
+                CTTextAlignment a = kCTRightTextAlignment;
+                CTParagraphStyleSetting alignmentSetting = {.spec = kCTParagraphStyleSpecifierAlignment, .valueSize = sizeof(CTTextAlignment), .value = &a};
+                CTParagraphStyleRef p = CTParagraphStyleCreate(&alignmentSetting, 1);
+                attributes = [[NSDictionary alloc] initWithObjectsAndKeys:
+                              (id)[NSFont WL_timeRulerMarkerFont],                (id)kCTFontAttributeName,
+                              (id)[[NSColor WL_timeRulerMarkerColor] WL_CGColor], (id)kCTForegroundColorAttributeName,
+                              (id)p,                                              (id)kCTParagraphStyleAttributeName,
+                              nil];
+                CFRelease(p);
+            });
+            l.marker = [[[NSAttributedString alloc] initWithString:marker attributes:attributes] autorelease];
+            _shouldUpdatePreferredFrameWidthCache = YES;
+        }
+    }];
 }
 
 
 #pragma mark Methods
 
-- (CGFloat)maximumHeightOfHourLabel
+- (CGFloat)maximumHeightOfMarker
 {
-    if ([_sortedTimeLayers count] > 0)
-        return [[_sortedTimeLayers objectAtIndex:0] preferredFrameSize].height;
+    if ([_sortedMarkerLayers count] > 0)
+        return [[_sortedMarkerLayers objectAtIndex:0] preferredFrameSize].height;
     else
-        return 0.0f;
-}
-
-- (CGPoint)pointForHour:(CGFloat)aHour
-{
-    return CGPointMake(0.0f, floorf([self maximumHeightOfHourLabel] / 2 + aHour * self.heightOfHour));
+        return 0.0;
 }
 
 - (CGFloat)preferredFrameWidth
 {
-    if ([_sortedTimeLayers count] == 0)
-        return 0.0f;
+    if ([_sortedMarkerLayers count] == 0)
+        return 0.0;
 
     if (_shouldUpdatePreferredFrameWidthCache)
     {
-        _cachedPreferredFrameWidth = 0.0f;
-        for (CALayer *l in _sortedTimeLayers)
-            _cachedPreferredFrameWidth = fmaxf(_cachedPreferredFrameWidth, [l preferredFrameSize].width);
+        _cachedPreferredFrameWidth = 0.0;
+        for (CALayer *l in _sortedMarkerLayers)
+            _cachedPreferredFrameWidth = fmax(_cachedPreferredFrameWidth, [l preferredFrameSize].width);
         _shouldUpdatePreferredFrameWidthCache = NO;
     }
     return _cachedPreferredFrameWidth;
-}
-
-
-#pragma mark Private
-
-- (WLCalendarTimeRulerLabelLayer *)_setupTimeLayerWithString:(NSString *)aTime
-{
-    WLCalendarTimeRulerLabelLayer *l = [WLCalendarTimeRulerLabelLayer layer];
-    CTTextAlignment a = kCTRightTextAlignment;
-    CTParagraphStyleSetting alignmentSetting = {.spec = kCTParagraphStyleSpecifierAlignment, .valueSize = sizeof(CTTextAlignment), .value = &a};
-    CTParagraphStyleRef p = CTParagraphStyleCreate(&alignmentSetting, 1);
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                (id)[NSFont WL_timeRulerLabelFont],                 (id)kCTFontAttributeName,
-                                (id)[[NSColor WL_timeRulerLabelColor] WL_CGColor],  (id)kCTForegroundColorAttributeName,
-                                (id)p,                                              (id)kCTParagraphStyleAttributeName,
-                                nil];
-    CFRelease(p);
-    l.string = [[[NSAttributedString alloc] initWithString:aTime attributes:attributes] autorelease];
-    l.needsDisplayOnBoundsChange = YES;
-#ifdef DEBUG_LAYERS
-    l.backgroundColor = [[NSColor greenColor] WL_CGColor];
-#endif
-    return l;
 }
 
 
@@ -114,31 +117,56 @@
 
 - (CGSize)preferredFrameSize
 {
-    if ([_sortedTimeLayers count] == 0)
+    if ([_sortedMarkerLayers count] == 0)
         return CGSizeZero;
 
-    CGFloat h = floorf(self.heightOfHour * [_sortedTimeLayers count] + [self maximumHeightOfHourLabel] / 2);
+    CGFloat h = [self.timeRuler originOffset] + [self.timeRuler heightForHourRange:[self.timeRuler hourRange]];
     return CGSizeMake([self preferredFrameWidth], h);
 }
 
 - (void)layoutSublayers
 {
     NSAssert(self.layoutManager == nil, @"You cannot use custom layout managers with this class");
-
-    CGFloat hourPosition = [self maximumHeightOfHourLabel] / 2;
-    for (WLCalendarTimeRulerLabelLayer *hourLabel in _sortedTimeLayers)
+    
+    WLHourRange r = [self.timeRuler hourRange];
+    NSUInteger numberOfMarkers = [_sortedMarkerLayers count];
+    WLEnumerateHourRange(r, NSHourCalendarUnit, ^(NSCalendarUnit aUnit, NSUInteger anIndex, CGFloat aMatchedValue, BOOL *aShouldStop)
     {
-        CGSize size = [hourLabel preferredFrameSize];
-        hourLabel.frame = CGRectIntegral(CGRectMake(0.0f, hourPosition - size.height / 2.0, self.bounds.size.width, size.height));
-        if (self.shouldHideHalfVisibleHourLabels)
+        if (anIndex < numberOfMarkers)
         {
-            if (CGRectGetMaxY(self.visibleRect) < CGRectGetMaxY(hourLabel.frame))
-                hourLabel.hidden = YES;
-            else
-                hourLabel.hidden = NO;
+            WLCalendarTimeRulerMarkerLayer *hourMarker = [_sortedMarkerLayers objectAtIndex:anIndex];
+            CGSize size = [hourMarker preferredFrameSize];
+            CGFloat hourPosition = [self.timeRuler positionForHour:aMatchedValue];
+            hourMarker.frame = CGRectIntegral(CGRectMake(0.0, hourPosition - size.height / 2.0, self.bounds.size.width, size.height));
+            if (self.onlyCompletelyVisibleMarkersShown)
+            {
+                if (CGRectGetMaxY(self.visibleRect) < CGRectGetMaxY(hourMarker.frame))
+                    hourMarker.hidden = YES;
+                else
+                    hourMarker.hidden = NO;
+            }
         }
-        hourPosition += self.heightOfHour;
-    }
+        else
+            *aShouldStop = YES;
+    });
 }
 
 @end
+
+
+#pragma mark -
+
+@implementation WLCalendarTimeRulerLayer (Layers)
+
+- (WLCalendarTimeRulerMarkerLayer *)setupMarkerLayer
+{
+    WLCalendarTimeRulerMarkerLayer *l = [WLCalendarTimeRulerMarkerLayer layer];
+    l.needsDisplayOnBoundsChange = YES;
+#ifdef DEBUG_LAYERS
+    l.backgroundColor = [[NSColor greenColor] WL_CGColor];
+#endif
+    return l;
+}
+
+@end
+

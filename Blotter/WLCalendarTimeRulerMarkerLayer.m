@@ -7,15 +7,15 @@
 //
 
 #import <WireloadClassesAndResources/WireloadClassesAndResources.h>
-#import "WLCalendarTimeRulerLabelLayer.h"
+#import "WLCalendarTimeRulerMarkerLayer.h"
 #import "NSColor+WLCalendar.h"
 
 
-@implementation WLCalendarTimeRulerLabelLayer
+@implementation WLCalendarTimeRulerMarkerLayer
 
 
 #pragma mark Properties
-@dynamic string;
+@dynamic marker;
 
 
 #pragma mark CALayer;
@@ -42,7 +42,7 @@
         CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f, -1.0f), 0.0f, [[NSColor WL_timelineShadowColor] WL_CGColor]);
     else
         CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f, 1.0f), 0.0f, [[NSColor WL_timelineShadowColor] WL_CGColor]);
-    [self.string WL_drawWithRect:self.bounds context:aContext];
+    [self.marker WL_drawWithRect:self.bounds context:aContext];
     CGContextRestoreGState(aContext);
 }
 
@@ -50,7 +50,7 @@
 {
     NSAssert(self.layoutManager == nil, @"You cannot use custom layout managers with this class");
 
-    return [self.string WL_preferredSize];
+    return [self.marker WL_preferredSize];
 }
 
 @end

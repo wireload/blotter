@@ -12,8 +12,8 @@
 /*!
  @discussion Draws only first line.
  */
-@interface WLCalendarTimeRulerLabelLayer : CALayer
+@interface WLCalendarTimeRulerMarkerLayer : CALayer
 
-@property (copy) NSAttributedString *string;
+@property (copy) NSAttributedString *marker;
 
 @end

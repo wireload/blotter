@@ -17,7 +17,9 @@
 + (id)defaultValueForKey:(NSString *)aKey
 {
     if ([aKey isEqualToString:@"color"])
-        return (id) [[NSColor WL_timelineLineColor] WL_CGColor];
+        return (id)[[NSColor WL_timelineLineColor] WL_CGColor];
+    else if ([aKey isEqualToString:@"needsDisplayOnBoundsChange"])
+        return [NSNumber numberWithBool:YES];
     else
         return [super defaultValueForKey:aKey];
 }

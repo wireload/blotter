@@ -13,6 +13,9 @@
  @classdesign One of superlayers must be flipped (that is, geometryFlipped is set to YES) so the origin would be top left.
  */
 @interface WLCalendarEventLayer : CALayer {
+    NSAttributedString *_minimumHumanVisibleString;
+    CGFloat _minimumHumanVisibleWidth;
+    CGFloat minimumHumanVisibleHeight;
 }
 
 @property (copy) NSAttributedString *title;
@@ -24,7 +27,7 @@
  @discussion    Default value is NO.
  If set to YES, while drawing content uses visibleRect to determine frames of title and location to keep them visible.
  */
-@property BOOL keepTextVisible;
+@property BOOL keepsTextVisible;
 
 @property CGFloat contentsBackgroundOpacity;
 

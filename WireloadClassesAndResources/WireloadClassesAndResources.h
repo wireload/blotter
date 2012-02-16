@@ -25,5 +25,6 @@
 #import <WireloadClassesAndResources/CATransaction+WLBlocks.h>
 #import <WireloadClassesAndResources/WLGraphics.h>
 #import <WireloadClassesAndResources/WLEvents.h>
+#import <WireloadClassesAndResources/CALayer+WLBlocks.h>
 
 #endif

@@ -17,12 +17,10 @@
 
 @interface WLCalendarDayEventsLayer : CALayer {
     BOOL keepsTextOfEventsVisible;
+    BOOL _needsUpdateHourRangeOfEvents;
+    WLHourRange hourRangeOfEvents;
     NSMutableArray *_sortedByStartDateEventLayers;
-    NSMutableArray *_sortedByUIDEventLayers;
-    NSUInteger _maximumNumberOfColumns;
     NSTreeNode *_eventsLayoutTreeRootNode;
-    BOOL _areEventsChanged;
-    BOOL _isHeightChanged;
 }
 
 /*!
@@ -42,12 +40,6 @@
 @property (nonatomic) BOOL keepsTextOfEventsVisible;
 
 /*!
- @abstract Height of house used for layout.
- @discussion    Affects layout.
- */
-@property CGFloat heightOfHour;
-
-/*!
  @abstract      Returns maximum number of horizontal adjacent events.
  @discussion    Minimum value is 1.
  */
@@ -55,27 +47,41 @@
 
 /*!
  @abstract  Returns actual hour range of events.
- @see       visibleHourRangeOfEventsForHeightOfHour
+ @result    Returns WLHourRangeZero if no events are specified.
  */
 - (WLHourRange)hourRangeOfEvents;
 
+- (CGFloat)preferredFrameWidth;
+
 /*!
- @abstract      Returns visible hour range of events taking care of minimum visible heights of events.
- @discussion    E.g. event's length is 5 minutes and passed height of hour is 10 points. Therefore calculated height of event is
- 0.16 (assuming 60 minutes/hour) but it may be less than minimumVisibleHeight so it will be extended.
- Returned range always either contains -hourRangeOfEvents or equal to it.
+ @abstract  Returns extent below last hour depending on timeRuler settings.
+ @see       timeRuler
+ */
+- (CGFloat)extent;
+
+/*!
+ @param         aStartHour Must be less or equal to the startHour of hourRangeOfEvents.
+ @result        If returns NO, you MUST NOT rely on this layer while calculating height of hour.
  @see           hourRangeOfEvents
  */
-- (WLHourRange)visibleHourRangeOfEventsForHeightOfHour:(CGFloat)aHeightOfHour;
+- (CGFloat)preferredHeightOfHourToFitAllEventsWithinLayerHeight:(CGFloat)aLayerHeight startHour:(CGFloat)aStartHour;
+
+/*!
+ @abstract      Calculates preferred layout settings that you CAN use to calculate height of hour.
+ @result        If returns NO, you MUST NOT rely on this layer while calculating height of hour.
+ @see           hourRangeOfEvents
+ */
+- (BOOL)toFitAllEventsWithinLayerHeight:(CGFloat)aLayerHeight
+                       startingWithHour:(CGFloat)aStartHour
+                              hourRange:(out WLHourRange *)outHourRange
+        shouldBePlacedWithinLayerHeight:(out CGFloat *)outLayerHeight;
 
 
 - (WLCalendarEventLayer *)_setupEventLayer;
 
 - (void)_updateEventLayer:(WLCalendarEventLayer *)aLayer withEvent:(id)anEvent;
 
-- (NSUInteger)_indexForInsertionOfEventLayerWithStartDate:(NSDate *)aStartDate;
-
-- (NSUInteger)_indexForInsertionOfEventLayerWithUID:(NSString *)anUID isFound:(out BOOL *)outIsFound;
+- (NSUInteger)_indexForInsertionOfEventLayerWithEvent:(id)anEvent;
 
 - (void)_buildEventsLayoutTreeIfNeeded;
 
@@ -94,11 +100,11 @@
 /*!
  @abstract  Returns minY for event layer for layout.
  */
-- (CGFloat)_minYOfEventLayer:(WLCalendarEventLayer *)aLayer forHeightOfHour:(CGFloat)aHeightOfHour;
+- (CGFloat)_minYOfEventLayer:(WLCalendarEventLayer *)aLayer;
 
 /*!
  @abstract  Returns maxY for event layer for layout.
  */
-- (CGFloat)_maxYOfEventLayer:(WLCalendarEventLayer *)aLayer forHeightOfHour:(CGFloat)aHeightOfHour minY:(CGFloat)aMinY;
+- (CGFloat)_maxYOfEventLayer:(WLCalendarEventLayer *)aLayer minY:(CGFloat)aMinY;
 
 @end

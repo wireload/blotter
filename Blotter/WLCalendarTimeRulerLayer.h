@@ -9,33 +9,35 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 #import "WLCalendarTimeRuler.h"
-#import "WLCalendarTimeRulerLabelLayer.h"
+#import "WLCalendarTimeRulerMarkerLayer.h"
 
 
 @interface WLCalendarTimeRulerLayer : CALayer {
-    NSMutableArray *_sortedTimeLayers;
+    NSMutableArray *_sortedMarkerLayers;
     BOOL _shouldUpdatePreferredFrameWidthCache;
     CGFloat _cachedPreferredFrameWidth;
 }
 
 @property (assign) id<WLCalendarTimeRuler> timeRuler;
 
-@property BOOL shouldHideHalfVisibleHourLabels;
+@property (getter = isOnlyCompletelyVisibleMarkersShown) BOOL onlyCompletelyVisibleMarkersShown;
 
-@property CGFloat heightOfHour;
-
-@property (nonatomic, copy) NSArray *hours;
-
-- (CGPoint)pointForHour:(CGFloat)aHour;
+@property (nonatomic, copy) NSArray *markers;
 
 - (CGFloat)preferredFrameWidth;
 
 /*!
- @abstract      Returns the maximum height of hour label. If there are no hours, returns 0.
- @discussion    You may use this value to make sure that hour label is visible.
+ @abstract      Returns the maximum height of hour marker.
+ @discussion    You may use this value to make sure that hour marker is visible.
+ @result        If there are no hours, returns 0.0.
  */
-- (CGFloat)maximumHeightOfHourLabel;
+- (CGFloat)maximumHeightOfMarker;
 
-- (WLCalendarTimeRulerLabelLayer *)_setupTimeLayerWithString:(NSString *)aTime;
+@end
+
+
+@interface WLCalendarTimeRulerLayer (Layers)
+
+- (WLCalendarTimeRulerMarkerLayer *)setupMarkerLayer;
 
 @end

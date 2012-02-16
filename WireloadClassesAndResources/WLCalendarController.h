@@ -89,7 +89,7 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType);
 
 - (NSArray *)calReminderCalendarsFromCalCalendars:(NSArray *)aCalCalendars;
 
-- (void)setCheck:(BOOL)newCheck forCalendarWithUID:(NSString *)anUID;
+- (void)setDisplay:(BOOL)newCheck forCalendarWithUID:(NSString *)anUID;
 
 - (BOOL)checkForCalendarWithUID:(NSString *)anUID;
 

@@ -34,6 +34,6 @@
 + (CTFontRef)WL_taskFont;
 
 
-+ (CTFontRef)WL_timeRulerLabelFont;
++ (CTFontRef)WL_timeRulerMarkerFont;
 
 @end

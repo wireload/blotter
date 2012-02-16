@@ -92,7 +92,7 @@
     return [NSColor whiteColor];
 }
 
-+ (NSColor *)WL_timeRulerLabelColor
++ (NSColor *)WL_timeRulerMarkerColor
 {
     return [NSColor whiteColor];
 }

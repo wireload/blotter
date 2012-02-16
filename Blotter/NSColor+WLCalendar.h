@@ -48,7 +48,7 @@
 + (NSColor *)WL_taskTitleColor;
 
 
-+ (NSColor *)WL_timeRulerLabelColor;
++ (NSColor *)WL_timeRulerMarkerColor;
 
 
 + (NSColor *)WL_windowFrameBackgroundColor;

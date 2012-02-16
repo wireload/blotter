@@ -64,7 +64,9 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     [userDefaults removeObserver:self forKeyPath:@"ShowInMenuBar"];
     [userDefaults removeObserver:self forKeyPath:@"shortcutNewEvent"];
     [userDefaults removeObserver:self forKeyPath:@"shortcutNewTask"];
-    [userDefaults removeObserver:self forKeyPath:@"shortcutNewTask"];
+    [userDefaults removeObserver:self forKeyPath:@"shortcutShowNextWeek"];
+    [userDefaults removeObserver:self forKeyPath:@"shortcutShowPreviousWeek"];
+    [userDefaults removeObserver:self forKeyPath:@"shortcutShowCurrentWeek"];
     [_preferencesController release];
     [super dealloc];
 }
@@ -132,16 +134,26 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (IBAction)showNextWeek:(id)aSender
 {
-    if (self.calendarWindowController.isNextWeekHidden)
-    {
-        [self.calendarWindowController showNextWeekView:aSender];
-        [[calendarWindowController fadeController] fadeIn];
-    }
-    else
-    {
-        [self.calendarWindowController hideNextWeekView:aSender];
+    [self.calendarWindowController showNextWeek:aSender];
+    if ([self.calendarWindowController isCurrentWeekShowed])
         [self autohideCalendarWindowIfAllConditionsAreMet];
-    }
+    else
+        [[calendarWindowController fadeController] fadeIn];
+}
+
+- (IBAction)showPreviousWeek:(id)aSender
+{
+    [self.calendarWindowController showPreviousWeek:aSender];
+    if ([self.calendarWindowController isCurrentWeekShowed])
+        [self autohideCalendarWindowIfAllConditionsAreMet];
+    else
+        [[calendarWindowController fadeController] fadeIn];
+}
+
+- (IBAction)showCurrentWeek:(id)aSender
+{
+    [self.calendarWindowController showCurrentWeek:aSender];
+    [self autohideCalendarWindowIfAllConditionsAreMet];
 }
 
 - (BOOL)isOnlyCalendarWindowVisible
@@ -153,10 +165,10 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 {
     BOOL isBlotterActive = [NSApp isActive];
     BOOL areThereUtilityWindows = ![self isOnlyCalendarWindowVisible];
-    BOOL isNextWeekShowed = !self.calendarWindowController.isNextWeekHidden;
-    if ((!isBlotterActive && !areThereUtilityWindows && !isNextWeekShowed) ||
-        (!isBlotterActive && areThereUtilityWindows && !isNextWeekShowed) ||
-        (isBlotterActive && !areThereUtilityWindows && !isNextWeekShowed))
+    BOOL isCurrentWeekShowed = [self.calendarWindowController isCurrentWeekShowed];
+    if ((!isBlotterActive && !areThereUtilityWindows && isCurrentWeekShowed) ||
+        (!isBlotterActive && areThereUtilityWindows && isCurrentWeekShowed) ||
+        (isBlotterActive && !areThereUtilityWindows && isCurrentWeekShowed))
     {
         [self.calendarWindowController.fadeController scheduleFadeOutTimer];
     }
@@ -275,12 +287,26 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     NSDictionary *showNextWeekShortcut = [userDefaults dictionaryForKey:@"shortcutShowNextWeek"];
     if (showNextWeekShortcut != nil)
     {
-        PTHotKey *hotKey = [PTHotKey hotKeyWithIdentifier:@"shortcutNewTask" keyCombo:showNextWeekShortcut target:self action:@selector(showNextWeek:)];
+        PTHotKey *hotKey = [PTHotKey hotKeyWithIdentifier:@"shortcutShowNextWeek" keyCombo:showNextWeekShortcut target:self action:@selector(showNextWeek:)];
+        [[PTHotKeyCenter sharedCenter] registerHotKey:hotKey];
+    }
+    NSDictionary *showPreviousWeekShortcut = [userDefaults dictionaryForKey:@"shortcutShowPreviousWeek"];
+    if (showNextWeekShortcut != nil)
+    {
+        PTHotKey *hotKey = [PTHotKey hotKeyWithIdentifier:@"shortcutShowPreviousWeek" keyCombo:showPreviousWeekShortcut target:self action:@selector(showPreviousWeek:)];
+        [[PTHotKeyCenter sharedCenter] registerHotKey:hotKey];
+    }
+    NSDictionary *showCurrentWeekShortcut = [userDefaults dictionaryForKey:@"shortcutShowCurrentWeek"];
+    if (showNextWeekShortcut != nil)
+    {
+        PTHotKey *hotKey = [PTHotKey hotKeyWithIdentifier:@"shortcutShowCurrentWeek" keyCombo:showCurrentWeekShortcut target:self action:@selector(showCurrentWeek:)];
         [[PTHotKeyCenter sharedCenter] registerHotKey:hotKey];
     }
     [userDefaults addObserver:self forKeyPath:@"shortcutNewEvent" options:NSKeyValueObservingOptionNew context:NULL];
     [userDefaults addObserver:self forKeyPath:@"shortcutNewTask" options:NSKeyValueObservingOptionNew context:NULL];
     [userDefaults addObserver:self forKeyPath:@"shortcutShowNextWeek" options:NSKeyValueObservingOptionNew context:NULL];
+    [userDefaults addObserver:self forKeyPath:@"shortcutShowPreviousWeek" options:NSKeyValueObservingOptionNew context:NULL];
+    [userDefaults addObserver:self forKeyPath:@"shortcutShowCurrentWeek" options:NSKeyValueObservingOptionNew context:NULL];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillClose:) name:NSWindowWillCloseNotification object:nil];
 
@@ -332,7 +358,11 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
             [_statusItem release], _statusItem = nil;
         }
     }
-    else if ([aKeyPath isEqualToString:@"shortcutNewEvent"] || [aKeyPath isEqualToString:@"shortcutNewTask"] || [aKeyPath isEqualToString:@"shortcutShowNextWeek"])
+    else if ([aKeyPath isEqualToString:@"shortcutNewEvent"] ||
+             [aKeyPath isEqualToString:@"shortcutNewTask"] ||
+             [aKeyPath isEqualToString:@"shortcutShowNextWeek"] ||
+             [aKeyPath isEqualToString:@"shortcutShowPreviousWeek"] ||
+             [aKeyPath isEqualToString:@"shortcutShowCurrentWeek"])
     {
         PTHotKeyCenter *hotKeyCenter = [PTHotKeyCenter sharedCenter];
         PTHotKey *oldHotKey = [hotKeyCenter hotKeyWithIdentifier:aKeyPath];
@@ -341,13 +371,18 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         NSDictionary *newHotKeyDict = [aChange objectForKey:NSKeyValueChangeNewKey];
         if (newHotKeyDict != nil && (id)newHotKeyDict != [NSNull null])
         {
-            PTHotKey *newHotKey = nil;
+            SEL action = NULL;
             if ([aKeyPath isEqualToString:@"shortcutNewEvent"])
-                newHotKey = [PTHotKey hotKeyWithIdentifier:aKeyPath keyCombo:newHotKeyDict target:self action:@selector(newEvent:)];
+                action = @selector(newEvent:);
             else if ([aKeyPath isEqualToString:@"shortcutNewTask"])
-                newHotKey = [PTHotKey hotKeyWithIdentifier:aKeyPath keyCombo:newHotKeyDict target:self action:@selector(newTask:)];
+                action = @selector(newTask:);
+            else if ([aKeyPath isEqualToString:@"shortcutShowNextWeek"])
+                action = @selector(showNextWeek:);
+            else if ([aKeyPath isEqualToString:@"shortcutShowPreviousWeek"])
+                action = @selector(showPreviousWeek:);
             else
-                newHotKey = [PTHotKey hotKeyWithIdentifier:aKeyPath keyCombo:newHotKeyDict target:self action:@selector(showNextWeek:)];
+                action = @selector(showCurrentWeek:);
+            PTHotKey *newHotKey = [PTHotKey hotKeyWithIdentifier:aKeyPath keyCombo:newHotKeyDict target:self action:action];
             [hotKeyCenter registerHotKey:newHotKey];
         }
     }

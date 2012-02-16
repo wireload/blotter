@@ -139,7 +139,7 @@
             uid = [[c.calEventCalendars objectAtIndex:rowIndex] uid];
         else
             uid = [[c.calReminderCalendars objectAtIndex:rowIndex] uid];
-        [c setCheck:[anObject boolValue] forCalendarWithUID:uid];
+        [c setDisplay:[anObject boolValue] forCalendarWithUID:uid];
     }
 }
 

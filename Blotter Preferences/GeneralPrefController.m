@@ -78,7 +78,11 @@
 - (BOOL)shortcutRecorder:(SRRecorderControl *)aRecorder isKeyCode:(NSInteger)keyCode andFlagsTaken:(NSUInteger)flags reason:(NSString **)aReason
 {
     KeyCombo keyCombo = SRMakeKeyCombo(keyCode, flags);
-    if (SRKeyComboEqualToKeyCombo([newEventRecorderControl keyCombo], keyCombo) || SRKeyComboEqualToKeyCombo([newTaskRecorderControl keyCombo], keyCombo) || SRKeyComboEqualToKeyCombo([showNextWeekControl keyCombo], keyCombo))
+    if (SRKeyComboEqualToKeyCombo([newEventRecorderControl keyCombo], keyCombo) ||
+        SRKeyComboEqualToKeyCombo([newTaskRecorderControl keyCombo], keyCombo) ||
+        SRKeyComboEqualToKeyCombo([showNextWeekControl keyCombo], keyCombo) ||
+        SRKeyComboEqualToKeyCombo([showPrevWeekControl keyCombo], keyCombo) ||
+        SRKeyComboEqualToKeyCombo([showCurrentWeekControl keyCombo], keyCombo))
     {
         *aReason = NSLocalizedStringFromTableInBundle(@"it's already used as a different Blotter shortcut. To use this shortcut, first remove or change the other shortcut", nil, [NSBundle bundleForClass:[self class]], @"A reason to use other shortcut");;
         return YES;
