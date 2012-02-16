@@ -39,15 +39,19 @@
     {
         NSInteger diff = newWeeksOffset - weeksOffset;
         weeksOffset = newWeeksOffset;
-        WLCalendarWeekView *v = [self view];
-        [CATransaction begin];
-        [CATransaction setAnimationDuration:0.25];
-        [v showDays:[self numberOfColumnsInWeekView:v]
-           hideDays:[v numberOfColumns]
-          direction:(diff > 0) ? WLRightToLeftDirection : WLLeftToRightDirection
-           animated:YES];
-        [v setIndexOfHighlightedColumn:[self indexOfColumnForToday]];
-        [CATransaction commit];
+        if (self.isViewLoaded)
+        {
+            WLCalendarWeekView *v = [self view];
+            [CATransaction begin];
+            [CATransaction setAnimationDuration:0.25];
+            [v showDays:[self numberOfColumnsInWeekView:v]
+               hideDays:[v numberOfColumns]
+              direction:(diff > 0) ? WLRightToLeftDirection : WLLeftToRightDirection
+               animated:YES];
+            [v setIndexOfHighlightedColumn:[self indexOfColumnForToday]];
+            v.ist
+            [CATransaction commit];
+        }
     }
 }
 

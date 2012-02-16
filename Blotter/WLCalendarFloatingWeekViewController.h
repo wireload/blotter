@@ -26,6 +26,9 @@ typedef enum
  */
 @property (nonatomic) WLCalendarWeekViewMode mode;
 
+/*!
+ @discussion    Default value is 0.
+ */
 @property (nonatomic) NSInteger weeksOffset;
 
 - (IBAction)showNextWeek:(id)aSender;
