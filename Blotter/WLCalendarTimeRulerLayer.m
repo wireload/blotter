@@ -91,10 +91,10 @@
 
 - (CGFloat)maximumHeightOfMarker
 {
-    if ([_sortedMarkerLayers count] > 0)
-        return [[_sortedMarkerLayers objectAtIndex:0] preferredFrameSize].height;
-    else
-        return 0.0;
+    CGFloat maxHeightOfMarker = 0.0;
+    for (CALayer *l in _sortedMarkerLayers)
+        maxHeightOfMarker = fmax(maxHeightOfMarker, [l preferredFrameSize].height);
+    return maxHeightOfMarker;
 }
 
 - (CGFloat)preferredFrameWidth
