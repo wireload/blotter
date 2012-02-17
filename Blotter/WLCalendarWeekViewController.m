@@ -62,6 +62,7 @@ static NSString* const _WLEventsKey = @"events";
 @synthesize titleFormat;
 @synthesize highlightWeekends;
 @synthesize isViewLoaded;
+@dynamic currentHour;
 
 - (void)setTitleFormat:(WLCalendarWeekViewTitleFormat)newFormat
 {
@@ -88,9 +89,6 @@ static NSString* const _WLEventsKey = @"events";
     }
 }
 
-
-#pragma mark Methods
-
 - (CGFloat)currentHour
 {
     NSParameterAssert([self representedObject] != nil);
@@ -104,6 +102,16 @@ static NSString* const _WLEventsKey = @"events";
     hour += (CGFloat)[components minute] / minutesRange.length;
     return hour;
 }
+
++ (NSSet *)keyPathsForValuesAffectingCurrentHour
+{
+    return [NSSet setWithObjects:@"self.representedObject.date",
+            @"self.representedObject.calendar",
+            nil];
+}
+
+
+#pragma mark Methods
 
 - (NSUInteger)indexOfColumnForToday
 {

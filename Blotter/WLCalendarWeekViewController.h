@@ -41,13 +41,16 @@ typedef enum
  */
 @property (nonatomic) BOOL highlightWeekends;
 
+/*!
+ @abstract  Returns YES if view is loaded. Otherwise NO.
+ */
 @property (assign, readonly) BOOL isViewLoaded;
+
+@property (readonly) CGFloat currentHour;
 
 - (WLCalendarWeekView *)view;
 
 - (WLCalendarController *)representedObject;
-
-- (CGFloat)currentHour;
 
 /*!
  @abstract      Returns events for columns at given indexes.
