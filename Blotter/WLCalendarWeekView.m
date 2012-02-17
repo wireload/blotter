@@ -160,13 +160,6 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
             CALayer *timeIndicatorRootLayer = [self timeIndicatorRootLayer];
             NSParameterAssert(timeIndicatorRootLayer != nil);
             [timeIndicatorRootLayer setNeedsLayout];
-
-            if ([CATransaction disableActions])
-            {
-                [timeRulerScrollLayer layoutIfNeeded];
-                [dayScrollLayers makeObjectsPerformSelector:@selector(layoutIfNeeded)];
-                [timeIndicatorRootLayer layoutIfNeeded];
-            }
         }
     }
 }
@@ -180,8 +173,6 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
         CALayer *rootLayer = [self layer];
         NSParameterAssert(rootLayer != nil);
         [rootLayer setNeedsLayout];
-        if ([CATransaction disableActions])
-            [rootLayer layoutIfNeeded];
     }
 }
 
@@ -194,8 +185,6 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
         CALayer *rootLayer = [self layer];
         NSParameterAssert(rootLayer != nil);
         [rootLayer setNeedsLayout];
-        if ([CATransaction disableActions])
-            [rootLayer layoutIfNeeded];
     }
 }
 
@@ -216,13 +205,6 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
         CALayer *timeIndicatorRootLayer = [self timeIndicatorRootLayer];
         NSParameterAssert(timeIndicatorRootLayer != nil);
         [timeIndicatorRootLayer setNeedsLayout];
-
-        if ([CATransaction disableActions])
-        {
-            [timeRulerScrollLayer layoutIfNeeded];
-            [dayScrollLayers makeObjectsPerformSelector:@selector(layoutIfNeeded)];
-            [timeIndicatorRootLayer layoutIfNeeded];
-        }
     }
 }
 
@@ -235,8 +217,6 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
         CALayer *rootLayer = [self layer];
         NSParameterAssert(rootLayer != nil);
         [rootLayer setNeedsLayout];
-        if ([CATransaction disableActions])
-            [rootLayer layoutIfNeeded];
     }
 }
 
@@ -280,10 +260,6 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     CALayer *rootLayer = [self layer];
     NSParameterAssert(rootLayer != nil);
     [rootLayer setNeedsLayout];
-
-    if ([CATransaction disableActions])
-        [rootLayer layoutIfNeeded];
-
     [CATransaction commit];
 }
 
@@ -310,13 +286,6 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
             NSParameterAssert(dayScrollLayers != nil);
             [dayScrollLayers makeObjectsPerformSelector:@selector(setNeedsLayout)];
         }
-
-        if (!isAnimated)
-        {
-            [timeIndicatorRootLayer layoutIfNeeded];
-            [timeRulerScrollLayer layoutIfNeeded];
-            [dayScrollLayers makeObjectsPerformSelector:@selector(layoutIfNeeded)];
-        }
     }
     [CATransaction commit];
 }
@@ -341,9 +310,6 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     CALayer *rootLayer = [self layer];
     NSParameterAssert(rootLayer != nil);
     [rootLayer setNeedsLayout];
-
-    if (!isAnimated)
-        [rootLayer layoutIfNeeded];
     [CATransaction commit];
 }
 
@@ -375,13 +341,6 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     CALayer *timeIndicatorRootLayer = [self timeIndicatorRootLayer];
     NSParameterAssert(timeIndicatorRootLayer != nil);
     [timeIndicatorRootLayer setNeedsLayout];
-
-    if ([CATransaction disableActions])
-    {
-        [timeRulerBackgroundLayer layoutIfNeeded];
-        [dayBackgroundLayers makeObjectsPerformSelector:@selector(layoutIfNeeded)];
-        [timeIndicatorRootLayer layoutIfNeeded];
-    }
     [CATransaction commit];
 }
 
@@ -412,9 +371,6 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     CALayer *rootLayer = [self layer];
     NSParameterAssert(rootLayer != nil);
     [rootLayer setNeedsLayout];
-
-    if ([CATransaction disableActions])
-        [rootLayer layoutIfNeeded];
     [CATransaction commit];
 }
 
@@ -734,8 +690,6 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     CALayer *rootLayer = [self layer];
     NSParameterAssert(rootLayer != nil);
     [rootLayer setNeedsLayout];
-    if ([CATransaction disableActions])
-        [rootLayer layoutIfNeeded];
     [CATransaction commit];
 }
 
@@ -829,6 +783,17 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
 }
 
 
+#pragma mark CALayerDelegate
+
+#ifdef DEBUG_LAYERS
+- (id<CAAction>)actionForLayer:(CALayer *)layer forKey:(NSString *)event
+{
+    NSLog(@"%@: %@", layer.name, event);
+    return nil;
+}
+#endif
+
+
 #pragma mark WLCalendarTimeRuler
 
 - (WLHourRange)hourRange
@@ -838,7 +803,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
 
 - (CGFloat)originOffset
 {
-    return ceil([[self timeRulerLayer] maximumHeightOfMarker] / 2.0f);
+    return ceil([[self timeRulerLayer] maximumHeightOfMarker] / 2.0);
 }
 
 - (CGFloat)positionForHour:(CGFloat)aHour
@@ -1034,12 +999,12 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
         [p setAlignment:NSCenterTextAlignment];
         [p setLineBreakMode:NSLineBreakByWordWrapping];
         NSShadow *s = [[NSShadow alloc] init];
-        [s setShadowBlurRadius:0.0f];
+        [s setShadowBlurRadius:0.0];
         [s setShadowColor:[NSColor WL_columnTitleShadowColor]];
         if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-            [s setShadowOffset:NSMakeSize(0.0f, -1.0f)];
+            [s setShadowOffset:NSMakeSize(0.0, -1.0)];
         else
-            [s setShadowOffset:NSMakeSize(0.0f, 1.0f)];
+            [s setShadowOffset:NSMakeSize(0.0, 1.0)];
         titleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
                            (id)[NSFont WL_columnTitleFont],  NSFontAttributeName,
                            p,                                NSParagraphStyleAttributeName,
@@ -1095,13 +1060,11 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
 #ifdef DEBUG_LAYERS
     NSLog(@"set frame size: %@", NSStringFromSize(newSize));
 #endif
-    NSSize oldSize = [self frame].size;
     [super setFrameSize:newSize];
     CALayer *rootLayer = [self layer];
     NSParameterAssert(rootLayer != nil);
-    if (!NSEqualSizes(oldSize, newSize))
-        [rootLayer setNeedsLayout];
-    [rootLayer layoutIfNeeded];
+    if ([CATransaction disableActions])
+        [rootLayer layoutIfNeeded];
 }
 
 @end
@@ -1120,8 +1083,6 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     [self setWantsLayer:YES];
     [self reloadDataAnimated:NO];
     [rootLayer setNeedsLayout];
-    if ([CATransaction disableActions])
-        [rootLayer layoutIfNeeded];
 }
 
 
@@ -1134,6 +1095,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.name = _WLRootLayerName;
     l.layoutManager = self;
 #ifdef DEBUG_LAYERS
+    l.delegate = self;
     l.backgroundColor = [[NSColor blackColor] WL_CGColor];
 #endif
 
@@ -1163,6 +1125,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.masksToBounds = YES;
     l.zPosition = 0;
 #ifdef DEBUG_LAYERS
+    l.delegate = self;
     l.backgroundColor = [[NSColor darkGrayColor] WL_CGColor];
 #endif
 
@@ -1179,6 +1142,8 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.name = _WLTimeRulerBackgroundLayerName;
     l.needsDisplayOnBoundsChange = YES;
     l.layoutManager = self;
+    NSDictionary *actions = [NSDictionary dictionaryWithObject:[NSNull null] forKey:@"contents"];
+    l.actions = actions;
 #ifndef DEBUG_LAYERS
     l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
         NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:[aLayer contentsAreFlipped]];
@@ -1209,19 +1174,19 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
         NSRect middleBorderFrame = NSMakeRect(0.0, NSMaxY(bottomBorderFrame), middleBorderSize.width, middleBorderSize.height);
         if (NSIntersectsRect(middleBorderFrame, dirtyRect))
         {
-            [(NSImage *)[NSImage imageNamed:@"timeruler-middle-left"] drawInRect:NSMakeRect(0.0f, middleBorderFrame.origin.y, 1.0f, middleBorderFrame.size.height)
+            [(NSImage *)[NSImage imageNamed:@"timeruler-middle-left"] drawInRect:NSMakeRect(0.0, middleBorderFrame.origin.y, 1.0, middleBorderFrame.size.height)
                                                                         fromRect:NSZeroRect
                                                                        operation:NSCompositeSourceOver
                                                                         fraction:AlphaFraction
                                                                   respectFlipped:YES
                                                                            hints:nil];
-            [(NSImage *)[NSImage imageNamed:@"timeruler-middle"] drawInRect:NSMakeRect(1.0f, middleBorderFrame.origin.y, middleBorderFrame.size.width - 2.0f, middleBorderFrame.size.height)
+            [(NSImage *)[NSImage imageNamed:@"timeruler-middle"] drawInRect:NSMakeRect(1.0, middleBorderFrame.origin.y, middleBorderFrame.size.width - 2.0, middleBorderFrame.size.height)
                                                                    fromRect:NSZeroRect
                                                                   operation:NSCompositeSourceOver
                                                                    fraction:AlphaFraction
                                                              respectFlipped:YES
                                                                       hints:nil];
-            [(NSImage *)[NSImage imageNamed:@"timeruler-middle-right"] drawInRect:NSMakeRect(middleBorderFrame.size.width - 1.0f, middleBorderFrame.origin.y, 1.0f, middleBorderFrame.size.height)
+            [(NSImage *)[NSImage imageNamed:@"timeruler-middle-right"] drawInRect:NSMakeRect(middleBorderFrame.size.width - 1.0, middleBorderFrame.origin.y, 1.0, middleBorderFrame.size.height)
                                                                          fromRect:NSZeroRect
                                                                         operation:NSCompositeSourceOver
                                                                          fraction:AlphaFraction
@@ -1244,6 +1209,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
         [NSGraphicsContext restoreGraphicsState];
     };
 #else
+    l.delegate = self;
     l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
 #endif
 
@@ -1262,6 +1228,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.geometryFlipped = YES;
     l.layoutManager = self;
 #ifdef DEBUG_LAYERS
+    l.delegate = self;
     l.backgroundColor = [[NSColor orangeColor] WL_CGColor];
 #endif
 
@@ -1280,6 +1247,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.markers = [self _timeRulerMarkers];
     l.onlyCompletelyVisibleMarkersShown = self.fitsDayEvents;
 #ifdef DEBUG_LAYERS
+    l.delegate = self;
     l.backgroundColor = [[NSColor blueColor] WL_CGColor];
 #endif
     return l;
@@ -1296,6 +1264,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.zPosition = 1;
     l.layoutManager = self;
 #ifdef DEBUG_LAYERS
+    l.delegate = self;
     l.backgroundColor = [[[NSColor darkGrayColor] colorWithAlphaComponent:0.5] WL_CGColor];
 #endif
 
@@ -1320,9 +1289,10 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     CALayer *l = [CALayer layer];
     l.geometryFlipped = YES;
     l.name = _WLColumnRootLayerName;
-    l.anchorPoint = CGPointMake(0.0f, 0.0f);
+    l.anchorPoint = CGPointMake(0.0, 0.0);
     l.layoutManager = self;
 #ifdef DEBUG_LAYERS
+    l.delegate = self;
     l.backgroundColor = [[NSColor redColor] WL_CGColor];
 #endif
 
@@ -1344,6 +1314,8 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.needsDisplayOnBoundsChange = YES;
     l.masksToBounds = YES;
     l.layoutManager = self;
+    NSDictionary *actions = [NSDictionary dictionaryWithObject:[NSNull null] forKey:@"contents"];
+    l.actions = actions;
 #ifndef DEBUG_LAYERS
     NSGradient *whiteToTransparentGradient = [[NSGradient alloc] initWithStartingColor:[[NSColor whiteColor] colorWithAlphaComponent:0.13f]
                                                                            endingColor:[NSColor clearColor]];
@@ -1363,7 +1335,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
                                        aLayer.bounds.size.height - bottomSize.height - topSize.height);
 
         NSRect dirtyRect = NSRectFromCGRect(aDirtyRect);
-        static CGFloat AlphaFraction = 1.0f;
+        static CGFloat AlphaFraction = 1.0;
 
         NSRect topFrame = NSMakeRect(0.0, 0.0, topSize.width, topSize.height);
         if (NSIntersectsRect(topFrame, topFrame))
@@ -1381,27 +1353,27 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
         NSRect middleFrame = NSMakeRect(0.0, NSMaxY(topFrame), middleSize.width, middleSize.height);
         if (NSIntersectsRect(middleFrame, dirtyRect))
         {
-            [(NSImage *)[NSImage imageNamed:@"allday-middle-left"] drawInRect:NSMakeRect(0.0f,
+            [(NSImage *)[NSImage imageNamed:@"allday-middle-left"] drawInRect:NSMakeRect(0.0,
                                                                                          middleFrame.origin.y,
-                                                                                         3.0f,
+                                                                                         3.0,
                                                                                          middleFrame.size.height)
                                                                      fromRect:NSZeroRect
                                                                     operation:NSCompositeSourceOver
                                                                      fraction:AlphaFraction
                                                                respectFlipped:YES
                                                                         hints:nil];
-            [(NSImage *)[NSImage imageNamed:@"allday-middle"] drawInRect:NSMakeRect(3.0f,
+            [(NSImage *)[NSImage imageNamed:@"allday-middle"] drawInRect:NSMakeRect(3.0,
                                                                                     middleFrame.origin.y,
-                                                                                    middleFrame.size.width - 6.0f,
+                                                                                    middleFrame.size.width - 6.0,
                                                                                     middleFrame.size.height)
                                                                 fromRect:NSZeroRect
                                                                operation:NSCompositeSourceOver
                                                                 fraction:AlphaFraction
                                                           respectFlipped:YES
                                                                    hints:nil];
-            [(NSImage *)[NSImage imageNamed:@"allday-middle-right"] drawInRect:NSMakeRect(middleFrame.size.width - 3.0f,
+            [(NSImage *)[NSImage imageNamed:@"allday-middle-right"] drawInRect:NSMakeRect(middleFrame.size.width - 3.0,
                                                                                           middleFrame.origin.y,
-                                                                                          3.0f,
+                                                                                          3.0,
                                                                                           middleFrame.size.height)
                                                                       fromRect:NSZeroRect
                                                                      operation:NSCompositeSourceOver
@@ -1425,13 +1397,14 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
 
         // Inset layer bounds, since images have 1px stroke.
         [whiteToTransparentGradient drawInRect:NSInsetRect(NSRectFromCGRect(aLayer.bounds),
-                                                           1.0f,
-                                                           1.0f)
+                                                           1.0,
+                                                           1.0)
                                          angle:90];
 
         [NSGraphicsContext restoreGraphicsState];
     };
 #else
+    l.delegate = self;
     l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
 #endif
 
@@ -1448,6 +1421,8 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.name = _WLDayBackgroundLayerName;
     l.needsDisplayOnBoundsChange = YES;
     l.layoutManager = self;
+    NSDictionary *actions = [NSDictionary dictionaryWithObject:[NSNull null] forKey:@"contents"];
+    l.actions = actions;
     NSGradient *whiteToTransparentGradient = [[NSGradient alloc] initWithStartingColor:[[NSColor whiteColor] colorWithAlphaComponent:0.1f]
                                                                            endingColor:[NSColor clearColor]];
     [whiteToTransparentGradient autorelease];
@@ -1467,7 +1442,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
         NSSize middleSize = NSMakeSize(aLayer.bounds.size.width,
                                        aLayer.bounds.size.height - bottomSize.height - topSize.height);
         NSRect dirtyRect = NSRectFromCGRect(aDirtyRect);
-        static CGFloat AlphaFraction = 1.0f;
+        static CGFloat AlphaFraction = 1.0;
 
         NSRect topFrame = NSMakeRect(0.0,
                                      0.0,
@@ -1491,27 +1466,27 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
                                         middleSize.height);
         if (NSIntersectsRect(middleFrame, dirtyRect))
         {
-            [(NSImage *)[NSImage imageNamed:@"day-middle-left"] drawInRect:NSMakeRect(0.0f,
+            [(NSImage *)[NSImage imageNamed:@"day-middle-left"] drawInRect:NSMakeRect(0.0,
                                                                                       middleFrame.origin.y,
-                                                                                      1.0f,
+                                                                                      1.0,
                                                                                       middleFrame.size.height)
                                                                   fromRect:NSZeroRect
                                                                  operation:NSCompositeSourceOver
                                                                   fraction:AlphaFraction
                                                             respectFlipped:YES
                                                                      hints:nil];
-            [(NSImage *)[NSImage imageNamed:@"day-middle"] drawInRect:NSMakeRect(1.0f,
+            [(NSImage *)[NSImage imageNamed:@"day-middle"] drawInRect:NSMakeRect(1.0,
                                                                                  middleFrame.origin.y,
-                                                                                 middleFrame.size.width - 2.0f,
+                                                                                 middleFrame.size.width - 2.0,
                                                                                  middleFrame.size.height)
                                                              fromRect:NSZeroRect
                                                             operation:NSCompositeSourceOver
                                                              fraction:AlphaFraction
                                                        respectFlipped:YES
                                                                 hints:nil];
-            [(NSImage *)[NSImage imageNamed:@"day-middle-right"] drawInRect:NSMakeRect(middleFrame.size.width - 1.0f,
+            [(NSImage *)[NSImage imageNamed:@"day-middle-right"] drawInRect:NSMakeRect(middleFrame.size.width - 1.0,
                                                                                        middleFrame.origin.y,
-                                                                                       1.0f,
+                                                                                       1.0,
                                                                                        middleFrame.size.height)
                                                                    fromRect:NSZeroRect
                                                                   operation:NSCompositeSourceOver
@@ -1538,8 +1513,8 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
 
         // Inset layer bounds, since images have 1px stroke.
         [whiteToTransparentGradient drawInRect:NSInsetRect(NSRectFromCGRect(aLayer.bounds),
-                                                           1.0f,
-                                                           1.0f)
+                                                           1.0,
+                                                           1.0)
                                          angle:90];
 #endif
         if (selfBlock.showsDayColumnTitle)
@@ -1567,6 +1542,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
         [NSGraphicsContext restoreGraphicsState];
     };
 #ifdef DEBUG_LAYERS
+    l.delegate = self;
     l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
 #endif
 
@@ -1582,6 +1558,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     WLCalendarAllDayEventsLayer *l = [WLCalendarAllDayEventsLayer layer];
     l.name = _WLAllDayLayerName;
 #ifdef DEBUG_LAYERS
+    l.delegate = self;
     l.backgroundColor = [[NSColor blueColor] WL_CGColor];
 #endif
     return l;
@@ -1593,6 +1570,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.name = _WLDayScrollLayerName;
     l.layoutManager = self;
 #ifdef DEBUG_LAYERS
+    l.delegate = self;
     l.backgroundColor = [[NSColor orangeColor] WL_CGColor];
 #endif
 
@@ -1610,6 +1588,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.timeRuler = self;
     l.keepsTextOfEventsVisible = !self.fitsDayEvents;
 #ifdef DEBUG_LAYERS
+    l.delegate = self;
     l.needsDisplayOnBoundsChange = YES;
     l.backgroundColor = [[NSColor blueColor] WL_CGColor];
 #endif
@@ -1627,6 +1606,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.zPosition = 2;
     l.layoutManager = self;
 #ifdef DEBUG_LAYERS
+    l.delegate = self;
     l.backgroundColor = [[[NSColor darkGrayColor] colorWithAlphaComponent:0.7] WL_CGColor];
 #endif
 
@@ -1644,6 +1624,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.anchorPoint = CGPointMake(0.0, 0.5);
     l.hidden = !self.showsTimeIndicator;
 #ifdef DEBUG_LAYERS
+    l.delegate = self;
     l.backgroundColor = [[NSColor whiteColor] WL_CGColor];
 #endif
     return l;
@@ -1762,13 +1743,6 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
                                                              fdim(aRootLayer.bounds.size.width, CGRectGetMaxX(timeRulerRootLayer.frame)),
                                                              [self visibleHeightOfTimeRuler]));
     [timeIndicatorRootLayer setNeedsLayout];
-
-    if ([CATransaction disableActions])
-    {
-        [eventsRootLayer layoutIfNeeded];
-        [timeRulerRootLayer layoutIfNeeded];
-        [timeIndicatorRootLayer layoutIfNeeded];
-    }
 }
 
 
@@ -1786,8 +1760,6 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     NSParameterAssert(timeRulerBackgroundLayer != nil);
     timeRulerBackgroundLayer.frame = aTimeRulerRootLayer.bounds;
     [timeRulerBackgroundLayer setNeedsLayout];
-    if ([CATransaction disableActions])
-        [timeRulerBackgroundLayer layoutIfNeeded];
 }
 
 - (void)layoutSublayersOfTimeRulerBackgroundLayer:(CALayer *)aTimeRulerBackgroundLayer
@@ -1804,8 +1776,6 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     f.size.height -= NSMaxY([self columnTitleFrame]);
     timeRulerScrollLayer.frame = f;
     [timeRulerScrollLayer setNeedsLayout];
-    if ([CATransaction disableActions])
-        [timeRulerScrollLayer layoutIfNeeded];
 }
 
 - (void)layoutSublayersOfTimeRulerScrollLayer:(CALayer *)aTimeRulerScrollLayer
@@ -1827,8 +1797,6 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
                                                       _WLXMarginBetweenTimeRulerAndTimeRulerRoot,
                                                       0.0));
     [timeRulerLayer setNeedsLayout];
-    if ([CATransaction disableActions])
-        [timeRulerLayer layoutIfNeeded];
 }
 
 
@@ -1855,9 +1823,6 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
         c.frame = NSRectToCGRect([[frames objectAtIndex:idx] rectValue]);
         [c setNeedsLayout];
     }];
-
-    if ([CATransaction disableActions])
-        [columnLayers makeObjectsPerformSelector:@selector(layoutIfNeeded)];
 }
 
 - (void)layoutSublayersOfColumnRootLayer:(CALayer *)aColumnRootLayer
@@ -1893,12 +1858,6 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
                                                          aColumnRootLayer.bounds.size.width,
                                                          aColumnRootLayer.bounds.size.height - heightAndMarginOfAllDayEventsPartOfColumn));
     [dayBackgroundLayer setNeedsLayout];
-
-    if ([CATransaction disableActions])
-    {
-        [allDayBackgroundLayer layoutIfNeeded];
-        [dayBackgroundLayer layoutIfNeeded];
-    }
 }
 
 - (void)layoutSublayersOfAllDayBackgroundLayer:(WLBlockLayer *)anAllDayBackgroundLayer
@@ -1913,8 +1872,6 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     NSParameterAssert(allDayEventsLayer != nil);
     allDayEventsLayer.frame = anAllDayBackgroundLayer.bounds;
     [allDayEventsLayer setNeedsLayout];
-    if ([CATransaction disableActions])
-        [allDayEventsLayer layoutIfNeeded];
 }
 
 - (void)layoutSublayersOfDayBackgroundLayer:(WLBlockLayer *)aDayBackgroundLayer
@@ -1936,8 +1893,6 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
                                                       1.0,
                                                       0.0));
     [dayScrollLayer setNeedsLayout];
-    if ([CATransaction disableActions])
-        [dayScrollLayer layoutIfNeeded];
 }
 
 - (void)layoutSublayersOfDayScrollLayer:(CAScrollLayer *)aDayScrollLayer
@@ -1956,8 +1911,6 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
                                                aDayScrollLayer.bounds.size.width,
                                                [dayLayer preferredFrameSize].height));
     [dayLayer setNeedsLayout];
-    if ([CATransaction disableActions])
-        [dayLayer layoutIfNeeded];
 }
 
 
@@ -2027,7 +1980,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     if (!self.showsDayColumnTitle || numberOfColumns == 0)
         return NSZeroRect;
 
-    static const CGFloat MinimumTitleHeight = 25.0f;
+    static const CGFloat MinimumTitleHeight = 25.0;
 
     CGFloat height = MinimumTitleHeight;
     CGFloat width = CGFLOAT_MAX;
@@ -2052,8 +2005,8 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
                                     attributes:attributes];
         height = fmax(height, r.size.height);
     }
-    return NSIntegralRect(NSMakeRect(0.0f,
-                                     0.0f,
+    return NSIntegralRect(NSMakeRect(0.0,
+                                     0.0,
                                      width,
                                      height + _WLYColumnTitleFrameBottomOffset));
 }
