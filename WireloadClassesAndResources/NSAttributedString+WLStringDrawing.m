@@ -6,6 +6,7 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
+#include <tgmath.h>
 #import "NSAttributedString+WLStringDrawing.h"
 #import "CoreText+Additions.h"
 
@@ -94,24 +95,38 @@
 
 - (CGSize)WL_preferredSize
 {
-    CGSize preferredFrameSize = CGSizeZero;
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self);
-    if (framesetter != NULL)
+    static NSCache *PreferredSizeCache = nil;
+    static dispatch_once_t PreferredSizeCacheOnceToken;
+    dispatch_once(&PreferredSizeCacheOnceToken, ^{
+        PreferredSizeCache = [[NSCache alloc] init];
+        [PreferredSizeCache setName:@"PreferredSizeCache"];
+        [PreferredSizeCache setCountLimit:100];
+    });
+
+    NSValue *preferredSize = [PreferredSizeCache objectForKey:self];
+    if (preferredSize == nil)
     {
-        static CGPathRef framePath = NULL;
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            framePath = CGPathCreateWithRect(CGRectMake(0.0, 0.0, 9999.0, 9999.0), NULL);
-        });
-        CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
-        if (frame != NULL)
+        CGSize preferredFrameSize = CGSizeZero;
+        CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self);
+        if (framesetter != NULL)
         {
-            preferredFrameSize = AB_CTFrameGetSize(frame);
-            CFRelease(frame);
+            static CGPathRef FramePath = NULL;
+            static dispatch_once_t FramePathOnceToken;
+            dispatch_once(&FramePathOnceToken, ^{
+                FramePath = CGPathCreateWithRect(CGRectMake(0.0, 0.0, 9999.0, 9999.0), NULL);
+            });
+            CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), FramePath, NULL);
+            if (frame != NULL)
+            {
+                preferredFrameSize = AB_CTFrameGetSize(frame);
+                CFRelease(frame);
+            }
+            CFRelease(framesetter);
         }
-        CFRelease(framesetter);
+        preferredSize = [NSValue valueWithSize:NSMakeSize(ceil(preferredFrameSize.width), ceil(preferredFrameSize.height))];
+        [PreferredSizeCache setObject:preferredSize forKey:self];
     }
-    return CGSizeMake(ceilf(preferredFrameSize.width), ceilf(preferredFrameSize.height));
+    return NSSizeToCGSize([preferredSize sizeValue]);
 }
 
 - (CGFloat)WL_preferredHeightWithWidth:(CGFloat)aWidth
