@@ -127,6 +127,9 @@
 - (void)layoutSublayers
 {
     NSAssert(self.layoutManager == nil, @"You cannot use custom layout managers with this class");
+
+    if (self.bounds.size.height == 0.0)
+        return;
     
     WLHourRange r = [self.timeRuler hourRange];
     NSUInteger numberOfMarkers = [_sortedMarkerLayers count];
