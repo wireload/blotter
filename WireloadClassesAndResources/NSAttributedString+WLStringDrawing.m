@@ -98,15 +98,17 @@
     CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self);
     if (framesetter != NULL)
     {
-        CGMutablePathRef framePath = CGPathCreateMutable();
-        CGPathAddRect(framePath, NULL, CGRectMake(0.0f, 0.0f, 9999.0f, 9999.0f));
+        static CGPathRef framePath = NULL;
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            framePath = CGPathCreateWithRect(CGRectMake(0.0, 0.0, 9999.0, 9999.0), NULL);
+        });
         CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
         if (frame != NULL)
         {
             preferredFrameSize = AB_CTFrameGetSize(frame);
             CFRelease(frame);
         }
-        CFRelease(framePath);
         CFRelease(framesetter);
     }
     return CGSizeMake(ceilf(preferredFrameSize.width), ceilf(preferredFrameSize.height));
