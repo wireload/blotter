@@ -60,13 +60,6 @@
 - (CGFloat)extent;
 
 /*!
- @param         aStartHour Must be less or equal to the startHour of hourRangeOfEvents.
- @result        If returns NO, you MUST NOT rely on this layer while calculating height of hour.
- @see           hourRangeOfEvents
- */
-- (CGFloat)preferredHeightOfHourToFitAllEventsWithinLayerHeight:(CGFloat)aLayerHeight startHour:(CGFloat)aStartHour;
-
-/*!
  @abstract      Calculates preferred layout settings that you CAN use to calculate height of hour.
  @result        If returns NO, you MUST NOT rely on this layer while calculating height of hour.
  @see           hourRangeOfEvents

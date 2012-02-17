@@ -164,51 +164,6 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
     return extent;
 }
 
-- (CGFloat)preferredHeightOfHourToFitAllEventsWithinLayerHeight:(CGFloat)aLayerHeight startHour:(CGFloat)aStartHour;
-{
-    WLHourRange hourRange = [self hourRangeOfEvents];
-    if (WLHourRangeEqualToHourRange(hourRange, WLHourRangeZero))
-        return 0.0;
-
-    NSParameterAssert(aStartHour <= hourRange.startHour);
-
-    hourRange.startHour = aStartHour;
-    CGFloat preferredHeightOfHour = aLayerHeight / WLHourRangeLength(hourRange);
-    /*
-     For each event calculate the preferred height of hour to fit it within aLayerHeight.
-     The preferredHeightOfHour would be the smallest value:
-
-     Initial:
-     aLayerHeight = 100
-     aHourRange = [0, 10]
-     => preferredHeightOfHour = 10
-
-     Iter 1:
-     hour range of e = [0, 1]
-     minimumHumanVisibleHeight of e = 25
-     => h = (100 - 25) / 1 = 75
-     => preferredHeightOfHour = min(10, 75) = 10
-
-     Iter 2:
-     hour range of e = [9.916667, 10] // [9h 55m, 10h]
-     minimumHumanVisibleHeight = 20
-     => h = (100 - 20) / 9.916667 = 8.06722662
-     => preferredHeightOfHour = min(10, 8.06722662) = 8.06722662
-     */
-    for (WLCalendarEventLayer *e in _sortedByStartDateEventLayers)
-    {
-        WLHourRange r = WLHourRangeMake(hourRange.startHour,
-                                        [self _startHourOfEventLayer:e]);
-        CGFloat l = WLHourRangeLength(r);
-        if (l > 0.0)
-        {
-            CGFloat h = fdim(aLayerHeight, [e minimumHumanVisibleHeight]) / l;
-            preferredHeightOfHour = fmin(preferredHeightOfHour, h);
-        }
-    }
-    return preferredHeightOfHour;
-}
-
 - (BOOL)toFitAllEventsWithinLayerHeight:(CGFloat)aLayerHeight
                        startingWithHour:(CGFloat)aStartHour
                               hourRange:(out WLHourRange *)outHourRange
