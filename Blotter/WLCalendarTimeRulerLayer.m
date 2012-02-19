@@ -140,13 +140,19 @@
             WLCalendarTimeRulerMarkerLayer *hourMarker = [_sortedMarkerLayers objectAtIndex:anIndex];
             CGSize size = [hourMarker preferredFrameSize];
             CGFloat hourPosition = [self.timeRuler positionForHour:aMatchedValue];
-            hourMarker.frame = CGRectIntegral(CGRectMake(0.0, hourPosition - size.height / 2.0, self.bounds.size.width, size.height));
-            if (self.onlyCompletelyVisibleMarkersShown)
+            hourMarker.frame = CGRectIntegral(CGRectMake(0.0,
+                                                         hourPosition - size.height / 2.0,
+                                                         self.bounds.size.width,
+                                                         size.height));
+            if (self.onlyCompletelyVisibleMarkersShown &&
+                !CGRectContainsRect(self.visibleRect, hourMarker.frame) &&
+                CGRectIntersectsRect(self.visibleRect, hourMarker.frame))
             {
-                if (CGRectGetMaxY(self.visibleRect) < CGRectGetMaxY(hourMarker.frame))
-                    hourMarker.hidden = YES;
+                CGRect intersection = CGRectIntersection(self.visibleRect, hourMarker.frame);
+                if (CGRectGetMinX(self.visibleRect) > CGRectGetMinX(hourMarker.frame))
+                    hourMarker.frame = CGRectOffset(hourMarker.frame, 0.0, -CGRectGetHeight(intersection));
                 else
-                    hourMarker.hidden = NO;
+                    hourMarker.frame = CGRectOffset(hourMarker.frame, 0.0, CGRectGetHeight(intersection));
             }
         }
         else
