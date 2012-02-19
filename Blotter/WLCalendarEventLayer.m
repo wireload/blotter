@@ -18,6 +18,15 @@ const CGFloat _WLXPadding = 10.0;
 
 @implementation WLCalendarEventLayer
 
+- (id)init
+{
+    self = [super init];
+    if (self != nil)
+    {
+    }
+    return self;
+}
+
 #pragma mark Properties
 @dynamic title;
 @dynamic location;
@@ -60,12 +69,11 @@ const CGFloat _WLXPadding = 10.0;
 - (CGFloat)minimumHumanVisibleHeight
 {
     NSAttributedString *visibleString = [self.title length] > 0 ? self.title : self.location;
-    if (![_minimumHumanVisibleString isEqualToAttributedString:visibleString] || _minimumHumanVisibleWidth != self.bounds.size.width)
+    if (_cachedMinimumHumanVisibleString != visibleString || _cachedMinimumHumanVisibleWidth != self.bounds.size.width)
     {
-        _minimumHumanVisibleWidth = self.bounds.size.width;
-        [_minimumHumanVisibleString release];
-        _minimumHumanVisibleString = [visibleString retain];
-        minimumHumanVisibleHeight = [_minimumHumanVisibleString WL_firstLineHeightWithWidth:_minimumHumanVisibleWidth - _WLXPadding];
+        _cachedMinimumHumanVisibleWidth = self.bounds.size.width;
+        _cachedMinimumHumanVisibleString = visibleString;
+        minimumHumanVisibleHeight = [_cachedMinimumHumanVisibleString WL_firstLineHeightWithWidth:_cachedMinimumHumanVisibleWidth - _WLXPadding];
         minimumHumanVisibleHeight += _WLYPadding;
     }
     return minimumHumanVisibleHeight;
@@ -284,10 +292,18 @@ const CGFloat _WLXPadding = 10.0;
 {
     NSAssert(self.layoutManager == nil, @"You cannot use custom layout managers with this class");
 
-    CGSize preferredTitleSize = [self.title WL_preferredSize];
-    CGSize preferredLocationSize = [self.location WL_preferredSize];
-    return CGSizeMake(fmax(preferredTitleSize.width, preferredLocationSize.width) + _WLXPadding,
-                      preferredTitleSize.height + preferredLocationSize.height + _WLYPadding);
+    if (_cachedTitle != self.title)
+    {
+        _cachedTitle = self.title;
+        _cachedPreferredSizeOfTitle = [_cachedTitle WL_preferredSize];
+    }
+    if (_cachedLocation != self.location)
+    {
+        _cachedLocation = self.location;
+        _cachedPreferredSizeOfLocation = [self.location WL_preferredSize];
+    }
+    return CGSizeMake(fmax(_cachedPreferredSizeOfTitle.width, _cachedPreferredSizeOfLocation.width) + _WLXPadding,
+                      _cachedPreferredSizeOfTitle.height + _cachedPreferredSizeOfLocation.height + _WLYPadding);
 }
 
 @end
