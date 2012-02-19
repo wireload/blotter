@@ -21,6 +21,8 @@
     if (self != nil)
     {
         _sortedMarkerLayers = [[NSMutableArray alloc] init];
+        _shouldUpdatePreferredFrameWidthCache = YES;
+        _shouldUpdatePreferredMaximumHeightOfMarker = YES;
     }
     return self;
 }
@@ -60,9 +62,9 @@
         [markerLayersToRemove makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
         [_sortedMarkerLayers removeObjectsInRange:rangeOfmarkerLayersToRemove];
     }
-    
+
     NSParameterAssert([aHours count] == [_sortedMarkerLayers count]);
-    
+
     [aHours enumerateObjectsUsingBlock:^(NSString *marker, NSUInteger idx, BOOL *stop) {
         WLCalendarTimeRulerMarkerLayer *l = [_sortedMarkerLayers objectAtIndex:idx];
         if (![[l.marker string] isEqualToString:marker])
@@ -84,6 +86,8 @@
             _shouldUpdatePreferredFrameWidthCache = YES;
         }
     }];
+
+    _shouldUpdatePreferredMaximumHeightOfMarker = YES;
 }
 
 
@@ -91,10 +95,17 @@
 
 - (CGFloat)maximumHeightOfMarker
 {
-    CGFloat maxHeightOfMarker = 0.0;
-    for (CALayer *l in _sortedMarkerLayers)
-        maxHeightOfMarker = fmax(maxHeightOfMarker, [l preferredFrameSize].height);
-    return maxHeightOfMarker;
+    if ([_sortedMarkerLayers count] == 0)
+        return 0.0;
+
+    if (_shouldUpdatePreferredMaximumHeightOfMarker)
+    {
+        _cachedMaximumHeightOfMarker = 0.0;
+        for (CALayer *l in _sortedMarkerLayers)
+            _cachedMaximumHeightOfMarker = fmax(_cachedMaximumHeightOfMarker, [l preferredFrameSize].height);
+        _shouldUpdatePreferredMaximumHeightOfMarker = NO;
+    }
+    return _cachedMaximumHeightOfMarker;
 }
 
 - (CGFloat)preferredFrameWidth
@@ -130,7 +141,7 @@
 
     if (self.bounds.size.height == 0.0)
         return;
-    
+
     WLHourRange r = [self.timeRuler hourRange];
     NSUInteger numberOfMarkers = [_sortedMarkerLayers count];
     WLEnumerateHourRange(r, NSHourCalendarUnit, ^(NSCalendarUnit aUnit, NSUInteger anIndex, CGFloat aMatchedValue, BOOL *aShouldStop)
