@@ -56,7 +56,7 @@
           <object class="SRRecorderControl" id="313256884">
             <reference key="NSNextResponder" ref="1005"/>
             <int key="NSvFlags">266</int>
-            <string key="NSFrame">{{121, 80}, {147, 22}}</string>
+            <string key="NSFrame">{{121, 110}, {147, 22}}</string>
             <reference key="NSSuperview" ref="1005"/>
             <bool key="NSEnabled">YES</bool>
             <object class="SRRecorderCell" key="NSCell" id="307648179">
@@ -76,7 +76,7 @@
           <object class="NSTextField" id="718117210">
             <reference key="NSNextResponder" ref="1005"/>
             <int key="NSvFlags">268</int>
-            <string key="NSFrame">{{22, 83}, {94, 17}}</string>
+            <string key="NSFrame">{{22, 113}, {94, 17}}</string>
             <reference key="NSSuperview" ref="1005"/>
             <bool key="NSEnabled">YES</bool>
             <object class="NSTextFieldCell" key="NSCell" id="522677204">
@@ -112,7 +112,7 @@
           <object class="SRRecorderControl" id="623287865">
             <reference key="NSNextResponder" ref="1005"/>
             <int key="NSvFlags">266</int>
-            <string key="NSFrame">{{121, 110}, {147, 22}}</string>
+            <string key="NSFrame">{{121, 80}, {147, 22}}</string>
             <reference key="NSSuperview" ref="1005"/>
             <bool key="NSEnabled">YES</bool>
             <object class="SRRecorderCell" key="NSCell" id="176883226">
@@ -132,7 +132,7 @@
           <object class="NSTextField" id="321296329">
             <reference key="NSNextResponder" ref="1005"/>
             <int key="NSvFlags">268</int>
-            <string key="NSFrame">{{17, 113}, {99, 17}}</string>
+            <string key="NSFrame">{{17, 83}, {99, 17}}</string>
             <reference key="NSSuperview" ref="1005"/>
             <bool key="NSEnabled">YES</bool>
             <object class="NSTextFieldCell" key="NSCell" id="415074230">

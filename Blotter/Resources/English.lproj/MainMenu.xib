@@ -86,7 +86,7 @@
 									<reference key="NSOnImage" ref="35465992"/>
 									<reference key="NSMixedImage" ref="502551668"/>
 								</object>
-								<object class="NSMenuItem" id="1064307591">
+								<object class="NSMenuItem" id="378441126">
 									<reference key="NSMenu" ref="110575045"/>
 									<string key="NSTitle">Next Week</string>
 									<string key="NSKeyEquiv"/>
@@ -94,15 +94,7 @@
 									<reference key="NSOnImage" ref="35465992"/>
 									<reference key="NSMixedImage" ref="502551668"/>
 								</object>
-								<object class="NSMenuItem" id="950396830">
-									<reference key="NSMenu" ref="110575045"/>
-									<string key="NSTitle">Previous Week</string>
-									<string key="NSKeyEquiv"/>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="35465992"/>
-									<reference key="NSMixedImage" ref="502551668"/>
-								</object>
-								<object class="NSMenuItem" id="414488286">
+								<object class="NSMenuItem" id="47755310">
 									<reference key="NSMenu" ref="110575045"/>
 									<string key="NSTitle">Current Week</string>
 									<string key="NSKeyEquiv"/>
@@ -110,7 +102,15 @@
 									<reference key="NSOnImage" ref="35465992"/>
 									<reference key="NSMixedImage" ref="502551668"/>
 								</object>
-								<object class="NSMenuItem" id="804249423">
+								<object class="NSMenuItem" id="483685443">
+									<reference key="NSMenu" ref="110575045"/>
+									<string key="NSTitle">Previous Week</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="35465992"/>
+									<reference key="NSMixedImage" ref="502551668"/>
+								</object>
+								<object class="NSMenuItem" id="715894517">
 									<reference key="NSMenu" ref="110575045"/>
 									<bool key="NSIsDisabled">YES</bool>
 									<bool key="NSIsSeparator">YES</bool>
@@ -271,7 +271,7 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">showNextWeek:</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="1064307591"/>
+						<reference key="destination" ref="378441126"/>
 					</object>
 					<int key="connectionID">561</int>
 				</object>
@@ -279,7 +279,7 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">showCurrentWeek:</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="414488286"/>
+						<reference key="destination" ref="47755310"/>
 					</object>
 					<int key="connectionID">562</int>
 				</object>
@@ -287,7 +287,7 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">showPreviousWeek:</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="950396830"/>
+						<reference key="destination" ref="483685443"/>
 					</object>
 					<int key="connectionID">563</int>
 				</object>
@@ -295,7 +295,7 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">_showNextWeekMenuItem</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="1064307591"/>
+						<reference key="destination" ref="378441126"/>
 					</object>
 					<int key="connectionID">564</int>
 				</object>
@@ -303,7 +303,7 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">_showCurrentWeekMenuItem</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="414488286"/>
+						<reference key="destination" ref="47755310"/>
 					</object>
 					<int key="connectionID">565</int>
 				</object>
@@ -311,7 +311,7 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">_showPreviousWeekMenuItem</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="950396830"/>
+						<reference key="destination" ref="483685443"/>
 					</object>
 					<int key="connectionID">566</int>
 				</object>
@@ -375,10 +375,10 @@
 							<reference ref="303983688"/>
 							<reference ref="584148628"/>
 							<reference ref="220675175"/>
-							<reference ref="804249423"/>
-							<reference ref="1064307591"/>
-							<reference ref="414488286"/>
-							<reference ref="950396830"/>
+							<reference ref="715894517"/>
+							<reference ref="378441126"/>
+							<reference ref="47755310"/>
+							<reference ref="483685443"/>
 						</object>
 						<reference key="parent" ref="694149608"/>
 					</object>
@@ -424,22 +424,22 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">557</int>
-						<reference key="object" ref="804249423"/>
+						<reference key="object" ref="715894517"/>
 						<reference key="parent" ref="110575045"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">558</int>
-						<reference key="object" ref="1064307591"/>
+						<reference key="object" ref="378441126"/>
 						<reference key="parent" ref="110575045"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">559</int>
-						<reference key="object" ref="414488286"/>
+						<reference key="object" ref="47755310"/>
 						<reference key="parent" ref="110575045"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">560</int>
-						<reference key="object" ref="950396830"/>
+						<reference key="object" ref="483685443"/>
 						<reference key="parent" ref="110575045"/>
 					</object>
 				</object>
