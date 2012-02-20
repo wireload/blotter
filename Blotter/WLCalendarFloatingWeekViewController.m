@@ -20,16 +20,34 @@
 {
     NSParameterAssert([self representedObject] != nil);
 
-    mode = newMode;
-    if (self.isViewLoaded)
+    if (newMode != mode)
     {
-        WLCalendarWeekView *v = [self view];
-        [v stopAnimations];
-        [CATransaction begin];
-        [CATransaction setDisableActions:YES];
-        [v setIndexOfHighlightedColumn:[self indexOfColumnForToday]];
-        [v reloadDataAnimated:NO];
-        [CATransaction commit];
+        [self willChangeValueForKey:@"mode"];
+        NSDate *oldDate = [self firstColumnDate];
+        mode = newMode;
+        if (weeksOffset != 0)
+        {
+            [self willChangeValueForKey:@"weeksOffset"];
+            weeksOffset = 0;
+            [self didChangeValueForKey:@"weeksOffset"];
+        }
+        [self didChangeValueForKey:@"mode"];
+        if (self.isViewLoaded)
+        {
+            WLCalendarWeekView *v = [self view];
+            [CATransaction begin];
+            [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear]];
+            [CATransaction setAnimationDuration:.25];
+            NSDate *newDate = [self firstColumnDate];
+            NSInteger daysBetweenDates = [oldDate WL_numberOfDaysToDate:newDate calendar:[self representedObject].calendar];
+            NSUInteger positiveDaysBetweenDates = ABS(daysBetweenDates);
+            [v showDays:MIN(positiveDaysBetweenDates, [self numberOfColumnsInWeekView:v])
+               hideDays:MIN(positiveDaysBetweenDates, [v numberOfColumns])
+              direction:(daysBetweenDates > 0) ? WLRightToLeftDirection : WLLeftToRightDirection
+               animated:YES];
+            [v setIndexOfHighlightedColumn:[self indexOfColumnForToday]];
+            [CATransaction commit];
+        }
     }
 }
 
@@ -38,24 +56,32 @@
     if (newWeeksOffset != weeksOffset)
     {
         NSInteger diff = newWeeksOffset - weeksOffset;
+        [self willChangeValueForKey:@"weeksOffset"];
         weeksOffset = newWeeksOffset;
+        [self didChangeValueForKey:@"weeksOffset"];
         if (self.isViewLoaded)
         {
             WLCalendarWeekView *v = [self view];
             [CATransaction begin];
-            [CATransaction setAnimationDuration:0.25];
+            [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear]];
+            [CATransaction setAnimationDuration:.25];
             [v showDays:[self numberOfColumnsInWeekView:v]
                hideDays:[v numberOfColumns]
               direction:(diff > 0) ? WLRightToLeftDirection : WLLeftToRightDirection
                animated:YES];
             [v setIndexOfHighlightedColumn:[self indexOfColumnForToday]];
-            v.ist
+            v.showsTimeIndicator = (weeksOffset == 0);
             [CATransaction commit];
         }
     }
 }
 
 + (BOOL)automaticallyNotifiesObserversOfWeeksOffset
+{
+    return NO;
+}
+
++ (BOOL)automaticallyNotifiesObserversOfMode
 {
     return NO;
 }
@@ -96,20 +122,19 @@
     NSParameterAssert([self representedObject] != nil);
 
     NSCalendar *calendar = [[self representedObject] calendar];
-    NSDate *date = [[self representedObject] date];
     NSDateComponents *weekComponents = [[NSDateComponents alloc] init];
     if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
         [weekComponents setWeek:self.weeksOffset];
     else
         [weekComponents setWeekOfMonth:self.weeksOffset];
-    date = [calendar dateByAddingComponents:weekComponents toDate:date options:0];
+    NSDate *effectiveRepresentedDate = [calendar dateByAddingComponents:weekComponents toDate:[self representedObject].date options:0];
     [weekComponents release];
 
     switch (mode) {
         case WLCalendarWeekViewDayMode:
         {
-            NSDateComponents *dateNoonComponents = [calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:date];
-            NSRange hoursRange = [calendar rangeOfUnit:NSHourCalendarUnit inUnit:NSDayCalendarUnit forDate:date];
+            NSDateComponents *dateNoonComponents = [calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:effectiveRepresentedDate];
+            NSRange hoursRange = [calendar rangeOfUnit:NSHourCalendarUnit inUnit:NSDayCalendarUnit forDate:effectiveRepresentedDate];
             [dateNoonComponents setHour:NSMaxRange(hoursRange) / 2];
             return [calendar dateFromComponents:dateNoonComponents];
         }
@@ -117,9 +142,9 @@
         {
             NSDate *firstWeekday = nil;
             if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-                [calendar rangeOfUnit:NSWeekCalendarUnit startDate:&firstWeekday interval:NULL forDate:date];
+                [calendar rangeOfUnit:NSWeekCalendarUnit startDate:&firstWeekday interval:NULL forDate:effectiveRepresentedDate];
             else
-                [calendar rangeOfUnit:NSWeekOfMonthCalendarUnit startDate:&firstWeekday interval:NULL forDate:date];
+                [calendar rangeOfUnit:NSWeekOfMonthCalendarUnit startDate:&firstWeekday interval:NULL forDate:effectiveRepresentedDate];
             NSRange hoursRange = [calendar rangeOfUnit:NSHourCalendarUnit inUnit:NSDayCalendarUnit forDate:firstWeekday];
             NSDateComponents *firstWeekdayNoonComponents = [calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
                                                                    fromDate:firstWeekday];
@@ -179,9 +204,7 @@
 {
     NSCalendar *calendar = [[self representedObject] calendar];
     // To properly animate date change, we have to know direction, and amount of days to update.
-    NSDate *startOfOldDate = [anOldDate WL_startOfDay:calendar];
-    NSDate *startOfNewDate = [aNewDate WL_startOfDay:calendar];
-    NSInteger daysBetweenDates = [[calendar components:NSDayCalendarUnit fromDate:startOfOldDate toDate:startOfNewDate options:0] day];
+    NSInteger daysBetweenDates = [anOldDate WL_numberOfDaysToDate:aNewDate calendar:calendar];
     WLCalendarWeekView *v = [self view];
     if (daysBetweenDates == 0)
         [v scrollHour:[self currentHour] animated:YES];
@@ -195,13 +218,13 @@
                 NSInteger newWeek = 0;
                 if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
                 {
-                    oldWeek = [[calendar components:NSWeekCalendarUnit fromDate:startOfOldDate] week];
-                    newWeek = [[calendar components:NSWeekCalendarUnit fromDate:startOfNewDate] week];
+                    oldWeek = [[calendar components:NSWeekCalendarUnit fromDate:anOldDate] week];
+                    newWeek = [[calendar components:NSWeekCalendarUnit fromDate:aNewDate] week];
                 }
                 else
                 {
-                    oldWeek = [[calendar components:NSWeekOfMonthCalendarUnit fromDate:startOfOldDate] weekOfMonth];
-                    newWeek = [[calendar components:NSWeekOfMonthCalendarUnit fromDate:startOfNewDate] weekOfMonth];
+                    oldWeek = [[calendar components:NSWeekOfMonthCalendarUnit fromDate:anOldDate] weekOfMonth];
+                    newWeek = [[calendar components:NSWeekOfMonthCalendarUnit fromDate:aNewDate] weekOfMonth];
                 }
 
                 if (oldWeek != newWeek)
@@ -227,13 +250,13 @@
                 NSInteger newWeek = 0;
                 if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
                 {
-                    oldWeek = [[calendar components:NSWeekCalendarUnit fromDate:startOfOldDate] week];
-                    newWeek = [[calendar components:NSWeekCalendarUnit fromDate:startOfNewDate] week];
+                    oldWeek = [[calendar components:NSWeekCalendarUnit fromDate:anOldDate] week];
+                    newWeek = [[calendar components:NSWeekCalendarUnit fromDate:aNewDate] week];
                 }
                 else
                 {
-                    oldWeek = [[calendar components:NSWeekOfMonthCalendarUnit fromDate:startOfOldDate] weekOfMonth];
-                    newWeek = [[calendar components:NSWeekOfMonthCalendarUnit fromDate:startOfNewDate] weekOfMonth];
+                    oldWeek = [[calendar components:NSWeekOfMonthCalendarUnit fromDate:anOldDate] weekOfMonth];
+                    newWeek = [[calendar components:NSWeekOfMonthCalendarUnit fromDate:aNewDate] weekOfMonth];
                 }
 
                 if (oldWeek != newWeek)
@@ -241,13 +264,10 @@
                 break;
             }
             case WLCalendarWeekViewDayMode:
-                [CATransaction begin];
-                [CATransaction setAnimationDuration:1.5];
                 [v showDays:MIN((NSUInteger)-daysBetweenDates, [self numberOfColumnsInWeekView:v])
                    hideDays:MIN((NSUInteger)-daysBetweenDates, [v numberOfColumns])
                   direction:WLLeftToRightDirection
                    animated:YES];
-                [CATransaction commit];
                 break;
         }
         [v scrollHour:[self currentHour] animated:YES];
@@ -274,6 +294,18 @@
         case WLCalendarWeekViewDayMode:
             return [super numberOfColumnsInWeekView:aWeekView];
     }
+}
+
+@end
+
+
+@implementation NSDate (WLCalendarFloatingWeekViewController)
+
+- (NSInteger)WL_numberOfDaysToDate:(NSDate *)aDate calendar:(NSCalendar *)aCalendar
+{
+    NSDate *startOfOldDate = [self WL_startOfDay:aCalendar];
+    NSDate *startOfNewDate = [aDate WL_startOfDay:aCalendar];
+    return [[aCalendar components:NSDayCalendarUnit fromDate:startOfOldDate toDate:startOfNewDate options:0] day];
 }
 
 @end

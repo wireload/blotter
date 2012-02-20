@@ -23,6 +23,7 @@ typedef enum
 
 /*!
  @discussion    Default value is WLCalendarWeekViewWeekMode.
+ Resets weeksOffset to 0.
  */
 @property (nonatomic) WLCalendarWeekViewMode mode;
 
@@ -36,5 +37,12 @@ typedef enum
 - (IBAction)showPreviousWeek:(id)aSender;
 
 - (IBAction)showCurrentWeek:(id)aSender;
+
+@end
+
+
+@interface NSDate (WLCalendarFloatingWeekViewController)
+
+- (NSInteger)WL_numberOfDaysToDate:(NSDate *)aDate calendar:(NSCalendar *)aCalendar;
 
 @end
