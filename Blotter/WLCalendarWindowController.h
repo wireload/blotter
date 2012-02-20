@@ -52,6 +52,12 @@
 
 - (IBAction)showCurrentWeek:(id)aSender;
 
+- (BOOL)canShowNextWeek;
+
+- (BOOL)canShowCurrentWeek;
+
+- (BOOL)canShowPreviousWeek;
+
 - (BOOL)isCurrentWeekShowed;
 
 @end

@@ -15,6 +15,9 @@
 #pragma mark Properties
 @synthesize mode;
 @synthesize weeksOffset;
+@dynamic canShowNextWeek;
+@dynamic canShowCurrentWeek;
+@dynamic canShowPreviousWeek;
 
 - (void)setMode:(WLCalendarWeekViewMode)newMode
 {
@@ -76,6 +79,21 @@
     }
 }
 
+- (BOOL)canShowNextWeek
+{
+    return self.weeksOffset != NSIntegerMax;
+}
+
+- (BOOL)canShowCurrentWeek
+{
+    return YES;
+}
+
+- (BOOL)canShowPreviousWeek
+{
+    return self.weeksOffset != NSIntegerMin;
+}
+
 + (BOOL)automaticallyNotifiesObserversOfWeeksOffset
 {
     return NO;
@@ -86,24 +104,40 @@
     return NO;
 }
 
++ (NSSet *)keyPathsForValuesAffectingCanShowNextWeek
+{
+    return [NSSet setWithObject:@"weeksOffset"];
+}
+
++ (NSSet *)keyPathsForValuesAffectingCanShowCurrentWeek
+{
+    return [NSSet setWithObject:@"weeksOffset"];
+}
+
++ (NSSet *)keyPathsForValuesAffectingCanShowPreviousWeek
+{
+    return [NSSet setWithObject:@"weeksOffset"];
+}
+
 
 #pragma mark Methods
 
 - (IBAction)showNextWeek:(id)aSender
 {
-    if (self.weeksOffset != NSIntegerMax)
+    if (self.canShowNextWeek)
         self.weeksOffset += 1;
-}
-
-- (IBAction)showPreviousWeek:(id)aSender
-{
-    if (self.weeksOffset != NSIntegerMin)
-        self.weeksOffset -= 1;
 }
 
 - (IBAction)showCurrentWeek:(id)aSender
 {
-    self.weeksOffset = 0;
+    if (self.canShowCurrentWeek)
+        self.weeksOffset = 0;
+}
+
+- (IBAction)showPreviousWeek:(id)aSender
+{
+    if (self.canShowPreviousWeek)
+        self.weeksOffset -= 1;
 }
 
 

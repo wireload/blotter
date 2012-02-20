@@ -133,23 +133,32 @@ const NSSize BLMinimumSize = {280, 215};
 
 - (IBAction)showNextWeek:(id)aSender
 {
-    NSParameterAssert(_isWindowShowed);
-    
     [_weekViewController showNextWeek:aSender];
 }
 
 - (IBAction)showPreviousWeek:(id)aSender
 {
-    NSParameterAssert(_isWindowShowed);
-    
     [_weekViewController showPreviousWeek:aSender];
 }
 
 - (IBAction)showCurrentWeek:(id)aSender
 {
-    NSParameterAssert(_isWindowShowed);
-    
     [_weekViewController showCurrentWeek:aSender];
+}
+
+- (BOOL)canShowNextWeek
+{
+    return _weekViewController.canShowNextWeek;
+}
+
+- (BOOL)canShowCurrentWeek
+{
+    return _weekViewController.canShowCurrentWeek;
+}
+
+- (BOOL)canShowPreviousWeek
+{
+    return _weekViewController.canShowPreviousWeek;
 }
 
 - (BOOL)isCurrentWeekShowed

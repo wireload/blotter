@@ -20,6 +20,9 @@
     IBOutlet NSMenu *_statusMenu;
     IBOutlet NSMenuItem *_newEventMenuItem;
     IBOutlet NSMenuItem *_newTaskMenuItem;
+    IBOutlet NSMenuItem *_showNextWeekMenuItem;
+    IBOutlet NSMenuItem *_showCurrentWeekMenuItem;
+    IBOutlet NSMenuItem *_showPreviousWeekMenuItem;
     IBOutlet NSMenuItem *preferencesMenuItem;
     SS_PrefsController *_preferencesController;
 }

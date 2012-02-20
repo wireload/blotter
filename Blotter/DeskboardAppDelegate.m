@@ -216,6 +216,45 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         }
         return [[WLNewTaskWindowController sharedWindowController] canCreateTask];
     }
+    else if (aMenuItem == _showNextWeekMenuItem)
+    {
+        NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutShowNextWeek"];
+        if (shortcut != nil) {
+            [aMenuItem setKeyEquivalent:[shortcut objectForKey:SRShortcutCharactersIgnoringModifiers]];
+            [aMenuItem setKeyEquivalentModifierMask:[[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue]];
+        }
+        else {
+            [aMenuItem setKeyEquivalent:@""];
+            [aMenuItem setKeyEquivalentModifierMask:0];
+        }
+        return [self.calendarWindowController canShowNextWeek];
+    }
+    else if (aMenuItem == _showCurrentWeekMenuItem)
+    {
+        NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutShowCurrentWeek"];
+        if (shortcut != nil) {
+            [aMenuItem setKeyEquivalent:[shortcut objectForKey:SRShortcutCharactersIgnoringModifiers]];
+            [aMenuItem setKeyEquivalentModifierMask:[[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue]];
+        }
+        else {
+            [aMenuItem setKeyEquivalent:@""];
+            [aMenuItem setKeyEquivalentModifierMask:0];
+        }
+        return [self.calendarWindowController canShowCurrentWeek];
+    }
+    else if (aMenuItem == _showPreviousWeekMenuItem)
+    {
+        NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutShowPreviousWeek"];
+        if (shortcut != nil) {
+            [aMenuItem setKeyEquivalent:[shortcut objectForKey:SRShortcutCharactersIgnoringModifiers]];
+            [aMenuItem setKeyEquivalentModifierMask:[[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue]];
+        }
+        else {
+            [aMenuItem setKeyEquivalent:@""];
+            [aMenuItem setKeyEquivalentModifierMask:0];
+        }
+        return [self.calendarWindowController canShowPreviousWeek];
+    }
     else
         return YES;
 }

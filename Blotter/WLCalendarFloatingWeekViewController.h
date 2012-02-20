@@ -32,6 +32,12 @@ typedef enum
  */
 @property (nonatomic) NSInteger weeksOffset;
 
+@property (nonatomic, readonly) BOOL canShowNextWeek;
+
+@property (nonatomic, readonly) BOOL canShowCurrentWeek;
+
+@property (nonatomic, readonly) BOOL canShowPreviousWeek;
+
 - (IBAction)showNextWeek:(id)aSender;
 
 - (IBAction)showPreviousWeek:(id)aSender;
