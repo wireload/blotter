@@ -25,6 +25,7 @@
     IBOutlet NSMenuItem *_showPreviousWeekMenuItem;
     IBOutlet NSMenuItem *preferencesMenuItem;
     SS_PrefsController *_preferencesController;
+    NSTimer *_showCurrentWeekTimer;
 }
 
 @property (readonly) WLCalendarWindowController *calendarWindowController;
@@ -53,6 +54,12 @@
  @see https://tracker.wireload.net/projects/blotter/wiki/Autohide
  */
 - (void)autohideCalendarWindowIfAllConditionsAreMet;
+
+- (void)_scheduleShowCurrentWeekTimerIfNeeded;
+
+- (void)_removeShowCurrentWeekTimerIfNeeded;
+
+- (void)_showCurrentWeekTimerDidFire;
 
 
 - (BOOL)_isOnlyCalendarWindowVisible:(NSArray *)aVisibleWindows;

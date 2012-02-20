@@ -68,6 +68,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     [userDefaults removeObserver:self forKeyPath:@"shortcutShowPreviousWeek"];
     [userDefaults removeObserver:self forKeyPath:@"shortcutShowCurrentWeek"];
     [_preferencesController release];
+    [_showCurrentWeekTimer invalidate];
     [super dealloc];
 }
 
@@ -83,10 +84,10 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     if (_preferencesController == nil) {
         // Determine path to the sample preference panes
         NSString *pathToPanes = [[[NSBundle mainBundle] resourcePath] stringByStandardizingPath];
-        
+
         _preferencesController = [[SS_PrefsController alloc] initWithPanesSearchPath:pathToPanes];
         [_preferencesController setDebug:YES];
-        
+
         // Set which panes are included, and their order.
         [_preferencesController setPanesOrder:[NSArray arrayWithObjects:NSLocalizedStringFromTableInBundle(@"General", nil, [_preferencesController bundle], nil),
                                                NSLocalizedStringFromTableInBundle(@"Positioning", nil, [_preferencesController bundle], nil),
@@ -136,22 +137,35 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 {
     [self.calendarWindowController showNextWeek:aSender];
     if ([self.calendarWindowController isCurrentWeekShowed])
+    {
+        [self _removeShowCurrentWeekTimerIfNeeded];
         [self autohideCalendarWindowIfAllConditionsAreMet];
+    }
     else
+    {
+        [self _scheduleShowCurrentWeekTimerIfNeeded];
         [[calendarWindowController fadeController] fadeIn];
+    }
 }
 
 - (IBAction)showPreviousWeek:(id)aSender
 {
     [self.calendarWindowController showPreviousWeek:aSender];
     if ([self.calendarWindowController isCurrentWeekShowed])
+    {
+        [self _removeShowCurrentWeekTimerIfNeeded];
         [self autohideCalendarWindowIfAllConditionsAreMet];
+    }
     else
+    {
+        [self _scheduleShowCurrentWeekTimerIfNeeded];
         [[calendarWindowController fadeController] fadeIn];
+    }
 }
 
 - (IBAction)showCurrentWeek:(id)aSender
 {
+    [self _removeShowCurrentWeekTimerIfNeeded];
     [self.calendarWindowController showCurrentWeek:aSender];
     [self autohideCalendarWindowIfAllConditionsAreMet];
 }
@@ -281,7 +295,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     _statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength] retain];;
     [_statusItem setHighlightMode:YES];
     [_statusItem setMenu:_statusMenu];
-    
+
     NSImage *statusImage = [NSImage imageNamed:@"blotter-status-bar"];
     NSImage *statusHighlightImage = [NSImage imageNamed:@"blotter-status-bar-active"];
     [_statusItem setImage:statusImage];
@@ -295,6 +309,34 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         return [w isVisible] && ![[w className] hasPrefix:@"NSStatusBarWindow"];
     }]];
     return ([visibleWindows count] == 1); // If only desktop window is visible
+}
+
+- (void)_scheduleShowCurrentWeekTimerIfNeeded
+{
+    [self _removeShowCurrentWeekTimerIfNeeded];
+    NSInteger delay = [[NSUserDefaults standardUserDefaults] integerForKey:@"AutoShowCurrentWeekDelay"];
+    if (delay > 0)
+    {
+        _showCurrentWeekTimer = [NSTimer scheduledTimerWithTimeInterval:delay
+                                                                 target:self
+                                                               selector:@selector(_showCurrentWeekTimerDidFire)
+                                                               userInfo:nil
+                                                                repeats:NO];
+    }
+    else
+        _showCurrentWeekTimer = nil;
+}
+
+- (void)_removeShowCurrentWeekTimerIfNeeded
+{
+    [_showCurrentWeekTimer invalidate];
+    _showCurrentWeekTimer = nil;
+}
+
+- (void)_showCurrentWeekTimerDidFire
+{
+    _showCurrentWeekTimer = nil;
+    [self showCurrentWeek:self];
 }
 
 
@@ -351,7 +393,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
     calendarWindowController = [[WLCalendarWindowController alloc] init];
     [calendarWindowController showWindow:self];
-    
+
     // Show preferences at first start.
     if ([userDefaults boolForKey:@"ShowPreferencesAtStartUp"])
     {
@@ -365,7 +407,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 - (void)applicationDidBecomeActive:(NSNotification *)aNotification
 {
     [self.calendarWindowController.fadeController fadeIn];
-    
+
     if ([self isOnlyCalendarWindowVisible])
         [NSApp hide:self];
 }

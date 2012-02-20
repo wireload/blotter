@@ -48,5 +48,7 @@
 	<integer>0</integer>
 	<key>AllowsAdvancedCalendarTypeCheck</key>
 	<true/>
+	<key>AutoShowCurrentWeekDelay</key>
+	<integer>5</integer>
 </dict>
 </plist>
