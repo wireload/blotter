@@ -32,7 +32,7 @@
     return [[self representedObject] date];
 }
 
-- (void)dateDidChangeFromDate:(NSDate *)anOldDate toDate:(NSDate *)aNewDate
+- (void)representedDateDidChangeFromDate:(NSDate *)anOldDate toDate:(NSDate *)aNewDate
 {
     NSCalendar *calendar = [[self representedObject] calendar];
     // To properly animate date change, we have to know direction, and amount of days to update.

@@ -55,7 +55,7 @@ typedef enum
 /*!
  @abstract      Returns events for columns at given indexes.
  @param         aFirstDate is the day of the column at index 0.
- @discussion    E.g. if want to get events for last 3 days of next week, pass the {4, 5, 6} index set and aFirstDate equal to the first date of the week.
+ @discussion    E.g. if want to get events for last 3 days of next week, pass the {4, 5, 6} index set and aFirstDate equal to the first date of next week.
  */
 - (NSArray *)eventsForColumnsAtIndexes:(NSIndexSet *)anIndexSet firstDate:(NSDate *)aFirstDate;
 
@@ -65,24 +65,24 @@ typedef enum
 - (WLDateRange *)dateRangeForColumnAtIndex:(NSUInteger)anIndex;
 
 /*!
- @abstract   Subclass should implement this method.
+ @abstract   Subclass MUST implement this method.
  */
 - (NSUInteger)indexOfColumnForToday;
 
 /*!
- @abstract   Subclass should implement this method.
+ @abstract   Subclass MUST implement this method.
  */
 - (NSDate *)firstColumnDate;
 
 /*!
- @abstract   Subclass should implement this method to setup aView before it will receive -setupLayer.
+ @abstract   Subclass CAN implement this method to setup aView before it will receive -setupLayer. MUST call super.
  */
 - (void)viewWillSetupLayers:(WLCalendarWeekView *)aView;
 
 /*!
- @abstract   Subclass should implement this method and update week view appropriately.
+ @abstract   Subclass SHOULD implement this method and update week view appropriately.
  */
-- (void)dateDidChangeFromDate:(NSDate *)anOldDate toDate:(NSDate *)aNewDate;
+- (void)representedDateDidChangeFromDate:(NSDate *)anOldDate toDate:(NSDate *)aNewDate;
 
 
 @property (nonatomic, retain) NSDateFormatter *_dateFormatter;

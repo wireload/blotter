@@ -127,6 +127,8 @@ static NSString* const _WLEventsKey = @"events";
 
 - (WLDateRange *)dateRangeForColumnAtIndex:(NSUInteger)anIndex
 {
+    NSParameterAssert([self representedObject] != nil);
+
     NSDateComponents *columnDateComponents = [[NSDateComponents alloc] init];
     [columnDateComponents setDay:anIndex];
     NSDate *firstColumnDate = [self firstColumnDate];
@@ -163,7 +165,7 @@ static NSString* const _WLEventsKey = @"events";
     [aView scrollHour:[self currentHour] animated:NO];
 }
 
-- (void)dateDidChangeFromDate:(NSDate *)anOldDate toDate:(NSDate *)aNewDate
+- (void)representedDateDidChangeFromDate:(NSDate *)anOldDate toDate:(NSDate *)aNewDate
 {
 }
 
@@ -223,11 +225,11 @@ static NSString* const _WLEventsKey = @"events";
 {
     _columnsData = [[NSMutableDictionary alloc] initWithCapacity:[anIndexSet count]];
 
-    NSDate *firstDate = [self firstColumnDate];
+    NSDate *firstColumnDate = [self firstColumnDate];
 
     NSArray *events = nil;
     if (dataUnits & WLCalendarWeekViewEventsDataUnit)
-        events = [self eventsForColumnsAtIndexes:anIndexSet firstDate:firstDate];
+        events = [self eventsForColumnsAtIndexes:anIndexSet firstDate:firstColumnDate];
 
     NSDateFormatter *titleFormatter = self._dateFormatter;
     NSCalendar *calendar = [[self representedObject] calendar];
@@ -470,7 +472,7 @@ static NSString* const _WLEventsKey = @"events";
     {
         NSDate *old = [aChange objectForKey:NSKeyValueChangeOldKey];
         NSDate *new = [aChange objectForKey:NSKeyValueChangeNewKey];
-        [self dateDidChangeFromDate:old toDate:new];
+        [self representedDateDidChangeFromDate:old toDate:new];
         [[self view] setIndexOfHighlightedColumn:[self indexOfColumnForToday]];
     }
     else
