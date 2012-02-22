@@ -17,8 +17,19 @@
 
 @interface WLCalendarDayEventsLayer : CALayer {
     BOOL keepsTextOfEventsVisible;
-    BOOL _needsUpdateHourRangeOfEvents;
+
     WLHourRange hourRangeOfEvents;
+    BOOL _needsUpdateHourRangeOfEvents;
+
+    struct
+    {
+        CGFloat cachedLayerHeight;
+        CGFloat cachedStartHour;
+        WLHourRange cachedOutHourRange;
+        CGFloat cachedOutLayerHeight;
+    } _toFitAllEventsCache;
+    BOOL _needsUpdateToFitAllEventsCache;
+
     NSMutableArray *_sortedByStartDateEventLayers;
     NSTreeNode *_eventsLayoutTreeRootNode;
 }

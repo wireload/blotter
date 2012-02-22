@@ -45,6 +45,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
     {
         _sortedByStartDateEventLayers = [[NSMutableArray alloc] init];
         _needsUpdateHourRangeOfEvents = YES;
+        _needsUpdateToFitAllEventsCache = YES;
     }
     return self;
 }
@@ -107,6 +108,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
     [unusedSublayers release];
 
     _needsUpdateHourRangeOfEvents = YES;
+    _needsUpdateToFitAllEventsCache = YES;
 }
 
 - (void)setKeepsTextOfEventsVisible:(BOOL)newKeepTextOfEventsVisible
@@ -169,45 +171,77 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
                               hourRange:(out WLHourRange *)outHourRange
         shouldBePlacedWithinLayerHeight:(out CGFloat *)outLayerHeight;
 {
+    NSParameterAssert(aLayerHeight >= 0.0);
+
     WLHourRange hourRange = [self hourRangeOfEvents];
     if (WLHourRangeEqualToHourRange(hourRange, WLHourRangeZero))
         return NO;
+    else if (outHourRange == NULL && outLayerHeight == NULL)
+        return YES;
 
     NSParameterAssert(aStartHour <= hourRange.startHour);
 
-    hourRange.startHour = aStartHour;
-    WLHourRange hourRangeOfEventsExceptBottommost = WLHourRangeZero;
-    CGFloat availableLayerHeight = CGFLOAT_MAX;
-    CGFloat heightOfHour = CGFLOAT_MAX;
-    for (WLCalendarEventLayer *eventLayer in _sortedByStartDateEventLayers)
-    {
-        WLHourRange hourRangeOfEventsExceptCurrentEventLayer = WLHourRangeMake(hourRange.startHour,
-                                                                               [self _startHourOfEventLayer:eventLayer]);
-        CGFloat l = WLHourRangeLength(hourRangeOfEventsExceptCurrentEventLayer);
-        if (l > 0.0)
-        {
-            CGFloat minHeightOfEventLayer = [eventLayer minimumHumanVisibleHeight];
-            CGFloat currentAvailableLayerHeight = fdimf(aLayerHeight, minHeightOfEventLayer);
-            CGFloat currentHeightOfHour = currentAvailableLayerHeight / l;
-            if (currentHeightOfHour < heightOfHour)
-            {
-                hourRangeOfEventsExceptBottommost = hourRangeOfEventsExceptCurrentEventLayer;
-                availableLayerHeight = currentAvailableLayerHeight;
-                heightOfHour = currentHeightOfHour;
-            }
-        }
-    }
-
-    if (availableLayerHeight != CGFLOAT_MAX && heightOfHour != CGFLOAT_MAX)
+    if (IS_EQ_F(aLayerHeight, 0.0))
     {
         if (outHourRange != NULL)
-            *outHourRange = hourRangeOfEventsExceptBottommost;
+            *outHourRange = hourRange;
         if (outLayerHeight != NULL)
-            *outLayerHeight = availableLayerHeight;
+            *outLayerHeight = 0.0;
         return YES;
     }
+
+    // According to tests, this method is called very often with the same parameters.
+    // Caching the result of last call improves performance.
+    if (_needsUpdateToFitAllEventsCache ||
+        !IS_EQ_F(_toFitAllEventsCache.cachedLayerHeight, aLayerHeight) ||
+        !IS_EQ_F(_toFitAllEventsCache.cachedStartHour, aStartHour))
+    {
+        hourRange.startHour = aStartHour;
+        WLHourRange hourRangeOfEventsExceptBottommost = WLHourRangeZero;
+        CGFloat availableLayerHeight = CGFLOAT_MAX;
+        CGFloat heightOfHour = CGFLOAT_MAX;
+        for (WLCalendarEventLayer *eventLayer in _sortedByStartDateEventLayers)
+        {
+            WLHourRange hourRangeOfEventsExceptCurrentEventLayer = WLHourRangeMake(hourRange.startHour,
+                                                                                   [self _startHourOfEventLayer:eventLayer]);
+            CGFloat l = WLHourRangeLength(hourRangeOfEventsExceptCurrentEventLayer);
+            if (l > 0.0)
+            {
+                CGFloat minHeightOfEventLayer = [eventLayer minimumHumanVisibleHeight];
+                CGFloat currentAvailableLayerHeight = fdim(aLayerHeight, minHeightOfEventLayer);
+                CGFloat currentHeightOfHour = currentAvailableLayerHeight / l;
+                if (currentHeightOfHour < heightOfHour)
+                {
+                    hourRangeOfEventsExceptBottommost = hourRangeOfEventsExceptCurrentEventLayer;
+                    availableLayerHeight = currentAvailableLayerHeight;
+                    heightOfHour = currentHeightOfHour;
+                }
+            }
+        }
+
+        BOOL success = (availableLayerHeight != CGFLOAT_MAX && heightOfHour != CGFLOAT_MAX);
+        if (success)
+        {
+            _toFitAllEventsCache.cachedLayerHeight = aLayerHeight;
+            _toFitAllEventsCache.cachedStartHour = aStartHour;
+            _toFitAllEventsCache.cachedOutHourRange = hourRangeOfEventsExceptBottommost;
+            _toFitAllEventsCache.cachedOutLayerHeight = availableLayerHeight;
+            _needsUpdateToFitAllEventsCache = NO;
+            if (outHourRange != NULL)
+                *outHourRange = _toFitAllEventsCache.cachedOutHourRange;
+            if (outLayerHeight != NULL)
+                *outLayerHeight = _toFitAllEventsCache.cachedOutLayerHeight;
+        }
+        return success;
+    }
     else
-        return NO;
+    {
+        if (outHourRange != NULL)
+            *outHourRange = _toFitAllEventsCache.cachedOutHourRange;
+        if (outLayerHeight != NULL)
+            *outLayerHeight = _toFitAllEventsCache.cachedOutLayerHeight;
+        return YES;
+    }
 }
 
 
@@ -268,7 +302,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
                          usingComparator:^(id aEvent, id bEvent)
     {
         // Storage can represent multiple instances of the same event because it may come from different servers/services.
-        // To make layout consistant we use different parameters of the event.
+        // To make layout consistent we compare different parameters of the event.
         NSComparisonResult result = [[aEvent startDate] compare:[bEvent startDate]];
         if (result == NSOrderedSame)
             result = [[aEvent uid] compare:[bEvent uid]];
