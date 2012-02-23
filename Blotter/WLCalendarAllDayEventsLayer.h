@@ -18,7 +18,6 @@
     NSMutableArray *_icalSortedEventLayers;
 }
 
-// TODO: NSArray -> NSSet
 @property (nonatomic, copy) NSArray *events;
 
 - (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth;
