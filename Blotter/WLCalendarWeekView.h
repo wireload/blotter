@@ -318,6 +318,9 @@ enum
 
 @optional
 
+/*!
+ @discussion    You MUST pair this call with -weekViewDidAskForData:.
+ */
 - (void)weekView:(WLCalendarWeekView *)aWeekView willAskForData:(NSUInteger)dataUnits forColumnsAtIndexes:(NSIndexSet *)anIndexSet;
 
 - (void)weekViewDidAskForData:(WLCalendarWeekView *)aWeekView;
