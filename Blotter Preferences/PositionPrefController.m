@@ -17,7 +17,7 @@
     if (_mainView != nil)
     {
         [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:@"CalendarSize"];
-        [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:@"ScreenIdentifier"];
+        [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:WLScreenIdentifierKey];
     }
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
@@ -86,7 +86,7 @@
             [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:@"CalendarSize"
                                                        options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionPrior
                                                        context:NULL];
-            [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:@"ScreenIdentifier" options:NSKeyValueObservingOptionNew context:NULL];
+            [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:WLScreenIdentifierKey options:NSKeyValueObservingOptionNew context:NULL];
             [[NSNotificationCenter defaultCenter] addObserver:self
                                                      selector:@selector(updatePreferredFrameSizeOfPaneView)
                                                          name:NSApplicationDidChangeScreenParametersNotification
@@ -257,7 +257,7 @@
             [self updatePreferredFrameSizeOfPaneView];
         }
     }
-    else if ([aKeyPath isEqualToString:@"ScreenIdentifier"])
+    else if ([aKeyPath isEqualToString:WLScreenIdentifierKey])
     {
         [self updatePreferredFrameSizeOfPaneView];
         [[_arrangement layer] setNeedsLayout];

@@ -10,6 +10,7 @@
 #import "WLLayoutCalendarWindowView.h"
 #import "DeskboardAppDelegate.h"
 #import "WLCalendarWindowController.h"
+#import "NSUserDefaults+WLApplicationDefaults.h"
 
 
 @implementation LayoutPrefController
@@ -26,7 +27,7 @@
     if (_mainView != nil)
     {
         [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:@"CalendarLayout"];
-        [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:@"ScreenIdentifier"];
+        [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:WLScreenIdentifierKey];
     }
     [super dealloc];
 }
@@ -72,7 +73,7 @@
                                                          name:NSWindowDidResizeNotification
                                                        object:delegate.calendarWindowController.window];
             [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:@"CalendarLayout" options:NSKeyValueObservingOptionNew context:NULL];
-            [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:@"ScreenIdentifier" options:NSKeyValueObservingOptionNew context:NULL];
+            [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:WLScreenIdentifierKey options:NSKeyValueObservingOptionNew context:NULL];
             [[NSNotificationCenter defaultCenter] addObserver:self
                                                      selector:@selector(_screenFrameDidChange)
                                                          name:NSApplicationDidChangeScreenParametersNotification
@@ -480,7 +481,7 @@
             [self _layoutSplitViewsWithParameters:defaultParameters];
         }
     }
-    else if ([aKeyPath isEqualToString:@"ScreenIdentifier"])
+    else if ([aKeyPath isEqualToString:WLScreenIdentifierKey])
         [self _screenFrameDidChange];
     else
         [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];

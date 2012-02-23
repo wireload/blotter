@@ -50,5 +50,7 @@
 	<true/>
 	<key>AutoShowCurrentWeekDelay</key>
 	<integer>45</integer>
+	<key>LastMigratedBundleVersion</key>
+	<string>0</string>
 </dict>
 </plist>

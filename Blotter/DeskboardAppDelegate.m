@@ -6,6 +6,7 @@
 //  Copyright 2010 SlevenBits. All rights reserved.
 //
 
+#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "DeskboardAppDelegate.h"
 #import "WLNewEventWindowController.h"
 #import "WLNewTaskWindowController.h"
@@ -34,26 +35,13 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     if (self == [DeskboardAppDelegate class])
     {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-
-        // In pre 1.3 versions of Blotter CalendarSize was a string.
-        if ([[userDefaults stringForKey:@"CalendarSize"] isEqualToString:@"Narrow"])
-            [userDefaults setInteger:BLNarrowSize forKey:@"CalendarSize"];
-        else if ([[userDefaults stringForKey:@"CalendarSize"] isEqualToString:@"Normal"])
-            [userDefaults setInteger:BLNormalSize forKey:@"CalendarSize"];
-        else if ([[userDefaults stringForKey:@"CalendarSize"] isEqualToString:@"Full"])
-            [userDefaults setInteger:BLFullSize forKey:@"CalendarSize"];
-
-        if ([userDefaults objectForKey:@"ScreenIdentifier"] == nil)
-        {
-            NSNumber *mainScreenID = [[[NSScreen mainScreen] deviceDescription] objectForKey:@"NSScreenNumber"];
-            [userDefaults setObject:mainScreenID forKey:@"ScreenIdentifier"];
-        }
-
+        [userDefaults WL_migrateIfNeeded];
+        [userDefaults WL_setDefaultScreenIdentifierIfNeeded];
         NSURL *defaultsURL = [[NSBundle mainBundle] URLForResource:@"defaults" withExtension:@"plist"];
         NSDictionary *defaults = [NSDictionary dictionaryWithContentsOfURL:defaultsURL];
         [userDefaults registerDefaults:defaults];
-
         // @see -[WLCalendarWindowController tasksViewFrame] for default value of TasksViewHeight.
+        [WLCalendarController synchronizeCalendarInUserDefaultsWithCalCalendars];
     }
 }
 

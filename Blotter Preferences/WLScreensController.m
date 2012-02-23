@@ -8,11 +8,10 @@
 
 #import <IOKit/graphics/IOGraphicsLib.h>
 #import "WLScreensController.h"
+#import "NSUserDefaults+WLApplicationDefaults.h"
 
 
 NSString* const WLScreenLocalizedName = @"ScreenName";
-
-NSString* const WLScreenIdentifier = @"ScreenIdentifier";
 
 
 @implementation WLScreensController
@@ -25,7 +24,7 @@ NSString* const WLScreenIdentifier = @"ScreenIdentifier";
                                                  name:NSApplicationDidChangeScreenParametersNotification
                                                object:nil];
     [[NSUserDefaults standardUserDefaults] addObserver:self
-                                            forKeyPath:WLScreenIdentifier
+                                            forKeyPath:WLScreenIdentifierKey
                                                options:NSKeyValueObservingOptionNew
                                                context:NULL];
 }
@@ -33,7 +32,7 @@ NSString* const WLScreenIdentifier = @"ScreenIdentifier";
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:WLScreenIdentifier];
+    [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:WLScreenIdentifierKey];
     [super dealloc];
 }
 
@@ -43,13 +42,13 @@ NSString* const WLScreenIdentifier = @"ScreenIdentifier";
 - (NSArray *)screens
 {
     NSMutableArray *screens = [NSMutableArray arrayWithArray:[[NSScreen screens] valueForKey:@"WL_dictionary"]];
-    NSNumber *selectedScreenID = [[NSUserDefaults standardUserDefaults] objectForKey:WLScreenIdentifier];
+    NSNumber *selectedScreenID = [[NSUserDefaults standardUserDefaults] WL_screenIdentifier];
     if (selectedScreenID != nil &&
-        ![[screens valueForKey:WLScreenIdentifier] containsObject:selectedScreenID])
+        ![[screens valueForKey:WLScreenIdentifierKey] containsObject:selectedScreenID])
     {
         NSString *screenName = NSLocalizedStringFromTableInBundle(@"Unplugged", nil, [NSBundle bundleForClass:[self class]], @"Name of unplugged monitor");
         NSDictionary *unpluggedScreen = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                          selectedScreenID,   WLScreenIdentifier,
+                                                          selectedScreenID,   WLScreenIdentifierKey,
                                                           screenName,         WLScreenLocalizedName,
                                                           nil];
         [screens insertObject:unpluggedScreen atIndex:0];
@@ -81,7 +80,7 @@ NSString* const WLScreenIdentifier = @"ScreenIdentifier";
                             [self WL_localizedScreenName], [self WL_localizedScreenSizeString]];
     NSDictionary *screenDict = [NSDictionary dictionaryWithObjectsAndKeys:
                                 screenName,                                                     WLScreenLocalizedName,
-                                [[self deviceDescription] objectForKey:@"NSScreenNumber"],      WLScreenIdentifier,
+                                [[self deviceDescription] objectForKey:@"NSScreenNumber"],      WLScreenIdentifierKey,
                                 nil];
     return screenDict;
 }

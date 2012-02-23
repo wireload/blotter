@@ -69,7 +69,7 @@ const NSSize BLMinimumSize = {280, 215};
 
         [defaults addObserver:self forKeyPath:@"CalendarSize" options:NSKeyValueObservingOptionNew context:NULL];
         [defaults addObserver:self forKeyPath:@"CalendarPosition" options:NSKeyValueObservingOptionNew context:NULL];
-        [defaults addObserver:self forKeyPath:@"ScreenIdentifier" options:NSKeyValueObservingOptionNew context:NULL];
+        [defaults addObserver:self forKeyPath:WLScreenIdentifierKey options:NSKeyValueObservingOptionNew context:NULL];
         [defaults addObserver:self forKeyPath:@"CustomFrameFactors" options:NSKeyValueObservingOptionNew context:NULL];
         [defaults addObserver:self forKeyPath:@"InfoViewsWidth" options:NSKeyValueObservingOptionNew context:NULL];
         [defaults addObserver:self forKeyPath:@"DateViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
@@ -106,7 +106,7 @@ const NSSize BLMinimumSize = {280, 215};
     [defaults removeObserver:self forKeyPath:@"AllDayViewHeight"];
     [defaults removeObserver:self forKeyPath:@"CalendarSize"];
     [defaults removeObserver:self forKeyPath:@"CalendarPosition"];
-    [defaults removeObserver:self forKeyPath:@"ScreenIdentifier"];
+    [defaults removeObserver:self forKeyPath:WLScreenIdentifierKey];
     [defaults removeObserver:self forKeyPath:@"CustomFrameFactors"];
     [super dealloc];
 }
@@ -183,7 +183,7 @@ const NSSize BLMinimumSize = {280, 215};
     }
     else if ([aKeyPath isEqualToString:@"CalendarSize"] ||
              [aKeyPath isEqualToString:@"CalendarPosition"] ||
-             [aKeyPath isEqualToString:@"ScreenIdentifier"] ||
+             [aKeyPath isEqualToString:WLScreenIdentifierKey] ||
              [aKeyPath isEqualToString:@"CustomFrameFactors"])
     {
         BLSize calendarSize = (BLSize)[[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"];
@@ -286,7 +286,7 @@ const NSSize BLMinimumSize = {280, 215};
 - (NSScreen *)windowScreen
 {
     NSArray *screens = [NSScreen screens];
-    NSNumber *screenIdentifier = [[NSUserDefaults standardUserDefaults] objectForKey:@"ScreenIdentifier"];
+    NSNumber *screenIdentifier = [[NSUserDefaults standardUserDefaults] WL_screenIdentifier];
     if ([screens count] > 0)
     {
         NSUInteger index = NSNotFound;

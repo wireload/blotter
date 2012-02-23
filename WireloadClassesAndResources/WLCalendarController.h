@@ -81,6 +81,8 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType);
 
 + (id)sharedController;
 
++ (void)synchronizeCalendarInUserDefaultsWithCalCalendars;
+
 - (void)updateDate;
 
 - (void)updateCalendar;
@@ -89,9 +91,13 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType);
 
 - (NSArray *)calReminderCalendarsFromCalCalendars:(NSArray *)aCalCalendars;
 
-- (void)setDisplay:(BOOL)newCheck forCalendarWithUID:(NSString *)anUID;
+- (void)setIsUsedForEvents:(BOOL)newIsUsed forCalendarWithUID:(NSString *)anUID;
 
-- (BOOL)checkForCalendarWithUID:(NSString *)anUID;
+- (BOOL)isCalendarWithUIDUsedForEvents:(NSString *)anUID;
+
+- (void)setIsUsedForReminders:(BOOL)newIsUsed forCalendarWithUID:(NSString *)anUID;
+
+- (BOOL)isCalendarWithUIDUsedForReminders:(NSString *)anUID;
 
 
 - (void)_scheduleNextMinuteTimer;
@@ -122,15 +128,17 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType);
  */
 - (void)_calCalendarsDidChange:(NSNotification *)aNotification;
 
-/*!
- @abstract  Returns calendars represented by the Calendars setting which "check" setting set to YES.
- */
+- (NSArray *)_calCalendarsToDisplayEvents;
+
+- (NSArray *)_calCalendarsToDisplayReminders;
+
 - (NSArray *)_calCalendarsToDisplay;
 
 /*!
+ @param     aPredicate which will be evaluated with calendar dict or nil.
  @abstract  Returns calendars represented by the Calendars setting.
  */
-- (NSArray *)_calCalendars;
+- (NSArray *)_filteredCalCalendars:(NSPredicate *)aPredicate;
 
 - (WLCalendarType)_typeForCalCalendar:(CalCalendar *)aCalCalendar;
 

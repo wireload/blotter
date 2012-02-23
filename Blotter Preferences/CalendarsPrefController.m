@@ -113,12 +113,10 @@
     WLCalendarController *c = [WLCalendarController sharedController];
     if ([[aTableColumn identifier] isEqualToString:@"check"])
     {
-        NSString *uid = nil;
         if (aTableView == _eventsTableView)
-            uid = [[c.calEventCalendars objectAtIndex:rowIndex] uid];
+            return [NSNumber numberWithBool:[c isCalendarWithUIDUsedForEvents:[[c.calEventCalendars objectAtIndex:rowIndex] uid]]];
         else
-            uid = [[c.calReminderCalendars objectAtIndex:rowIndex] uid];
-        return [NSNumber numberWithBool:[c checkForCalendarWithUID:uid]];
+            return [NSNumber numberWithBool:[c isCalendarWithUIDUsedForReminders:[[c.calReminderCalendars objectAtIndex:rowIndex] uid]]];
     }
     else
     {
@@ -133,13 +131,11 @@
 {
     if ([[aTableColumn identifier] isEqualToString:@"check"])
     {
-        NSString *uid = nil;
         WLCalendarController *c = [WLCalendarController sharedController];
         if (aTableView == _eventsTableView)
-            uid = [[c.calEventCalendars objectAtIndex:rowIndex] uid];
+            [c setIsUsedForEvents:[anObject boolValue] forCalendarWithUID:[[c.calEventCalendars objectAtIndex:rowIndex] uid]];
         else
-            uid = [[c.calReminderCalendars objectAtIndex:rowIndex] uid];
-        [c setDisplay:[anObject boolValue] forCalendarWithUID:uid];
+            [c setIsUsedForReminders:[anObject boolValue] forCalendarWithUID:[[c.calReminderCalendars objectAtIndex:rowIndex] uid]];
     }
 }
 

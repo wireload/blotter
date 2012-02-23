@@ -11,8 +11,6 @@
 
 extern NSString* const WLScreenLocalizedName;
 
-extern NSString* const WLScreenIdentifier;
-
 /*!
     @discussion  WLScreensController monitors parameters of system's screens and user selected screen.
     When either parameter changes, WLScreensController updates content.
@@ -37,7 +35,7 @@ extern NSString* const WLScreenIdentifier;
 
 /*!
  @see   WLScreenLocalizedName
- @see   WLScreenIdentifier
+ @see   WLScreenIdentifierKey
  */
 - (NSDictionary *)WL_dictionary;
 
