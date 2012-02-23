@@ -788,7 +788,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
 #ifdef DEBUG_LAYERS
 - (id<CAAction>)actionForLayer:(CALayer *)layer forKey:(NSString *)event
 {
-    NSLog(@"%@: %@", layer.name, event);
+    NSLog(@"    %@: %@", layer.name, event);
     return nil;
 }
 #endif
