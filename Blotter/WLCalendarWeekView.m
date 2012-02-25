@@ -1680,12 +1680,12 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
 
 - (NSArray *)dayScrollLayers
 {
-    return [[self dayBackgroundLayers] valueForKey:_WLDayScrollLayerName];
+    return [[self columnRootLayers] valueForKeyPath:[NSString stringWithFormat:@"%@.%@", _WLDayBackgroundLayerName, _WLDayScrollLayerName]];
 }
 
 - (NSArray *)dayLayers
 {
-    return [[self dayScrollLayers] valueForKey:_WLDayLayerName];
+    return [[self columnRootLayers] valueForKeyPath:[NSString stringWithFormat:@"%@.%@.%@", _WLDayBackgroundLayerName, _WLDayScrollLayerName, _WLDayLayerName]];
 }
 
 - (CALayer *)timeIndicatorRootLayer
