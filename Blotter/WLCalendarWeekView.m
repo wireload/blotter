@@ -82,6 +82,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
         showsAllDayEvents = YES;
         alwaysVisibleHourRange = WLHourRangeMake(9.0, 17.0);
         [self setNeedsUpdateColumnTitleFrame];
+        [self setNeedsUpdateVisibleHourRange];
     }
     return self;
 }
@@ -192,6 +193,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
 - (void)setAlwaysVisibleHourRange:(WLHourRange)newHourRange
 {
     alwaysVisibleHourRange = newHourRange;
+    [self setNeedsUpdateVisibleHourRange];
 
     if ([self wantsLayer] && self.fitsDayEvents)
     {
@@ -752,10 +754,24 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
 
 - (WLHourRange)visibleHourRange
 {
-    WLHourRange visibleHourRange = [self hourRangeOfEvents];
-    visibleHourRange.startHour = fmin(visibleHourRange.startHour, self.alwaysVisibleHourRange.startHour);
-    visibleHourRange.endHour = fmax(visibleHourRange.endHour, self.alwaysVisibleHourRange.endHour);
+    if ([self needsUpdateVisibleHourRange])
+    {
+        visibleHourRange = [self hourRangeOfEvents];
+        visibleHourRange.startHour = fmin(visibleHourRange.startHour, self.alwaysVisibleHourRange.startHour);
+        visibleHourRange.endHour = fmax(visibleHourRange.endHour, self.alwaysVisibleHourRange.endHour);
+        needsUpdateVisibleHourRange = NO;
+    }
     return visibleHourRange;
+}
+
+- (BOOL)needsUpdateVisibleHourRange
+{
+    return needsUpdateVisibleHourRange;
+}
+
+- (void)setNeedsUpdateVisibleHourRange
+{
+    needsUpdateVisibleHourRange = YES;
 }
 
 
@@ -961,6 +977,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     [columnEvents removeObjectsAtIndexes:allDayEventIndexes];
     NSSet *dayEvents = [NSSet setWithArray:columnEvents];
 
+    [self setNeedsUpdateVisibleHourRange];
     WLCalendarDayEventsLayer *dayLayer = [[self dayLayers] objectAtIndex:anIndex];
     NSParameterAssert(dayLayer != nil);
     [dayLayer setEvents:dayEvents];

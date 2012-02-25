@@ -39,6 +39,8 @@ typedef enum
     WLHourRange alwaysVisibleHourRange;
     NSRect columnTitleFrame;
     BOOL needsUpdateColumnTitleFrame;
+    WLHourRange visibleHourRange;
+    BOOL needsUpdateVisibleHourRange;
 
     CGFloat _hour;
     NSUInteger _numberOfActiveShowDaysTransactions;
@@ -119,31 +121,26 @@ typedef enum
 - (WLHourRange)hourRangeOfEvents;
 
 /*!
+ @abstract      Determines visible hour range based on value of alwaysVisibleHourRange and range day events.
  @see           alwaysVisibleHourRange
  */
 - (WLHourRange)visibleHourRange;
 
+- (BOOL)needsUpdateVisibleHourRange;
+
+/*!
+ @discussion    Automatically sent when:
+ - Events are chaned
+ - alwaysVisibleHourRange is changed
+ @see   alwaysVisibleHourRange
+ @see   -_updateEventsOfColumnAtIndex:
+ */
+- (void)setNeedsUpdateVisibleHourRange;
 
 - (void)_updateColumnsAtIndexes:(NSIndexSet *)anIndexSet;
 
-/*!
- @discussion Sends setNeedsLayout to:
-    1. dayLayer
-    2. allDayLayer
-    3. dayScrollLayer
-    4. timeRulerScrollLayer
-    5. timeIndicatorRootLayer
- @see dayLayers, allDayLayers, dayScrollLayers, timeRulerScrollLayer, timeIndicatorRootLayer
- */
 - (void)_updateEventsOfColumnAtIndex:(NSUInteger)anIndex;
 
-/*!
- @discussion Sends setNeedsLayout to:
-    1. timeRulerBackgroundLayer
-    2. dayBackgroundLayers
-    3. timeIndicatorRootLayer
- @see timeRulerBackgroundLayer, dayBackgroundLayers, timeIndicatorRootLayer
- */
 - (void)_updateTitleOfColumnAtIndex:(NSUInteger)anIndex;
 
 - (void)_updateColorOfColumnAtIndex:(NSUInteger)anIndex;
