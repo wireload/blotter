@@ -81,6 +81,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
         showsDayColumnTitle = YES;
         showsAllDayEvents = YES;
         alwaysVisibleHourRange = WLHourRangeMake(9.0, 17.0);
+        [self setNeedsUpdateColumnTitleFrame];
     }
     return self;
 }
@@ -211,6 +212,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
 - (void)setHeightOfAllDayPartOfColumn:(CGFloat)newHeightOfAllDayPartOfColumn
 {
     heightOfAllDayPartOfColumn = newHeightOfAllDayPartOfColumn;
+    [self setNeedsUpdateColumnTitleFrame];
 
     if ([self wantsLayer] && self.showsAllDayEvents)
     {
@@ -252,6 +254,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
             [columnRootLayers removeLastObject];
         }
     }
+    [self setColumnRootLayers:columnRootLayers];
     [self _updateColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, numberOfColumns)]];
     WLCalendarTimeRulerLayer *timeRulerLayer = [self timeRulerLayer];
     timeRulerLayer.markers = [self _timeRulerMarkers];
@@ -595,7 +598,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     NSParameterAssert(rangeOfInsertedColumns.location == NSNotFound || NSMaxRange(rangeOfInsertedColumns) <= [eventsRootLayer.sublayers count]);
     NSParameterAssert(NSMaxRange(rangeOfColumnRootLayers) <= [eventsRootLayer.sublayers count]);
     columnRootLayers = [NSMutableArray arrayWithArray:[eventsRootLayer.sublayers subarrayWithRange:rangeOfColumnRootLayers]];
-    [eventsRootLayer setValue:columnRootLayers forKey:_WLColumnLayersKey];
+    [self setColumnRootLayers:columnRootLayers];
     
     [CATransaction WL_performWithDisabledActions:^{
         NSRange rangeOfColumnsToUpdate = NSMakeRange(NSNotFound, 0);
@@ -970,8 +973,13 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
 {
     CALayer *l = [[self dayBackgroundLayers] objectAtIndex:anIndex];
     NSParameterAssert(l != nil);
-    [l setValue:[dataSource weekView:self titleForColumnAtIndex:anIndex] forKey:_WLDayBackgroundLayerTitleKey];
-    [l setNeedsDisplay];
+    NSString *newTitle = [dataSource weekView:self titleForColumnAtIndex:anIndex];
+    if (![[l valueForKey:_WLDayBackgroundLayerTitleKey] isEqualToString:newTitle])
+    {
+        [self setNeedsUpdateColumnTitleFrame];
+        [l setValue:newTitle forKey:_WLDayBackgroundLayerTitleKey];
+        [l setNeedsDisplay];
+    }
 }
 
 - (void)_updateColorOfColumnAtIndex:(NSUInteger)anIndex
@@ -1060,6 +1068,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
 #ifdef DEBUG_LAYERS
     NSLog(@"set frame size: %@", NSStringFromSize(newSize));
 #endif
+    [self needsUpdateColumnTitleFrame];
     [super setFrameSize:newSize];
     CALayer *rootLayer = [self layer];
     NSParameterAssert(rootLayer != nil);
@@ -1663,6 +1672,12 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     return [[self eventsRootLayer] valueForKey:_WLColumnLayersKey];
 }
 
+- (void)setColumnRootLayers:(NSMutableArray *)newColumnRootLayers
+{
+    [self setNeedsUpdateColumnTitleFrame];
+    [[self eventsRootLayer] setValue:newColumnRootLayers forKey:_WLColumnLayersKey];
+}
+
 - (NSArray *)allDayBackgroundLayers
 {
     return [[self columnRootLayers] valueForKey:_WLAllDayBackgroundLayerName];
@@ -1980,35 +1995,51 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     if (!self.showsDayColumnTitle || numberOfColumns == 0)
         return NSZeroRect;
 
-    static const CGFloat MinimumTitleHeight = 25.0;
-
-    CGFloat height = MinimumTitleHeight;
-    CGFloat width = CGFLOAT_MAX;
-    CGFloat maximumHeight = height;
-    NSArray *frames = [self framesForNumberOfColumns:numberOfColumns];
-    NSParameterAssert([frames count] == [frames count]);
-    for (NSValue *frame in frames)
+    if ([self needsUpdateColumnTitleFrame])
     {
-        NSRect rectValue = [frame rectValue];
-        width = fmin(width, rectValue.size.width);
-        maximumHeight = fmax(maximumHeight, rectValue.size.height);
-    }
+        static const CGFloat MinimumTitleHeight = 25.0;
 
-    NSArray *dayBackgroundLayers = [self dayBackgroundLayers];
-    NSParameterAssert(dayBackgroundLayers != nil);
-    for (WLBlockLayer *l in dayBackgroundLayers)
-    {
-        NSString *title = [l valueForKey:_WLDayBackgroundLayerName];
-        NSDictionary *attributes = [self _titleAttributesForColumnDayBackgroundLayer:l];
-        NSRect r = [title boundingRectWithSize:NSMakeSize(width, maximumHeight)
-                                       options:_WLDayBackgroundTitleAttributes
-                                    attributes:attributes];
-        height = fmax(height, r.size.height);
+        CGFloat height = MinimumTitleHeight;
+        CGFloat width = CGFLOAT_MAX;
+        CGFloat maximumHeight = height;
+        CGFloat heightAndMarginOfAllDayEventsPartOfColumn = [self heightAndMarginOfAllDayEventsPartOfColumn];
+        NSArray *frames = [self framesForNumberOfColumns:numberOfColumns];
+        NSParameterAssert([frames count] == [frames count]);
+        for (NSValue *frame in frames)
+        {
+            NSRect rectValue = [frame rectValue];
+            width = fmin(width, rectValue.size.width);
+            maximumHeight = fmax(maximumHeight, rectValue.size.height - heightAndMarginOfAllDayEventsPartOfColumn);
+        }
+
+        NSArray *dayBackgroundLayers = [self dayBackgroundLayers];
+        NSParameterAssert(dayBackgroundLayers != nil);
+        for (WLBlockLayer *l in dayBackgroundLayers)
+        {
+            NSString *title = [l valueForKey:_WLDayBackgroundLayerName];
+            NSDictionary *attributes = [self _titleAttributesForColumnDayBackgroundLayer:l];
+            NSRect r = [title boundingRectWithSize:NSMakeSize(width, maximumHeight)
+                                           options:_WLDayBackgroundTitleAttributes
+                                        attributes:attributes];
+            height = fmax(height, r.size.height);
+        }
+        columnTitleFrame = NSIntegralRect(NSMakeRect(0.0,
+                                                     0.0,
+                                                     width,
+                                                     height + _WLYColumnTitleFrameBottomOffset));
+        needsUpdateColumnTitleFrame = NO;
     }
-    return NSIntegralRect(NSMakeRect(0.0,
-                                     0.0,
-                                     width,
-                                     height + _WLYColumnTitleFrameBottomOffset));
+    return columnTitleFrame;
+}
+
+- (BOOL)needsUpdateColumnTitleFrame
+{
+    return needsUpdateColumnTitleFrame;
+}
+
+- (void)setNeedsUpdateColumnTitleFrame
+{
+    needsUpdateColumnTitleFrame = YES;
 }
 
 - (CGPoint)scrollPoint

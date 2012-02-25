@@ -37,6 +37,8 @@ typedef enum
     BOOL showsAllDayEvents;
     BOOL showsDayColumnTitle;
     WLHourRange alwaysVisibleHourRange;
+    NSRect columnTitleFrame;
+    BOOL needsUpdateColumnTitleFrame;
 
     CGFloat _hour;
     NSUInteger _numberOfActiveShowDaysTransactions;
@@ -213,6 +215,8 @@ typedef enum
 
 - (NSMutableArray *)columnRootLayers;
 
+- (void)setColumnRootLayers:(NSMutableArray *)newColumnRootLayers;
+
 - (NSArray *)dayBackgroundLayers;
 
 - (NSArray *)dayScrollLayers;
@@ -275,6 +279,21 @@ typedef enum
  @discussion    Frame of column title is general for all columns.
  */
 - (NSRect)columnTitleFrame;
+
+- (BOOL)needsUpdateColumnTitleFrame;
+
+/*!
+ @discussion    Automatically sent when:
+ - Height of all day events part is changed
+ - Frame is changed
+ - Title of any column is changed
+ - Number of columns is changed
+ @see   heightOfAllDayPartOfColumn
+ @see   -layoutSublayersOfRootLayer:
+ @see   -_updateTitleOfColumnAtIndex:
+ @see   -setColumnRootLayers:
+ */
+- (void)setNeedsUpdateColumnTitleFrame;
 
 - (CGPoint)scrollPoint;
 
