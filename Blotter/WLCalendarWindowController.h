@@ -63,7 +63,8 @@
 @end
 
 
-typedef enum {
+typedef enum
+{
     BLNarrowSize    = 0,
     BLNormalSize    = 1,
     BLFullSize      = 2,
@@ -71,20 +72,22 @@ typedef enum {
 } BLSize;
 
 
-typedef enum BLPosition {
-    BLPositionTopLeft,
-    BLPositionTopCenter,
-    BLPositionTopRight,
-    BLPositionCenterLeft,
-    BLPositionCenterCenter,
-    BLPositionCenterRight,
-    BLPositionBottomLeft,
-    BLPositionBottomCenter,
-    BLPositionBottomRight
+typedef enum BLPosition
+{
+    BLPositionTopLeft =         0,
+    BLPositionTopCenter =       1,
+    BLPositionTopRight =        2,
+    BLPositionCenterLeft =      3,
+    BLPositionCenterCenter =    4,
+    BLPositionCenterRight =     5,
+    BLPositionBottomLeft =      6,
+    BLPositionBottomCenter =    7,
+    BLPositionBottomRight =     8
 } BLPosition;
 
 
-typedef enum {
+typedef enum
+{
     WLCalendarCustomLayout = 1,
     WLCalendarNormalLayout = 0,
     WLCalendarToDoLayout = 2,
