@@ -55,12 +55,17 @@
  */
 - (void)autohideCalendarWindowIfAllConditionsAreMet;
 
+
 - (void)_scheduleShowCurrentWeekTimerIfNeeded;
 
 - (void)_removeShowCurrentWeekTimerIfNeeded;
 
+/*!
+ @discussion    Automatically sent when _showCurrentWeekTimer fires.
+ @see -_scheduleShowCurrentWeekTimerIfNeeded
+ @see -_removeShowCurrentWeekTimerIfNeeded
+ */
 - (void)_showCurrentWeekTimerDidFire;
-
 
 - (BOOL)_isOnlyCalendarWindowVisible:(NSArray *)aVisibleWindows;
 

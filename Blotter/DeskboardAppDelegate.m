@@ -304,59 +304,6 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 }
 
 
-#pragma mark Private
-
-- (void)_addStatusItem
-{
-    NSAssert(_statusItem == nil, @"You cannot add status bar twice");
-    _statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength] retain];;
-    [_statusItem setHighlightMode:YES];
-    [_statusItem setMenu:_statusMenu];
-
-    NSImage *statusImage = [NSImage imageNamed:@"blotter-status-bar"];
-    NSImage *statusHighlightImage = [NSImage imageNamed:@"blotter-status-bar-active"];
-    [_statusItem setImage:statusImage];
-    [_statusItem setAlternateImage:statusHighlightImage];
-}
-
-- (BOOL)_isOnlyCalendarWindowVisible:(NSArray *)aVisibleWindows
-{
-    NSMutableArray *visibleWindows = [[aVisibleWindows mutableCopy] autorelease];
-    [visibleWindows filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSWindow *w, NSDictionary *bindings) {
-        return [w isVisible] && ![[w className] hasPrefix:@"NSStatusBarWindow"];
-    }]];
-    return ([visibleWindows count] == 1); // If only desktop window is visible
-}
-
-- (void)_scheduleShowCurrentWeekTimerIfNeeded
-{
-    [self _removeShowCurrentWeekTimerIfNeeded];
-    NSInteger delay = [[NSUserDefaults standardUserDefaults] integerForKey:@"AutoShowCurrentWeekDelay"];
-    if (delay > 0)
-    {
-        _showCurrentWeekTimer = [NSTimer scheduledTimerWithTimeInterval:delay
-                                                                 target:self
-                                                               selector:@selector(_showCurrentWeekTimerDidFire)
-                                                               userInfo:nil
-                                                                repeats:NO];
-    }
-    else
-        _showCurrentWeekTimer = nil;
-}
-
-- (void)_removeShowCurrentWeekTimerIfNeeded
-{
-    [_showCurrentWeekTimer invalidate];
-    _showCurrentWeekTimer = nil;
-}
-
-- (void)_showCurrentWeekTimerDidFire
-{
-    _showCurrentWeekTimer = nil;
-    [self showCurrentWeek:self];
-}
-
-
 #pragma mark NSApplicationDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -439,6 +386,59 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"ShowInMenuBar"])
         [self showPreferences:self];
     return NO;
+}
+
+
+#pragma mark Private
+
+- (void)_addStatusItem
+{
+    NSAssert(_statusItem == nil, @"You cannot add status bar twice");
+    _statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength] retain];;
+    [_statusItem setHighlightMode:YES];
+    [_statusItem setMenu:_statusMenu];
+    
+    NSImage *statusImage = [NSImage imageNamed:@"blotter-status-bar"];
+    NSImage *statusHighlightImage = [NSImage imageNamed:@"blotter-status-bar-active"];
+    [_statusItem setImage:statusImage];
+    [_statusItem setAlternateImage:statusHighlightImage];
+}
+
+- (BOOL)_isOnlyCalendarWindowVisible:(NSArray *)aVisibleWindows
+{
+    NSMutableArray *visibleWindows = [[aVisibleWindows mutableCopy] autorelease];
+    [visibleWindows filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSWindow *w, NSDictionary *bindings) {
+        return [w isVisible] && ![[w className] hasPrefix:@"NSStatusBarWindow"];
+    }]];
+    return ([visibleWindows count] == 1); // If only desktop window is visible
+}
+
+- (void)_scheduleShowCurrentWeekTimerIfNeeded
+{
+    [self _removeShowCurrentWeekTimerIfNeeded];
+    NSInteger delay = [[NSUserDefaults standardUserDefaults] integerForKey:@"AutoShowCurrentWeekDelay"];
+    if (delay > 0)
+    {
+        _showCurrentWeekTimer = [NSTimer scheduledTimerWithTimeInterval:delay
+                                                                 target:self
+                                                               selector:@selector(_showCurrentWeekTimerDidFire)
+                                                               userInfo:nil
+                                                                repeats:NO];
+    }
+    else
+        _showCurrentWeekTimer = nil;
+}
+
+- (void)_removeShowCurrentWeekTimerIfNeeded
+{
+    [_showCurrentWeekTimer invalidate];
+    _showCurrentWeekTimer = nil;
+}
+
+- (void)_showCurrentWeekTimerDidFire
+{
+    _showCurrentWeekTimer = nil;
+    [self showCurrentWeek:self];
 }
 
 
