@@ -123,7 +123,7 @@ const NSSize BLMinimumSize = {280, 215};
 {
     if (!_isWindowShowed)
     {
-        [self _placeViews];
+        [self _makeViews];
         [self _updateFrame];
         fadeController = [[WLViewFade alloc] initWithView:[self.window realContentView]];
         [self.window orderBack:aSender];
@@ -433,7 +433,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     [CATransaction commit];
 }
 
-- (void)_placeViews
+- (void)_makeViews
 {
     // TODO: There is no need make views to be layer-backed if AutoFade is disabled.
     NSParameterAssert(!_isWindowShowed);

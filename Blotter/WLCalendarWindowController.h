@@ -150,7 +150,7 @@ extern NSSize const BLNormalMinimumSize;
 /*!
  @abstract Places views to the controller's window.
  */
-- (void)_placeViews;
+- (void)_makeViews;
 
 - (CGFloat)fixedInfoViewsWidth;
 
