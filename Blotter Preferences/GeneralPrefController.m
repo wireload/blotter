@@ -37,7 +37,19 @@
     if (_mainView == nil)
     {
         if ([NSBundle loadNibNamed:@"GeneralPrefPaneView" owner:self])
+        {
             _mainView.preferredFrameSize = [_mainView frame].size;
+            [newEventRecorderControl setAllowsKeyOnly:NO escapeKeysRecord:YES];
+            [newEventRecorderControl setIsASCIIOnly:YES];
+            [newTaskRecorderControl setAllowsKeyOnly:NO escapeKeysRecord:YES];
+            [newTaskRecorderControl setIsASCIIOnly:YES];
+            [showNextWeekControl setAllowsKeyOnly:NO escapeKeysRecord:YES];
+            [showNextWeekControl setIsASCIIOnly:YES];
+            [showPrevWeekControl setAllowsKeyOnly:NO escapeKeysRecord:YES];
+            [showPrevWeekControl setIsASCIIOnly:YES];
+            [showCurrentWeekControl setAllowsKeyOnly:NO escapeKeysRecord:YES];
+            [showCurrentWeekControl setIsASCIIOnly:YES];
+        }
         else
             NSLog(@"Cannot load GeneralPrefPaneView");
     }

@@ -196,8 +196,10 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     {
         NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutNewEvent"];
         if (shortcut != nil) {
-            [aMenuItem setKeyEquivalent:[shortcut objectForKey:SRShortcutCharactersIgnoringModifiers]];
-            [aMenuItem setKeyEquivalentModifierMask:[[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue]];
+            NSInteger code = [[shortcut objectForKey:SRShortcutCodeKey] integerValue];
+            NSUInteger flags = [[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue];
+            [aMenuItem setKeyEquivalent:SRASCIIStringForKeyCode(code)];
+            [aMenuItem setKeyEquivalentModifierMask:flags];
         }
         else {
             [aMenuItem setKeyEquivalent:@""];
@@ -209,8 +211,10 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     {
         NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutNewTask"];
         if (shortcut != nil) {
-            [aMenuItem setKeyEquivalent:[shortcut objectForKey:SRShortcutCharactersIgnoringModifiers]];
-            [aMenuItem setKeyEquivalentModifierMask:[[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue]];
+            NSInteger code = [[shortcut objectForKey:SRShortcutCodeKey] integerValue];
+            NSUInteger flags = [[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue];
+            [aMenuItem setKeyEquivalent:SRASCIIStringForKeyCode(code)];
+            [aMenuItem setKeyEquivalentModifierMask:flags];
         }
         else {
             [aMenuItem setKeyEquivalent:@""];
@@ -222,8 +226,10 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     {
         NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutShowNextWeek"];
         if (shortcut != nil) {
-            [aMenuItem setKeyEquivalent:[shortcut objectForKey:SRShortcutCharactersIgnoringModifiers]];
-            [aMenuItem setKeyEquivalentModifierMask:[[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue]];
+            NSInteger code = [[shortcut objectForKey:SRShortcutCodeKey] integerValue];
+            NSUInteger flags = [[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue];
+            [aMenuItem setKeyEquivalent:SRASCIIStringForKeyCode(code)];
+            [aMenuItem setKeyEquivalentModifierMask:flags];
         }
         else {
             [aMenuItem setKeyEquivalent:@""];
@@ -235,8 +241,10 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     {
         NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutShowCurrentWeek"];
         if (shortcut != nil) {
-            [aMenuItem setKeyEquivalent:[shortcut objectForKey:SRShortcutCharactersIgnoringModifiers]];
-            [aMenuItem setKeyEquivalentModifierMask:[[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue]];
+            NSInteger code = [[shortcut objectForKey:SRShortcutCodeKey] integerValue];
+            NSUInteger flags = [[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue];
+            [aMenuItem setKeyEquivalent:SRASCIIStringForKeyCode(code)];
+            [aMenuItem setKeyEquivalentModifierMask:flags];
         }
         else {
             [aMenuItem setKeyEquivalent:@""];
@@ -248,8 +256,10 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     {
         NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutShowPreviousWeek"];
         if (shortcut != nil) {
-            [aMenuItem setKeyEquivalent:[shortcut objectForKey:SRShortcutCharactersIgnoringModifiers]];
-            [aMenuItem setKeyEquivalentModifierMask:[[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue]];
+            NSInteger code = [[shortcut objectForKey:SRShortcutCodeKey] integerValue];
+            NSUInteger flags = [[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue];
+            [aMenuItem setKeyEquivalent:SRASCIIStringForKeyCode(code)];
+            [aMenuItem setKeyEquivalentModifierMask:flags];
         }
         else {
             [aMenuItem setKeyEquivalent:@""];
