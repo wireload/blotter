@@ -52,5 +52,7 @@
 	<integer>45</integer>
 	<key>LastMigratedBundleVersion</key>
 	<string>0</string>
+	<key>SlowAnimation</key>
+	<false/>
 </dict>
 </plist>

@@ -32,6 +32,8 @@ NSString* const WLDisplayAllCalendarsKey = @"DisplayAllCalendars";
 
 NSString* const WLAllowsAdvancedCalendarTypeCheck = @"AllowsAdvancedCalendarTypeCheck";
 
+NSString* const WLSlowAnimationKey = @"SlowAnimation";
+
 NSComparator const WLCalendarsComparator = ^(id left, id right) {
     return [[left valueForKey:WLCalendarUIDKey] compare:[right valueForKey:WLCalendarUIDKey]];
 };
@@ -227,3 +229,16 @@ NSComparator const WLCalendarsComparator = ^(id left, id right) {
 }
 
 @end
+
+
+#pragma mark -
+
+@implementation NSUserDefaults (WLCalendarWindowController)
+
+- (BOOL)WL_slowsAnimation
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:WLSlowAnimationKey];
+}
+
+@end
+

@@ -439,6 +439,8 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     NSParameterAssert(!_isWindowShowed);
     [[self.window realContentView] setWantsLayer:YES];
     NSView *contentView = [self.window contentView];
+    if ([[NSUserDefaults standardUserDefaults] WL_slowsAnimation])
+        [contentView layer].speed = 0.1f;
     [contentView setAutoresizesSubviews:NO];
 
     NSView *dateView = [_dateViewController view];

@@ -33,6 +33,8 @@ extern NSString* const WLCalendarTypeKey;
 
 extern NSString* const WLAllowsAdvancedCalendarTypeCheck;
 
+extern NSString* const WLSlowAnimationKey;
+
 typedef void (^WLCalendarsUpdaterBlock)(NSMutableArray *aCalendars);
 
 extern NSComparator const WLCalendarsComparator;
@@ -101,5 +103,12 @@ extern NSComparator const WLCalendarsComparator;
  @param aCalCalendar    MUST be non-nil.
  */
 + (NSDictionary *)WL_makeCalendarWithCalCalendar:(CalCalendar *)aCalCalendar;
+
+@end
+
+
+@interface NSUserDefaults (WLCalendarWindowController)
+
+- (BOOL)WL_slowsAnimation;
 
 @end
