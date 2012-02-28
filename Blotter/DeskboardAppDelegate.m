@@ -100,6 +100,8 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         [controller showWindow:aSender];
         [NSApp activateIgnoringOtherApps:YES];
     }
+    else
+        NSBeep();
 }
 
 - (IBAction)newTask:(id)aSender
@@ -113,6 +115,8 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         [controller showWindow:aSender];
         [NSApp activateIgnoringOtherApps:YES];
     }
+    else
+        NSBeep();
 }
 
 - (IBAction)showAbout:(id)aSender
@@ -123,39 +127,54 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (IBAction)showNextWeek:(id)aSender
 {
-    [self.calendarWindowController showNextWeek:aSender];
-    if ([self.calendarWindowController isCurrentWeekShowed])
+    if ([self.calendarWindowController canShowNextWeek])
     {
-        [self _removeShowCurrentWeekTimerIfNeeded];
-        [self autohideCalendarWindowIfAllConditionsAreMet];
+        [self.calendarWindowController showNextWeek:aSender];
+        if ([self.calendarWindowController isCurrentWeekShowed])
+        {
+            [self _removeShowCurrentWeekTimerIfNeeded];
+            [self autohideCalendarWindowIfAllConditionsAreMet];
+        }
+        else
+        {
+            [self _scheduleShowCurrentWeekTimerIfNeeded];
+            [[calendarWindowController fadeController] fadeIn];
+        }
     }
     else
-    {
-        [self _scheduleShowCurrentWeekTimerIfNeeded];
-        [[calendarWindowController fadeController] fadeIn];
-    }
+        NSBeep();
 }
 
 - (IBAction)showPreviousWeek:(id)aSender
 {
-    [self.calendarWindowController showPreviousWeek:aSender];
-    if ([self.calendarWindowController isCurrentWeekShowed])
+    if ([self.calendarWindowController canShowPreviousWeek])
     {
-        [self _removeShowCurrentWeekTimerIfNeeded];
-        [self autohideCalendarWindowIfAllConditionsAreMet];
+        [self.calendarWindowController showPreviousWeek:aSender];
+        if ([self.calendarWindowController isCurrentWeekShowed])
+        {
+            [self _removeShowCurrentWeekTimerIfNeeded];
+            [self autohideCalendarWindowIfAllConditionsAreMet];
+        }
+        else
+        {
+            [self _scheduleShowCurrentWeekTimerIfNeeded];
+            [[calendarWindowController fadeController] fadeIn];
+        }
     }
     else
-    {
-        [self _scheduleShowCurrentWeekTimerIfNeeded];
-        [[calendarWindowController fadeController] fadeIn];
-    }
+        NSBeep();
 }
 
 - (IBAction)showCurrentWeek:(id)aSender
 {
-    [self _removeShowCurrentWeekTimerIfNeeded];
-    [self.calendarWindowController showCurrentWeek:aSender];
-    [self autohideCalendarWindowIfAllConditionsAreMet];
+    if ([self.calendarWindowController canShowCurrentWeek])
+    {
+        [self _removeShowCurrentWeekTimerIfNeeded];
+        [self.calendarWindowController showCurrentWeek:aSender];
+        [self autohideCalendarWindowIfAllConditionsAreMet];
+    }
+    else
+        NSBeep();
 }
 
 - (BOOL)isOnlyCalendarWindowVisible
