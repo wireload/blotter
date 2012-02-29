@@ -140,6 +140,11 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
         for (WLCalendarEventLayer *e in _sortedByStartDateEventLayers)
             end = [[e valueForKeyPath:_WLEndDateKeyPath] laterDate:end];
         hourRangeOfEvents = WLHourRangeMake([self.timeRuler hourForDate:start], [self.timeRuler hourForDate:end]);
+        if (hourRangeOfEvents.endHour <= hourRangeOfEvents.startHour && [end timeIntervalSinceDate:start] > 0)
+        {
+            // If event ends at start of next day.
+            hourRangeOfEvents.endHour = [self.timeRuler hourRange].endHour;
+        }
         _needsUpdateHourRangeOfEvents = NO;
     }
     return hourRangeOfEvents;
@@ -159,9 +164,8 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
     CGFloat extent = 0.0;
     for (WLCalendarEventLayer *e in _sortedByStartDateEventLayers)
     {
-        CGFloat minY = [self _minYOfEventLayer:e];
-        CGFloat maxY = [self _maxYOfEventLayer:e minY:minY];
-        extent = fmax(extent, fdim(maxY, availableHeight));
+        CGRect yAndHeight = [self _yAndHeightOfEventLayer:e];
+        extent = fmax(extent, fdim(CGRectGetMaxY(yAndHeight), availableHeight));
     }
     return extent;
 }
@@ -203,7 +207,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
         for (WLCalendarEventLayer *eventLayer in _sortedByStartDateEventLayers)
         {
             WLHourRange hourRangeOfEventsExceptCurrentEventLayer = WLHourRangeMake(hourRange.startHour,
-                                                                                   [self _startHourOfEventLayer:eventLayer]);
+                                                                                   [self _hourRangeOfEventLayer:eventLayer].startHour);
             CGFloat l = WLHourRangeLength(hourRangeOfEventsExceptCurrentEventLayer);
             if (l > 0.0)
             {
@@ -360,8 +364,9 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
         __block CGFloat rowBottom = 0.0;
         [_sortedByStartDateEventLayers enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger idx, BOOL *stop)
         {
-            CGFloat layerTop = [self _minYOfEventLayer:l];
-            CGFloat layerBottom = [self _maxYOfEventLayer:l minY:layerTop];
+            CGRect yAndHeight = [self _yAndHeightOfEventLayer:l];
+            CGFloat layerTop = CGRectGetMinY(yAndHeight);
+            CGFloat layerBottom = CGRectGetMaxY(yAndHeight);
             if (IS_LESS_F(layerTop, rowBottom))
             {
                 rowBottom = fmax(rowBottom, layerBottom);
@@ -433,13 +438,14 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
 
                 if ([row count] > 0)
                 {
-                    __block CGFloat columnTop = [self _minYOfEventLayer:topLayer];
-                    __block CGFloat columnBottom = [self _maxYOfEventLayer:topLayer minY:columnTop];
+                    CGRect yAndHeight = [self _yAndHeightOfEventLayer:topLayer];
+                    __block CGFloat columnBottom = CGRectGetMaxY(yAndHeight);
                     NSMutableIndexSet *placedLayers = [NSMutableIndexSet indexSet];
                     [row enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger layerIdx, BOOL *stopLayer)
                     {
-                        CGFloat layerTop = [self _minYOfEventLayer:l];
-                        CGFloat layerBottom = [self _maxYOfEventLayer:l minY:layerTop];
+                        CGRect yAndHeight = [self _yAndHeightOfEventLayer:l];
+                        CGFloat layerTop = CGRectGetMinY(yAndHeight);
+                        CGFloat layerBottom = CGRectGetMaxY(yAndHeight);
                         if (IS_LESS_OR_EQ_F(columnBottom, layerTop))
                         {
                             [column addObject:l];
@@ -510,8 +516,9 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
                 NSArray *events = [columnNode representedObject];
                 for (WLCalendarEventLayer *left in events)
                 {
-                    CGFloat leftTop = [self _minYOfEventLayer:left];
-                    CGFloat leftBottom = [self _maxYOfEventLayer:left minY:leftTop];
+                    CGRect yAndHeight = [self _yAndHeightOfEventLayer:left];
+                    CGFloat leftTop = CGRectGetMinY(yAndHeight);
+                    CGFloat leftBottom = CGRectGetMaxY(yAndHeight);
                     NSRange rightColumns = NSMakeRange(columnIdx + 1, [columnNodes count] - columnIdx - 1);
                     __block NSUInteger numberOfColumnsToSkip = 0;
                     [columnNodes enumerateObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:rightColumns]
@@ -521,8 +528,9 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
                         BOOL doesIntersectRightColumn = NO;
                         for (WLCalendarEventLayer *right in [rightColumnNode representedObject])
                         {
-                            CGFloat rightTop = [self _minYOfEventLayer:right];
-                            CGFloat rightBottom = [self _maxYOfEventLayer:right minY:rightTop];
+                            CGRect yAndHeight = [self _yAndHeightOfEventLayer:right];
+                            CGFloat rightTop = CGRectGetMinY(yAndHeight);
+                            CGFloat rightBottom = CGRectGetMaxY(yAndHeight);
                             if (IS_LESS_F(leftTop, rightBottom) && IS_LESS_F(rightTop, leftBottom))
                             {
                                 doesIntersectRightColumn = YES;
@@ -572,34 +580,33 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
      */
 }
 
-- (CGFloat)_startHourOfEventLayer:(WLCalendarEventLayer *)aLayer
+- (WLHourRange)_hourRangeOfEventLayer:(WLCalendarEventLayer *)aLayer
 {
-    NSNumber *startHour = [aLayer valueForKey:_WLStartHourKey];
-    if (startHour == nil)
+    WLHourRange h = WLHourRangeZero;
+    NSDate *start = [aLayer valueForKeyPath:_WLStartDateKeyPath];
+    h.startHour = [self.timeRuler hourForDate:start];
+    NSDate *end = [aLayer valueForKeyPath:_WLEndDateKeyPath];
+    h.endHour = [self.timeRuler hourForDate:end];
+    if (h.endHour <= h.startHour && [end timeIntervalSinceDate:start] > 0.0)
     {
-        startHour = [NSNumber numberWithFloat:[self.timeRuler hourForDate:[aLayer valueForKeyPath:_WLStartDateKeyPath]]];
-        [aLayer setValue:startHour forKey:_WLStartHourKey];
+        // If event ends at start of next day.
+        h.endHour = [self.timeRuler hourRange].endHour;
     }
-    return [startHour floatValue];
+    return h;
 }
 
-- (CGFloat)_endHourOfEventLayer:(WLCalendarEventLayer *)aLayer
+- (CGRect)_yAndHeightOfEventLayer:(WLCalendarEventLayer *)aLayer
 {
-    return [self.timeRuler hourForDate:[aLayer valueForKeyPath:_WLEndDateKeyPath]];
-}
-
-- (CGFloat)_minYOfEventLayer:(WLCalendarEventLayer *)aLayer
-{
-    return [self.timeRuler positionForHour:[self _startHourOfEventLayer:aLayer]];
-}
-
-- (CGFloat)_maxYOfEventLayer:(WLCalendarEventLayer *)aLayer minY:(CGFloat)aMinY
-{
-    CGFloat maxY = [self.timeRuler positionForHour:[self _endHourOfEventLayer:aLayer]];
+    WLHourRange h = [self _hourRangeOfEventLayer:aLayer];
+    CGFloat minY = [self.timeRuler positionForHour:h.startHour];
+    CGFloat maxY = [self.timeRuler positionForHour:h.endHour];
     CGFloat minimumHeight = [aLayer minimumHumanVisibleHeight];
-    if (IS_LESS_F(maxY - aMinY, minimumHeight))
-        maxY = aMinY + minimumHeight;
-    return maxY;
+    if (IS_LESS_F(maxY - minY, minimumHeight))
+        maxY = minY + minimumHeight;
+    return CGRectMake(0.0,
+                      minY,
+                      0.0,
+                      maxY - minY);
 }
 
 
@@ -645,11 +652,13 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
         {
             NSArray *eventLayers = [columnNode representedObject];
             CGFloat columnWidth = columnIdx < numberOfExtendedColumns ? extendedColumnWidth : baseColumnWidth;
-            [eventLayers enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger layerIdx, BOOL *stopLayer) {
-                CGFloat t = [self _minYOfEventLayer:l];
-                CGFloat b = [self _maxYOfEventLayer:l minY:t];
+            [eventLayers enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger layerIdx, BOOL *stopLayer)
+            {
+                CGRect yAndHeight = [self _yAndHeightOfEventLayer:l];
+                CGFloat t = CGRectGetMinY(yAndHeight);
+                CGFloat b = CGRectGetMaxY(yAndHeight);
                 // If bottom of the event is equal or greater than Y of last hour, it's visually better when it matches bottom of the column.
-                if (IS_LESS_OR_EQ_F(floorf(lastHourY), ceilf(b)))
+                if (IS_LESS_OR_EQ_F(floor(lastHourY), ceil(b)))
                     b = CGRectGetMaxY(self.bounds);
 
                 CGFloat y = t;

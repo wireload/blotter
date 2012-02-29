@@ -23,7 +23,7 @@
     NSDate *startDate = nil;
     NSTimeInterval interval = 0.0;
     [aCalendar rangeOfUnit:NSDayCalendarUnit startDate:&startDate interval:&interval forDate:self];
-    return [startDate dateByAddingTimeInterval:interval - 1.0];
+    return [startDate dateByAddingTimeInterval:interval];
 }
 
 - (NSDate *)WL_nextHourDate

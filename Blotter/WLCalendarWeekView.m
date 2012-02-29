@@ -1122,6 +1122,13 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.masksToBounds = YES;
     l.name = _WLRootLayerName;
     l.layoutManager = self;
+    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNull null], kCAOnOrderIn,
+                             [NSNull null], kCAOnOrderOut,
+                             [NSNull null], kCATransition,
+                             [NSNull null], @"contents",
+                             nil];
+    l.actions = actions;
 #ifdef DEBUG_LAYERS
     l.delegate = self;
     l.backgroundColor = [[NSColor blackColor] WL_CGColor];
@@ -1152,6 +1159,13 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.layoutManager = self;
     l.masksToBounds = YES;
     l.zPosition = 0;
+    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNull null], kCAOnOrderIn,
+                             [NSNull null], kCAOnOrderOut,
+                             [NSNull null], kCATransition,
+                             [NSNull null], @"contents",
+                             nil];
+    l.actions = actions;
 #ifdef DEBUG_LAYERS
     l.delegate = self;
     l.backgroundColor = [[NSColor darkGrayColor] WL_CGColor];
@@ -1170,7 +1184,12 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.name = _WLTimeRulerBackgroundLayerName;
     l.needsDisplayOnBoundsChange = YES;
     l.layoutManager = self;
-    NSDictionary *actions = [NSDictionary dictionaryWithObject:[NSNull null] forKey:@"contents"];
+    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNull null], kCAOnOrderIn,
+                             [NSNull null], kCAOnOrderOut,
+                             [NSNull null], kCATransition,
+                             [NSNull null], @"contents",
+                             nil];
     l.actions = actions;
 #ifndef DEBUG_LAYERS
     l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
@@ -1255,6 +1274,13 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.scrollMode = kCAScrollVertically;
     l.geometryFlipped = YES;
     l.layoutManager = self;
+    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNull null], kCAOnOrderIn,
+                             [NSNull null], kCAOnOrderOut,
+                             [NSNull null], kCATransition,
+                             [NSNull null], @"contents",
+                             nil];
+    l.actions = actions;
 #ifdef DEBUG_LAYERS
     l.delegate = self;
     l.backgroundColor = [[NSColor orangeColor] WL_CGColor];
@@ -1274,6 +1300,13 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.timeRuler = self;
     l.markers = [self _timeRulerMarkers];
     l.onlyCompletelyVisibleMarkersShown = self.fitsDayEvents;
+    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNull null], kCAOnOrderIn,
+                             [NSNull null], kCAOnOrderOut,
+                             [NSNull null], kCATransition,
+                             [NSNull null], @"contents",
+                             nil];
+    l.actions = actions;
 #ifdef DEBUG_LAYERS
     l.delegate = self;
     l.backgroundColor = [[NSColor blueColor] WL_CGColor];
@@ -1291,6 +1324,13 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.name = _WLEventsRootLayerName;
     l.zPosition = 1;
     l.layoutManager = self;
+    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNull null], kCAOnOrderIn,
+                             [NSNull null], kCAOnOrderOut,
+                             [NSNull null], kCATransition,
+                             [NSNull null], @"contents",
+                             nil];
+    l.actions = actions;
 #ifdef DEBUG_LAYERS
     l.delegate = self;
     l.backgroundColor = [[[NSColor darkGrayColor] colorWithAlphaComponent:0.5] WL_CGColor];
@@ -1319,6 +1359,13 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.name = _WLColumnRootLayerName;
     l.anchorPoint = CGPointMake(0.0, 0.0);
     l.layoutManager = self;
+    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNull null], kCAOnOrderIn,
+                             [NSNull null], kCAOnOrderOut,
+                             [NSNull null], kCATransition,
+                             [NSNull null], @"contents",
+                             nil];
+    l.actions = actions;
 #ifdef DEBUG_LAYERS
     l.delegate = self;
     l.backgroundColor = [[NSColor redColor] WL_CGColor];
@@ -1342,7 +1389,12 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.needsDisplayOnBoundsChange = YES;
     l.masksToBounds = YES;
     l.layoutManager = self;
-    NSDictionary *actions = [NSDictionary dictionaryWithObject:[NSNull null] forKey:@"contents"];
+    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNull null], kCAOnOrderIn,
+                             [NSNull null], kCAOnOrderOut,
+                             [NSNull null], kCATransition,
+                             [NSNull null], @"contents",
+                             nil];
     l.actions = actions;
 #ifndef DEBUG_LAYERS
     NSGradient *whiteToTransparentGradient = [[NSGradient alloc] initWithStartingColor:[[NSColor whiteColor] colorWithAlphaComponent:0.13f]
@@ -1449,7 +1501,12 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.name = _WLDayBackgroundLayerName;
     l.needsDisplayOnBoundsChange = YES;
     l.layoutManager = self;
-    NSDictionary *actions = [NSDictionary dictionaryWithObject:[NSNull null] forKey:@"contents"];
+    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNull null], kCAOnOrderIn,
+                             [NSNull null], kCAOnOrderOut,
+                             [NSNull null], kCATransition,
+                             [NSNull null], @"contents",
+                             nil];
     l.actions = actions;
     NSGradient *whiteToTransparentGradient = [[NSGradient alloc] initWithStartingColor:[[NSColor whiteColor] colorWithAlphaComponent:0.1f]
                                                                            endingColor:[NSColor clearColor]];
@@ -1585,6 +1642,13 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
 {
     WLCalendarAllDayEventsLayer *l = [WLCalendarAllDayEventsLayer layer];
     l.name = _WLAllDayLayerName;
+    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNull null], kCAOnOrderIn,
+                             [NSNull null], kCAOnOrderOut,
+                             [NSNull null], kCATransition,
+                             [NSNull null], @"contents",
+                             nil];
+    l.actions = actions;
 #ifdef DEBUG_LAYERS
     l.delegate = self;
     l.backgroundColor = [[NSColor blueColor] WL_CGColor];
@@ -1597,6 +1661,13 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     CAScrollLayer *l = [CAScrollLayer layer];
     l.name = _WLDayScrollLayerName;
     l.layoutManager = self;
+    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNull null], kCAOnOrderIn,
+                             [NSNull null], kCAOnOrderOut,
+                             [NSNull null], kCATransition,
+                             [NSNull null], @"contents",
+                             nil];
+    l.actions = actions;
 #ifdef DEBUG_LAYERS
     l.delegate = self;
     l.backgroundColor = [[NSColor orangeColor] WL_CGColor];
@@ -1615,6 +1686,13 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.name = _WLDayLayerName;
     l.timeRuler = self;
     l.keepsTextOfEventsVisible = !self.fitsDayEvents;
+    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNull null], kCAOnOrderIn,
+                             [NSNull null], kCAOnOrderOut,
+                             [NSNull null], kCATransition,
+                             [NSNull null], @"contents",
+                             nil];
+    l.actions = actions;
 #ifdef DEBUG_LAYERS
     l.delegate = self;
     l.needsDisplayOnBoundsChange = YES;
@@ -1633,6 +1711,13 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.masksToBounds = YES;
     l.zPosition = 2;
     l.layoutManager = self;
+    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNull null], kCAOnOrderIn,
+                             [NSNull null], kCAOnOrderOut,
+                             [NSNull null], kCATransition,
+                             [NSNull null], @"contents",
+                             nil];
+    l.actions = actions;
 #ifdef DEBUG_LAYERS
     l.delegate = self;
     l.backgroundColor = [[[NSColor darkGrayColor] colorWithAlphaComponent:0.7] WL_CGColor];
@@ -1651,6 +1736,13 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     l.name = _WLTimeIndicatorLayerName;
     l.anchorPoint = CGPointMake(0.0, 0.5);
     l.hidden = !self.showsTimeIndicator;
+    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNull null], kCAOnOrderIn,
+                             [NSNull null], kCAOnOrderOut,
+                             [NSNull null], kCATransition,
+                             [NSNull null], @"contents",
+                             nil];
+    l.actions = actions;
 #ifdef DEBUG_LAYERS
     l.delegate = self;
     l.backgroundColor = [[NSColor whiteColor] WL_CGColor];

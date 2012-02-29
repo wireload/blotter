@@ -91,24 +91,8 @@
 
 - (void)_buildEventsLayoutTree;
 
-/*!
- @abstract  Returns start hour of a given layer.
- */
-- (CGFloat)_startHourOfEventLayer:(WLCalendarEventLayer *)aLayer;
+- (WLHourRange)_hourRangeOfEventLayer:(WLCalendarEventLayer *)aLayer;
 
-/*!
- @abstract  Returns end hour of a given layer.
- */
-- (CGFloat)_endHourOfEventLayer:(WLCalendarEventLayer *)aLayer;
-
-/*!
- @abstract  Returns minY for event layer for layout.
- */
-- (CGFloat)_minYOfEventLayer:(WLCalendarEventLayer *)aLayer;
-
-/*!
- @abstract  Returns maxY for event layer for layout.
- */
-- (CGFloat)_maxYOfEventLayer:(WLCalendarEventLayer *)aLayer minY:(CGFloat)aMinY;
+- (CGRect)_yAndHeightOfEventLayer:(WLCalendarEventLayer *)aLayer;
 
 @end
