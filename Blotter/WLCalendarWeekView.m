@@ -492,7 +492,6 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     
     [CATransaction begin];
     [CATransaction setDisableActions:!isAnimated];
-    [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear]];
     // Ensure you retain all sublayers before changing its properties or adding animations.
     __block WLCalendarWeekView *selfBlock = self;
     [CATransaction setCompletionBlock:^{
@@ -670,11 +669,13 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
         if (isAnimated)
         {
             CABasicAnimation *boundsAnimation = [CABasicAnimation animationWithKeyPath:@"bounds"];
+            boundsAnimation.fromValue = [NSValue valueWithRect:NSRectFromCGRect([(CALayer *)[l presentationLayer] bounds])];
             boundsAnimation.toValue = [NSValue valueWithRect:NSRectFromCGRect(CGRectMake(0.0,
                                                                                          0.0,
                                                                                          CGRectGetWidth(toFrame),
                                                                                          CGRectGetHeight(toFrame)))];
             CABasicAnimation *positionXAnimation = [CABasicAnimation animationWithKeyPath:@"position.x"];
+            positionXAnimation.fromValue = [NSNumber numberWithDouble:CGRectGetMinX([(CALayer *)[l presentationLayer] frame])];
             positionXAnimation.toValue = [NSNumber numberWithDouble:CGRectGetMinX(toFrame)];
             if (idx >= rangeOfInsertedColumns.location && idx < NSMaxRange(rangeOfInsertedColumns))
             {
