@@ -1089,6 +1089,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     [super setFrameSize:newSize];
     CALayer *rootLayer = [self layer];
     NSParameterAssert(rootLayer != nil);
+    [rootLayer setNeedsLayout];
     if ([CATransaction disableActions])
         [rootLayer layoutIfNeeded];
 }
