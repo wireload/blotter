@@ -21,11 +21,15 @@
 
 - (CGColorRef)WL_CGColor {
     CGColorSpaceRef colorSpace = [[self colorSpace] CGColorSpace];
+    CGColorSpaceRetain(colorSpace);
+    if (colorSpace == NULL)
+        colorSpace = CGColorSpaceCreateDeviceRGB();
     NSInteger componentCount = [self numberOfComponents];
     CGFloat *components = (CGFloat *)calloc(componentCount, sizeof(CGFloat));
     [self getComponents:components];
     CGColorRef color = CGColorCreate(colorSpace, components);
     free((void*)components);
+    CGColorSpaceRelease(colorSpace);
     return (CGColorRef)[(id)color autorelease];
 }
 
