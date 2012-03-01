@@ -10,6 +10,12 @@
 		256AC3DA0F4B6AC300CF3369 /* DeskboardAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */; };
 		284064FC12834B98000816FF /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 284064FB12834B98000816FF /* CalendarStore.framework */; };
 		2898BE4F148E6FB5002C68EB /* Blotter-B10.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2898BE4E148E6FB5002C68EB /* Blotter-B10.icns */; };
+		28C5E26B14FFC21C00CD35F5 /* glass-hud-button-active-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C5E26514FFC21C00CD35F5 /* glass-hud-button-active-left.png */; };
+		28C5E26C14FFC21C00CD35F5 /* glass-hud-button-active-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C5E26614FFC21C00CD35F5 /* glass-hud-button-active-middle.png */; };
+		28C5E26D14FFC21C00CD35F5 /* glass-hud-button-active-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C5E26714FFC21C00CD35F5 /* glass-hud-button-active-right.png */; };
+		28C5E26E14FFC21C00CD35F5 /* glass-hud-button-disabled-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C5E26814FFC21C00CD35F5 /* glass-hud-button-disabled-left.png */; };
+		28C5E26F14FFC21C00CD35F5 /* glass-hud-button-disabled-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C5E26914FFC21C00CD35F5 /* glass-hud-button-disabled-middle.png */; };
+		28C5E27014FFC21C00CD35F5 /* glass-hud-button-disabled-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C5E26A14FFC21C00CD35F5 /* glass-hud-button-disabled-right.png */; };
 		28CB50F114603CEC00810395 /* glass-hud-bottom-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50E814603CEC00810395 /* glass-hud-bottom-left.png */; };
 		28CB50F214603CEC00810395 /* glass-hud-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50E914603CEC00810395 /* glass-hud-bottom.png */; };
 		28CB50F314603CEC00810395 /* glass-hud-bottom-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50EA14603CEC00810395 /* glass-hud-bottom-right.png */; };
@@ -67,9 +73,6 @@
 		E27021A3133BA7610098CD79 /* glass-hud-textview-top-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E270219A133BA7610098CD79 /* glass-hud-textview-top-right.png */; };
 		E27021A4133BA7610098CD79 /* glass-hud-textview-top.png in Resources */ = {isa = PBXBuildFile; fileRef = E270219B133BA7610098CD79 /* glass-hud-textview-top.png */; };
 		E27196BB13C5A1C3008E5C43 /* WLCalendarTasksView.m in Sources */ = {isa = PBXBuildFile; fileRef = E27196BA13C5A1C3008E5C43 /* WLCalendarTasksView.m */; };
-		E271E506133762A300BF7F2B /* glass-hud-button-pressed-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E271E503133762A300BF7F2B /* glass-hud-button-pressed-right.png */; };
-		E271E507133762A300BF7F2B /* glass-hud-button-pressed-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = E271E504133762A300BF7F2B /* glass-hud-button-pressed-middle.png */; };
-		E271E508133762A300BF7F2B /* glass-hud-button-pressed-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E271E505133762A300BF7F2B /* glass-hud-button-pressed-left.png */; };
 		E271E5B513377E6100BF7F2B /* blotter-status-bar.png in Resources */ = {isa = PBXBuildFile; fileRef = E271E5B313377E6100BF7F2B /* blotter-status-bar.png */; };
 		E271E5B613377E6100BF7F2B /* blotter-status-bar-active.png in Resources */ = {isa = PBXBuildFile; fileRef = E271E5B413377E6100BF7F2B /* blotter-status-bar-active.png */; };
 		E27313C51349F41200A84433 /* PTHotKey+ShortcutRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = E27313C41349F41200A84433 /* PTHotKey+ShortcutRecorder.m */; };
@@ -239,6 +242,12 @@
 		256AC3F00F4B6AF500CF3369 /* Deskboard_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deskboard_Prefix.pch; sourceTree = "<group>"; };
 		284064FB12834B98000816FF /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = System/Library/Frameworks/CalendarStore.framework; sourceTree = SDKROOT; };
 		2898BE4E148E6FB5002C68EB /* Blotter-B10.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Blotter-B10.icns"; sourceTree = "<group>"; };
+		28C5E26514FFC21C00CD35F5 /* glass-hud-button-active-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-active-left.png"; sourceTree = "<group>"; };
+		28C5E26614FFC21C00CD35F5 /* glass-hud-button-active-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-active-middle.png"; sourceTree = "<group>"; };
+		28C5E26714FFC21C00CD35F5 /* glass-hud-button-active-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-active-right.png"; sourceTree = "<group>"; };
+		28C5E26814FFC21C00CD35F5 /* glass-hud-button-disabled-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-disabled-left.png"; sourceTree = "<group>"; };
+		28C5E26914FFC21C00CD35F5 /* glass-hud-button-disabled-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-disabled-middle.png"; sourceTree = "<group>"; };
+		28C5E26A14FFC21C00CD35F5 /* glass-hud-button-disabled-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-disabled-right.png"; sourceTree = "<group>"; };
 		28CB50E814603CEC00810395 /* glass-hud-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-bottom-left.png"; sourceTree = "<group>"; };
 		28CB50E914603CEC00810395 /* glass-hud-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-bottom.png"; sourceTree = "<group>"; };
 		28CB50EA14603CEC00810395 /* glass-hud-bottom-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-bottom-right.png"; sourceTree = "<group>"; };
@@ -307,9 +316,6 @@
 		E270219B133BA7610098CD79 /* glass-hud-textview-top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-textview-top.png"; sourceTree = "<group>"; };
 		E27196B913C5A1C3008E5C43 /* WLCalendarTasksView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTasksView.h; sourceTree = "<group>"; };
 		E27196BA13C5A1C3008E5C43 /* WLCalendarTasksView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarTasksView.m; sourceTree = "<group>"; };
-		E271E503133762A300BF7F2B /* glass-hud-button-pressed-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-pressed-right.png"; sourceTree = "<group>"; };
-		E271E504133762A300BF7F2B /* glass-hud-button-pressed-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-pressed-middle.png"; sourceTree = "<group>"; };
-		E271E505133762A300BF7F2B /* glass-hud-button-pressed-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-pressed-left.png"; sourceTree = "<group>"; };
 		E271E5B313377E6100BF7F2B /* blotter-status-bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blotter-status-bar.png"; sourceTree = "<group>"; };
 		E271E5B413377E6100BF7F2B /* blotter-status-bar-active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blotter-status-bar-active.png"; sourceTree = "<group>"; };
 		E27313C31349F41200A84433 /* PTHotKey+ShortcutRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PTHotKey+ShortcutRecorder.h"; path = "../ShortcutRecorder/Demo/HotKey/PTHotKey+ShortcutRecorder.h"; sourceTree = "<group>"; };
@@ -717,6 +723,12 @@
 		E2F9E1D71322A4F4007598E2 /* glass-hud */ = {
 			isa = PBXGroup;
 			children = (
+				28C5E26514FFC21C00CD35F5 /* glass-hud-button-active-left.png */,
+				28C5E26614FFC21C00CD35F5 /* glass-hud-button-active-middle.png */,
+				28C5E26714FFC21C00CD35F5 /* glass-hud-button-active-right.png */,
+				28C5E26814FFC21C00CD35F5 /* glass-hud-button-disabled-left.png */,
+				28C5E26914FFC21C00CD35F5 /* glass-hud-button-disabled-middle.png */,
+				28C5E26A14FFC21C00CD35F5 /* glass-hud-button-disabled-right.png */,
 				E2702193133BA7610098CD79 /* glass-hud-textview-bottom-left.png */,
 				E2702194133BA7610098CD79 /* glass-hud-textview-bottom-right.png */,
 				E2702195133BA7610098CD79 /* glass-hud-textview-bottom.png */,
@@ -726,9 +738,6 @@
 				E2702199133BA7610098CD79 /* glass-hud-textview-top-left.png */,
 				E270219A133BA7610098CD79 /* glass-hud-textview-top-right.png */,
 				E270219B133BA7610098CD79 /* glass-hud-textview-top.png */,
-				E271E503133762A300BF7F2B /* glass-hud-button-pressed-right.png */,
-				E271E504133762A300BF7F2B /* glass-hud-button-pressed-middle.png */,
-				E271E505133762A300BF7F2B /* glass-hud-button-pressed-left.png */,
 				E2670357132CA21F003FBFC2 /* glass-hud-button-right.png */,
 				E2670358132CA21F003FBFC2 /* glass-hud-button-middle.png */,
 				E2670359132CA21F003FBFC2 /* glass-hud-button-left.png */,
@@ -871,9 +880,6 @@
 				E267035A132CA21F003FBFC2 /* glass-hud-button-right.png in Resources */,
 				E267035B132CA21F003FBFC2 /* glass-hud-button-middle.png in Resources */,
 				E267035C132CA21F003FBFC2 /* glass-hud-button-left.png in Resources */,
-				E271E506133762A300BF7F2B /* glass-hud-button-pressed-right.png in Resources */,
-				E271E507133762A300BF7F2B /* glass-hud-button-pressed-middle.png in Resources */,
-				E271E508133762A300BF7F2B /* glass-hud-button-pressed-left.png in Resources */,
 				E271E5B513377E6100BF7F2B /* blotter-status-bar.png in Resources */,
 				E271E5B613377E6100BF7F2B /* blotter-status-bar-active.png in Resources */,
 				E270219C133BA7610098CD79 /* glass-hud-textview-bottom-left.png in Resources */,
@@ -948,6 +954,12 @@
 				28CB50F814603CEC00810395 /* glass-hud-top.png in Resources */,
 				28CB50F914603CEC00810395 /* glass-hud-top-right.png in Resources */,
 				2898BE4F148E6FB5002C68EB /* Blotter-B10.icns in Resources */,
+				28C5E26B14FFC21C00CD35F5 /* glass-hud-button-active-left.png in Resources */,
+				28C5E26C14FFC21C00CD35F5 /* glass-hud-button-active-middle.png in Resources */,
+				28C5E26D14FFC21C00CD35F5 /* glass-hud-button-active-right.png in Resources */,
+				28C5E26E14FFC21C00CD35F5 /* glass-hud-button-disabled-left.png in Resources */,
+				28C5E26F14FFC21C00CD35F5 /* glass-hud-button-disabled-middle.png in Resources */,
+				28C5E27014FFC21C00CD35F5 /* glass-hud-button-disabled-right.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

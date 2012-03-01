@@ -27,9 +27,9 @@
     else
     {
         NSDrawThreePartImage(cellFrame,
-                             [NSImage imageNamed:@"glass-hud-button-pressed-left"],
-                             [NSImage imageNamed:@"glass-hud-button-pressed-middle"],
-                             [NSImage imageNamed:@"glass-hud-button-pressed-right"],
+                             [NSImage imageNamed:@"glass-hud-button-active-left"],
+                             [NSImage imageNamed:@"glass-hud-button-active-middle"],
+                             [NSImage imageNamed:@"glass-hud-button-active-right"],
                              NO,
                              NSCompositeSourceOver,
                              1.0,
