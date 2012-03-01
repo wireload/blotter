@@ -13,7 +13,18 @@
 
 -(void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-    if (![self isHighlighted])
+    if (![self isEnabled])
+    {
+        NSDrawThreePartImage(cellFrame,
+                             [NSImage imageNamed:@"glass-hud-button-disabled-left"],
+                             [NSImage imageNamed:@"glass-hud-button-disabled-middle"],
+                             [NSImage imageNamed:@"glass-hud-button-disabled-right"],
+                             NO,
+                             NSCompositeSourceOver,
+                             1.0,
+                             YES);
+    }
+    else if (![self isHighlighted])
     {
         NSDrawThreePartImage(cellFrame,
                              [NSImage imageNamed:@"glass-hud-button-left"],
@@ -55,7 +66,8 @@
     NSRange titleLength = NSMakeRange(0, [whiteTitle length]);
     [whiteTitle beginEditing];
     [whiteTitle addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Lucida Grande" size:11] range:titleLength];
-    [whiteTitle addAttribute:NSForegroundColorAttributeName value:[NSColor colorWithCalibratedWhite:0.95 alpha:1.0] range:titleLength];
+    float titleAlpha = [self isEnabled] ? 1.0 : 0.85;
+    [whiteTitle addAttribute:NSForegroundColorAttributeName value:[NSColor colorWithCalibratedWhite:0.98 alpha:titleAlpha] range:titleLength];
     [whiteTitle endEditing];
     return [super drawTitle:whiteTitle withFrame:frame inView:controlView];
 }
