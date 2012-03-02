@@ -53,4 +53,7 @@
 
 + (NSColor *)WL_windowFrameBackgroundColor;
 
+
++ (NSColor *)WL_defaultCalendarColorIfFrameworkFails;
+
 @end

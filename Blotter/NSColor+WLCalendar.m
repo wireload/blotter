@@ -115,4 +115,9 @@
     return [[NSColor blackColor] colorWithAlphaComponent:0.25f];
 }
 
++ (NSColor *)WL_defaultCalendarColorIfFrameworkFails
+{
+    return [NSColor blackColor];
+}
+
 @end

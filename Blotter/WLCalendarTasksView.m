@@ -88,7 +88,10 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     CALayer *layer = [self layer];
     WLCalendarTaskLayer *taskLayer = [[layer valueForKey:_WLOrderedSublayersKey] objectAtIndex:anIndex];
     taskLayer.title = [self _titleWithString:task.title];
-    taskLayer.mark = [self _markWithColor:[[[task calendar] color] WL_CGColor]];
+    NSColor *calendarColor = [task.calendar color];
+    if (calendarColor == NULL)
+        calendarColor = [NSColor WL_defaultCalendarColorIfFrameworkFails];
+    taskLayer.mark = [self _markWithColor:[calendarColor WL_CGColor]];
     [layer setNeedsLayout];
 }
 
