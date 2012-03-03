@@ -193,6 +193,8 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 
 - (NSAttributedString *)_markWithColor:(CGColorRef)aColor
 {
+    NSParameterAssert(aColor != NULL);
+
     static NSMutableDictionary *a = nil;
     if (a == nil)
     {       

@@ -38,6 +38,9 @@
 
 - (NSAttributedString *)_titleWithString:(NSString *)aString;
 
+/*!
+ @param aColor Color of the mark. Raises an exception if NULL.
+ */
 - (NSAttributedString *)_markWithColor:(CGColorRef)aColor;
 
 @end
