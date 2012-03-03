@@ -4,6 +4,9 @@
 
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
+    #import <CalendarStore/CalendarStore.h>
+    #import <Carbon/Carbon.h>
+    #import <QuartzCore/QuartzCore.h>
     #include <IOKit/ps/IOPowerSources.h>
     #include <IOKit/ps/IOPSKeys.h>
 #endif
