@@ -9,17 +9,18 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 #import <CalendarStore/CalendarStore.h>
+#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLCalendarTaskLayer.h"
 
 
 @protocol WLCalendarTasksViewDataSource;
 
 
-@interface WLCalendarTasksView : NSView /*<CALayerDelegate, CALayoutManager>*/ {
+@interface WLCalendarTasksView : WLLayerBackedView /*<CALayoutManager>*/ {
     IBOutlet id<WLCalendarTasksViewDataSource> dataSource;
 }
 
-@property (nonatomic, assign) id<WLCalendarTasksViewDataSource> dataSource;
+@property (assign) id<WLCalendarTasksViewDataSource> dataSource;
 
 - (void)reloadDataAnimated:(BOOL)isAnimated;
 
@@ -30,6 +31,8 @@
 - (void)updateTaskAtIndex:(NSUInteger)anIndex;
 
 - (void)moveTaskAtIndex:(NSUInteger)oldIndex toIndex:(NSUInteger)newIndex;
+
+- (NSUInteger)numberOfTasks;
 
 @end
 
@@ -44,8 +47,6 @@
 
 
 @interface WLCalendarTasksView (Layers)
-
-- (void)makeLayers;
 
 - (WLCalendarTaskLayer *)makeTaskLayer;
 

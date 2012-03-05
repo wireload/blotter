@@ -6,7 +6,6 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
-#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #include <tgmath.h>
 #import "WLCalendarTasksView.h"
 #import "NSFont+WLCalendar.h"
@@ -52,6 +51,9 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 {
     CALayer *rootLayer = [self layer];
     NSParameterAssert(rootLayer != nil);
+    NSAssert(anIndex <= [self numberOfTasks],
+             @"anIndex (%ld) MUST be less or equal than number of tasks (%ld).", anIndex, [self numberOfTasks]);
+
     WLCalendarTaskLayer *taskLayer = [self makeTaskLayer];
     [rootLayer addSublayer:taskLayer];
     [[rootLayer valueForKey:_WLOrderedSublayersKey] insertObject:taskLayer atIndex:anIndex];
@@ -80,28 +82,46 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 
 - (void)updateTaskAtIndex:(NSUInteger)anIndex
 {
+    CALayer *rootLayer = [self layer];
+    NSParameterAssert(rootLayer != nil);
+    NSAssert(anIndex < [self numberOfTasks],
+             @"anIndex (%ld) MUST point to a valid task (%ld tasks).", anIndex, [self numberOfTasks]);
+
     CalTask *task = [dataSource tasksView:self taskAtIndex:anIndex];
-    CALayer *layer = [self layer];
-    WLCalendarTaskLayer *taskLayer = [[layer valueForKey:_WLOrderedSublayersKey] objectAtIndex:anIndex];
+    WLCalendarTaskLayer *taskLayer = [[rootLayer valueForKey:_WLOrderedSublayersKey] objectAtIndex:anIndex];
     taskLayer.name = task.uid;
     taskLayer.title = [NSAttributedString WL_titleWithString:task.title];
     NSColor *calendarColor = [task.calendar color];
     if (calendarColor == NULL)
         calendarColor = [NSColor WL_defaultCalendarColorIfFrameworkFails];
     taskLayer.mark = [NSAttributedString WL_markWithColor:[calendarColor WL_CGColor]];
-    [layer setNeedsLayout];
+    [rootLayer setNeedsLayout];
 }
 
 - (void)moveTaskAtIndex:(NSUInteger)oldIndex toIndex:(NSUInteger)newIndex
 {
     if (oldIndex == newIndex)
         return;
-    CALayer *layer = [self layer];
-    NSMutableArray *orderedTaskLayers = [layer valueForKey:_WLOrderedSublayersKey];
+
+    CALayer *rootLayer = [self layer];
+    NSParameterAssert(rootLayer != nil);
+    NSAssert(oldIndex < [self numberOfTasks],
+             @"oldIndex (%ld) MUST point to a valid task (%ld tasks).", oldIndex, [self numberOfTasks]);
+    NSAssert(newIndex < [self numberOfTasks],
+             @"newIndex (%ld) MUST be less than number of tasks (%ld tasks).", newIndex, [self numberOfTasks]);
+
+    NSMutableArray *orderedTaskLayers = [rootLayer valueForKey:_WLOrderedSublayersKey];
     CalTask *movable = [orderedTaskLayers objectAtIndex:oldIndex];
     [orderedTaskLayers removeObjectAtIndex:oldIndex];
     [orderedTaskLayers insertObject:movable atIndex:newIndex];
-    [layer setNeedsLayout];
+    [rootLayer setNeedsLayout];
+}
+
+- (NSUInteger)numberOfTasks
+{
+    CALayer *rootLayer = [self layer];
+    NSParameterAssert(rootLayer != nil);
+    return [[rootLayer valueForKey:_WLOrderedSublayersKey] count];
 }
 
 
@@ -114,7 +134,8 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 
     CGFloat taskLayerYOffset = 0.0;
     static const CGFloat TopMargin = 9.0;
-    for (WLCalendarTaskLayer *taskLayer in [aLayer valueForKey:_WLOrderedSublayersKey])
+    NSArray *orderedSublayers = [aLayer valueForKey:_WLOrderedSublayersKey];
+    for (WLCalendarTaskLayer *taskLayer in orderedSublayers)
     {
         CGFloat preferredHeight = [taskLayer preferredHeightWithWidth:CGRectGetWidth(aLayer.bounds)];
         if (taskLayerYOffset < CGRectGetHeight(aLayer.bounds))
@@ -160,27 +181,16 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 }
 
 
-#pragma mark NSView
+#pragma mark WLLayerBackedView
 
-- (void)setFrameSize:(NSSize)newSize
-{
-    [super setFrameSize:newSize];
-    if ([CATransaction disableActions])
-        [[self layer] layoutIfNeeded];
-}
-
-@end
-
-
-@implementation WLCalendarTasksView (Layers)
-
-- (void)makeLayers
+- (CALayer *)makeRootLayer
 {
     CALayer *l = [CALayer layer];
     l.layoutManager = self;
     l.masksToBounds = YES;
     l.name = _WLTasksLayerName;
     l.geometryFlipped = YES;
+    l.delegate = self;
     [l setValue:[NSMutableArray array] forKey:_WLOrderedSublayersKey];
     NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
                              [NSNull null], kCAOnOrderIn,
@@ -196,19 +206,22 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 #ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor blackColor] WL_CGColor];
 #endif
-    [self setLayer:l];
-    [self setWantsLayer:YES];
-    [self reloadDataAnimated:NO];
+    return l;
 }
+
+@end
+
+
+@implementation WLCalendarTasksView (Layers)
 
 - (WLCalendarTaskLayer *)makeTaskLayer
 {
-    WLCalendarTaskLayer *taskLayer = [WLCalendarTaskLayer layer];
-    taskLayer.needsDisplayOnBoundsChange = YES;
+    WLCalendarTaskLayer *l = [WLCalendarTaskLayer layer];
+    l.needsDisplayOnBoundsChange = YES;
 #ifdef DEBUG_LAYERS
-    taskLayer.backgroundColor = [[NSColor orangeColor] WL_CGColor];
+    l.backgroundColor = [[NSColor orangeColor] WL_CGColor];
 #endif
-    return taskLayer;
+    return l;
 }
 
 @end
@@ -242,7 +255,6 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     dispatch_once(&onceToken, ^{
         MarkAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
                           (id)[NSFont WL_taskFont],                      (id)kCTFontAttributeName,
-                          (id)[[NSColor WL_taskTitleColor] WL_CGColor],  (id)kCTForegroundColorAttributeName,
                           nil];
     });
     NSMutableDictionary *a = [[MarkAttributes mutableCopy] autorelease];
