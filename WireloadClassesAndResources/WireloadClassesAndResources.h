@@ -27,5 +27,6 @@
 #import <WireloadClassesAndResources/WLEvents.h>
 #import <WireloadClassesAndResources/CALayer+WLBlocks.h>
 #import <WireloadClassesAndResources/NSUserDefaults+WLApplicationDefaults.h>
+#import <WireloadClassesAndResources/WLLayerBackedView.h>
 
 #endif
