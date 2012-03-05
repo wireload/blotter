@@ -1086,7 +1086,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
 #ifdef DEBUG_LAYERS
     NSLog(@"set frame size: %@", NSStringFromSize(newSize));
 #endif
-    [self needsUpdateColumnTitleFrame];
+    [self setNeedsUpdateColumnTitleFrame];
     [super setFrameSize:newSize];
     CALayer *rootLayer = [self layer];
     NSParameterAssert(rootLayer != nil);
