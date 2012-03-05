@@ -61,12 +61,21 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 
 - (void)removeTaskAtIndex:(NSUInteger)anIndex
 {
-    CALayer *layer = [self layer];
-    NSMutableArray *orderedTaskLayers = [layer valueForKey:_WLOrderedSublayersKey];
+    CALayer *rootLayer = [self layer];
+    NSParameterAssert(rootLayer != nil);
+    NSAssert(anIndex < [self numberOfTasks],
+             @"anIndex (%ld) MUST point to a valid task (%ld tasks).", anIndex, [self numberOfTasks]);
+
+    NSMutableArray *orderedTaskLayers = [rootLayer valueForKey:_WLOrderedSublayersKey];
     WLCalendarTaskLayer *taskLayer = [orderedTaskLayers objectAtIndex:anIndex];
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        [taskLayer removeFromSuperlayer];
+    }];
+    taskLayer.opacity = 0.0;
+    [CATransaction commit];
     [orderedTaskLayers removeObjectAtIndex:anIndex];
-    [taskLayer removeFromSuperlayer];
-    [layer setNeedsLayout];
+    [rootLayer setNeedsLayout];
 }
 
 - (void)updateTaskAtIndex:(NSUInteger)anIndex
