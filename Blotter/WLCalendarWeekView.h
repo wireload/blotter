@@ -28,7 +28,7 @@ typedef enum
 } WLDayAppearanceDirection;
 
 
-@interface WLCalendarWeekView : NSView <WLCalendarTimeRuler/*, CALayerManager, CALayerDelegate*/> {
+@interface WLCalendarWeekView : WLLayerBackedView <WLCalendarTimeRuler/*, CALayerManager, CALayerDelegate*/> {
     IBOutlet NSObject<WLCalendarWeekViewDataSource> *dataSource;
     CGFloat heightOfAllDayPartOfColumn;
     BOOL showsTimeIndicator;
@@ -105,12 +105,6 @@ typedef enum
        direction:(WLDayAppearanceDirection)aDirection
         animated:(BOOL)isAnimated;
 
-- (void)stopAnimations;
-
-- (void)pauseAnimations;
-
-- (void)resumeAnimations;
-
 - (NSUInteger)numberOfColumns;
 
 /*!
@@ -159,12 +153,6 @@ typedef enum
 #pragma mark -
 
 @interface WLCalendarWeekView (Layers)
-
-- (void)setupLayers;
-
-#pragma mark Root Layer
-
-- (CALayer *)setupRootLayer;
 
 #pragma mark Time Ruler Layers
 

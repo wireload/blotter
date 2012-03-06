@@ -183,7 +183,7 @@
     WLCalendarTasksView *v = [[WLCalendarTasksView alloc] initWithFrame:NSZeroRect];
     [self setView:v];
     v.dataSource = self;
-    [v createLayers];
+    [v makeLayers];
     [v release];
     [self fetchTasksAndReloadViewDataAnimated:NO];
     [self addObserver:self forKeyPath:@"representedObject.calReminderCalendarsToDisplay" options:NSKeyValueObservingOptionNew context:NULL];

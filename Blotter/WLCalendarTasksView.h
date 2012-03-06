@@ -9,19 +9,18 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 #import <CalendarStore/CalendarStore.h>
+#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLCalendarTaskLayer.h"
 
 
 @protocol WLCalendarTasksViewDataSource;
 
 
-@interface WLCalendarTasksView : NSView /*<CALayerDelegate, CALayoutManager>*/ {
+@interface WLCalendarTasksView : WLLayerBackedView /*<CALayoutManager>*/ {
     IBOutlet id<WLCalendarTasksViewDataSource> dataSource;
 }
 
-@property (nonatomic, assign) id<WLCalendarTasksViewDataSource> dataSource;
-
-- (void)createLayers;
+@property (assign) id<WLCalendarTasksViewDataSource> dataSource;
 
 - (void)reloadDataAnimated:(BOOL)isAnimated;
 
@@ -33,15 +32,7 @@
 
 - (void)moveTaskAtIndex:(NSUInteger)oldIndex toIndex:(NSUInteger)newIndex;
 
-
-- (WLCalendarTaskLayer *)_setupTaskLayerAtIndex:(NSUInteger)anIndex;
-
-- (NSAttributedString *)_titleWithString:(NSString *)aString;
-
-/*!
- @param aColor Color of the mark. Raises an exception if NULL.
- */
-- (NSAttributedString *)_markWithColor:(CGColorRef)aColor;
+- (NSUInteger)numberOfTasks;
 
 @end
 
@@ -51,5 +42,27 @@
 - (NSUInteger)numberOfTasksInTasksView:(WLCalendarTasksView *)aTasksView;
 
 - (CalTask *)tasksView:(WLCalendarTasksView *)aTasksView taskAtIndex:(NSUInteger)anIndex;
+
+@end
+
+
+@interface WLCalendarTasksView (Layers)
+
+- (WLCalendarTaskLayer *)makeTaskLayer;
+
+@end
+
+
+@interface NSAttributedString (WLCalendarTasksView)
+
+/*!
+ @discussion    Returns nil if aString is empty.
+ */
++ (NSAttributedString *)WL_titleWithString:(NSString *)aString;
+
+/*!
+ @discussion    Returns nil if aColor is NULL.
+ */
++ (NSAttributedString *)WL_markWithColor:(CGColorRef)aColor;
 
 @end

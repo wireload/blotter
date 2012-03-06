@@ -81,11 +81,28 @@ static const CGFloat _WLMarkTailIndent = 6.0f;
     CGContextSetAllowsFontSubpixelQuantization(aContext, NO);
     CGContextSetAllowsFontSmoothing(aContext, NO);
 
-    CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f, 1.0f), 0.0f, [[[NSColor whiteColor] colorWithAlphaComponent:0.25] WL_CGColor]);
-    [self.mark WL_drawWithRect:[self _markFrame] context:aContext];
-    
-    CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f, -1.0f), 0.0f, [[NSColor WL_taskTextShadowColor] WL_CGColor]);
+    if ([self contentsAreFlipped])
+    {
+        CGAffineTransform flipVertical = CGAffineTransformMake(1.0, 0.0, 0.0, -1.0, 0.0, self.bounds.size.height);
+        CGContextConcatCTM(aContext, flipVertical);
+    }
 
+#ifdef DEBUG_LAYERS
+    CGContextSetFillColorWithColor(aContext, [[NSColor greenColor] WL_CGColor]);
+    CGContextFillRect(aContext, [self _markFrame]);
+    CGContextFillRect(aContext, [self _titleFrame]);
+#endif
+
+    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6 || ![self contentsAreFlipped])
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f, 1.0f), 0.0f, [[[NSColor whiteColor] colorWithAlphaComponent:0.25] WL_CGColor]);
+    else
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f, -1.0f), 0.0f, [[[NSColor whiteColor] colorWithAlphaComponent:0.25] WL_CGColor]);
+    [self.mark WL_drawWithRect:[self _markFrame] context:aContext];
+
+    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6 || ![self contentsAreFlipped])
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f, -1.0f), 0.0f, [[NSColor WL_taskTextShadowColor] WL_CGColor]);
+    else
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f, 1.0f), 0.0f, [[NSColor WL_taskTextShadowColor] WL_CGColor]);
     [self.mark WL_drawWithRect:[self _markFrame] context:aContext];
     [self.title WL_drawWithRect:[self _titleFrame] context:aContext];
 
