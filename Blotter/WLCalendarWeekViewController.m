@@ -425,7 +425,7 @@ static NSString* const _WLEventsKey = @"events";
 {
     WLCalendarWeekView *v = [[WLCalendarWeekView alloc] init];
     [self viewWillSetupLayers:v];
-    [v setupLayers];
+    [v makeLayers];
     [self setView:v];
     [v release];
     [self addObserver:self forKeyPath:@"representedObject.date" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:NULL];

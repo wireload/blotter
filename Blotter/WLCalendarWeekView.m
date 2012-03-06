@@ -699,37 +699,6 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     [CATransaction commit];
 }
 
-- (void)stopAnimations
-{
-    [[self layer] WL_applyBlockToTree:^(CALayer *aLayer)
-    {
-        [aLayer removeAllAnimations];
-    }];
-}
-
-- (void)pauseAnimations
-{
-    [[self layer] WL_applyBlockToTree:^(CALayer *aLayer)
-    {
-        CFTimeInterval pausedTime = [aLayer convertTime:CACurrentMediaTime() fromLayer:nil];
-        aLayer.speed = 0.0;
-        aLayer.timeOffset = pausedTime;
-    }];
-}
-
-- (void)resumeAnimations
-{
-    [[self layer] WL_applyBlockToTree:^(CALayer *aLayer)
-    {
-        CFTimeInterval pausedTime = aLayer.timeOffset;
-        aLayer.speed = 1.0;
-        aLayer.timeOffset = 0.0;
-        aLayer.beginTime = 0.0;
-        CFTimeInterval timeSincePause = [aLayer convertTime:CACurrentMediaTime() fromLayer:nil] - pausedTime;
-        aLayer.beginTime = timeSincePause;
-    }];
-}
-
 - (NSUInteger)numberOfColumns
 {
     return [[self columnRootLayers] count];
@@ -1078,45 +1047,16 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
 }
 
 
-#pragma mark NSView
+#pragma mark WLLayerBackedView
 
-- (void)setFrameSize:(NSSize)newSize
+- (void)makeLayers
 {
-    [self stopAnimations];
-#ifdef DEBUG_LAYERS
-    NSLog(@"set frame size: %@", NSStringFromSize(newSize));
-#endif
-    [self setNeedsUpdateColumnTitleFrame];
-    [super setFrameSize:newSize];
-    CALayer *rootLayer = [self layer];
-    NSParameterAssert(rootLayer != nil);
-    [rootLayer setNeedsLayout];
-    if ([CATransaction disableActions])
-        [rootLayer layoutIfNeeded];
-}
-
-@end
-
-
-#pragma mark -
-
-@implementation WLCalendarWeekView (Layers)
-
-- (void)setupLayers
-{
-    NSParameterAssert(![self wantsLayer]);
-
-    CALayer *rootLayer = [self setupRootLayer];
-    [self setLayer:rootLayer];
-    [self setWantsLayer:YES];
+    [super makeLayers];
     [self reloadDataAnimated:NO];
-    [rootLayer setNeedsLayout];
+    [[self layer] setNeedsLayout];
 }
 
-
-#pragma mark Root Layer
-
-- (CALayer *)setupRootLayer
+- (CALayer *)makeRootLayer
 {
     CALayer *l = [CALayer layer];
     l.masksToBounds = YES;
@@ -1149,6 +1089,12 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     return l;
 }
 
+@end
+
+
+#pragma mark -
+
+@implementation WLCalendarWeekView (Layers)
 
 #pragma mark Time Ruler Layers
 
