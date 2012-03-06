@@ -86,7 +86,7 @@
 
 - (BOOL)canShowCurrentWeek
 {
-    return YES;
+    return self.weeksOffset != 0;
 }
 
 - (BOOL)canShowPreviousWeek
@@ -228,7 +228,7 @@
             Today is Monday:
             (7 + (2 - 3)) % 7 = 6
             */
-            
+
             return (weekdaysRange.length + [todayComponents weekday] - [firstColumnDateComponents weekday]) % weekdaysRange.length;
         }
     }
