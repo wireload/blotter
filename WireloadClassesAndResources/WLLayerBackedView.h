@@ -37,4 +37,6 @@
  */
 - (CALayer *)makeRootLayer;
 
+- (void)layoutIfNeeded;
+
 @end

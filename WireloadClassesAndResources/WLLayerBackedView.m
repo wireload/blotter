@@ -63,8 +63,23 @@ static NSString *const _WLIsLayerPausedKey = @"WLLayerBackedView_IsLayerPaused";
     return [CALayer layer];
 }
 
+- (void)layoutIfNeeded
+{
+    [[self layer] layoutIfNeeded];
+}
+
 
 #pragma mark NSView
+
+- (void)displayIfNeeded
+{
+    [super displayIfNeeded];
+    [[self layer] WL_applyBlockToTree:^(CALayer *aLayer)
+    {
+        [aLayer displayIfNeeded];
+    }];
+}
+
 
 - (void)setFrameSize:(NSSize)newSize
 {
@@ -77,7 +92,10 @@ static NSString *const _WLIsLayerPausedKey = @"WLLayerBackedView_IsLayerPaused";
     NSParameterAssert(rootLayer != nil);
     [rootLayer setNeedsLayout];
     if ([CATransaction disableActions])
-        [rootLayer layoutIfNeeded];
+    {
+        [self layoutIfNeeded];
+        [self displayIfNeeded];
+    }
 }
 
 @end
