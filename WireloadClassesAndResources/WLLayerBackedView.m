@@ -83,6 +83,8 @@ static NSString *const _WLIsLayerPausedKey = @"WLLayerBackedView_IsLayerPaused";
 }
 
 
+#pragma mark NSView
+
 - (void)setFrameSize:(NSSize)newSize
 {
     [self stopAnimations];

@@ -130,6 +130,8 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 - (void)layoutSublayersOfLayer:(CALayer *)aLayer
 {
     // Origin is top left.
+    if (![aLayer.name isEqualToString:_WLTasksLayerName])
+        return;
     NSParameterAssert([aLayer.name isEqualToString:_WLTasksLayerName]);
 
     CGFloat taskLayerYOffset = 0.0;
