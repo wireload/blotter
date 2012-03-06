@@ -83,6 +83,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
         alwaysVisibleHourRange = WLHourRangeMake(9.0, 17.0);
         [self setNeedsUpdateColumnTitleFrame];
         [self setNeedsUpdateVisibleHourRange];
+        [self setNeedsUpdateHoursHeightAndPosition];
     }
     return self;
 }
@@ -744,6 +745,22 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
     needsUpdateVisibleHourRange = YES;
 }
 
+- (BOOL)needsUpdateHoursHeightAndPosition
+{
+    return needsUpdateHoursHeightAndPosition;
+}
+
+- (void)setNeedsUpdateHoursHeightAndPosition
+{
+    needsUpdateHoursHeightAndPosition = YES;
+}
+
+- (void)updateHoursHeightAndPositionIfNeeded
+{
+    if ([self needsUpdateHoursHeightAndPosition])
+        [self _updateHoursHeightAndPosition];
+}
+
 
 #pragma mark CALayoutManager
 
@@ -803,100 +820,7 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
 
 - (CGFloat)heightForHourRange:(WLHourRange)aHourRange
 {
-    static const CGFloat DefaultHeightOfHour = 40.0;
-
-    NSParameterAssert(WLHourRangeLength(aHourRange) >= 0.0);
-    WLHourRange maxHourRange = [self hourRange];
-    NSParameterAssert(WLHourRangeContainsHourRange(maxHourRange, aHourRange));
-
-    if (WLHourRangeLength(aHourRange) == 0.0)
-        return 0.0;
-    CGFloat availableHeight = fdim([self visibleHeightOfTimeRuler], [self originOffset]);
-    if (availableHeight == 0.0)
-        return 0.0;
-
-    if (self.fitsDayEvents)
-    {
-        WLHourRange fixedVisibleHourRange = [self visibleHourRange];
-        if (WLHourRangeLength(fixedVisibleHourRange) == 0.0)
-            return ceil(DefaultHeightOfHour * WLHourRangeLength(aHourRange));
-        CGFloat effectiveAvailableHeight = availableHeight;
-        WLHourRange effectiveVisibleHourRange = fixedVisibleHourRange;
-        CGFloat effectiveHeightOfHour = availableHeight / WLHourRangeLength(fixedVisibleHourRange);
-        NSArray *dayLayers = [self dayLayers];
-        NSParameterAssert(dayLayers != nil);
-        for (WLCalendarDayEventsLayer *l in dayLayers)
-        {
-            WLHourRange r = WLHourRangeZero;
-            CGFloat h = 0.0;
-            BOOL success = [l toFitAllEventsWithinLayerHeight:availableHeight
-                                             startingWithHour:fixedVisibleHourRange.startHour
-                                                    hourRange:&r
-                              shouldBePlacedWithinLayerHeight:&h];
-            if (success)
-            {
-                CGFloat newHeightOfHour = h / WLHourRangeLength(r);
-                if (newHeightOfHour < effectiveHeightOfHour)
-                {
-                    effectiveAvailableHeight = h;
-                    effectiveVisibleHourRange = r;
-                    effectiveHeightOfHour = newHeightOfHour;
-                }
-            }
-        }
-        CGFloat endVisibleHourBasedOnEffectiveHeightOfHour = fixedVisibleHourRange.startHour + availableHeight / effectiveHeightOfHour;
-        fixedVisibleHourRange.endHour = fmax(fixedVisibleHourRange.endHour, endVisibleHourBasedOnEffectiveHeightOfHour);
-        if (fixedVisibleHourRange.endHour < maxHourRange.endHour)
-            fixedVisibleHourRange.endHour = ceil(fixedVisibleHourRange.endHour);
-        else
-        {
-            fixedVisibleHourRange.endHour = effectiveVisibleHourRange.endHour;
-            availableHeight = effectiveAvailableHeight;
-        }
-
-        NSParameterAssert(WLHourRangeLength(fixedVisibleHourRange) > 0.0);
-        NSParameterAssert(WLHourRangeContainsHourRange(maxHourRange, fixedVisibleHourRange));
-        CGFloat heightOfHourRange = 0.0;
-        // Calculate height of out of event range hours.
-        CGFloat heightOfHourOutOfEventRange = round(availableHeight / WLHourRangeLength(fixedVisibleHourRange));
-        if (aHourRange.endHour < fixedVisibleHourRange.startHour)
-            return heightOfHourOutOfEventRange * WLHourRangeLength(aHourRange);
-        else if (aHourRange.startHour < fixedVisibleHourRange.startHour)
-        {
-            heightOfHourRange += heightOfHourOutOfEventRange * WLHourRangeLength(WLHourRangeMake(aHourRange.startHour, fixedVisibleHourRange.startHour));
-            aHourRange.startHour = fixedVisibleHourRange.startHour;
-        }
-        if (aHourRange.startHour > fixedVisibleHourRange.endHour)
-            return heightOfHourOutOfEventRange * WLHourRangeLength(aHourRange);
-        else if (aHourRange.endHour > fixedVisibleHourRange.endHour)
-        {
-            heightOfHourRange += heightOfHourOutOfEventRange * WLHourRangeLength(WLHourRangeMake(fixedVisibleHourRange.endHour, aHourRange.endHour));
-            aHourRange.endHour = fixedVisibleHourRange.endHour;
-        }
-        // Calculate height of inside of event range hours.
-        NSParameterAssert(WLHourRangeContainsHourRange(fixedVisibleHourRange, aHourRange));
-        CGFloat baseHeightOfHour = floor(availableHeight / WLHourRangeLength(fixedVisibleHourRange));
-        CGFloat extendedHeightOfHour = baseHeightOfHour + 1.0;
-        CGFloat lengthOfExtendedHourRange = round(fmod(availableHeight, WLHourRangeLength(fixedVisibleHourRange)));
-        WLHourRange extendedHourRange = WLHourRangeMake(fixedVisibleHourRange.startHour, fixedVisibleHourRange.startHour + lengthOfExtendedHourRange);
-        if (WLHourRangeContainsHourRange(extendedHourRange, aHourRange))
-            heightOfHourRange += extendedHeightOfHour * WLHourRangeLength(aHourRange);
-        else
-        {
-            if (aHourRange.startHour < extendedHourRange.endHour)
-            {
-                heightOfHourRange += extendedHeightOfHour * WLHourRangeLength(WLHourRangeMake(aHourRange.startHour, extendedHourRange.endHour));
-                aHourRange.startHour = extendedHourRange.endHour;
-            }
-            heightOfHourRange += baseHeightOfHour * WLHourRangeLength(aHourRange);
-        }
-        return round(heightOfHourRange);
-    }
-    else
-    {
-        CGFloat hourHeightBasedOnMaxHourRange = round(availableHeight / WLHourRangeLength(maxHourRange));
-        return ceil(fmax(DefaultHeightOfHour, hourHeightBasedOnMaxHourRange) * WLHourRangeLength(aHourRange));
-    }
+    return [self segmentForHourRange:aHourRange].length;
 }
 
 - (CGFloat)hourForDate:(NSDate *)aDate
@@ -908,6 +832,10 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
 {
     NSParameterAssert(aHour >= 0.0);
     return [dataSource weekView:self stringForHour:(NSUInteger)floor(aHour)];
+}
+
+- (WLSegmentRange)segmentForHourRange:(WLHourRange)aHourRange
+{
 }
 
 
@@ -1043,6 +971,114 @@ static const NSTimeInterval _WLMaxDurationOfShowHideAnimation = 1.5;
             [l setNeedsDisplay];
             [oldValue release];
         }];
+    }
+}
+
+- (void)_updateHoursHeightAndPosition
+{
+    static const CGFloat DefaultHeightOfHour = 40.0;
+    
+    WLHourRange timeRulerHourRange = [self hourRange];
+    
+    CGFloat availableHeight = fdim([self visibleHeightOfTimeRuler], [self originOffset]);    
+    if (self.fitsDayEvents)
+    {
+#if CGFLOAT_IS_DOUBLE
+        memset_pattern8(_heightOfHours, (double)0.0, 8 * sizeof(_heightOfHours) / sizeof(CGFloat));
+        memset_pattern8(_positionOfHours, (double)0.0, 8 * sizeof(_positionOfHours) / sizeof(CGFloat));
+#else
+        memset_pattern4(_heightOfHours, (float)0.0f, 4 * sizeof(_heightOfHours) / sizeof(CGFloat));
+        memset_pattern4(_positionOfHours, (float)0.0f, 4 * sizeof(_positionOfHours) / sizeof(CGFloat));
+#endif
+        if (fabs(availableHeight) < CGFLOAT_EPSILON)
+            return; // _heightOfHours and _positionOfHours are filled with 0.0
+        
+        WLHourRange visibleHourRange = [self visibleHourRange];
+        if (WLHourRangeLength(visibleHourRange) == 0.0)
+            return; // _heightOfHours and _positionOfHours are filled with 0.0
+        
+        NSArray *dayLayers = [self dayLayers];
+        NSParameterAssert(dayLayers != nil);
+        CGFloat effectiveAvailableHeight = availableHeight;
+        WLHourRange effectiveVisibleHourRange = visibleHourRange;
+        CGFloat effectiveHeightOfHour = availableHeight / WLHourRangeLength(visibleHourRange);
+        for (WLCalendarDayEventsLayer *l in dayLayers)
+        {
+            WLHourRange r = WLHourRangeZero;
+            CGFloat h = 0.0;
+            BOOL success = [l toFitAllEventsWithinLayerHeight:availableHeight
+                                             startingWithHour:fixedVisibleHourRange.startHour
+                                                    hourRange:&r
+                              shouldBePlacedWithinLayerHeight:&h];
+            if (success)
+            {
+                CGFloat newHeightOfHour = h / WLHourRangeLength(r);
+                if (newHeightOfHour < effectiveHeightOfHour)
+                {
+                    effectiveAvailableHeight = h;
+                    effectiveVisibleHourRange = r;
+                    effectiveHeightOfHour = newHeightOfHour;
+                }
+            }
+        }
+        CGFloat endVisibleHourBasedOnEffectiveHeightOfHour = fixedVisibleHourRange.startHour + availableHeight / effectiveHeightOfHour;
+        fixedVisibleHourRange.endHour = fmax(fixedVisibleHourRange.endHour, endVisibleHourBasedOnEffectiveHeightOfHour);
+        if (fixedVisibleHourRange.endHour < maxHourRange.endHour)
+            fixedVisibleHourRange.endHour = ceil(fixedVisibleHourRange.endHour);
+        else
+        {
+            fixedVisibleHourRange.endHour = effectiveVisibleHourRange.endHour;
+            availableHeight = effectiveAvailableHeight;
+        }
+        
+        NSParameterAssert(WLHourRangeLength(fixedVisibleHourRange) > 0.0);
+        NSParameterAssert(WLHourRangeContainsHourRange(maxHourRange, fixedVisibleHourRange));
+        CGFloat heightOfHourRange = 0.0;
+        // Calculate height of out of event range hours.
+        CGFloat heightOfHourOutOfEventRange = round(availableHeight / WLHourRangeLength(fixedVisibleHourRange));
+        if (aHourRange.endHour < fixedVisibleHourRange.startHour)
+            return heightOfHourOutOfEventRange * WLHourRangeLength(aHourRange);
+        else if (aHourRange.startHour < fixedVisibleHourRange.startHour)
+        {
+            heightOfHourRange += heightOfHourOutOfEventRange * WLHourRangeLength(WLHourRangeMake(aHourRange.startHour, fixedVisibleHourRange.startHour));
+            aHourRange.startHour = fixedVisibleHourRange.startHour;
+        }
+        if (aHourRange.startHour > fixedVisibleHourRange.endHour)
+            return heightOfHourOutOfEventRange * WLHourRangeLength(aHourRange);
+        else if (aHourRange.endHour > fixedVisibleHourRange.endHour)
+        {
+            heightOfHourRange += heightOfHourOutOfEventRange * WLHourRangeLength(WLHourRangeMake(fixedVisibleHourRange.endHour, aHourRange.endHour));
+            aHourRange.endHour = fixedVisibleHourRange.endHour;
+        }
+        // Calculate height of inside of event range hours.
+        NSParameterAssert(WLHourRangeContainsHourRange(fixedVisibleHourRange, aHourRange));
+        CGFloat baseHeightOfHour = floor(availableHeight / WLHourRangeLength(fixedVisibleHourRange));
+        CGFloat extendedHeightOfHour = baseHeightOfHour + 1.0;
+        CGFloat lengthOfExtendedHourRange = round(fmod(availableHeight, WLHourRangeLength(fixedVisibleHourRange)));
+        WLHourRange extendedHourRange = WLHourRangeMake(fixedVisibleHourRange.startHour, fixedVisibleHourRange.startHour + lengthOfExtendedHourRange);
+        if (WLHourRangeContainsHourRange(extendedHourRange, aHourRange))
+            heightOfHourRange += extendedHeightOfHour * WLHourRangeLength(aHourRange);
+        else
+        {
+            if (aHourRange.startHour < extendedHourRange.endHour)
+            {
+                heightOfHourRange += extendedHeightOfHour * WLHourRangeLength(WLHourRangeMake(aHourRange.startHour, extendedHourRange.endHour));
+                aHourRange.startHour = extendedHourRange.endHour;
+            }
+            heightOfHourRange += baseHeightOfHour * WLHourRangeLength(aHourRange);
+        }
+        return round(heightOfHourRange);
+    }
+    else
+    {
+        CGFloat hourHeightBasedOnMaxHourRange = round(availableHeight / WLHourRangeLength(HourRange));
+        CGFloat hourHeight = fmax(DefaultHeightOfHour, hourHeightBasedOnMaxHourRange);
+        _positionOfHours[i] = 0.0;
+        for (size_t i = 1, size = sizeof(_heightOfHours) / sizeof(CGFloat)); i < size; ++i)
+        {
+            _positionOfHours[i] = _positionOfHours[i - 1] + hourHeight;
+            _heightOfHours[i] = hourHeight;
+        }
     }
 }
 

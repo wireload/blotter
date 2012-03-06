@@ -164,7 +164,7 @@
     NSDate *effectiveRepresentedDate = [calendar dateByAddingComponents:weekComponents toDate:[self representedObject].date options:0];
     [weekComponents release];
 
-    switch (mode) {
+    switch (self.mode) {
         case WLCalendarWeekViewDayMode:
         {
             NSDateComponents *dateNoonComponents = [calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:effectiveRepresentedDate];
