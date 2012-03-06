@@ -28,6 +28,7 @@
 
 /*!
  @abstract      Sets view's layer to [self makeRootLayer].
+ @discussion    You can send this message only once.
  @see           -makeRootLayer
  */
 - (void)makeLayers;
