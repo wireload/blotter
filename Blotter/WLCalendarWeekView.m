@@ -962,7 +962,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     else if ([aLayer.name isEqualToString:_WLAllDayBackgroundLayerName])
         [self layoutSublayersOfAllDayBackgroundLayer:(WLBlockLayer *)aLayer];
     else if ([aLayer.name isEqualToString:_WLDayBackgroundLayerName])
-        [self layoutSublayersOfDayBackgroundLayer:(WLBlockLayer *)aLayer];
+        [self layoutSublayersOfDayBackgroundLayer:(WLCalendarDayEventsBackgroundLayer *)aLayer];
     else if ([aLayer.name isEqualToString:_WLDayScrollLayerName])
         [self layoutSublayersOfDayScrollLayer:(CAScrollLayer *)aLayer];
 }

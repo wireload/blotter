@@ -9,17 +9,13 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 #import "WLCalendarTimeRuler.h"
+#import "WLCalendarEventLayer.h"
 #import "WLHourRange.h"
-
-
-@class WLCalendarEventLayer;
 
 
 @interface WLCalendarDayEventsLayer : CALayer {
     BOOL keepsTextOfEventsVisible;
-
     WLHourRange hourRangeOfEvents;
-    BOOL _needsUpdateHourRangeOfEvents;
 
     struct
     {
@@ -34,21 +30,17 @@
     NSTreeNode *_eventsLayoutTreeRootNode;
 }
 
-/*!
- @discussion    Affects layout.
- */
-@property (assign) id<WLCalendarTimeRuler> timeRuler;
+@property (assign) NSObject<WLCalendarTimeRuler> *timeRuler;
 
-/*!
- @discussion    Affects layout and display.
- */
 @property (nonatomic, copy) NSSet *events;
 
-/*!
- @abstract      Indicates whether text of event is visible if visible rect of event is changed (e.g. because of scrolling).
- @discussion    Affects display.
- */
 @property (nonatomic) BOOL keepsTextOfEventsVisible;
+
+/*!
+ @abstract  Returns actual hour range of events.
+ @result    Hour range of events or WLHourRangeZero if no events are specified.
+ */
+@property (readonly) WLHourRange hourRangeOfEvents;
 
 /*!
  @abstract      Returns maximum number of horizontal adjacent events.
@@ -56,17 +48,13 @@
  */
 - (NSUInteger)maximumNumberOfColumns;
 
-/*!
- @abstract  Returns actual hour range of events.
- @result    Returns WLHourRangeZero if no events are specified.
- */
-- (WLHourRange)hourRangeOfEvents;
-
 - (CGFloat)preferredFrameWidth;
 
 /*!
- @abstract  Returns extent below last hour depending on timeRuler settings.
- @see       timeRuler
+ @abstract      Returns extent below end of hourRangeOfEvents.
+ @discussion    If calculated height of event is less than suggested minimum visible height, it will be extended.
+ The number of points which exceed its calculated bounds is called extent.
+ Users of WLCalendarDayEventsLayer are interested only in largest extent below end of hourRangeOfEvents.
  */
 - (CGFloat)extent;
 
@@ -81,18 +69,53 @@
         shouldBePlacedWithinLayerHeight:(out CGFloat *)outLayerHeight;
 
 
-- (WLCalendarEventLayer *)_setupEventLayer;
-
-- (void)_updateEventLayer:(WLCalendarEventLayer *)aLayer withEvent:(id)anEvent;
-
 - (NSUInteger)_indexForInsertionOfEventLayerWithEvent:(id)anEvent;
 
 - (void)_buildEventsLayoutTreeIfNeeded;
 
 - (void)_buildEventsLayoutTree;
 
-- (WLHourRange)_hourRangeOfEventLayer:(WLCalendarEventLayer *)aLayer;
+@end
 
-- (CGRect)_yAndHeightOfEventLayer:(WLCalendarEventLayer *)aLayer;
+
+typedef struct _WLSegment
+{
+    CGFloat location;
+    CGFloat length;
+} WLSegment;
+
+
+NS_INLINE CGFloat WLSegmentGetMinLocation(WLSegment aSegment)
+{
+    return aSegment.location;
+}
+
+
+NS_INLINE CGFloat WLSegmentGetMaxLocation(WLSegment aSegment)
+{
+    return aSegment.location + aSegment.length;
+}
+
+
+@interface WLCalendarEventLayer (WLCalendarDayEventsLayer)
+
+@property (nonatomic, retain) id dayEvent;
+
+@property (nonatomic) NSUInteger numberOfColumnsToSkip;
+
+@property (nonatomic) WLHourRange hourRange;
+
++ (WLCalendarEventLayer *)makeDayEventLayer;
+
+- (WLSegment)segmentOnTimeRuler:(NSObject<WLCalendarTimeRuler> *)aTimeRuler;
+
+@end
+
+
+@interface NSDictionary (WLCalendarDayEventsLayer)
+
++ (NSDictionary *)WL_dayEventTitleAttributes;
+
++ (NSDictionary *)WL_dayEventLocationAttributes;
 
 @end
