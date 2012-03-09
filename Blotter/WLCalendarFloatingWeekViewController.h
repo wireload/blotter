@@ -16,9 +16,17 @@ typedef enum
 } WLCalendarWeekViewMode;
 
 
+typedef enum
+{
+    WLCalendarWeekViewWeekdayTitleFormat,
+    WLCalendarWeekViewWeekdayAndMonthdayTitleFormat
+} WLCalendarWeekViewTitleFormat;
+
+
 @interface WLCalendarFloatingWeekViewController : WLCalendarWeekViewController {
     WLCalendarWeekViewMode mode;
     NSInteger weeksOffset;
+    WLCalendarWeekViewTitleFormat titleFormat;
 }
 
 /*!
@@ -37,6 +45,11 @@ typedef enum
 @property (nonatomic, readonly) BOOL canShowCurrentWeek;
 
 @property (nonatomic, readonly) BOOL canShowPreviousWeek;
+
+/*!
+ @discussion    Default value is WLCalendarWeekViewWeekdayTitleFormat.
+ */
+@property (nonatomic) WLCalendarWeekViewTitleFormat titleFormat;
 
 - (IBAction)showNextWeek:(id)aSender;
 

@@ -48,7 +48,7 @@ const NSSize BLMinimumSize = {280, 215};
         [_weekViewController setRepresentedObject:[WLCalendarController sharedController]];
         [_weekViewController bind:@"mode" toObject:defaults withKeyPath:@"RollingCalendar" options:nil];
         [_weekViewController bind:@"titleFormat" toObject:defaults withKeyPath:@"PerDayDate" options:nil];
-        _weekViewController.highlightWeekends = YES;
+        _weekViewController.highlightsWeekends = YES;
 
         _rightNowViewController = [[WLCalendarRightNowViewController alloc] init];
         [_rightNowViewController setRepresentedObject:[WLCalendarController sharedController]];
@@ -164,7 +164,7 @@ const NSSize BLMinimumSize = {280, 215};
 - (BOOL)isCurrentWeekShowed
 {
     NSParameterAssert(_isWindowShowed);
-    
+
     return _weekViewController.weeksOffset == 0;
 }
 

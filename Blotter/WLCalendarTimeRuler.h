@@ -20,11 +20,20 @@
  */
 - (WLHourRange)hourRange;
 
-- (WLSegmentRange)segmentForHourRange:(WLHourRange)aHourRange;
+/*!
+ @abstract  Returns location of aHour on time ruler.
+ */
+- (CGFloat)locationForHour:(CGFloat)aHour;
 
-- (CGFloat)positionForHour:(CGFloat)aHour;
+/*!
+ @abstract  Returns length of aHourRange on time ruler.
+ */
+- (CGFloat)lengthForHourRange:(WLHourRange)aHourRange;
 
-- (CGFloat)heightForHourRange:(WLHourRange)aHourRange;
+/*!
+ @abstract  Returns localized marker for integer part of aHour.
+ */
+- (NSString *)markerForHour:(NSUInteger)aHour;
 
 /*!
  @abstract      Converts a given date into hour.
@@ -33,7 +42,5 @@
  @result        Min and Max values MUST lie within hourRange.
  */
 - (CGFloat)hourForDate:(NSDate *)aDate;
-
-- (NSString *)markerForHour:(CGFloat)aHour;
 
 @end

@@ -21,8 +21,8 @@
     if (self != nil)
     {
         _sortedMarkerLayers = [[NSMutableArray alloc] init];
-        _shouldUpdatePreferredFrameWidthCache = YES;
-        _shouldUpdatePreferredMaximumHeightOfMarker = YES;
+        _needsUpdatePreferredFrameWidthCache = YES;
+        _needsUpdatePreferredMaximumHeightOfMarker = YES;
     }
     return self;
 }
@@ -83,11 +83,11 @@
                 CFRelease(p);
             });
             l.marker = [[[NSAttributedString alloc] initWithString:marker attributes:attributes] autorelease];
-            _shouldUpdatePreferredFrameWidthCache = YES;
+            _needsUpdatePreferredFrameWidthCache = YES;
         }
     }];
 
-    _shouldUpdatePreferredMaximumHeightOfMarker = YES;
+    _needsUpdatePreferredMaximumHeightOfMarker = YES;
 }
 
 
@@ -98,12 +98,12 @@
     if ([_sortedMarkerLayers count] == 0)
         return 0.0;
 
-    if (_shouldUpdatePreferredMaximumHeightOfMarker)
+    if (_needsUpdatePreferredMaximumHeightOfMarker)
     {
         _cachedMaximumHeightOfMarker = 0.0;
         for (CALayer *l in _sortedMarkerLayers)
             _cachedMaximumHeightOfMarker = fmax(_cachedMaximumHeightOfMarker, [l preferredFrameSize].height);
-        _shouldUpdatePreferredMaximumHeightOfMarker = NO;
+        _needsUpdatePreferredMaximumHeightOfMarker = NO;
     }
     return _cachedMaximumHeightOfMarker;
 }
@@ -113,12 +113,12 @@
     if ([_sortedMarkerLayers count] == 0)
         return 0.0;
 
-    if (_shouldUpdatePreferredFrameWidthCache)
+    if (_needsUpdatePreferredFrameWidthCache)
     {
         _cachedPreferredFrameWidth = 0.0;
         for (CALayer *l in _sortedMarkerLayers)
             _cachedPreferredFrameWidth = fmax(_cachedPreferredFrameWidth, [l preferredFrameSize].width);
-        _shouldUpdatePreferredFrameWidthCache = NO;
+        _needsUpdatePreferredFrameWidthCache = NO;
     }
     return _cachedPreferredFrameWidth;
 }
@@ -131,7 +131,7 @@
     if ([_sortedMarkerLayers count] == 0)
         return CGSizeZero;
 
-    CGFloat h = [self.timeRuler originOffset] + [self.timeRuler heightForHourRange:[self.timeRuler hourRange]];
+    CGFloat h = [self.timeRuler originOffset] + [self.timeRuler lengthForHourRange:[self.timeRuler hourRange]];
     return CGSizeMake([self preferredFrameWidth], h);
 }
 
@@ -150,7 +150,7 @@
         {
             WLCalendarTimeRulerMarkerLayer *hourMarker = [_sortedMarkerLayers objectAtIndex:anIndex];
             CGSize size = [hourMarker preferredFrameSize];
-            CGFloat hourPosition = [self.timeRuler positionForHour:aMatchedValue];
+            CGFloat hourPosition = [self.timeRuler locationForHour:aMatchedValue];
             hourMarker.frame = CGRectIntegral(CGRectMake(0.0,
                                                          hourPosition - size.height / 2.0,
                                                          self.bounds.size.width,
@@ -161,9 +161,17 @@
             {
                 CGRect intersection = CGRectIntersection(self.visibleRect, hourMarker.frame);
                 if (CGRectGetMinX(self.visibleRect) > CGRectGetMinX(hourMarker.frame))
-                    hourMarker.frame = CGRectOffset(hourMarker.frame, 0.0, -CGRectGetHeight(intersection));
+                {
+                    hourMarker.frame = CGRectOffset(hourMarker.frame,
+                                                    0.0,
+                                                    -CGRectGetHeight(intersection));
+                }
                 else
-                    hourMarker.frame = CGRectOffset(hourMarker.frame, 0.0, CGRectGetHeight(intersection));
+                {
+                    hourMarker.frame = CGRectOffset(hourMarker.frame,
+                                                    0.0,
+                                                    CGRectGetHeight(intersection));
+                }
             }
         }
         else

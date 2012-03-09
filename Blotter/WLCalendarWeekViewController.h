@@ -12,16 +12,8 @@
 #import "WLCalendarWeekView.h"
 
 
-typedef enum
-{
-    WLCalendarWeekViewWeekdayTitleFormat,
-    WLCalendarWeekViewWeekdayAndMonthdayTitleFormat
-} WLCalendarWeekViewTitleFormat;
-
-
 @interface WLCalendarWeekViewController : NSViewController <WLCalendarWeekViewDataSource> {
-    WLCalendarWeekViewTitleFormat titleFormat;
-    BOOL highlightWeekends;
+    BOOL highlightsWeekends;
     BOOL isViewLoaded;
 
     NSCache *_cache;
@@ -32,14 +24,9 @@ typedef enum
 }
 
 /*!
- @discussion    Default value is WLCalendarWeekViewWeekdayTitleFormat.
- */
-@property (nonatomic) WLCalendarWeekViewTitleFormat titleFormat;
-
-/*!
  @discussion    Default value is NO.
  */
-@property (nonatomic) BOOL highlightWeekends;
+@property (nonatomic) BOOL highlightsWeekends;
 
 /*!
  @abstract  Returns YES if view is loaded. Otherwise NO.
@@ -87,13 +74,9 @@ typedef enum
 
 @property (nonatomic, retain) NSDateFormatter *_dateFormatter;
 
-@property (nonatomic, retain) NSString *_columnTitleFormat;
-
 @property (nonatomic, retain) NSString *_timeFormat;
 
-/*!
- @abstract  Reloads data if there are only updated events.
- */
+
 - (void)_calEventsDidChange:(NSNotification *)aNotification;
 
 @end

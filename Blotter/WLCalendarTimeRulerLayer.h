@@ -14,8 +14,8 @@
 
 @interface WLCalendarTimeRulerLayer : CALayer {
     NSMutableArray *_sortedMarkerLayers;
-    BOOL _shouldUpdatePreferredFrameWidthCache;
-    BOOL _shouldUpdatePreferredMaximumHeightOfMarker;
+    BOOL _needsUpdatePreferredFrameWidthCache;
+    BOOL _needsUpdatePreferredMaximumHeightOfMarker;
     CGFloat _cachedPreferredFrameWidth;
     CGFloat _cachedMaximumHeightOfMarker;
 }

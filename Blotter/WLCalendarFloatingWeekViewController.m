@@ -18,6 +18,7 @@
 @dynamic canShowNextWeek;
 @dynamic canShowCurrentWeek;
 @dynamic canShowPreviousWeek;
+@synthesize titleFormat;
 
 - (void)setMode:(WLCalendarWeekViewMode)newMode
 {
@@ -48,7 +49,7 @@
                hideDays:MIN(positiveDaysBetweenDates, [v numberOfColumns])
               direction:(daysBetweenDates > 0) ? WLRightToLeftDirection : WLLeftToRightDirection
                animated:YES];
-            [v setIndexOfHighlightedColumn:[self indexOfColumnForToday]];
+            [v updateHighlightsTitleOfColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [v numberOfColumns])] animated:YES];
             [CATransaction commit];
         }
     }
@@ -72,9 +73,24 @@
                hideDays:[v numberOfColumns]
               direction:(diff > 0) ? WLRightToLeftDirection : WLLeftToRightDirection
                animated:YES];
-            [v setIndexOfHighlightedColumn:[self indexOfColumnForToday]];
             v.showsTimeIndicator = (weeksOffset == 0);
+            [v updateHighlightsTitleOfColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [v numberOfColumns])] animated:YES];
             [CATransaction commit];
+        }
+    }
+}
+
+- (void)setTitleFormat:(WLCalendarWeekViewTitleFormat)newFormat
+{
+    NSParameterAssert([self representedObject] != nil);
+
+    if (newFormat != titleFormat)
+    {
+        titleFormat = newFormat;
+        if (self.isViewLoaded)
+        {
+            WLCalendarWeekView *v = [self view];
+            [v updateTitleOfColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [v numberOfColumns])] animated:NO];
         }
     }
 }
@@ -100,6 +116,11 @@
 }
 
 + (BOOL)automaticallyNotifiesObserversOfMode
+{
+    return NO;
+}
+
++ (BOOL)automaticallyNotifiesObserversOfTitleFormat
 {
     return NO;
 }
@@ -147,8 +168,6 @@
 {
     [super viewWillSetupLayers:aView];
     aView.fitsDayEvents = YES;
-    aView.indexOfHighlightedColumn = [self indexOfColumnForToday];
-    aView.showsDayColumnTitle = YES;
 }
 
 - (NSDate *)firstColumnDate
@@ -156,13 +175,13 @@
     NSParameterAssert([self representedObject] != nil);
 
     NSCalendar *calendar = [[self representedObject] calendar];
-    NSDateComponents *weekComponents = [[NSDateComponents alloc] init];
+    NSDateComponents *weekOffsetComponents = [[NSDateComponents alloc] init];
     if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-        [weekComponents setWeek:self.weeksOffset];
+        [weekOffsetComponents setWeek:self.weeksOffset];
     else
-        [weekComponents setWeekOfMonth:self.weeksOffset];
-    NSDate *effectiveRepresentedDate = [calendar dateByAddingComponents:weekComponents toDate:[self representedObject].date options:0];
-    [weekComponents release];
+        [weekOffsetComponents setWeekOfMonth:self.weeksOffset];
+    NSDate *effectiveRepresentedDate = [calendar dateByAddingComponents:weekOffsetComponents toDate:[self representedObject].date options:0];
+    [weekOffsetComponents release];
 
     switch (self.mode) {
         case WLCalendarWeekViewDayMode:
@@ -203,7 +222,16 @@
         {
             NSCalendar *calendar = [[self representedObject] calendar];
             NSDateComponents *firstColumnDateComponents = [calendar components:NSWeekdayCalendarUnit fromDate:[self firstColumnDate]];
-            NSDateComponents *todayComponents = [calendar components:NSWeekdayCalendarUnit fromDate:[[self representedObject] date]];
+            NSDateComponents *weekOffsetComponents = [[NSDateComponents alloc] init];
+            if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
+                [weekOffsetComponents setWeek:self.weeksOffset];
+            else
+                [weekOffsetComponents setWeekOfMonth:self.weeksOffset];
+            NSDateComponents *todayComponents = [calendar components:NSWeekdayCalendarUnit
+                                                            fromDate:[calendar dateByAddingComponents:weekOffsetComponents
+                                                                                               toDate:[[self representedObject] date]
+                                                                                              options:0]];
+            [weekOffsetComponents release];
             NSRange weekdaysRange = NSMakeRange(NSNotFound, 0);
             if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
                 weekdaysRange = [calendar rangeOfUnit:NSWeekdayCalendarUnit inUnit:NSWeekCalendarUnit forDate:[[self representedObject] date]];
@@ -308,7 +336,6 @@
     }
 }
 
-
 - (NSUInteger)numberOfColumnsInWeekView:(WLCalendarWeekView *)aWeekView
 {
     NSParameterAssert([self representedObject] != nil);
@@ -328,6 +355,25 @@
         case WLCalendarWeekViewDayMode:
             return [super numberOfColumnsInWeekView:aWeekView];
     }
+}
+
+- (NSString *)weekView:(WLCalendarWeekView *)aWeekView titleForColumnAtIndex:(NSUInteger)anIndex
+{
+    NSParameterAssert(_columnsData != nil);
+    NSString *f = nil;
+    NSCalendar *calendar = [[self representedObject] calendar];
+    if (titleFormat == WLCalendarWeekViewWeekdayAndMonthdayTitleFormat)
+        f = [NSDateFormatter dateFormatFromTemplate:@"eeedMMM" options:0 locale:[calendar locale]];
+    else
+        f = [NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:[calendar locale]];
+    [self._dateFormatter setDateFormat:f];
+    WLDateRange *columnDateRange = [self dateRangeForColumnAtIndex:anIndex];
+    return [self._dateFormatter stringFromDate:columnDateRange.startDate];
+}
+
+- (BOOL)weekView:(WLCalendarWeekView *)aWeekView highlightsTitleForColumnAtIndex:(NSUInteger)anIndex
+{
+    return anIndex == [self indexOfColumnForToday];
 }
 
 @end

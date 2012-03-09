@@ -12,5 +12,13 @@
 #endif
 
 #ifndef NSAppKitVersionNumber10_6
-#define NSAppKitVersionNumber10_6 1038
+    #define NSAppKitVersionNumber10_6 1038
+#endif
+
+#ifndef CGFLOAT_EPSILON
+    #if CGFLOAT_IS_DOUBLE
+        #define CGFLOAT_EPSILON DBL_EPSILON
+    #else
+        #define CGFLOAT_EPSILON FLT_EPSILON
+    #endif
 #endif

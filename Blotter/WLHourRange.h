@@ -16,6 +16,11 @@ typedef struct
 } WLHourRange;
 
 
+extern const WLHourRange WLHourRangeZero;
+
+extern const WLHourRange WLHourRangeInvalid;
+
+
 NS_INLINE WLHourRange WLHourRangeMake(CGFloat aStartHour, CGFloat anEndHour)
 {
     WLHourRange h = {
@@ -24,11 +29,6 @@ NS_INLINE WLHourRange WLHourRangeMake(CGFloat aStartHour, CGFloat anEndHour)
     };
     return h;
 }
-
-
-extern const WLHourRange WLHourRangeZero;
-
-extern const WLHourRange WLHourRangeInvalid;
 
 
 NS_INLINE BOOL WLHourRangeEqualToHourRange(WLHourRange aHourRange, WLHourRange bHourRange)

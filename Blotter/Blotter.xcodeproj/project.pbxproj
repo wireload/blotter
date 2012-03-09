@@ -138,6 +138,7 @@
 		E2EB28D0146D8ED900E975F6 /* Blotter Preferences.preferencePane in Copy Blotter Preferences */ = {isa = PBXBuildFile; fileRef = E2EB289C146D8E1700E975F6 /* Blotter Preferences.preferencePane */; };
 		E2F112DD13E6E263001C2B7B /* WLCalendarWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F112DC13E6E263001C2B7B /* WLCalendarWindow.m */; };
 		E2F1133D13E70B4F001C2B7B /* WLCalendarWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F1133C13E70B4F001C2B7B /* WLCalendarWindowController.m */; };
+		E2F8AB2115079E56006239C1 /* WLCalendarDayEventsBackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F8AB2015079E56006239C1 /* WLCalendarDayEventsBackgroundLayer.m */; };
 		E2FCE09D133F9264006E713F /* WLGlassHudDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FCE09C133F9264006E713F /* WLGlassHudDatePicker.m */; };
 		E2FCE09D133F9264006E7141 /* WLCalendarTimeIndicatorLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FCE09D133F9264006E7140 /* WLCalendarTimeIndicatorLayer.m */; };
 /* End PBXBuildFile section */
@@ -424,6 +425,8 @@
 		E2F112DC13E6E263001C2B7B /* WLCalendarWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindow.m; sourceTree = "<group>"; };
 		E2F1133B13E70B4F001C2B7B /* WLCalendarWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowController.h; sourceTree = "<group>"; };
 		E2F1133C13E70B4F001C2B7B /* WLCalendarWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindowController.m; sourceTree = "<group>"; };
+		E2F8AB1F15079E56006239C1 /* WLCalendarDayEventsBackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarDayEventsBackgroundLayer.h; sourceTree = "<group>"; };
+		E2F8AB2015079E56006239C1 /* WLCalendarDayEventsBackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarDayEventsBackgroundLayer.m; sourceTree = "<group>"; };
 		E2FCE09B133F9264006E713F /* WLGlassHudDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudDatePicker.h; sourceTree = "<group>"; };
 		E2FCE09C133F9264006E713F /* WLGlassHudDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudDatePicker.m; sourceTree = "<group>"; };
 		E2FCE09D133F9264006E7140 /* WLCalendarTimeIndicatorLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarTimeIndicatorLayer.m; sourceTree = "<group>"; };
@@ -597,6 +600,8 @@
 				E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */,
 				E286C00114068703008C0CDB /* NSFont+WLCalendar.h */,
 				E286C00214068703008C0CDB /* NSFont+WLCalendar.m */,
+				E2F8AB1F15079E56006239C1 /* WLCalendarDayEventsBackgroundLayer.h */,
+				E2F8AB2015079E56006239C1 /* WLCalendarDayEventsBackgroundLayer.m */,
 			);
 			name = WLCalendar;
 			sourceTree = "<group>";
@@ -1006,6 +1011,7 @@
 				E28F83F514B451A9008458C1 /* WLCalendarRightNowViewController.m in Sources */,
 				E28F83FA14B454B7008458C1 /* WLCalendarFloatingWeekViewController.m in Sources */,
 				E234BF7E14DAFADF00AB2262 /* WLCalendarTimeRulerMarkerLayer.m in Sources */,
+				E2F8AB2115079E56006239C1 /* WLCalendarDayEventsBackgroundLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

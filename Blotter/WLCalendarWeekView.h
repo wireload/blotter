@@ -15,6 +15,7 @@
 #import "WLCalendarDayEventsLayer.h"
 #import "WLCalendarAllDayEventsLayer.h"
 #import "WLCalendarTimeIndicatorLayer.h"
+#import "WLCalendarDayEventsBackgroundLayer.h"
 #import "WLHourRange.h"
 
 
@@ -33,23 +34,28 @@ typedef enum
     CGFloat heightOfAllDayPartOfColumn;
     BOOL showsTimeIndicator;
     BOOL fitsDayEvents;
-    NSUInteger indexOfHighlightedColumn;
     BOOL showsAllDayEvents;
-    BOOL showsDayColumnTitle;
     WLHourRange alwaysVisibleHourRange;
-    NSRect columnTitleFrame;
-    BOOL needsUpdateColumnTitleFrame;
-    WLHourRange visibleHourRange;
-    BOOL needsUpdateVisibleHourRange;
+    BOOL needsUpdateHoursLengthAndPositions;
 
     CGFloat _hour;
     NSUInteger _numberOfActiveShowDaysTransactions;
+
+    // MUST be >= 24
+    // Sizes MUST be equal
+    CGFloat _lengthOfHours[32]; // extra hours for safety
+    CGFloat _locationOfHours[32]; // extra hours for safety
 }
 
 @property (assign) NSObject<WLCalendarWeekViewDataSource> *dataSource;
 
 /*!
- @discussion    Default value is 114.0f.
+ @discussion Default value is YES.
+ */
+@property (nonatomic) BOOL showsAllDayEvents;
+
+/*!
+ @discussion    Default value is 114.
  */
 @property (nonatomic) CGFloat heightOfAllDayPartOfColumn;
 
@@ -66,24 +72,8 @@ typedef enum
 @property (nonatomic) BOOL fitsDayEvents;
 
 /*!
- @discussion    Pass NSNotFound if you want no columns to be highlighted.
- Default value is NSNotFound
- */
-@property (nonatomic) NSUInteger indexOfHighlightedColumn;
-
-/*!
- @discussion Default value is YES.
- */
-@property (nonatomic) BOOL showsAllDayEvents;
-
-/*!
- @discussion Default value is YES.
- */
-@property (nonatomic) BOOL showsDayColumnTitle;
-
-/*!
  @abstract      Returns range of always visible hours when shouldFitAllDayEvents is set to YES.
- @discussion    Default value is [09:00, 17:00].
+ @discussion    Default value is [9.0, 17.0].
  Affects layout.
  */
 @property (nonatomic) WLHourRange alwaysVisibleHourRange;
@@ -95,6 +85,8 @@ typedef enum
 - (void)updateEventsOfColumnsAtIndexes:(NSIndexSet *)anIndexSet animated:(BOOL)isAnimated;
 
 - (void)updateTitleOfColumnsAtIndexes:(NSIndexSet *)anIndexSet animated:(BOOL)isAnimated;
+
+- (void)updateHighlightsTitleOfColumnsAtIndexes:(NSIndexSet *)anIndexSet animated:(BOOL)isAnimated;
 
 - (void)updateColorOfColumnsAtIndexes:(NSIndexSet *)anIndexSet animated:(BOOL)isAnimated;
 
@@ -120,33 +112,22 @@ typedef enum
  */
 - (WLHourRange)visibleHourRange;
 
-- (BOOL)needsUpdateVisibleHourRange;
+- (BOOL)needsUpdateHoursLengthAndLocation;
 
-/*!
- @discussion    Automatically sent when:
- - Events are chaned
- - alwaysVisibleHourRange is changed
- @see   alwaysVisibleHourRange
- @see   -_updateEventsOfColumnAtIndex:
- */
-- (void)setNeedsUpdateVisibleHourRange;
+- (void)setNeedsUpdateHoursLengthAndLocation;
 
-- (void)_updateColumnsAtIndexes:(NSIndexSet *)anIndexSet;
+- (void)updateHoursLengthAndLocationIfNeeded;
+
 
 - (void)_updateEventsOfColumnAtIndex:(NSUInteger)anIndex;
 
 - (void)_updateTitleOfColumnAtIndex:(NSUInteger)anIndex;
 
+- (void)_updateHighlightsTitleOfColumnAtIndex:(NSUInteger)anIndex;
+
 - (void)_updateColorOfColumnAtIndex:(NSUInteger)anIndex;
 
-- (NSDictionary *)_titleAttributesForColumnDayBackgroundLayer:(WLBlockLayer *)aLayer;
-
 - (NSArray *)_timeRulerMarkers;
-
-/*!
- @abstract  Updates the highlight property of day background layers and marks them needs display if needed.
- */
-- (void)_updateHighlightColumnTitle;
 
 @end
 
@@ -172,7 +153,7 @@ typedef enum
 
 - (WLBlockLayer *)setupAllDayBackgroundLayer;
 
-- (WLBlockLayer *)setupDayBackgroundLayer;
+- (WLCalendarDayEventsBackgroundLayer *)setupDayBackgroundLayer;
 
 - (WLCalendarAllDayEventsLayer *)setupAllDayLayer;
 
@@ -234,6 +215,8 @@ typedef enum
 
 - (void)layoutSublayersOfTimeRulerScrollLayer:(CAScrollLayer *)aTimeRulerScrollLayer;
 
+- (void)invalidateLayoutOfTimeRulerRootLayer:(CALayer *)aTimeRulerRootLayer;
+
 #pragma mark Event Layers
 
 - (void)layoutSublayersOfEventsRootLayer:(CALayer *)anEventsRootLayer;
@@ -242,7 +225,7 @@ typedef enum
 
 - (void)layoutSublayersOfAllDayBackgroundLayer:(WLBlockLayer *)anAllDayBackgroundLayer;
 
-- (void)layoutSublayersOfDayBackgroundLayer:(WLBlockLayer *)aDayBackgroundLayer;
+- (void)layoutSublayersOfDayBackgroundLayer:(WLCalendarDayEventsBackgroundLayer *)aDayBackgroundLayer;
 
 - (void)layoutSublayersOfDayScrollLayer:(CAScrollLayer *)aDayScrollLayer;
 
@@ -265,21 +248,6 @@ typedef enum
  */
 - (NSRect)columnTitleFrame;
 
-- (BOOL)needsUpdateColumnTitleFrame;
-
-/*!
- @discussion    Automatically sent when:
- - Height of all day events part is changed
- - Frame is changed
- - Title of any column is changed
- - Number of columns is changed
- @see   heightOfAllDayPartOfColumn
- @see   -layoutSublayersOfRootLayer:
- @see   -_updateTitleOfColumnAtIndex:
- @see   -setColumnRootLayers:
- */
-- (void)setNeedsUpdateColumnTitleFrame;
-
 - (CGPoint)scrollPoint;
 
 - (CGPoint)scrollPointToFocusOnDayEvents;
@@ -294,25 +262,25 @@ typedef enum
 
 @end
 
+#pragma mark -
 
 enum
 {
     WLCalendarWeekViewTitleDataUnit = 1 << 0,
     WLCalendarWeekViewEventsDataUnit = 1 << 1,
-    WLCalendarWeekViewColorDataUnit = 1 << 2
+    WLCalendarWeekViewColorDataUnit = 1 << 2,
+    WLCalendarWeekViewHighlightsTitleDataUnit = 1 << 3
 };
 
-#pragma mark -
 
 @protocol WLCalendarWeekViewDataSource
 
+/*!
+    @result     MUST lie within [0.0, 32.0).
+ */
 - (WLHourRange)hourRangeOfColumnsInWeekView:(WLCalendarWeekView *)aWeekView;
 
-- (NSString *)weekView:(WLCalendarWeekView *)aWeekView titleForColumnAtIndex:(NSUInteger)anIndex;
-
 - (NSArray *)weekView:(WLCalendarWeekView *)aWeekView eventsForColumnAtIndex:(NSUInteger)anIndex;
-
-- (CGColorRef)weekView:(WLCalendarWeekView *)aWeekView colorForColumnAtIndex:(NSUInteger)anIndex;
 
 - (CGFloat)weekView:(WLCalendarWeekView *)aWeekView convertDateToHour:(NSDate *)aDate;
 
@@ -328,5 +296,11 @@ enum
 - (void)weekView:(WLCalendarWeekView *)aWeekView willAskForData:(NSUInteger)dataUnits forColumnsAtIndexes:(NSIndexSet *)anIndexSet;
 
 - (void)weekViewDidAskForData:(WLCalendarWeekView *)aWeekView;
+
+- (NSString *)weekView:(WLCalendarWeekView *)aWeekView titleForColumnAtIndex:(NSUInteger)anIndex;
+
+- (BOOL)weekView:(WLCalendarWeekView *)aWeekView highlightsTitleForColumnAtIndex:(NSUInteger)anIndex;
+
+- (CGColorRef)weekView:(WLCalendarWeekView *)aWeekView colorForColumnAtIndex:(NSUInteger)anIndex;
 
 @end

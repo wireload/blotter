@@ -59,29 +59,15 @@ static NSString* const _WLEventsKey = @"events";
 
 
 #pragma mark Properties
-@synthesize titleFormat;
-@synthesize highlightWeekends;
+@synthesize highlightsWeekends;
 @synthesize isViewLoaded;
 @dynamic currentHour;
 
-- (void)setTitleFormat:(WLCalendarWeekViewTitleFormat)newFormat
+- (void)setHighlightsWeekends:(BOOL)newHighlight
 {
     NSParameterAssert([self representedObject] != nil);
 
-    self._columnTitleFormat = nil;
-    titleFormat = newFormat;
-    if (self.isViewLoaded)
-    {
-        WLCalendarWeekView *v = [self view];
-        [v updateTitleOfColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [v numberOfColumns])] animated:NO];
-    }
-}
-
-- (void)setHighlightWeekends:(BOOL)newHighlight
-{
-    NSParameterAssert([self representedObject] != nil);
-
-    highlightWeekends = newHighlight;
+    highlightsWeekends = newHighlight;
     if (self.isViewLoaded)
     {
         WLCalendarWeekView *v = [self view];
@@ -105,9 +91,10 @@ static NSString* const _WLEventsKey = @"events";
 
 + (NSSet *)keyPathsForValuesAffectingCurrentHour
 {
-    return [NSSet setWithObjects:@"self.representedObject.date",
-            @"self.representedObject.calendar",
-            nil];
+    return [NSSet setWithObjects:
+                      @"self.representedObject.date",
+                      @"self.representedObject.calendar",
+                      nil];
 }
 
 
@@ -161,7 +148,6 @@ static NSString* const _WLEventsKey = @"events";
 - (void)viewWillSetupLayers:(WLCalendarWeekView *)aView
 {
     aView.dataSource = self;
-    [aView setIndexOfHighlightedColumn:[self indexOfColumnForToday]];
     [aView scrollHour:[self currentHour] animated:NO];
 }
 
@@ -171,14 +157,6 @@ static NSString* const _WLEventsKey = @"events";
 
 
 #pragma mark WLCalendarWeekViewDataSource
-
-- (NSUInteger)numberOfHoursInWeekView:(WLCalendarWeekView *)aWeekView
-{
-    NSParameterAssert([self representedObject] != nil);
-
-    NSRange hoursRange = [[[self representedObject] calendar] maximumRangeOfUnit:NSHourCalendarUnit];
-    return hoursRange.length;
-}
 
 - (WLHourRange)hourRangeOfColumnsInWeekView:(WLCalendarWeekView *)aWeekView
 {
@@ -221,26 +199,23 @@ static NSString* const _WLEventsKey = @"events";
 }
 
 // -[CalCalendarStore eventsWithPredicate:] can take a relatively long time. This optimization allows us to call that method only once.
-- (void)weekView:(WLCalendarWeekView *)aWeekView willAskForData:(NSUInteger)dataUnits forColumnsAtIndexes:(NSIndexSet *)anIndexSet
+- (void)weekView:(WLCalendarWeekView *)aWeekView willAskForData:(NSUInteger)aDataUnits forColumnsAtIndexes:(NSIndexSet *)anIndexSet
 {
     _columnsData = [[NSMutableDictionary alloc] initWithCapacity:[anIndexSet count]];
 
+    if ((aDataUnits & WLCalendarWeekViewEventsDataUnit) == 0)
+        return;
+
     NSDate *firstColumnDate = [self firstColumnDate];
-
     NSArray *events = nil;
-    if (dataUnits & WLCalendarWeekViewEventsDataUnit)
+    if (aDataUnits & WLCalendarWeekViewEventsDataUnit)
         events = [self eventsForColumnsAtIndexes:anIndexSet firstDate:firstColumnDate];
-
-    NSDateFormatter *titleFormatter = self._dateFormatter;
-    NSCalendar *calendar = [[self representedObject] calendar];
-    [titleFormatter setCalendar:calendar];
-    [titleFormatter setDateFormat:self._columnTitleFormat];
     [anIndexSet enumerateIndexesUsingBlock:^(NSUInteger columnIdx, BOOL *stop)
     {
         WLDateRange *columnDateRange = [self dateRangeForColumnAtIndex:columnIdx];
         NSMutableDictionary *columnData = [NSMutableDictionary dictionary];
 
-        if (dataUnits & WLCalendarWeekViewEventsDataUnit)
+        if (aDataUnits & WLCalendarWeekViewEventsDataUnit)
         {
             NSMutableArray *columnEvents = [NSMutableArray array];
             for (CalEvent *event in events)
@@ -279,18 +254,8 @@ static NSString* const _WLEventsKey = @"events";
             }
             [columnData setObject:columnEvents forKey:_WLEventsKey];
         }
-
-        if (dataUnits & WLCalendarWeekViewTitleDataUnit)
-            [columnData setObject:[titleFormatter stringFromDate:columnDateRange.startDate] forKey:_WLTitleKey];
         [_columnsData setObject:columnData forKey:[NSNumber numberWithUnsignedInteger:columnIdx]];
     }];
-}
-
-- (NSString *)weekView:(WLCalendarWeekView *)aWeekView titleForColumnAtIndex:(NSUInteger)anIndex
-{
-    NSParameterAssert(_columnsData != nil);
-
-    return [(NSDictionary *)[_columnsData objectForKey:[NSNumber numberWithUnsignedInteger:anIndex]] objectForKey:_WLTitleKey];
 }
 
 - (NSArray *)weekView:(WLCalendarWeekView *)aWeekView eventsForColumnAtIndex:(NSUInteger)anIndex
@@ -309,7 +274,7 @@ static NSString* const _WLEventsKey = @"events";
 - (CGColorRef)weekView:(WLCalendarWeekView *)aWeekView colorForColumnAtIndex:(NSUInteger)anIndex
 {
     BOOL isWeekend = NO;
-    if (highlightWeekends)
+    if (highlightsWeekends)
     {
         NSCalendar *calendar = [[self representedObject] calendar];
         NSDate *columnDate = [[self dateRangeForColumnAtIndex:anIndex] startDate];
@@ -327,7 +292,6 @@ static NSString* const _WLEventsKey = @"events";
 
 #pragma mark Private
 @dynamic _dateFormatter;
-@dynamic _columnTitleFormat;
 @dynamic _timeFormat;
 
 - (NSDateFormatter *)_dateFormatter
@@ -344,27 +308,6 @@ static NSString* const _WLEventsKey = @"events";
 {
     NSParameterAssert(newDateFormatter == nil);
     [_cache removeObjectForKey:_WLDateFormatterCacheKey];
-}
-
-- (NSString *)_columnTitleFormat
-{
-    NSString *f = [[[_cache objectForKey:_WLColumnTitleFormatCacheKey] retain] autorelease];
-    if (f == nil)
-    {
-        NSCalendar *calendar = [[self representedObject] calendar];
-        if (titleFormat == WLCalendarWeekViewWeekdayAndMonthdayTitleFormat)
-            f = [NSDateFormatter dateFormatFromTemplate:@"eeedMMM" options:0 locale:[calendar locale]];
-        else
-            f = [NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:[calendar locale]];
-        [_cache setObject:f forKey:_WLColumnTitleFormatCacheKey];
-    }
-    return f;
-}
-
-- (void)set_columnTitleFormat:(NSString *)newFormat
-{
-    NSParameterAssert(newFormat == nil);
-    [_cache removeObjectForKey:_WLColumnTitleFormatCacheKey];
 }
 
 - (NSString *)_timeFormat
@@ -462,9 +405,7 @@ static NSString* const _WLEventsKey = @"events";
     {
         if ([aKeyPath isEqual:@"representedObject.calendar"])
         {
-            self._columnTitleFormat = nil;
             self._timeFormat = nil;
-            [[self view] setIndexOfHighlightedColumn:[self indexOfColumnForToday]];
         }
         [[self view] reloadDataAnimated:YES];
     }
@@ -473,7 +414,6 @@ static NSString* const _WLEventsKey = @"events";
         NSDate *old = [aChange objectForKey:NSKeyValueChangeOldKey];
         NSDate *new = [aChange objectForKey:NSKeyValueChangeNewKey];
         [self representedDateDidChangeFromDate:old toDate:new];
-        [[self view] setIndexOfHighlightedColumn:[self indexOfColumnForToday]];
     }
     else
         [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];

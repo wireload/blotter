@@ -20,11 +20,6 @@
     return 1;
 }
 
-- (NSUInteger)indexOfColumnForToday
-{
-    return 0;
-}
-
 - (NSDate *)firstColumnDate
 {
     NSParameterAssert([self representedObject] != nil);
@@ -41,25 +36,16 @@
     NSInteger daysBetweenDates = [[calendar components:NSDayCalendarUnit fromDate:startOfOldDate toDate:startOfNewDate options:0] day];
     WLCalendarWeekView *v = [self view];
     [v stopAnimations];
-    if (daysBetweenDates == 0)
-        [v scrollHour:[self currentHour] animated:YES];
-    else if (daysBetweenDates > 0)
-    {
+    if (daysBetweenDates > 0)
         [v showDays:1 hideDays:1 direction:WLRightToLeftDirection animated:YES];
-        [v scrollHour:[self currentHour] animated:YES];
-    }
-    else
-    {
+    else if (daysBetweenDates < 0)
         [v showDays:1 hideDays:1 direction:WLLeftToRightDirection animated:YES];
-        [v scrollHour:[self currentHour] animated:YES];
-    }
+    [v scrollHour:[self currentHour] animated:YES];
 }
 
 - (void)viewWillSetupLayers:(WLCalendarWeekView *)aView
 {
     [super viewWillSetupLayers:aView];
-    aView.fitsDayEvents = NO;
-    aView.showsDayColumnTitle = NO;
     aView.showsAllDayEvents = NO;
 }
 

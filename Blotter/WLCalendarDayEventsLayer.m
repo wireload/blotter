@@ -160,7 +160,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
 
 - (CGFloat)extent
 {
-    CGFloat availableHeight = [self.timeRuler positionForHour:[self.timeRuler hourRange].endHour];
+    CGFloat availableHeight = [self.timeRuler locationForHour:[self.timeRuler hourRange].endHour];
     CGFloat extent = 0.0;
     for (WLCalendarEventLayer *e in _sortedByStartDateEventLayers)
     {
@@ -598,8 +598,8 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
 - (CGRect)_yAndHeightOfEventLayer:(WLCalendarEventLayer *)aLayer
 {
     WLHourRange h = [self _hourRangeOfEventLayer:aLayer];
-    CGFloat minY = [self.timeRuler positionForHour:h.startHour];
-    CGFloat maxY = [self.timeRuler positionForHour:h.endHour];
+    CGFloat minY = [self.timeRuler locationForHour:h.startHour];
+    CGFloat maxY = [self.timeRuler locationForHour:h.endHour];
     CGFloat minimumHeight = [aLayer minimumHumanVisibleHeight];
     if (IS_LESS_F(maxY - minY, minimumHeight))
         maxY = minY + minimumHeight;
@@ -631,7 +631,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
 
     static const CGFloat CornerRadius = 5.0;
 
-    CGFloat lastHourY = [self.timeRuler positionForHour:[self.timeRuler hourRange].endHour];
+    CGFloat lastHourY = [self.timeRuler locationForHour:[self.timeRuler hourRange].endHour];
 
     // Layout rows.
     for (NSTreeNode *rowNode in [_eventsLayoutTreeRootNode childNodes])
@@ -699,7 +699,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
 - (CGSize)preferredFrameSize
 {
     return CGSizeMake([self preferredFrameWidth],
-                      ceilf([self.timeRuler originOffset] + [self.timeRuler heightForHourRange:[self.timeRuler hourRange]] + [self extent]));
+                      ceilf([self.timeRuler originOffset] + [self.timeRuler lengthForHourRange:[self.timeRuler hourRange]] + [self extent]));
 }
 
 #ifdef DEBUG_LAYERS
@@ -716,7 +716,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
     WLHourRange h = [self.timeRuler hourRange];
     for (NSUInteger i = h.startHour, numberOfHours = WLHourRangeLength(h); i < numberOfHours; ++i)
     {
-        CGFloat y = roundf(self.bounds.origin.y + [self.timeRuler positionForHour:i]);
+        CGFloat y = roundf(self.bounds.origin.y + [self.timeRuler locationForHour:i]);
         CGContextMoveToPoint(aContext, self.bounds.origin.x, y);
         CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), y);
     }
