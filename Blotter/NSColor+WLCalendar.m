@@ -117,7 +117,7 @@
 
 + (NSColor *)WL_defaultCalendarColorIfFrameworkFails
 {
-    return [NSColor blackColor];
+    return [NSColor blueColor];
 }
 
 @end
