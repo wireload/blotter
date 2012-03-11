@@ -14,8 +14,6 @@
  */
 @interface WLCalendarEventLayer : CALayer {
     CGFloat minimumHumanVisibleHeight;
-    NSAttributedString *_cachedMinimumHumanVisibleString;
-    CGFloat _cachedMinimumHumanVisibleWidth;
     NSAttributedString *_cachedTitle;
     CGSize _cachedPreferredSizeOfTitle;
     NSAttributedString *_cachedLocation;
@@ -48,6 +46,8 @@
  @abstract Returns height that layer should have to fit at least 1 line.
  */
 - (CGFloat)minimumHumanVisibleHeight;
+
+- (CGFloat)minimumHumanVisibleHeightWithWidth:(CGFloat)aWidth;
 
 
 - (void)_drawBackground:(CGContextRef)aContext;

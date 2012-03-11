@@ -6,8 +6,8 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
-#import <CalendarStore/CalendarStore.h>
 #import <WireloadClassesAndResources/WireloadClassesAndResources.h>
+#import <tgmath.h>
 #import "WLCalendarAllDayEventsLayer.h"
 #import "WLCalendarEventLayer.h"
 #import "NSFont+WLCalendar.h"
@@ -16,7 +16,10 @@
 static NSString* const _WLCalendarKey = @"calendar";
 
 
-static const CGFloat _WLTopMargin = 10.0f;
+static const CGFloat _WLTopMargin = 10.0;
+
+
+static const CGFloat _WLXPadding = 2.0;
 
 
 @implementation WLCalendarAllDayEventsLayer
@@ -169,46 +172,76 @@ static const CGFloat _WLTopMargin = 10.0f;
 
 - (void)layoutSublayers
 {
+    if ([_icalSortedEventLayers count] == 0 || self.bounds.size.width == 0.0 || self.bounds.size.height == 0.0)
+        return;
+
     // Origin is top left
-    CGFloat maxHeight = self.bounds.size.height - _WLTopMargin;
-    CGFloat offset = CGRectGetMinY(self.bounds) + _WLTopMargin;
-    CGFloat lastVisibleOffset = offset;
-    WLCalendarEventLayer *firstHiddenLayer = nil;
-    for (WLCalendarEventLayer *layer in _icalSortedEventLayers)
+    NSMutableArray *preferredHeightOfLayers = [NSMutableArray arrayWithCapacity:[_icalSortedEventLayers count]];
+    NSMutableArray *minimumHeightOfLayers = [NSMutableArray arrayWithCapacity:[_icalSortedEventLayers count]];
+    CGFloat totalPreferredHeight = CGRectGetMinY(self.bounds);
+    CGFloat totalMinimumHeight = CGRectGetMinY(self.bounds);
+    CGFloat totalVisibleHeight = CGRectGetHeight(self.bounds);
+    for (WLCalendarEventLayer *l in _icalSortedEventLayers)
     {
-        CGFloat height = MIN([layer preferredHeightWithWidth:self.bounds.size.width], maxHeight);
-        if (offset + height <= CGRectGetMaxY(self.bounds))
-        {
-            layer.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(self.bounds),
-                                                    offset,
-                                                    self.bounds.size.width,
-                                                    height));
-            layer.hidden = NO;
-        }
-        else
-        {
-            if (firstHiddenLayer == nil)
-            {
-                lastVisibleOffset = offset;
-                firstHiddenLayer = layer;
-            }
-            layer.hidden = YES;
-        }
-        offset += height + _WLTopMargin;
+        CGFloat preferredHeight = [l preferredHeightWithWidth:CGRectGetWidth(self.bounds) - _WLXPadding];
+        totalPreferredHeight += _WLTopMargin + preferredHeight;
+        [preferredHeightOfLayers addObject:[NSNumber numberWithDouble:preferredHeight]];
+
+        CGFloat minimumHeight = [l minimumHumanVisibleHeightWithWidth:CGRectGetWidth(self.bounds) - _WLXPadding];
+        totalMinimumHeight += _WLTopMargin + minimumHeight;
+        [minimumHeightOfLayers addObject:[NSNumber numberWithDouble:minimumHeight]];
     }
 
-    // If there is enough space to fit at least one line of the first hidden layer, show this layer.
-    if (firstHiddenLayer != nil)
+    if (totalVisibleHeight >= totalPreferredHeight)
     {
-        CGFloat minimumHeight = [firstHiddenLayer minimumHumanVisibleHeight];
-        if (CGRectGetMaxY(self.bounds) - lastVisibleOffset >= minimumHeight)
+        __block CGFloat offset = CGRectGetMinY(self.bounds) + _WLTopMargin;
+        [_icalSortedEventLayers enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger idx, BOOL *stop)
         {
-            firstHiddenLayer.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(self.bounds),
-                                                               lastVisibleOffset,
-                                                               self.bounds.size.width,
-                                                               CGRectGetMaxY(self.bounds) - lastVisibleOffset));
-            firstHiddenLayer.hidden = NO;
-        }
+            CGFloat preferredHeight = [[preferredHeightOfLayers objectAtIndex:idx] doubleValue];
+            l.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(self.bounds) + _WLXPadding / 2.0,
+                                                offset,
+                                                CGRectGetWidth(self.bounds) - _WLXPadding,
+                                                preferredHeight));
+            offset += _WLTopMargin + preferredHeight;
+        }];
+    }
+    else if (totalVisibleHeight >= totalMinimumHeight/* && totalVisibleHeight < totalPreferredHeight */)
+    {
+        __block CGFloat availableHeight = totalVisibleHeight - totalMinimumHeight;
+        __block CGFloat offset = CGRectGetMinY(self.bounds) + _WLTopMargin;
+        [_icalSortedEventLayers enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger idx, BOOL *stop)
+        {
+            CGFloat preferredHeight = [[preferredHeightOfLayers objectAtIndex:idx] doubleValue];
+            CGFloat minimumHeight = [[minimumHeightOfLayers objectAtIndex:idx] doubleValue];
+            CGFloat height = minimumHeight;
+            height += fmin(fdim(preferredHeight, minimumHeight), availableHeight);
+            availableHeight = fdim(availableHeight, fdim(preferredHeight, minimumHeight));
+            l.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(self.bounds) + _WLXPadding / 2.0,
+                                                offset,
+                                                CGRectGetWidth(self.bounds) - _WLXPadding,
+                                                height));
+            offset += _WLTopMargin + height;
+        }];
+
+    }
+    else/* ( totalVisibleHeight < totalMinimumHeight) */
+    {
+        __block CGFloat offset = CGRectGetMinY(self.bounds) + _WLTopMargin;
+        __block BOOL crossedMinimumHeight = NO;
+        [_icalSortedEventLayers enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger idx, BOOL *stop)
+        {
+            CGFloat minimumHeight = [[minimumHeightOfLayers objectAtIndex:idx] doubleValue];
+            if (!crossedMinimumHeight && (offset + minimumHeight) > totalVisibleHeight)
+            {
+                crossedMinimumHeight = YES;
+                offset = CGRectGetMinY(self.bounds) + totalVisibleHeight + _WLTopMargin;
+            }
+            l.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(self.bounds) + _WLXPadding / 2.0,
+                                                offset,
+                                                CGRectGetWidth(self.bounds) - _WLXPadding,
+                                                minimumHeight));
+            offset += _WLTopMargin + minimumHeight;
+        }];
     }
 }
 
@@ -218,7 +251,7 @@ static const CGFloat _WLTopMargin = 10.0f;
     for (WLCalendarEventLayer *layer in _icalSortedEventLayers)
     {
         CGSize layerSize = [layer preferredFrameSize];
-        preferredSize.width = MAX(preferredSize.width, layerSize.width);
+        preferredSize.width = MAX(preferredSize.width + _WLXPadding, layerSize.width + _WLXPadding);
         preferredSize.height += _WLTopMargin + layerSize.height;
     }
     return preferredSize;

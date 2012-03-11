@@ -27,6 +27,13 @@ const CGFloat _WLXPadding = 10.0;
     return self;
 }
 
+- (void)dealloc
+{
+    [_cachedLocation release];
+    [_cachedTitle release];
+    [super dealloc];
+}
+
 #pragma mark Properties
 @dynamic title;
 @dynamic location;
@@ -69,14 +76,13 @@ const CGFloat _WLXPadding = 10.0;
 - (CGFloat)minimumHumanVisibleHeight
 {
     NSAttributedString *visibleString = [self.title length] > 0 ? self.title : self.location;
-    if (_cachedMinimumHumanVisibleString != visibleString || _cachedMinimumHumanVisibleWidth != self.bounds.size.width)
-    {
-        _cachedMinimumHumanVisibleWidth = self.bounds.size.width;
-        _cachedMinimumHumanVisibleString = visibleString;
-        minimumHumanVisibleHeight = [_cachedMinimumHumanVisibleString WL_firstLineHeightWithWidth:_cachedMinimumHumanVisibleWidth - _WLXPadding];
-        minimumHumanVisibleHeight += _WLYPadding;
-    }
-    return minimumHumanVisibleHeight;
+    return [visibleString WL_firstLineHeightWithWidth:self.bounds.size.width - _WLXPadding] + _WLYPadding;
+}
+
+- (CGFloat)minimumHumanVisibleHeightWithWidth:(CGFloat)aWidth
+{
+    NSAttributedString *visibleString = [self.title length] > 0 ? self.title : self.location;
+    return [visibleString WL_firstLineHeightWithWidth:aWidth - _WLXPadding] + _WLYPadding;
 }
 
 
@@ -292,14 +298,16 @@ const CGFloat _WLXPadding = 10.0;
 {
     NSAssert(self.layoutManager == nil, @"You cannot use custom layout managers with this class");
 
-    if (_cachedTitle != self.title)
+    if (![_cachedTitle isEqualToAttributedString:self.title])
     {
-        _cachedTitle = self.title;
+        [_cachedTitle release];
+        _cachedTitle = [self.title retain];
         _cachedPreferredSizeOfTitle = [_cachedTitle WL_preferredSize];
     }
-    if (_cachedLocation != self.location)
+    if (![_cachedLocation isEqualToAttributedString:self.location])
     {
-        _cachedLocation = self.location;
+        [_cachedLocation release];
+        _cachedLocation = [self.location retain];
         _cachedPreferredSizeOfLocation = [self.location WL_preferredSize];
     }
     return CGSizeMake(fmax(_cachedPreferredSizeOfTitle.width, _cachedPreferredSizeOfLocation.width) + _WLXPadding,
