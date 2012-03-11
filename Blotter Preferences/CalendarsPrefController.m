@@ -9,6 +9,7 @@
 #import <CalendarStore/CalendarStore.h>
 #import "CalendarsPrefController.h"
 #import "WLColorCheckboxCell.h"
+#import "NSColor+WLCalendar.h"
 
 
 @implementation CalendarsPrefController
@@ -92,6 +93,8 @@
             calColor = [[c.calEventCalendars objectAtIndex:rowIndex] color];
         else
             calColor = [[c.calReminderCalendars objectAtIndex:rowIndex] color];
+        if (calColor == nil || (id)calColor == [NSNull null])
+            calColor = [NSColor WL_defaultCalendarColorIfFrameworkFails];
         [cell setButtonColor:calColor];
     }
 }

@@ -259,7 +259,7 @@ static const CGFloat _WLXPadding = 2.0;
         self.location = nil;
 
     NSColor *calendarColor = [[(CalEvent *)newEvent calendar] color];
-    if (calendarColor == NULL || calendarColor == [NSNull null])
+    if (calendarColor == NULL || (id)calendarColor == [NSNull null])
         calendarColor = [NSColor WL_defaultCalendarColorIfFrameworkFails];
 #ifdef DEBUG_LAYERS
     self.backgroundColor = [calendarColor WL_CGColor];

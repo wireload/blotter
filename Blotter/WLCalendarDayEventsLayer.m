@@ -746,8 +746,8 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
     }
     self.hourRange = h;
 
-    NSColor *calendarColor = [[newEvent calendar] color];
-    if (calendarColor == NULL || calendarColor == [NSNull null])
+    NSColor *calendarColor = [[(CalEvent *)newEvent calendar] color];
+    if (calendarColor == NULL || (id)calendarColor == [NSNull null])
         calendarColor = [NSColor WL_defaultCalendarColorIfFrameworkFails];
 #ifdef DEBUG_LAYERS
     self.backgroundColor = [calendarColor WL_CGColor];
