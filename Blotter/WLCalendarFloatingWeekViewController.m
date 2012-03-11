@@ -288,9 +288,11 @@
                     oldWeek = [[calendar components:NSWeekOfMonthCalendarUnit fromDate:anOldDate] weekOfMonth];
                     newWeek = [[calendar components:NSWeekOfMonthCalendarUnit fromDate:aNewDate] weekOfMonth];
                 }
-
                 if (oldWeek != newWeek)
+                {
                     [v showDays:[self numberOfColumnsInWeekView:v] hideDays:[v numberOfColumns] direction:WLRightToLeftDirection animated:YES];
+                    [v updateHighlightsTitleOfColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [v numberOfColumns])] animated:YES];
+                }
                 break;
             }
             case WLCalendarWeekViewDayMode:
@@ -298,6 +300,7 @@
                    hideDays:MIN((NSUInteger)daysBetweenDates, [v numberOfColumns])
                   direction:WLRightToLeftDirection
                    animated:YES];
+                [v updateHighlightsTitleOfColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [v numberOfColumns])] animated:YES];
                 break;
         }
         [v scrollHour:[self currentHour] animated:YES];
@@ -322,7 +325,10 @@
                 }
 
                 if (oldWeek != newWeek)
+                {
                     [v showDays:[self numberOfColumnsInWeekView:v] hideDays:[v numberOfColumns] direction:WLLeftToRightDirection animated:YES];
+                    [v updateHighlightsTitleOfColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [v numberOfColumns])] animated:YES];
+                }
                 break;
             }
             case WLCalendarWeekViewDayMode:
@@ -330,6 +336,7 @@
                    hideDays:MIN((NSUInteger)-daysBetweenDates, [v numberOfColumns])
                   direction:WLLeftToRightDirection
                    animated:YES];
+                [v updateHighlightsTitleOfColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [v numberOfColumns])] animated:YES];
                 break;
         }
         [v scrollHour:[self currentHour] animated:YES];
