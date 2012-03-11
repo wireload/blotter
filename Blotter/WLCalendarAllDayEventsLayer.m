@@ -13,7 +13,8 @@
 #import "NSFont+WLCalendar.h"
 #import "NSColor+WLCalendar.h"
 
-static NSString* const _WLCalendarKey = @"calendar";
+
+static NSString* const _WLEventKey = @"WLCalendarAllDayEventsLayer_event";
 
 
 static const CGFloat _WLTopMargin = 10.0;
@@ -68,14 +69,14 @@ static const CGFloat _WLXPadding = 2.0;
         if (isFound)
         {
             WLCalendarEventLayer *l = [_sortedByUIDEventLayers objectAtIndex:layerIdx];
-            [self _updateEventLayer:l withEvent:event];
+            l.allDayEvent = event;
             [_icalSortedEventLayers addObject:l];
             [sublayersToRemove removeObjectIdenticalTo:l];
         }
         else
         {
-            WLCalendarEventLayer *l = [self _setupEventLayer];
-            [self _updateEventLayer:l withEvent:event];
+            WLCalendarEventLayer *l = [WLCalendarEventLayer allDayEventLayer];
+            l.allDayEvent = event;
             [_sortedByUIDEventLayers insertObject:l atIndex:layerIdx];
             [_icalSortedEventLayers addObject:l];
             [self addSublayer:l];
@@ -126,45 +127,6 @@ static const CGFloat _WLXPadding = 2.0;
         }];
     }
     return idx;
-}
-
-- (WLCalendarEventLayer *)_setupEventLayer
-{
-    WLCalendarEventLayer *l = [WLCalendarEventLayer layer];
-    l.needsDisplayOnBoundsChange = YES;
-#ifndef DEBUG_LAYERS
-    l.contentsBackgroundOpacity = 0.45;
-#endif
-    return l;
-}
-
-- (void)_updateEventLayer:(WLCalendarEventLayer *)aLayer withEvent:(CalEvent *)anEvent
-{
-    aLayer.name = [anEvent uid];
-    NSMutableDictionary *attr = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                 (id)[[NSColor whiteColor] WL_CGColor], (id)kCTForegroundColorAttributeName,
-                                 (id)[NSFont WL_eventTitleFont],            (id)kCTFontAttributeName,
-                                 nil];
-    if ([[anEvent title] length])
-        aLayer.title = [[[NSAttributedString alloc] initWithString:[anEvent title] attributes:attr] autorelease];
-    else
-        aLayer.title = nil;
-
-
-    if ([[anEvent location] length])
-    {
-        [attr setObject:(id)[NSFont WL_eventLocationFont] forKey:(id)kCTFontAttributeName];
-        [attr setObject:(id)[[NSColor WL_eventLocationColor] WL_CGColor] forKey:(id)kCTForegroundColorAttributeName];
-
-        aLayer.location = [[[NSAttributedString alloc] initWithString:[anEvent location] attributes:attr] autorelease];
-    }
-    else
-        aLayer.location = nil;
-#ifdef DEBUG_LAYERS
-    aLayer.backgroundColor = [[(CalCalendar *)[anEvent calendar] color] WL_CGColor];
-#else
-    aLayer.contentsBackgroundColor = [[(CalCalendar *)[anEvent calendar] color] WL_CGColor];
-#endif
 }
 
 
@@ -256,5 +218,55 @@ static const CGFloat _WLXPadding = 2.0;
     }
     return preferredSize;
 }
+
+@end
+
+
+@implementation WLCalendarEventLayer (WLCalendarAllDayEventsLayer)
+
++ (WLCalendarEventLayer *)allDayEventLayer
+{
+    WLCalendarEventLayer *l = [WLCalendarEventLayer layer];
+    l.needsDisplayOnBoundsChange = YES;
+#ifndef DEBUG_LAYERS
+    l.contentsBackgroundOpacity = 0.45;
+#endif
+    return l;
+}
+
+
+#pragma mark Properties
+@dynamic allDayEvent;
+
+- (id)allDayEvent
+{
+    return [self valueForKey:_WLEventKey];
+}
+
+- (void)setAllDayEvent:(id)newEvent
+{
+    [self setValue:newEvent forKey:_WLEventKey];
+
+    self.name = [newEvent uid];
+    if ([[newEvent title] length] > 0)
+        self.title = [[[NSAttributedString alloc] initWithString:[newEvent title] attributes:[NSDictionary WL_eventTitleAttributes]] autorelease];
+    else
+        self.title = nil;
+
+    if ([[(CalEvent *)newEvent location] length] > 0)
+        self.location = [[[NSAttributedString alloc] initWithString:[(CalEvent *)newEvent location] attributes:[NSDictionary WL_eventLocationAttributes]] autorelease];
+    else
+        self.location = nil;
+
+    NSColor *calendarColor = [[(CalEvent *)newEvent calendar] color];
+    if (calendarColor == NULL || calendarColor == [NSNull null])
+        calendarColor = [NSColor WL_defaultCalendarColorIfFrameworkFails];
+#ifdef DEBUG_LAYERS
+    self.backgroundColor = [calendarColor WL_CGColor];
+#else
+    self.contentsBackgroundColor = [calendarColor WL_CGColor];
+#endif
+}
+
 
 @end

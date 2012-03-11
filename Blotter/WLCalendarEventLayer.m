@@ -10,6 +10,7 @@
 #include <tgmath.h>
 #import "WLCalendarEventLayer.h"
 #import "NSColor+WLCalendar.h"
+#import "NSFont+WLCalendar.h"
 
 
 const CGFloat _WLYPadding = 6.0;
@@ -312,6 +313,37 @@ const CGFloat _WLXPadding = 10.0;
     }
     return CGSizeMake(fmax(_cachedPreferredSizeOfTitle.width, _cachedPreferredSizeOfLocation.width) + _WLXPadding,
                       _cachedPreferredSizeOfTitle.height + _cachedPreferredSizeOfLocation.height + _WLYPadding);
+}
+
+@end
+
+
+@implementation NSDictionary (WLCalendarEventLayer)
+
++ (NSDictionary *)WL_eventTitleAttributes
+{
+    static dispatch_once_t onceToken;
+    static NSDictionary *TitleAttributes = nil;
+    dispatch_once(&onceToken, ^{
+        TitleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
+            (id)[[NSColor whiteColor] WL_CGColor], (id)kCTForegroundColorAttributeName,
+            (id)[NSFont WL_eventTitleFont],        (id)kCTFontAttributeName,
+            nil];
+    });
+    return TitleAttributes;
+}
+
++ (NSDictionary *)WL_eventLocationAttributes
+{
+    static dispatch_once_t onceToken;
+    static NSDictionary *LocationAttributes = nil;
+    dispatch_once(&onceToken, ^{
+        LocationAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
+            (id)[[NSColor WL_eventLocationColor] WL_CGColor], (id)kCTForegroundColorAttributeName,
+            (id)[NSFont WL_eventLocationFont],                (id)kCTFontAttributeName,
+            nil];
+    });
+    return LocationAttributes;
 }
 
 @end

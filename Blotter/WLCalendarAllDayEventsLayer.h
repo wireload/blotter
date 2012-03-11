@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
+#import "WLCalendarEventLayer.h"
 
 
 @class WLCalendarEventLayer;
@@ -23,10 +24,15 @@
 - (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth;
 
 
-- (WLCalendarEventLayer *)_setupEventLayer;
-
-- (void)_updateEventLayer:(WLCalendarEventLayer *)aLayer withEvent:(id)anEvent;
-
 - (NSUInteger)_indexOfEventLayerWithUID:(NSString *)anUID isFound:(out BOOL *)outIsFound;
+
+@end
+
+
+@interface WLCalendarEventLayer (WLCalendarAllDayEventsLayer)
+
++ (WLCalendarEventLayer *)allDayEventLayer;
+
+@property (nonatomic, retain) id allDayEvent;
 
 @end

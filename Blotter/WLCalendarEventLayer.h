@@ -57,3 +57,12 @@
 - (CGColorRef)_lineColor;
 
 @end
+
+
+@interface NSDictionary (WLCalendarEventLayer)
+
++ (NSDictionary *)WL_eventTitleAttributes;
+
++ (NSDictionary *)WL_eventLocationAttributes;
+
+@end

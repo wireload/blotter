@@ -105,17 +105,8 @@ NS_INLINE CGFloat WLSegmentGetMaxLocation(WLSegment aSegment)
 
 @property (nonatomic) WLHourRange hourRange;
 
-+ (WLCalendarEventLayer *)makeDayEventLayer;
++ (WLCalendarEventLayer *)dayEventLayer;
 
 - (WLSegment)segmentOnTimeRuler:(NSObject<WLCalendarTimeRuler> *)aTimeRuler;
-
-@end
-
-
-@interface NSDictionary (WLCalendarDayEventsLayer)
-
-+ (NSDictionary *)WL_dayEventTitleAttributes;
-
-+ (NSDictionary *)WL_dayEventLocationAttributes;
 
 @end

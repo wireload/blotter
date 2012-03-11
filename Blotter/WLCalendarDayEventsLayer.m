@@ -94,7 +94,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
         else
         {
             // Create new layer for the event.
-            layer = [WLCalendarEventLayer makeDayEventLayer];
+            layer = [WLCalendarEventLayer dayEventLayer];
             layer.keepsTextVisible = self.keepsTextOfEventsVisible;
             [self addSublayer:layer];
             layer.dayEvent = event;
@@ -689,7 +689,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
 
 @implementation WLCalendarEventLayer (WLCalendarDayEventsLayer)
 
-+ (WLCalendarEventLayer *)makeDayEventLayer
++ (WLCalendarEventLayer *)dayEventLayer
 {
     WLCalendarEventLayer *l = [WLCalendarEventLayer layer];
     l.needsDisplayOnBoundsChange = YES;
@@ -716,7 +716,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
     if ([[newEvent title] length] > 0)
     {
         self.title = [[[NSAttributedString alloc] initWithString:[newEvent title]
-        attributes:[NSDictionary WL_dayEventTitleAttributes]] autorelease];
+        attributes:[NSDictionary WL_eventTitleAttributes]] autorelease];
     }
     else
     self.title = nil;
@@ -724,7 +724,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
     if ([[(CalEvent *)newEvent location] length] > 0)
     {
         self.location = [[[NSAttributedString alloc] initWithString:[(CalEvent *)newEvent location]
-        attributes:[NSDictionary WL_dayEventLocationAttributes]] autorelease];
+        attributes:[NSDictionary WL_eventLocationAttributes]] autorelease];
     }
     else
     self.location = nil;
@@ -745,10 +745,14 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
         h.endHour = [timeRuler hourRange].endHour;
     }
     self.hourRange = h;
+
+    NSColor *calendarColor = [[newEvent calendar] color];
+    if (calendarColor == NULL || calendarColor == [NSNull null])
+        calendarColor = [NSColor WL_defaultCalendarColorIfFrameworkFails];
 #ifdef DEBUG_LAYERS
-    self.backgroundColor = [[[(CalEvent *)newEvent calendar] color] WL_CGColor];
+    self.backgroundColor = [calendarColor WL_CGColor];
 #else
-    self.contentsBackgroundColor = [[[(CalEvent *)newEvent calendar] color] WL_CGColor];
+    self.contentsBackgroundColor = [calendarColor WL_CGColor];
 #endif
 }
 
@@ -791,37 +795,6 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
     if (IS_LESS_CGFLOAT(endLocation - startLocation, minimumHeight))
         endLocation = startLocation + minimumHeight;
     return (WLSegment){startLocation, endLocation - startLocation};
-}
-
-@end
-
-
-@implementation NSDictionary (WLCalendarDayEventsLayer)
-
-+ (NSDictionary *)WL_dayEventTitleAttributes
-{
-    static dispatch_once_t onceToken;
-    static NSDictionary *TitleAttributes = nil;
-    dispatch_once(&onceToken, ^{
-        TitleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
-                           (id)[[NSColor whiteColor] WL_CGColor], (id)kCTForegroundColorAttributeName,
-                           (id)[NSFont WL_eventTitleFont],        (id)kCTFontAttributeName,
-                           nil];
-    });
-    return TitleAttributes;
-}
-
-+ (NSDictionary *)WL_dayEventLocationAttributes
-{
-    static dispatch_once_t onceToken;
-    static NSDictionary *LocationAttributes = nil;
-    dispatch_once(&onceToken, ^{
-        LocationAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
-                              (id)[[NSColor WL_eventLocationColor] WL_CGColor], (id)kCTForegroundColorAttributeName,
-                              (id)[NSFont WL_eventLocationFont],                (id)kCTFontAttributeName,
-                              nil];
-    });
-    return LocationAttributes;
 }
 
 @end
