@@ -1934,7 +1934,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                                                           aTimeIndicatorRootLayer.bounds.size.width,
                                                           preferredTimeIndicatorLayerSize.height));
     timeIndicatorLayer.position = CGPointMake(0.0,
-                                              [self positionForTimeIndicator]);
+                                              round([self positionForTimeIndicator]));
 }
 
 
