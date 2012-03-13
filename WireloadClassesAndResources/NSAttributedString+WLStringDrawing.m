@@ -19,8 +19,7 @@
     CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self);
     if (framesetter != NULL)
     {
-        CGMutablePathRef framePath = CGPathCreateMutable();
-        CGPathAddRect(framePath, NULL, aRect);
+        CGPathRef framePath = CGPathCreateWithRect(aRect, NULL);
         CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
         if (frame != NULL)
         {
@@ -40,6 +39,10 @@
                 {
                     CGPoint origin = lineOrigins[idx];
                     CGContextSetTextPosition(aContext, aRect.origin.x + origin.x, aRect.origin.y + origin.y);
+
+                    CGRect lineImageBounds = CTLineGetImageBounds((CTLineRef)line, aContext);
+                    if (fdim(CGRectGetWidth(aRect), origin.x) < CGRectGetWidth(lineImageBounds))
+                        return;
 
                     if (idx != numberOfLines - 1 || !shouldTruncateLastLine)
                         CTLineDraw((CTLineRef)line, aContext);
