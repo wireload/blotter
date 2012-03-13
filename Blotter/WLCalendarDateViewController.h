@@ -22,6 +22,8 @@
 - (void)reloadViewData;
 
 
-@property (nonatomic, retain) NSDateFormatter *_dateFormatter;
+@property (nonatomic, retain) NSDateFormatter *_monthAndYearDateFormatter;
+
+@property (nonatomic, retain) NSDateFormatter *_weekdayDateFormatter;
 
 @end
