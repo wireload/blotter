@@ -11,13 +11,22 @@
 
 @interface WLCalendarDayEventsBackgroundLayer : CALayer
 {
+    NSString *title;
+    BOOL isTitleHighlighted;
+    struct
+    {
+        CGSize _preferredFrameSizeOut;
+        CGSize _preferredFrameSizeWithinBoundingSizeOut;
+        CGSize _cachedBoundingSizeIn;
+    } _titleCache;
+    BOOL _needsUpdateTitleCache;
 }
 
-@property (copy) NSString *title;
+@property (nonatomic, copy) NSString *title;
 
 @property CGRect titleFrame;
 
-@property BOOL isTitleHighlighted;
+@property (nonatomic) BOOL isTitleHighlighted;
 
 - (CGSize)preferredTitleFrameSizeWithBoundingSize:(CGSize)aBoundingSize;
 

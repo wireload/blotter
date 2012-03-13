@@ -17,19 +17,69 @@ static const NSStringDrawingOptions _WLTitleDrawingOptions = NSStringDrawingUses
 
 @implementation WLCalendarDayEventsBackgroundLayer
 
+- (id)initWithLayer:(id)aLayer
+{
+    self = [super initWithLayer:aLayer];
+    if (self != nil)
+    {
+        title = [[aLayer title] copy];
+        isTitleHighlighted = [aLayer isTitleHighlighted];
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    [title release];
+    [super dealloc];
+}
+
 #pragma mark Properties
 @dynamic titleFrame;
-@dynamic title;
-@dynamic isTitleHighlighted;
+@synthesize title;
+@synthesize isTitleHighlighted;
+
+- (void)setTitle:(NSString *)newTitle
+{
+    NSString *tmp = [newTitle copy];
+    [title release];
+    title = tmp;
+    _needsUpdateTitleCache = YES;
+}
+
+- (void)setIsTitleHighlighted:(BOOL)newIsTitleHighlighted
+{
+    isTitleHighlighted = newIsTitleHighlighted;
+    _needsUpdateTitleCache = YES;
+}
 
 
 #pragma mark Methods
 
 - (CGSize)preferredTitleFrameSizeWithBoundingSize:(CGSize)aBoundingSize
 {
-    return NSSizeToCGSize([self.title boundingRectWithSize:NSSizeFromCGSize(aBoundingSize)
-                                                   options:_WLTitleDrawingOptions
-                                                attributes:self.isTitleHighlighted ? [NSDictionary WL_highlightedTitleAttributes] : [NSDictionary WL_titleAttributes]].size);
+    if (_needsUpdateTitleCache)
+    {
+        _titleCache._preferredFrameSizeOut = NSSizeToCGSize([self.title boundingRectWithSize:NSMakeSize(9999.0, 9999.0)
+                                                                                     options:_WLTitleDrawingOptions
+                                                                                  attributes:self.isTitleHighlighted ? [NSDictionary WL_highlightedTitleAttributes] : [NSDictionary WL_titleAttributes]].size);
+    }
+    BOOL isBoundingSizeEqualToCachedBoundingSize = CGSizeEqualToSize(aBoundingSize, _titleCache._cachedBoundingSizeIn);
+    if (_needsUpdateTitleCache || !isBoundingSizeEqualToCachedBoundingSize)
+    {
+        BOOL isBoundingSizeContainsPreferredFrameSize = !IS_LESS_CGFLOAT(aBoundingSize.width, _titleCache._preferredFrameSizeOut.width) && !IS_LESS_CGFLOAT(aBoundingSize.height, _titleCache._preferredFrameSizeOut.height);
+        if (isBoundingSizeContainsPreferredFrameSize)
+            _titleCache._preferredFrameSizeWithinBoundingSizeOut = _titleCache._preferredFrameSizeOut;
+        else
+        {
+            _titleCache._preferredFrameSizeWithinBoundingSizeOut = NSSizeToCGSize([self.title boundingRectWithSize:NSSizeFromCGSize(aBoundingSize)
+                                                                                                           options:_WLTitleDrawingOptions
+                                                                                                        attributes:self.isTitleHighlighted ? [NSDictionary WL_highlightedTitleAttributes] : [NSDictionary WL_titleAttributes]].size);
+        }
+    }
+    _needsUpdateTitleCache = NO;
+    _titleCache._cachedBoundingSizeIn = aBoundingSize;
+    return _titleCache._preferredFrameSizeWithinBoundingSizeOut;
 }
 
 
