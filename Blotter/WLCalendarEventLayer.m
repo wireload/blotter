@@ -14,7 +14,12 @@
 
 
 const CGFloat _WLYPadding = 6.0;
+
 const CGFloat _WLXPadding = 10.0;
+
+const CGFloat _WLMinimumStringWidth = 10.0; // Width of "..." for the current event title/location attributes.
+
+const CGFloat _WLMinimumStringHeight = 5.0;
 
 
 @implementation WLCalendarEventLayer
@@ -71,19 +76,19 @@ const CGFloat _WLXPadding = 10.0;
 
 - (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth
 {
-    return [self.title WL_preferredHeightWithWidth:aWidth - _WLXPadding] + [self.location WL_preferredHeightWithWidth:aWidth - _WLXPadding] + _WLYPadding;
+    return [self.title WL_preferredHeightWithWidth:fdim(aWidth, _WLXPadding)] + [self.location WL_preferredHeightWithWidth:fdim(aWidth, _WLXPadding)] + _WLYPadding;
 }
 
 - (CGFloat)minimumHumanVisibleHeight
 {
     NSAttributedString *visibleString = [self.title length] > 0 ? self.title : self.location;
-    return [visibleString WL_firstLineHeightWithWidth:self.bounds.size.width - _WLXPadding] + _WLYPadding;
+    return [visibleString WL_firstLineHeightWithWidth:fdim(CGRectGetWidth(self.bounds), _WLXPadding)] + _WLYPadding;
 }
 
 - (CGFloat)minimumHumanVisibleHeightWithWidth:(CGFloat)aWidth
 {
     NSAttributedString *visibleString = [self.title length] > 0 ? self.title : self.location;
-    return [visibleString WL_firstLineHeightWithWidth:aWidth - _WLXPadding] + _WLYPadding;
+    return [visibleString WL_firstLineHeightWithWidth:fdim(aWidth, _WLXPadding)] + _WLYPadding;
 }
 
 
@@ -141,6 +146,12 @@ const CGFloat _WLXPadding = 10.0;
 
 - (void)_drawString:(CGContextRef)aContext
 {
+    if ([self.title length] == 0 && [self.location length] == 0)
+        return;
+
+    if (IS_LESS_CGFLOAT(fdim(CGRectGetHeight(self.bounds), _WLYPadding), _WLMinimumStringHeight) || IS_LESS_CGFLOAT(fdim(CGRectGetWidth(self.bounds), _WLXPadding), _WLMinimumStringWidth))
+        return;
+
     CGContextSaveGState(aContext);
     CGRect titleAndLocationFrame = CGRectInset(self.bounds, _WLXPadding / 2.0, _WLYPadding / 2.0);
     CGRect dirtyRect = CGContextGetClipBoundingBox(aContext);
@@ -158,11 +169,11 @@ const CGFloat _WLXPadding = 10.0;
         else
             CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0), 0.0, [[NSColor WL_eventTextShadowColor] WL_CGColor]);
 
-        CGFloat preferredTitleHeight = [self.title WL_preferredHeightWithWidth:self.bounds.size.width - _WLXPadding];
+        CGFloat preferredTitleHeight = [self.title WL_preferredHeightWithWidth:fdim(CGRectGetWidth(self.bounds), _WLXPadding)];
         if (preferredTitleHeight < titleAndLocationFrame.size.height)
         {
             CGFloat titleHeight = preferredTitleHeight;
-            CGFloat preferredLocationHeight = [self.location WL_preferredHeightWithWidth:self.bounds.size.width - _WLXPadding];
+            CGFloat preferredLocationHeight = [self.location WL_preferredHeightWithWidth:fdim(CGRectGetWidth(self.bounds), _WLXPadding)];
             CGFloat locationHeight = CGFLOAT_MAX;
             if (preferredTitleHeight + preferredLocationHeight < titleAndLocationFrame.size.height)
             {
@@ -171,17 +182,17 @@ const CGFloat _WLXPadding = 10.0;
                 {
                     // Make text visible as much as possible.
                     // Visible rect's origin is top left, while context's origin is bottom left. Convert to context's coordinates.
-                    CGFloat visibleRectTop = self.bounds.size.height - self.visibleRect.origin.y;
-                    CGFloat visibleRectBottom = self.bounds.size.height - CGRectGetMaxY(self.visibleRect);
-                    CGFloat maxY = CGRectGetMaxY(titleAndLocationFrame) - titleHeight - locationHeight;
-                    CGFloat minY = titleAndLocationFrame.origin.y;
+                    CGFloat visibleRectTop = fdim(CGRectGetHeight(self.bounds), CGRectGetMinY(self.visibleRect));
+                    CGFloat visibleRectBottom = fdim(CGRectGetHeight(self.bounds), CGRectGetMaxY(self.visibleRect));
+                    CGFloat maxY = fdim(CGRectGetMaxY(titleAndLocationFrame), titleHeight + locationHeight);
+                    CGFloat minY = CGRectGetMinY(titleAndLocationFrame);
                     // If the parent layer fits the whole event layer, draw text as usual, otherwise center it.
                     CGFloat y = 0.0;
                     BOOL isWholeEventLayerVisible = (visibleRectTop >= maxY && visibleRectBottom <= minY);
                     BOOL isEventLayerBecomeVisible = (visibleRectTop >= maxY && visibleRectBottom > minY);
                     if (isWholeEventLayerVisible || isEventLayerBecomeVisible)
                     {
-                        y = visibleRectTop - titleHeight - locationHeight;
+                        y = fdim(visibleRectTop, titleHeight + locationHeight);
                         y = fmin(maxY, fmax(minY, y));
                     }
                     else
@@ -194,10 +205,10 @@ const CGFloat _WLXPadding = 10.0;
                 }
             }
             else
-                locationHeight = titleAndLocationFrame.size.height - titleHeight;
+                locationHeight = fdim(CGRectGetHeight(titleAndLocationFrame), titleHeight);
 
             CGRect titleFrame = CGRectIntegral(CGRectMake(titleAndLocationFrame.origin.x,
-                                                          CGRectGetMaxY(titleAndLocationFrame) - titleHeight,
+                                                          fdim(CGRectGetMaxY(titleAndLocationFrame), titleHeight),
                                                           titleAndLocationFrame.size.width,
                                                           titleHeight));
 #ifdef DEBUG_LAYERS
@@ -206,7 +217,7 @@ const CGFloat _WLXPadding = 10.0;
 #endif
             [self.title WL_drawWithRect:titleFrame context:aContext];
             CGRect locationFrame = CGRectIntegral(CGRectMake(titleAndLocationFrame.origin.x,
-                                                             CGRectGetMinY(titleFrame) - locationHeight,
+                                                             fdim(CGRectGetMinY(titleFrame), locationHeight),
                                                              titleAndLocationFrame.size.width,
                                                              locationHeight));
 #ifdef DEBUG_LAYERS
