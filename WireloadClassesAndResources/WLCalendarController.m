@@ -222,6 +222,7 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType)
 
 - (void)updateCalendar
 {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateCalendar) object:nil];
     self.calendar = [NSCalendar autoupdatingCurrentCalendar];
     [self _scheduleNextDayTimer];
     [self _scheduleNextMinuteTimer];
@@ -229,6 +230,7 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType)
 
 - (void)updateDate
 {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateDate) object:nil];
     self.date = [NSDate date];
     [self _scheduleNextDayTimer];
     [self _scheduleNextMinuteTimer];
@@ -321,7 +323,6 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType)
 
 - (void)_localeDidChange:(NSNotification *)aNotification
 {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateCalendar) object:nil];
     // NSCurrentLocaleDidChangeNotification may be posted multiple times for 1 change (meaning user's change in the sys prefs).
     // Don't annoy the user with multiple updates.
     static const NSTimeInterval AnyDelay = 1.0;
@@ -383,7 +384,6 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType)
     // http://groups.google.com/group/cocoa-unbound/browse_thread/thread/46fe3433cfef6a97#
     if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
     {
-        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateDate) object:nil];
         static const NSTimeInterval AnyDelay = 0.5;
         [self performSelector:@selector(updateDate) withObject:nil afterDelay:AnyDelay];
     }
