@@ -124,7 +124,7 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType)
 {
     [calendar release];
     [date release];
-//    [calCalendarsToDisplay release];
+    [calCalendarsToDisplay release];
     [calEventCalendarsToDisplay release];
     [calReminderCalendarsToDisplay release];
     [calCalendars release];
