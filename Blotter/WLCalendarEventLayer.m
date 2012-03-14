@@ -266,7 +266,7 @@ const CGFloat _WLMinimumStringHeight = 5.0;
         return YES;
     else if ([aKey isEqualToString:@"location"])
         return YES;
-    else if ([aKey isEqualToString:@"keepTextVisible"])
+    else if ([aKey isEqualToString:@"keepsTextVisible"])
         return YES;
     else if ([aKey isEqualToString:@"contentsBackgroundOpacity"])
         return YES;
@@ -277,7 +277,7 @@ const CGFloat _WLMinimumStringHeight = 5.0;
 }
 
 + (id)defaultValueForKey:(NSString *)aKey {
-    if ([aKey isEqualToString:@"keepTextVisible"])
+    if ([aKey isEqualToString:@"keepsTextVisible"])
         return [NSNumber numberWithBool:NO];
     else if ([aKey isEqualToString:@"contentsBackgroundOpacity"])
         return [NSNumber numberWithFloat:1.0f];
