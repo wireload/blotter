@@ -129,8 +129,11 @@
     CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self);
     if (framesetter != NULL)
     {
-        CGMutablePathRef framePath = CGPathCreateMutable();
-        CGPathAddRect(framePath, NULL, CGRectMake(0.0f, 0.0f, aWidth, 9999.0f));
+        CGPathRef framePath = CGPathCreateWithRect(CGRectMake(0.0,
+                                                              0.0,
+                                                              aWidth,
+                                                              9999.0),
+                                                   NULL);
         CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
         if (frame != NULL)
         {
@@ -140,17 +143,20 @@
         CFRelease(framePath);
         CFRelease(framesetter);
     }
-    return ceilf(preferredFrameSize.height);
+    return ceil(preferredFrameSize.height);
 }
 
 - (CGFloat)WL_firstLineHeightWithWidth:(CGFloat)aWidth
 {
     CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self);
-    CGFloat height = 0.0f;
+    CGFloat height = 0.0;
     if (framesetter != NULL)
     {
-        CGMutablePathRef framePath = CGPathCreateMutable();
-        CGPathAddRect(framePath, NULL, CGRectMake(0.0f, 0.0f, aWidth, 9999.0f));
+        CGPathRef framePath = CGPathCreateWithRect(CGRectMake(0.0,
+                                                              0.0,
+                                                              aWidth,
+                                                              9999.0),
+                                                   NULL);
         CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
         if (frame != NULL)
         {
@@ -168,7 +174,7 @@
         CFRelease(framePath);
         CFRelease(framesetter);
     }
-    return ceilf(height);
+    return ceil(height);
 }
 
 - (CGFloat)WL_firstLineHeight
