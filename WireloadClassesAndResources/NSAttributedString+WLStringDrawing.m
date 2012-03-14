@@ -171,4 +171,9 @@
     return ceilf(height);
 }
 
+- (CGFloat)WL_firstLineHeight
+{
+    return [self WL_firstLineHeightWithWidth:9999.0];
+}
+
 @end

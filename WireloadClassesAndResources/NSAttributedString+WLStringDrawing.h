@@ -19,4 +19,6 @@
 
 - (CGFloat)WL_firstLineHeightWithWidth:(CGFloat)aWidth;
 
+- (CGFloat)WL_firstLineHeight;
+
 @end

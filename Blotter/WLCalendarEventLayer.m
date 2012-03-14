@@ -90,9 +90,9 @@ const CGFloat _WLMinimumStringHeight = 5.0;
         _cachedVisibleString = visibleString;
 
         if (_cachedVisibleString != nil)
-            _cachedMinimumHumanVisibleHeight = [visibleString WL_firstLineHeightWithWidth:fdim(CGRectGetWidth(self.bounds), _WLXPadding)] + _WLYPadding;
+            _cachedMinimumHumanVisibleHeight = [visibleString WL_firstLineHeight] + _WLYPadding;
         else
-            _cachedMinimumHumanVisibleHeight = 0.0;
+            _cachedMinimumHumanVisibleHeight = _WLYPadding;
     }
     return _cachedMinimumHumanVisibleHeight;
 }
