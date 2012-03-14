@@ -35,6 +35,7 @@ const CGFloat _WLMinimumStringHeight = 5.0;
 
 - (void)dealloc
 {
+    [_cachedVisibleString release];
     [_cachedLocation release];
     [_cachedTitle release];
     [super dealloc];
@@ -82,7 +83,18 @@ const CGFloat _WLMinimumStringHeight = 5.0;
 - (CGFloat)minimumHumanVisibleHeight
 {
     NSAttributedString *visibleString = [self.title length] > 0 ? self.title : self.location;
-    return [visibleString WL_firstLineHeightWithWidth:fdim(CGRectGetWidth(self.bounds), _WLXPadding)] + _WLYPadding;
+    if (![visibleString isEqualToAttributedString:_cachedVisibleString])
+    {
+        [visibleString retain];
+        [_cachedVisibleString release];
+        _cachedVisibleString = visibleString;
+
+        if (_cachedVisibleString != nil)
+            _cachedMinimumHumanVisibleHeight = [visibleString WL_firstLineHeightWithWidth:fdim(CGRectGetWidth(self.bounds), _WLXPadding)] + _WLYPadding;
+        else
+            _cachedMinimumHumanVisibleHeight = 0.0;
+    }
+    return _cachedMinimumHumanVisibleHeight;
 }
 
 - (CGFloat)minimumHumanVisibleHeightWithWidth:(CGFloat)aWidth
