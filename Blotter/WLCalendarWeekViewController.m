@@ -408,6 +408,7 @@ static NSString* const _WLEventsKey = @"events";
             self._timeFormat = nil;
         }
         [[self view] reloadDataAnimated:YES];
+        [[self view] scrollHour:[self currentHour] animated:YES];
     }
     else if ([aKeyPath isEqual:@"representedObject.date"])
     {
