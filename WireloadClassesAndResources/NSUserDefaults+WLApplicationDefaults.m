@@ -140,9 +140,10 @@ NSComparator const WLCalendarsComparator = ^(id left, id right) {
 {
     if (anUpdaterBlock == NULL)
         return;
-
-    anUpdaterBlock([self mutableArrayValueForKey:WLCalendarsKey]);
-    [self synchronize];
+    NSMutableArray *calendars = [[self arrayForKey:WLCalendarsKey] mutableCopy];
+    anUpdaterBlock(calendars);
+    [self setObject:calendars forKey:WLCalendarsKey];
+    [calendars release];
 }
 
 - (void)WL_setDisplaysAllCalendars:(BOOL)newDisplaysAllCalendars
