@@ -33,6 +33,16 @@
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://twitter.com/BlotterApp"]];
 }
 
+- (IBAction)showWireload:(id)aSender
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wireload.net"]];
+}
+
+- (IBAction)showBanner:(id)aSender
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wireload.net/products/quiet"]];
+}
+
 
 #pragma mark SS_PreferencePaneProtocol
 

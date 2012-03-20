@@ -26,4 +26,8 @@
 
 - (IBAction)showFollowUsOnTwitter:(id)aSender;
 
+- (IBAction)showWireload:(id)aSender;
+
+- (IBAction)showBanner:(id)aSender;
+
 @end
