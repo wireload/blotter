@@ -53,6 +53,8 @@
         if ([NSBundle loadNibNamed:@"AboutPrefPaneView" owner:self])
         {
             _mainView.preferredFrameSize = [_mainView frame].size;
+
+            [_versionView setStringValue:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
         }
         else
             NSLog(@"Cannot load AboutPrefPaneView");

@@ -16,6 +16,7 @@
 @interface AboutPrefController : NSObject <SS_PreferencePaneProtocol>
 {
     IBOutlet WLPrefPaneView *_mainView;
+    IBOutlet NSTextField *_versionView;
 }
 
 - (IBAction)showHelp:(id)aSender;
