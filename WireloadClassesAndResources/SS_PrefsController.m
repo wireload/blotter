@@ -657,4 +657,9 @@ float ToolbarHeightForWindow(NSWindow *window)
     return [[[prefsWindow contentView] subviews] objectAtIndex:0];
 }
 
+- (NSDictionary *)prefsToolbarItems
+{
+    return prefsToolbarItems;
+}
+
 @end

@@ -11,6 +11,7 @@
 #import "PositionPrefController.h"
 #import "CalendarsPrefController.h"
 #import "LayoutPrefController.h"
+#import "AboutPrefController.h"
 
 
 @implementation GeneralPrefController
@@ -29,6 +30,7 @@
             [[[PositionPrefController alloc] init] autorelease],
             [[[LayoutPrefController alloc] init] autorelease],
             [[[CalendarsPrefController alloc] init] autorelease],
+            [[[AboutPrefController alloc] init] autorelease],
             nil];
 }
 

@@ -81,9 +81,11 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
                                                NSLocalizedStringFromTableInBundle(@"Positioning", nil, [_preferencesController bundle], nil),
                                                NSLocalizedStringFromTableInBundle(@"Layout", nil, [_preferencesController bundle], nil),
                                                NSLocalizedStringFromTableInBundle(@"Calendars", nil, [_preferencesController bundle], nil),
+                                               NSLocalizedStringFromTableInBundle(@"About", nil, [_preferencesController bundle], nil),
                                                nil]];
         [_preferencesController createPreferencesWindow];
         [[_preferencesController preferencesWindow] setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
+        [[[_preferencesController preferencesWindow] toolbar] insertItemWithItemIdentifier:NSToolbarFlexibleSpaceItemIdentifier atIndex:4];
     }
     [_preferencesController showPreferencesWindow];
     [NSApp activateIgnoringOtherApps:YES];
@@ -121,8 +123,9 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (IBAction)showAbout:(id)aSender
 {
-    [NSApp orderFrontStandardAboutPanelWithOptions:nil];
-    [NSApp activateIgnoringOtherApps:YES];
+    [self showPreferences:aSender];
+    NSToolbarItem *aboutItem = [[_preferencesController prefsToolbarItems] objectForKey:@"About"];
+    [_preferencesController prefsToolbarItemClicked:aboutItem];
 }
 
 - (IBAction)showNextWeek:(id)aSender

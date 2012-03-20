@@ -60,6 +60,7 @@ float ToolbarHeightForWindow(NSWindow *window);
 - (NSString *)bundleExtension;
 - (NSString *)searchPath;
 - (NSBundle *)bundle;
+- (NSDictionary *)prefsToolbarItems;
 
 - (NSArray *)loadedPanes;
 - (NSArray *)panesOrder;
