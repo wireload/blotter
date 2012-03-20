@@ -40,7 +40,7 @@
 
 - (IBAction)showBanner:(id)aSender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wireload.net/products/quiet"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wireload.net/products/quiet/"]];
 }
 
 
