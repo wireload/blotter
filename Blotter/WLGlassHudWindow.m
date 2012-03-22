@@ -27,7 +27,7 @@
     {
         [self setOpaque:NO];
         [self setBackgroundColor:[NSColor clearColor]];
-        [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
+        [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces | NSWindowCollectionBehaviorParticipatesInCycle];
     }
     return self;
 }
