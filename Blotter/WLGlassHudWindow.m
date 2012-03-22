@@ -107,12 +107,8 @@
 
 - (void)sendEvent:(NSEvent *)theEvent
 {
-    // Stop editing the current field when numpad enter is pressed. This way the key press
-    // can be picked up on as the 'commit' key equivalent instead of a new line in the text
-    // field.
-
-    // FIXME This is a hack for New Event and New Task - it doesn't properly belong
-    // in WLGlassHudWindow.
+    // FIXME: This is a hack for New Event and New Task - it doesn't belong to WLGlassHudWindow.
+    // Stop editing the current field when numpad enter is pressed to prevent inserting new line. We use it to commit changes.
     NSResponder *firstResponder = [self firstResponder];
     if (([firstResponder isKindOfClass:[NSTextField class]] || [firstResponder isKindOfClass:[NSTextView class]])
         && ([theEvent type] == NSKeyDown || [theEvent type] == NSKeyUp)
