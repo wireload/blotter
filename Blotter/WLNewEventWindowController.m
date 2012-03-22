@@ -180,6 +180,8 @@ static const NSTimeInterval _WLDefaultTimeDiff = 3600; // seconds
 
 - (void)windowDidLoad
 {
+    [[self window] setLevel:NSFloatingWindowLevel];
+
     unichar keyEquiv = NSEnterCharacter;
     NSString *equivString = [NSString stringWithCharacters:&keyEquiv length:1];
     [_createButton setKeyEquivalent:equivString];
