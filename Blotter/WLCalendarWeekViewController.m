@@ -407,8 +407,12 @@ static NSString* const _WLEventsKey = @"events";
         {
             self._timeFormat = nil;
         }
+        [CATransaction begin];
+        [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear]];
+        [CATransaction setAnimationDuration:.25];
         [[self view] reloadDataAnimated:YES];
         [[self view] scrollHour:[self currentHour] animated:YES];
+        [CATransaction commit];
     }
     else if ([aKeyPath isEqual:@"representedObject.date"])
     {

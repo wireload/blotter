@@ -268,10 +268,14 @@
     // To properly animate date change, we have to know direction, and amount of days to update.
     NSInteger daysBetweenDates = [anOldDate WL_numberOfDaysToDate:aNewDate calendar:calendar];
     WLCalendarWeekView *v = [self view];
-    if (daysBetweenDates == 0)
-        [v scrollHour:[self currentHour] animated:YES];
-    else if (daysBetweenDates > 0)
+    [CATransaction begin];
+    [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear]];
+    [CATransaction setAnimationDuration:.25];
+    if (daysBetweenDates != 0)
     {
+        WLDayAppearanceDirection direction = daysBetweenDates > 0 ? WLRightToLeftDirection : WLLeftToRightDirection;
+        NSUInteger numberOfDaysToShow = 0;
+        NSUInteger numberOfDaysToHide = 0;
         switch (self.mode)
         {
             case WLCalendarWeekViewWeekMode:
@@ -290,57 +294,24 @@
                 }
                 if (oldWeek != newWeek)
                 {
-                    [v showDays:[self numberOfColumnsInWeekView:v] hideDays:[v numberOfColumns] direction:WLRightToLeftDirection animated:YES];
-                    [v updateHighlightsTitleOfColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [v numberOfColumns])] animated:YES];
+                    numberOfDaysToShow = [self numberOfColumnsInWeekView:v];
+                    numberOfDaysToHide = [v numberOfColumns];
                 }
                 break;
             }
             case WLCalendarWeekViewDayMode:
-                [v showDays:MIN((NSUInteger)daysBetweenDates, [self numberOfColumnsInWeekView:v])
-                   hideDays:MIN((NSUInteger)daysBetweenDates, [v numberOfColumns])
-                  direction:WLRightToLeftDirection
-                   animated:YES];
-                [v updateHighlightsTitleOfColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [v numberOfColumns])] animated:YES];
-                break;
-        }
-        [v scrollHour:[self currentHour] animated:YES];
-    }
-    else
-    {
-        switch (self.mode)
-        {
-            case WLCalendarWeekViewWeekMode:
             {
-                NSInteger oldWeek = 0;
-                NSInteger newWeek = 0;
-                if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-                {
-                    oldWeek = [[calendar components:NSWeekCalendarUnit fromDate:anOldDate] week];
-                    newWeek = [[calendar components:NSWeekCalendarUnit fromDate:aNewDate] week];
-                }
-                else
-                {
-                    oldWeek = [[calendar components:NSWeekOfMonthCalendarUnit fromDate:anOldDate] weekOfMonth];
-                    newWeek = [[calendar components:NSWeekOfMonthCalendarUnit fromDate:aNewDate] weekOfMonth];
-                }
-
-                if (oldWeek != newWeek)
-                {
-                    [v showDays:[self numberOfColumnsInWeekView:v] hideDays:[v numberOfColumns] direction:WLLeftToRightDirection animated:YES];
-                    [v updateHighlightsTitleOfColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [v numberOfColumns])] animated:YES];
-                }
+                NSUInteger normalizedDaysBetweenDates = ABS(daysBetweenDates);
+                numberOfDaysToShow = MIN(normalizedDaysBetweenDates, [self numberOfColumnsInWeekView:v]);
+                numberOfDaysToHide = MIN(normalizedDaysBetweenDates, [v numberOfColumns]);
                 break;
             }
-            case WLCalendarWeekViewDayMode:
-                [v showDays:MIN((NSUInteger)-daysBetweenDates, [self numberOfColumnsInWeekView:v])
-                   hideDays:MIN((NSUInteger)-daysBetweenDates, [v numberOfColumns])
-                  direction:WLLeftToRightDirection
-                   animated:YES];
-                [v updateHighlightsTitleOfColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [v numberOfColumns])] animated:YES];
-                break;
         }
-        [v scrollHour:[self currentHour] animated:YES];
+        [v showDays:numberOfDaysToShow hideDays:numberOfDaysToHide direction:direction animated:YES];
+        [v updateHighlightsTitleOfColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [v numberOfColumns])] animated:YES];
     }
+    [v scrollHour:[self currentHour] animated:YES];
+    [CATransaction commit];
 }
 
 - (NSUInteger)numberOfColumnsInWeekView:(WLCalendarWeekView *)aWeekView
