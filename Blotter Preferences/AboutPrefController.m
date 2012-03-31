@@ -69,7 +69,7 @@
 
 - (NSImage *)paneIcon
 {
-    return [NSImage imageNamed:NSImageNamePreferencesGeneral];
+    return [[[NSImage alloc] initWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"Blotter-toolbar-icon" ofType:@"png"]] autorelease];
 }
 
 - (NSString *)paneToolTip
