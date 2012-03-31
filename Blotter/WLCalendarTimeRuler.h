@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "WLHourRange.h"
-#import "WLSegmentRange.h"
 
 
 @protocol WLCalendarTimeRuler
