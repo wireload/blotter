@@ -7,12 +7,13 @@
 //
 
 #import <WireloadClassesAndResources/WireloadClassesAndResources.h>
+#include <tgmath.h>
 #import "WLCalendarTaskLayer.h"
 #import "NSFont+WLCalendar.h"
 #import "NSColor+WLCalendar.h"
 
 
-static const CGFloat _WLMarkTailIndent = 6.0f;
+static const CGFloat _WLMarkTailIndent = 6.0;
 
 
 @implementation WLCalendarTaskLayer
@@ -28,15 +29,17 @@ static const CGFloat _WLMarkTailIndent = 6.0f;
 - (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth
 {
     CGSize markSize = [self.mark WL_preferredSize];
-    return fmaxf([self.title WL_preferredHeightWithWidth:aWidth - markSize.width - _WLMarkTailIndent],
-                 [self.mark WL_preferredSize].height);
+    CGFloat width = fdim(aWidth, markSize.width + _WLMarkTailIndent);
+    return fmax([self.title WL_preferredHeightWithWidth:width],
+                [self.mark WL_preferredSize].height);
 }
 
 - (CGFloat)minimumHumanVisibleHeight
 {
     CGSize markSize = [self.mark WL_preferredSize];
-    return fmaxf([self.mark WL_firstLineHeightWithWidth:self.bounds.size.width],
-                 [self.title WL_firstLineHeightWithWidth:self.bounds.size.width - markSize.width - _WLMarkTailIndent]);
+    CGFloat titleWidth = fdim(CGRectGetWidth(self.bounds), markSize.width + _WLMarkTailIndent);
+    return fmax([self.mark WL_firstLineHeightWithWidth:CGRectGetWidth(self.bounds)],
+                [self.title WL_firstLineHeightWithWidth:titleWidth]);
 }
 
 
@@ -46,18 +49,29 @@ static const CGFloat _WLMarkTailIndent = 6.0f;
 {
     CGRect markFrame = [self _markFrame];
     return CGRectIntegral(CGRectMake(CGRectGetMaxX(markFrame) + _WLMarkTailIndent,
-                                     0.0f,
-                                     self.bounds.size.width - CGRectGetMaxX(markFrame) - _WLMarkTailIndent,
-                                     self.bounds.size.height));
+                                     0.0,
+                                     fdim(CGRectGetWidth(self.bounds), CGRectGetMaxX(markFrame) + _WLMarkTailIndent),
+                                     CGRectGetHeight(self.bounds)));
 }
 
 - (CGRect)_markFrame
 {
     CGSize preferredSize = [self.mark WL_preferredSize];
-    return CGRectIntegral(CGRectMake(0.0f,
-                                     2.0f,
-                                     preferredSize.width,
-                                     self.bounds.size.height));
+    CGFloat topMargin = -1.0;
+    if ([self contentsAreFlipped])
+    {
+        return CGRectIntegral(CGRectMake(0.0,
+                                         0.0,
+                                         preferredSize.width,
+                                         fdim(CGRectGetHeight(self.bounds), topMargin)));
+    }
+    else
+    {
+        return CGRectIntegral(CGRectMake(0.0,
+                                         topMargin,
+                                         preferredSize.width,
+                                         fdim(CGRectGetHeight(self.bounds), topMargin)));
+    }
 }
 
 
@@ -83,7 +97,7 @@ static const CGFloat _WLMarkTailIndent = 6.0f;
 
     if ([self contentsAreFlipped])
     {
-        CGAffineTransform flipVertical = CGAffineTransformMake(1.0, 0.0, 0.0, -1.0, 0.0, self.bounds.size.height);
+        CGAffineTransform flipVertical = CGAffineTransformMake(1.0, 0.0, 0.0, -1.0, 0.0, CGRectGetHeight(self.bounds));
         CGContextConcatCTM(aContext, flipVertical);
     }
 
@@ -94,15 +108,15 @@ static const CGFloat _WLMarkTailIndent = 6.0f;
 #endif
 
     if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6 || ![self contentsAreFlipped])
-        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f, 1.0f), 0.0f, [[[NSColor whiteColor] colorWithAlphaComponent:0.25] WL_CGColor]);
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0), 0.0, [[[NSColor whiteColor] colorWithAlphaComponent:0.25] WL_CGColor]);
     else
-        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f, -1.0f), 0.0f, [[[NSColor whiteColor] colorWithAlphaComponent:0.25] WL_CGColor]);
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, -1.0), 0.0, [[[NSColor whiteColor] colorWithAlphaComponent:0.25] WL_CGColor]);
     [self.mark WL_drawWithRect:[self _markFrame] context:aContext];
 
     if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6 || ![self contentsAreFlipped])
-        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f, -1.0f), 0.0f, [[NSColor WL_taskTextShadowColor] WL_CGColor]);
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, -1.0), 0.0, [[NSColor WL_taskTextShadowColor] WL_CGColor]);
     else
-        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f, 1.0f), 0.0f, [[NSColor WL_taskTextShadowColor] WL_CGColor]);
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f, 1.0), 0.0, [[NSColor WL_taskTextShadowColor] WL_CGColor]);
     [self.mark WL_drawWithRect:[self _markFrame] context:aContext];
     [self.title WL_drawWithRect:[self _titleFrame] context:aContext];
 
