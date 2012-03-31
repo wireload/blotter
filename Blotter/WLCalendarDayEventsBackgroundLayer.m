@@ -45,12 +45,24 @@ static const NSStringDrawingOptions _WLTitleDrawingOptions = NSStringDrawingUses
     [title release];
     title = tmp;
     _needsUpdateTitleCache = YES;
+    [self setNeedsDisplay];
 }
 
 - (void)setIsTitleHighlighted:(BOOL)newIsTitleHighlighted
 {
-    isTitleHighlighted = newIsTitleHighlighted;
-    _needsUpdateTitleCache = YES;
+    if (newIsTitleHighlighted != isTitleHighlighted)
+    {
+        [self willChangeValueForKey:@"isTitleHighlighted"];
+        isTitleHighlighted = newIsTitleHighlighted;
+        _needsUpdateTitleCache = YES;
+        [self setNeedsDisplay];
+        [self didChangeValueForKey:@"isTitleHighlighted"];
+    }
+}
+
++ (BOOL)automaticallyNotifiesObserversOfIsTitleHighlighted
+{
+    return NO;
 }
 
 
@@ -90,9 +102,9 @@ static const NSStringDrawingOptions _WLTitleDrawingOptions = NSStringDrawingUses
     if ([aKey isEqualToString:@"titleFrame"])
         return YES;
     else if ([aKey isEqualToString:@"title"])
-        return YES;
+        return NO; // customized property
     else if ([aKey isEqualToString:@"isTitleHighlighted"])
-        return YES;
+        return NO; // customized property
     else
         return [super needsDisplayForKey:aKey];
 }
@@ -113,13 +125,13 @@ static const NSStringDrawingOptions _WLTitleDrawingOptions = NSStringDrawingUses
         WhiteToTransparentGradient = [[NSGradient alloc] initWithStartingColor:[[NSColor whiteColor] colorWithAlphaComponent:0.1]
                                                                    endingColor:[NSColor clearColor]];
     });
-
+    
     NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:[self contentsAreFlipped]];
     [c setImageInterpolation:NSImageInterpolationHigh];
     [c setShouldAntialias:YES];
     [NSGraphicsContext saveGraphicsState];
     [NSGraphicsContext setCurrentContext:c];
-
+    
     NSRect dirtyRect = NSRectFromCGRect(CGContextGetClipBoundingBox(aContext));
 #ifndef DEBUG_LAYERS
     NSSize bottomSize = NSMakeSize(self.bounds.size.width,
@@ -128,7 +140,7 @@ static const NSStringDrawingOptions _WLTitleDrawingOptions = NSStringDrawingUses
                                 [[NSImage imageNamed:@"day-top"] size].height);
     NSSize middleSize = NSMakeSize(self.bounds.size.width,
                                    fdim(self.bounds.size.height, bottomSize.height + topSize.height));
-
+    
     NSRect topFrame = NSMakeRect(0.0,
                                  0.0,
                                  topSize.width,
@@ -144,7 +156,7 @@ static const NSStringDrawingOptions _WLTitleDrawingOptions = NSStringDrawingUses
                              1.0,
                              YES);
     }
-
+    
     NSRect middleFrame = NSMakeRect(0.0,
                                     NSMaxY(topFrame),
                                     middleSize.width,
@@ -179,7 +191,7 @@ static const NSStringDrawingOptions _WLTitleDrawingOptions = NSStringDrawingUses
                                                          respectFlipped:YES
                                                                   hints:nil];
     }
-
+    
     NSRect bottomFrame = NSMakeRect(0.0,
                                     NSMaxY(middleFrame),
                                     bottomSize.width,
@@ -195,7 +207,7 @@ static const NSStringDrawingOptions _WLTitleDrawingOptions = NSStringDrawingUses
                              1.0,
                              YES);
     }
-
+    
     // Inset layer bounds, since images have 1px stroke.
     [WhiteToTransparentGradient drawInRect:NSInsetRect(NSRectFromCGRect(self.bounds),
                                                        1.0,
@@ -207,8 +219,8 @@ static const NSStringDrawingOptions _WLTitleDrawingOptions = NSStringDrawingUses
         NSDictionary *attributes = self.isTitleHighlighted ? [NSDictionary WL_highlightedTitleAttributes] : [NSDictionary WL_titleAttributes];
         // Vertically center the title.
         NSSize preferredTitleSize = [self.title boundingRectWithSize:NSSizeFromCGSize(self.titleFrame.size)
-                                                        options:_WLTitleDrawingOptions
-                                                     attributes:attributes].size;
+                                                             options:_WLTitleDrawingOptions
+                                                          attributes:attributes].size;
         NSRect centeredFrame = NSRectFromCGRect(self.titleFrame);
         CGFloat yOffset = ceil(fdim(self.titleFrame.size.height / 2.0, preferredTitleSize.height / 2.0));
         centeredFrame.origin.y += yOffset;
