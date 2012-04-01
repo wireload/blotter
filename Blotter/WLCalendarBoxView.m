@@ -6,6 +6,7 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
+#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLCalendarBoxView.h"
 #import "NSFont+WLCalendar.h"
 #import "NSColor+WLCalendar.h"
@@ -126,80 +127,20 @@ static const CGFloat _WLMysteriousExtraBottomSpace = 4.0f;
     [context setShouldAntialias:YES];
     [context setImageInterpolation:NSImageInterpolationHigh];
 
-    NSSize bottomSize = NSMakeSize(bounds.size.width, [[NSImage imageNamed:@"info-bottom"] size].height);
-    NSSize topSize = NSMakeSize(bounds.size.width, [[NSImage imageNamed:@"info-top"] size].height);
-    NSSize middleSize = NSMakeSize(bounds.size.width, bounds.size.height - bottomSize.height - topSize.height);
+    WLDrawScaledNinePartImage(bounds, 
+                              [NSImage imageNamed:@"info-top-left"], 
+                              [NSImage imageNamed:@"info-top-middle"], 
+                              [NSImage imageNamed:@"info-top-right"], 
+                              [NSImage imageNamed:@"info-middle-left"], 
+                              [NSImage imageNamed:@"info-middle-middle"], 
+                              [NSImage imageNamed:@"info-middle-right"], 
+                              [NSImage imageNamed:@"info-bottom-left"], 
+                              [NSImage imageNamed:@"info-bottom-middle"], 
+                              [NSImage imageNamed:@"info-bottom-right"],
+                              NSCompositeSourceOver, 
+                              1.0, 
+                              YES);
 
-    static const CGFloat AlphaFraction = 1.0f;
-
-    NSRect topFrame = NSMakeRect(NSMinX(bounds), NSMinY(bounds), topSize.width, topSize.height);
-    if (NSIntersectsRect(topFrame, aDirtyRect))
-    {
-        NSDrawThreePartImage(topFrame,
-                             [NSImage imageNamed:@"info-top-left"],
-                             [NSImage imageNamed:@"info-top"],
-                             [NSImage imageNamed:@"info-top-right"],
-                             NO,
-                             NSCompositeSourceOver,
-                             AlphaFraction,
-                             YES);
-    }
-
-    NSRect middleFrame = NSMakeRect(NSMinX(bounds), NSMaxY(topFrame), middleSize.width, middleSize.height);
-    if (NSIntersectsRect(middleFrame, aDirtyRect))
-    {
-        [(NSImage *)[NSImage imageNamed:@"info-middle-left"] drawInRect:NSMakeRect(0.0f,
-                                                                                   middleFrame.origin.y,
-                                                                                   2.0f,
-                                                                                   middleFrame.size.height)
-                                                               fromRect:NSZeroRect
-                                                              operation:NSCompositeSourceOver
-                                                               fraction:AlphaFraction
-                                                         respectFlipped:YES
-                                                                  hints:nil];
-        [(NSImage *)[NSImage imageNamed:@"info-middle"] drawInRect:NSMakeRect(2.0f,
-                                                                              middleFrame.origin.y,
-                                                                              middleFrame.size.width - 4.0f,
-                                                                              middleFrame.size.height)
-                                                          fromRect:NSZeroRect
-                                                         operation:NSCompositeSourceOver
-                                                          fraction:AlphaFraction
-                                                    respectFlipped:YES
-                                                             hints:nil];
-        [(NSImage *)[NSImage imageNamed:@"info-middle-right"] drawInRect:NSMakeRect(middleFrame.size.width - 2.0f,
-                                                                                    middleFrame.origin.y,
-                                                                                    2.0f,
-                                                                                    middleFrame.size.height)
-                                                                fromRect:NSZeroRect
-                                                               operation:NSCompositeSourceOver
-                                                                fraction:AlphaFraction
-                                                          respectFlipped:YES
-                                                                   hints:nil];
-    }
-
-    NSRect bottomFrame = NSMakeRect(NSMinX(bounds), NSMaxY(middleFrame), bottomSize.width, bottomSize.height);
-    if (NSIntersectsRect(bottomFrame, aDirtyRect))
-    {
-        NSDrawThreePartImage(bottomFrame,
-                             [NSImage imageNamed:@"info-bottom-left"],
-                             [NSImage imageNamed:@"info-bottom"],
-                             [NSImage imageNamed:@"info-bottom-right"],
-                             NO,
-                             NSCompositeSourceOver,
-                             AlphaFraction,
-                             YES);
-    }
-
-    [NSGraphicsContext saveGraphicsState];
-    // Gradient is already applied to top images.
-    NSGradient *whiteToTransparentGradient = [[NSGradient alloc] initWithStartingColor:[[NSColor whiteColor] colorWithAlphaComponent:0.125f]
-                                                                           endingColor:[NSColor clearColor]];
-    // Images have 1px stroke.
-    NSRect gradientFrame = NSInsetRect(bounds, 1.0f, 0.0f);
-    gradientFrame.size.height -= topSize.height;
-    gradientFrame.origin.y += topSize.height;
-    [whiteToTransparentGradient drawInRect:gradientFrame angle:90];
-    [whiteToTransparentGradient release];
     [NSGraphicsContext restoreGraphicsState];
 
 #else

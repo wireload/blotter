@@ -1387,9 +1387,6 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                              nil];
     l.actions = actions;
 #ifndef DEBUG_LAYERS
-    NSGradient *whiteToTransparentGradient = [[NSGradient alloc] initWithStartingColor:[[NSColor whiteColor] colorWithAlphaComponent:0.13f]
-                                                                           endingColor:[NSColor clearColor]];
-    [whiteToTransparentGradient autorelease];
     l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
         // (0, 0) is top left.
         NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:[aLayer contentsAreFlipped]];
@@ -1397,80 +1394,22 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
         [NSGraphicsContext saveGraphicsState];
         [NSGraphicsContext setCurrentContext:c];
 
-        NSSize bottomSize = NSMakeSize(aLayer.bounds.size.width,
-                                       [[NSImage imageNamed:@"allday-bottom"] size].height);
-        NSSize topSize = NSMakeSize(aLayer.bounds.size.width,
-                                    [[NSImage imageNamed:@"allday-top"] size].height);
-        NSSize middleSize = NSMakeSize(aLayer.bounds.size.width,
-                                       aLayer.bounds.size.height - bottomSize.height - topSize.height);
-
-        NSRect dirtyRect = NSRectFromCGRect(aDirtyRect);
-        static CGFloat AlphaFraction = 1.0;
-
-        NSRect topFrame = NSMakeRect(0.0, 0.0, topSize.width, topSize.height);
-        if (NSIntersectsRect(topFrame, topFrame))
-        {
-            NSDrawThreePartImage(topFrame,
-                                 [NSImage imageNamed:@"allday-top-left"],
-                                 [NSImage imageNamed:@"allday-top"],
-                                 [NSImage imageNamed:@"allday-top-right"],
-                                 NO,
-                                 NSCompositeSourceOver,
-                                 AlphaFraction,
-                                 YES);
-        }
-
-        NSRect middleFrame = NSMakeRect(0.0, NSMaxY(topFrame), middleSize.width, middleSize.height);
-        if (NSIntersectsRect(middleFrame, dirtyRect))
-        {
-            [(NSImage *)[NSImage imageNamed:@"allday-middle-left"] drawInRect:NSMakeRect(0.0,
-                                                                                         middleFrame.origin.y,
-                                                                                         3.0,
-                                                                                         middleFrame.size.height)
-                                                                     fromRect:NSZeroRect
-                                                                    operation:NSCompositeSourceOver
-                                                                     fraction:AlphaFraction
-                                                               respectFlipped:YES
-                                                                        hints:nil];
-            [(NSImage *)[NSImage imageNamed:@"allday-middle"] drawInRect:NSMakeRect(3.0,
-                                                                                    middleFrame.origin.y,
-                                                                                    middleFrame.size.width - 6.0,
-                                                                                    middleFrame.size.height)
-                                                                fromRect:NSZeroRect
-                                                               operation:NSCompositeSourceOver
-                                                                fraction:AlphaFraction
-                                                          respectFlipped:YES
-                                                                   hints:nil];
-            [(NSImage *)[NSImage imageNamed:@"allday-middle-right"] drawInRect:NSMakeRect(middleFrame.size.width - 3.0,
-                                                                                          middleFrame.origin.y,
-                                                                                          3.0,
-                                                                                          middleFrame.size.height)
-                                                                      fromRect:NSZeroRect
-                                                                     operation:NSCompositeSourceOver
-                                                                      fraction:AlphaFraction
-                                                                respectFlipped:YES
-                                                                         hints:nil];
-        }
-
-        NSRect bottomFrame = NSMakeRect(0.0, NSMaxY(middleFrame), bottomSize.width, bottomSize.height);
-        if (NSIntersectsRect(bottomFrame, dirtyRect))
-        {
-            NSDrawThreePartImage(bottomFrame,
-                                 [NSImage imageNamed:@"allday-bottom-left"],
-                                 [NSImage imageNamed:@"allday-bottom"],
-                                 [NSImage imageNamed:@"allday-bottom-right"],
-                                 NO,
-                                 NSCompositeSourceOver,
-                                 AlphaFraction,
-                                 YES);
-        }
-
-        // Inset layer bounds, since images have 1px stroke.
-        [whiteToTransparentGradient drawInRect:NSInsetRect(NSRectFromCGRect(aLayer.bounds),
-                                                           1.0,
-                                                           1.0)
-                                         angle:90];
-
+        [c setImageInterpolation:NSImageInterpolationHigh];
+        
+        WLDrawScaledNinePartImage(aLayer.bounds, 
+                                  [NSImage imageNamed:@"all-day-top-left"], 
+                                  [NSImage imageNamed:@"all-day-top-middle"], 
+                                  [NSImage imageNamed:@"all-day-top-right"], 
+                                  [NSImage imageNamed:@"all-day-middle-left"], 
+                                  [NSImage imageNamed:@"all-day-middle-middle"], 
+                                  [NSImage imageNamed:@"all-day-middle-right"], 
+                                  [NSImage imageNamed:@"all-day-bottom-left"], 
+                                  [NSImage imageNamed:@"all-day-bottom-middle"], 
+                                  [NSImage imageNamed:@"all-day-bottom-right"],
+                                  NSCompositeSourceOver, 
+                                  1.0, 
+                                  YES);
+        
         [NSGraphicsContext restoreGraphicsState];
     };
 #else
