@@ -1078,7 +1078,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0f, .height = 10.0f
 
 - (CALayer *)setupCalendarWindowLayer
 {
-    static const CGFloat CalendarWindowFrameLineWidth = 5.0f;
+    static const CGFloat CalendarWindowFrameLineWidth = 2.0f;
     WLNinePartBlockLayer *l = [WLNinePartBlockLayer layer];
     l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect)
     {

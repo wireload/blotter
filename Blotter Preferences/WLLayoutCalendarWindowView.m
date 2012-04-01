@@ -16,7 +16,7 @@
 
 - (void)drawRect:(NSRect)aDirtyRect
 {
-    static const CGFloat CalendarWindowFrameLineWidth = 5.0f;
+    static const CGFloat CalendarWindowFrameLineWidth = 2.0f;
     
     [NSGraphicsContext saveGraphicsState];
     NSBezierPath *path = [NSBezierPath bezierPath];
