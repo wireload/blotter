@@ -9,6 +9,19 @@
 /* Begin PBXBuildFile section */
 		280A24DB14588519001B82C8 /* Layout-Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 280A24DA14588519001B82C8 /* Layout-Icon.png */; };
 		2850CB091528642E00DEEA82 /* Blotter-toolbar-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2850CB081528642E00DEEA82 /* Blotter-toolbar-icon.png */; };
+		2850CB101528646400DEEA82 /* about-blotter-tall-button-bezel-active-centre.png in Resources */ = {isa = PBXBuildFile; fileRef = 2850CB0A1528646400DEEA82 /* about-blotter-tall-button-bezel-active-centre.png */; };
+		2850CB111528646400DEEA82 /* about-blotter-tall-button-bezel-active-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 2850CB0B1528646400DEEA82 /* about-blotter-tall-button-bezel-active-left.png */; };
+		2850CB121528646400DEEA82 /* about-blotter-tall-button-bezel-active-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 2850CB0C1528646400DEEA82 /* about-blotter-tall-button-bezel-active-right.png */; };
+		2850CB131528646400DEEA82 /* about-blotter-tall-button-bezel-centre.png in Resources */ = {isa = PBXBuildFile; fileRef = 2850CB0D1528646400DEEA82 /* about-blotter-tall-button-bezel-centre.png */; };
+		2850CB141528646400DEEA82 /* about-blotter-tall-button-bezel-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 2850CB0E1528646400DEEA82 /* about-blotter-tall-button-bezel-left.png */; };
+		2850CB151528646400DEEA82 /* about-blotter-tall-button-bezel-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 2850CB0F1528646400DEEA82 /* about-blotter-tall-button-bezel-right.png */; };
+		2850CB181528646F00DEEA82 /* WLPreferencesButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2850CB171528646F00DEEA82 /* WLPreferencesButtonCell.m */; };
+		2850CB1F15287D7500DEEA82 /* about-blotter-button-bezel-active-centre.png in Resources */ = {isa = PBXBuildFile; fileRef = 2850CB1915287D7500DEEA82 /* about-blotter-button-bezel-active-centre.png */; };
+		2850CB2015287D7500DEEA82 /* about-blotter-button-bezel-active-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 2850CB1A15287D7500DEEA82 /* about-blotter-button-bezel-active-left.png */; };
+		2850CB2115287D7500DEEA82 /* about-blotter-button-bezel-active-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 2850CB1B15287D7500DEEA82 /* about-blotter-button-bezel-active-right.png */; };
+		2850CB2215287D7500DEEA82 /* about-blotter-button-bezel-centre.png in Resources */ = {isa = PBXBuildFile; fileRef = 2850CB1C15287D7500DEEA82 /* about-blotter-button-bezel-centre.png */; };
+		2850CB2315287D7500DEEA82 /* about-blotter-button-bezel-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 2850CB1D15287D7500DEEA82 /* about-blotter-button-bezel-left.png */; };
+		2850CB2415287D7500DEEA82 /* about-blotter-button-bezel-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 2850CB1E15287D7500DEEA82 /* about-blotter-button-bezel-right.png */; };
 		28B54D5E12839B8D0037BF53 /* GeneralPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54D5D12839B8D0037BF53 /* GeneralPrefController.m */; };
 		28B54D7A1283AEEE0037BF53 /* PositionPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B54D791283AEEE0037BF53 /* PositionPrefController.m */; };
 		28CB5085145DB3E200810395 /* WLBlockLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CB5084145DB3E200810395 /* WLBlockLayoutManager.m */; };
@@ -142,6 +155,20 @@
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		280A24DA14588519001B82C8 /* Layout-Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Layout-Icon.png"; sourceTree = "<group>"; };
 		2850CB081528642E00DEEA82 /* Blotter-toolbar-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Blotter-toolbar-icon.png"; sourceTree = "<group>"; };
+		2850CB0A1528646400DEEA82 /* about-blotter-tall-button-bezel-active-centre.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-blotter-tall-button-bezel-active-centre.png"; sourceTree = "<group>"; };
+		2850CB0B1528646400DEEA82 /* about-blotter-tall-button-bezel-active-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-blotter-tall-button-bezel-active-left.png"; sourceTree = "<group>"; };
+		2850CB0C1528646400DEEA82 /* about-blotter-tall-button-bezel-active-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-blotter-tall-button-bezel-active-right.png"; sourceTree = "<group>"; };
+		2850CB0D1528646400DEEA82 /* about-blotter-tall-button-bezel-centre.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-blotter-tall-button-bezel-centre.png"; sourceTree = "<group>"; };
+		2850CB0E1528646400DEEA82 /* about-blotter-tall-button-bezel-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-blotter-tall-button-bezel-left.png"; sourceTree = "<group>"; };
+		2850CB0F1528646400DEEA82 /* about-blotter-tall-button-bezel-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-blotter-tall-button-bezel-right.png"; sourceTree = "<group>"; };
+		2850CB161528646F00DEEA82 /* WLPreferencesButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLPreferencesButtonCell.h; sourceTree = "<group>"; };
+		2850CB171528646F00DEEA82 /* WLPreferencesButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLPreferencesButtonCell.m; sourceTree = "<group>"; };
+		2850CB1915287D7500DEEA82 /* about-blotter-button-bezel-active-centre.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-blotter-button-bezel-active-centre.png"; sourceTree = "<group>"; };
+		2850CB1A15287D7500DEEA82 /* about-blotter-button-bezel-active-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-blotter-button-bezel-active-left.png"; sourceTree = "<group>"; };
+		2850CB1B15287D7500DEEA82 /* about-blotter-button-bezel-active-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-blotter-button-bezel-active-right.png"; sourceTree = "<group>"; };
+		2850CB1C15287D7500DEEA82 /* about-blotter-button-bezel-centre.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-blotter-button-bezel-centre.png"; sourceTree = "<group>"; };
+		2850CB1D15287D7500DEEA82 /* about-blotter-button-bezel-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-blotter-button-bezel-left.png"; sourceTree = "<group>"; };
+		2850CB1E15287D7500DEEA82 /* about-blotter-button-bezel-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-blotter-button-bezel-right.png"; sourceTree = "<group>"; };
 		28B54D5C12839B8D0037BF53 /* GeneralPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralPrefController.h; sourceTree = "<group>"; };
 		28B54D5D12839B8D0037BF53 /* GeneralPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralPrefController.m; sourceTree = "<group>"; wrapsLines = 1; };
 		28B54D781283AEEE0037BF53 /* PositionPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PositionPrefController.h; sourceTree = "<group>"; };
@@ -312,6 +339,18 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2850CB1915287D7500DEEA82 /* about-blotter-button-bezel-active-centre.png */,
+				2850CB1A15287D7500DEEA82 /* about-blotter-button-bezel-active-left.png */,
+				2850CB1B15287D7500DEEA82 /* about-blotter-button-bezel-active-right.png */,
+				2850CB1C15287D7500DEEA82 /* about-blotter-button-bezel-centre.png */,
+				2850CB1D15287D7500DEEA82 /* about-blotter-button-bezel-left.png */,
+				2850CB1E15287D7500DEEA82 /* about-blotter-button-bezel-right.png */,
+				2850CB0A1528646400DEEA82 /* about-blotter-tall-button-bezel-active-centre.png */,
+				2850CB0B1528646400DEEA82 /* about-blotter-tall-button-bezel-active-left.png */,
+				2850CB0C1528646400DEEA82 /* about-blotter-tall-button-bezel-active-right.png */,
+				2850CB0D1528646400DEEA82 /* about-blotter-tall-button-bezel-centre.png */,
+				2850CB0E1528646400DEEA82 /* about-blotter-tall-button-bezel-left.png */,
+				2850CB0F1528646400DEEA82 /* about-blotter-tall-button-bezel-right.png */,
 				2850CB081528642E00DEEA82 /* Blotter-toolbar-icon.png */,
 				E275221D151871C90050836A /* about-blotter-banner-overlay.png */,
 				E275221E151871C90050836A /* about-blotter-bg.png */,
@@ -371,6 +410,8 @@
 				28CB5084145DB3E200810395 /* WLBlockLayoutManager.m */,
 				E2A18CB5146D7560004B727B /* WLNinePartBlockLayer.h */,
 				E2A18CB6146D7560004B727B /* WLNinePartBlockLayer.m */,
+				2850CB161528646F00DEEA82 /* WLPreferencesButtonCell.h */,
+				2850CB171528646F00DEEA82 /* WLPreferencesButtonCell.m */,
 				28CB5087145E22B900810395 /* NSCursor+ResizeAdditions.h */,
 				28CB5088145E22B900810395 /* NSCursor+ResizeAdditions.m */,
 				E26CCA92146DABA0002F2CC2 /* NSColor+WLPrefColors.h */,
@@ -616,6 +657,18 @@
 				E2752227151871C90050836A /* about-blotter-rate-bezel.png in Resources */,
 				E2752228151871C90050836A /* about-blotter-twitter-icon.png in Resources */,
 				2850CB091528642E00DEEA82 /* Blotter-toolbar-icon.png in Resources */,
+				2850CB101528646400DEEA82 /* about-blotter-tall-button-bezel-active-centre.png in Resources */,
+				2850CB111528646400DEEA82 /* about-blotter-tall-button-bezel-active-left.png in Resources */,
+				2850CB121528646400DEEA82 /* about-blotter-tall-button-bezel-active-right.png in Resources */,
+				2850CB131528646400DEEA82 /* about-blotter-tall-button-bezel-centre.png in Resources */,
+				2850CB141528646400DEEA82 /* about-blotter-tall-button-bezel-left.png in Resources */,
+				2850CB151528646400DEEA82 /* about-blotter-tall-button-bezel-right.png in Resources */,
+				2850CB1F15287D7500DEEA82 /* about-blotter-button-bezel-active-centre.png in Resources */,
+				2850CB2015287D7500DEEA82 /* about-blotter-button-bezel-active-left.png in Resources */,
+				2850CB2115287D7500DEEA82 /* about-blotter-button-bezel-active-right.png in Resources */,
+				2850CB2215287D7500DEEA82 /* about-blotter-button-bezel-centre.png in Resources */,
+				2850CB2315287D7500DEEA82 /* about-blotter-button-bezel-left.png in Resources */,
+				2850CB2415287D7500DEEA82 /* about-blotter-button-bezel-right.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,6 +705,7 @@
 				E26CCA98146DB2AA002F2CC2 /* WLLayoutView.m in Sources */,
 				E27C5E21146FEFA400B809F6 /* WLPositioningPaneView.m in Sources */,
 				E275221A1518649F0050836A /* AboutPrefController.m in Sources */,
+				2850CB181528646F00DEEA82 /* WLPreferencesButtonCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

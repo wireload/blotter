@@ -17,6 +17,7 @@
 {
     IBOutlet WLPrefPaneView *_mainView;
     IBOutlet NSTextField *_versionView;
+    IBOutlet NSTextField *_copyrightView;
 }
 
 - (IBAction)showHelp:(id)aSender;

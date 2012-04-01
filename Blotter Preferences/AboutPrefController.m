@@ -55,6 +55,7 @@
             _mainView.preferredFrameSize = [_mainView frame].size;
 
             [_versionView setStringValue:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+            [[_copyrightView cell] setBackgroundStyle:NSBackgroundStyleRaised];
         }
         else
             NSLog(@"Cannot load AboutPrefPaneView");
