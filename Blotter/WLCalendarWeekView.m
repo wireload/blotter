@@ -1396,7 +1396,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 
         [c setImageInterpolation:NSImageInterpolationHigh];
         
-        WLDrawScaledNinePartImage(aLayer.bounds, 
+        WLDrawScaledNinePartImage(NSRectFromCGRect(aLayer.bounds),
                                   [NSImage imageNamed:@"all-day-top-left"], 
                                   [NSImage imageNamed:@"all-day-top-middle"], 
                                   [NSImage imageNamed:@"all-day-top-right"], 
