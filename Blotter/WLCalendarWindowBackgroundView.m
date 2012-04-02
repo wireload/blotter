@@ -15,6 +15,8 @@ static const CGFloat WLCalendarBackgroundShadowTop = 6.0f;
 static const CGFloat WLCalendarBackgroundShadowRight = 9.0f;
 static const CGFloat WLCalendarBackgroundShadowBottom = 12.0f;
 static const CGFloat WLCalendarBackgroundShadowLeft = 9.0f;
+static const CGFloat WLCalendarBackgroundActiveBlur = 4.0;
+static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
 
 #pragma mark Methods
 
@@ -44,6 +46,64 @@ static const CGFloat WLCalendarBackgroundShadowLeft = 9.0f;
     return frameRect;
 }
 
+- (CGImageRef)createCGImageOfScreenBelowWindow:(NSWindow *)aWindow
+{
+    // To properly map screen coordinates (meaning that 0,0 point is lower left corner of the screen with main menu)
+    // we need to calculate _minimal_ offset to the left border (always <= 0, cause left-side windows (relative to the screen with main menu) always have negative x)
+    // and _maximal_ offset to the top border (always > 0, cause it cannot be less than height of the screen with main menu)
+    CGFloat mapX = 0, mapY = 0;
+    for (NSScreen *screen in [NSScreen screens]) {
+        mapX = MIN([screen frame].origin.x, mapX);
+        mapY = MAX(NSMaxY([screen frame]), mapY);
+    }
+    assert(mapX <= 0);
+    assert(mapY > 0);
+    
+    CGWindowID windowId = [aWindow windowNumber];
+    CGImageRef desktopImage = CGWindowListCreateImage(CGRectInfinite, kCGWindowListOptionOnScreenBelowWindow, windowId, kCGWindowImageDefault);
+    
+    // Get window frame in screen coordinates
+    CGRect screenWindowFrame = NSRectToCGRect([aWindow frame]);
+    //DLOG(@"Window frame in screen coordinates: %@", NSStringFromRect(screenWindowFrame));
+    
+    // Get window frame in desktop image coordinates
+    CGRect imageWindowFrame = CGRectMake(screenWindowFrame.origin.x - mapX,
+                                         -screenWindowFrame.origin.y + mapY - screenWindowFrame.size.height,
+                                         screenWindowFrame.size.width,
+                                         screenWindowFrame.size.height);
+    // DLOG(@"Window frame in desktop image coordinates: %@", NSStringFromRect(imageWindowFrame));
+    CGImageRef screenBelowWindowImage = CGImageCreateWithImageInRect(desktopImage, imageWindowFrame);
+    CFRelease(desktopImage);
+    
+    return screenBelowWindowImage;
+}
+
+- (CIImage *)blurredBackgroundImage
+{  
+    CGImageRef backgroundImage = [self createCGImageOfScreenBelowWindow:[self window]];
+    CIImage *ciImage = [CIImage imageWithCGImage:backgroundImage];
+
+    // Flip image upside down.
+    NSAffineTransform *affineTransform = [NSAffineTransform transform];
+    [affineTransform translateXBy:0 yBy:[ciImage extent].size.height];
+    [affineTransform scaleXBy:1.0 yBy:-1.0];
+    
+    CIFilter *transform = [CIFilter filterWithName:@"CIAffineTransform"];
+    [transform setValue:ciImage forKey:@"inputImage"];
+    [transform setValue:affineTransform forKey:@"inputTransform"];
+
+    CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
+    [filter setDefaults];
+    [filter setValue:[transform valueForKey:@"outputImage"] forKey:@"inputImage"];
+    [filter setValue:[NSNumber numberWithFloat:WLCalendarBackgroundActiveBlur] forKey:@"inputRadius"];
+
+    CIImage *result = [filter valueForKey:@"outputImage"];
+
+    CFRelease(backgroundImage);
+    
+    return result;
+}
+
 #pragma mark NSView
 
 - (void)drawRect:(NSRect)aDirtyRect
@@ -51,8 +111,27 @@ static const CGFloat WLCalendarBackgroundShadowLeft = 9.0f;
     [NSGraphicsContext saveGraphicsState];
     [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
 #ifndef DEBUG_LAYERS
+    NSRect innerArea = [[self class] glassRectForBounds:[self bounds]];
+    NSBezierPath *innerPath = [NSBezierPath bezierPathWithRoundedRect:innerArea xRadius:5 yRadius:5];
+
     if ([[self window] level] >= NSFloatingWindowLevel)
     {
+        [NSGraphicsContext saveGraphicsState];
+        [innerPath setClip];
+        CIImage *blurredBackgroundImage = [self blurredBackgroundImage];
+        CGRect blurredRect = [blurredBackgroundImage extent];
+        
+        [blurredBackgroundImage drawAtPoint:NSMakePoint(blurredRect.origin.x, blurredRect.origin.y)
+                                   fromRect:NSRectFromCGRect(blurredRect)
+                                  operation:NSCompositeSourceOver
+                                   fraction:1.0];
+        
+        // Slightly darken the background with a blueish tint.
+        [[NSColor colorWithSRGBRed:21.0 / 255.0 green:44.0 / 255.0 blue:73.0 / 255.0 alpha:WLCalendarBackgroundActiveDarkness] set];
+        [innerPath fill];
+               
+        [NSGraphicsContext restoreGraphicsState];
+        
         WLDrawScaledNinePartImage([self bounds],
                                   [NSImage imageNamed:@"calendar-background-active-top-left"],
                                   [NSImage imageNamed:@"calendar-background-active-top-middle"],
@@ -85,8 +164,7 @@ static const CGFloat WLCalendarBackgroundShadowLeft = 9.0f;
     }
 
     NSImage *noiseImage = [NSImage imageNamed:@"noise"];
-    NSRect innerArea = [[self class] glassRectForBounds:[self bounds]];
-    [[NSBezierPath bezierPathWithRoundedRect:innerArea xRadius:5 yRadius:5] setClip];
+    [innerPath setClip];
     
     NSDrawNinePartImage(innerArea, nil, nil, nil, nil, noiseImage, nil, nil, nil, nil, NSCompositeSourceOver, 0.03, NO);
 
