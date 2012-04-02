@@ -69,20 +69,14 @@
 
 - (NSRect)frameRectForContentRect:(NSRect)aWindowContentRect
 {
-	return NSInsetRect(aWindowContentRect,
-                       -[WLCalendarWindowBackgroundView borderWidth],
-                       -[WLCalendarWindowBackgroundView borderWidth]);
+    return [WLCalendarWindowBackgroundView frameRectForContentRect:aWindowContentRect];
 }
 
 - (NSRect)contentRectForFrameRect:(NSRect)aWindowFrame
 {
-    NSRect contentRect = NSMakeRect(0.0f,
-                                    0.0f,
-                                    aWindowFrame.size.width,
-                                    aWindowFrame.size.height);
-	return NSInsetRect(contentRect,
-                       [WLCalendarWindowBackgroundView borderWidth],
-                       [WLCalendarWindowBackgroundView borderWidth]);
+    aWindowFrame.origin.x = 0;
+    aWindowFrame.origin.y = 0;
+    return [WLCalendarWindowBackgroundView contentRectForFrameRect:aWindowFrame];
 }
 
 - (BOOL)canBecomeKeyWindow

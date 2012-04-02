@@ -11,11 +11,37 @@
 
 @implementation WLCalendarWindowBackgroundView
 
+static const CGFloat WLCalendarBackgroundShadowTop = 6.0f;
+static const CGFloat WLCalendarBackgroundShadowRight = 9.0f;
+static const CGFloat WLCalendarBackgroundShadowBottom = 12.0f;
+static const CGFloat WLCalendarBackgroundShadowLeft = 9.0f;
+
 #pragma mark Methods
 
-+ (CGFloat)borderWidth
++ (NSRect)glassRectForBounds:(NSRect)bounds
 {
-    return 20.0f;
+    NSRect glassRect = bounds;
+    glassRect.origin.x += WLCalendarBackgroundShadowLeft + 3.0;
+    glassRect.origin.y += WLCalendarBackgroundShadowTop + 3.0;
+    glassRect.size.width -= WLCalendarBackgroundShadowLeft + 3.0 + WLCalendarBackgroundShadowRight + 3.0;
+    glassRect.size.height -= WLCalendarBackgroundShadowTop + 3.0 + WLCalendarBackgroundShadowBottom + 3.0;    
+    return glassRect;
+}
+
++ (NSRect)contentRectForFrameRect:(NSRect)aFrame
+{
+    NSRect contentRect = [self glassRectForBounds:aFrame];
+    return NSInsetRect(contentRect, 17.0, 17.0);
+}
+
++ (NSRect)frameRectForContentRect:(NSRect)aContentRect
+{
+    NSRect frameRect = NSInsetRect(aContentRect, -17.0, -17.0);
+    frameRect.origin.x -= WLCalendarBackgroundShadowLeft + 3.0;
+    frameRect.origin.y -= WLCalendarBackgroundShadowTop + 3.0;
+    frameRect.size.width += WLCalendarBackgroundShadowLeft + 3.0 + WLCalendarBackgroundShadowRight + 3.0;
+    frameRect.size.height += WLCalendarBackgroundShadowTop + 3.0 + WLCalendarBackgroundShadowBottom + 3.0;    
+    return frameRect;
 }
 
 #pragma mark NSView
@@ -40,7 +66,7 @@
                             YES);
 
     NSImage *noiseImage = [NSImage imageNamed:@"noise"];
-    NSRect innerArea = NSInsetRect([self bounds], 3.0, 3.0);
+    NSRect innerArea = [[self class] glassRectForBounds:[self bounds]];
     [[NSBezierPath bezierPathWithRoundedRect:innerArea xRadius:5 yRadius:5] setClip];
     
     NSDrawNinePartImage(innerArea, nil, nil, nil, nil, noiseImage, nil, nil, nil, nil, NSCompositeSourceOver, 0.03, NO);

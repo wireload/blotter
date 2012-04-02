@@ -17,6 +17,7 @@
  */
 @interface WLCalendarWindowBackgroundView : NSView
 
-+ (CGFloat)borderWidth;
++ (NSRect)contentRectForFrameRect:(NSRect)aFrame;
++ (NSRect)frameRectForContentRect:(NSRect)aContentRect;
 
 @end
