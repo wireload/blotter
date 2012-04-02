@@ -27,6 +27,21 @@
 
 @implementation WLCalendarWindow
 
+@synthesize state;
+
+static const CGFloat fadeDuration = 0.1;
+
+- (int)finderLevel
+{
+    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
+        return kCGDesktopWindowLevel;
+    else
+    {
+        // On Lion window level of desktop elements is kCGDesktopWindowLevel + 21.
+        return kCGDesktopWindowLevel + 15;
+    }   
+}
+
 - (id)init
 {
     self = [self initWithContentRect:NSZeroRect
@@ -40,18 +55,14 @@
         [self setHasShadow:NO];
         [self setBackgroundColor:[NSColor clearColor]];
         [self setIgnoresMouseEvents:YES];
-        if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-            [self setLevel:kCGDesktopWindowLevel];
-        else
-        {
-            // On Lion window level of desktop elements is kCGDesktopWindowLevel + 21.
-            [self setLevel:kCGDesktopWindowLevel + 15];
-        }
+        [self setLevel:[self finderLevel]];
         [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
         [self setCanHide:NO];
         [self setDisplaysWhenScreenProfileChanges:YES];
         [self useOptimizedDrawing:YES];
         [self setContentView:[[[_WLFlippedView alloc] init] autorelease]];
+        
+        state = WLFinderLevelState;
     }
     return self;
 }
@@ -116,10 +127,69 @@
     return _realContentView;
 }
 
-- (void)setLevel:(NSInteger)newLevel
+- (void)setFinderLevel
 {
-    [super setLevel:newLevel];
-    [[super contentView] setNeedsDisplay:YES];
+    NSView *frameView = [super contentView];
+    [self setLevel:[self finderLevel]];
+    [frameView display];
+    [self display];
+    state = WLFinderLevelState;    
+
+    [NSAnimationContext beginGrouping];
+    [[NSAnimationContext currentContext] setDuration:fadeDuration];
+    [[frameView animator] setAlphaValue:1.0];
+    [NSAnimationContext endGrouping];
+}
+
+- (void)setFloatingLevel
+{
+    NSView *frameView = [super contentView];
+    [self setLevel:NSFloatingWindowLevel];
+    [frameView display];
+    [self display];
+    state = WLFloatingLevelState;   
+
+    [NSAnimationContext beginGrouping];
+    [[NSAnimationContext currentContext] setDuration:fadeDuration];
+    [[frameView animator] setAlphaValue:1.0];
+    [NSAnimationContext endGrouping];
+}
+
+- (void)levelUp
+{
+    if (state != WLFloatingLevelState && state != WLLevelingUpState)
+    {
+        NSView *frameView = [super contentView];
+
+        state = WLLevelingUpState;
+        
+        [NSAnimationContext beginGrouping];
+        [[NSAnimationContext currentContext] setCompletionHandler:^{
+            if (state == WLLevelingUpState)
+                [self setFloatingLevel];
+        }];
+        [[NSAnimationContext currentContext] setDuration:fadeDuration];
+        [[frameView animator] setAlphaValue:0.0];
+        [NSAnimationContext endGrouping];
+    }
+}
+
+- (void)levelDown
+{
+    if (state != WLFinderLevelState && state != WLLevelingDownState)
+    {
+        NSView *frameView = [super contentView];
+        state = WLLevelingDownState;
+        
+        [NSAnimationContext beginGrouping];
+        [[NSAnimationContext currentContext] setCompletionHandler:^{
+            if (state == WLLevelingDownState)
+                [self setFinderLevel];
+        }];
+        [[NSAnimationContext currentContext] setDuration:fadeDuration];
+        [[frameView animator] setAlphaValue:0.0];
+        [NSAnimationContext endGrouping];
+    }    
 }
 
 @end

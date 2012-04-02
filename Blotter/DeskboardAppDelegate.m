@@ -300,12 +300,12 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 {
     [[calendarWindowController fadeController] fadeIn];
     _calendarWindowLevelBeforeMenuWasShown = [self.calendarWindowController.window level];
-    [self.calendarWindowController.window setLevel:NSFloatingWindowLevel];
+    [self.calendarWindowController.window levelUp];
 }
 
 - (void)menuDidClose:(NSMenu *)aMenu
 {
-    [self.calendarWindowController.window setLevel:_calendarWindowLevelBeforeMenuWasShown];
+    [self.calendarWindowController.window levelDown];
     [self autohideCalendarWindowIfAllConditionsAreMet];
 }
 

@@ -8,6 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 
+typedef enum
+{
+    WLFinderLevelState,
+    WLLevelingUpState,
+    WLFloatingLevelState,
+    WLLevelingDownState
+} WLCalendarWindowState;
 
 /*!
  @abstract      Borderless window that draws custom background.
@@ -18,8 +25,15 @@
  */
 @interface WLCalendarWindow : NSWindow {
     NSView *_realContentView;
+    
+    WLCalendarWindowState state;
 }
 
+@property (nonatomic) WLCalendarWindowState state;
+
 - (NSView *)realContentView;
+
+- (void)levelUp;
+- (void)levelDown;
 
 @end
