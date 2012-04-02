@@ -25,9 +25,9 @@
 	<key>InfoViewsWidth</key>
 	<real>250</real>
 	<key>PerDayDate</key>
-	<false/>
+	<true/>
 	<key>MinimumWeekViewWidth</key>
-	<real>460</real>
+	<integer>460</integer>
 	<key>ShowPreferencesAtStartUp</key>
 	<true/>
 	<key>MinimumWeekViewHeight</key>
