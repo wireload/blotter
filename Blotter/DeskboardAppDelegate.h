@@ -26,6 +26,7 @@
     IBOutlet NSMenuItem *preferencesMenuItem;
     SS_PrefsController *_preferencesController;
     NSTimer *_showCurrentWeekTimer;
+    NSInteger _calendarWindowLevelBeforeMenuWasShown;
 }
 
 @property (readonly) WLCalendarWindowController *calendarWindowController;
