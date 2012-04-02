@@ -51,19 +51,38 @@ static const CGFloat WLCalendarBackgroundShadowLeft = 9.0f;
     [NSGraphicsContext saveGraphicsState];
     [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
 #ifndef DEBUG_LAYERS
-    WLDrawScaledNinePartImage([self bounds],
-                            [NSImage imageNamed:@"calendar-background-top-left"],
-                            [NSImage imageNamed:@"calendar-background-top-middle"],
-                            [NSImage imageNamed:@"calendar-background-top-right"],
-                            [NSImage imageNamed:@"calendar-background-middle-left"],
-                            [NSImage imageNamed:@"calendar-background-middle-middle"],
-                            [NSImage imageNamed:@"calendar-background-middle-right"],
-                            [NSImage imageNamed:@"calendar-background-bottom-left"],
-                            [NSImage imageNamed:@"calendar-background-bottom-middle"],
-                            [NSImage imageNamed:@"calendar-background-bottom-right"],
-                            NSCompositeSourceOver,
-                            1.0f,
-                            YES);
+    if ([[self window] level] >= NSFloatingWindowLevel)
+    {
+        WLDrawScaledNinePartImage([self bounds],
+                                  [NSImage imageNamed:@"calendar-background-active-top-left"],
+                                  [NSImage imageNamed:@"calendar-background-active-top-middle"],
+                                  [NSImage imageNamed:@"calendar-background-active-top-right"],
+                                  [NSImage imageNamed:@"calendar-background-active-middle-left"],
+                                  [NSImage imageNamed:@"calendar-background-active-middle-middle"],
+                                  [NSImage imageNamed:@"calendar-background-active-middle-right"],
+                                  [NSImage imageNamed:@"calendar-background-active-bottom-left"],
+                                  [NSImage imageNamed:@"calendar-background-active-bottom-middle"],
+                                  [NSImage imageNamed:@"calendar-background-active-bottom-right"],
+                                  NSCompositeSourceOver,
+                                  1.0f,
+                                  YES);
+    }
+    else 
+    {
+        WLDrawScaledNinePartImage([self bounds],
+                                  [NSImage imageNamed:@"calendar-background-top-left"],
+                                  [NSImage imageNamed:@"calendar-background-top-middle"],
+                                  [NSImage imageNamed:@"calendar-background-top-right"],
+                                  [NSImage imageNamed:@"calendar-background-middle-left"],
+                                  [NSImage imageNamed:@"calendar-background-middle-middle"],
+                                  [NSImage imageNamed:@"calendar-background-middle-right"],
+                                  [NSImage imageNamed:@"calendar-background-bottom-left"],
+                                  [NSImage imageNamed:@"calendar-background-bottom-middle"],
+                                  [NSImage imageNamed:@"calendar-background-bottom-right"],
+                                  NSCompositeSourceOver,
+                                  1.0f,
+                                  YES);
+    }
 
     NSImage *noiseImage = [NSImage imageNamed:@"noise"];
     NSRect innerArea = [[self class] glassRectForBounds:[self bounds]];

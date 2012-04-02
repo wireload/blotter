@@ -116,4 +116,10 @@
     return _realContentView;
 }
 
+- (void)setLevel:(NSInteger)newLevel
+{
+    [super setLevel:newLevel];
+    [[super contentView] setNeedsDisplay:YES];
+}
+
 @end
