@@ -443,13 +443,15 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 {
     [self.calendarWindowController.fadeController fadeIn];
 
-    if ([self isOnlyCalendarWindowVisible])
+    if ([self isOnlyCalendarWindowVisible] && calendarWindowController.window.state == WLFinderLevelState)
         [NSApp hide:self];
 }
 
 - (void)applicationDidResignActive:(NSNotification *)aNotification
 {
     [self autohideCalendarWindowIfAllConditionsAreMet];
+    if (calendarWindowController.window.state != WLFinderLevelState)
+        [calendarWindowController.window levelDown];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)anApplication hasVisibleWindows:(BOOL)aFlag
