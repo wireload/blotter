@@ -58,6 +58,9 @@ def Xibs():
             {'output': prefsResources,
              'file': join(prefsResources, "English.lproj", "LayoutPrefPaneView.xib"),
              'old': join(prefsResources, "English.lproj", "LayoutPrefPaneView.old.xib")},
+            {'output': prefsResources,
+             'file': join(prefsResources, "English.lproj", "AboutPrefPaneView.xib"),
+             'old': join(prefsResources, "English.lproj", "AboutPrefPaneView.old.xib")},
             ]
     return xibs
 
