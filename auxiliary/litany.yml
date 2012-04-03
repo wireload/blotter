@@ -49,6 +49,7 @@ strings:
   -
     id:       'other'
     path:     "Blotter/Resources/%(lang)s.lproj/Localizable.strings"
+    skip:     ['About', 'Calendars', 'General', 'Layout', 'Positioning']
   -
     id:       'store description'
     path:     "Blotter/Resources/%(lang)s.lproj/Meta.strings"

@@ -76,6 +76,7 @@ def Sources():
                 'files': [join(BLOTTER_DIR, "WLCalendarWindowController.m"),
                           join(BLOTTER_DIR, "WLNewEventWindowController.m"),
                           join(BLOTTER_DIR, "WLNewTaskWindowController.m"),
+                          join(BLOTTER_DIR, "DeskboardAppDelegate.m"),
                           join(BLOTTER_DIR, "WLCalendarTasksView.m")]},
                {'output': join(BLOTTER_PREFS_DIR, "Resources"),
                 'files': [join(BLOTTER_PREFS_DIR, "GeneralPrefController.m"),
