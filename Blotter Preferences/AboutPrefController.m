@@ -7,6 +7,10 @@
 //
 
 #import "AboutPrefController.h"
+#import "WLCustomCursorButton.h"
+
+
+static NSString* const _WLCursorKey = @"cursor";
 
 
 @implementation AboutPrefController
@@ -56,6 +60,9 @@
 
             [_versionView setStringValue:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
             [[_copyrightView cell] setBackgroundStyle:NSBackgroundStyleRaised];
+
+            _bannerButton.cursor = [NSCursor pointingHandCursor];
+            _wireloadButton.cursor = [NSCursor pointingHandCursor];
         }
         else
             NSLog(@"Cannot load AboutPrefPaneView");
