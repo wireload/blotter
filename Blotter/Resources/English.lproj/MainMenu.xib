@@ -59,7 +59,7 @@
 							<string key="NSTitle">Blotter</string>
 							<object class="NSMutableArray" key="NSMenuItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSMenuItem" id="893699668">
+								<object class="NSMenuItem" id="168685719">
 									<reference key="NSMenu" ref="110575045"/>
 									<string key="NSTitle">Bring to Front</string>
 									<string key="NSKeyEquiv"/>
@@ -129,7 +129,7 @@
 									<reference key="NSOnImage" ref="35465992"/>
 									<reference key="NSMixedImage" ref="502551668"/>
 								</object>
-								<object class="NSMenuItem" id="434762348">
+								<object class="NSMenuItem" id="950530892">
 									<reference key="NSMenu" ref="110575045"/>
 									<bool key="NSIsDisabled">YES</bool>
 									<bool key="NSIsSeparator">YES</bool>
@@ -150,7 +150,7 @@
 								</object>
 								<object class="NSMenuItem" id="770530803">
 									<reference key="NSMenu" ref="110575045"/>
-									<string key="NSTitle">Rate this app...</string>
+									<string key="NSTitle">Rate This App...</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="35465992"/>
@@ -357,7 +357,7 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">bringToFront:</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="893699668"/>
+						<reference key="destination" ref="168685719"/>
 					</object>
 					<int key="connectionID">578</int>
 				</object>
@@ -365,7 +365,7 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">bringToFrontMenuItem</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="893699668"/>
+						<reference key="destination" ref="168685719"/>
 					</object>
 					<int key="connectionID">579</int>
 				</object>
@@ -462,9 +462,9 @@
 							<reference ref="483685443"/>
 							<reference ref="770530803"/>
 							<reference ref="715894517"/>
-							<reference ref="893699668"/>
+							<reference ref="168685719"/>
 							<reference ref="584148628"/>
-							<reference ref="434762348"/>
+							<reference ref="950530892"/>
 						</object>
 						<reference key="parent" ref="694149608"/>
 					</object>
@@ -540,12 +540,12 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">575</int>
-						<reference key="object" ref="893699668"/>
+						<reference key="object" ref="168685719"/>
 						<reference key="parent" ref="110575045"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">577</int>
-						<reference key="object" ref="434762348"/>
+						<reference key="object" ref="950530892"/>
 						<reference key="parent" ref="110575045"/>
 					</object>
 				</object>
