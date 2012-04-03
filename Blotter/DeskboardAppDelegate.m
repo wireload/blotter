@@ -15,6 +15,7 @@
 #import "PTHotKey+ShortcutRecorder.h"
 #import "WLCalendarWindow.h"
 #import "WLCalendarWindowController.h"
+#import "WLApplicationRunTimer.h"
 
 
 extern NSString* const SRShortcutCodeKey;
@@ -55,8 +56,12 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     [userDefaults removeObserver:self forKeyPath:@"shortcutShowNextWeek"];
     [userDefaults removeObserver:self forKeyPath:@"shortcutShowPreviousWeek"];
     [userDefaults removeObserver:self forKeyPath:@"shortcutShowCurrentWeek"];
+    if (_applicationRunTimer != nil)
+        [[WLCalendarController sharedController] removeObserver:self forKeyPath:@"date"];
     [_preferencesController release];
     [_showCurrentWeekTimer invalidate];
+    [_applicationRunTimer release];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
 
@@ -178,6 +183,12 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     }
     else
         NSBeep();
+}
+
+- (IBAction)showRateThisApp:(id)aSender
+{
+    [[NSUserDefaults standardUserDefaults] WL_setShowRateThisAppInMenu:NO];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"macappstore://itunes.apple.com/app/id406580224?mt=12"]];
 }
 
 - (BOOL)isOnlyCalendarWindowVisible
@@ -358,6 +369,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     [userDefaults addObserver:self forKeyPath:@"shortcutShowPreviousWeek" options:NSKeyValueObservingOptionNew context:NULL];
     [userDefaults addObserver:self forKeyPath:@"shortcutShowCurrentWeek" options:NSKeyValueObservingOptionNew context:NULL];
 
+    // Configure windows.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillClose:) name:NSWindowWillCloseNotification object:nil];
 
     calendarWindowController = [[WLCalendarWindowController alloc] init];
@@ -371,6 +383,20 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     }
 
     [self autohideCalendarWindowIfAllConditionsAreMet];
+
+    // Configure application run timer.
+    if (![userDefaults WL_applicationRunTimerIsFired])
+    {
+        _applicationRunTimer = [[WLApplicationRunTimer alloc] initWithDelayDefaultsKey:WLApplicationRunTimerDelayKey
+                                                                    isFiredDefaultsKey:WLApplicationRunTimerIsFiredKey
+                                                             elapsedSecondsDefaultsKey:WLApplicationRunTimerElapsedSecondsKey];
+        // Bind tick to changes of WLCalendarController's date. So we can avoid using additional timer.
+        [[WLCalendarController sharedController] addObserver:self
+                                                  forKeyPath:@"date"
+                                                     options:NSKeyValueObservingOptionNew
+                                                     context:NULL];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_applicationRunTimerDidFire:) name:WLApplicationRunTimerDidFireNotification object:_applicationRunTimer];
+    }
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)aNotification
@@ -402,7 +428,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     _statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength] retain];;
     [_statusItem setHighlightMode:YES];
     [_statusItem setMenu:_statusMenu];
-    
+
     NSImage *statusImage = [NSImage imageNamed:@"blotter-status-bar"];
     NSImage *statusHighlightImage = [NSImage imageNamed:@"blotter-status-bar-active"];
     [_statusItem setImage:statusImage];
@@ -444,6 +470,11 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 {
     _showCurrentWeekTimer = nil;
     [self showCurrentWeek:self];
+}
+
+- (void)_applicationRunTimerDidFire:(NSNotification *)aNotification
+{
+    [[NSUserDefaults standardUserDefaults] WL_setShowRateThisAppInMenu:YES];
 }
 
 
@@ -489,6 +520,10 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
             [hotKeyCenter registerHotKey:newHotKey];
         }
     }
+    else if ([aKeyPath isEqualToString:@"date"])
+        [_applicationRunTimer tick];
+    else
+        [super observeValueForKeyPath:aKeyPath ofObject:aObject change:aChange context:aContext];
 }
 
 @end

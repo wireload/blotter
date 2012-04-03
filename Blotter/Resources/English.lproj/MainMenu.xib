@@ -12,6 +12,7 @@
 		</object>
 		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<string>NSUserDefaultsController</string>
 			<string>NSMenu</string>
 			<string>NSMenuItem</string>
 			<string>NSCustomObject</string>
@@ -175,6 +176,9 @@
 			<object class="NSCustomObject" id="976324537">
 				<string key="NSClassName">DeskboardAppDelegate</string>
 			</object>
+			<object class="NSUserDefaultsController" id="615851665">
+				<bool key="NSSharedInstance">YES</bool>
+			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<object class="NSMutableArray" key="connectionRecords">
@@ -325,11 +329,40 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">showAbout:</string>
+						<string key="label">showRateThisApp:</string>
 						<reference key="source" ref="976324537"/>
 						<reference key="destination" ref="770530803"/>
 					</object>
-					<int key="connectionID">568</int>
+					<int key="connectionID">574</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">hidden: values.ShowRateThisAppInMenu</string>
+						<reference key="source" ref="770530803"/>
+						<reference key="destination" ref="615851665"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="770530803"/>
+							<reference key="NSDestination" ref="615851665"/>
+							<string key="NSLabel">hidden: values.ShowRateThisAppInMenu</string>
+							<string key="NSBinding">hidden</string>
+							<string key="NSKeyPath">values.ShowRateThisAppInMenu</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSNullPlaceholder</string>
+									<string>NSValueTransformerName</string>
+								</object>
+								<object class="NSArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<integer value="1"/>
+									<string>NSNegateBoolean</string>
+								</object>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">573</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -464,6 +497,11 @@
 						<reference key="object" ref="770530803"/>
 						<reference key="parent" ref="110575045"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">569</int>
+						<reference key="object" ref="615851665"/>
+						<reference key="parent" ref="0"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -488,10 +526,12 @@
 					<string>56.IBPluginDependency</string>
 					<string>560.IBPluginDependency</string>
 					<string>567.IBPluginDependency</string>
+					<string>569.IBPluginDependency</string>
 					<string>57.IBPluginDependency</string>
 				</object>
 				<object class="NSArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -525,7 +565,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">568</int>
+			<int key="maxID">574</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -544,9 +584,11 @@
 							<string>showNextWeek:</string>
 							<string>showPreferences:</string>
 							<string>showPreviousWeek:</string>
+							<string>showRateThisApp:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -567,6 +609,7 @@
 							<string>showNextWeek:</string>
 							<string>showPreferences:</string>
 							<string>showPreviousWeek:</string>
+							<string>showRateThisApp:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -596,6 +639,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">showPreviousWeek:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">showRateThisApp:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 						</object>

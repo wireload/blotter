@@ -12,6 +12,8 @@
 
 @class SS_PrefsController;
 
+@class WLApplicationRunTimer;
+
 
 @interface DeskboardAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate> {
     WLCalendarWindowController *calendarWindowController;
@@ -26,6 +28,7 @@
     IBOutlet NSMenuItem *preferencesMenuItem;
     SS_PrefsController *_preferencesController;
     NSTimer *_showCurrentWeekTimer;
+    WLApplicationRunTimer *_applicationRunTimer;
 }
 
 @property (readonly) WLCalendarWindowController *calendarWindowController;
@@ -43,6 +46,8 @@
 - (IBAction)showPreviousWeek:(id)aSender;
 
 - (IBAction)showCurrentWeek:(id)aSender;
+
+- (IBAction)showRateThisApp:(id)aSender;
 
 /*!
  @abstract Determines whether only calendar window is visible.
@@ -70,5 +75,7 @@
 - (BOOL)_isOnlyCalendarWindowVisible:(NSArray *)aVisibleWindows;
 
 - (void)_addStatusItem;
+
+- (void)_applicationRunTimerDidFire:(NSNotification *)aNotification;
 
 @end

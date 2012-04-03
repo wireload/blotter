@@ -54,5 +54,13 @@
 	<string>0</string>
 	<key>SlowAnimation</key>
 	<false/>
+	<key>ApplicationRunTimerDelay</key>
+	<integer>604800</integer>
+	<key>ShowRateThisAppInMenu</key>
+	<false/>
+	<key>ApplicationRunTimerElapsedSeconds</key>
+	<integer>0</integer>
+	<key>ApplicationRunTimerIsFired</key>
+	<false/>
 </dict>
 </plist>

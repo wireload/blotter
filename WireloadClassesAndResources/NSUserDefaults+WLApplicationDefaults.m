@@ -34,6 +34,14 @@ NSString* const WLAllowsAdvancedCalendarTypeCheck = @"AllowsAdvancedCalendarType
 
 NSString* const WLSlowAnimationKey = @"SlowAnimation";
 
+NSString* const WLApplicationRunTimerDelayKey = @"ApplicationRunTimerDelay";
+
+NSString* const WLApplicationRunTimerElapsedSecondsKey = @"ApplicationRunTimerElapsedSeconds";
+
+NSString* const WLApplicationRunTimerIsFiredKey = @"ApplicationRunTimerIsFired";
+
+NSString* const WLShowRateThisAppInMenuKey = @"ShowRateThisAppInMenu";
+
 NSComparator const WLCalendarsComparator = ^(id left, id right) {
     return [[left valueForKey:WLCalendarUIDKey] compare:[right valueForKey:WLCalendarUIDKey]];
 };
@@ -238,7 +246,54 @@ NSComparator const WLCalendarsComparator = ^(id left, id right) {
 
 - (BOOL)WL_slowsAnimation
 {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:WLSlowAnimationKey];
+    return [self boolForKey:WLSlowAnimationKey];
+}
+
+@end
+
+
+#pragma mark -
+
+@implementation NSUserDefaults (WLRateThisAppMenuItem)
+
+- (NSTimeInterval)WL_applicationRunTimerDelay
+{
+    return [self doubleForKey:WLApplicationRunTimerDelayKey];
+}
+
+- (void)WL_setApplicationRunTimerDelay:(NSTimeInterval)newDelay
+{
+    [self setDouble:newDelay forKey:WLApplicationRunTimerDelayKey];
+}
+
+- (NSTimeInterval)WL_applicationRunTimerElapsedSeconds
+{
+    return [self doubleForKey:WLApplicationRunTimerElapsedSecondsKey];
+}
+
+- (void)WL_setApplicationRunTimerElapsedSeconds:(NSTimeInterval)newElapsed
+{
+    [self setDouble:newElapsed forKey:WLApplicationRunTimerElapsedSecondsKey];
+}
+
+- (BOOL)WL_applicationRunTimerIsFired
+{
+    return [self boolForKey:WLApplicationRunTimerIsFiredKey];
+}
+
+- (void)WL_setApplicationRunTimerIsFired:(BOOL)newIsFired
+{
+    [self setBool:newIsFired forKey:WLApplicationRunTimerIsFiredKey];
+}
+
+- (BOOL)WL_showRateThisAppInMenu
+{
+    return [self boolForKey:WLShowRateThisAppInMenuKey];
+}
+
+- (void)WL_setShowRateThisAppInMenu:(BOOL)newShow
+{
+    [self setBool:newShow forKey:WLShowRateThisAppInMenuKey];
 }
 
 @end

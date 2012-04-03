@@ -35,6 +35,14 @@ extern NSString* const WLAllowsAdvancedCalendarTypeCheck;
 
 extern NSString* const WLSlowAnimationKey;
 
+extern NSString* const WLApplicationRunTimerDelayKey;
+
+extern NSString* const WLApplicationRunTimerElapsedSecondsKey;
+
+extern NSString* const WLApplicationRunTimerIsFiredKey;
+
+extern NSString* const WLShowRateThisAppInMenuKey;
+
 typedef void (^WLCalendarsUpdaterBlock)(NSMutableArray *aCalendars);
 
 extern NSComparator const WLCalendarsComparator;
@@ -110,5 +118,26 @@ extern NSComparator const WLCalendarsComparator;
 @interface NSUserDefaults (WLCalendarWindowController)
 
 - (BOOL)WL_slowsAnimation;
+
+@end
+
+
+@interface NSUserDefaults (WLRateThisAppMenuItem)
+
+- (NSTimeInterval)WL_applicationRunTimerDelay;
+
+- (void)WL_setApplicationRunTimerDelay:(NSTimeInterval)newDelay;
+
+- (NSTimeInterval)WL_applicationRunTimerElapsedSeconds;
+
+- (void)WL_setApplicationRunTimerElapsedSeconds:(NSTimeInterval)newElapsed;
+
+- (BOOL)WL_applicationRunTimerIsFired;
+
+- (void)WL_setApplicationRunTimerIsFired:(BOOL)newIsFired;
+
+- (BOOL)WL_showRateThisAppInMenu;
+
+- (void)WL_setShowRateThisAppInMenu:(BOOL)newShow;
 
 @end
