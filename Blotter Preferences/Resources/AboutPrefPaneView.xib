@@ -417,6 +417,22 @@ YnkgTWF0dCBHZW1tZWxsLg</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
+						<string key="label">_wireloadButton</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="1024217001"/>
+					</object>
+					<int key="connectionID">80</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_bannerButton</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="605025245"/>
+					</object>
+					<int key="connectionID">81</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
 						<string key="label">nextKeyView</string>
 						<reference key="source" ref="1005"/>
 						<reference key="destination" ref="686407934"/>
@@ -660,8 +676,10 @@ YnkgTWF0dCBHZW1tZWxsLg</string>
 				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="30.CustomClassName">WLPreferencesButtonCell</string>
 				<string key="30.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="47.CustomClassName">WLCustomCursorButton</string>
 				<string key="47.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="48.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="49.CustomClassName">WLCustomCursorButton</string>
 				<string key="49.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="50.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="53.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -674,7 +692,7 @@ YnkgTWF0dCBHZW1tZWxsLg</string>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">79</int>
+			<int key="maxID">81</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -716,11 +734,17 @@ YnkgTWF0dCBHZW1tZWxsLg</string>
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="_bannerButton">WLCustomCursorButton</string>
 						<string key="_copyrightView">NSTextField</string>
 						<string key="_mainView">WLPrefPaneView</string>
 						<string key="_versionView">NSTextField</string>
+						<string key="_wireloadButton">WLCustomCursorButton</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="_bannerButton">
+							<string key="name">_bannerButton</string>
+							<string key="candidateClassName">WLCustomCursorButton</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="_copyrightView">
 							<string key="name">_copyrightView</string>
 							<string key="candidateClassName">NSTextField</string>
@@ -733,10 +757,22 @@ YnkgTWF0dCBHZW1tZWxsLg</string>
 							<string key="name">_versionView</string>
 							<string key="candidateClassName">NSTextField</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="_wireloadButton">
+							<string key="name">_wireloadButton</string>
+							<string key="candidateClassName">WLCustomCursorButton</string>
+						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/AboutPrefController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">WLCustomCursorButton</string>
+					<string key="superclassName">NSButton</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/WLCustomCursorButton.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

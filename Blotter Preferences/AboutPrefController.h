@@ -12,12 +12,16 @@
 
 @class WLPrefPaneView;
 
+@class WLCustomCursorButton;
+
 
 @interface AboutPrefController : NSObject <SS_PreferencePaneProtocol>
 {
     IBOutlet WLPrefPaneView *_mainView;
     IBOutlet NSTextField *_versionView;
     IBOutlet NSTextField *_copyrightView;
+    IBOutlet WLCustomCursorButton *_bannerButton;
+    IBOutlet WLCustomCursorButton *_wireloadButton;
 }
 
 - (IBAction)showHelp:(id)aSender;

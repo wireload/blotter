@@ -79,6 +79,7 @@
 		E2A18CB7146D7560004B727B /* WLNinePartBlockLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A18CB6146D7560004B727B /* WLNinePartBlockLayer.m */; };
 		E2BADDC0134DF2FB00F65E14 /* exclamation.png in Resources */ = {isa = PBXBuildFile; fileRef = E2BADDBF134DF2FB00F65E14 /* exclamation.png */; };
 		E2DC7DDD130810F00065CEAD /* WLScreensController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2DC7DDC130810F00065CEAD /* WLScreensController.m */; };
+		E2E19FFF152ADFFF0059B2D3 /* WLCustomCursorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E19FFE152ADFFF0059B2D3 /* WLCustomCursorButton.m */; };
 		E2E8267814501BD8007035E5 /* chkbxBackground_10_6.png in Resources */ = {isa = PBXBuildFile; fileRef = E2E8267214501BD8007035E5 /* chkbxBackground_10_6.png */; };
 		E2E8267914501BD8007035E5 /* chkbxBackground_10_7.png in Resources */ = {isa = PBXBuildFile; fileRef = E2E8267314501BD8007035E5 /* chkbxBackground_10_7.png */; };
 		E2E8267A14501BD8007035E5 /* chkbxCheck_10_6.png in Resources */ = {isa = PBXBuildFile; fileRef = E2E8267414501BD8007035E5 /* chkbxCheck_10_6.png */; };
@@ -256,6 +257,8 @@
 		E2BADDBF134DF2FB00F65E14 /* exclamation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exclamation.png; sourceTree = "<group>"; };
 		E2DC7DDB130810F00065CEAD /* WLScreensController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLScreensController.h; sourceTree = "<group>"; };
 		E2DC7DDC130810F00065CEAD /* WLScreensController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLScreensController.m; sourceTree = "<group>"; };
+		E2E19FFD152ADFFF0059B2D3 /* WLCustomCursorButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCustomCursorButton.h; sourceTree = "<group>"; };
+		E2E19FFE152ADFFF0059B2D3 /* WLCustomCursorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCustomCursorButton.m; sourceTree = "<group>"; };
 		E2E8267214501BD8007035E5 /* chkbxBackground_10_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chkbxBackground_10_6.png; sourceTree = "<group>"; };
 		E2E8267314501BD8007035E5 /* chkbxBackground_10_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chkbxBackground_10_7.png; sourceTree = "<group>"; };
 		E2E8267414501BD8007035E5 /* chkbxCheck_10_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chkbxCheck_10_6.png; sourceTree = "<group>"; };
@@ -416,6 +419,8 @@
 				28CB5088145E22B900810395 /* NSCursor+ResizeAdditions.m */,
 				E26CCA92146DABA0002F2CC2 /* NSColor+WLPrefColors.h */,
 				E26CCA93146DABA0002F2CC2 /* NSColor+WLPrefColors.m */,
+				E2E19FFD152ADFFF0059B2D3 /* WLCustomCursorButton.h */,
+				E2E19FFE152ADFFF0059B2D3 /* WLCustomCursorButton.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -706,6 +711,7 @@
 				E27C5E21146FEFA400B809F6 /* WLPositioningPaneView.m in Sources */,
 				E275221A1518649F0050836A /* AboutPrefController.m in Sources */,
 				2850CB181528646F00DEEA82 /* WLPreferencesButtonCell.m in Sources */,
+				E2E19FFF152ADFFF0059B2D3 /* WLCustomCursorButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
