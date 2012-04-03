@@ -299,7 +299,6 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 - (void)menuWillOpen:(NSMenu *)aMenu
 {
     [[calendarWindowController fadeController] fadeIn];
-    _calendarWindowLevelBeforeMenuWasShown = [self.calendarWindowController.window level];
     [self.calendarWindowController.window levelUp];
 }
 
