@@ -58,6 +58,7 @@
     [self addTrackingArea:_cursorTrackingArea];
 }
 
+
 #pragma mark NSResponder
 
 - (void)cursorUpdate:(NSEvent *)anEvent
