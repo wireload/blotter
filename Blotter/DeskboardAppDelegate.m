@@ -56,6 +56,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     [userDefaults removeObserver:self forKeyPath:@"shortcutShowNextWeek"];
     [userDefaults removeObserver:self forKeyPath:@"shortcutShowPreviousWeek"];
     [userDefaults removeObserver:self forKeyPath:@"shortcutShowCurrentWeek"];
+    [userDefaults removeObserver:self forKeyPath:@"shortcutBringToFront"];
     if (_applicationRunTimer != nil)
         [[WLCalendarController sharedController] removeObserver:self forKeyPath:@"date"];
     [_preferencesController release];
@@ -71,6 +72,19 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 
 #pragma mark Methods
+
+- (IBAction)bringToFront:(id)sender {
+    WLCalendarWindow *calendarWindow = self.calendarWindowController.window;
+    if (calendarWindow.state == WLFinderLevelState)
+    {
+        [[calendarWindowController fadeController] fadeIn];
+        [calendarWindow levelUp];
+    }
+    else 
+    {
+        [calendarWindow levelDown];
+    }
+}
 
 - (IBAction)showPreferences:(id)aSender
 {
@@ -300,6 +314,27 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         }
         return [self.calendarWindowController canShowPreviousWeek];
     }
+    else if (aMenuItem == bringToFrontMenuItem)
+    {
+        NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutBringToFront"];
+        if (shortcut != nil) {
+            NSInteger code = [[shortcut objectForKey:SRShortcutCodeKey] integerValue];
+            NSUInteger flags = [[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue];
+            [aMenuItem setKeyEquivalent:SRASCIIStringForKeyCode(code)];
+            [aMenuItem setKeyEquivalentModifierMask:flags];
+        }
+        else {
+            [aMenuItem setKeyEquivalent:@""];
+            [aMenuItem setKeyEquivalentModifierMask:0];
+        }
+        
+        if (self.calendarWindowController.window.state != WLFinderLevelState)
+            [aMenuItem setTitle:NSLocalizedString(@"Send to Back", @"Send to Back menu item title")];
+        else 
+            [aMenuItem setTitle:NSLocalizedString(@"Bring to Front", @"Bring to Front menu item title")];
+        
+        return [self.calendarWindowController canShowPreviousWeek];
+    }
     else
         return YES;
 }
@@ -310,12 +345,10 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 - (void)menuWillOpen:(NSMenu *)aMenu
 {
     [[calendarWindowController fadeController] fadeIn];
-    [self.calendarWindowController.window levelUp];
 }
 
 - (void)menuDidClose:(NSMenu *)aMenu
 {
-    [self.calendarWindowController.window levelDown];
     [self autohideCalendarWindowIfAllConditionsAreMet];
 }
 
@@ -363,11 +396,18 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         PTHotKey *hotKey = [PTHotKey hotKeyWithIdentifier:@"shortcutShowCurrentWeek" keyCombo:showCurrentWeekShortcut target:self action:@selector(showCurrentWeek:)];
         [[PTHotKeyCenter sharedCenter] registerHotKey:hotKey];
     }
+    NSDictionary *bringToFrontShortcut = [userDefaults dictionaryForKey:@"shortcutBringToFront"];
+    if (bringToFrontShortcut != nil)
+    {
+        PTHotKey *hotKey = [PTHotKey hotKeyWithIdentifier:@"shortcutBringToFront" keyCombo:bringToFrontShortcut target:self action:@selector(bringToFront:)];
+        [[PTHotKeyCenter sharedCenter] registerHotKey:hotKey];
+    }
     [userDefaults addObserver:self forKeyPath:@"shortcutNewEvent" options:NSKeyValueObservingOptionNew context:NULL];
     [userDefaults addObserver:self forKeyPath:@"shortcutNewTask" options:NSKeyValueObservingOptionNew context:NULL];
     [userDefaults addObserver:self forKeyPath:@"shortcutShowNextWeek" options:NSKeyValueObservingOptionNew context:NULL];
     [userDefaults addObserver:self forKeyPath:@"shortcutShowPreviousWeek" options:NSKeyValueObservingOptionNew context:NULL];
     [userDefaults addObserver:self forKeyPath:@"shortcutShowCurrentWeek" options:NSKeyValueObservingOptionNew context:NULL];
+    [userDefaults addObserver:self forKeyPath:@"shortcutBringToFront" options:NSKeyValueObservingOptionNew context:NULL];
 
     // Configure windows.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillClose:) name:NSWindowWillCloseNotification object:nil];
@@ -496,7 +536,8 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
              [aKeyPath isEqualToString:@"shortcutNewTask"] ||
              [aKeyPath isEqualToString:@"shortcutShowNextWeek"] ||
              [aKeyPath isEqualToString:@"shortcutShowPreviousWeek"] ||
-             [aKeyPath isEqualToString:@"shortcutShowCurrentWeek"])
+             [aKeyPath isEqualToString:@"shortcutShowCurrentWeek"] ||
+             [aKeyPath isEqualToString:@"shortcutBringToFront"])
     {
         PTHotKeyCenter *hotKeyCenter = [PTHotKeyCenter sharedCenter];
         PTHotKey *oldHotKey = [hotKeyCenter hotKeyWithIdentifier:aKeyPath];
@@ -514,8 +555,10 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
                 action = @selector(showNextWeek:);
             else if ([aKeyPath isEqualToString:@"shortcutShowPreviousWeek"])
                 action = @selector(showPreviousWeek:);
-            else
+            else if ([aKeyPath isEqualToString:@"shortcutShowCurrentWeek"])
                 action = @selector(showCurrentWeek:);
+            else if ([aKeyPath isEqualToString:@"shortcutBringToFront"])
+                action = @selector(bringToFront:);
             PTHotKey *newHotKey = [PTHotKey hotKeyWithIdentifier:aKeyPath keyCombo:newHotKeyDict target:self action:action];
             [hotKeyCenter registerHotKey:newHotKey];
         }

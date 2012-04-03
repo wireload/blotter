@@ -59,6 +59,24 @@
 							<string key="NSTitle">Blotter</string>
 							<object class="NSMutableArray" key="NSMenuItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSMenuItem" id="893699668">
+									<reference key="NSMenu" ref="110575045"/>
+									<string key="NSTitle">Bring to Front</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="35465992"/>
+									<reference key="NSMixedImage" ref="502551668"/>
+								</object>
+								<object class="NSMenuItem" id="584148628">
+									<reference key="NSMenu" ref="110575045"/>
+									<bool key="NSIsDisabled">YES</bool>
+									<bool key="NSIsSeparator">YES</bool>
+									<string key="NSTitle"/>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="35465992"/>
+									<reference key="NSMixedImage" ref="502551668"/>
+								</object>
 								<object class="NSMenuItem" id="303983688">
 									<reference key="NSMenu" ref="110575045"/>
 									<string key="NSTitle">New Event</string>
@@ -77,7 +95,7 @@
 									<reference key="NSMixedImage" ref="502551668"/>
 									<int key="NSTag">2</int>
 								</object>
-								<object class="NSMenuItem" id="584148628">
+								<object class="NSMenuItem" id="715894517">
 									<reference key="NSMenu" ref="110575045"/>
 									<bool key="NSIsDisabled">YES</bool>
 									<bool key="NSIsSeparator">YES</bool>
@@ -111,7 +129,7 @@
 									<reference key="NSOnImage" ref="35465992"/>
 									<reference key="NSMixedImage" ref="502551668"/>
 								</object>
-								<object class="NSMenuItem" id="715894517">
+								<object class="NSMenuItem" id="434762348">
 									<reference key="NSMenu" ref="110575045"/>
 									<bool key="NSIsDisabled">YES</bool>
 									<bool key="NSIsSeparator">YES</bool>
@@ -336,6 +354,22 @@
 					<int key="connectionID">574</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">bringToFront:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="893699668"/>
+					</object>
+					<int key="connectionID">578</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">bringToFrontMenuItem</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="893699668"/>
+					</object>
+					<int key="connectionID">579</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">hidden: values.ShowRateThisAppInMenu</string>
 						<reference key="source" ref="770530803"/>
@@ -422,13 +456,15 @@
 							<reference ref="481834944"/>
 							<reference ref="1006149097"/>
 							<reference ref="303983688"/>
-							<reference ref="584148628"/>
 							<reference ref="220675175"/>
-							<reference ref="715894517"/>
 							<reference ref="378441126"/>
 							<reference ref="47755310"/>
 							<reference ref="483685443"/>
 							<reference ref="770530803"/>
+							<reference ref="715894517"/>
+							<reference ref="893699668"/>
+							<reference ref="584148628"/>
+							<reference ref="434762348"/>
 						</object>
 						<reference key="parent" ref="694149608"/>
 					</object>
@@ -502,6 +538,16 @@
 						<reference key="object" ref="615851665"/>
 						<reference key="parent" ref="0"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">575</int>
+						<reference key="object" ref="893699668"/>
+						<reference key="parent" ref="110575045"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">577</int>
+						<reference key="object" ref="434762348"/>
+						<reference key="parent" ref="110575045"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -528,9 +574,13 @@
 					<string>567.IBPluginDependency</string>
 					<string>569.IBPluginDependency</string>
 					<string>57.IBPluginDependency</string>
+					<string>575.IBPluginDependency</string>
+					<string>577.IBPluginDependency</string>
 				</object>
 				<object class="NSArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -565,7 +615,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">574</int>
+			<int key="maxID">579</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -577,6 +627,7 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>bringToFront:</string>
 							<string>newEvent:</string>
 							<string>newTask:</string>
 							<string>showAbout:</string>
@@ -588,6 +639,7 @@
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -602,6 +654,7 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>bringToFront:</string>
 							<string>newEvent:</string>
 							<string>newTask:</string>
 							<string>showAbout:</string>
@@ -613,6 +666,10 @@
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">bringToFront:</string>
+								<string key="candidateClassName">id</string>
+							</object>
 							<object class="IBActionInfo">
 								<string key="name">newEvent:</string>
 								<string key="candidateClassName">id</string>
@@ -657,6 +714,7 @@
 							<string>_showNextWeekMenuItem</string>
 							<string>_showPreviousWeekMenuItem</string>
 							<string>_statusMenu</string>
+							<string>bringToFrontMenuItem</string>
 							<string>preferencesMenuItem</string>
 						</object>
 						<object class="NSArray" key="dict.values">
@@ -667,6 +725,7 @@
 							<string>NSMenuItem</string>
 							<string>NSMenuItem</string>
 							<string>NSMenu</string>
+							<string>NSMenuItem</string>
 							<string>NSMenuItem</string>
 						</object>
 					</object>
@@ -680,6 +739,7 @@
 							<string>_showNextWeekMenuItem</string>
 							<string>_showPreviousWeekMenuItem</string>
 							<string>_statusMenu</string>
+							<string>bringToFrontMenuItem</string>
 							<string>preferencesMenuItem</string>
 						</object>
 						<object class="NSArray" key="dict.values">
@@ -707,6 +767,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">_statusMenu</string>
 								<string key="candidateClassName">NSMenu</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">bringToFrontMenuItem</string>
+								<string key="candidateClassName">NSMenuItem</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">preferencesMenuItem</string>

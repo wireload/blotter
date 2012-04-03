@@ -20,6 +20,7 @@
 
     NSStatusItem *_statusItem;
     IBOutlet NSMenu *_statusMenu;
+    IBOutlet NSMenuItem *bringToFrontMenuItem;
     IBOutlet NSMenuItem *_newEventMenuItem;
     IBOutlet NSMenuItem *_newTaskMenuItem;
     IBOutlet NSMenuItem *_showNextWeekMenuItem;
@@ -32,6 +33,8 @@
 }
 
 @property (readonly) WLCalendarWindowController *calendarWindowController;
+
+- (IBAction)bringToFront:(id)sender;
 
 - (IBAction)showPreferences:(id)aSender;
 
