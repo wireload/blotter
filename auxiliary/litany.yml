@@ -21,6 +21,10 @@ strings:
     path:     "Blotter Preferences/Resources/%(lang)s.lproj/LayoutPrefPaneView.strings"
     skip:     ['63.title']
   -
+    id:       'Layout Preferences'
+    path:     "Blotter Preferences/Resources/%(lang)s.lproj/AboutPrefPaneView.strings"
+    skip:     ['54.title']
+  -
     id:       'Calendar Preferences'
     path:     "Blotter Preferences/Resources/%(lang)s.lproj/CalendarsPrefPaneView.strings"
     skip:     ['14.title', '76.title']
