@@ -123,6 +123,8 @@
 		E28F83FA14B454B7008458C1 /* WLCalendarFloatingWeekViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E28F83F914B454B7008458C1 /* WLCalendarFloatingWeekViewController.m */; };
 		E292D7E013E9DCEA00433262 /* WLCalendarWindowBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = E292D7DF13E9DCEA00433262 /* WLCalendarWindowBackgroundView.m */; };
 		E2948D941401484B007122BC /* NSCalendar+WLWeekend.m in Sources */ = {isa = PBXBuildFile; fileRef = E2948D931401484B007122BC /* NSCalendar+WLWeekend.m */; };
+		E2957E5A152B117E00AE05E8 /* WLApplicationRunTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2957E59152B117E00AE05E8 /* WLApplicationRunTimer.m */; };
+		E2957E5E152B13E500AE05E8 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2957E5D152B13E500AE05E8 /* CoreServices.framework */; };
 		E29F38EE1319694C00A865D9 /* WLNewTaskWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E29F38ED1319694C00A865D9 /* WLNewTaskWindowController.m */; };
 		E2A61A80140745FC0059F201 /* WLCalendarBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A61A7F140745FC0059F201 /* WLCalendarBoxView.m */; };
 		E2A701ED13EFE4C500A4BF3A /* WLCalendarDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A701EC13EFE4C500A4BF3A /* WLCalendarDateView.m */; };
@@ -388,6 +390,9 @@
 		E292D7DF13E9DCEA00433262 /* WLCalendarWindowBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindowBackgroundView.m; sourceTree = "<group>"; };
 		E2948D921401484B007122BC /* NSCalendar+WLWeekend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCalendar+WLWeekend.h"; sourceTree = "<group>"; };
 		E2948D931401484B007122BC /* NSCalendar+WLWeekend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+WLWeekend.m"; sourceTree = "<group>"; };
+		E2957E58152B117E00AE05E8 /* WLApplicationRunTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLApplicationRunTimer.h; sourceTree = "<group>"; };
+		E2957E59152B117E00AE05E8 /* WLApplicationRunTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLApplicationRunTimer.m; sourceTree = "<group>"; };
+		E2957E5D152B13E500AE05E8 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		E29F38EC1319694C00A865D9 /* WLNewTaskWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNewTaskWindowController.h; sourceTree = "<group>"; };
 		E29F38ED1319694C00A865D9 /* WLNewTaskWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNewTaskWindowController.m; sourceTree = "<group>"; };
 		E2A61A7E140745FB0059F201 /* WLCalendarBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarBoxView.h; sourceTree = "<group>"; };
@@ -453,6 +458,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2957E5E152B13E500AE05E8 /* CoreServices.framework in Frameworks */,
 				E2EB28C9146D8E7400E975F6 /* PTHotKey.framework in Frameworks */,
 				E2EB28CA146D8E7400E975F6 /* ShortcutRecorder.framework in Frameworks */,
 				E2EB28CB146D8E7400E975F6 /* WireloadClassesAndResources.framework in Frameworks */,
@@ -502,6 +508,8 @@
 				E2E64B4D1402483500912A92 /* WLSoftEdgeLayer.m */,
 				E23F746D14434DE40055D6CE /* WLHourRange.h */,
 				E23F746E14434DE40055D6CE /* WLHourRange.m */,
+				E2957E58152B117E00AE05E8 /* WLApplicationRunTimer.h */,
+				E2957E59152B117E00AE05E8 /* WLApplicationRunTimer.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -517,6 +525,7 @@
 		29B97314FDCFA39411CA2CEA /* Deskboard */ = {
 			isa = PBXGroup;
 			children = (
+				E2957E5D152B13E500AE05E8 /* CoreServices.framework */,
 				E226B23215139BCC0014F120 /* Distribution.xcconfig */,
 				E2EB28C1146D8E6500E975F6 /* WireloadClassesAndResources.xcodeproj */,
 				E2EB2897146D8E1700E975F6 /* Blotter Preferences.xcodeproj */,
@@ -1042,6 +1051,7 @@
 				E28F83FA14B454B7008458C1 /* WLCalendarFloatingWeekViewController.m in Sources */,
 				E234BF7E14DAFADF00AB2262 /* WLCalendarTimeRulerMarkerLayer.m in Sources */,
 				E2F8AB2115079E56006239C1 /* WLCalendarDayEventsBackgroundLayer.m in Sources */,
+				E2957E5A152B117E00AE05E8 /* WLApplicationRunTimer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
