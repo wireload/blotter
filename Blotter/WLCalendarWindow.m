@@ -155,6 +155,12 @@ static const CGFloat fadeDuration = 0.1;
     [NSAnimationContext endGrouping];
 }
 
+- (void)cancelOperation:(id)sender
+{
+    if (state != WLFinderLevelState)
+        [self levelDown];
+}
+
 - (void)levelUp
 {
     if (state != WLFloatingLevelState && state != WLLevelingUpState)
