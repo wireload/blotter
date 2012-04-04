@@ -10,20 +10,12 @@
 #import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 
 
-@class SRRecorderControl;
-
 @class WLPrefPaneView;
 
 
-
-@interface GeneralPrefController : NSObject <SS_PreferencePaneProtocol /*, SRRecorderControlDelegate */>
+@interface GeneralPrefController : NSObject <SS_PreferencePaneProtocol>
 {
     IBOutlet WLPrefPaneView *_mainView;
-    IBOutlet SRRecorderControl *newEventRecorderControl;
-    IBOutlet SRRecorderControl *newTaskRecorderControl;
-    IBOutlet SRRecorderControl *showNextWeekControl;
-    IBOutlet SRRecorderControl *showPrevWeekControl;
-    IBOutlet SRRecorderControl *showCurrentWeekControl;
 }
 
 - (IBAction)quitBlotter:(id)sender;

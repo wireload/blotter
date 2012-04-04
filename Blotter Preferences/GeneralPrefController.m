@@ -6,12 +6,12 @@
 //  Copyright 2010 WireLoad, Inc. All rights reserved.
 //
 
-#import <ShortcutRecorder/ShortcutRecorder.h>
 #import "GeneralPrefController.h"
 #import "PositionPrefController.h"
 #import "CalendarsPrefController.h"
 #import "LayoutPrefController.h"
 #import "AboutPrefController.h"
+#import "ShortcutsPrefController.h"
 
 
 @implementation GeneralPrefController
@@ -27,6 +27,7 @@
 + (NSArray *)preferencePanes
 {
     return [NSArray arrayWithObjects:[[[GeneralPrefController alloc] init] autorelease],
+            [[[ShortcutsPrefController alloc] init] autorelease],
             [[[PositionPrefController alloc] init] autorelease],
             [[[LayoutPrefController alloc] init] autorelease],
             [[[CalendarsPrefController alloc] init] autorelease],
@@ -41,16 +42,6 @@
         if ([NSBundle loadNibNamed:@"GeneralPrefPaneView" owner:self])
         {
             _mainView.preferredFrameSize = [_mainView frame].size;
-            [newEventRecorderControl setAllowsKeyOnly:NO escapeKeysRecord:YES];
-            [newEventRecorderControl setIsASCIIOnly:YES];
-            [newTaskRecorderControl setAllowsKeyOnly:NO escapeKeysRecord:YES];
-            [newTaskRecorderControl setIsASCIIOnly:YES];
-            [showNextWeekControl setAllowsKeyOnly:NO escapeKeysRecord:YES];
-            [showNextWeekControl setIsASCIIOnly:YES];
-            [showPrevWeekControl setAllowsKeyOnly:NO escapeKeysRecord:YES];
-            [showPrevWeekControl setIsASCIIOnly:YES];
-            [showCurrentWeekControl setAllowsKeyOnly:NO escapeKeysRecord:YES];
-            [showCurrentWeekControl setIsASCIIOnly:YES];
         }
         else
             NSLog(@"Cannot load GeneralPrefPaneView");
@@ -82,30 +73,6 @@
 
 
 - (BOOL)allowsVerticalResizing
-{
-    return NO;
-}
-
-
-#pragma mark SRRecorderControlDelegate
-
-- (BOOL)shortcutRecorder:(SRRecorderControl *)aRecorder isKeyCode:(NSInteger)keyCode andFlagsTaken:(NSUInteger)flags reason:(NSString **)aReason
-{
-    KeyCombo keyCombo = SRMakeKeyCombo(keyCode, flags);
-    if ((aRecorder != newEventRecorderControl && SRKeyComboEqualToKeyCombo([newEventRecorderControl keyCombo], keyCombo)) ||
-        (aRecorder != newTaskRecorderControl && SRKeyComboEqualToKeyCombo([newTaskRecorderControl keyCombo], keyCombo)) ||
-        (aRecorder != showNextWeekControl && SRKeyComboEqualToKeyCombo([showNextWeekControl keyCombo], keyCombo)) ||
-        (aRecorder != showPrevWeekControl && SRKeyComboEqualToKeyCombo([showPrevWeekControl keyCombo], keyCombo)) ||
-        (aRecorder != showCurrentWeekControl && SRKeyComboEqualToKeyCombo([showCurrentWeekControl keyCombo], keyCombo)))
-    {
-        *aReason = NSLocalizedStringFromTableInBundle(@"it's already used as a different Blotter shortcut. To use this shortcut, first remove or change the other shortcut", nil, [NSBundle bundleForClass:[self class]], @"A reason to use other shortcut");;
-        return YES;
-    }
-    else
-        return NO;
-}
-
-- (BOOL)shortcutRecorderShouldCheckMenu:(SRRecorderControl *)aRecorder
 {
     return NO;
 }

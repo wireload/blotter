@@ -525,7 +525,6 @@
 		29B97314FDCFA39411CA2CEA /* Deskboard */ = {
 			isa = PBXGroup;
 			children = (
-				E2957E5D152B13E500AE05E8 /* CoreServices.framework */,
 				E226B23215139BCC0014F120 /* Distribution.xcconfig */,
 				E2EB28C1146D8E6500E975F6 /* WireloadClassesAndResources.xcodeproj */,
 				E2EB2897146D8E1700E975F6 /* Blotter Preferences.xcodeproj */,
@@ -535,6 +534,7 @@
 				E27951BA131AA060008AE1DA /* Carbon.framework */,
 				E2BA531913C5A873005F0045 /* QuartzCore.framework */,
 				E2D6488F1441062300A03FAD /* IOKit.framework */,
+				E2957E5D152B13E500AE05E8 /* CoreServices.framework */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
