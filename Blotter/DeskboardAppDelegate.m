@@ -83,6 +83,8 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     else 
     {
         [calendarWindow levelDown];
+        if ([self _isOnlyCalendarWindowVisible:[NSApp windows]])
+            [NSApp hide:self];
     }
 }
 
