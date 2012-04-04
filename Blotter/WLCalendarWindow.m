@@ -130,6 +130,9 @@ static const CGFloat fadeDuration = 0.1;
 - (void)setFinderLevel
 {
     NSView *frameView = [super contentView];
+    
+    // NSDisableScreenUpdates();
+    
     [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
     [self setLevel:[self finderLevel]];
     // If we went to Finder level due to becoming inactive during a space shift, then
@@ -139,15 +142,20 @@ static const CGFloat fadeDuration = 0.1;
     [self display];
     state = WLFinderLevelState;
 
-    [NSAnimationContext beginGrouping];
-    [[NSAnimationContext currentContext] setDuration:fadeDuration];
-    [[frameView animator] setAlphaValue:1.0];
-    [NSAnimationContext endGrouping];
+    // NSEnableScreenUpdates();
+
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:fadeDuration];
+    [[frameView layer] setOpacity:1.0];
+    [CATransaction commit];
 }
 
 - (void)setFloatingLevel
 {
     NSView *frameView = [super contentView];
+
+    //NSDisableScreenUpdates();
+
     [self setLevel:NSFloatingWindowLevel];
     [self setCollectionBehavior:NSWindowCollectionBehaviorDefault];
     [frameView display];
@@ -156,11 +164,13 @@ static const CGFloat fadeDuration = 0.1;
     
     [NSApp activateIgnoringOtherApps:YES];
     [self makeKeyAndOrderFront:nil];
-    
-    [NSAnimationContext beginGrouping];
-    [[NSAnimationContext currentContext] setDuration:fadeDuration];
-    [[frameView animator] setAlphaValue:1.0];
-    [NSAnimationContext endGrouping];
+
+    //NSEnableScreenUpdates();
+
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:fadeDuration];
+    [[frameView layer] setOpacity:1.0];
+    [CATransaction commit];
 }
 
 - (void)cancelOperation:(id)sender
@@ -176,15 +186,15 @@ static const CGFloat fadeDuration = 0.1;
         NSView *frameView = [super contentView];
 
         state = WLLevelingUpState;
-        
-        [NSAnimationContext beginGrouping];
-        [[NSAnimationContext currentContext] setCompletionHandler:^{
+
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:^(void) {
             if (state == WLLevelingUpState)
                 [self setFloatingLevel];
         }];
-        [[NSAnimationContext currentContext] setDuration:fadeDuration];
-        [[frameView animator] setAlphaValue:0.0];
-        [NSAnimationContext endGrouping];
+        [CATransaction setAnimationDuration:fadeDuration];
+        [[frameView layer] setOpacity:0.0];
+        [CATransaction commit];
     }
 }
 
@@ -195,14 +205,14 @@ static const CGFloat fadeDuration = 0.1;
         NSView *frameView = [super contentView];
         state = WLLevelingDownState;
         
-        [NSAnimationContext beginGrouping];
-        [[NSAnimationContext currentContext] setCompletionHandler:^{
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:^(void) {
             if (state == WLLevelingDownState)
                 [self setFinderLevel];
         }];
-        [[NSAnimationContext currentContext] setDuration:fadeDuration];
-        [[frameView animator] setAlphaValue:0.0];
-        [NSAnimationContext endGrouping];
+        [CATransaction setAnimationDuration:fadeDuration];
+        [[frameView layer] setOpacity:0.0];
+        [CATransaction commit];
     }    
 }
 
