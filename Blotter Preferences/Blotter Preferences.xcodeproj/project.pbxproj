@@ -35,6 +35,9 @@
 		28F69A29129C587F00D4BB97 /* WLCalendarWindowArrangementView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F69A28129C587F00D4BB97 /* WLCalendarWindowArrangementView.m */; };
 		28F93FC6146EEF6A0012F07A /* LayoutPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28F93FC8146EEF6A0012F07A /* LayoutPrefPaneView.xib */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		E206A7E6152C5537008B63F4 /* ShortcutsPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E206A7E4152C5537008B63F4 /* ShortcutsPrefPaneView.xib */; };
+		E206A7EA152C5598008B63F4 /* ShortcutsPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = E206A7E9152C5598008B63F4 /* ShortcutsPrefController.m */; };
+		E206A7EC152C6337008B63F4 /* shortcuts-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E206A7EB152C6337008B63F4 /* shortcuts-icon.png */; };
 		E20840511466D31700FE050A /* WLLayoutInfoSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = E20840501466D31700FE050A /* WLLayoutInfoSplitView.m */; };
 		E20840551466D59D00FE050A /* WLLayoutWeekSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = E20840541466D59C00FE050A /* WLLayoutWeekSplitView.m */; };
 		E20840581467230C00FE050A /* WLLayoutSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = E20840571467230C00FE050A /* WLLayoutSplitView.m */; };
@@ -114,13 +117,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = E273122E1349EC9000A84433;
 			remoteInfo = PTHotKey.framework;
-		};
-		E2EB28B0146D8E3300E975F6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E2EB28A3146D8E2900E975F6 /* ShortcutRecorder.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 342E00BA109CCBF5009AD8CA;
-			remoteInfo = ShortcutRecorder.ibplugin;
 		};
 		E2EB28B2146D8E3500E975F6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -203,6 +199,10 @@
 		32DBCF630370AF2F00C91783 /* Blotter Preferences_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Blotter Preferences_Prefix.pch"; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Blotter Preferences.preferencePane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Blotter Preferences.preferencePane"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
+		E206A7E5152C5537008B63F4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
+		E206A7E8152C5598008B63F4 /* ShortcutsPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShortcutsPrefController.h; sourceTree = "<group>"; };
+		E206A7E9152C5598008B63F4 /* ShortcutsPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShortcutsPrefController.m; sourceTree = "<group>"; };
+		E206A7EB152C6337008B63F4 /* shortcuts-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shortcuts-icon.png"; sourceTree = "<group>"; };
 		E208404F1466D31700FE050A /* WLLayoutInfoSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutInfoSplitView.h; sourceTree = "<group>"; };
 		E20840501466D31700FE050A /* WLLayoutInfoSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutInfoSplitView.m; sourceTree = "<group>"; };
 		E20840531466D59C00FE050A /* WLLayoutWeekSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutWeekSplitView.h; sourceTree = "<group>"; };
@@ -348,6 +348,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E206A7EB152C6337008B63F4 /* shortcuts-icon.png */,
 				2850CB1915287D7500DEEA82 /* about-blotter-button-bezel-active-centre.png */,
 				2850CB1A15287D7500DEEA82 /* about-blotter-button-bezel-active-left.png */,
 				2850CB1B15287D7500DEEA82 /* about-blotter-button-bezel-active-right.png */,
@@ -383,10 +384,11 @@
 				28CB50B4145E277800810395 /* Resize-Cursor-Up-Left.png */,
 				280A24DA14588519001B82C8 /* Layout-Icon.png */,
 				E2A01DC51455634C0008BDF2 /* Recreated-Aqua.jpg */,
-				E2E8268B1450217A007035E5 /* CalendarsPrefPaneView.xib */,
 				E2E8268D1450217A007035E5 /* GeneralPrefPaneView.xib */,
+				E206A7E4152C5537008B63F4 /* ShortcutsPrefPaneView.xib */,
 				E2E826911450217B007035E5 /* PositionPrefPaneView.xib */,
 				28F93FC8146EEF6A0012F07A /* LayoutPrefPaneView.xib */,
+				E2E8268B1450217A007035E5 /* CalendarsPrefPaneView.xib */,
 				2821FFF1152B4B7900290798 /* AboutPrefPaneView.xib */,
 				E2E8268F1450217A007035E5 /* Localizable.strings */,
 				E2E8267214501BD8007035E5 /* chkbxBackground_10_6.png */,
@@ -455,12 +457,14 @@
 			children = (
 				28B54D5C12839B8D0037BF53 /* GeneralPrefController.h */,
 				28B54D5D12839B8D0037BF53 /* GeneralPrefController.m */,
+				E206A7E8152C5598008B63F4 /* ShortcutsPrefController.h */,
+				E206A7E9152C5598008B63F4 /* ShortcutsPrefController.m */,
 				28B54D781283AEEE0037BF53 /* PositionPrefController.h */,
 				28B54D791283AEEE0037BF53 /* PositionPrefController.m */,
-				E2FE5ECF12D74F5E00003E48 /* CalendarsPrefController.h */,
-				E2FE5ED012D74F5E00003E48 /* CalendarsPrefController.m */,
 				E21BC9CF141625E700A91662 /* LayoutPrefController.h */,
 				E21BC9D0141625E700A91662 /* LayoutPrefController.m */,
+				E2FE5ECF12D74F5E00003E48 /* CalendarsPrefController.h */,
+				E2FE5ED012D74F5E00003E48 /* CalendarsPrefController.m */,
 				E27522181518649F0050836A /* AboutPrefController.h */,
 				E27522191518649F0050836A /* AboutPrefController.m */,
 			);
@@ -542,7 +546,6 @@
 				E2EB28BD146D8E4700E975F6 /* PBXTargetDependency */,
 				E2EB28B5146D8E3700E975F6 /* PBXTargetDependency */,
 				E2EB28B3146D8E3500E975F6 /* PBXTargetDependency */,
-				E2EB28B1146D8E3300E975F6 /* PBXTargetDependency */,
 			);
 			name = "Blotter Preferences";
 			productInstallPath = "$(HOME)/Library/Bundles";
@@ -680,6 +683,8 @@
 				2850CB2215287D7500DEEA82 /* about-blotter-button-bezel-centre.png in Resources */,
 				2850CB2315287D7500DEEA82 /* about-blotter-button-bezel-left.png in Resources */,
 				2850CB2415287D7500DEEA82 /* about-blotter-button-bezel-right.png in Resources */,
+				E206A7E6152C5537008B63F4 /* ShortcutsPrefPaneView.xib in Resources */,
+				E206A7EC152C6337008B63F4 /* shortcuts-icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -718,17 +723,13 @@
 				E275221A1518649F0050836A /* AboutPrefController.m in Sources */,
 				2850CB181528646F00DEEA82 /* WLPreferencesButtonCell.m in Sources */,
 				E2E19FFF152ADFFF0059B2D3 /* WLCustomCursorButton.m in Sources */,
+				E206A7EA152C5598008B63F4 /* ShortcutsPrefController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		E2EB28B1146D8E3300E975F6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ShortcutRecorder.ibplugin;
-			targetProxy = E2EB28B0146D8E3300E975F6 /* PBXContainerItemProxy */;
-		};
 		E2EB28B3146D8E3500E975F6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ShortcutRecorder.framework;
@@ -773,6 +774,14 @@
 				28F93FCF146EEF850012F07A /* sv */,
 			);
 			name = LayoutPrefPaneView.xib;
+			sourceTree = "<group>";
+		};
+		E206A7E4152C5537008B63F4 /* ShortcutsPrefPaneView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E206A7E5152C5537008B63F4 /* English */,
+			);
+			name = ShortcutsPrefPaneView.xib;
 			sourceTree = "<group>";
 		};
 		E2E8268B1450217A007035E5 /* CalendarsPrefPaneView.xib */ = {

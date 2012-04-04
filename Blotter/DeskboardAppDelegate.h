@@ -20,7 +20,7 @@
 
     NSStatusItem *_statusItem;
     IBOutlet NSMenu *_statusMenu;
-    IBOutlet NSMenuItem *bringToFrontMenuItem;
+    IBOutlet NSMenuItem *_bringToFrontMenuItem;
     IBOutlet NSMenuItem *_newEventMenuItem;
     IBOutlet NSMenuItem *_newTaskMenuItem;
     IBOutlet NSMenuItem *_showNextWeekMenuItem;

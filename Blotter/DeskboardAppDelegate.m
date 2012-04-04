@@ -96,7 +96,9 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         [_preferencesController setDebug:YES];
 
         // Set which panes are included, and their order.
-        [_preferencesController setPanesOrder:[NSArray arrayWithObjects:NSLocalizedStringFromTableInBundle(@"General", nil, [_preferencesController bundle], nil),
+        [_preferencesController setPanesOrder:[NSArray arrayWithObjects:
+                                               NSLocalizedStringFromTableInBundle(@"General", nil, [_preferencesController bundle], nil),
+                                               NSLocalizedStringFromTableInBundle(@"Shortcuts", nil, [_preferencesController bundle], nil),
                                                NSLocalizedStringFromTableInBundle(@"Positioning", nil, [_preferencesController bundle], nil),
                                                NSLocalizedStringFromTableInBundle(@"Layout", nil, [_preferencesController bundle], nil),
                                                NSLocalizedStringFromTableInBundle(@"Calendars", nil, [_preferencesController bundle], nil),
@@ -104,7 +106,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
                                                nil]];
         [_preferencesController createPreferencesWindow];
         [[_preferencesController preferencesWindow] setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
-        [[[_preferencesController preferencesWindow] toolbar] insertItemWithItemIdentifier:NSToolbarFlexibleSpaceItemIdentifier atIndex:4];
+        [[[_preferencesController preferencesWindow] toolbar] insertItemWithItemIdentifier:NSToolbarFlexibleSpaceItemIdentifier atIndex:5];
     }
     [_preferencesController showPreferencesWindow];
     [NSApp activateIgnoringOtherApps:YES];
@@ -238,8 +240,24 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 #pragma mark NSMenuValidation
 
-- (BOOL)validateMenuItem:(NSMenuItem *)aMenuItem {
-    if (aMenuItem == _newEventMenuItem)
+- (BOOL)validateMenuItem:(NSMenuItem *)aMenuItem
+{
+    if (aMenuItem == _bringToFrontMenuItem)
+    {
+        NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutBringToFront"];
+        if (shortcut != nil) {
+            NSInteger code = [[shortcut objectForKey:SRShortcutCodeKey] integerValue];
+            NSUInteger flags = [[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue];
+            [aMenuItem setKeyEquivalent:SRASCIIStringForKeyCode(code)];
+            [aMenuItem setKeyEquivalentModifierMask:flags];
+        }
+        else {
+            [aMenuItem setKeyEquivalent:@""];
+            [aMenuItem setKeyEquivalentModifierMask:0];
+        }
+        return YES;
+    }
+    else if (aMenuItem == _newEventMenuItem)
     {
         NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutNewEvent"];
         if (shortcut != nil) {
@@ -314,7 +332,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         }
         return [self.calendarWindowController canShowPreviousWeek];
     }
-    else if (aMenuItem == bringToFrontMenuItem)
+    else if (aMenuItem == _bringToFrontMenuItem)
     {
         NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutBringToFront"];
         if (shortcut != nil) {
