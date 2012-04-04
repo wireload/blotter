@@ -19,12 +19,12 @@ static NSString* const _WLCursorKey = @"cursor";
 
 - (void)showHelp:(id)aSender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://support.wireload.net/forums/356140-frequently-asked-questions"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wireload.net/products/blotter/faq/?utm_source=Blotter&utm_medium=app&utm_content=about_page_help&utm_campaign=Blotter_app"]];
 }
 
 - (void)showGetSupport:(id)aSender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://support.wireload.net/home"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wireload.net/products/blotter/help/?utm_source=Blotter&utm_medium=app&utm_content=about_page_support&utm_campaign=Blotter_app"]];
 }
 
 - (IBAction)showRateThisApp:(id)aSender
@@ -39,12 +39,12 @@ static NSString* const _WLCursorKey = @"cursor";
 
 - (IBAction)showWireload:(id)aSender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wireload.net"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wireload.net/?utm_source=Blotter&utm_medium=app&utm_content=about_page_wireload&utm_campaign=Blotter_app"]];
 }
 
 - (IBAction)showBanner:(id)aSender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wireload.net/products/quiet/"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wireload.net/products/quiet/?utm_source=Blotter&utm_medium=app&utm_content=about_page_quiet&utm_campaign=Blotter_app"]];
 }
 
 
