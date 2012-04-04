@@ -895,7 +895,6 @@
 					"\"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers\"",
 					"\"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers\"",
 				);
-				IBC_PLUGINS = "$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.ibplugin";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACH_O_TYPE = mh_bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
@@ -921,7 +920,6 @@
 					"\"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers\"",
 					"\"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers\"",
 				);
-				IBC_PLUGINS = "$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.ibplugin";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACH_O_TYPE = mh_bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
