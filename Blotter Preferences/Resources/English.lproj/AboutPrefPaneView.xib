@@ -53,7 +53,7 @@
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="349496589">
 							<int key="NSCellFlags">67239424</int>
-							<int key="NSCellFlags2">272629760</int>
+							<int key="NSCellFlags2">306184192</int>
 							<string type="base64-UTF8" key="NSContents">wqkgMjAxMC0xMiBXaXJlbG9hZCBJbmMuCkFsbCByaWdodHMgcmVzZXJ2ZWQuCkluY2x1ZGVzIGNvZGUg
 YnkgTWF0dCBHZW1tZWxsLg</string>
 							<object class="NSFont" key="NSSupport">
@@ -90,7 +90,7 @@ YnkgTWF0dCBHZW1tZWxsLg</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="9731935">
 							<int key="NSCellFlags">68288064</int>
-							<int key="NSCellFlags2">71304192</int>
+							<int key="NSCellFlags2">104858624</int>
 							<string key="NSContents">2.1</string>
 							<object class="NSFont" key="NSSupport">
 								<string key="NSName">HelveticaNeue-Bold</string>
@@ -122,7 +122,7 @@ YnkgTWF0dCBHZW1tZWxsLg</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="788657948">
 							<int key="NSCellFlags">-2080244224</int>
-							<int key="NSCellFlags2">134217728</int>
+							<int key="NSCellFlags2">167772160</int>
 							<string key="NSContents"/>
 							<object class="NSFont" key="NSSupport" id="705183354">
 								<string key="NSName">LucidaGrande</string>
@@ -145,11 +145,12 @@ YnkgTWF0dCBHZW1tZWxsLg</string>
 						<string key="NSFrame">{{394, -1}, {246, 88}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:22</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="673781184">
 							<int key="NSCellFlags">-2080244224</int>
-							<int key="NSCellFlags2">134217728</int>
+							<int key="NSCellFlags2">167772160</int>
 							<string key="NSContents"/>
 							<reference key="NSSupport" ref="705183354"/>
 							<string key="NSCellIdentifier">_NS:22</string>
