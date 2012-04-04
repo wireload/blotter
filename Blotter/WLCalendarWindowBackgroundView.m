@@ -127,7 +127,7 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
                                    fraction:1.0];
         
         // Slightly darken the background with a blueish tint.
-        [[NSColor colorWithSRGBRed:21.0 / 255.0 green:44.0 / 255.0 blue:73.0 / 255.0 alpha:WLCalendarBackgroundActiveDarkness] set];
+        [[NSColor colorWithCalibratedRed:21.0 / 255.0 green:44.0 / 255.0 blue:73.0 / 255.0 alpha:WLCalendarBackgroundActiveDarkness] set];
         [innerPath fill];
                
         [NSGraphicsContext restoreGraphicsState];
