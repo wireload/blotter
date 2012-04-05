@@ -708,17 +708,18 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>_bringToFrontMenuItem</string>
 							<string>_newEventMenuItem</string>
 							<string>_newTaskMenuItem</string>
 							<string>_showCurrentWeekMenuItem</string>
 							<string>_showNextWeekMenuItem</string>
 							<string>_showPreviousWeekMenuItem</string>
 							<string>_statusMenu</string>
-							<string>bringToFrontMenuItem</string>
 							<string>preferencesMenuItem</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSMenuItem</string>
 							<string>NSMenuItem</string>
 							<string>NSMenuItem</string>
 							<string>NSMenuItem</string>
@@ -726,24 +727,27 @@
 							<string>NSMenuItem</string>
 							<string>NSMenu</string>
 							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>_bringToFrontMenuItem</string>
 							<string>_newEventMenuItem</string>
 							<string>_newTaskMenuItem</string>
 							<string>_showCurrentWeekMenuItem</string>
 							<string>_showNextWeekMenuItem</string>
 							<string>_showPreviousWeekMenuItem</string>
 							<string>_statusMenu</string>
-							<string>bringToFrontMenuItem</string>
 							<string>preferencesMenuItem</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">_bringToFrontMenuItem</string>
+								<string key="candidateClassName">NSMenuItem</string>
+							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">_newEventMenuItem</string>
 								<string key="candidateClassName">NSMenuItem</string>
@@ -767,10 +771,6 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">_statusMenu</string>
 								<string key="candidateClassName">NSMenu</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">bringToFrontMenuItem</string>
-								<string key="candidateClassName">NSMenuItem</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">preferencesMenuItem</string>
