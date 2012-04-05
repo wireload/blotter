@@ -1154,6 +1154,7 @@
 				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
 				INFOPLIST_FILE = "Blotter-Info.plist";
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "-DDEBUG=1";
 				PRODUCT_NAME = Blotter;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../WireloadClassesAndResources/** \"\\\"${PROJECT_DIR}/../Blotter Preferences\"/** \"\\\"${PROJECT_DIR}/../Blotter Preferences\"/**";
 			};
