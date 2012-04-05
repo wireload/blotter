@@ -244,22 +244,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (BOOL)validateMenuItem:(NSMenuItem *)aMenuItem
 {
-    if (aMenuItem == _bringToFrontMenuItem)
-    {
-        NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutBringToFront"];
-        if (shortcut != nil) {
-            NSInteger code = [[shortcut objectForKey:SRShortcutCodeKey] integerValue];
-            NSUInteger flags = [[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue];
-            [aMenuItem setKeyEquivalent:SRASCIIStringForKeyCode(code)];
-            [aMenuItem setKeyEquivalentModifierMask:flags];
-        }
-        else {
-            [aMenuItem setKeyEquivalent:@""];
-            [aMenuItem setKeyEquivalentModifierMask:0];
-        }
-        return YES;
-    }
-    else if (aMenuItem == _newEventMenuItem)
+    if (aMenuItem == _newEventMenuItem)
     {
         NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutNewEvent"];
         if (shortcut != nil) {
@@ -353,7 +338,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         else 
             [aMenuItem setTitle:NSLocalizedString(@"Bring to Front", @"Bring to Front menu item title")];
         
-        return [self.calendarWindowController canShowPreviousWeek];
+        return YES;
     }
     else
         return YES;
