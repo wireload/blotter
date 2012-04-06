@@ -27,6 +27,7 @@ typedef enum
     NSView *_realContentView;
     
     WLCalendarWindowState state;
+    BOOL _didWarmUp;
 }
 
 @property (nonatomic) WLCalendarWindowState state;

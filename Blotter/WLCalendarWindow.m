@@ -62,6 +62,8 @@ static const CGFloat fadeDuration = 0.1;
         [self useOptimizedDrawing:YES];
         [self setContentView:[[[_WLFlippedView alloc] init] autorelease]];
         
+        _didWarmUp = NO;
+        
         state = WLFinderLevelState;
     }
     return self;
@@ -77,6 +79,26 @@ static const CGFloat fadeDuration = 0.1;
 
 
 #pragma mark NSWindow
+
+- (void)orderWindow:(NSWindowOrderingMode)place relativeTo:(NSInteger)otherWin
+{
+    NSView *frameView = [super contentView];
+    if (!_didWarmUp)
+        [frameView setAlphaValue:0.0];
+
+    [super orderWindow:place relativeTo:otherWin];
+    
+    if (!_didWarmUp)
+    {
+        // Warm up the drawing system.
+        [self setLevel:NSFloatingWindowLevel];
+        [frameView display];
+        [self setLevel:[self finderLevel]];
+        [frameView display];
+        [frameView setAlphaValue:1.0];
+        _didWarmUp = YES;
+    }
+}
 
 - (NSRect)frameRectForContentRect:(NSRect)aWindowContentRect
 {
