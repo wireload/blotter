@@ -282,6 +282,10 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 {
     [_shortCuts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) 
     {
+        // If the menu item is nil, the shortcut definition will only be 2 items long. Ignore those.
+        if ([obj count] < 3)
+            return;
+        
         NSString *shortcutName = [obj objectAtIndex:ShortcutsNameIdx];
         NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:shortcutName];
         NSMenuItem *shortcutMenuItem = [obj objectAtIndex:ShortcutsMenuItemIdx];
