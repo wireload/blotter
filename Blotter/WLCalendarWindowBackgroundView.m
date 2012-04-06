@@ -46,8 +46,34 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
     return frameRect;
 }
 
++ (void)initialize
+{
+    [NSImage imageNamed:@"calendar-background-active-top-left"];
+    [NSImage imageNamed:@"calendar-background-active-top-middle"];
+    [NSImage imageNamed:@"calendar-background-active-top-right"];
+    [NSImage imageNamed:@"calendar-background-active-middle-left"];
+    [NSImage imageNamed:@"calendar-background-active-middle-middle"];
+    [NSImage imageNamed:@"calendar-background-active-middle-right"];
+    [NSImage imageNamed:@"calendar-background-active-bottom-left"];
+    [NSImage imageNamed:@"calendar-background-active-bottom-middle"];
+    [NSImage imageNamed:@"calendar-background-active-bottom-right"];
+
+    [NSImage imageNamed:@"calendar-background-top-left"];
+    [NSImage imageNamed:@"calendar-background-top-middle"];
+    [NSImage imageNamed:@"calendar-background-top-right"];
+    [NSImage imageNamed:@"calendar-background-middle-left"];
+    [NSImage imageNamed:@"calendar-background-middle-middle"];
+    [NSImage imageNamed:@"calendar-background-middle-right"];
+    [NSImage imageNamed:@"calendar-background-bottom-left"];
+    [NSImage imageNamed:@"calendar-background-bottom-middle"];
+    [NSImage imageNamed:@"calendar-background-bottom-right"];
+    
+    [NSImage imageNamed:@"noise"];
+}
+
 - (CGImageRef)createCGImageOfScreenBelowWindow:(NSWindow *)aWindow
 {
+    BEGIN_TIMING();
     // To properly map screen coordinates (meaning that 0,0 point is lower left corner of the screen with main menu)
     // we need to calculate _minimal_ offset to the left border (always <= 0, cause left-side windows (relative to the screen with main menu) always have negative x)
     // and _maximal_ offset to the top border (always > 0, cause it cannot be less than height of the screen with main menu)
@@ -75,11 +101,14 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
     CGImageRef screenBelowWindowImage = CGImageCreateWithImageInRect(desktopImage, imageWindowFrame);
     CFRelease(desktopImage);
     
+    END_TIMING(@"capture background");
+    
     return screenBelowWindowImage;
 }
 
 - (CIImage *)blurredBackgroundImage
 {  
+    BEGIN_TIMING();
     CGImageRef backgroundImage = [self createCGImageOfScreenBelowWindow:[self window]];
     CIImage *ciImage = [CIImage imageWithCGImage:backgroundImage];
 
@@ -101,6 +130,8 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
 
     CFRelease(backgroundImage);
     
+    END_TIMING(@"blur background");
+    
     return result;
 }
 
@@ -108,6 +139,8 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
 
 - (void)drawRect:(NSRect)aDirtyRect
 {
+    BEGIN_TIMING();
+    
     [NSGraphicsContext saveGraphicsState];
     [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
 #ifndef DEBUG_LAYERS
@@ -173,6 +206,8 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
     NSRectFill(aDirtyRect);
 #endif
     [NSGraphicsContext restoreGraphicsState];
+
+    END_TIMING(@"draw background");
 }
 
 - (BOOL)isFlipped
