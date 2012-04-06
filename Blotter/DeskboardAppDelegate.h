@@ -30,6 +30,7 @@
     SS_PrefsController *_preferencesController;
     NSTimer *_showCurrentWeekTimer;
     WLApplicationRunTimer *_applicationRunTimer;
+    NSArray *_shortCuts;
 }
 
 @property (readonly) WLCalendarWindowController *calendarWindowController;

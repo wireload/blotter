@@ -17,6 +17,11 @@
 #import "WLCalendarWindowController.h"
 #import "WLApplicationRunTimer.h"
 
+enum {
+    ShortcutsNameIdx,
+    ShortcutsSelectorIdx,
+    ShortcutsMenuItemIdx
+};
 
 extern NSString* const SRShortcutCodeKey;
 extern NSString* const SRShortcutFlagsKey;
@@ -51,18 +56,21 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     [calendarWindowController release];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults removeObserver:self forKeyPath:@"ShowInMenuBar"];
-    [userDefaults removeObserver:self forKeyPath:@"shortcutNewEvent"];
-    [userDefaults removeObserver:self forKeyPath:@"shortcutNewTask"];
-    [userDefaults removeObserver:self forKeyPath:@"shortcutShowNextWeek"];
-    [userDefaults removeObserver:self forKeyPath:@"shortcutShowPreviousWeek"];
-    [userDefaults removeObserver:self forKeyPath:@"shortcutShowCurrentWeek"];
-    [userDefaults removeObserver:self forKeyPath:@"shortcutBringToFront"];
+    [_shortCuts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) 
+    {
+        NSString *shortcutName = [obj objectAtIndex:ShortcutsNameIdx];
+        [userDefaults removeObserver:self forKeyPath:shortcutName];
+    }];
+
     if (_applicationRunTimer != nil)
         [[WLCalendarController sharedController] removeObserver:self forKeyPath:@"date"];
     [_preferencesController release];
     [_showCurrentWeekTimer invalidate];
     [_applicationRunTimer release];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [_shortCuts release];
+    _shortCuts = nil;
     [super dealloc];
 }
 
@@ -244,95 +252,39 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (BOOL)validateMenuItem:(NSMenuItem *)aMenuItem
 {
+    for (int i = 0, count = [_shortCuts count]; i < count; i++)
+    {
+        NSArray *obj = [_shortCuts objectAtIndex:i];
+        NSMenuItem *shortcutMenuItem = [obj objectAtIndex:ShortcutsMenuItemIdx];
+        if (aMenuItem == shortcutMenuItem)
+        {
+            NSString *shortcutName = [obj objectAtIndex:ShortcutsNameIdx];
+            NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:shortcutName];
+            if (shortcut != nil) {
+                NSInteger code = [[shortcut objectForKey:SRShortcutCodeKey] integerValue];
+                NSUInteger flags = [[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue];
+                [aMenuItem setKeyEquivalent:SRASCIIStringForKeyCode(code)];
+                [aMenuItem setKeyEquivalentModifierMask:flags];
+            }
+            else {
+                [aMenuItem setKeyEquivalent:@""];
+                [aMenuItem setKeyEquivalentModifierMask:0];
+            }
+        }
+    }
+    
     if (aMenuItem == _newEventMenuItem)
-    {
-        NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutNewEvent"];
-        if (shortcut != nil) {
-            NSInteger code = [[shortcut objectForKey:SRShortcutCodeKey] integerValue];
-            NSUInteger flags = [[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue];
-            [aMenuItem setKeyEquivalent:SRASCIIStringForKeyCode(code)];
-            [aMenuItem setKeyEquivalentModifierMask:flags];
-        }
-        else {
-            [aMenuItem setKeyEquivalent:@""];
-            [aMenuItem setKeyEquivalentModifierMask:0];
-        }
         return [[WLNewEventWindowController sharedWindowController] canCreateEvent];
-    }
     else if (aMenuItem == _newTaskMenuItem)
-    {
-        NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutNewTask"];
-        if (shortcut != nil) {
-            NSInteger code = [[shortcut objectForKey:SRShortcutCodeKey] integerValue];
-            NSUInteger flags = [[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue];
-            [aMenuItem setKeyEquivalent:SRASCIIStringForKeyCode(code)];
-            [aMenuItem setKeyEquivalentModifierMask:flags];
-        }
-        else {
-            [aMenuItem setKeyEquivalent:@""];
-            [aMenuItem setKeyEquivalentModifierMask:0];
-        }
         return [[WLNewTaskWindowController sharedWindowController] canCreateTask];
-    }
     else if (aMenuItem == _showNextWeekMenuItem)
-    {
-        NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutShowNextWeek"];
-        if (shortcut != nil) {
-            NSInteger code = [[shortcut objectForKey:SRShortcutCodeKey] integerValue];
-            NSUInteger flags = [[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue];
-            [aMenuItem setKeyEquivalent:SRASCIIStringForKeyCode(code)];
-            [aMenuItem setKeyEquivalentModifierMask:flags];
-        }
-        else {
-            [aMenuItem setKeyEquivalent:@""];
-            [aMenuItem setKeyEquivalentModifierMask:0];
-        }
         return [self.calendarWindowController canShowNextWeek];
-    }
     else if (aMenuItem == _showCurrentWeekMenuItem)
-    {
-        NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutShowCurrentWeek"];
-        if (shortcut != nil) {
-            NSInteger code = [[shortcut objectForKey:SRShortcutCodeKey] integerValue];
-            NSUInteger flags = [[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue];
-            [aMenuItem setKeyEquivalent:SRASCIIStringForKeyCode(code)];
-            [aMenuItem setKeyEquivalentModifierMask:flags];
-        }
-        else {
-            [aMenuItem setKeyEquivalent:@""];
-            [aMenuItem setKeyEquivalentModifierMask:0];
-        }
         return [self.calendarWindowController canShowCurrentWeek];
-    }
     else if (aMenuItem == _showPreviousWeekMenuItem)
-    {
-        NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutShowPreviousWeek"];
-        if (shortcut != nil) {
-            NSInteger code = [[shortcut objectForKey:SRShortcutCodeKey] integerValue];
-            NSUInteger flags = [[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue];
-            [aMenuItem setKeyEquivalent:SRASCIIStringForKeyCode(code)];
-            [aMenuItem setKeyEquivalentModifierMask:flags];
-        }
-        else {
-            [aMenuItem setKeyEquivalent:@""];
-            [aMenuItem setKeyEquivalentModifierMask:0];
-        }
         return [self.calendarWindowController canShowPreviousWeek];
-    }
     else if (aMenuItem == _bringToFrontMenuItem)
     {
-        NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:@"shortcutBringToFront"];
-        if (shortcut != nil) {
-            NSInteger code = [[shortcut objectForKey:SRShortcutCodeKey] integerValue];
-            NSUInteger flags = [[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue];
-            [aMenuItem setKeyEquivalent:SRASCIIStringForKeyCode(code)];
-            [aMenuItem setKeyEquivalentModifierMask:flags];
-        }
-        else {
-            [aMenuItem setKeyEquivalent:@""];
-            [aMenuItem setKeyEquivalentModifierMask:0];
-        }
-        
         if (self.calendarWindowController.window.state != WLFinderLevelState)
             [aMenuItem setTitle:NSLocalizedString(@"Send to Back", @"Send to Back menu item title")];
         else 
@@ -362,7 +314,15 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-
+    _shortCuts = [[NSArray arrayWithObjects:
+                  [NSArray arrayWithObjects:@"shortcutNewEvent", @"newEvent:", _newEventMenuItem, nil],
+                  [NSArray arrayWithObjects:@"shortcutNewTask", @"newTask:", _newTaskMenuItem, nil],
+                  [NSArray arrayWithObjects:@"shortcutShowNextWeek", @"showNextWeek:", _showNextWeekMenuItem, nil],
+                  [NSArray arrayWithObjects:@"shortcutShowPreviousWeek", @"showPreviousWeek:", _showPreviousWeekMenuItem, nil],
+                  [NSArray arrayWithObjects:@"shortcutShowCurrentWeek", @"showCurrentWeek:", _showCurrentWeekMenuItem, nil],
+                  [NSArray arrayWithObjects:@"shortcutBringToFront", @"bringToFront:", _bringToFrontMenuItem, nil],
+                  nil] retain];
+    
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 
     // Configure status bar
@@ -371,48 +331,11 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     [userDefaults addObserver:self forKeyPath:@"ShowInMenuBar" options:NSKeyValueObservingOptionNew context:NULL];
 
     // Configure shortcuts
-    NSDictionary *newEventShortcut = [userDefaults dictionaryForKey:@"shortcutNewEvent"];
-    if (newEventShortcut != nil)
+    [_shortCuts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) 
     {
-        PTHotKey *hotKey = [PTHotKey hotKeyWithIdentifier:@"shortcutNewEvent" keyCombo:newEventShortcut target:self action:@selector(newEvent:)];
-        [[PTHotKeyCenter sharedCenter] registerHotKey:hotKey];
-    }
-    NSDictionary *newTaskShortcut = [userDefaults dictionaryForKey:@"shortcutNewTask"];
-    if (newTaskShortcut != nil)
-    {
-        PTHotKey *hotKey = [PTHotKey hotKeyWithIdentifier:@"shortcutNewTask" keyCombo:newTaskShortcut target:self action:@selector(newTask:)];
-        [[PTHotKeyCenter sharedCenter] registerHotKey:hotKey];
-    }
-    NSDictionary *showNextWeekShortcut = [userDefaults dictionaryForKey:@"shortcutShowNextWeek"];
-    if (showNextWeekShortcut != nil)
-    {
-        PTHotKey *hotKey = [PTHotKey hotKeyWithIdentifier:@"shortcutShowNextWeek" keyCombo:showNextWeekShortcut target:self action:@selector(showNextWeek:)];
-        [[PTHotKeyCenter sharedCenter] registerHotKey:hotKey];
-    }
-    NSDictionary *showPreviousWeekShortcut = [userDefaults dictionaryForKey:@"shortcutShowPreviousWeek"];
-    if (showNextWeekShortcut != nil)
-    {
-        PTHotKey *hotKey = [PTHotKey hotKeyWithIdentifier:@"shortcutShowPreviousWeek" keyCombo:showPreviousWeekShortcut target:self action:@selector(showPreviousWeek:)];
-        [[PTHotKeyCenter sharedCenter] registerHotKey:hotKey];
-    }
-    NSDictionary *showCurrentWeekShortcut = [userDefaults dictionaryForKey:@"shortcutShowCurrentWeek"];
-    if (showNextWeekShortcut != nil)
-    {
-        PTHotKey *hotKey = [PTHotKey hotKeyWithIdentifier:@"shortcutShowCurrentWeek" keyCombo:showCurrentWeekShortcut target:self action:@selector(showCurrentWeek:)];
-        [[PTHotKeyCenter sharedCenter] registerHotKey:hotKey];
-    }
-    NSDictionary *bringToFrontShortcut = [userDefaults dictionaryForKey:@"shortcutBringToFront"];
-    if (bringToFrontShortcut != nil)
-    {
-        PTHotKey *hotKey = [PTHotKey hotKeyWithIdentifier:@"shortcutBringToFront" keyCombo:bringToFrontShortcut target:self action:@selector(bringToFront:)];
-        [[PTHotKeyCenter sharedCenter] registerHotKey:hotKey];
-    }
-    [userDefaults addObserver:self forKeyPath:@"shortcutNewEvent" options:NSKeyValueObservingOptionNew context:NULL];
-    [userDefaults addObserver:self forKeyPath:@"shortcutNewTask" options:NSKeyValueObservingOptionNew context:NULL];
-    [userDefaults addObserver:self forKeyPath:@"shortcutShowNextWeek" options:NSKeyValueObservingOptionNew context:NULL];
-    [userDefaults addObserver:self forKeyPath:@"shortcutShowPreviousWeek" options:NSKeyValueObservingOptionNew context:NULL];
-    [userDefaults addObserver:self forKeyPath:@"shortcutShowCurrentWeek" options:NSKeyValueObservingOptionNew context:NULL];
-    [userDefaults addObserver:self forKeyPath:@"shortcutBringToFront" options:NSKeyValueObservingOptionNew context:NULL];
+        NSString *shortcutName = [obj objectAtIndex:ShortcutsNameIdx];
+        [userDefaults addObserver:self forKeyPath:shortcutName options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:obj];
+    }];
 
     // Configure windows.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillClose:) name:NSWindowWillCloseNotification object:nil];
@@ -529,6 +452,23 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (void)observeValueForKeyPath:(NSString *)aKeyPath ofObject:(id)aObject change:(NSDictionary *)aChange context:(void *)aContext
 {
+    if (aContext != nil && [((id) aContext) isKindOfClass:[NSArray class]] && [((NSArray *) aContext) count] == 3)
+    {
+        // Shortcut.
+        NSArray *obj = aContext;
+        PTHotKeyCenter *hotKeyCenter = [PTHotKeyCenter sharedCenter];
+        PTHotKey *oldHotKey = [hotKeyCenter hotKeyWithIdentifier:aKeyPath];
+        [hotKeyCenter unregisterHotKey:oldHotKey];
+        
+        NSDictionary *newHotKeyDict = [aChange objectForKey:NSKeyValueChangeNewKey];
+        if (newHotKeyDict != nil && (id)newHotKeyDict != [NSNull null])
+        {
+            PTHotKey *newHotKey = [PTHotKey hotKeyWithIdentifier:aKeyPath keyCombo:newHotKeyDict target:self action:NSSelectorFromString([obj objectAtIndex:ShortcutsSelectorIdx])];
+            [hotKeyCenter registerHotKey:newHotKey];
+        }
+        return;
+    }
+    
     if ([aKeyPath isEqualToString:@"ShowInMenuBar"])
     {
         if ([[aChange objectForKey:NSKeyValueChangeNewKey] boolValue])
@@ -537,37 +477,6 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         {
             [[NSStatusBar systemStatusBar] removeStatusItem:_statusItem];
             [_statusItem release], _statusItem = nil;
-        }
-    }
-    else if ([aKeyPath isEqualToString:@"shortcutNewEvent"] ||
-             [aKeyPath isEqualToString:@"shortcutNewTask"] ||
-             [aKeyPath isEqualToString:@"shortcutShowNextWeek"] ||
-             [aKeyPath isEqualToString:@"shortcutShowPreviousWeek"] ||
-             [aKeyPath isEqualToString:@"shortcutShowCurrentWeek"] ||
-             [aKeyPath isEqualToString:@"shortcutBringToFront"])
-    {
-        PTHotKeyCenter *hotKeyCenter = [PTHotKeyCenter sharedCenter];
-        PTHotKey *oldHotKey = [hotKeyCenter hotKeyWithIdentifier:aKeyPath];
-        [hotKeyCenter unregisterHotKey:oldHotKey];
-
-        NSDictionary *newHotKeyDict = [aChange objectForKey:NSKeyValueChangeNewKey];
-        if (newHotKeyDict != nil && (id)newHotKeyDict != [NSNull null])
-        {
-            SEL action = NULL;
-            if ([aKeyPath isEqualToString:@"shortcutNewEvent"])
-                action = @selector(newEvent:);
-            else if ([aKeyPath isEqualToString:@"shortcutNewTask"])
-                action = @selector(newTask:);
-            else if ([aKeyPath isEqualToString:@"shortcutShowNextWeek"])
-                action = @selector(showNextWeek:);
-            else if ([aKeyPath isEqualToString:@"shortcutShowPreviousWeek"])
-                action = @selector(showPreviousWeek:);
-            else if ([aKeyPath isEqualToString:@"shortcutShowCurrentWeek"])
-                action = @selector(showCurrentWeek:);
-            else if ([aKeyPath isEqualToString:@"shortcutBringToFront"])
-                action = @selector(bringToFront:);
-            PTHotKey *newHotKey = [PTHotKey hotKeyWithIdentifier:aKeyPath keyCombo:newHotKeyDict target:self action:action];
-            [hotKeyCenter registerHotKey:newHotKey];
         }
     }
     else if ([aKeyPath isEqualToString:@"date"])
