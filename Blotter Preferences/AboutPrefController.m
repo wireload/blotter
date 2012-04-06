@@ -19,32 +19,32 @@ static NSString* const _WLCursorKey = @"cursor";
 
 - (void)showHelp:(id)aSender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wireload.net/products/blotter/faq/?utm_source=Blotter&utm_medium=app&utm_content=about_page_help&utm_campaign=Blotter_app"]];
+    [[NSWorkspace sharedWorkspace] openURL:[[NSUserDefaults standardUserDefaults] WL_getHelpURL]];
 }
 
 - (void)showGetSupport:(id)aSender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wireload.net/products/blotter/help/?utm_source=Blotter&utm_medium=app&utm_content=about_page_support&utm_campaign=Blotter_app"]];
+    [[NSWorkspace sharedWorkspace] openURL:[[NSUserDefaults standardUserDefaults] WL_getSupportURL]];
 }
 
 - (IBAction)showRateThisApp:(id)aSender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"macappstore://itunes.apple.com/app/id406580224?mt=12"]];
+    [[NSWorkspace sharedWorkspace] openURL:[[NSUserDefaults standardUserDefaults] WL_rateThisAppURL]];
 }
 
 - (IBAction)showFollowUsOnTwitter:(id)aSender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://twitter.com/BlotterApp"]];
+    [[NSWorkspace sharedWorkspace] openURL:[[NSUserDefaults standardUserDefaults] WL_followOnTwitterURL]];
 }
 
 - (IBAction)showWireload:(id)aSender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wireload.net/?utm_source=Blotter&utm_medium=app&utm_content=about_page_wireload&utm_campaign=Blotter_app"]];
+    [[NSWorkspace sharedWorkspace] openURL:[[NSUserDefaults standardUserDefaults] WL_wireloadURL]];
 }
 
 - (IBAction)showBanner:(id)aSender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wireload.net/products/quiet/?utm_source=Blotter&utm_medium=app&utm_content=about_page_quiet&utm_campaign=Blotter_app"]];
+    [[NSWorkspace sharedWorkspace] openURL:[[NSUserDefaults standardUserDefaults] WL_bannerURL]];
 }
 
 

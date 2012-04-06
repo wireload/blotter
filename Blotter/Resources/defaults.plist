@@ -62,5 +62,17 @@
 	<integer>0</integer>
 	<key>ApplicationRunTimerIsFired</key>
 	<false/>
+	<key>RateThisAppURL</key>
+	<string>macappstore://itunes.apple.com/app/id406580224?mt=12</string>
+	<key>GetHelpURL</key>
+	<string>http://wireload.net/products/blotter/faq/?utm_source=Blotter&amp;utm_medium=app&amp;utm_content=about_page_help&amp;utm_campaign=Blotter_app</string>
+	<key>GetSupportURL</key>
+	<string>http://wireload.net/products/blotter/help/?utm_source=Blotter&amp;utm_medium=app&amp;utm_content=about_page_support&amp;utm_campaign=Blotter_app</string>
+	<key>FollowOnTwitterURL</key>
+	<string>http://twitter.com/BlotterApp</string>
+	<key>WireloadURL</key>
+	<string>http://wireload.net/?utm_source=Blotter&amp;utm_medium=app&amp;utm_content=about_page_wireload&amp;utm_campaign=Blotter_app</string>
+	<key>BannerURL</key>
+	<string>http://wireload.net/products/quiet/?utm_source=Blotter&amp;utm_medium=app&amp;utm_content=about_page_quiet&amp;utm_campaign=Blotter_app</string>
 </dict>
 </plist>

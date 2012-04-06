@@ -214,7 +214,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 - (IBAction)showRateThisApp:(id)aSender
 {
     [[NSUserDefaults standardUserDefaults] WL_setShowRateThisAppInMenu:NO];
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"macappstore://itunes.apple.com/app/id406580224?mt=12"]];
+    [[NSWorkspace sharedWorkspace] openURL:[[NSUserDefaults standardUserDefaults] WL_rateThisAppURL]];
 }
 
 - (BOOL)isOnlyCalendarWindowVisible
