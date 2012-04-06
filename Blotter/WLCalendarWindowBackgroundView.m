@@ -74,36 +74,16 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
 - (CGImageRef)createCGImageOfScreenBelowWindow:(NSWindow *)aWindow
 {
     BEGIN_TIMING();
-    // To properly map screen coordinates (meaning that 0,0 point is lower left corner of the screen with main menu)
-    // we need to calculate _minimal_ offset to the left border (always <= 0, cause left-side windows (relative to the screen with main menu) always have negative x)
-    // and _maximal_ offset to the top border (always > 0, cause it cannot be less than height of the screen with main menu)
-    CGFloat mapX = 0, mapY = 0;
-    for (NSScreen *screen in [NSScreen screens]) {
-        mapX = MIN([screen frame].origin.x, mapX);
-        mapY = MAX(NSMaxY([screen frame]), mapY);
-    }
-    assert(mapX <= 0);
-    assert(mapY > 0);
+
+    CGRect windowRect = NSRectToCGRect([aWindow frame] );
+    windowRect.origin.y = NSMaxY([[aWindow screen] frame]) - NSMaxY([aWindow frame]);
     
     CGWindowID windowId = [aWindow windowNumber];
-    CGImageRef desktopImage = CGWindowListCreateImage(CGRectInfinite, kCGWindowListOptionOnScreenBelowWindow, windowId, kCGWindowImageDefault);
-    
-    // Get window frame in screen coordinates
-    CGRect screenWindowFrame = NSRectToCGRect([aWindow frame]);
-    //DLOG(@"Window frame in screen coordinates: %@", NSStringFromRect(screenWindowFrame));
-    
-    // Get window frame in desktop image coordinates
-    CGRect imageWindowFrame = CGRectMake(screenWindowFrame.origin.x - mapX,
-                                         -screenWindowFrame.origin.y + mapY - screenWindowFrame.size.height,
-                                         screenWindowFrame.size.width,
-                                         screenWindowFrame.size.height);
-    // DLOG(@"Window frame in desktop image coordinates: %@", NSStringFromRect(imageWindowFrame));
-    CGImageRef screenBelowWindowImage = CGImageCreateWithImageInRect(desktopImage, imageWindowFrame);
-    CFRelease(desktopImage);
-    
+    CGImageRef desktopImage = CGWindowListCreateImage(windowRect, kCGWindowListOptionOnScreenBelowWindow, windowId, kCGWindowImageBoundsIgnoreFraming);
+
     END_TIMING(@"capture background");
-    
-    return screenBelowWindowImage;
+
+    return desktopImage;
 }
 
 - (CIImage *)blurredBackgroundImage
