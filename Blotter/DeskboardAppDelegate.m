@@ -252,27 +252,6 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (BOOL)validateMenuItem:(NSMenuItem *)aMenuItem
 {
-    for (int i = 0, count = [_shortCuts count]; i < count; i++)
-    {
-        NSArray *obj = [_shortCuts objectAtIndex:i];
-        NSMenuItem *shortcutMenuItem = [obj objectAtIndex:ShortcutsMenuItemIdx];
-        if (aMenuItem == shortcutMenuItem)
-        {
-            NSString *shortcutName = [obj objectAtIndex:ShortcutsNameIdx];
-            NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:shortcutName];
-            if (shortcut != nil) {
-                NSInteger code = [[shortcut objectForKey:SRShortcutCodeKey] integerValue];
-                NSUInteger flags = [[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue];
-                [aMenuItem setKeyEquivalent:SRASCIIStringForKeyCode(code)];
-                [aMenuItem setKeyEquivalentModifierMask:flags];
-            }
-            else {
-                [aMenuItem setKeyEquivalent:@""];
-                [aMenuItem setKeyEquivalentModifierMask:0];
-            }
-        }
-    }
-    
     if (aMenuItem == _newEventMenuItem)
         return [[WLNewEventWindowController sharedWindowController] canCreateEvent];
     else if (aMenuItem == _newTaskMenuItem)
@@ -301,6 +280,25 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (void)menuWillOpen:(NSMenu *)aMenu
 {
+    [_shortCuts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) 
+    {
+        NSString *shortcutName = [obj objectAtIndex:ShortcutsNameIdx];
+        NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:shortcutName];
+        NSMenuItem *shortcutMenuItem = [obj objectAtIndex:ShortcutsMenuItemIdx];
+        
+        if (shortcut != nil) {
+            NSInteger code = [[shortcut objectForKey:SRShortcutCodeKey] integerValue];
+            NSUInteger flags = [[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue];
+            [shortcutMenuItem setKeyEquivalent:SRASCIIStringForKeyCode(code)];
+            [shortcutMenuItem setKeyEquivalentModifierMask:flags];
+        }
+        else 
+        {
+            [shortcutMenuItem setKeyEquivalent:@""];
+            [shortcutMenuItem setKeyEquivalentModifierMask:0];
+        }
+    }];
+
     [[calendarWindowController fadeController] fadeIn];
 }
 
