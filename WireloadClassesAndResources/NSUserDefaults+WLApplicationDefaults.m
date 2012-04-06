@@ -42,6 +42,18 @@ NSString* const WLApplicationRunTimerIsFiredKey = @"ApplicationRunTimerIsFired";
 
 NSString* const WLShowRateThisAppInMenuKey = @"ShowRateThisAppInMenu";
 
+NSString* const WLRateThisAppURLKey = @"RateThisAppURL";
+
+NSString* const WLGetHelpURLKey = @"GetHelpURL";
+
+NSString* const WLGetSupportURLKey = @"GetSupportURL";
+
+NSString* const WLFollowOnTwitterURLKey = @"FollowOnTwitterURL";
+
+NSString* const WLWireloadURLKey = @"WireloadURL";
+
+NSString* const WLBannerURLKey = @"BannerURL";
+
 NSComparator const WLCalendarsComparator = ^(id left, id right) {
     return [[left valueForKey:WLCalendarUIDKey] compare:[right valueForKey:WLCalendarUIDKey]];
 };
@@ -298,3 +310,45 @@ NSComparator const WLCalendarsComparator = ^(id left, id right) {
 
 @end
 
+
+#pragma mark -
+
+@implementation NSUserDefaults (WLURLs)
+
+- (NSURL *)WL_rateThisAppURL
+{
+    NSString *s = [self stringForKey:WLRateThisAppURLKey];
+    return [NSURL URLWithString:s];
+}
+
+- (NSURL *)WL_getHelpURL
+{
+    NSString *s = [self stringForKey:WLGetHelpURLKey];
+    return [NSURL URLWithString:s];
+}
+
+- (NSURL *)WL_getSupportURL
+{
+    NSString *s = [self stringForKey:WLGetSupportURLKey];
+    return [NSURL URLWithString:s];
+}
+
+- (NSURL *)WL_followOnTwitterURL
+{
+    NSString *s = [self stringForKey:WLFollowOnTwitterURLKey];
+    return [NSURL URLWithString:s];
+}
+
+- (NSURL *)WL_wireloadURL
+{
+    NSString *s = [self stringForKey:WLWireloadURLKey];
+    return [NSURL URLWithString:s];
+}
+
+- (NSURL *)WL_bannerURL
+{
+    NSString *s = [self stringForKey:WLBannerURLKey];
+    return [NSURL URLWithString:s];
+}
+
+@end

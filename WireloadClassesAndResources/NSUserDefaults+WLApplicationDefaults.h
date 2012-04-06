@@ -43,6 +43,18 @@ extern NSString* const WLApplicationRunTimerIsFiredKey;
 
 extern NSString* const WLShowRateThisAppInMenuKey;
 
+extern NSString* const WLRateThisAppURLKey;
+
+extern NSString* const WLGetHelpURLKey;
+
+extern NSString* const WLGetSupportURLKey;
+
+extern NSString* const WLFollowOnTwitterURLKey;
+
+extern NSString* const WLWireloadURLKey;
+
+extern NSString* const WLBannerURLKey;
+
 typedef void (^WLCalendarsUpdaterBlock)(NSMutableArray *aCalendars);
 
 extern NSComparator const WLCalendarsComparator;
@@ -139,5 +151,22 @@ extern NSComparator const WLCalendarsComparator;
 - (BOOL)WL_showRateThisAppInMenu;
 
 - (void)WL_setShowRateThisAppInMenu:(BOOL)newShow;
+
+@end
+
+
+@interface NSUserDefaults (WLURLs)
+
+- (NSURL *)WL_rateThisAppURL;
+
+- (NSURL *)WL_getHelpURL;
+
+- (NSURL *)WL_getSupportURL;
+
+- (NSURL *)WL_followOnTwitterURL;
+
+- (NSURL *)WL_wireloadURL;
+
+- (NSURL *)WL_bannerURL;
 
 @end
