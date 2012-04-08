@@ -71,6 +71,25 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
     [NSImage imageNamed:@"noise"];
 }
 
+- (id)initWithFrame:(NSRect)frameRect
+{
+    if (self = [super initWithFrame:frameRect])
+    {
+        // This filter will be responsible for flipping the input image upside down. It can't be 
+        // fully prepared in advance because we need to know the height of the image.
+        CIFilter *transform = [CIFilter filterWithName:@"CIAffineTransform"];
+        
+        CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
+        [filter setDefaults];
+        [filter setValue:[NSNumber numberWithFloat:WLCalendarBackgroundActiveBlur] forKey:@"inputRadius"];
+
+        _blurInputFilter = [transform retain];
+        _blurOutputFilter = [filter retain];
+    }
+
+    return self;
+}
+
 - (CGImageRef)createCGImageOfScreenBelowWindow:(NSWindow *)aWindow
 {
     BEGIN_TIMING();
@@ -91,24 +110,18 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
     BEGIN_TIMING();
     CGImageRef backgroundImage = [self createCGImageOfScreenBelowWindow:[self window]];
     CIImage *ciImage = [CIImage imageWithCGImage:backgroundImage];
+    CFRelease(backgroundImage);
 
     // Flip image upside down.
     NSAffineTransform *affineTransform = [NSAffineTransform transform];
     [affineTransform translateXBy:0 yBy:[ciImage extent].size.height];
     [affineTransform scaleXBy:1.0 yBy:-1.0];
+
+    [_blurInputFilter setValue:ciImage forKey:@"inputImage"];
+    [_blurInputFilter setValue:affineTransform forKey:@"inputTransform"];
+    [_blurOutputFilter setValue:[_blurInputFilter valueForKey:@"outputImage"] forKey:@"inputImage"];
     
-    CIFilter *transform = [CIFilter filterWithName:@"CIAffineTransform"];
-    [transform setValue:ciImage forKey:@"inputImage"];
-    [transform setValue:affineTransform forKey:@"inputTransform"];
-
-    CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
-    [filter setDefaults];
-    [filter setValue:[transform valueForKey:@"outputImage"] forKey:@"inputImage"];
-    [filter setValue:[NSNumber numberWithFloat:WLCalendarBackgroundActiveBlur] forKey:@"inputRadius"];
-
-    CIImage *result = [filter valueForKey:@"outputImage"];
-
-    CFRelease(backgroundImage);
+    CIImage *result = [_blurOutputFilter valueForKey:@"outputImage"];
     
     END_TIMING(@"blur background");
     

@@ -16,6 +16,10 @@
  @ownership     WLCalendarWindow
  */
 @interface WLCalendarWindowBackgroundView : NSView
+{
+    CIFilter *_blurInputFilter;
+    CIFilter *_blurOutputFilter;
+}
 
 + (NSRect)contentRectForFrameRect:(NSRect)aFrame;
 + (NSRect)frameRectForContentRect:(NSRect)aContentRect;
