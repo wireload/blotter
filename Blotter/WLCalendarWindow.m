@@ -157,14 +157,15 @@ static const CGFloat fadeDuration = 0.1;
     
     [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
     [self setLevel:[self finderLevel]];
-    // If we went to Finder level due to becoming inactive during a space shift, then
-    // we must also order to the front or we somehow end up underneath Finder.
-    [self orderFrontRegardless];
     [frameView display];
     [self display];
     state = WLFinderLevelState;
 
     // NSEnableScreenUpdates();
+
+    // If we went to Finder level due to becoming inactive during a space shift, then
+    // we must also order to the front or we somehow end up underneath Finder.
+    [self orderFrontRegardless];
 
     [CATransaction begin];
     [CATransaction setAnimationDuration:fadeDuration];
@@ -176,18 +177,18 @@ static const CGFloat fadeDuration = 0.1;
 {
     NSView *frameView = [super contentView];
 
-    //NSDisableScreenUpdates();
+    // NSDisableScreenUpdates();
 
     [self setLevel:NSFloatingWindowLevel];
     [self setCollectionBehavior:NSWindowCollectionBehaviorDefault];
     [frameView display];
     [self display];
     state = WLFloatingLevelState;   
+
+    // NSEnableScreenUpdates();
     
     [NSApp activateIgnoringOtherApps:YES];
     [self makeKeyAndOrderFront:nil];
-
-    //NSEnableScreenUpdates();
 
     [CATransaction begin];
     [CATransaction setAnimationDuration:fadeDuration];
