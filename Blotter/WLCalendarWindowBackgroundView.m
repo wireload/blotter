@@ -94,7 +94,7 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
 {
     BEGIN_TIMING();
 
-    CGRect windowRect = NSRectToCGRect([aWindow frame] );
+    CGRect windowRect = NSRectToCGRect([aWindow frame]);
     windowRect.origin.y = NSMaxY([[aWindow screen] frame]) - NSMaxY([aWindow frame]);
     
     CGWindowID windowId = [aWindow windowNumber];
