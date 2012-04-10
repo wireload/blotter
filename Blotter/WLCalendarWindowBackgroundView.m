@@ -90,7 +90,7 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
     return self;
 }
 
-- (CGImageRef)createCGImageOfScreenBelowWindow:(NSWindow *)aWindow
+- (CGImageRef)newCGImageOfScreenBelowWindow:(NSWindow *)aWindow
 {
     BEGIN_TIMING();
 
@@ -108,9 +108,9 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
 - (CIImage *)blurredBackgroundImage
 {  
     BEGIN_TIMING();
-    CGImageRef backgroundImage = [self createCGImageOfScreenBelowWindow:[self window]];
+    CGImageRef backgroundImage = [self newCGImageOfScreenBelowWindow:[self window]];
     CIImage *ciImage = [CIImage imageWithCGImage:backgroundImage];
-    CFRelease(backgroundImage);
+    CGImageRelease(backgroundImage);
 
     // Flip image upside down.
     NSAffineTransform *affineTransform = [NSAffineTransform transform];
