@@ -28,6 +28,7 @@
         [self setOpaque:NO];
         [self setBackgroundColor:[NSColor clearColor]];
         [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces | NSWindowCollectionBehaviorParticipatesInCycle];
+        [self setMovableByWindowBackground:YES];
     }
     return self;
 }

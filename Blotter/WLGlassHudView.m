@@ -24,6 +24,16 @@ static const CGFloat _WLRightPadding = 18.0;
 
 #pragma mark NSView
 
+- (BOOL)acceptsFirstMouse:(NSEvent *)anEvent
+{
+    return YES;
+}
+
+- (BOOL)mouseDownCanMoveWindow
+{
+    return YES;
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
     NSRect bounds = [self bounds];
