@@ -153,11 +153,11 @@
 
 - (void)createPreferencesWindowAndDisplay:(BOOL)shouldDisplay
 {
-    if (prefsWindow) {
+    if (prefsWindow && shouldDisplay) {
         if (alwaysOpensCentered && ![prefsWindow isVisible]) {
             [prefsWindow center];
+            [prefsWindow makeKeyAndOrderFront:nil];
         }
-        [prefsWindow makeKeyAndOrderFront:nil];
         return;
     }
     
