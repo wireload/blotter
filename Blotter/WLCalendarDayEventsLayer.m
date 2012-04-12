@@ -668,11 +668,11 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
     NSMutableString *description = [NSMutableString stringWithString:[super description]];
     [description appendFormat:@"\n"];
     [[_eventsLayoutTreeRootNode childNodes] enumerateObjectsUsingBlock:^(NSTreeNode *rowNode, NSUInteger rowIdx, BOOL *stopRow) {
-        NSLog(@"Row #%lu", rowIdx);
+        NSLog(@"Row #%lu", (unsigned long)rowIdx);
         NSArray *columnNodes = [rowNode childNodes];
         [columnNodes enumerateObjectsUsingBlock:^(NSTreeNode *columnNode, NSUInteger columnIdx, BOOL *stopColumn)
         {
-            NSLog(@"\tColumn #%lu", columnIdx);
+            NSLog(@"\tColumn #%lu", (unsigned long)columnIdx);
             NSArray *eventLayers = [columnNode representedObject];
             [eventLayers enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger layerIdx, BOOL *stopLayer)
             {
