@@ -7,7 +7,7 @@
 //
 
 #import <WireloadClassesAndResources/WireloadClassesAndResources.h>
-#import "WLGlassHudView.h"
+#import "WLGlassHudWindowBackgroundView.h"
 
 
 static const CGFloat _WLTopPadding = 18.0;
@@ -19,7 +19,7 @@ static const CGFloat _WLLeftPadding = 18.0;
 static const CGFloat _WLRightPadding = 18.0;
 
 
-@implementation WLGlassHudView
+@implementation WLGlassHudWindowBackgroundView
 
 
 #pragma mark NSView

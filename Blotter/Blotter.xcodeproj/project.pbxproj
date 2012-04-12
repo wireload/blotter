@@ -97,7 +97,7 @@
 		E278ECF413C8B73D00B327EB /* WLCalendarTasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E278ECF313C8B73D00B327EB /* WLCalendarTasksViewController.m */; };
 		E278F19E13C9EA6700B327EB /* WLCalendarWeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = E278F19D13C9EA6700B327EB /* WLCalendarWeekView.m */; };
 		E279363A1324F05800BC5224 /* WLGlassHudWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E27936391324F05800BC5224 /* WLGlassHudWindow.m */; };
-		E27936461324F6E200BC5224 /* WLGlassHudView.m in Sources */ = {isa = PBXBuildFile; fileRef = E27936451324F6E200BC5224 /* WLGlassHudView.m */; };
+		E27936461324F6E200BC5224 /* WLGlassHudWindowBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = E27936451324F6E200BC5224 /* WLGlassHudWindowBackgroundView.m */; };
 		E27951BB131AA060008AE1DA /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E27951BA131AA060008AE1DA /* Carbon.framework */; };
 		E27DE06A13CF18B1003E8E9A /* WLCalendarAllDayEventsLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E27DE06913CF18B1003E8E9A /* WLCalendarAllDayEventsLayer.m */; };
 		E27DE07613D03E19003E8E9A /* WLCalendarEventLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E27DE07513D03E19003E8E9A /* WLCalendarEventLayer.m */; };
@@ -355,8 +355,8 @@
 		E278F19D13C9EA6700B327EB /* WLCalendarWeekView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWeekView.m; sourceTree = "<group>"; };
 		E27936381324F05800BC5224 /* WLGlassHudWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudWindow.h; sourceTree = "<group>"; };
 		E27936391324F05800BC5224 /* WLGlassHudWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudWindow.m; sourceTree = "<group>"; };
-		E27936441324F6E200BC5224 /* WLGlassHudView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudView.h; sourceTree = "<group>"; };
-		E27936451324F6E200BC5224 /* WLGlassHudView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudView.m; sourceTree = "<group>"; };
+		E27936441324F6E200BC5224 /* WLGlassHudWindowBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; path = WLGlassHudWindowBackgroundView.h; sourceTree = "<group>"; };
+		E27936451324F6E200BC5224 /* WLGlassHudWindowBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudWindowBackgroundView.m; sourceTree = "<group>"; };
 		E27951BA131AA060008AE1DA /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		E27DE06813CF18B1003E8E9A /* WLCalendarAllDayEventsLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarAllDayEventsLayer.h; sourceTree = "<group>"; };
 		E27DE06913CF18B1003E8E9A /* WLCalendarAllDayEventsLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarAllDayEventsLayer.m; sourceTree = "<group>"; };
@@ -643,8 +643,8 @@
 			children = (
 				E27936381324F05800BC5224 /* WLGlassHudWindow.h */,
 				E27936391324F05800BC5224 /* WLGlassHudWindow.m */,
-				E27936441324F6E200BC5224 /* WLGlassHudView.h */,
-				E27936451324F6E200BC5224 /* WLGlassHudView.m */,
+				E27936441324F6E200BC5224 /* WLGlassHudWindowBackgroundView.h */,
+				E27936451324F6E200BC5224 /* WLGlassHudWindowBackgroundView.m */,
 				E267038F132CA887003FBFC2 /* WLGlassHudButtonCell.h */,
 				E2670390132CA887003FBFC2 /* WLGlassHudButtonCell.m */,
 				E2701FA7133B563B0098CD79 /* WLGlassHudTextView.h */,
@@ -1019,7 +1019,7 @@
 				E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */,
 				E29F38EE1319694C00A865D9 /* WLNewTaskWindowController.m in Sources */,
 				E279363A1324F05800BC5224 /* WLGlassHudWindow.m in Sources */,
-				E27936461324F6E200BC5224 /* WLGlassHudView.m in Sources */,
+				E27936461324F6E200BC5224 /* WLGlassHudWindowBackgroundView.m in Sources */,
 				E2670391132CA887003FBFC2 /* WLGlassHudButtonCell.m in Sources */,
 				E2701FA9133B563B0098CD79 /* WLGlassHudTextView.m in Sources */,
 				E2FCE09D133F9264006E713F /* WLGlassHudDatePicker.m in Sources */,

@@ -9,7 +9,7 @@
 #import <Carbon/Carbon.h>
 #import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLGlassHudWindow.h"
-#import "WLGlassHudView.h"
+#import "WLGlassHudWindowBackgroundView.h"
 
 
 @implementation WLGlassHudWindow
@@ -68,10 +68,10 @@
         NSRect bounds = [self frame];
         bounds.origin = NSZeroPoint;
 
-        WLGlassHudView *frameView = [super contentView];
+        WLGlassHudWindowBackgroundView *frameView = [super contentView];
         if (frameView == nil)
         {
-            frameView = [[[WLGlassHudView alloc] initWithFrame:bounds] autorelease];
+            frameView = [[[WLGlassHudWindowBackgroundView alloc] initWithFrame:bounds] autorelease];
             [super setContentView:frameView];
         }
 
