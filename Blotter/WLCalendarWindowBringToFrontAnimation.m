@@ -8,6 +8,26 @@
 
 #import "WLCalendarWindowBringToFrontAnimation.h"
 
+
 @implementation WLCalendarWindowBringToFrontAnimation
+
+- (id)initWithWindow:(WLCalendarWindow *)aWindow
+{
+    self = [super init];
+    if (self != nil)
+    {
+        _window = aWindow;
+    }
+    return self;
+}
+
+
+#pragma mark NSAnimation
+
+- (void)setCurrentProgress:(NSAnimationProgress)aProgress
+{
+    [super setCurrentProgress:aProgress];
+    [_window setAlphaValue:[self currentValue]];
+}
 
 @end

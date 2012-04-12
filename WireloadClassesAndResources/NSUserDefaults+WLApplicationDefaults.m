@@ -54,6 +54,12 @@ NSString* const WLWireloadURLKey = @"WireloadURL";
 
 NSString* const WLBannerURLKey = @"BannerURL";
 
+NSString* const WLAnimateBringToFrontKey = @"AnimateBringToFront";
+
+NSString* const WLAutoFadeKey = @"AutoFade";
+
+NSString* const WLAutoFadeSecondsKey = @"AutoFadeSeconds";
+
 NSComparator const WLCalendarsComparator = ^(id left, id right) {
     return [[left valueForKey:WLCalendarUIDKey] compare:[right valueForKey:WLCalendarUIDKey]];
 };
@@ -79,7 +85,7 @@ NSComparator const WLCalendarsComparator = ^(id left, id right) {
 
 - (void)WL_migrateTo2_1
 {
-    NSLog(@"Migrate to %d", WLBlotterBundleVersion2_1);
+    NSLog(@"Migrate to %d", (int)WLBlotterBundleVersion2_1);
     // In pre 1.3 versions of Blotter CalendarSize was a string.
     if ([[self stringForKey:WLCalendarSizeKey] isEqualToString:@"Narrow"])
         [self setInteger:BLNarrowSize forKey:WLCalendarSizeKey];
@@ -254,11 +260,26 @@ NSComparator const WLCalendarsComparator = ^(id left, id right) {
 
 #pragma mark -
 
-@implementation NSUserDefaults (WLCalendarWindowController)
+@implementation NSUserDefaults (WLCalendarWindow)
 
 - (BOOL)WL_slowsAnimation
 {
     return [self boolForKey:WLSlowAnimationKey];
+}
+
+- (BOOL)WL_animatesBringToFront
+{
+    return [self boolForKey:WLAnimateBringToFrontKey];
+}
+
+- (BOOL)WL_autoFades
+{
+    return [self boolForKey:WLAutoFadeKey];
+}
+
+- (NSTimeInterval)WL_autoFadeSeconds
+{
+    return [self doubleForKey:WLAutoFadeSecondsKey];
 }
 
 @end

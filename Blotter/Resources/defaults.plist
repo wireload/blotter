@@ -74,5 +74,7 @@
 	<string>http://wireload.net/?utm_source=Blotter&amp;utm_medium=app&amp;utm_content=about_page_wireload&amp;utm_campaign=Blotter_app</string>
 	<key>BannerURL</key>
 	<string>http://wireload.net/products/quiet/?utm_source=Blotter&amp;utm_medium=app&amp;utm_content=about_page_quiet&amp;utm_campaign=Blotter_app</string>
+	<key>AnimateBringToFront</key>
+	<true/>
 </dict>
 </plist>

@@ -56,7 +56,6 @@
 		28CB50F714603CEC00810395 /* glass-hud-top-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50EE14603CEC00810395 /* glass-hud-top-left.png */; };
 		28CB50F814603CEC00810395 /* glass-hud-top.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50EF14603CEC00810395 /* glass-hud-top.png */; };
 		28CB50F914603CEC00810395 /* glass-hud-top-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50F014603CEC00810395 /* glass-hud-top-right.png */; };
-		28F699E4129C0EBC00D4BB97 /* WLViewFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F699E3129C0EBC00D4BB97 /* WLViewFade.m */; };
 		28F69A1B129C1CAA00D4BB97 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 28F69A1A129C1CAA00D4BB97 /* Credits.rtf */; };
 		28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 28F69CF4129CC12100D4BB97 /* Licenses.rtf */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -133,6 +132,7 @@
 		E2BA531A13C5A873005F0045 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2BA531913C5A873005F0045 /* QuartzCore.framework */; };
 		E2C774C413D1C02A0067102F /* WLCalendarDayEventsLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2C774C313D1C02A0067102F /* WLCalendarDayEventsLayer.m */; };
 		E2D648901441062300A03FAD /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2D6488F1441062300A03FAD /* IOKit.framework */; };
+		E2D6D8F9153335C8005F070D /* WLCalendarWindowBringToFrontAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D6D8F8153335C8005F070D /* WLCalendarWindowBringToFrontAnimation.m */; };
 		E2E64B4E1402483500912A92 /* WLSoftEdgeLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E64B4D1402483500912A92 /* WLSoftEdgeLayer.m */; };
 		E2E826CF145023A6007035E5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C7145023A6007035E5 /* Localizable.strings */; };
 		E2E826D0145023A6007035E5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C9145023A6007035E5 /* MainMenu.xib */; };
@@ -298,8 +298,6 @@
 		28CB50EE14603CEC00810395 /* glass-hud-top-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-top-left.png"; sourceTree = "<group>"; };
 		28CB50EF14603CEC00810395 /* glass-hud-top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-top.png"; sourceTree = "<group>"; };
 		28CB50F014603CEC00810395 /* glass-hud-top-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-top-right.png"; sourceTree = "<group>"; };
-		28F699E2129C0EBC00D4BB97 /* WLViewFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLViewFade.h; sourceTree = "<group>"; };
-		28F699E3129C0EBC00D4BB97 /* WLViewFade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLViewFade.m; sourceTree = "<group>"; };
 		28F69A1A129C1CAA00D4BB97 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		28F69CF4129CC12100D4BB97 /* Licenses.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Licenses.rtf; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -408,6 +406,8 @@
 		E2C774C313D1C02A0067102F /* WLCalendarDayEventsLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarDayEventsLayer.m; sourceTree = "<group>"; };
 		E2C776E413D20A970067102F /* WLCalendarTimeRuler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTimeRuler.h; sourceTree = "<group>"; };
 		E2D6488F1441062300A03FAD /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		E2D6D8F7153335C8005F070D /* WLCalendarWindowBringToFrontAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowBringToFrontAnimation.h; sourceTree = "<group>"; };
+		E2D6D8F8153335C8005F070D /* WLCalendarWindowBringToFrontAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindowBringToFrontAnimation.m; sourceTree = "<group>"; };
 		E2E64B4C1402483500912A92 /* WLSoftEdgeLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLSoftEdgeLayer.h; sourceTree = "<group>"; };
 		E2E64B4D1402483500912A92 /* WLSoftEdgeLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLSoftEdgeLayer.m; sourceTree = "<group>"; };
 		E2E826C8145023A6007035E5 /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -482,8 +482,6 @@
 				256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */,
 				E27313C31349F41200A84433 /* PTHotKey+ShortcutRecorder.h */,
 				E27313C41349F41200A84433 /* PTHotKey+ShortcutRecorder.m */,
-				28F699E2129C0EBC00D4BB97 /* WLViewFade.h */,
-				28F699E3129C0EBC00D4BB97 /* WLViewFade.m */,
 				E2596D711316C8C100A8B15E /* WLNewEventWindowController.h */,
 				E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */,
 				E29F38EC1319694C00A865D9 /* WLNewTaskWindowController.h */,
@@ -634,6 +632,8 @@
 				E286C00214068703008C0CDB /* NSFont+WLCalendar.m */,
 				E2F8AB1F15079E56006239C1 /* WLCalendarDayEventsBackgroundLayer.h */,
 				E2F8AB2015079E56006239C1 /* WLCalendarDayEventsBackgroundLayer.m */,
+				E2D6D8F7153335C8005F070D /* WLCalendarWindowBringToFrontAnimation.h */,
+				E2D6D8F8153335C8005F070D /* WLCalendarWindowBringToFrontAnimation.m */,
 			);
 			name = WLCalendar;
 			sourceTree = "<group>";
@@ -1016,7 +1016,6 @@
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				256AC3DA0F4B6AC300CF3369 /* DeskboardAppDelegate.m in Sources */,
-				28F699E4129C0EBC00D4BB97 /* WLViewFade.m in Sources */,
 				E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */,
 				E29F38EE1319694C00A865D9 /* WLNewTaskWindowController.m in Sources */,
 				E279363A1324F05800BC5224 /* WLGlassHudWindow.m in Sources */,
@@ -1052,6 +1051,7 @@
 				E234BF7E14DAFADF00AB2262 /* WLCalendarTimeRulerMarkerLayer.m in Sources */,
 				E2F8AB2115079E56006239C1 /* WLCalendarDayEventsBackgroundLayer.m in Sources */,
 				E2957E5A152B117E00AE05E8 /* WLApplicationRunTimer.m in Sources */,
+				E2D6D8F9153335C8005F070D /* WLCalendarWindowBringToFrontAnimation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

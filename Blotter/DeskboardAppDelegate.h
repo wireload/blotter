@@ -29,13 +29,14 @@
     IBOutlet NSMenuItem *preferencesMenuItem;
     SS_PrefsController *_preferencesController;
     NSTimer *_showCurrentWeekTimer;
+    NSTimer *_autoFadeTimer;
     WLApplicationRunTimer *_applicationRunTimer;
     NSArray *_shortCuts;
 }
 
 @property (readonly) WLCalendarWindowController *calendarWindowController;
 
-- (IBAction)bringToFront:(id)sender;
+- (IBAction)bringToFrontOrSendToBack:(id)sender;
 
 - (IBAction)showPreferences:(id)aSender;
 
@@ -56,13 +57,18 @@
 /*!
  @abstract Determines whether only calendar window is visible.
  */
-- (BOOL)isOnlyCalendarWindowVisible;
+- (BOOL)isOnlyCalendarWindowVisible:(NSArray *)aVisibleWindows;
 
 /*!
  @abstract Autohides the calendar window if all conditions are met.
  @see https://tracker.wireload.net/projects/blotter/wiki/Autohide
  */
-- (void)autohideCalendarWindowIfAllConditionsAreMet;
+- (void)scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:(NSArray *)aWindows;
+
+/*!
+ @abstract Deactivates application by sending -hide: to NSApp.
+ */
+- (void)deactivateAppIfAllConditionsAreMet:(NSArray *)aWindows;
 
 
 - (void)_scheduleShowCurrentWeekTimerIfNeeded;
@@ -76,7 +82,14 @@
  */
 - (void)_showCurrentWeekTimerDidFire;
 
-- (BOOL)_isOnlyCalendarWindowVisible:(NSArray *)aVisibleWindows;
+- (void)_scheduleAutoFadeTimerIfNeeded;
+
+- (void)_removeAutoFadeTimerIfNeeded;
+
+/*!
+ @discussion    Automatically sent when _fadeOutTimer fires.
+ */
+- (void)_autoFadeTimerDidFire;
 
 - (void)_addStatusItem;
 

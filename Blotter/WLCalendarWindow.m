@@ -7,8 +7,8 @@
 //
 
 #import "WLCalendarWindow.h"
-#import "WLCalendarWindowBackgroundView.h"
 #import "NSColor+WLCalendar.h"
+#import "WLCalendarWindowController.h"
 
 
 @interface _WLFlippedView : NSView
@@ -16,6 +16,16 @@
 
 
 @implementation _WLFlippedView
+
+- (id)init
+{
+    self = [super init];
+    if (self != nil)
+    {
+        [self setWantsLayer:YES];
+    }
+    return self;
+}
 
 - (BOOL)isFlipped
 {
@@ -26,21 +36,6 @@
 
 
 @implementation WLCalendarWindow
-
-@synthesize state;
-
-static const CGFloat fadeDuration = 0.1;
-
-- (int)finderLevel
-{
-    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-        return kCGDesktopWindowLevel;
-    else
-    {
-        // On Lion window level of desktop elements is kCGDesktopWindowLevel + 21.
-        return kCGDesktopWindowLevel + 15;
-    }   
-}
 
 - (id)init
 {
@@ -55,16 +50,15 @@ static const CGFloat fadeDuration = 0.1;
         [self setHasShadow:NO];
         [self setBackgroundColor:[NSColor clearColor]];
         [self setIgnoresMouseEvents:YES];
-        [self setLevel:[self finderLevel]];
         [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
         [self setCanHide:NO];
         [self setDisplaysWhenScreenProfileChanges:YES];
         [self useOptimizedDrawing:YES];
         [self setContentView:[[[_WLFlippedView alloc] init] autorelease]];
-        
+        if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_6)
+            [self setAnimationBehavior:NSWindowAnimationBehaviorNone];
+
         _didWarmUp = NO;
-        
-        state = WLFinderLevelState;
     }
     return self;
 }
@@ -72,7 +66,7 @@ static const CGFloat fadeDuration = 0.1;
 
 #pragma mark Methods
 
-- (NSView *)realContentView
+- (WLCalendarWindowBackgroundView *)realContentView
 {
     return [super contentView];
 }
@@ -82,18 +76,19 @@ static const CGFloat fadeDuration = 0.1;
 
 - (void)orderWindow:(NSWindowOrderingMode)place relativeTo:(NSInteger)otherWin
 {
-    NSView *frameView = [super contentView];
+    WLCalendarWindowBackgroundView *frameView = [self realContentView];
     if (!_didWarmUp)
         [frameView setAlphaValue:0.0];
 
     [super orderWindow:place relativeTo:otherWin];
-    
+
     if (!_didWarmUp)
     {
         // Warm up the drawing system.
         [self setLevel:NSFloatingWindowLevel];
+        [frameView setNeedsDisplay:YES];
         [frameView display];
-        [self setLevel:[self finderLevel]];
+        [self setLevel:WLGetFinderLevel()];
         [frameView display];
         [frameView setAlphaValue:1.0];
         _didWarmUp = YES;
@@ -114,17 +109,28 @@ static const CGFloat fadeDuration = 0.1;
 
 - (BOOL)canBecomeKeyWindow
 {
-    return state == WLFloatingLevelState;
+    if ([[self windowController] respondsToSelector:@selector(windowState)])
+        return [[self windowController] windowState] == WLFloatingLevelState;
+    else
+        return NO;
 }
 
 - (BOOL)canBecomeMainWindow
 {
-    return state == WLFloatingLevelState;
+    if ([[self windowController] respondsToSelector:@selector(windowState)])
+        return [[self windowController] windowState] == WLFloatingLevelState;
+    else
+        return NO;
+}
+
+- (NSView *)contentView
+{
+    return _fakeContentView;
 }
 
 - (void)setContentView:(NSView *)aView
 {
-    if (![_realContentView isEqualTo:aView])
+    if (![_fakeContentView isEqualTo:aView])
     {
         NSRect bounds = [self frame];
         bounds.origin = NSZeroPoint;
@@ -136,107 +142,20 @@ static const CGFloat fadeDuration = 0.1;
             [super setContentView:frameView];
         }
 
-        [_realContentView removeFromSuperview];
-        _realContentView = aView;
-        [_realContentView setFrame:[self contentRectForFrameRect:bounds]];
-        [_realContentView setNeedsDisplay:YES];
-        [frameView addSubview:_realContentView];
+        [_fakeContentView removeFromSuperview];
+        _fakeContentView = aView;
+        [_fakeContentView setFrame:[self contentRectForFrameRect:bounds]];
+        [_fakeContentView setNeedsDisplay:YES];
+        [frameView addSubview:_fakeContentView];
     }
 }
 
-- (id)contentView
+- (void)cancelOperation:(id)aSender
 {
-    return _realContentView;
-}
-
-- (void)setFinderLevel
-{
-    NSView *frameView = [super contentView];
-    
-    // NSDisableScreenUpdates();
-    
-    [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
-    [self setLevel:[self finderLevel]];
-    [frameView display];
-    [self display];
-    state = WLFinderLevelState;
-
-    // NSEnableScreenUpdates();
-
-    // If we went to Finder level due to becoming inactive during a space shift, then
-    // we must also order to the front or we somehow end up underneath Finder.
-    [self orderFrontRegardless];
-
-    [CATransaction begin];
-    [CATransaction setAnimationDuration:fadeDuration];
-    [[frameView layer] setOpacity:1.0];
-    [CATransaction commit];
-}
-
-- (void)setFloatingLevel
-{
-    NSView *frameView = [super contentView];
-
-    // NSDisableScreenUpdates();
-
-    [self setLevel:NSFloatingWindowLevel];
-    [self setCollectionBehavior:NSWindowCollectionBehaviorDefault];
-    [frameView display];
-    [self display];
-    state = WLFloatingLevelState;   
-
-    // NSEnableScreenUpdates();
-    
-    [NSApp activateIgnoringOtherApps:YES];
-    [self makeKeyAndOrderFront:nil];
-
-    [CATransaction begin];
-    [CATransaction setAnimationDuration:fadeDuration];
-    [[frameView layer] setOpacity:1.0];
-    [CATransaction commit];
-}
-
-- (void)cancelOperation:(id)sender
-{
-    if (state != WLFinderLevelState)
-        [self levelDown];
-}
-
-- (void)levelUp
-{
-    if (state != WLFloatingLevelState && state != WLLevelingUpState)
-    {
-        NSView *frameView = [super contentView];
-
-        state = WLLevelingUpState;
-
-        [CATransaction begin];
-        [CATransaction setCompletionBlock:^(void) {
-            if (state == WLLevelingUpState)
-                [self setFloatingLevel];
-        }];
-        [CATransaction setAnimationDuration:fadeDuration];
-        [[frameView layer] setOpacity:0.0];
-        [CATransaction commit];
-    }
-}
-
-- (void)levelDown
-{
-    if (state != WLFinderLevelState && state != WLLevelingDownState)
-    {
-        NSView *frameView = [super contentView];
-        state = WLLevelingDownState;
-        
-        [CATransaction begin];
-        [CATransaction setCompletionBlock:^(void) {
-            if (state == WLLevelingDownState)
-                [self setFinderLevel];
-        }];
-        [CATransaction setAnimationDuration:fadeDuration];
-        [[frameView layer] setOpacity:0.0];
-        [CATransaction commit];
-    }    
+    if ([[NSApp delegate] respondsToSelector:@selector(cancelOperation:)])
+        [[NSApp delegate] cancelOperation:aSender];
+    else
+        [super cancelOperation:aSender];
 }
 
 @end

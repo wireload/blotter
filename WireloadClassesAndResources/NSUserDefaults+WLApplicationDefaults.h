@@ -55,6 +55,12 @@ extern NSString* const WLWireloadURLKey;
 
 extern NSString* const WLBannerURLKey;
 
+extern NSString* const WLAnimateBringToFrontKey;
+
+extern NSString* const WLAutoFadeKey;
+
+extern NSString* const WLAutoFadeSecondsKey;
+
 typedef void (^WLCalendarsUpdaterBlock)(NSMutableArray *aCalendars);
 
 extern NSComparator const WLCalendarsComparator;
@@ -127,9 +133,15 @@ extern NSComparator const WLCalendarsComparator;
 @end
 
 
-@interface NSUserDefaults (WLCalendarWindowController)
+@interface NSUserDefaults (WLCalendarWindow)
 
 - (BOOL)WL_slowsAnimation;
+
+- (BOOL)WL_animatesBringToFront;
+
+- (BOOL)WL_autoFades;
+
+- (NSTimeInterval)WL_autoFadeSeconds;
 
 @end
 

@@ -7,34 +7,24 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "WLCalendarWindowBackgroundView.h"
 
-typedef enum
-{
-    WLFinderLevelState,
-    WLLevelingUpState,
-    WLFloatingLevelState,
-    WLLevelingDownState
-} WLCalendarWindowState;
 
 /*!
  @abstract      Borderless window that draws custom background.
  @discussion    Default contentView is flipped.
+ Overrides -cancelOperation: and forwards it directly to NSApp's delegate if it implements this method.
+ Otherwise message is forwarded to super.
  @classdesign   You SHOULD use -init to initialize.
  @coclass       WLCalendarWindowBackgroundView
  @ownership     WLCalendarWindowController
  */
-@interface WLCalendarWindow : NSWindow {
-    NSView *_realContentView;
-    
-    WLCalendarWindowState state;
+@interface WLCalendarWindow : NSWindow <NSAnimationDelegate>
+{
+    NSView *_fakeContentView;
     BOOL _didWarmUp;
 }
 
-@property (nonatomic) WLCalendarWindowState state;
-
-- (NSView *)realContentView;
-
-- (void)levelUp;
-- (void)levelDown;
+- (WLCalendarWindowBackgroundView *)realContentView;
 
 @end

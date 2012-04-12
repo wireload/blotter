@@ -9,7 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLCalendarWindow.h"
-#import "WLViewFade.h"
 
 
 @class WLCalendarWeekViewController;
@@ -18,6 +17,26 @@
 @class WLCalendarTasksViewController;
 @class WLCalendarDateViewController;
 @class WLCalendarBoxView;
+@class WLCalendarWindowBringToFrontAnimation;
+
+
+typedef enum
+{
+    WLFinderLevelState,
+    WLFloatingLevelState,
+} WLCalendarWindowState;
+
+
+NS_INLINE int WLGetFinderLevel()
+{
+    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
+        return kCGDesktopWindowLevel;
+    else
+    {
+        // In Lion window level of desktop elements is kCGDesktopWindowLevel + 21.
+        return kCGDesktopWindowLevel + 15;
+    }
+}
 
 
 /*!
@@ -26,23 +45,27 @@
  @performance   You SHOULD prepare the controller and its window before you call -showWindow:
  @coclass       WLCalendarWindow The class of controller's window.
  */
-@interface WLCalendarWindowController : NSObject <NSWindowDelegate> {
-    WLCalendarWindow *window;
-    WLViewFade *fadeController;
-
+@interface WLCalendarWindowController : NSWindowController <NSWindowDelegate, NSAnimationDelegate>
+{
+    WLCalendarWindowState windowState;
+    BOOL isFadedOut;
+    
+    BOOL _isWindowShowed;
     WLCalendarFloatingWeekViewController *_weekViewController;
     WLCalendarRightNowViewController *_rightNowViewController;
     WLCalendarTasksViewController *_tasksViewController;
     WLCalendarDateViewController *_dateViewController;
     WLCalendarBoxView *_tasksViewBox;
     WLCalendarBoxView *_rightNowViewBox;
-
-    BOOL _isWindowShowed;
+    WLCalendarWindowBringToFrontAnimation *_fadeInAnimation;
+    WLCalendarWindowBringToFrontAnimation *_fadeOutAnimation;
 }
 
-@property (readonly) WLCalendarWindow *window;
+@property (nonatomic) WLCalendarWindowState windowState;
 
-@property (readonly) WLViewFade *fadeController;
+@property (nonatomic) BOOL isFadedOut;
+
+- (id)initWithWindow:(WLCalendarWindow *)aWindow;
 
 - (IBAction)showWindow:(id)aSender;
 
@@ -59,6 +82,25 @@
 - (BOOL)canShowPreviousWeek;
 
 - (BOOL)isCurrentWeekShowed;
+
+- (WLCalendarWindow *)window;
+
+/*!
+ @abstract      Animates setWindowState.
+ @discussion    Takes into account isFadeOut.
+ Alpha value of the window at WLFloatingLevelState is always 1.0. Alpha value at WLFinderLevelState depends on isFadeOut property.
+ @see           isFadeOut
+ */
+- (void)setWindowState:(WLCalendarWindowState)newWindowState animated:(BOOL)isAnimated duration:(NSTimeInterval)aDuration;
+
+- (void)flushWindowState;
+
+- (BOOL)isAnimatingWindowState;
+
+
+- (void)_setFinderLevel;
+
+- (void)_setFloatingLevel;
 
 @end
 

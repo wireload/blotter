@@ -13,6 +13,7 @@
 #import "WLCalendarTasksViewController.h"
 #import "WLCalendarDateViewController.h"
 #import "WLCalendarBoxView.h"
+#import "WLCalendarWindowBringToFrontAnimation.h"
 
 
 // Sizes are chosen so that when switching between these 2 modes only week view is disappeard. that is the date, todo and right now vies are visually unchanged.
@@ -27,20 +28,29 @@ const NSSize BLNormalMinimumSize = {950, 750};
 const NSSize BLMinimumSize = {280, 215};
 
 
+static const CGFloat _WLFadeOutAlphaValue = 0.5;
+
+
 @implementation WLCalendarWindowController
 
 - (id)init
 {
-    self = [super init];
+    self = [self initWithWindow:[[[WLCalendarWindow alloc] init] autorelease]];
     if (self != nil)
     {
-        window = [[WLCalendarWindow alloc] init];
-        [window setDelegate:self];
+    }
+    return self;
+}
 
-        [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:window
-                                                               selector:@selector(display)
-                                                                   name:NSWorkspaceActiveSpaceDidChangeNotification
-                                                                 object:nil];
+- (id)initWithWindow:(WLCalendarWindow *)aWindow
+{
+    NSParameterAssert([aWindow isKindOfClass:[WLCalendarWindow class]]);
+    self = [super initWithWindow:aWindow];
+    if (self != nil)
+    {
+        [aWindow setDelegate:self];
+
+        windowState = WLFinderLevelState;
 
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
@@ -86,10 +96,6 @@ const NSSize BLMinimumSize = {280, 215};
 
 - (void)dealloc
 {
-    [window setDelegate:nil];
-    [window release];
-    [fadeController release];
-
     [_weekViewController release];
     [_rightNowViewController release];
     [_tasksViewController release];
@@ -97,8 +103,12 @@ const NSSize BLMinimumSize = {280, 215};
     [_tasksViewBox release];
     [_rightNowViewBox release];
 
+    [_fadeOutAnimation stopAnimation];
+    [_fadeOutAnimation release];
+    [_fadeInAnimation stopAnimation];
+    [_fadeInAnimation release];
+
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObserver:self forKeyPath:@"InfoViewsWidth"];
     [defaults removeObserver:self forKeyPath:@"DateViewHeight"];
@@ -108,28 +118,57 @@ const NSSize BLMinimumSize = {280, 215};
     [defaults removeObserver:self forKeyPath:@"CalendarPosition"];
     [defaults removeObserver:self forKeyPath:WLScreenIdentifierKey];
     [defaults removeObserver:self forKeyPath:@"CustomFrameFactors"];
+
     [super dealloc];
 }
 
 
 #pragma mark Properties
-@synthesize window;
-@synthesize fadeController;
+@synthesize windowState;
+@synthesize isFadedOut;
+
+- (void)setWindowState:(WLCalendarWindowState)newWindowState
+{
+    [self setWindowState:newWindowState animated:NO duration:0.0];
+}
+
+- (void)setIsFadedOut:(BOOL)newIsFadedOut
+{
+    if (newIsFadedOut != isFadedOut)
+    {
+        [self willChangeValueForKey:@"isFadedOut"];
+        isFadedOut = newIsFadedOut;
+        [NSAnimationContext beginGrouping];
+        if ([[NSUserDefaults standardUserDefaults] WL_slowsAnimation])
+            [[NSAnimationContext currentContext] setDuration:[[NSAnimationContext currentContext] duration] * 10];
+        if (![self isAnimatingWindowState])
+        {
+            if (isFadedOut)
+                [[[self window] animator] setAlphaValue:_WLFadeOutAlphaValue];
+            else
+                [[self window] setAlphaValue:1.0];
+        }
+        else
+        {
+            // setWindowState animation will handle isFadedOut property automatically.
+        }
+        [NSAnimationContext endGrouping];
+        [self didChangeValueForKey:@"isFadedOut"];
+    }
+}
+
++ (BOOL)automaticallyNotifiesObserversOfWindowState
+{
+    return NO;
+}
+
++ (BOOL)automaticallyNotifiesObserversOfIsFadedOut
+{
+    return NO;
+}
 
 
 #pragma mark Methods
-
-- (IBAction)showWindow:(id)aSender
-{
-    if (!_isWindowShowed)
-    {
-        [self _makeViews];
-        [self _updateFrame];
-        fadeController = [[WLViewFade alloc] initWithView:[self.window realContentView]];
-        [self.window orderBack:aSender];
-        _isWindowShowed = YES;
-    }
-}
 
 - (IBAction)showNextWeek:(id)aSender
 {
@@ -166,6 +205,322 @@ const NSSize BLMinimumSize = {280, 215};
     NSParameterAssert(_isWindowShowed);
 
     return _weekViewController.weeksOffset == 0;
+}
+
+- (void)setWindowState:(WLCalendarWindowState)newWindowState animated:(BOOL)isAnimated duration:(NSTimeInterval)aDuration;
+{
+    NSParameterAssert(_fadeOutAnimation == nil || _fadeInAnimation == nil);
+
+    /*
+     | = current position
+     set level
+     1.0        0.5        0.0        0.5       1.0
+     |--------------------------------------------> time
+     */
+    if (isAnimated)
+    {
+        if (newWindowState == windowState)
+            return;
+
+        [self willChangeValueForKey:@"windowState"];
+        windowState = newWindowState;
+        [self didChangeValueForKey:@"windowState"];
+
+        if (_fadeOutAnimation == nil && _fadeInAnimation == nil)
+        {
+            /*
+             1.0                                        0.0
+             |--------------------------------------------> time
+
+             No animation is running.
+             */
+            _fadeOutAnimation = [[WLCalendarWindowBringToFrontAnimation alloc] initWithWindow:[self window]];
+            [_fadeOutAnimation setDelegate:self];
+            [_fadeOutAnimation setAnimationBlockingMode:NSAnimationNonblocking];
+            [_fadeOutAnimation setDuration:aDuration / 2.0];
+            [_fadeOutAnimation setCurrentProgress:1.0 - [[self window] alphaValue]];
+            [_fadeOutAnimation startAnimation];
+        }
+        else if (_fadeOutAnimation != nil)
+        {
+            /*
+             1.0                                        0.0
+             ------------------|--------------------------> time
+             <----progress---->
+
+             Window is fading out, level is not changed yet.
+             */
+            [_fadeOutAnimation stopAnimation];
+            NSTimeInterval duration = aDuration / 2.0;
+            // Invert progress, because value will be inverted again in -animation:valueForProgress:
+            NSAnimationProgress progress = 1.0 - [_fadeOutAnimation currentProgress];
+            [_fadeOutAnimation release];
+            _fadeOutAnimation = nil;
+
+            _fadeInAnimation = [[WLCalendarWindowBringToFrontAnimation alloc] initWithWindow:[self window]];
+            [_fadeInAnimation setDelegate:self];
+            [_fadeInAnimation setAnimationBlockingMode:NSAnimationNonblocking];
+            [_fadeInAnimation setDuration:duration];
+            [_fadeInAnimation setCurrentProgress:progress];
+            [_fadeInAnimation startAnimation];
+        }
+        else /* if (_fadeInAnimation != nil) */
+        {
+            /*
+             1.0        0.5        0.0        0.5       1.0
+             ------------------------------------------|--> time
+             <----progress---->
+
+             Window is fading in, level is already changed.
+             */
+            [_fadeInAnimation stopAnimation];
+            NSTimeInterval duration = aDuration / 2.0;
+            // Invert progress, because value will be inverted again in -animation:valueForProgress:
+            NSAnimationProgress progress = 1.0 - [_fadeInAnimation currentProgress];
+            [_fadeInAnimation release];
+            _fadeInAnimation = nil;
+
+            _fadeOutAnimation = [[WLCalendarWindowBringToFrontAnimation alloc] initWithWindow:[self window]];
+            [_fadeOutAnimation setDelegate:self];
+            [_fadeOutAnimation setAnimationBlockingMode:NSAnimationNonblocking];
+            [_fadeOutAnimation setDuration:duration];
+            [_fadeOutAnimation setCurrentProgress:progress];
+            [_fadeOutAnimation startAnimation];
+        }
+    }
+    else
+    {
+        if (_fadeOutAnimation == nil && _fadeInAnimation == nil)
+        {
+            if (newWindowState == windowState)
+                return;
+
+            [self willChangeValueForKey:@"windowState"];
+            windowState = newWindowState;
+
+            switch (windowState)
+            {
+                case WLFinderLevelState:
+                    [self _setFinderLevel];
+                    if (self.isFadedOut)
+                        [[self window] setAlphaValue:_WLFadeOutAlphaValue];
+                    else
+                        [[self window] setAlphaValue:1.0];
+                    break;
+                case WLFloatingLevelState:
+                    [[self window] setAlphaValue:1.0];
+                    [self _setFloatingLevel];
+                    break;
+            }
+            [self didChangeValueForKey:@"windowState"];
+        }
+        else if (_fadeOutAnimation != nil)
+        {
+            if (newWindowState == windowState)
+            {
+                [self flushWindowState];
+            }
+            else
+            {
+                [self willChangeValueForKey:@"windowState"];
+                windowState = newWindowState;
+                [_fadeOutAnimation stopAnimation];
+                [_fadeOutAnimation setCurrentProgress:0.0];
+                [_fadeOutAnimation release];
+                _fadeOutAnimation = nil;
+                [self didChangeValueForKey:@"windowState"];
+            }
+        }
+        else /* if (_fadeInAnimation != nil) */
+        {
+            if (newWindowState == windowState)
+                [self flushWindowState];
+            else
+            {
+                [self willChangeValueForKey:@"windowState"];
+                windowState = newWindowState;
+
+                [_fadeInAnimation stopAnimation];
+                [_fadeInAnimation setCurrentProgress:1.0];
+                [_fadeInAnimation release];
+                _fadeInAnimation = nil;
+
+                switch (windowState)
+                {
+                    case WLFinderLevelState:
+                        [self _setFinderLevel];
+                        if (self.isFadedOut)
+                            [[self window] setAlphaValue:_WLFadeOutAlphaValue];
+                        else
+                            [[self window] setAlphaValue:1.0];
+                        break;
+                    case WLFloatingLevelState:
+                        [[self window] setAlphaValue:1.0];
+                        [self _setFloatingLevel];
+                        break;
+                }
+                [self didChangeValueForKey:@"windowState"];
+            }
+        }
+    }
+}
+
+- (void)flushWindowState
+{
+    NSParameterAssert(_fadeOutAnimation == nil || _fadeInAnimation == nil);
+
+    if (_fadeOutAnimation != nil)
+    {
+        [_fadeOutAnimation stopAnimation];
+        [_fadeOutAnimation release];
+        _fadeOutAnimation = nil;
+
+        switch (self.windowState)
+        {
+            case WLFinderLevelState:
+                [self _setFinderLevel];
+                if (self.isFadedOut)
+                    [[self window] setAlphaValue:_WLFadeOutAlphaValue];
+                else
+                    [[self window] setAlphaValue:1.0];
+                break;
+            case WLFloatingLevelState:
+                [[self window] setAlphaValue:1.0];
+                [self _setFloatingLevel];
+                break;
+        }
+    }
+    else if (_fadeInAnimation != nil)
+    {
+        [_fadeInAnimation stopAnimation];
+        [_fadeInAnimation setCurrentProgress:1.0];
+        [_fadeInAnimation release];
+        _fadeInAnimation = nil;
+    }
+}
+
+- (BOOL)isAnimatingWindowState
+{
+    return (_fadeOutAnimation != nil || _fadeInAnimation != nil);
+}
+
+
+#pragma mark NSAnimationDelegate
+
+- (float)animation:(NSAnimation *)anAnimation valueForProgress:(NSAnimationProgress)aProgress
+{
+    NSParameterAssert(_fadeOutAnimation == nil || _fadeInAnimation == nil);
+
+    if (anAnimation == _fadeOutAnimation)
+    {
+        switch (self.windowState)
+        {
+            case WLFinderLevelState:
+            {
+                // If the window is faded out, we have to restore to fade out value.
+                if (self.isFadedOut)
+                    return (1.0 - aProgress) * _WLFadeOutAlphaValue;
+                else
+                    return 1.0 - aProgress;
+            }
+            case WLFloatingLevelState:
+                return 1.0 - aProgress;
+        }
+    }
+    else
+    {
+        switch (self.windowState)
+        {
+            case WLFinderLevelState:
+            {
+                // If the window is faded out, we have to restore to fade out value.
+                if (self.isFadedOut)
+                    return aProgress * _WLFadeOutAlphaValue;
+                else
+                    return aProgress;
+            }
+            case WLFloatingLevelState:
+                return aProgress;
+        }
+    }
+}
+
+- (void)animationDidEnd:(NSAnimation *)anAnimation
+{
+    NSParameterAssert(_fadeOutAnimation == nil || _fadeInAnimation == nil);
+
+    if (anAnimation == _fadeOutAnimation)
+    {
+        switch (self.windowState)
+        {
+            case WLFinderLevelState:
+                [self _setFinderLevel];
+                break;
+            case WLFloatingLevelState:
+                [self _setFloatingLevel];
+                break;
+        }
+
+        _fadeInAnimation = [[WLCalendarWindowBringToFrontAnimation alloc] initWithWindow:[self window]];
+        [_fadeInAnimation setDelegate:self];
+        [_fadeInAnimation setDuration:[_fadeOutAnimation duration]];
+        [_fadeInAnimation setAnimationBlockingMode:NSAnimationNonblocking];
+        [_fadeInAnimation startAnimation];
+
+        [_fadeOutAnimation release];
+        _fadeOutAnimation = nil;
+    }
+    else if (anAnimation == _fadeInAnimation)
+    {
+        [_fadeInAnimation release];
+        _fadeInAnimation = nil;
+    }
+}
+
+
+#pragma mark Private
+
+- (void)_setFinderLevel
+{
+    WLCalendarWindow *w = [self window];
+    [w setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
+    [w setLevel:WLGetFinderLevel()];
+    [w orderBack:nil];
+    [[w realContentView] setNeedsDisplay:YES];
+    [w displayIfNeeded];
+}
+
+- (void)_setFloatingLevel
+{
+    WLCalendarWindow *w = [self window];
+    [w setLevel:NSFloatingWindowLevel];
+    [w orderBack:nil];
+    [w setCollectionBehavior:NSWindowCollectionBehaviorDefault];
+    [[w realContentView] setNeedsDisplay:YES];
+    [w displayIfNeeded];
+}
+
+
+#pragma mark NSWindowController
+
+- (WLCalendarWindow *)window
+{
+    return (WLCalendarWindow *)[super window];
+}
+
+- (IBAction)showWindow:(id)aSender
+{
+    if (!_isWindowShowed)
+    {
+        [self _makeViews];
+        [self _updateFrame];
+        if (self.windowState == WLFinderLevelState)
+            [self.window setLevel:WLGetFinderLevel()];
+        else
+            [self.window setLevel:NSFloatingWindowLevel];
+        [self.window orderBack:aSender];
+        _isWindowShowed = YES;
+    }
 }
 
 
@@ -428,6 +783,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
         [self.window displayIfNeeded];
         NSEnableScreenUpdates();
     }];
+    [self flushWindowState];
     [self.window setFrame:windowFrame display:NO];
     [self _applyWindowSizeToViews];
     [CATransaction commit];
@@ -435,13 +791,12 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
 
 - (void)_makeViews
 {
-    // TODO: There is no need make views to be layer-backed if AutoFade is disabled.
     NSParameterAssert(!_isWindowShowed);
-    [[self.window realContentView] setWantsLayer:YES];
     NSView *contentView = [self.window contentView];
+    [contentView setWantsLayer:YES];
+    [contentView setAutoresizesSubviews:NO];
     if ([[NSUserDefaults standardUserDefaults] WL_slowsAnimation])
         [contentView layer].speed = 0.1f;
-    [contentView setAutoresizesSubviews:NO];
 
     NSView *dateView = [_dateViewController view];
     [dateView setWantsLayer:YES];
@@ -470,7 +825,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     CGFloat infoViewWidth = [defaults floatForKey:@"InfoViewsWidth"];
     CGFloat minWeekWidth = [defaults floatForKey:@"MinimumWeekViewWidth"];
-    NSRect bounds = [[window contentView] bounds];
+    NSRect bounds = [[[self window] contentView] bounds];
     CGFloat weekWidth = NSWidth(bounds) - infoViewWidth;
     if (weekWidth > minWeekWidth)
         return infoViewWidth;
@@ -482,8 +837,8 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
 
 - (NSRect)dateViewFrame
 {
-    NSRect bounds = [[window contentView] bounds];
-    NSRect r = [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
+    NSRect bounds = [[[self window] contentView] bounds];
+    NSRect r = [[[self window] contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
                                                                NSMinY(bounds) + _WLYMarginBetweenBoundsAndDate,
                                                                [self fixedInfoViewsWidth],
                                                                [[NSUserDefaults standardUserDefaults] floatForKey:@"DateViewHeight"] - _WLYMarginBetweenBoundsAndDate)];
@@ -496,7 +851,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
 
 - (NSRect)tasksViewFrame
 {
-    NSRect bounds = [[window contentView] bounds];
+    NSRect bounds = [[[self window] contentView] bounds];
     // By default tasks and right now have the same height. Since window size is unknown until user start blotter
     // set the default value here.
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -512,7 +867,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
         [defaults setFloat:[self fullTasksViewHeight] forKey:@"TasksViewHeight"];
         [defaults addObserver:self forKeyPath:@"TasksViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
     }
-    NSRect r = [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
+    NSRect r = [[[self window] contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
                                                                NSMaxY([self dateViewFrame]),
                                                                [self fixedInfoViewsWidth],
                                                                [defaults floatForKey:@"TasksViewHeight"])];
@@ -530,7 +885,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     if (fabsf(tasksViewFrame.size.height - 0.0f) > FLT_EPSILON)
         margin = _WLYMarginBetweenTasksAndRightNow;
     NSRect bounds = [[self.window contentView] bounds];
-    NSRect r = [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
+    NSRect r = [[[self window] contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
                                                                NSMaxY(tasksViewFrame) + margin,
                                                                [self fixedInfoViewsWidth],
                                                                NSHeight(bounds) - NSMaxY([self tasksViewFrame]) - margin)];
@@ -543,11 +898,11 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
 
 - (NSRect)weekViewFrame
 {
-    NSRect bounds = [[window contentView] bounds];
+    NSRect bounds = [[[self window] contentView] bounds];
     CGFloat infoViewWidth = [self fixedInfoViewsWidth];
     if (fabsf(infoViewWidth - 0.0f) > FLT_EPSILON)
         infoViewWidth += _WLXMarginBetweenInfoAndWeek;
-    NSRect r = [[window contentView] centerScanRect:NSMakeRect(NSMinX(bounds) + infoViewWidth,
+    NSRect r = [[[self window] contentView] centerScanRect:NSMakeRect(NSMinX(bounds) + infoViewWidth,
                                                                NSMinY(bounds),
                                                                NSWidth(bounds) - infoViewWidth,
                                                                NSHeight(bounds))];
