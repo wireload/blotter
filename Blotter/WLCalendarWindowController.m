@@ -17,10 +17,9 @@
 
 
 // Sizes are chosen so that when switching between these 2 modes only week view is disappeard. that is the date, todo and right now vies are visually unchanged.
-// @see WLCalendarWindowController
-const NSSize BLNarrowMinimumSize = {290, 750};
+const NSSize BLNarrowMinimumSize = {308, 718};
 
-const NSSize BLNormalMinimumSize = {950, 750};
+const NSSize BLNormalMinimumSize = {950, 718};
 
 /**
     This is the overall smallest possible size for Blotter when using custom sizing.
