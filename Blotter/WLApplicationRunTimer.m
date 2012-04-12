@@ -73,14 +73,11 @@ NSString* const WLApplicationRunTimerDidFireNotification = @"WLApplicationRunTim
         {
             uint64_t end = mach_absolute_time();
             uint64_t elapsed = end - _start;
-            Nanoseconds elapsedNano = AbsoluteToNanoseconds(*(AbsoluteTime *)&elapsed);
-            uint64_t elapsedNanoInt = elapsedNano.hi;
-            elapsedNanoInt <<= 32;
-            elapsedNanoInt += elapsedNano.lo;
+            Nanoseconds elapsedNano = AbsoluteToNanoseconds(UInt64ToUnsignedWide(elapsed));
             NSTimeInterval elapsedSeconds = [defaults doubleForKey:_elapsedSecondsKey];
             if (elapsedSeconds < 0.0)
                 elapsedSeconds = 0.0;
-            elapsedSeconds += (double)elapsedNanoInt * 1e-9;
+            elapsedSeconds += (double)(UnsignedWideToUInt64(elapsedNano)) * 1e-9;
             NSTimeInterval delay = [defaults doubleForKey:_delayKey];
             BOOL isFired = NO;
             if (elapsedSeconds >= delay)
