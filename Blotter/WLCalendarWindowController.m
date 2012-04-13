@@ -268,7 +268,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
             /*
              1.0        0.5        0.0        0.5       1.0
              ------------------------------------------|--> alpha value
-             <----progress---->
+                                     <----progress---->
 
              Window is fading in, level is already changed.
              */
