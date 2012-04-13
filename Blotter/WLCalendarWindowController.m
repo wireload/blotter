@@ -171,32 +171,35 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
 
 - (IBAction)showNextWeek:(id)aSender
 {
-    [_weekViewController showNextWeek:aSender];
+    if ([self canShowNextWeek])
+        [_weekViewController showNextWeek:aSender];
 }
 
 - (IBAction)showPreviousWeek:(id)aSender
 {
-    [_weekViewController showPreviousWeek:aSender];
+    if ([self canShowPreviousWeek])
+        [_weekViewController showPreviousWeek:aSender];
 }
 
 - (IBAction)showCurrentWeek:(id)aSender
 {
-    [_weekViewController showCurrentWeek:aSender];
+    if ([self canShowCurrentWeek])
+        [_weekViewController showCurrentWeek:aSender];
 }
 
 - (BOOL)canShowNextWeek
 {
-    return _weekViewController.canShowNextWeek;
+    return _isWindowShowed && ![[_weekViewController view] isHidden] && _weekViewController.canShowNextWeek;
 }
 
 - (BOOL)canShowCurrentWeek
 {
-    return _weekViewController.canShowCurrentWeek;
+    return _isWindowShowed && ![[_weekViewController view] isHidden] && _weekViewController.canShowCurrentWeek;
 }
 
 - (BOOL)canShowPreviousWeek
 {
-    return _weekViewController.canShowPreviousWeek;
+    return _isWindowShowed && ![[_weekViewController view] isHidden] && _weekViewController.canShowPreviousWeek;
 }
 
 - (BOOL)isCurrentWeekShowed
