@@ -100,11 +100,9 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         [self.calendarWindowController setWindowState:WLFloatingLevelState
                                              animated:isStateChangeAnimated
                                              duration:stateChangeDuration];
+        [NSApp activateIgnoringOtherApps:YES];
         if ([self isOnlyCalendarWindowVisible:[NSApp windows]])
-        {
-            [NSApp activateIgnoringOtherApps:YES];
             [[self.calendarWindowController window] makeKeyWindow];
-        }
     }
     else
     {
