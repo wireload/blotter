@@ -212,9 +212,9 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
 
     /*
      | = current position
-     set level
+                        set level
      1.0        0.5        0.0        0.5       1.0
-     |--------------------------------------------> time
+     |--------------------------------------------> alpha value
      */
     if (isAnimated)
     {
@@ -229,7 +229,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
         {
             /*
              1.0                                        0.0
-             |--------------------------------------------> time
+             |--------------------------------------------> alpha value
 
              No animation is running.
              */
@@ -244,7 +244,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
         {
             /*
              1.0                                        0.0
-             ------------------|--------------------------> time
+             ------------------|--------------------------> alpha value
              <----progress---->
 
              Window is fading out, level is not changed yet.
@@ -267,7 +267,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
         {
             /*
              1.0        0.5        0.0        0.5       1.0
-             ------------------------------------------|--> time
+             ------------------------------------------|--> alpha value
              <----progress---->
 
              Window is fading in, level is already changed.
