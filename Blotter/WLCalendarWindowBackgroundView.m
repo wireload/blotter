@@ -170,7 +170,7 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
     if ([[self window] level] >= NSFloatingWindowLevel)
     {
         [NSGraphicsContext saveGraphicsState];
-        [innerPath setClip];
+        [innerPath addClip];
         CIImage *blurredBackgroundImage = [self blurredBackgroundImage];
         CGRect blurredRect = [blurredBackgroundImage extent];
         
@@ -217,7 +217,7 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
     }
 
     NSImage *noiseImage = [NSImage imageNamed:@"noise"];
-    [innerPath setClip];
+    [innerPath addClip];
     
     NSDrawNinePartImage(innerArea, nil, nil, nil, nil, noiseImage, nil, nil, nil, nil, NSCompositeSourceOver, 0.03, NO);
 
