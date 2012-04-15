@@ -176,7 +176,7 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
         
         [blurredBackgroundImage drawAtPoint:NSMakePoint(blurredRect.origin.x, blurredRect.origin.y)
                                    fromRect:NSRectFromCGRect(blurredRect)
-                                  operation:NSCompositeSourceOver
+                                  operation:NSCompositeCopy
                                    fraction:1.0];
         
         // Slightly darken the background with a blueish tint.
@@ -211,7 +211,7 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
                                   [NSImage imageNamed:@"calendar-background-bottom-left"],
                                   [NSImage imageNamed:@"calendar-background-bottom-middle"],
                                   [NSImage imageNamed:@"calendar-background-bottom-right"],
-                                  NSCompositeSourceOver,
+                                  NSCompositeCopy,
                                   1.0f,
                                   YES);
     }
