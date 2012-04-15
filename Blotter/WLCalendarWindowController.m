@@ -778,12 +778,15 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
 - (void)_updateFrame
 {
     NSRect windowFrame = [self windowFrame];
-    NSDisableScreenUpdates();
+    BOOL shouldDisableUpdates = _isWindowShowed;
+    if (shouldDisableUpdates)
+        NSDisableScreenUpdates();
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
     [CATransaction setCompletionBlock:^(void) {
         [self.window displayIfNeeded];
-        NSEnableScreenUpdates();
+        if (shouldDisableUpdates)
+            NSEnableScreenUpdates();
     }];
     [self flushWindowState];
     [self.window setFrame:windowFrame display:NO];
