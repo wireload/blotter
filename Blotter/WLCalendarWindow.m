@@ -50,7 +50,6 @@
         [self setHasShadow:NO];
         [self setBackgroundColor:[NSColor clearColor]];
         [self setIgnoresMouseEvents:YES];
-        [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
         [self setCanHide:NO];
         [self setDisplaysWhenScreenProfileChanges:YES];
         [self useOptimizedDrawing:YES];

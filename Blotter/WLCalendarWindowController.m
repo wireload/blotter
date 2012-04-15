@@ -485,7 +485,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
 - (void)_setFinderLevel
 {
     WLCalendarWindow *w = [self window];
-    [w setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
+    [w setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces | NSWindowCollectionBehaviorIgnoresCycle | NSWindowCollectionBehaviorTransient];
     [w setLevel:WLGetFinderLevel()];
     [w orderBack:nil];
     [[w realContentView] setNeedsDisplay:YES];
@@ -496,8 +496,8 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
 {
     WLCalendarWindow *w = [self window];
     [w setLevel:NSFloatingWindowLevel];
+    [w setCollectionBehavior:NSWindowCollectionBehaviorDefault | NSWindowCollectionBehaviorTransient | NSWindowCollectionBehaviorIgnoresCycle];
     [w orderBack:nil];
-    [w setCollectionBehavior:NSWindowCollectionBehaviorDefault];
     [[w realContentView] setNeedsDisplay:YES];
     [w displayIfNeeded];
 }
@@ -520,7 +520,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
             [self.window setLevel:WLGetFinderLevel()];
         else
             [self.window setLevel:NSFloatingWindowLevel];
-        [self.window orderBack:aSender];
+        [self _setFinderLevel];
         _isWindowShowed = YES;
     }
 }
