@@ -130,6 +130,33 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
 
 #pragma mark NSView
 
+- (void)viewWillDraw
+{
+    dispatch_once(&_didWarmUp, ^{
+        [self blurredBackgroundImage];
+        [NSImage imageNamed:@"calendar-background-active-top-left"];
+        [NSImage imageNamed:@"calendar-background-active-top-middle"];
+        [NSImage imageNamed:@"calendar-background-active-top-right"];
+        [NSImage imageNamed:@"calendar-background-active-middle-left"];
+        [NSImage imageNamed:@"calendar-background-active-middle-middle"];
+        [NSImage imageNamed:@"calendar-background-active-middle-right"];
+        [NSImage imageNamed:@"calendar-background-active-bottom-left"];
+        [NSImage imageNamed:@"calendar-background-active-bottom-middle"];
+        [NSImage imageNamed:@"calendar-background-active-bottom-right"];
+        [NSImage imageNamed:@"noise"];
+        [NSImage imageNamed:@"calendar-background-top-left"];
+        [NSImage imageNamed:@"calendar-background-top-middle"];
+        [NSImage imageNamed:@"calendar-background-top-right"];
+        [NSImage imageNamed:@"calendar-background-middle-left"];
+        [NSImage imageNamed:@"calendar-background-middle-middle"];
+        [NSImage imageNamed:@"calendar-background-middle-right"];
+        [NSImage imageNamed:@"calendar-background-bottom-left"];
+        [NSImage imageNamed:@"calendar-background-bottom-middle"];
+        [NSImage imageNamed:@"calendar-background-bottom-right"];
+    });
+    [super viewWillDraw];
+}
+
 - (void)drawRect:(NSRect)aDirtyRect
 {
     BEGIN_TIMING();

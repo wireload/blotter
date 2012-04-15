@@ -57,8 +57,6 @@
         [self setContentView:[[[_WLFlippedView alloc] init] autorelease]];
         if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_6)
             [self setAnimationBehavior:NSWindowAnimationBehaviorNone];
-
-        _didWarmUp = NO;
     }
     return self;
 }
@@ -73,27 +71,6 @@
 
 
 #pragma mark NSWindow
-
-- (void)orderWindow:(NSWindowOrderingMode)place relativeTo:(NSInteger)otherWin
-{
-    WLCalendarWindowBackgroundView *frameView = [self realContentView];
-    if (!_didWarmUp)
-        [frameView setAlphaValue:0.0];
-
-    [super orderWindow:place relativeTo:otherWin];
-
-    if (!_didWarmUp)
-    {
-        // Warm up the drawing system.
-        [self setLevel:NSFloatingWindowLevel];
-        [frameView setNeedsDisplay:YES];
-        [frameView display];
-        [self setLevel:WLGetFinderLevel()];
-        [frameView display];
-        [frameView setAlphaValue:1.0];
-        _didWarmUp = YES;
-    }
-}
 
 - (NSRect)frameRectForContentRect:(NSRect)aWindowContentRect
 {

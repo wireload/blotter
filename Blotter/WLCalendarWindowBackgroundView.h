@@ -19,9 +19,11 @@
 {
     CIFilter *_blurInputFilter;
     CIFilter *_blurOutputFilter;
+    dispatch_once_t _didWarmUp;
 }
 
 + (NSRect)contentRectForFrameRect:(NSRect)aFrame;
+
 + (NSRect)frameRectForContentRect:(NSRect)aContentRect;
 
 @end

@@ -22,7 +22,6 @@
 @interface WLCalendarWindow : NSWindow <NSAnimationDelegate>
 {
     NSView *_fakeContentView;
-    BOOL _didWarmUp;
 }
 
 - (WLCalendarWindowBackgroundView *)realContentView;
