@@ -8,25 +8,31 @@
 
 #import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLCalendarWindowBackgroundView.h"
+#import "WLCalendarWindow.h"
+
+
+static const CGFloat _WLCalendarBackgroundShadowTop = 6.0;
+
+static const CGFloat _WLCalendarBackgroundShadowRight = 9.0;
+
+static const CGFloat _WLCalendarBackgroundShadowBottom = 12.0;
+
+static const CGFloat _WLCalendarBackgroundShadowLeft = 9.0;
+
+static const CGFloat _WLCalendarBackgroundActiveDarkness = 0.20;
+
 
 @implementation WLCalendarWindowBackgroundView
-
-static const CGFloat WLCalendarBackgroundShadowTop = 6.0f;
-static const CGFloat WLCalendarBackgroundShadowRight = 9.0f;
-static const CGFloat WLCalendarBackgroundShadowBottom = 12.0f;
-static const CGFloat WLCalendarBackgroundShadowLeft = 9.0f;
-static const CGFloat WLCalendarBackgroundActiveBlur = 4.0;
-static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
 
 #pragma mark Methods
 
 + (NSRect)glassRectForBounds:(NSRect)aBounds
 {
     NSRect glassRect = aBounds;
-    glassRect.origin.x += WLCalendarBackgroundShadowLeft + 3.0;
-    glassRect.origin.y += WLCalendarBackgroundShadowTop + 3.0;
-    glassRect.size.width -= WLCalendarBackgroundShadowLeft + 3.0 + WLCalendarBackgroundShadowRight + 3.0;
-    glassRect.size.height -= WLCalendarBackgroundShadowTop + 3.0 + WLCalendarBackgroundShadowBottom + 3.0;    
+    glassRect.origin.x += _WLCalendarBackgroundShadowLeft + 3.0;
+    glassRect.origin.y += _WLCalendarBackgroundShadowTop + 3.0;
+    glassRect.size.width -= _WLCalendarBackgroundShadowLeft + 3.0 + _WLCalendarBackgroundShadowRight + 3.0;
+    glassRect.size.height -= _WLCalendarBackgroundShadowTop + 3.0 + _WLCalendarBackgroundShadowBottom + 3.0;
     return glassRect;
 }
 
@@ -39,77 +45,20 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
 + (NSRect)frameRectForContentRect:(NSRect)aContentRect
 {
     NSRect frameRect = NSInsetRect(aContentRect, -17.0, -17.0);
-    frameRect.origin.x -= WLCalendarBackgroundShadowLeft + 3.0;
-    frameRect.origin.y -= WLCalendarBackgroundShadowTop + 3.0;
-    frameRect.size.width += WLCalendarBackgroundShadowLeft + 3.0 + WLCalendarBackgroundShadowRight + 3.0;
-    frameRect.size.height += WLCalendarBackgroundShadowTop + 3.0 + WLCalendarBackgroundShadowBottom + 3.0;    
+    frameRect.origin.x -= _WLCalendarBackgroundShadowLeft + 3.0;
+    frameRect.origin.y -= _WLCalendarBackgroundShadowTop + 3.0;
+    frameRect.size.width += _WLCalendarBackgroundShadowLeft + 3.0 + _WLCalendarBackgroundShadowRight + 3.0;
+    frameRect.size.height += _WLCalendarBackgroundShadowTop + 3.0 + _WLCalendarBackgroundShadowBottom + 3.0;
     return frameRect;
 }
 
-- (id)initWithFrame:(NSRect)frameRect
-{
-    self = [super initWithFrame:frameRect];
-    if (self != nil)
-    {
-        // This filter will be responsible for flipping the input image upside down. It can't be 
-        // fully prepared in advance because we need to know the height of the image.
-        CIFilter *transform = [CIFilter filterWithName:@"CIAffineTransform"];
-        
-        CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
-        [filter setDefaults];
-        [filter setValue:[NSNumber numberWithFloat:WLCalendarBackgroundActiveBlur] forKey:@"inputRadius"];
-
-        _blurInputFilter = [transform retain];
-        _blurOutputFilter = [filter retain];
-    }
-
-    return self;
-}
-
-- (CGImageRef)newCGImageOfScreenBelowWindow:(NSWindow *)aWindow
-{
-    BEGIN_TIMING();
-
-    CGRect windowRect = NSRectToCGRect([aWindow frame]);
-    windowRect.origin.y = NSMaxY([[aWindow screen] frame]) - NSMaxY([aWindow frame]);
-    
-    CGWindowID windowId = (CGWindowID)[aWindow windowNumber];
-    CGImageRef desktopImage = CGWindowListCreateImage(windowRect, kCGWindowListOptionOnScreenBelowWindow, windowId, kCGWindowImageBoundsIgnoreFraming);
-
-    END_TIMING(@"capture background");
-
-    return desktopImage;
-}
-
-- (CIImage *)blurredBackgroundImage
-{  
-    BEGIN_TIMING();
-    CGImageRef backgroundImage = [self newCGImageOfScreenBelowWindow:[self window]];
-    CIImage *ciImage = [CIImage imageWithCGImage:backgroundImage];
-    CGImageRelease(backgroundImage);
-
-    // Flip image upside down.
-    NSAffineTransform *affineTransform = [NSAffineTransform transform];
-    [affineTransform translateXBy:0 yBy:[ciImage extent].size.height];
-    [affineTransform scaleXBy:1.0 yBy:-1.0];
-
-    [_blurInputFilter setValue:ciImage forKey:@"inputImage"];
-    [_blurInputFilter setValue:affineTransform forKey:@"inputTransform"];
-    [_blurOutputFilter setValue:[_blurInputFilter valueForKey:@"outputImage"] forKey:@"inputImage"];
-    
-    CIImage *result = [_blurOutputFilter valueForKey:@"outputImage"];
-    
-    END_TIMING(@"blur background");
-    
-    return result;
-}
 
 #pragma mark NSView
 
 - (void)viewWillDraw
 {
     dispatch_once(&_didWarmUp, ^{
-        [self blurredBackgroundImage];
+        [(WLCalendarWindow *)[self window] blurredBackgroundImage];
         [NSImage imageNamed:@"calendar-background-active-top-left"];
         [NSImage imageNamed:@"calendar-background-active-top-middle"];
         [NSImage imageNamed:@"calendar-background-active-top-right"];
@@ -147,7 +96,7 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
     {
         [NSGraphicsContext saveGraphicsState];
         [innerPath addClip];
-        CIImage *blurredBackgroundImage = [self blurredBackgroundImage];
+        CIImage *blurredBackgroundImage = [(WLCalendarWindow *)[self window] blurredBackgroundImage];
         CGRect blurredRect = [blurredBackgroundImage extent];
         
         [blurredBackgroundImage drawAtPoint:NSMakePoint(blurredRect.origin.x, blurredRect.origin.y)
@@ -156,9 +105,8 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
                                    fraction:1.0];
         
         // Slightly darken the background with a blueish tint.
-        [[NSColor colorWithCalibratedRed:21.0 / 255.0 green:44.0 / 255.0 blue:73.0 / 255.0 alpha:WLCalendarBackgroundActiveDarkness] set];
+        [[NSColor colorWithCalibratedRed:21.0 / 255.0 green:44.0 / 255.0 blue:73.0 / 255.0 alpha:_WLCalendarBackgroundActiveDarkness] set];
         [innerPath fill];
-               
         [NSGraphicsContext restoreGraphicsState];
         
         WLDrawScaledNinePartImage([self bounds],
@@ -173,7 +121,7 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
                                   [NSImage imageNamed:@"calendar-background-active-bottom-right"],
                                   NSCompositeSourceOver,
                                   1.0f,
-                                  YES);
+                                  [self isFlipped]);
     }
     else 
     {
@@ -189,7 +137,7 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
                                   [NSImage imageNamed:@"calendar-background-bottom-right"],
                                   NSCompositeCopy,
                                   1.0f,
-                                  YES);
+                                  [self isFlipped]);
     }
 
     NSImage *noiseImage = [NSImage imageNamed:@"noise"];

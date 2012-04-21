@@ -17,8 +17,6 @@
  */
 @interface WLCalendarWindowBackgroundView : NSView
 {
-    CIFilter *_blurInputFilter;
-    CIFilter *_blurOutputFilter;
     dispatch_once_t _didWarmUp;
 }
 

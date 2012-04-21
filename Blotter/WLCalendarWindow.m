@@ -11,6 +11,9 @@
 #import "WLCalendarWindowController.h"
 
 
+static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
+
+
 @interface _WLFlippedView : NSView
 @end
 
@@ -56,9 +59,28 @@
         [self setContentView:[[[_WLFlippedView alloc] init] autorelease]];
         if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_6)
             [self setAnimationBehavior:NSWindowAnimationBehaviorNone];
+
+        // This filter will be responsible for flipping the input image upside down. It can't be
+        // fully prepared in advance because we need to know the height of the image.
+        CIFilter *transform = [CIFilter filterWithName:@"CIAffineTransform"];
+
+        CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
+        [filter setDefaults];
+        [filter setValue:[NSNumber numberWithFloat:_WLCalendarBackgroundActiveBlur] forKey:@"inputRadius"];
+
+        _blurInputFilter = [transform retain];
+        _blurOutputFilter = [filter retain];
     }
     return self;
 }
+
+- (void)dealloc
+{
+    [_blurInputFilter release];
+    [_blurOutputFilter release];
+    [super dealloc];
+}
+
 
 
 #pragma mark Methods
@@ -66,6 +88,44 @@
 - (WLCalendarWindowBackgroundView *)realContentView
 {
     return [super contentView];
+}
+
+- (CGImageRef)newCGImageOfScreenBelowWindow
+{
+    BEGIN_TIMING();
+
+    CGRect windowRect = NSRectToCGRect([self frame]);
+    windowRect.origin.y = NSMaxY([[self screen] frame]) - NSMaxY([self frame]);
+
+    CGWindowID windowId = (CGWindowID)[self windowNumber];
+    CGImageRef desktopImage = CGWindowListCreateImage(windowRect, kCGWindowListOptionOnScreenBelowWindow, windowId, kCGWindowImageBoundsIgnoreFraming);
+
+    END_TIMING(@"capture background");
+
+    return desktopImage;
+}
+
+- (CIImage *)blurredBackgroundImage
+{
+    BEGIN_TIMING();
+    CGImageRef backgroundImage = [self newCGImageOfScreenBelowWindow];
+    CIImage *ciImage = [CIImage imageWithCGImage:backgroundImage];
+    CGImageRelease(backgroundImage);
+
+    // Flip image upside down.
+    NSAffineTransform *affineTransform = [NSAffineTransform transform];
+    [affineTransform translateXBy:0 yBy:[ciImage extent].size.height];
+    [affineTransform scaleXBy:1.0 yBy:-1.0];
+
+    [_blurInputFilter setValue:ciImage forKey:@"inputImage"];
+    [_blurInputFilter setValue:affineTransform forKey:@"inputTransform"];
+    [_blurOutputFilter setValue:[_blurInputFilter valueForKey:@"outputImage"] forKey:@"inputImage"];
+
+    CIImage *result = [_blurOutputFilter valueForKey:@"outputImage"];
+
+    END_TIMING(@"blur background");
+
+    return result;
 }
 
 

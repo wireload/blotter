@@ -22,8 +22,14 @@
 @interface WLCalendarWindow : NSWindow <NSAnimationDelegate>
 {
     NSView *_fakeContentView;
+    CIFilter *_blurInputFilter;
+    CIFilter *_blurOutputFilter;
 }
 
 - (WLCalendarWindowBackgroundView *)realContentView;
+
+- (CGImageRef)newCGImageOfScreenBelowWindow;
+
+- (CIImage *)blurredBackgroundImage;
 
 @end
