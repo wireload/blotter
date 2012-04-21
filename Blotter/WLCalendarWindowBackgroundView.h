@@ -26,4 +26,6 @@
 
 + (NSRect)frameRectForContentRect:(NSRect)aContentRect;
 
++ (NSRect)glassRectForBounds:(NSRect)aBounds;
+
 @end

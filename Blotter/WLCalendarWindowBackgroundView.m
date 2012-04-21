@@ -20,9 +20,9 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
 
 #pragma mark Methods
 
-+ (NSRect)glassRectForBounds:(NSRect)bounds
++ (NSRect)glassRectForBounds:(NSRect)aBounds
 {
-    NSRect glassRect = bounds;
+    NSRect glassRect = aBounds;
     glassRect.origin.x += WLCalendarBackgroundShadowLeft + 3.0;
     glassRect.origin.y += WLCalendarBackgroundShadowTop + 3.0;
     glassRect.size.width -= WLCalendarBackgroundShadowLeft + 3.0 + WLCalendarBackgroundShadowRight + 3.0;
@@ -48,7 +48,8 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
 
 - (id)initWithFrame:(NSRect)frameRect
 {
-    if (self = [super initWithFrame:frameRect])
+    self = [super initWithFrame:frameRect];
+    if (self != nil)
     {
         // This filter will be responsible for flipping the input image upside down. It can't be 
         // fully prepared in advance because we need to know the height of the image.
@@ -72,7 +73,7 @@ static const CGFloat WLCalendarBackgroundActiveDarkness = 0.20;
     CGRect windowRect = NSRectToCGRect([aWindow frame]);
     windowRect.origin.y = NSMaxY([[aWindow screen] frame]) - NSMaxY([aWindow frame]);
     
-    CGWindowID windowId = [aWindow windowNumber];
+    CGWindowID windowId = (CGWindowID)[aWindow windowNumber];
     CGImageRef desktopImage = CGWindowListCreateImage(windowRect, kCGWindowListOptionOnScreenBelowWindow, windowId, kCGWindowImageBoundsIgnoreFraming);
 
     END_TIMING(@"capture background");
