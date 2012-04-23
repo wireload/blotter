@@ -140,7 +140,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
         [NSAnimationContext beginGrouping];
         if ([[NSUserDefaults standardUserDefaults] WL_slowsAnimation])
             [[NSAnimationContext currentContext] setDuration:[[NSAnimationContext currentContext] duration] * 10];
-        if (![self isAnimatingWindowState])
+        if (![self isAnimatingWindowState] && self.windowState == WLFinderLevelState)
         {
             if (isFadedOut)
                 [[[self window] animator] setAlphaValue:_WLFadeOutAlphaValue];
