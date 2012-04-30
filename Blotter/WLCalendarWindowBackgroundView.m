@@ -86,7 +86,6 @@ static const CGFloat _WLCalendarBackgroundNoiseOpacity = 0.03;
         [NSImage imageNamed:@"calendar-background-active-bottom-left"];
         [NSImage imageNamed:@"calendar-background-active-bottom-middle"];
         [NSImage imageNamed:@"calendar-background-active-bottom-right"];
-        [NSImage imageNamed:@"noise"];
         [NSImage imageNamed:@"calendar-background-top-left"];
         [NSImage imageNamed:@"calendar-background-top-middle"];
         [NSImage imageNamed:@"calendar-background-top-right"];
