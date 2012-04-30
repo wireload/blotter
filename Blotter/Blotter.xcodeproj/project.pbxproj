@@ -355,7 +355,7 @@
 		E278F19D13C9EA6700B327EB /* WLCalendarWeekView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWeekView.m; sourceTree = "<group>"; };
 		E27936381324F05800BC5224 /* WLGlassHudWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudWindow.h; sourceTree = "<group>"; };
 		E27936391324F05800BC5224 /* WLGlassHudWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudWindow.m; sourceTree = "<group>"; };
-		E27936441324F6E200BC5224 /* WLGlassHudWindowBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; path = WLGlassHudWindowBackgroundView.h; sourceTree = "<group>"; };
+		E27936441324F6E200BC5224 /* WLGlassHudWindowBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudWindowBackgroundView.h; sourceTree = "<group>"; };
 		E27936451324F6E200BC5224 /* WLGlassHudWindowBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudWindowBackgroundView.m; sourceTree = "<group>"; };
 		E27951BA131AA060008AE1DA /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		E27DE06813CF18B1003E8E9A /* WLCalendarAllDayEventsLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarAllDayEventsLayer.h; sourceTree = "<group>"; };

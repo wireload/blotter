@@ -21,10 +21,28 @@ static const CGFloat _WLCalendarBackgroundShadowLeft = 9.0;
 
 static const CGFloat _WLCalendarBackgroundActiveDarkness = 0.20;
 
+static const NSColor *_WLCalendarBackgroundNoisePatternColor = nil;
+
+static const CGFloat _WLCalendarBackgroundNoiseOpacity = 0.03;
 
 @implementation WLCalendarWindowBackgroundView
 
 #pragma mark Methods
+
++ (void)initialize
+{    
+    NSImage *noiseImage = [NSImage imageNamed:@"noise"];
+    
+    // Redraw with the desired transparency.
+    [noiseImage lockFocus];
+    [[[NSColor clearColor] colorWithAlphaComponent:_WLCalendarBackgroundNoiseOpacity] set];
+    NSSize noiseSize = [noiseImage size];
+    NSRectFillUsingOperation(NSMakeRect(0, 0, noiseSize.width, noiseSize.height), NSCompositeDestinationIn);
+    [noiseImage unlockFocus];
+    
+    // Retained for the life time of the app since every calendar window can reuse the same pattern.
+    _WLCalendarBackgroundNoisePatternColor = [[NSColor colorWithPatternImage:noiseImage] retain];
+}
 
 + (NSRect)glassRectForBounds:(NSRect)aBounds
 {
@@ -140,11 +158,10 @@ static const CGFloat _WLCalendarBackgroundActiveDarkness = 0.20;
                                   [self isFlipped]);
     }
 
-    NSImage *noiseImage = [NSImage imageNamed:@"noise"];
+    [_WLCalendarBackgroundNoisePatternColor setFill];
     [innerPath addClip];
     
-    NSDrawNinePartImage(innerArea, nil, nil, nil, nil, noiseImage, nil, nil, nil, nil, NSCompositeSourceOver, 0.03, NO);
-
+    NSRectFillUsingOperation(innerArea, NSCompositeSourceOver);
 #else
     [[NSColor lightGrayColor] setFill];
     NSRectFill(aDirtyRect);
