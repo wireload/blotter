@@ -106,7 +106,8 @@ static const CGFloat _WLCalendarBackgroundNoiseOpacity = 0.03;
     [NSGraphicsContext saveGraphicsState];
     [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
 #ifndef DEBUG_LAYERS
-    NSRect innerArea = [[self class] glassRectForBounds:[self bounds]];
+    NSRect bounds = [self bounds];
+    NSRect innerArea = [[self class] glassRectForBounds:bounds];
     NSBezierPath *innerPath = [NSBezierPath bezierPathWithRoundedRect:innerArea xRadius:5 yRadius:5];
 
     if ([[self window] level] >= NSFloatingWindowLevel)
@@ -126,7 +127,7 @@ static const CGFloat _WLCalendarBackgroundNoiseOpacity = 0.03;
         [innerPath fill];
         [NSGraphicsContext restoreGraphicsState];
         
-        WLDrawScaledNinePartImage([self bounds],
+        WLDrawScaledNinePartImage(bounds,
                                   [NSImage imageNamed:@"calendar-background-active-top-left"],
                                   [NSImage imageNamed:@"calendar-background-active-top-middle"],
                                   [NSImage imageNamed:@"calendar-background-active-top-right"],
@@ -142,7 +143,7 @@ static const CGFloat _WLCalendarBackgroundNoiseOpacity = 0.03;
     }
     else 
     {
-        WLDrawScaledNinePartImage([self bounds],
+        WLDrawScaledNinePartImage(bounds,
                                   [NSImage imageNamed:@"calendar-background-top-left"],
                                   [NSImage imageNamed:@"calendar-background-top-middle"],
                                   [NSImage imageNamed:@"calendar-background-top-right"],
@@ -158,9 +159,7 @@ static const CGFloat _WLCalendarBackgroundNoiseOpacity = 0.03;
     }
 
     [_WLCalendarBackgroundNoisePatternColor setFill];
-    [innerPath addClip];
-    
-    NSRectFillUsingOperation(innerArea, NSCompositeSourceOver);
+    [innerPath fill];
 #else
     [[NSColor lightGrayColor] setFill];
     NSRectFill(aDirtyRect);
