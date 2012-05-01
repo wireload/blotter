@@ -47,7 +47,7 @@
 					<object class="NSButton" id="272044766">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{115, 73}, {214, 32}}</string>
+						<string key="NSFrame">{{115, 73}, {186, 32}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="107585228"/>
@@ -56,7 +56,7 @@
 						<object class="NSButtonCell" key="NSCell" id="101010992">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">134217728</int>
-							<string key="NSContents">Mac OS X Calendar Settings</string>
+							<string key="NSContents">Date &amp; Time Formats…</string>
 							<object class="NSFont" key="NSSupport" id="129810539">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">13</double>
