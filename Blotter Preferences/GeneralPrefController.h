@@ -13,11 +13,13 @@
 @class WLPrefPaneView;
 
 
-@interface GeneralPrefController : NSObject <SS_PreferencePaneProtocol>
+@interface GeneralPrefController : NSObject <SS_PreferencePaneProtocol, NSAlertDelegate>
 {
     IBOutlet WLPrefPaneView *_mainView;
 }
 
-- (IBAction)quitBlotter:(id)sender;
+- (IBAction)quitBlotter:(id)aSender;
+
+- (IBAction)showMacOSXCalendarSettings:(id)aSender;
 
 @end

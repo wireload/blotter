@@ -81,6 +81,7 @@
 		E2A01DC61455634C0008BDF2 /* Recreated-Aqua.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2A01DC51455634C0008BDF2 /* Recreated-Aqua.jpg */; };
 		E2A18CB7146D7560004B727B /* WLNinePartBlockLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A18CB6146D7560004B727B /* WLNinePartBlockLayer.m */; };
 		E2BADDC0134DF2FB00F65E14 /* exclamation.png in Resources */ = {isa = PBXBuildFile; fileRef = E2BADDBF134DF2FB00F65E14 /* exclamation.png */; };
+		E2BFBA44154FD338005290C5 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2BFBA43154FD338005290C5 /* ScriptingBridge.framework */; };
 		E2DC7DDD130810F00065CEAD /* WLScreensController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2DC7DDC130810F00065CEAD /* WLScreensController.m */; };
 		E2E19FFF152ADFFF0059B2D3 /* WLCustomCursorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E19FFE152ADFFF0059B2D3 /* WLCustomCursorButton.m */; };
 		E2E8267814501BD8007035E5 /* chkbxBackground_10_6.png in Resources */ = {isa = PBXBuildFile; fileRef = E2E8267214501BD8007035E5 /* chkbxBackground_10_6.png */; };
@@ -261,6 +262,8 @@
 		E2A18CB5146D7560004B727B /* WLNinePartBlockLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNinePartBlockLayer.h; sourceTree = "<group>"; };
 		E2A18CB6146D7560004B727B /* WLNinePartBlockLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNinePartBlockLayer.m; sourceTree = "<group>"; };
 		E2BADDBF134DF2FB00F65E14 /* exclamation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exclamation.png; sourceTree = "<group>"; };
+		E2BFBA40154FD13B005290C5 /* SystemPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemPreferences.h; sourceTree = "<group>"; };
+		E2BFBA43154FD338005290C5 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		E2DC7DDB130810F00065CEAD /* WLScreensController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLScreensController.h; sourceTree = "<group>"; };
 		E2DC7DDC130810F00065CEAD /* WLScreensController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLScreensController.m; sourceTree = "<group>"; };
 		E2E19FFD152ADFFF0059B2D3 /* WLCustomCursorButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCustomCursorButton.h; sourceTree = "<group>"; };
@@ -313,6 +316,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2BFBA44154FD338005290C5 /* ScriptingBridge.framework in Frameworks */,
 				E2EB28BE146D8E4B00E975F6 /* PTHotKey.framework in Frameworks */,
 				E2EB28BF146D8E4B00E975F6 /* ShortcutRecorder.framework in Frameworks */,
 				E2EB28C0146D8E4B00E975F6 /* WireloadClassesAndResources.framework in Frameworks */,
@@ -337,6 +341,7 @@
 				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
 				E2794F9E131A6425008AE1DA /* Carbon.framework */,
 				E2435B2714539E080052D9A3 /* QuartzCore.framework */,
+				E2BFBA43154FD338005290C5 /* ScriptingBridge.framework */,
 				08FB77AFFE84173DC02AAC07 /* Classes */,
 				32C88E010371C26100C91783 /* Other Sources */,
 				089C167CFE841241C02AAC07 /* Resources */,
@@ -444,6 +449,7 @@
 		32C88E010371C26100C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				E2BFBA40154FD13B005290C5 /* SystemPreferences.h */,
 				E2A18CB4146D751B004B727B /* NSColor+WLCalendar.h */,
 				E2A18CB3146D74EB004B727B /* WLCalendarWindowController.h */,
 				E2A18CA5146D73A4004B727B /* DeskboardAppDelegate.h */,

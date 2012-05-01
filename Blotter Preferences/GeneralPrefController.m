@@ -12,13 +12,37 @@
 #import "LayoutPrefController.h"
 #import "AboutPrefController.h"
 #import "ShortcutsPrefController.h"
+#import "SystemPreferences.h"
 
 
 @implementation GeneralPrefController
 
-- (IBAction)quitBlotter:(id)sender
+#pragma mark Methods
+
+- (IBAction)quitBlotter:(id)aSender
 {
-    [[NSApplication sharedApplication] terminate:sender];
+    [[NSApplication sharedApplication] terminate:aSender];
+}
+
+- (IBAction)showMacOSXCalendarSettings:(id)aSender
+{
+    SystemPreferencesApplication *app = (SystemPreferencesApplication *)[SBApplication applicationWithBundleIdentifier:@"com.apple.systempreferences"];
+    SystemPreferencesPane *pane = [[app panes] objectWithID:@"com.apple.Localization"];
+    SystemPreferencesAnchor *anchor = [[pane anchors] objectWithName:@"Formats"];
+    if ([anchor reveal] != nil)
+        [app activate];
+    else
+    {
+        NSAlert *a = [NSAlert alertWithMessageText:NSLocalizedStringFromTableInBundle(@"Failed to open System Preferences.", nil, [NSBundle bundleForClass:[self class]], @"Cannot open System Preferences alert message")
+                                     defaultButton:NSLocalizedStringFromTableInBundle(@"Close", nil, [NSBundle bundleForClass:[self class]], @"Cannot open System Preferences alert default title")
+                                   alternateButton:@""
+                                       otherButton:@""
+                         informativeTextWithFormat:NSLocalizedStringFromTableInBundle(@"You can open it manually by following:\n→System Preferences…→Language & Text→Formats", nil, [NSBundle bundleForClass:[self class]], @"Cannot open System Preferences alert informative text")];
+        [a setAlertStyle:NSCriticalAlertStyle];
+        [a setShowsHelp:YES];
+        [a setDelegate:self];
+        [a beginSheetModalForWindow:[_mainView window] modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+    }
 }
 
 
@@ -75,6 +99,15 @@
 - (BOOL)allowsVerticalResizing
 {
     return NO;
+}
+
+
+#pragma mark NSAlertDelegate
+
+- (BOOL)alertShowHelp:(NSAlert *)anAlert
+{
+    [[NSWorkspace sharedWorkspace] openURL:[[NSUserDefaults standardUserDefaults] WL_getSupportURL]];
+    return YES;
 }
 
 @end

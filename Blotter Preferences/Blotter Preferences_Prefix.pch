@@ -7,4 +7,6 @@
     #import <CalendarStore/CalendarStore.h>
     #import <Carbon/Carbon.h>
     #import <QuartzCore/QuartzCore.h>
+    #import <ScriptingBridge/ScriptingBridge.h>
+    #import "SystemPreferences.h"
 #endif
