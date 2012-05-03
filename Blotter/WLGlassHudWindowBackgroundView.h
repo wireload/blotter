@@ -9,9 +9,6 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface WLGlassHudWindowBackgroundView : NSView {
-    NSPoint _initialPoint;
-    NSRect _initialWindowFrame;
-}
+@interface WLGlassHudWindowBackgroundView : NSView
 
 @end

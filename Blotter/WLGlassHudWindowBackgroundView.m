@@ -52,20 +52,4 @@ static const CGFloat _WLRightPadding = 18.0;
                         NO);
 }
 
-- (void)mouseDown:(NSEvent *)anEvent
-{
-    _initialPoint = [[self window] convertBaseToScreen:[anEvent locationInWindow]];
-    _initialWindowFrame = [[self window] frame];
-}
-
-- (void)mouseDragged:(NSEvent *)anEvent
-{
-    NSWindow *window = [self window];
-    NSPoint newPoint = [window convertBaseToScreen:[anEvent locationInWindow]];
-    NSSize delta = NSMakeSize(newPoint.x - _initialPoint.x,
-                              newPoint.y - _initialPoint.y);
-    NSRect newFrame = NSOffsetRect(_initialWindowFrame, delta.width, delta.height);
-    [window setFrame:newFrame display:YES animate:NO];
-}
-
 @end
