@@ -2,7 +2,7 @@
 //  WLGlassHudTextField.m
 //  Blotter
 //
-//  Created by Ilya Kulakov on 24.03.11.
+//  Created by Ilya Kulakov on 24.04.12.
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
@@ -28,16 +28,20 @@ NSString* const WLSizeDiff = @"WLSizeDiff";
 - (BOOL)becomeFirstResponder
 {
     // Move cursor to the end
-    BOOL result = [super becomeFirstResponder];
-    if (result && [[[self selectedRanges] objectAtIndex:0] rangeValue].length == 0)
-        [self setSelectedRange:NSMakeRange([[self string] length], 0)];
-    return result;
+    BOOL isBecome = [super becomeFirstResponder];
+    if (isBecome)
+    {
+        if ([[[self selectedRanges] objectAtIndex:0] rangeValue].length == 0)
+            [self setSelectedRange:NSMakeRange([[self string] length], 0)];
+//        [self setTextColor:[NSColor blackColor]];
+    }
+    return isBecome;
 }
 
 - (BOOL)resignFirstResponder
 {
-    // TODO: resign first responder may return NO. we probably need to handle this to do not change selection.
     [self setSelectedRange:NSMakeRange(0, 0)];
+//    [self setTextColor:[NSColor whiteColor]];
     return [super resignFirstResponder];
 }
 
@@ -49,7 +53,8 @@ NSString* const WLSizeDiff = @"WLSizeDiff";
 
 - (id)initWithFrame:(NSRect)frameRect
 {
-    if (self = [super initWithFrame:frameRect])
+    self = [super initWithFrame:frameRect];
+    if (self != nil)
     {
         NSRect textViewFrame = [self convertRect:frameRect fromView:[self superview]];
         textViewFrame.origin.y += _WLTextViewTopOffset;
@@ -61,6 +66,7 @@ NSString* const WLSizeDiff = @"WLSizeDiff";
         [_textView setRichText:NO];
         [_textView setImportsGraphics:NO];
         [_textView setAllowsImageEditing:NO];
+//        [_textView setTextColor:[NSColor whiteColor]];
         _textView.containerView = self;
         [self addSubview:_textView];
         [_textView release];

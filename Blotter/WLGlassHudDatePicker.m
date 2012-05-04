@@ -11,6 +11,12 @@
 
 @implementation WLGlassHudDatePicker
 
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    [self setTextColor:[NSColor whiteColor]];
+}
+
 - (id<WLGlassHudDatePickerCellDelegate>)delegate
 {
     return (id<WLGlassHudDatePickerCellDelegate>)[super delegate];
@@ -24,16 +30,24 @@
 - (BOOL)becomeFirstResponder
 {
     BOOL isBecome = [super becomeFirstResponder];
-    if (isBecome && [[self delegate] respondsToSelector:@selector(datePickerCellDidBecomeFirstResponder:)])
-        [[self delegate] datePickerCellDidBecomeFirstResponder:[self cell]];
+    if (isBecome)
+    {
+        if ([[self delegate] respondsToSelector:@selector(datePickerCellDidBecomeFirstResponder:)])
+            [[self delegate] datePickerCellDidBecomeFirstResponder:[self cell]];
+        [self setTextColor:[NSColor blackColor]];
+    }
     return isBecome;
 }
 
 - (BOOL)resignFirstResponder
 {
     BOOL isResigned = [super resignFirstResponder];
-    if (isResigned && [[self delegate] respondsToSelector:@selector(datePickerCellDidResignFirstResponder:)])
-        [[self delegate] datePickerCellDidResignFirstResponder:[self cell]];
+    if (isResigned)
+    {
+        if ([[self delegate] respondsToSelector:@selector(datePickerCellDidResignFirstResponder:)])
+            [[self delegate] datePickerCellDidResignFirstResponder:[self cell]];
+        [self setTextColor:[NSColor whiteColor]];
+    }
     return isResigned;
 }
 
