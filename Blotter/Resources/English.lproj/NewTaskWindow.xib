@@ -50,7 +50,7 @@
 				<int key="NSWindowStyleMask">17</int>
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{421, 311}, {269, 196}}</string>
-				<int key="NSWTFlags">1685586944</int>
+				<int key="NSWTFlags">1685591040</int>
 				<string key="NSWindowTitle">New Reminder</string>
 				<string key="NSWindowClass">WLGlassHudWindow</string>
 				<nil key="NSViewClass"/>
@@ -66,7 +66,6 @@
 							<string key="NSFrame">{{30, 137}, {208, 28}}</string>
 							<reference key="NSSuperview" ref="414427165"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSClassName">WLGlassHudTextView</string>
 						</object>
 						<object class="NSCustomView" id="577727828">
