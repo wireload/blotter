@@ -20,6 +20,8 @@
     dispatch_once_t _didWarmUp;
 }
 
++ (const NSColor *)backgroundNoisePatternColor;
+
 + (NSRect)contentRectForFrameRect:(NSRect)aFrame;
 
 + (NSRect)frameRectForContentRect:(NSRect)aContentRect;

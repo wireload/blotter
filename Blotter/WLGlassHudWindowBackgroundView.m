@@ -8,7 +8,7 @@
 
 #import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLGlassHudWindowBackgroundView.h"
-
+#import "WLCalendarWindowBackgroundView.h"
 
 static const CGFloat _WLGlassHudBackgroundShadowTop = 6.0;
 
@@ -80,9 +80,9 @@ static const CGFloat _WLGlassHudBackgroundActiveDarkness = 0.88;
                               1.0f,
                               [self isFlipped]);
 
-    NSImage *noiseImage = [NSImage imageNamed:@"noise"];
-    [innerPath addClip];
-    NSDrawNinePartImage(innerArea,nil, nil, nil, nil, noiseImage, nil, nil, nil, nil, NSCompositeSourceOver, 0.03, [self isFlipped]);
+    
+    [[WLCalendarWindowBackgroundView backgroundNoisePatternColor] setFill];
+    [innerPath fill];
     [NSGraphicsContext restoreGraphicsState];
 }
 
