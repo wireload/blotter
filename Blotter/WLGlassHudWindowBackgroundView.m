@@ -18,7 +18,7 @@ static const CGFloat _WLGlassHudBackgroundShadowBottom = 12.0;
 
 static const CGFloat _WLGlassHudBackgroundShadowLeft = 9.0;
 
-static const CGFloat _WLGlassHudBackgroundActiveDarkness = 0.9;
+static const CGFloat _WLGlassHudBackgroundActiveDarkness = 0.88;
 
 
 @implementation WLGlassHudWindowBackgroundView
@@ -58,10 +58,10 @@ static const CGFloat _WLGlassHudBackgroundActiveDarkness = 0.9;
     [NSGraphicsContext saveGraphicsState];
     [innerPath addClip];
 
-    // Slightly darken the background with a blueish tint.
-    [[NSColor colorWithCalibratedRed:250.0 / 255.0
-                               green:250.0 / 255.0
-                                blue:250.0 / 255.0
+    // Slightly darken the background with a blackish tint.
+    [[NSColor colorWithCalibratedRed:55.0 / 255.0
+                               green:48.0 / 255.0
+                                blue:41.0 / 255.0
                                alpha:_WLGlassHudBackgroundActiveDarkness] set];
     [innerPath fill];
     [NSGraphicsContext restoreGraphicsState];

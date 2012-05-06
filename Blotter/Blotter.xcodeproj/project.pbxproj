@@ -66,6 +66,8 @@
 		E22C78AB13FFCD9F00EE44C0 /* NSColor+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */; };
 		E234BF7E14DAFADF00AB2262 /* WLCalendarTimeRulerMarkerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E234BF7D14DAFADF00AB2262 /* WLCalendarTimeRulerMarkerLayer.m */; };
 		E23F746F14434DE40055D6CE /* WLHourRange.m in Sources */ = {isa = PBXBuildFile; fileRef = E23F746E14434DE40055D6CE /* WLHourRange.m */; };
+		E252E9C515545AD300B64F5F /* WLGlassHudPopUpButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E252E9C415545AD300B64F5F /* WLGlassHudPopUpButtonCell.m */; };
+		E252E9C71555670500B64F5F /* glass-hud-pop-up-button-arrows.png in Resources */ = {isa = PBXBuildFile; fileRef = E252E9C61555670500B64F5F /* glass-hud-pop-up-button-arrows.png */; };
 		E253575013DC884D0010A2ED /* NSDate+WLDayBoundaries.m in Sources */ = {isa = PBXBuildFile; fileRef = E253574F13DC884D0010A2ED /* NSDate+WLDayBoundaries.m */; };
 		E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */; };
 		E267035A132CA21F003FBFC2 /* glass-hud-button-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E2670357132CA21F003FBFC2 /* glass-hud-button-right.png */; };
@@ -314,6 +316,9 @@
 		E234BF7D14DAFADF00AB2262 /* WLCalendarTimeRulerMarkerLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarTimeRulerMarkerLayer.m; sourceTree = "<group>"; };
 		E23F746D14434DE40055D6CE /* WLHourRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLHourRange.h; sourceTree = "<group>"; };
 		E23F746E14434DE40055D6CE /* WLHourRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLHourRange.m; sourceTree = "<group>"; };
+		E252E9C315545AD300B64F5F /* WLGlassHudPopUpButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudPopUpButtonCell.h; sourceTree = "<group>"; };
+		E252E9C415545AD300B64F5F /* WLGlassHudPopUpButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudPopUpButtonCell.m; sourceTree = "<group>"; };
+		E252E9C61555670500B64F5F /* glass-hud-pop-up-button-arrows.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-pop-up-button-arrows.png"; sourceTree = "<group>"; };
 		E253574E13DC884D0010A2ED /* NSDate+WLDayBoundaries.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+WLDayBoundaries.h"; sourceTree = "<group>"; };
 		E253574F13DC884D0010A2ED /* NSDate+WLDayBoundaries.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+WLDayBoundaries.m"; sourceTree = "<group>"; };
 		E2596D711316C8C100A8B15E /* WLNewEventWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNewEventWindowController.h; sourceTree = "<group>"; };
@@ -651,6 +656,8 @@
 				E2701FA8133B563B0098CD79 /* WLGlassHudTextView.m */,
 				E2FCE09B133F9264006E713F /* WLGlassHudDatePicker.h */,
 				E2FCE09C133F9264006E713F /* WLGlassHudDatePicker.m */,
+				E252E9C315545AD300B64F5F /* WLGlassHudPopUpButtonCell.h */,
+				E252E9C415545AD300B64F5F /* WLGlassHudPopUpButtonCell.m */,
 			);
 			name = WLGlassHud;
 			sourceTree = "<group>";
@@ -760,6 +767,7 @@
 		E2F9E1D71322A4F4007598E2 /* glass-hud */ = {
 			isa = PBXGroup;
 			children = (
+				E252E9C61555670500B64F5F /* glass-hud-pop-up-button-arrows.png */,
 				28C5E26514FFC21C00CD35F5 /* glass-hud-button-active-left.png */,
 				28C5E26614FFC21C00CD35F5 /* glass-hud-button-active-middle.png */,
 				28C5E26714FFC21C00CD35F5 /* glass-hud-button-active-right.png */,
@@ -1004,6 +1012,7 @@
 				28BED42D152A15A700D8ABE1 /* calendar-background-active-top-left.png in Resources */,
 				28BED42E152A15A700D8ABE1 /* calendar-background-active-top-middle.png in Resources */,
 				28BED42F152A15A700D8ABE1 /* calendar-background-active-top-right.png in Resources */,
+				E252E9C71555670500B64F5F /* glass-hud-pop-up-button-arrows.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1052,6 +1061,7 @@
 				E2F8AB2115079E56006239C1 /* WLCalendarDayEventsBackgroundLayer.m in Sources */,
 				E2957E5A152B117E00AE05E8 /* WLApplicationRunTimer.m in Sources */,
 				E2D6D8F9153335C8005F070D /* WLCalendarWindowBringToFrontAnimation.m in Sources */,
+				E252E9C515545AD300B64F5F /* WLGlassHudPopUpButtonCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
