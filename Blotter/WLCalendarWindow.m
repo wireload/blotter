@@ -94,15 +94,40 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
 {
     BEGIN_TIMING();
 
-    CGRect windowRect = NSRectToCGRect([self frame]);
-    windowRect.origin.y = NSMaxY([[self screen] frame]) - NSMaxY([self frame]);
+    NSArray *screens = [NSScreen screens];
+    if ([screens count] > 0)
+    {
+        NSScreen *screenWithMenubar = [screens objectAtIndex:0];
+        NSRect windowFrame = [self frame];
 
-    CGWindowID windowId = (CGWindowID)[self windowNumber];
-    CGImageRef desktopImage = CGWindowListCreateImage(windowRect, kCGWindowListOptionOnScreenBelowWindow, windowId, kCGWindowImageBoundsIgnoreFraming);
+        // Map window frame from coordinates where both window and screen origins are bottom left
+        // and y-axis values increase upward to coordinates where both window and screen origins are top left
+        // and
 
-    END_TIMING(@"capture background");
+        NSAffineTransform *windowOriginTransform = [NSAffineTransform transform];
+        [windowOriginTransform translateXBy:0.0 yBy:NSHeight(windowFrame)];
 
-    return desktopImage;
+        NSAffineTransform *screenOriginAndDirectionTransform = [NSAffineTransform transform];
+        [screenOriginAndDirectionTransform translateXBy:0.0 yBy:NSHeight([screenWithMenubar frame])];
+        [screenOriginAndDirectionTransform scaleXBy:1.0 yBy:-1.0];
+
+        NSAffineTransform *resultTransform = [NSAffineTransform transform];
+        [resultTransform appendTransform:windowOriginTransform];
+        [resultTransform appendTransform:screenOriginAndDirectionTransform];
+        windowFrame.origin = [resultTransform transformPoint:windowFrame.origin];
+
+        CGWindowID windowId = (CGWindowID)[self windowNumber];
+        CGImageRef desktopImage = CGWindowListCreateImage(NSRectToCGRect(windowFrame),
+                                                          kCGWindowListOptionOnScreenBelowWindow,
+                                                          windowId,
+                                                          kCGWindowImageBoundsIgnoreFraming);
+
+        END_TIMING(@"capture background");
+
+        return desktopImage;
+    }
+    else
+        return NULL;
 }
 
 - (CIImage *)blurredBackgroundImage
