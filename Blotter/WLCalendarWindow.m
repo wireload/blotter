@@ -100,9 +100,9 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
         NSScreen *screenWithMenubar = [screens objectAtIndex:0];
         NSRect windowFrame = [self frame];
 
-        // Map window frame from coordinates where both window and screen origins are bottom left
-        // and y-axis values increase upward to coordinates where both window and screen origins are top left
-        // and
+        // Map window frame
+        // FROM coordinates where both window and screen origins are bottom left and y-axis values increase upward
+        // TO coordinates where both window and screen origins are top left and y-axis values increase downward.
 
         NSAffineTransform *windowOriginTransform = [NSAffineTransform transform];
         [windowOriginTransform translateXBy:0.0 yBy:NSHeight(windowFrame)];
