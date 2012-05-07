@@ -60,10 +60,16 @@
 @end
 
 
-@interface NSDictionary (WLCalendarEventLayer)
+@interface NSAttributedString (WLCalendarEventLayer)
 
-+ (NSDictionary *)WL_eventTitleAttributes;
+/*!
+ @discussion    Returns nil if aString is empty.
+ */
++ (NSAttributedString *)WL_eventTitleWithString:(NSString *)aString;
 
-+ (NSDictionary *)WL_eventLocationAttributes;
+/*!
+ @discussion    Returns nil if aString is empty.
+ */
++ (NSAttributedString *)WL_eventLocationWithString:(NSString *)aString;
 
 @end

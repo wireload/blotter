@@ -341,32 +341,40 @@ const CGFloat _WLMinimumStringHeight = 5.0;
 @end
 
 
-@implementation NSDictionary (WLCalendarEventLayer)
+@implementation NSAttributedString (WLCalendarEventLayer)
 
-+ (NSDictionary *)WL_eventTitleAttributes
++ (NSAttributedString *)WL_eventTitleWithString:(NSString *)aString
 {
+    if ([aString length] == 0)
+        return nil;
+
     static dispatch_once_t onceToken;
     static NSDictionary *TitleAttributes = nil;
     dispatch_once(&onceToken, ^{
         TitleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
-            (id)[[NSColor whiteColor] WL_CGColor], (id)kCTForegroundColorAttributeName,
-            (id)[NSFont WL_eventTitleFont],        (id)kCTFontAttributeName,
-            nil];
+                           (id)[[NSColor whiteColor] WL_CGColor], (id)kCTForegroundColorAttributeName,
+                           (id)[NSFont WL_eventTitleFont],        (id)kCTFontAttributeName,
+                           nil];
     });
-    return TitleAttributes;
+    return [[[NSAttributedString alloc] initWithString:[aString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
+                                            attributes:TitleAttributes] autorelease];
 }
 
-+ (NSDictionary *)WL_eventLocationAttributes
++ (NSAttributedString *)WL_eventLocationWithString:(NSString *)aString;
 {
+    if ([aString length] == 0)
+        return nil;
+
     static dispatch_once_t onceToken;
     static NSDictionary *LocationAttributes = nil;
     dispatch_once(&onceToken, ^{
         LocationAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
-            (id)[[NSColor WL_eventLocationColor] WL_CGColor], (id)kCTForegroundColorAttributeName,
-            (id)[NSFont WL_eventLocationFont],                (id)kCTFontAttributeName,
-            nil];
+                              (id)[[NSColor WL_eventLocationColor] WL_CGColor], (id)kCTForegroundColorAttributeName,
+                              (id)[NSFont WL_eventLocationFont],                (id)kCTFontAttributeName,
+                              nil];
     });
-    return LocationAttributes;
+    return [[[NSAttributedString alloc] initWithString:[aString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
+                                            attributes:LocationAttributes] autorelease];
 }
 
 @end

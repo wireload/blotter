@@ -32,3 +32,18 @@
 - (CGRect)_markFrame;
 
 @end
+
+
+@interface NSAttributedString (WLCalendarTaskLayer)
+
+/*!
+ @discussion    Returns nil if aString is empty.
+ */
++ (NSAttributedString *)WL_taskTitleWithString:(NSString *)aString;
+
+/*!
+ @discussion    Returns nil if aColor is NULL.
+ */
++ (NSAttributedString *)WL_taskMarkWithColor:(CGColorRef)aColor;
+
+@end

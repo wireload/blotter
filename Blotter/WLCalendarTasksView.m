@@ -90,11 +90,11 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     CalTask *task = [dataSource tasksView:self taskAtIndex:anIndex];
     WLCalendarTaskLayer *taskLayer = [[rootLayer valueForKey:_WLOrderedSublayersKey] objectAtIndex:anIndex];
     taskLayer.name = task.uid;
-    taskLayer.title = [NSAttributedString WL_titleWithString:task.title];
+    taskLayer.title = [NSAttributedString WL_taskTitleWithString:task.title];
     NSColor *calendarColor = [task.calendar color];
     if (calendarColor == NULL || (id)calendarColor == [NSNull null])
         calendarColor = [NSColor WL_defaultCalendarColorIfFrameworkFails];
-    taskLayer.mark = [NSAttributedString WL_markWithColor:[calendarColor WL_CGColor]];
+    taskLayer.mark = [NSAttributedString WL_taskMarkWithColor:[calendarColor WL_CGColor]];
     [rootLayer setNeedsLayout];
 }
 
@@ -224,45 +224,6 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     l.backgroundColor = [[NSColor orangeColor] WL_CGColor];
 #endif
     return l;
-}
-
-@end
-
-
-@implementation NSAttributedString (WLCalendarTasksView)
-
-+ (NSAttributedString *)WL_titleWithString:(NSString *)aString
-{
-    if ([aString length] == 0)
-        return nil;
-
-    static dispatch_once_t onceToken;
-    static NSDictionary *TitleAttributes = nil;
-    dispatch_once(&onceToken, ^{
-        TitleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
-                           (id)[NSFont WL_taskFont],                      (id)kCTFontAttributeName,
-                           (id)[[NSColor WL_taskTitleColor] WL_CGColor],  (id)kCTForegroundColorAttributeName,
-                           nil];
-    });
-    return [[[NSAttributedString alloc] initWithString:aString attributes:TitleAttributes] autorelease];
-}
-
-+ (NSAttributedString *)WL_markWithColor:(CGColorRef)aColor
-{
-    if(aColor == NULL)
-        return nil;
-
-    static dispatch_once_t onceToken;
-    static NSDictionary *MarkAttributes = nil;
-    dispatch_once(&onceToken, ^{
-        MarkAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
-                          (id)[NSFont WL_taskFont],                      (id)kCTFontAttributeName,
-                          nil];
-    });
-    NSMutableDictionary *a = [[MarkAttributes mutableCopy] autorelease];
-    [a setObject:(id)aColor forKey:(id)kCTForegroundColorAttributeName];
-    return [[[NSAttributedString alloc] initWithString:NSLocalizedString(@"●", @"Task's mark")
-                                            attributes:a] autorelease];
 }
 
 @end

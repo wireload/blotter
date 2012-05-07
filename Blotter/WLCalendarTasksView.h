@@ -51,18 +51,3 @@
 - (WLCalendarTaskLayer *)makeTaskLayer;
 
 @end
-
-
-@interface NSAttributedString (WLCalendarTasksView)
-
-/*!
- @discussion    Returns nil if aString is empty.
- */
-+ (NSAttributedString *)WL_titleWithString:(NSString *)aString;
-
-/*!
- @discussion    Returns nil if aColor is NULL.
- */
-+ (NSAttributedString *)WL_markWithColor:(CGColorRef)aColor;
-
-@end

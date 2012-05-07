@@ -132,3 +132,43 @@ static const CGFloat _WLMarkTailIndent = 6.0;
 }
 
 @end
+
+
+@implementation NSAttributedString (WLCalendarTaskLayer)
+
++ (NSAttributedString *)WL_taskTitleWithString:(NSString *)aString
+{
+    if ([aString length] == 0)
+        return nil;
+
+    static dispatch_once_t onceToken;
+    static NSDictionary *TitleAttributes = nil;
+    dispatch_once(&onceToken, ^{
+        TitleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
+                           (id)[NSFont WL_taskFont],                      (id)kCTFontAttributeName,
+                           (id)[[NSColor WL_taskTitleColor] WL_CGColor],  (id)kCTForegroundColorAttributeName,
+                           nil];
+    });
+    return [[[NSAttributedString alloc] initWithString:[aString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
+                                            attributes:TitleAttributes] autorelease];
+}
+
++ (NSAttributedString *)WL_taskMarkWithColor:(CGColorRef)aColor
+{
+    if(aColor == NULL)
+        return nil;
+
+    static dispatch_once_t onceToken;
+    static NSDictionary *MarkAttributes = nil;
+    dispatch_once(&onceToken, ^{
+        MarkAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
+                          (id)[NSFont WL_taskFont],                      (id)kCTFontAttributeName,
+                          nil];
+    });
+    NSMutableDictionary *a = [[MarkAttributes mutableCopy] autorelease];
+    [a setObject:(id)aColor forKey:(id)kCTForegroundColorAttributeName];
+    return [[[NSAttributedString alloc] initWithString:NSLocalizedString(@"●", @"Task's mark")
+                                            attributes:a] autorelease];
+}
+
+@end

@@ -248,15 +248,8 @@ static const CGFloat _WLXPadding = 2.0;
     [self setValue:newEvent forKey:_WLEventKey];
 
     self.name = [newEvent uid];
-    if ([[newEvent title] length] > 0)
-        self.title = [[[NSAttributedString alloc] initWithString:[newEvent title] attributes:[NSDictionary WL_eventTitleAttributes]] autorelease];
-    else
-        self.title = nil;
-
-    if ([[(CalEvent *)newEvent location] length] > 0)
-        self.location = [[[NSAttributedString alloc] initWithString:[(CalEvent *)newEvent location] attributes:[NSDictionary WL_eventLocationAttributes]] autorelease];
-    else
-        self.location = nil;
+    self.title = [NSAttributedString WL_eventTitleWithString:[newEvent title]];
+    self.location = [NSAttributedString WL_eventLocationWithString:[(CalEvent *)newEvent location]];
 
     NSColor *calendarColor = [[(CalEvent *)newEvent calendar] color];
     if (calendarColor == NULL || (id)calendarColor == [NSNull null])
