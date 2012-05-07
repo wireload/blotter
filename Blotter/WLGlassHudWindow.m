@@ -107,21 +107,6 @@
 	return YES;
 }
 
-- (void)sendEvent:(NSEvent *)theEvent
-{
-    // FIXME: This is a hack for New Event and New Task - it doesn't belong to WLGlassHudWindow.
-    // Stop editing the current field when numpad enter is pressed to prevent inserting new line. We use it to commit changes.
-    NSResponder *firstResponder = [self firstResponder];
-    if (([firstResponder isKindOfClass:[NSTextField class]] || [firstResponder isKindOfClass:[NSTextView class]])
-        && ([theEvent type] == NSKeyDown || [theEvent type] == NSKeyUp)
-        && ([theEvent keyCode] == kVK_ANSI_KeypadEnter))
-    {
-        [self makeFirstResponder:nil];
-    }
-
-    [super sendEvent:theEvent];
-}
-
 - (BOOL)performKeyEquivalent:(NSEvent *)theEvent
 {
     // Close
