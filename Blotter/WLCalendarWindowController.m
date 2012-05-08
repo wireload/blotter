@@ -303,7 +303,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
             switch (windowState)
             {
                 case WLFinderLevelState:
-                    [self _setFinderLevel];
+                    self.window.isFloatingWindow = NO;
                     if (self.isFadedOut)
                         [[self window] setAlphaValue:_WLFadeOutAlphaValue];
                     else
@@ -311,7 +311,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
                     break;
                 case WLFloatingLevelState:
                     [[self window] setAlphaValue:1.0];
-                    [self _setFloatingLevel];
+                    self.window.isFloatingWindow = YES;
                     break;
             }
             [self didChangeValueForKey:@"windowState"];
@@ -350,7 +350,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
                 switch (windowState)
                 {
                     case WLFinderLevelState:
-                        [self _setFinderLevel];
+                        self.window.isFloatingWindow = NO;
                         if (self.isFadedOut)
                             [[self window] setAlphaValue:_WLFadeOutAlphaValue];
                         else
@@ -358,7 +358,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
                         break;
                     case WLFloatingLevelState:
                         [[self window] setAlphaValue:1.0];
-                        [self _setFloatingLevel];
+                        self.window.isFloatingWindow = YES;
                         break;
                 }
                 [self didChangeValueForKey:@"windowState"];
@@ -380,7 +380,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
         switch (self.windowState)
         {
             case WLFinderLevelState:
-                [self _setFinderLevel];
+                self.window.isFloatingWindow = NO;
                 if (self.isFadedOut)
                     [[self window] setAlphaValue:_WLFadeOutAlphaValue];
                 else
@@ -388,7 +388,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
                 break;
             case WLFloatingLevelState:
                 [[self window] setAlphaValue:1.0];
-                [self _setFloatingLevel];
+                self.window.isFloatingWindow = YES;
                 break;
         }
     }
@@ -456,10 +456,10 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
         switch (self.windowState)
         {
             case WLFinderLevelState:
-                [self _setFinderLevel];
+                self.window.isFloatingWindow = NO;
                 break;
             case WLFloatingLevelState:
-                [self _setFloatingLevel];
+                self.window.isFloatingWindow = YES;
                 break;
         }
 
@@ -480,29 +480,6 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
 }
 
 
-#pragma mark Private
-
-- (void)_setFinderLevel
-{
-    WLCalendarWindow *w = [self window];
-    [w setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces | NSWindowCollectionBehaviorIgnoresCycle | NSWindowCollectionBehaviorTransient];
-    [w setLevel:WLGetFinderLevel()];
-    [w orderBack:nil];
-    [[w realContentView] setNeedsDisplay:YES];
-    [w displayIfNeeded];
-}
-
-- (void)_setFloatingLevel
-{
-    WLCalendarWindow *w = [self window];
-    [w setLevel:NSFloatingWindowLevel];
-    [w setCollectionBehavior:NSWindowCollectionBehaviorDefault | NSWindowCollectionBehaviorTransient | NSWindowCollectionBehaviorIgnoresCycle];
-    [w orderBack:nil];
-    [[w realContentView] setNeedsDisplay:YES];
-    [w displayIfNeeded];
-}
-
-
 #pragma mark NSWindowController
 
 - (WLCalendarWindow *)window
@@ -516,11 +493,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
     {
         [self _makeViews];
         [self _updateFrame];
-        if (self.windowState == WLFinderLevelState)
-            [self.window setLevel:WLGetFinderLevel()];
-        else
-            [self.window setLevel:NSFloatingWindowLevel];
-        [self _setFinderLevel];
+        self.window.isFloatingWindow = (self.windowState == WLFloatingLevelState);
         _isWindowShowed = YES;
     }
 }

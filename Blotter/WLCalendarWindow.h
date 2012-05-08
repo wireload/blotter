@@ -10,6 +10,18 @@
 #import "WLCalendarWindowBackgroundView.h"
 
 
+NS_INLINE int WLGetFinderLevel()
+{
+    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
+        return kCGDesktopWindowLevel;
+    else
+    {
+        // In Lion window level of desktop elements is kCGDesktopWindowLevel + 21.
+        return kCGDesktopWindowLevel + 15;
+    }
+}
+
+
 /*!
  @abstract      Borderless window that draws custom background.
  @discussion    Default contentView is flipped.
@@ -21,15 +33,20 @@
  */
 @interface WLCalendarWindow : NSWindow <NSAnimationDelegate>
 {
+    BOOL isFloatingWindow;
+    CIImage *cachedBlurredBackgroundImage;
+
     NSView *_fakeContentView;
     CIFilter *_blurInputFilter;
     CIFilter *_blurOutputFilter;
 }
 
+@property (nonatomic, setter=setFloatingWindow:) BOOL isFloatingWindow;
+
 - (WLCalendarWindowBackgroundView *)realContentView;
 
 - (CGImageRef)newCGImageOfScreenBelowWindow;
 
-- (CIImage *)blurredBackgroundImage;
+- (CIImage *)cachedBlurredBackgroundImage:(BOOL)aShouldClearCache;
 
 @end

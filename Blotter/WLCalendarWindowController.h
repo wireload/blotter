@@ -27,18 +27,6 @@ typedef enum
 } WLCalendarWindowState;
 
 
-NS_INLINE int WLGetFinderLevel()
-{
-    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-        return kCGDesktopWindowLevel;
-    else
-    {
-        // In Lion window level of desktop elements is kCGDesktopWindowLevel + 21.
-        return kCGDesktopWindowLevel + 15;
-    }
-}
-
-
 /*!
  @abstract      This class is responsible for sizing and placing its window according to user settings.
  It observes various system notifications to update its subcontrollers appropriately.
@@ -96,11 +84,6 @@ NS_INLINE int WLGetFinderLevel()
 - (void)flushWindowState;
 
 - (BOOL)isAnimatingWindowState;
-
-
-- (void)_setFinderLevel;
-
-- (void)_setFloatingLevel;
 
 @end
 

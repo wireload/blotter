@@ -8,7 +8,6 @@
 
 #import "WLCalendarWindow.h"
 #import "NSColor+WLCalendar.h"
-#import "WLCalendarWindowController.h"
 
 
 static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
@@ -78,9 +77,37 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
 {
     [_blurInputFilter release];
     [_blurOutputFilter release];
+    [cachedBlurredBackgroundImage release];
     [super dealloc];
 }
 
+
+#pragma mark Properties
+@synthesize isFloatingWindow;
+
+- (void)setFloatingWindow:(BOOL)newIsFloatingWindow
+{
+    isFloatingWindow = newIsFloatingWindow;
+    [cachedBlurredBackgroundImage release];
+    cachedBlurredBackgroundImage = nil;
+
+    if (isFloatingWindow)
+    {
+        [self setLevel:NSFloatingWindowLevel];
+        [self setCollectionBehavior:NSWindowCollectionBehaviorDefault | NSWindowCollectionBehaviorTransient | NSWindowCollectionBehaviorIgnoresCycle];
+        [self orderBack:nil];
+        [[self realContentView] setNeedsDisplay:YES];
+        [self displayIfNeeded];
+    }
+    else
+    {
+        [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces | NSWindowCollectionBehaviorIgnoresCycle | NSWindowCollectionBehaviorTransient];
+        [self setLevel:WLGetFinderLevel()];
+        [self orderBack:nil];
+        [[self realContentView] setNeedsDisplay:YES];
+        [self displayIfNeeded];
+    }
+}
 
 
 #pragma mark Methods
@@ -130,27 +157,28 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
         return NULL;
 }
 
-- (CIImage *)blurredBackgroundImage
+- (CIImage *)cachedBlurredBackgroundImage:(BOOL)aShouldClearCache
 {
-    BEGIN_TIMING();
-    CGImageRef backgroundImage = [self newCGImageOfScreenBelowWindow];
-    CIImage *ciImage = [CIImage imageWithCGImage:backgroundImage];
-    CGImageRelease(backgroundImage);
+    if (cachedBlurredBackgroundImage == nil || aShouldClearCache)
+    {
+        BEGIN_TIMING();
+        CGImageRef backgroundImage = [self newCGImageOfScreenBelowWindow];
+        CIImage *ciImage = [CIImage imageWithCGImage:backgroundImage];
+        CGImageRelease(backgroundImage);
 
-    // Flip image upside down.
-    NSAffineTransform *affineTransform = [NSAffineTransform transform];
-    [affineTransform translateXBy:0 yBy:[ciImage extent].size.height];
-    [affineTransform scaleXBy:1.0 yBy:-1.0];
+        // Flip image upside down.
+        NSAffineTransform *affineTransform = [NSAffineTransform transform];
+        [affineTransform translateXBy:0 yBy:[ciImage extent].size.height];
+        [affineTransform scaleXBy:1.0 yBy:-1.0];
 
-    [_blurInputFilter setValue:ciImage forKey:@"inputImage"];
-    [_blurInputFilter setValue:affineTransform forKey:@"inputTransform"];
-    [_blurOutputFilter setValue:[_blurInputFilter valueForKey:@"outputImage"] forKey:@"inputImage"];
+        [_blurInputFilter setValue:ciImage forKey:@"inputImage"];
+        [_blurInputFilter setValue:affineTransform forKey:@"inputTransform"];
+        [_blurOutputFilter setValue:[_blurInputFilter valueForKey:@"outputImage"] forKey:@"inputImage"];
 
-    CIImage *result = [_blurOutputFilter valueForKey:@"outputImage"];
-
-    END_TIMING(@"blur background");
-
-    return result;
+        cachedBlurredBackgroundImage = [[_blurOutputFilter valueForKey:@"outputImage"] retain];
+        END_TIMING(@"blur background");
+    }
+    return cachedBlurredBackgroundImage;
 }
 
 
@@ -170,18 +198,12 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
 
 - (BOOL)canBecomeKeyWindow
 {
-    if ([[self windowController] respondsToSelector:@selector(windowState)])
-        return [[self windowController] windowState] == WLFloatingLevelState;
-    else
-        return NO;
+    return self.isFloatingWindow;
 }
 
 - (BOOL)canBecomeMainWindow
 {
-    if ([[self windowController] respondsToSelector:@selector(windowState)])
-        return [[self windowController] windowState] == WLFloatingLevelState;
-    else
-        return NO;
+    return self.isFloatingWindow;
 }
 
 - (NSView *)contentView
@@ -200,6 +222,7 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
         if (frameView == nil)
         {
             frameView = [[[WLCalendarWindowBackgroundView alloc] initWithFrame:bounds] autorelease];
+            [frameView setWantsLayer:YES];
             [super setContentView:frameView];
         }
 
@@ -217,6 +240,89 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
         [[NSApp delegate] cancelOperation:aSender];
     else
         [super cancelOperation:aSender];
+}
+
+- (void)setFrameOrigin:(NSPoint)aPoint
+{
+    [super setFrameOrigin:aPoint];
+    if (self.isFloatingWindow)
+    {
+        [cachedBlurredBackgroundImage release], cachedBlurredBackgroundImage = nil;
+        [[self realContentView] setNeedsDisplay:YES];
+    }
+}
+
+- (void)setFrameTopLeftPoint:(NSPoint)aPoint
+{
+    [super setFrameTopLeftPoint:aPoint];
+    if (self.isFloatingWindow)
+    {
+        [cachedBlurredBackgroundImage release], cachedBlurredBackgroundImage = nil;
+        [[self realContentView] setNeedsDisplay:YES];
+    }
+}
+
+- (void)setFrame:(NSRect)frameRect display:(BOOL)flag
+{
+    [super setFrame:frameRect display:flag];
+    if (self.isFloatingWindow)
+    {
+        [cachedBlurredBackgroundImage release], cachedBlurredBackgroundImage = nil;
+        [[self realContentView] setNeedsDisplay:YES];
+    }
+}
+
+- (void)setFrame:(NSRect)frameRect display:(BOOL)displayFlag animate:(BOOL)animateFlag
+{
+    [super setFrame:frameRect display:displayFlag animate:animateFlag];
+    if (self.isFloatingWindow)
+    {
+        [cachedBlurredBackgroundImage release], cachedBlurredBackgroundImage = nil;
+        [[self realContentView] setNeedsDisplay:YES];
+    }
+}
+
+- (void)setFrameFromString:(NSString *)string
+{
+    [super setFrameFromString:string];
+    if (self.isFloatingWindow)
+    {
+        [cachedBlurredBackgroundImage release], cachedBlurredBackgroundImage = nil;
+        [[self realContentView] setNeedsDisplay:YES];
+    }
+}
+
+- (BOOL)setFrameUsingName:(NSString *)name force:(BOOL)force
+{
+    BOOL result = [super setFrameUsingName:name force:force];
+    if (result && self.isFloatingWindow)
+    {
+        [[self realContentView] setNeedsDisplay:YES];
+        [cachedBlurredBackgroundImage release], cachedBlurredBackgroundImage = nil;
+    }
+    return result;
+}
+
+- (BOOL)setFrameUsingName:(NSString *)name
+{
+    BOOL result = [super setFrameUsingName:name];
+    if (result && self.isFloatingWindow)
+    {
+        [[self realContentView] setNeedsDisplay:YES];
+        [cachedBlurredBackgroundImage release], cachedBlurredBackgroundImage = nil;
+    }
+    return result;
+}
+
+- (BOOL)setFrameAutosaveName:(NSString *)name
+{
+    BOOL result = [super setFrameAutosaveName:name];
+    if (result && self.isFloatingWindow)
+    {
+        [cachedBlurredBackgroundImage release], cachedBlurredBackgroundImage = nil;
+        [[self realContentView] setNeedsDisplay:YES];
+    }
+    return result;
 }
 
 @end

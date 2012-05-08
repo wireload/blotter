@@ -76,7 +76,6 @@ static const CGFloat _WLCalendarBackgroundNoiseOpacity = 0.03;
 - (void)viewWillDraw
 {
     dispatch_once(&_didWarmUp, ^{
-        [(WLCalendarWindow *)[self window] blurredBackgroundImage];
         [NSImage imageNamed:@"calendar-background-active-top-left"];
         [NSImage imageNamed:@"calendar-background-active-top-middle"];
         [NSImage imageNamed:@"calendar-background-active-top-right"];
@@ -110,11 +109,11 @@ static const CGFloat _WLCalendarBackgroundNoiseOpacity = 0.03;
     NSRect innerArea = [[self class] glassRectForBounds:bounds];
     NSBezierPath *innerPath = [NSBezierPath bezierPathWithRoundedRect:innerArea xRadius:5 yRadius:5];
 
-    if ([[self window] level] >= NSFloatingWindowLevel)
+    if ([(WLCalendarWindow *)[self window] isFloatingWindow])
     {
         [NSGraphicsContext saveGraphicsState];
         [innerPath addClip];
-        CIImage *blurredBackgroundImage = [(WLCalendarWindow *)[self window] blurredBackgroundImage];
+        CIImage *blurredBackgroundImage = [(WLCalendarWindow *)[self window] cachedBlurredBackgroundImage:NO];
         CGRect blurredRect = [blurredBackgroundImage extent];
         
         [blurredBackgroundImage drawAtPoint:NSMakePoint(blurredRect.origin.x, blurredRect.origin.y)
@@ -186,6 +185,11 @@ static const CGFloat _WLCalendarBackgroundNoiseOpacity = 0.03;
     NSWindow *w = [self window];
     NSView *realContentView = [[self subviews] lastObject];
     [realContentView setFrame:[w contentRectForFrameRect:[w frame]]];
+}
+
+- (BOOL)isOpaque
+{
+    return [(WLCalendarWindow *)[self window] isFloatingWindow];
 }
 
 @end
