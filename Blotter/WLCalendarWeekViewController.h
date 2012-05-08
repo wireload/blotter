@@ -57,7 +57,9 @@
 - (NSUInteger)indexOfColumnForToday;
 
 /*!
- @abstract   Subclass MUST implement this method.
+ @abstract      Returns date of first column represented by view.
+ Subclass MUST implement this method.
+ @discussion    Hour MUST be set to noon of the date.
  */
 - (NSDate *)firstColumnDate;
 

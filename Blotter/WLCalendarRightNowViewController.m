@@ -24,7 +24,7 @@
 {
     NSParameterAssert([self representedObject] != nil);
 
-    return [[self representedObject] date];
+    return [[[self representedObject] date] WL_noon:[[self representedObject] calendar]];
 }
 
 - (void)representedDateDidChangeFromDate:(NSDate *)anOldDate toDate:(NSDate *)aNewDate

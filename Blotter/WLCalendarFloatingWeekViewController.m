@@ -175,22 +175,11 @@
     NSParameterAssert([self representedObject] != nil);
 
     NSCalendar *calendar = [[self representedObject] calendar];
-    NSDateComponents *weekOffsetComponents = [[NSDateComponents alloc] init];
-    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-        [weekOffsetComponents setWeek:self.weeksOffset];
-    else
-        [weekOffsetComponents setWeekOfMonth:self.weeksOffset];
-    NSDate *effectiveRepresentedDate = [calendar dateByAddingComponents:weekOffsetComponents toDate:[self representedObject].date options:0];
-    [weekOffsetComponents release];
+    NSDate *effectiveRepresentedDate = [[self representedObject].date WL_dateByAddingWeekOffset:self.weeksOffset calendar:calendar];
 
     switch (self.mode) {
         case WLCalendarWeekViewDayMode:
-        {
-            NSDateComponents *dateNoonComponents = [calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:effectiveRepresentedDate];
-            NSRange hoursRange = [calendar rangeOfUnit:NSHourCalendarUnit inUnit:NSDayCalendarUnit forDate:effectiveRepresentedDate];
-            [dateNoonComponents setHour:NSMaxRange(hoursRange) / 2];
-            return [calendar dateFromComponents:dateNoonComponents];
-        }
+            return [effectiveRepresentedDate WL_noon:calendar];
         case WLCalendarWeekViewWeekMode:
         {
             NSDate *firstWeekday = nil;
@@ -198,11 +187,7 @@
                 [calendar rangeOfUnit:NSWeekCalendarUnit startDate:&firstWeekday interval:NULL forDate:effectiveRepresentedDate];
             else
                 [calendar rangeOfUnit:NSWeekOfMonthCalendarUnit startDate:&firstWeekday interval:NULL forDate:effectiveRepresentedDate];
-            NSRange hoursRange = [calendar rangeOfUnit:NSHourCalendarUnit inUnit:NSDayCalendarUnit forDate:firstWeekday];
-            NSDateComponents *firstWeekdayNoonComponents = [calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
-                                                                   fromDate:firstWeekday];
-            [firstWeekdayNoonComponents setHour:NSMaxRange(hoursRange) / 2];
-            return [calendar dateFromComponents:firstWeekdayNoonComponents];
+            return [firstWeekday WL_noon:calendar];
         }
     }
 }
@@ -222,16 +207,8 @@
         {
             NSCalendar *calendar = [[self representedObject] calendar];
             NSDateComponents *firstColumnDateComponents = [calendar components:NSWeekdayCalendarUnit fromDate:[self firstColumnDate]];
-            NSDateComponents *weekOffsetComponents = [[NSDateComponents alloc] init];
-            if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-                [weekOffsetComponents setWeek:self.weeksOffset];
-            else
-                [weekOffsetComponents setWeekOfMonth:self.weeksOffset];
-            NSDateComponents *todayComponents = [calendar components:NSWeekdayCalendarUnit
-                                                            fromDate:[calendar dateByAddingComponents:weekOffsetComponents
-                                                                                               toDate:[[self representedObject] date]
-                                                                                              options:0]];
-            [weekOffsetComponents release];
+            NSDate *effectiveRepresentedDate = [[self representedObject].date WL_dateByAddingWeekOffset:self.weeksOffset calendar:calendar];
+            NSDateComponents *todayComponents = [calendar components:NSWeekdayCalendarUnit fromDate:effectiveRepresentedDate];
             NSRange weekdaysRange = NSMakeRange(NSNotFound, 0);
             if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
                 weekdaysRange = [calendar rangeOfUnit:NSWeekdayCalendarUnit inUnit:NSWeekCalendarUnit forDate:[[self representedObject] date]];
@@ -322,7 +299,7 @@
         case WLCalendarWeekViewWeekMode:
         {
             NSCalendar *calendar = [[self representedObject] calendar];
-            NSDate *date = [[self representedObject] date];
+            NSDate *date = [self firstColumnDate];
             NSRange weekdaysRange = NSMakeRange(NSNotFound, 0);
             if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
                 weekdaysRange = [calendar rangeOfUnit:NSWeekdayCalendarUnit inUnit:NSWeekCalendarUnit forDate:date];
@@ -364,6 +341,20 @@
     NSDate *startOfOldDate = [self WL_startOfDay:aCalendar];
     NSDate *startOfNewDate = [aDate WL_startOfDay:aCalendar];
     return [[aCalendar components:NSDayCalendarUnit fromDate:startOfOldDate toDate:startOfNewDate options:0] day];
+}
+
+- (NSDate *)WL_dateByAddingWeekOffset:(NSInteger)anOffset calendar:(NSCalendar *)aCalendar
+{
+    NSDateComponents *weekOffsetComponents = [[NSDateComponents alloc] init];
+    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
+        [weekOffsetComponents setWeek:anOffset];
+    else
+        [weekOffsetComponents setWeekOfMonth:anOffset];
+    NSDate *dateWithOffset = [aCalendar dateByAddingComponents:weekOffsetComponents
+                                                        toDate:self
+                                                       options:0];
+    [weekOffsetComponents release];
+    return dateWithOffset;
 }
 
 @end

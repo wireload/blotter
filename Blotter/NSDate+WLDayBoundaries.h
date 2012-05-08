@@ -17,4 +17,6 @@
 
 - (NSDate *)WL_nextHourDate;
 
+- (NSDate *)WL_noon:(NSCalendar *)aCalendar;
+
 @end

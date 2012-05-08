@@ -64,4 +64,6 @@ typedef enum
 
 - (NSInteger)WL_numberOfDaysToDate:(NSDate *)aDate calendar:(NSCalendar *)aCalendar;
 
+- (NSDate *)WL_dateByAddingWeekOffset:(NSInteger)anOffset calendar:(NSCalendar *)aCalendar;
+
 @end
