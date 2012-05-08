@@ -15,7 +15,8 @@
 @class WLApplicationRunTimer;
 
 
-@interface DeskboardAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate> {
+@interface DeskboardAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate /*, NSMenuValidation*/>
+{
     WLCalendarWindowController *calendarWindowController;
 
     NSStatusItem *_statusItem;

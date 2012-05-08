@@ -272,83 +272,6 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 }
 
 
-#pragma mark NSWindowDelegate
-
-- (void)windowWillClose:(NSNotification *)aNotification
-{
-    NSMutableArray *visibleWindows = [[[NSApp windows] mutableCopy] autorelease];
-    NSWindow *closedWindow = [aNotification object];
-    [visibleWindows removeObjectIdenticalTo:closedWindow];
-    [self deactivateAppIfAllConditionsAreMet:visibleWindows];
-    [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:visibleWindows];
-}
-
-
-#pragma mark NSMenuValidation
-
-- (BOOL)validateMenuItem:(NSMenuItem *)aMenuItem
-{
-    if (aMenuItem == _newEventMenuItem)
-        return [[WLNewEventWindowController sharedWindowController] canCreateEvent];
-    else if (aMenuItem == _newTaskMenuItem)
-        return [[WLNewTaskWindowController sharedWindowController] canCreateTask];
-    else if (aMenuItem == _showNextWeekMenuItem)
-        return [self.calendarWindowController canShowNextWeek];
-    else if (aMenuItem == _showCurrentWeekMenuItem)
-        return [self.calendarWindowController canShowCurrentWeek];
-    else if (aMenuItem == _showPreviousWeekMenuItem)
-        return [self.calendarWindowController canShowPreviousWeek];
-    else if (aMenuItem == _bringToFrontMenuItem)
-    {
-        if (self.calendarWindowController.windowState != WLFinderLevelState)
-            [aMenuItem setTitle:NSLocalizedString(@"Send to Back", @"Send to Back menu item title")];
-        else
-            [aMenuItem setTitle:NSLocalizedString(@"Bring to Front", @"Bring to Front menu item title")];
-
-        return YES;
-    }
-    else
-        return YES;
-}
-
-
-#pragma mark NSMenuDelegate
-
-- (void)menuWillOpen:(NSMenu *)aMenu
-{
-    [_shortCuts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
-    {
-        // If the menu item is nil, the shortcut definition will only be 2 items long. Ignore those.
-        if ([obj count] < 3)
-            return;
-
-        NSString *shortcutName = [obj objectAtIndex:ShortcutsNameIdx];
-        NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:shortcutName];
-        NSMenuItem *shortcutMenuItem = [obj objectAtIndex:ShortcutsMenuItemIdx];
-
-        if (shortcut != nil) {
-            NSInteger code = [[shortcut objectForKey:SRShortcutCodeKey] integerValue];
-            NSUInteger flags = [[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue];
-            [shortcutMenuItem setKeyEquivalent:SRASCIIStringForKeyCode(code)];
-            [shortcutMenuItem setKeyEquivalentModifierMask:flags];
-        }
-        else
-        {
-            [shortcutMenuItem setKeyEquivalent:@""];
-            [shortcutMenuItem setKeyEquivalentModifierMask:0];
-        }
-    }];
-
-    [self _removeAutoFadeTimerIfNeeded];
-    self.calendarWindowController.isFadedOut = NO;
-}
-
-- (void)menuDidClose:(NSMenu *)aMenu
-{
-    [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:[NSApp windows]];
-}
-
-
 #pragma mark NSApplicationDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -446,6 +369,83 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"ShowInMenuBar"])
         [self showPreferences:self];
     return NO;
+}
+
+
+#pragma mark NSWindowDelegate
+
+- (void)windowWillClose:(NSNotification *)aNotification
+{
+    NSMutableArray *visibleWindows = [[[NSApp windows] mutableCopy] autorelease];
+    NSWindow *closedWindow = [aNotification object];
+    [visibleWindows removeObjectIdenticalTo:closedWindow];
+    [self deactivateAppIfAllConditionsAreMet:visibleWindows];
+    [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:visibleWindows];
+}
+
+
+#pragma mark NSMenuDelegate
+
+- (void)menuWillOpen:(NSMenu *)aMenu
+{
+    [_shortCuts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
+     {
+         // If the menu item is nil, the shortcut definition will only be 2 items long. Ignore those.
+         if ([obj count] < 3)
+             return;
+
+         NSString *shortcutName = [obj objectAtIndex:ShortcutsNameIdx];
+         NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:shortcutName];
+         NSMenuItem *shortcutMenuItem = [obj objectAtIndex:ShortcutsMenuItemIdx];
+
+         if (shortcut != nil) {
+             NSInteger code = [[shortcut objectForKey:SRShortcutCodeKey] integerValue];
+             NSUInteger flags = [[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue];
+             [shortcutMenuItem setKeyEquivalent:SRASCIIStringForKeyCode(code)];
+             [shortcutMenuItem setKeyEquivalentModifierMask:flags];
+         }
+         else
+         {
+             [shortcutMenuItem setKeyEquivalent:@""];
+             [shortcutMenuItem setKeyEquivalentModifierMask:0];
+         }
+     }];
+
+    [self _removeAutoFadeTimerIfNeeded];
+    self.calendarWindowController.isFadedOut = NO;
+}
+
+- (void)menuDidClose:(NSMenu *)aMenu
+{
+    [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:[NSApp windows]];
+}
+
+
+#pragma mark NSMenuValidation
+
+- (BOOL)validateMenuItem:(NSMenuItem *)aMenuItem
+{
+    if (aMenuItem == _newEventMenuItem)
+        return [[WLNewEventWindowController sharedWindowController] canCreateEvent];
+    else if (aMenuItem == _newTaskMenuItem)
+        return [[WLNewTaskWindowController sharedWindowController] canCreateTask];
+    else if (aMenuItem == _showNextWeekMenuItem)
+        return [self.calendarWindowController canShowNextWeek];
+    else if (aMenuItem == _showCurrentWeekMenuItem)
+        return [self.calendarWindowController canShowCurrentWeek];
+    else if (aMenuItem == _showPreviousWeekMenuItem)
+        return [self.calendarWindowController canShowPreviousWeek];
+    else if (aMenuItem == _bringToFrontMenuItem)
+    {
+        if (self.calendarWindowController.windowState != WLFinderLevelState)
+            [aMenuItem setTitle:NSLocalizedString(@"Send to Back", @"Send to Back menu item title")];
+        else
+            [aMenuItem setTitle:NSLocalizedString(@"Bring to Front", @"Bring to Front menu item title")];
+
+        return YES;
+    }
+    else
+        return YES;
 }
 
 
