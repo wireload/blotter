@@ -38,13 +38,13 @@ typedef enum
 /*
  [] - self, {} - aRange
  YES and:
-    WLEarlierThanRange, than { [ } ]
-    WLOverlapsRange, than { [ ] }
-    WLWithinRange, than [ { } ]
-    WLLaterThanRange, than [ { ] }
+    WLEarlierThanRange, then { [ } ]
+    WLOverlapsRange, then { [ ] }
+    WLWithinRange, then [ { } ]
+    WLLaterThanRange, then [ { ] }
  NO and:
-    WLEarlierThanRange, than {} []
-    WLLaterThanRange, than [] {}
+    WLEarlierThanRange, then {} []
+    WLLaterThanRange, then [] {}
  */
 - (BOOL)intersectsRange:(WLDateRange *)aRange position:(WLPositionRelativeToRange *)outPosition;
 
