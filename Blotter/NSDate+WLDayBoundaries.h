@@ -9,14 +9,29 @@
 #import <Cocoa/Cocoa.h>
 
 
+/*!
+ @abstract  Provides methods to manipulate NSDate in terms of day boundaries.
+ */
 @interface NSDate (WLDayBoundaries)
 
+/*!
+ @abstract  Returns first appearance of the date in day boundaries according to aCalendar.
+ */
 - (NSDate *)WL_startOfDay:(NSCalendar *)aCalendar;
 
+/*!
+ @abstract  Returns last appearance of the date in day boundaries according to aCalendar.
+ */
 - (NSDate *)WL_endOfDay:(NSCalendar *)aCalendar;
 
-- (NSDate *)WL_nextHourDate;
+/*!
+ @abstract  Returns date + 1 aCalendar's hour.
+ */
+- (NSDate *)WL_nextHourDate:(NSCalendar *)aCalendar;
 
+/*!
+ @abstract  Returns noon of the date according to aCalendar.
+ */
 - (NSDate *)WL_noon:(NSCalendar *)aCalendar;
 
 @end

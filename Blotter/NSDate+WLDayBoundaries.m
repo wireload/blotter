@@ -26,18 +26,15 @@
     return [startDate dateByAddingTimeInterval:interval];
 }
 
-- (NSDate *)WL_nextHourDate
+- (NSDate *)WL_nextHourDate:(NSCalendar *)aCalendar
 {
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *comps = [calendar components: NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit |NSDayCalendarUnit | NSHourCalendarUnit fromDate:self];
-    
-    if ([comps hour] == 23) {
-        [comps setHour:0];
-        return [[calendar dateFromComponents:comps] dateByAddingTimeInterval:24 * 60 *60];
-    } else {
-        [comps setHour:[comps hour] + 1];
-        return [calendar dateFromComponents:comps];
-    }    
+    static NSDateComponents *oneHourComponents = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        oneHourComponents = [[NSDateComponents alloc] init];
+        [oneHourComponents setHour:1];
+    });
+    return [aCalendar dateByAddingComponents:oneHourComponents toDate:self options:0];
 }
 
 - (NSDate *)WL_noon:(NSCalendar *)aCalendar

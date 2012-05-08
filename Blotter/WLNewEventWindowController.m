@@ -107,7 +107,7 @@ static const NSTimeInterval _WLDefaultTimeDiff = 3600; // seconds
     self.location = @"";
     self.title = NSLocalizedString(@"New Event", @"Default text for title field on the New Event panel");
     self.isAllDay = NO;
-    self.startDate = [[NSDate date] WL_nextHourDate];
+    self.startDate = [[NSDate date] WL_nextHourDate:[[WLCalendarController sharedController] calendar]];
     self.endDate = [self.startDate dateByAddingTimeInterval:_WLDefaultTimeDiff];
     
     [(NSTextView *)_titleView selectAll:self];

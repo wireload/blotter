@@ -97,7 +97,7 @@
     self.isDueDate = NO;
     // The due date is an 'all day' date, but we still base it on the next hour so that if you create an
     // event at 23:XX, the suggested due date is tomorrow instead of the same day which is more helpful.
-    self.dueDate = [[NSDate date] WL_nextHourDate];
+    self.dueDate = [[NSDate date] WL_nextHourDate:[[WLCalendarController sharedController] calendar]];
     self.priority = CalPriorityNone;
 
     [(NSTextView *)_titleView selectAll:self];
