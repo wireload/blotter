@@ -18,7 +18,7 @@ static const CGFloat _WLGlassHudBackgroundShadowBottom = 12.0;
 
 static const CGFloat _WLGlassHudBackgroundShadowLeft = 9.0;
 
-static const CGFloat _WLGlassHudBackgroundActiveDarkness = 0.88;
+static const CGFloat _WLGlassHudBackgroundActiveDarkness = 0.90;
 
 
 @implementation WLGlassHudWindowBackgroundView
@@ -56,12 +56,11 @@ static const CGFloat _WLGlassHudBackgroundActiveDarkness = 0.88;
     NSRect innerArea = [[self class] glassRectForBounds:[self bounds]];
     NSBezierPath *innerPath = [NSBezierPath bezierPathWithRoundedRect:innerArea xRadius:5 yRadius:5];
     [NSGraphicsContext saveGraphicsState];
-    [innerPath addClip];
 
-    // Slightly darken the background with a blackish tint.
-    [[NSColor colorWithCalibratedRed:55.0 / 255.0
-                               green:48.0 / 255.0
-                                blue:41.0 / 255.0
+    // Heavily darken the background with an iPhoto like blackish tint.
+    [[NSColor colorWithCalibratedRed:18 / 255.0
+                               green:18 / 255.0
+                                blue:18 / 255.0
                                alpha:_WLGlassHudBackgroundActiveDarkness] set];
     [innerPath fill];
     [NSGraphicsContext restoreGraphicsState];
