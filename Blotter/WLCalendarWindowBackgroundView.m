@@ -44,6 +44,11 @@ static const CGFloat _WLCalendarBackgroundNoiseOpacity = 0.03;
     _WLCalendarBackgroundNoisePatternColor = [[NSColor colorWithPatternImage:noiseImage] retain];
 }
 
++ (const NSColor *)backgroundNoisePatternColor
+{
+    return _WLCalendarBackgroundNoisePatternColor;
+}
+
 + (NSRect)glassRectForBounds:(NSRect)aBounds
 {
     NSRect glassRect = aBounds;
@@ -158,7 +163,7 @@ static const CGFloat _WLCalendarBackgroundNoiseOpacity = 0.03;
                                   [self isFlipped]);
     }
 
-    [_WLCalendarBackgroundNoisePatternColor setFill];
+    [[WLCalendarWindowBackgroundView backgroundNoisePatternColor] setFill];
     [innerPath fill];
 #else
     [[NSColor lightGrayColor] setFill];
