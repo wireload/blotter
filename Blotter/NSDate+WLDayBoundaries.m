@@ -34,7 +34,10 @@
         oneHourComponents = [[NSDateComponents alloc] init];
         [oneHourComponents setHour:1];
     });
-    return [aCalendar dateByAddingComponents:oneHourComponents toDate:self options:0];
+    NSDate *nextHour = [aCalendar dateByAddingComponents:oneHourComponents toDate:self options:0];
+    NSDate *roundedNextHour = nil;
+    [aCalendar rangeOfUnit:NSHourCalendarUnit startDate:&roundedNextHour interval:NULL forDate:nextHour];
+    return roundedNextHour;
 }
 
 - (NSDate *)WL_noon:(NSCalendar *)aCalendar
