@@ -192,9 +192,4 @@ static const CGFloat _WLCalendarBackgroundNoiseOpacity = 0.03;
     [realContentView setFrame:[w contentRectForFrameRect:[w frame]]];
 }
 
-- (BOOL)isOpaque
-{
-    return [(WLCalendarWindow *)[self window] isFloatingWindow];
-}
-
 @end
