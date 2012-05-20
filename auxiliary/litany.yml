@@ -13,6 +13,11 @@ strings:
     path:     "Blotter Preferences/Resources/%(lang)s.lproj/GeneralPrefPaneView.strings"
     skip:     ['82.title']
   -
+    id:       'Shortcuts Preferences'
+    comment:  "Options shown on the Shortcuts preferences page."
+    path:     "Blotter Preferences/Resources/%(lang)s.lproj/ShortcutsPrefPaneView.strings"
+    skip:     []
+  -
     id:       'Position Preferences'
     path:     "Blotter Preferences/Resources/%(lang)s.lproj/PositionPrefPaneView.strings"
     skip:     ['10.title', '66.title']
