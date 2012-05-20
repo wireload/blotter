@@ -25,7 +25,7 @@
 - (NSDate *)WL_endOfDay:(NSCalendar *)aCalendar;
 
 /*!
- @abstract  Returns date + 1 aCalendar's hour.
+ @abstract  Returns floor(date + 1 aCalendar's hour).
  */
 - (NSDate *)WL_nextHourDate:(NSCalendar *)aCalendar;
 
