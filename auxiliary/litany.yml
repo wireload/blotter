@@ -32,7 +32,7 @@ strings:
   -
     id:       'Calendar Preferences'
     path:     "Blotter Preferences/Resources/%(lang)s.lproj/CalendarsPrefPaneView.strings"
-    skip:     ['14.title', '76.title']
+    skip:     ['14.title', '76.title', '95.title']
   -
     id:       'Other Preferences'
     path:     "Blotter Preferences/Resources/%(lang)s.lproj/Localizable.strings"
