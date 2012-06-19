@@ -174,6 +174,12 @@
 		2850CB1C15287D7500DEEA82 /* about-blotter-button-bezel-centre.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-blotter-button-bezel-centre.png"; sourceTree = "<group>"; };
 		2850CB1D15287D7500DEEA82 /* about-blotter-button-bezel-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-blotter-button-bezel-left.png"; sourceTree = "<group>"; };
 		2850CB1E15287D7500DEEA82 /* about-blotter-button-bezel-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-blotter-button-bezel-right.png"; sourceTree = "<group>"; };
+		2884D97F1591419600AF0670 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
+		2884D9801591419700AF0670 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
+		2884D9811591419A00AF0670 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
+		2884D9821591419D00AF0670 /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = ko.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
+		2884D9831591419F00AF0670 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
+		2884D9841591419F00AF0670 /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = sv.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
 		28B54D5C12839B8D0037BF53 /* GeneralPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralPrefController.h; sourceTree = "<group>"; };
 		28B54D5D12839B8D0037BF53 /* GeneralPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralPrefController.m; sourceTree = "<group>"; wrapsLines = 1; };
 		28B54D781283AEEE0037BF53 /* PositionPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PositionPrefController.h; sourceTree = "<group>"; };
@@ -786,6 +792,12 @@
 			isa = PBXVariantGroup;
 			children = (
 				E206A7E5152C5537008B63F4 /* English */,
+				2884D97F1591419600AF0670 /* de */,
+				2884D9801591419700AF0670 /* es */,
+				2884D9811591419A00AF0670 /* fr */,
+				2884D9821591419D00AF0670 /* ko */,
+				2884D9831591419F00AF0670 /* ru */,
+				2884D9841591419F00AF0670 /* sv */,
 			);
 			name = ShortcutsPrefPaneView.xib;
 			sourceTree = "<group>";
