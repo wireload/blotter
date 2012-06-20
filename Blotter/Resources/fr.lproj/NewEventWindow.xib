@@ -163,7 +163,7 @@
 								<object class="NSButton" id="187184368">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">289</int>
-									<string key="NSFrame">{{58, 27}, {65, 18}}</string>
+									<string key="NSFrame">{{61, 27}, {67, 18}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="1026362590"/>
@@ -172,10 +172,10 @@
 										<int key="NSCellFlags">67239424</int>
 										<int key="NSCellFlags2">134217728</int>
 										<string key="NSContents">Annuler</string>
-										<object class="NSFont" key="NSSupport" id="618754605">
+										<object class="NSFont" key="NSSupport" id="267675198">
 											<string key="NSName">LucidaGrande</string>
-											<double key="NSSize">13</double>
-											<int key="NSfFlags">1044</int>
+											<double key="NSSize">11</double>
+											<int key="NSfFlags">16</int>
 										</object>
 										<reference key="NSControlView" ref="187184368"/>
 										<int key="NSButtonFlags">-2036580097</int>
@@ -189,7 +189,7 @@
 								<object class="NSButton" id="1026362590">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">289</int>
-									<string key="NSFrame">{{133, 27}, {122, 18}}</string>
+									<string key="NSFrame">{{138, 27}, {116, 18}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="1015655719"/>
@@ -198,7 +198,7 @@
 										<int key="NSCellFlags">67239424</int>
 										<int key="NSCellFlags2">134217728</int>
 										<string key="NSContents">Créer événement</string>
-										<reference key="NSSupport" ref="618754605"/>
+										<reference key="NSSupport" ref="267675198"/>
 										<reference key="NSControlView" ref="1026362590"/>
 										<int key="NSButtonFlags">-2036580097</int>
 										<int key="NSButtonFlags2">134</int>
@@ -331,7 +331,11 @@
 											<object class="NSMutableArray" key="NSMenuItems">
 												<bool key="EncodedWithXMLCoder">YES</bool>
 											</object>
-											<reference key="NSMenuFont" ref="618754605"/>
+											<object class="NSFont" key="NSMenuFont">
+												<string key="NSName">LucidaGrande</string>
+												<double key="NSSize">13</double>
+												<int key="NSfFlags">1044</int>
+											</object>
 										</object>
 										<int key="NSSelectedIndex">-1</int>
 										<int key="NSPreferredEdge">1</int>

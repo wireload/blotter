@@ -65,7 +65,7 @@
 							<string key="NSFrame">{{22, 189}, {225, 28}}</string>
 							<reference key="NSSuperview" ref="675070131"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="690297653"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSClassName">WLGlassHudTextView</string>
 						</object>
 						<object class="NSCustomView" id="690297653">
@@ -79,7 +79,7 @@
 									<string key="NSFrame">{{19, 136}, {69, 14}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="939906521"/>
+									<reference key="NSNextKeyView" ref="456489716"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="173180381">
 										<int key="NSCellFlags">68288064</int>
@@ -163,7 +163,7 @@
 								<object class="NSButton" id="187184368">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">289</int>
-									<string key="NSFrame">{{93, 27}, {41, 18}}</string>
+									<string key="NSFrame">{{95, 27}, {47, 18}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="1026362590"/>
@@ -172,10 +172,10 @@
 										<int key="NSCellFlags">67239424</int>
 										<int key="NSCellFlags2">134217728</int>
 										<string key="NSContents">취소</string>
-										<object class="NSFont" key="NSSupport" id="618754605">
+										<object class="NSFont" key="NSSupport" id="267675198">
 											<string key="NSName">LucidaGrande</string>
-											<double key="NSSize">13</double>
-											<int key="NSfFlags">1044</int>
+											<double key="NSSize">11</double>
+											<int key="NSfFlags">16</int>
 										</object>
 										<reference key="NSControlView" ref="187184368"/>
 										<int key="NSButtonFlags">-2036580097</int>
@@ -189,15 +189,16 @@
 								<object class="NSButton" id="1026362590">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">289</int>
-									<string key="NSFrame">{{144, 27}, {98, 18}}</string>
+									<string key="NSFrame">{{152, 27}, {95, 18}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView" ref="1015655719"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="413100244">
 										<int key="NSCellFlags">67239424</int>
 										<int key="NSCellFlags2">134217728</int>
 										<string key="NSContents">이벤트 만들기</string>
-										<reference key="NSSupport" ref="618754605"/>
+										<reference key="NSSupport" ref="267675198"/>
 										<reference key="NSControlView" ref="1026362590"/>
 										<int key="NSButtonFlags">-2036580097</int>
 										<int key="NSButtonFlags2">134</int>
@@ -213,7 +214,7 @@
 									<string key="NSFrame">{{91, 135}, {155, 18}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="354528427"/>
+									<reference key="NSNextKeyView" ref="939906521"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="648425809">
 										<int key="NSCellFlags">67239424</int>
@@ -282,7 +283,7 @@
 									<string key="NSFrame">{{93, 109}, {154, 27}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="456489716"/>
+									<reference key="NSNextKeyView" ref="354528427"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSDatePickerCell" key="NSCell" id="877791295">
 										<int key="NSCellFlags">67239424</int>
@@ -330,7 +331,11 @@
 											<object class="NSMutableArray" key="NSMenuItems">
 												<bool key="EncodedWithXMLCoder">YES</bool>
 											</object>
-											<reference key="NSMenuFont" ref="618754605"/>
+											<object class="NSFont" key="NSMenuFont">
+												<string key="NSName">LucidaGrande</string>
+												<double key="NSSize">13</double>
+												<int key="NSfFlags">1044</int>
+											</object>
 										</object>
 										<int key="NSSelectedIndex">-1</int>
 										<int key="NSPreferredEdge">1</int>
@@ -380,7 +385,7 @@
 					<string key="NSFrameSize">{269, 239}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
-					<reference key="NSNextKeyView" ref="1015655719"/>
+					<reference key="NSNextKeyView" ref="690297653"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
