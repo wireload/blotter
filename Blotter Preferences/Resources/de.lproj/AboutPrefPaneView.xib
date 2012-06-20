@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">11D50</string>
+		<string key="IBDocument.SystemVersion">11E53</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
-		<string key="IBDocument.AppKitVersion">1138.32</string>
-		<string key="IBDocument.HIToolboxVersion">568.00</string>
+		<string key="IBDocument.AppKitVersion">1138.47</string>
+		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">2182</string>
@@ -44,7 +44,7 @@
 					<object class="NSTextField" id="829487978">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{400, 126}, {199, 39}}</string>
+						<string key="NSFrame">{{400, 126}, {223, 39}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1024217001"/>
@@ -53,9 +53,9 @@
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="349496589">
 							<int key="NSCellFlags">67239424</int>
-							<int key="NSCellFlags2">272629760</int>
-							<string type="base64-UTF8" key="NSContents">wqkgMjAxMC0xMiBXaXJlbG9hZCBJbmMuCkFsbCByaWdodHMgcmVzZXJ2ZWQuCkluY2x1ZGVzIGNvZGUg
-YnkgTWF0dCBHZW1tZWxsLg</string>
+							<int key="NSCellFlags2">306184192</int>
+							<string type="base64-UTF8" key="NSContents">wqkgMjAxMC0xMiBXaXJlTG9hZCBJbmMuCiBBbGxlIFJlY2h0ZSB2b3JiZWhhbHRlbi4KIEVpbnNjaGxp
+ZcOfbGljaCBkZXMgQ29kZXMgdm9uIE1hdHQgR2VtbWVsbC4</string>
 							<object class="NSFont" key="NSSupport">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">10</double>
@@ -90,7 +90,7 @@ YnkgTWF0dCBHZW1tZWxsLg</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="9731935">
 							<int key="NSCellFlags">68288064</int>
-							<int key="NSCellFlags2">71304192</int>
+							<int key="NSCellFlags2">104858624</int>
 							<string key="NSContents">2.1</string>
 							<object class="NSFont" key="NSSupport">
 								<string key="NSName">HelveticaNeue-Bold</string>
@@ -122,7 +122,7 @@ YnkgTWF0dCBHZW1tZWxsLg</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="788657948">
 							<int key="NSCellFlags">-2080244224</int>
-							<int key="NSCellFlags2">134217728</int>
+							<int key="NSCellFlags2">167772160</int>
 							<string key="NSContents"/>
 							<object class="NSFont" key="NSSupport" id="705183354">
 								<string key="NSName">LucidaGrande</string>
@@ -150,7 +150,7 @@ YnkgTWF0dCBHZW1tZWxsLg</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="673781184">
 							<int key="NSCellFlags">-2080244224</int>
-							<int key="NSCellFlags2">134217728</int>
+							<int key="NSCellFlags2">167772160</int>
 							<string key="NSContents"/>
 							<reference key="NSSupport" ref="705183354"/>
 							<string key="NSCellIdentifier">_NS:22</string>
@@ -166,7 +166,7 @@ YnkgTWF0dCBHZW1tZWxsLg</string>
 					<object class="NSButton" id="566407001">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{401, 272}, {117, 50}}</string>
+						<string key="NSFrame">{{401, 272}, {161, 50}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="26934728"/>
@@ -175,7 +175,7 @@ YnkgTWF0dCBHZW1tZWxsLg</string>
 						<object class="NSButtonCell" key="NSCell" id="882860536">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">134217728</int>
-							<string key="NSContents">Rate This App</string>
+							<string key="NSContents">Bewerten Sie diese App</string>
 							<reference key="NSSupport" ref="705183354"/>
 							<string key="NSCellIdentifier">_NS:9</string>
 							<reference key="NSControlView" ref="566407001"/>
@@ -203,7 +203,7 @@ YnkgTWF0dCBHZW1tZWxsLg</string>
 						<object class="NSButtonCell" key="NSCell" id="89317824">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">134217728</int>
-							<string key="NSContents">Help</string>
+							<string key="NSContents">Hilfe</string>
 							<reference key="NSSupport" ref="705183354"/>
 							<string key="NSCellIdentifier">_NS:9</string>
 							<reference key="NSControlView" ref="686407934"/>
@@ -219,7 +219,7 @@ YnkgTWF0dCBHZW1tZWxsLg</string>
 					<object class="NSButton" id="1041564446">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{469, 365}, {100, 22}}</string>
+						<string key="NSFrame">{{469, 365}, {74, 22}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="566407001"/>
@@ -228,7 +228,7 @@ YnkgTWF0dCBHZW1tZWxsLg</string>
 						<object class="NSButtonCell" key="NSCell" id="185708696">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">134217728</int>
-							<string key="NSContents">Get Support</string>
+							<string key="NSContents">Support</string>
 							<reference key="NSSupport" ref="705183354"/>
 							<string key="NSCellIdentifier">_NS:9</string>
 							<reference key="NSControlView" ref="1041564446"/>
@@ -244,7 +244,7 @@ YnkgTWF0dCBHZW1tZWxsLg</string>
 					<object class="NSButton" id="26934728">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{401, 207}, {205, 22}}</string>
+						<string key="NSFrame">{{401, 207}, {221, 22}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="605025245"/>
@@ -253,7 +253,7 @@ YnkgTWF0dCBHZW1tZWxsLg</string>
 						<object class="NSButtonCell" key="NSCell" id="557971938">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">134217728</int>
-							<string key="NSContents">Follow us on Twitter</string>
+							<string key="NSContents">Folgen uns auf Twitter</string>
 							<reference key="NSSupport" ref="705183354"/>
 							<string key="NSCellIdentifier">_NS:9</string>
 							<reference key="NSControlView" ref="26934728"/>

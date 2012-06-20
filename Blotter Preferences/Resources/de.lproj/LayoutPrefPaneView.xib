@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">11C74</string>
-		<string key="IBDocument.InterfaceBuilderVersion">1938</string>
-		<string key="IBDocument.AppKitVersion">1138.23</string>
-		<string key="IBDocument.HIToolboxVersion">567.00</string>
+		<string key="IBDocument.SystemVersion">11E53</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
+		<string key="IBDocument.AppKitVersion">1138.47</string>
+		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">1938</string>
+			<string key="NS.object.0">2182</string>
 		</object>
 		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -43,7 +43,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="1005">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -52,6 +52,7 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 289}, {110, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="655890231"/>
 						<string key="NSReuseIdentifierKey">_NS:3944</string>
 						<bool key="NSEnabled">YES</bool>
@@ -91,10 +92,11 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{129, 283}, {149, 26}}</string>
 						<reference key="NSSuperview" ref="1005"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="729899837"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="183428051">
-							<int key="NSCellFlags">-2080244160</int>
+							<int key="NSCellFlags">-2076049856</int>
 							<int key="NSCellFlags2">2048</int>
 							<reference key="NSSupport" ref="724121852"/>
 							<reference key="NSControlView" ref="655890231"/>
@@ -202,6 +204,7 @@
 																<int key="NSvFlags">268</int>
 																<string key="NSFrameSize">{108, 99}</string>
 																<reference key="NSSuperview" ref="732422139"/>
+																<reference key="NSWindow"/>
 																<reference key="NSNextKeyView" ref="822486296"/>
 																<int key="NSViewLayerContentsRedrawPolicy">2</int>
 																<string key="NSReuseIdentifierKey">_NS:547</string>
@@ -212,6 +215,7 @@
 																<int key="NSvFlags">256</int>
 																<string key="NSFrame">{{0, 108}, {108, 45}}</string>
 																<reference key="NSSuperview" ref="732422139"/>
+																<reference key="NSWindow"/>
 																<reference key="NSNextKeyView" ref="83856410"/>
 																<int key="NSViewLayerContentsRedrawPolicy">2</int>
 																<string key="NSReuseIdentifierKey">_NS:1192</string>
@@ -222,6 +226,7 @@
 																<int key="NSvFlags">256</int>
 																<string key="NSFrame">{{0, 162}, {108, 69}}</string>
 																<reference key="NSSuperview" ref="732422139"/>
+																<reference key="NSWindow"/>
 																<reference key="NSNextKeyView" ref="209585813"/>
 																<int key="NSViewLayerContentsRedrawPolicy">2</int>
 																<string key="NSReuseIdentifierKey">_NS:1192</string>
@@ -230,6 +235,7 @@
 														</object>
 														<string key="NSFrameSize">{108, 231}</string>
 														<reference key="NSSuperview" ref="413383031"/>
+														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="1052202239"/>
 														<int key="NSViewLayerContentsRedrawPolicy">2</int>
 														<string key="NSReuseIdentifierKey">_NS:545</string>
@@ -244,6 +250,7 @@
 																<int key="NSvFlags">268</int>
 																<string key="NSFrameSize">{263, 108}</string>
 																<reference key="NSSuperview" ref="209585813"/>
+																<reference key="NSWindow"/>
 																<reference key="NSNextKeyView" ref="286032300"/>
 																<int key="NSViewLayerContentsRedrawPolicy">2</int>
 																<string key="NSReuseIdentifierKey">_NS:547</string>
@@ -254,6 +261,7 @@
 																<int key="NSvFlags">268</int>
 																<string key="NSFrame">{{0, 117}, {263, 114}}</string>
 																<reference key="NSSuperview" ref="209585813"/>
+																<reference key="NSWindow"/>
 																<int key="NSViewLayerContentsRedrawPolicy">2</int>
 																<string key="NSReuseIdentifierKey">_NS:549</string>
 																<string key="NSClassName">WLLayoutDayView</string>
@@ -261,6 +269,7 @@
 														</object>
 														<string key="NSFrame">{{117, 0}, {263, 231}}</string>
 														<reference key="NSSuperview" ref="413383031"/>
+														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="557101213"/>
 														<int key="NSViewLayerContentsRedrawPolicy">2</int>
 														<string key="NSReuseIdentifierKey">_NS:545</string>
@@ -268,6 +277,7 @@
 												</object>
 												<string key="NSFrame">{{10, 10}, {380, 231}}</string>
 												<reference key="NSSuperview" ref="307974184"/>
+												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="732422139"/>
 												<int key="NSViewLayerContentsRedrawPolicy">2</int>
 												<string key="NSReuseIdentifierKey">_NS:597</string>
@@ -276,6 +286,7 @@
 										</object>
 										<string key="NSFrame">{{0, 3}, {400, 251}}</string>
 										<reference key="NSSuperview" ref="393265673"/>
+										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="413383031"/>
 										<bool key="NSViewIsLayerTreeHost">YES</bool>
 										<int key="NSViewLayerContentsRedrawPolicy">2</int>
@@ -285,6 +296,7 @@
 								</object>
 								<string key="NSFrameSize">{400, 254}</string>
 								<reference key="NSSuperview" ref="729899837"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="307974184"/>
 								<bool key="NSViewIsLayerTreeHost">YES</bool>
 								<int key="NSViewLayerContentsRedrawPolicy">2</int>
@@ -294,6 +306,7 @@
 						</object>
 						<string key="NSFrame">{{20, 17}, {400, 254}}</string>
 						<reference key="NSSuperview" ref="1005"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="393265673"/>
 						<bool key="NSViewIsLayerTreeHost">YES</bool>
 						<int key="NSViewLayerContentsRedrawPolicy">2</int>
@@ -302,6 +315,8 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{440, 326}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="322597722"/>
 				<string key="NSClassName">WLPrefPaneView</string>
 			</object>
@@ -548,8 +563,8 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="729899837"/>
-							<reference ref="322597722"/>
 							<reference ref="655890231"/>
+							<reference ref="322597722"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Custom View</string>
@@ -751,7 +766,7 @@
 					<string>81.IBPluginDependency</string>
 					<string>82.IBPluginDependency</string>
 				</object>
-				<object class="NSMutableArray" key="dict.values">
+				<object class="NSArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -819,7 +834,7 @@
 							<string>_rootSplitView</string>
 							<string>_weekSplitView</string>
 						</object>
-						<object class="NSMutableArray" key="dict.values">
+						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSView</string>
 							<string>WLLayoutSplitView</string>
@@ -840,7 +855,7 @@
 							<string>_rootSplitView</string>
 							<string>_weekSplitView</string>
 						</object>
-						<object class="NSMutableArray" key="dict.values">
+						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBToOneOutletInfo">
 								<string key="name">_calendarWindowView</string>
@@ -986,10 +1001,10 @@
 				<string>NSMenuCheckmark</string>
 				<string>NSMenuMixedState</string>
 			</object>
-			<object class="NSMutableArray" key="dict.values">
+			<object class="NSArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>{9, 8}</string>
-				<string>{7, 2}</string>
+				<string>{11, 11}</string>
+				<string>{10, 3}</string>
 			</object>
 		</object>
 	</data>
