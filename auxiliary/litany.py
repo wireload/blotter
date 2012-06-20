@@ -176,10 +176,13 @@ class Litany(object):
           source_key = "%s.%s" % (id, pair['key'])
           for source_pair in pairs:
             if source_pair['key'] == source_key:
-              value = source_pair['value'].replace('\\n', '\n')
+              new_value = source_pair['value'].replace('\\n', '\n')
               matches += 1
-              if value != pair['value']:
+              # If "new_value" is empty, leave the original translation. We'd never translate something
+              # to nothing, so empty just means we don't have a translation yet.
+              if new_value != '""' and new_value != value:
                 new_values += 1
+                value = new_value
               break
           else:
             #print u"Did not replace %s = %s" % (pair['key'], value)
