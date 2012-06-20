@@ -185,7 +185,8 @@ class Litany(object):
             #print u"Did not replace %s = %s" % (pair['key'], value)
             pass
 
-        output_line = u'"%s" = %s;\n\n' % (pair['key'], value)
+        # Make sure to escape newlines.
+        output_line = u'"%s" = %s;\n\n' % (pair['key'], value.replace('\n', '\\n'))
         target_write.write(output_line)
 
     print "Found %d matching keys (%d updated)" % (matches, new_values)
