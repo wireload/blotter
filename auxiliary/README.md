@@ -1,6 +1,6 @@
 ## How to translate
 
-1. Edit every `.xib` to make sure alignment and placement is perfect. Try to give as much width as possible to every label so that wider languages will fit well. 
+1. Edit every `.xib` to make sure alignment and placement is perfect. Try to give as much width as possible to every label so that wider languages will fit well.
 2. Edit `Meta.strings` with new "What's New" and any updates to the main text.
 3. Edit `localization.py`.
     1. For each new `.m` file with a localisable string, add it under `Sources()`.
@@ -41,10 +41,10 @@
     This example is for Russian. Just substitute `ru.lproj` for `sv.lproj` etc. for other languages. Current language codes we use are `de`, `es`, `fr`, `ko`, `ru`, `sv`.
 
 11. Order translations.
-12. Export each language as a `.strings` file from mygengo.
+12. Export all languages from MyGengo with the "Download files > All languages" option.
 13. Run `litany.py` in reverse:
 
-        python auxiliary/litany.py process_global mygengo_<language>.strings <language>
+        sh auxiliary/litany_reverse_all.sh
 
 14. Commit the new `.strings`.
 15. Create the language specific xibs using `localization.py`:
