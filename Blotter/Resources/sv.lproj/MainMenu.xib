@@ -61,7 +61,7 @@
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSMenuItem" id="168685719">
 									<reference key="NSMenu" ref="110575045"/>
-									<string key="NSTitle">Bring to Front</string>
+									<string key="NSTitle">Visa Överst</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="35465992"/>
