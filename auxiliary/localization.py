@@ -83,9 +83,11 @@ def Sources():
                           join(BLOTTER_DIR, "WLCalendarTasksView.m")]},
                {'output': join(BLOTTER_PREFS_DIR, "Resources"),
                 'files': [join(BLOTTER_PREFS_DIR, "GeneralPrefController.m"),
+                          join(BLOTTER_PREFS_DIR, "ShortcutsPrefController.m"),
                           join(BLOTTER_PREFS_DIR, "PositionPrefController.m"),
                           join(BLOTTER_PREFS_DIR, "LayoutPrefController.m"),
                           join(BLOTTER_PREFS_DIR, "CalendarsPrefController.m"),
+                          join(BLOTTER_PREFS_DIR, "AboutPrefController.m"),
                           join(BLOTTER_PREFS_DIR, "NSScreen+WLScreenName.m"),
                           join(BLOTTER_PREFS_DIR, "WLScreensController.m")]}]
     return sources
