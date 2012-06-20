@@ -48,7 +48,7 @@
 			<object class="NSWindowTemplate" id="1032099916">
 				<int key="NSWindowStyleMask">17</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{400, 267}, {269, 239}}</string>
+				<string key="NSWindowRect">{{400, 267}, {279, 239}}</string>
 				<int key="NSWTFlags">1685591040</int>
 				<string key="NSWindowTitle">Nouvel événement</string>
 				<string key="NSWindowClass">WLGlassHudWindow</string>
@@ -62,10 +62,10 @@
 						<object class="NSCustomView" id="1015655719">
 							<reference key="NSNextResponder" ref="675070131"/>
 							<int key="NSvFlags">4370</int>
-							<string key="NSFrame">{{22, 189}, {225, 28}}</string>
+							<string key="NSFrame">{{22, 189}, {235, 28}}</string>
 							<reference key="NSSuperview" ref="675070131"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="690297653"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSClassName">WLGlassHudTextView</string>
 						</object>
 						<object class="NSCustomView" id="690297653">
@@ -79,7 +79,7 @@
 									<string key="NSFrame">{{19, 136}, {69, 14}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="939906521"/>
+									<reference key="NSNextKeyView" ref="456489716"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="173180381">
 										<int key="NSCellFlags">68288064</int>
@@ -163,7 +163,7 @@
 								<object class="NSButton" id="187184368">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">289</int>
-									<string key="NSFrame">{{58, 27}, {60, 18}}</string>
+									<string key="NSFrame">{{58, 27}, {65, 18}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="1026362590"/>
@@ -189,9 +189,10 @@
 								<object class="NSButton" id="1026362590">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">289</int>
-									<string key="NSFrame">{{128, 27}, {117, 18}}</string>
+									<string key="NSFrame">{{133, 27}, {122, 18}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView" ref="1015655719"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="413100244">
 										<int key="NSCellFlags">67239424</int>
@@ -210,10 +211,10 @@
 								<object class="NSButton" id="456489716">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">290</int>
-									<string key="NSFrame">{{91, 135}, {155, 18}}</string>
+									<string key="NSFrame">{{91, 135}, {165, 18}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="354528427"/>
+									<reference key="NSNextKeyView" ref="939906521"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="648425809">
 										<int key="NSCellFlags">67239424</int>
@@ -243,7 +244,7 @@
 								<object class="NSDatePicker" id="689527520">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">290</int>
-									<string key="NSFrame">{{93, 85}, {154, 27}}</string>
+									<string key="NSFrame">{{93, 85}, {164, 27}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="12582526"/>
@@ -279,10 +280,10 @@
 								<object class="NSDatePicker" id="211563046">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">290</int>
-									<string key="NSFrame">{{93, 109}, {154, 27}}</string>
+									<string key="NSFrame">{{93, 109}, {164, 27}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="456489716"/>
+									<reference key="NSNextKeyView" ref="354528427"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSDatePickerCell" key="NSCell" id="877791295">
 										<int key="NSCellFlags">67239424</int>
@@ -307,7 +308,7 @@
 								<object class="NSPopUpButton" id="408232026">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">290</int>
-									<string key="NSFrame">{{87, 63}, {160, 17}}</string>
+									<string key="NSFrame">{{87, 63}, {170, 17}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="187184368"/>
@@ -363,24 +364,24 @@
 								<object class="NSCustomView" id="553055910">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">4386</int>
-									<string key="NSFrame">{{94, 154}, {153, 23}}</string>
+									<string key="NSFrame">{{94, 154}, {163, 23}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="722791319"/>
 									<string key="NSClassName">WLGlassHudTextView</string>
 								</object>
 							</object>
-							<string key="NSFrameSize">{269, 192}</string>
+							<string key="NSFrameSize">{279, 192}</string>
 							<reference key="NSSuperview" ref="675070131"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="619627054"/>
 							<string key="NSClassName">NSView</string>
 						</object>
 					</object>
-					<string key="NSFrameSize">{269, 239}</string>
+					<string key="NSFrameSize">{279, 239}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
-					<reference key="NSNextKeyView" ref="1015655719"/>
+					<reference key="NSNextKeyView" ref="690297653"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>

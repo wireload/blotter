@@ -49,7 +49,7 @@
 			<object class="NSWindowTemplate" id="513744381">
 				<int key="NSWindowStyleMask">17</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{421, 313}, {292, 193}}</string>
+				<string key="NSWindowRect">{{421, 313}, {312, 193}}</string>
 				<int key="NSWTFlags">1685591040</int>
 				<string key="NSWindowTitle">Neue Erinnerung</string>
 				<string key="NSWindowClass">WLGlassHudWindow</string>
@@ -63,7 +63,7 @@
 						<object class="NSCustomView" id="903219286">
 							<reference key="NSNextResponder" ref="414427165"/>
 							<int key="NSvFlags">4370</int>
-							<string key="NSFrame">{{22, 143}, {245, 28}}</string>
+							<string key="NSFrame">{{22, 143}, {265, 28}}</string>
 							<reference key="NSSuperview" ref="414427165"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="577727828"/>
@@ -77,7 +77,7 @@
 								<object class="NSButton" id="447760508">
 									<reference key="NSNextResponder" ref="577727828"/>
 									<int key="NSvFlags">289</int>
-									<string key="NSFrame">{{39, 27}, {78, 18}}</string>
+									<string key="NSFrame">{{49, 27}, {83, 18}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="143960448"/>
@@ -103,7 +103,7 @@
 								<object class="NSButton" id="143960448">
 									<reference key="NSNextResponder" ref="577727828"/>
 									<int key="NSvFlags">289</int>
-									<string key="NSFrame">{{127, 27}, {138, 18}}</string>
+									<string key="NSFrame">{{142, 27}, {143, 18}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
 									<reference key="NSWindow"/>
 									<bool key="NSEnabled">YES</bool>
@@ -232,7 +232,7 @@
 								<object class="NSPopUpButton" id="93078503">
 									<reference key="NSNextResponder" ref="577727828"/>
 									<int key="NSvFlags">266</int>
-									<string key="NSFrame">{{88, 60}, {179, 26}}</string>
+									<string key="NSFrame">{{88, 60}, {199, 26}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="447760508"/>
@@ -267,7 +267,7 @@
 								<object class="NSPopUpButton" id="649689110">
 									<reference key="NSNextResponder" ref="577727828"/>
 									<int key="NSvFlags">266</int>
-									<string key="NSFrame">{{88, 84}, {179, 26}}</string>
+									<string key="NSFrame">{{88, 84}, {199, 26}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="350755557"/>
@@ -355,7 +355,7 @@
 								<object class="NSDatePicker" id="758771597">
 									<reference key="NSNextResponder" ref="577727828"/>
 									<int key="NSvFlags">-2147483382</int>
-									<string key="NSFrame">{{115, 110}, {152, 27}}</string>
+									<string key="NSFrame">{{115, 110}, {172, 27}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="880146158"/>
@@ -409,14 +409,14 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 									</object>
 								</object>
 							</object>
-							<string key="NSFrame">{{0, -2}, {292, 145}}</string>
+							<string key="NSFrame">{{0, -2}, {312, 145}}</string>
 							<reference key="NSSuperview" ref="414427165"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="184759867"/>
 							<string key="NSClassName">NSView</string>
 						</object>
 					</object>
-					<string key="NSFrameSize">{292, 193}</string>
+					<string key="NSFrameSize">{312, 193}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="903219286"/>
