@@ -6,6 +6,8 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
+#import <WireloadClassesAndResources/WLGraphics.h>
+
 #import "WLGlassHudButtonCell.h"
 
 
@@ -15,36 +17,36 @@
 {
     if (![self isEnabled])
     {
-        NSDrawThreePartImage(cellFrame,
+        WLDrawScaledThreePartImage(cellFrame,
                              [NSImage imageNamed:@"glass-hud-button-disabled-left"],
                              [NSImage imageNamed:@"glass-hud-button-disabled-middle"],
                              [NSImage imageNamed:@"glass-hud-button-disabled-right"],
                              NO,
                              NSCompositeSourceOver,
                              1.0,
-                             YES);
+                             NO);
     }
     else if (![self isHighlighted])
     {
-        NSDrawThreePartImage(cellFrame,
+        WLDrawScaledThreePartImage(cellFrame,
                              [NSImage imageNamed:@"glass-hud-button-left"],
                              [NSImage imageNamed:@"glass-hud-button-middle"],
                              [NSImage imageNamed:@"glass-hud-button-right"],
                              NO,
                              NSCompositeSourceOver,
                              1.0,
-                             YES);
+                             NO);
     }
     else
     {
-        NSDrawThreePartImage(cellFrame,
+        WLDrawScaledThreePartImage(cellFrame,
                              [NSImage imageNamed:@"glass-hud-button-active-left"],
                              [NSImage imageNamed:@"glass-hud-button-active-middle"],
                              [NSImage imageNamed:@"glass-hud-button-active-right"],
                              NO,
                              NSCompositeSourceOver,
                              1.0,
-                             YES);
+                             NO);
     }
     // Title frame is the button frame without round parts and shadows.
     NSRect titleFrame = NSInsetRect(cellFrame, 7, 2);
