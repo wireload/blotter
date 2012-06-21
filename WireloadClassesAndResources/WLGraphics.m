@@ -45,6 +45,112 @@ void WLRecessedBoxShadow(NSRect frame)
 
 #define NSRectFromSize(size) (NSMakeRect(0, 0, (size).width, (size).height))
 
+void WLDrawScaledThreePartImage(NSRect frame, 
+                                NSImage *startCap, 
+                                NSImage *centerFill, 
+                                NSImage *endCap, 
+                                BOOL vertical, 
+                                NSCompositingOperation op, 
+                                CGFloat alphaFraction,
+                                BOOL flipped)
+{   
+    NSSize startSize = [startCap size];
+    NSSize endSize = [endCap size];
+    CGFloat width = startSize.width;
+    CGFloat startLength = vertical ? startSize.height : startSize.width;
+    CGFloat endLength = vertical ? endSize.height : endSize.width;
+    
+    CGFloat capAxisLength = startLength + endLength;
+    CGFloat excess = vertical ? capAxisLength - frame.size.height : capAxisLength - frame.size.width;
+    CGFloat startOffset = 0;
+    CGFloat endOffset = 0;
+
+    if (excess > 0) {
+        startLength -= floorf(excess / 2.0);
+        endOffset = ceilf(excess / 2.0);
+        endLength -= endOffset;
+    }
+
+    CGFloat endPosition = 0;
+    CGFloat startPosition = 0;
+    CGFloat midLength = 0;
+    CGFloat midPosition = 0;
+    
+    if (vertical) {
+        if (flipped)
+        {
+            endPosition = frame.size.height - endLength + endOffset;
+            startPosition = 0;
+            midPosition = 0 + startLength;
+            midLength = endPosition - startLength;
+        } else {
+            startPosition = frame.size.height - startLength + startOffset;
+            endPosition = 0;
+            midPosition = 0 + endLength;
+            midLength = startPosition - midPosition;
+        }
+    } else {
+        startPosition = 0;
+        endPosition = frame.size.width - endLength + endOffset;
+        midPosition = 0 + startLength;
+        midLength = endPosition - midPosition;
+    }
+
+    BOOL drawMiddle = midLength > 0;
+
+    if (vertical)
+    {
+        [startCap drawInRect:NSMakeRect(0, startPosition, width, startLength) 
+                    fromRect:NSMakeRect(0, flipped ? startOffset : 0, width, startLength)
+                   operation:op 
+                    fraction:alphaFraction 
+              respectFlipped:YES 
+                       hints:nil];
+
+        if (drawMiddle)
+        {
+            [centerFill drawInRect:NSMakeRect(0, midPosition, width, midLength) 
+                          fromRect:NSMakeRect(0, flipped ? [centerFill size].height : 0, width, [centerFill size].height)
+                         operation:op 
+                          fraction:alphaFraction 
+                    respectFlipped:YES 
+                             hints:nil];           
+        }
+
+        [endCap drawInRect:NSMakeRect(0, endPosition, width, endLength) 
+                  fromRect:NSMakeRect(0, flipped ? endOffset : 0, width, endLength)
+                 operation:op 
+                  fraction:alphaFraction 
+            respectFlipped:YES 
+                     hints:nil];
+    } else {
+        [startCap drawInRect:NSMakeRect(startPosition, 0, startLength, startSize.height) 
+                    fromRect:NSMakeRect(0, 0, startLength, startSize.height)
+                   operation:op 
+                    fraction:alphaFraction 
+              respectFlipped:YES 
+                       hints:nil];
+        
+        if (drawMiddle)
+        {
+            [centerFill drawInRect:NSMakeRect(midPosition, 0, midLength, startSize.height) 
+                          fromRect:NSMakeRect(0, 0, [centerFill size].width, startSize.height)
+                         operation:op 
+                          fraction:alphaFraction 
+                    respectFlipped:YES 
+                             hints:nil];           
+        }
+        
+        [endCap drawInRect:NSMakeRect(endPosition, 0, endLength, startSize.height) 
+                  fromRect:NSMakeRect(0, 0, endLength, startSize.height)
+                 operation:op 
+                  fraction:alphaFraction 
+            respectFlipped:YES 
+                     hints:nil];        
+    }
+}
+
+
 /**
  Like NSDrawNinePartImage but scale the middle parts instead of tiling them. This allows some simple gradients
  from edge to edge as long as the detail is such that it scales up and down well with bilinear filtering.

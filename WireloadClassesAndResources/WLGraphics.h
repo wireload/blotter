@@ -15,6 +15,15 @@
  */
 void WLRecessedBoxShadow(NSRect frame);
 
+void WLDrawScaledThreePartImage(NSRect frame, 
+                                NSImage *startCap, 
+                                NSImage *centerFill, 
+                                NSImage *endCap, 
+                                BOOL vertical, 
+                                NSCompositingOperation op, 
+                                CGFloat alphaFraction,
+                                BOOL flipped);
+
 void WLDrawScaledNinePartImage(NSRect bounds,
                                NSImage *topLeftCorner,
                                NSImage *topEdgeFill,
