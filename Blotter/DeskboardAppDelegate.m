@@ -179,7 +179,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 - (IBAction)showAbout:(id)aSender
 {
     [self showPreferences:aSender];
-    NSToolbarItem *aboutItem = [[_preferencesController prefsToolbarItems] objectForKey:@"About"];
+    NSToolbarItem *aboutItem = [[_preferencesController prefsToolbarItems] objectForKey:NSLocalizedStringFromTableInBundle(@"About", nil, [_preferencesController bundle], nil)];
     [_preferencesController prefsToolbarItemClicked:aboutItem];
 }
 
