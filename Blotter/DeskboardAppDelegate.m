@@ -336,6 +336,8 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
                forKeyPath:WLAutoFadeSecondsKey
                   options:NSKeyValueObservingOptionNew
                   context:NULL];
+
+    [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:[NSApp windows]];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)aNotification
