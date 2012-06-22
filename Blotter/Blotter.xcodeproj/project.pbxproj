@@ -1153,6 +1153,7 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: WireLoad, LLC";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1166,6 +1167,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DDEBUG=1";
 				PRODUCT_NAME = Blotter;
+				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../WireloadClassesAndResources/** \"\\\"${PROJECT_DIR}/../Blotter Preferences\"/** \"\\\"${PROJECT_DIR}/../Blotter Preferences\"/**";
 			};
 			name = Debug;
@@ -1173,6 +1175,7 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: WireLoad, LLC";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1182,6 +1185,7 @@
 				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
 				INFOPLIST_FILE = "Blotter-Info.plist";
 				PRODUCT_NAME = Blotter;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -1281,6 +1285,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E226B23215139BCC0014F120 /* Distribution.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: WireLoad, LLC";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1290,6 +1295,7 @@
 				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
 				INFOPLIST_FILE = "Blotter-Info.plist";
 				PRODUCT_NAME = Blotter;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Distribution;
 		};
