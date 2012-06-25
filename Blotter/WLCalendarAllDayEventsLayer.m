@@ -31,7 +31,6 @@ static const CGFloat _WLXPadding = 2.0;
     self = [super init];
     if (self != nil)
     {
-        _sortedByUIDEventLayers = [[NSMutableArray alloc] init];
         _icalSortedEventLayers = [[NSMutableArray alloc] init];
     }
     return self;
@@ -40,93 +39,55 @@ static const CGFloat _WLXPadding = 2.0;
 - (void)dealloc
 {
     [_icalSortedEventLayers release];
-    [_sortedByUIDEventLayers release];
     [super dealloc];
 }
 
 - (NSArray *)events
 {
-    NSMutableArray *events = [NSMutableArray arrayWithCapacity:[_sortedByUIDEventLayers count]];
-    for (WLCalendarEventLayer *eventLayer in _sortedByUIDEventLayers)
-    {
-        NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:
-                               eventLayer.name,             @"uid",
-                               [eventLayer.title string],   @"title",
-                               nil];
-        [events addObject:event];
-    }
-    return events;
+    return [_icalSortedEventLayers valueForKey:@"allDayEvent"];;
 }
 
 - (void)setEvents:(NSArray *)newEvents
 {
+    NSMutableArray *unusedSublayers = [_icalSortedEventLayers mutableCopy];
     [_icalSortedEventLayers removeAllObjects];
-    NSMutableArray *sublayersToRemove = [_sortedByUIDEventLayers mutableCopy];
     for (id event in newEvents)
     {
-        BOOL isFound = NO;
-        NSUInteger layerIdx = [self _indexOfEventLayerWithUID:[event uid] isFound:&isFound];
-        if (isFound)
+        NSUInteger indexOfUsedLayer = [unusedSublayers indexOfObjectPassingTest:^BOOL(WLCalendarEventLayer *l, NSUInteger idx, BOOL *stop)
         {
-            WLCalendarEventLayer *l = [_sortedByUIDEventLayers objectAtIndex:layerIdx];
-            l.allDayEvent = event;
-            [_icalSortedEventLayers addObject:l];
-            [sublayersToRemove removeObjectIdenticalTo:l];
+            id layerEvent = l.allDayEvent;
+            return [layerEvent isEqual:event] || (
+                                                  [[layerEvent uid] isEqual:[event uid]] &&
+                                                  [[[(CalEvent *)layerEvent calendar] uid] isEqual:[[(CalEvent *)event calendar] uid]]
+                                                  );
+        }];
+        WLCalendarEventLayer *usedLayer = nil;
+        if (indexOfUsedLayer != NSNotFound)
+        {
+            // Layer for the event already exist. Update it.
+            usedLayer = [unusedSublayers objectAtIndex:indexOfUsedLayer];
+            usedLayer.allDayEvent = event;
+            [unusedSublayers removeObjectAtIndex:indexOfUsedLayer];
         }
         else
         {
-            WLCalendarEventLayer *l = [WLCalendarEventLayer allDayEventLayer];
-            l.allDayEvent = event;
-            [_sortedByUIDEventLayers insertObject:l atIndex:layerIdx];
-            [_icalSortedEventLayers addObject:l];
-            [self addSublayer:l];
+            // Create new layer for the event.
+            usedLayer = [WLCalendarEventLayer allDayEventLayer];
+            usedLayer.allDayEvent = event;
+            [self addSublayer:usedLayer];
         }
+        [_icalSortedEventLayers addObject:usedLayer];
     }
-    [sublayersToRemove makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
-    for (WLCalendarEventLayer *l in sublayersToRemove)
-        [_sortedByUIDEventLayers removeObjectIdenticalTo:l];
-    [sublayersToRemove release];
+    [unusedSublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+    [unusedSublayers release];
 }
 
 - (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth
 {
     CGFloat preferredHeight = 0.0f;
-    for (WLCalendarEventLayer *layer in _sortedByUIDEventLayers)
+    for (WLCalendarEventLayer *layer in _icalSortedEventLayers)
         preferredHeight += _WLTopMargin + [layer preferredHeightWithWidth:aWidth];
     return preferredHeight;
-}
-
-
-#pragma mark Private
-
-- (NSUInteger)_indexOfEventLayerWithUID:(NSString *)anUID isFound:(out BOOL *)outIsFound
-{
-    NSArray *layerNames = [_sortedByUIDEventLayers valueForKey:@"name"];
-    NSUInteger idx = [layerNames indexOfObject:anUID
-                                 inSortedRange:NSMakeRange(0, [_sortedByUIDEventLayers count])
-                                       options:NSBinarySearchingFirstEqual
-                               usingComparator:^(NSString *obj1, NSString *obj2)
-    {
-        return [obj1 compare:obj2];
-    }];
-    if (idx != NSNotFound)
-    {
-        if (outIsFound != NULL)
-            *outIsFound = YES;
-    }
-    else
-    {
-        if (outIsFound != NULL)
-            *outIsFound = NO;
-        idx = [layerNames indexOfObject:anUID
-                          inSortedRange:NSMakeRange(0, [_sortedByUIDEventLayers count])
-                                options:NSBinarySearchingFirstEqual | NSBinarySearchingInsertionIndex
-                        usingComparator:^(NSString *obj1, NSString *obj2)
-        {
-            return [obj1 compare:obj2];
-        }];
-    }
-    return idx;
 }
 
 

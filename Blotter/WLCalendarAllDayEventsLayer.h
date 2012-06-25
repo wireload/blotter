@@ -15,16 +15,12 @@
 
 
 @interface WLCalendarAllDayEventsLayer : CALayer {
-    NSMutableArray *_sortedByUIDEventLayers;
     NSMutableArray *_icalSortedEventLayers;
 }
 
 @property (nonatomic, copy) NSArray *events;
 
 - (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth;
-
-
-- (NSUInteger)_indexOfEventLayerWithUID:(NSString *)anUID isFound:(out BOOL *)outIsFound;
 
 @end
 
