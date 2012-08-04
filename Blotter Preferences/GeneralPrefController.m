@@ -28,7 +28,13 @@
 {
     SystemPreferencesApplication *app = (SystemPreferencesApplication *)[SBApplication applicationWithBundleIdentifier:@"com.apple.systempreferences"];
     SystemPreferencesPane *pane = [[app panes] objectWithID:@"com.apple.Localization"];
-    SystemPreferencesAnchor *anchor = [[pane anchors] objectWithName:@"Formats"];
+    SystemPreferencesAnchor *anchor = nil;
+    
+    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_7)
+        anchor = [[pane anchors] objectWithName:@"Formats"];
+    else
+        anchor = [[pane anchors] objectWithName:@"Region"];
+    
     if ([anchor reveal] != nil)
         [app activate];
     else
