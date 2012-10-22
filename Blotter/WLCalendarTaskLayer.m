@@ -83,6 +83,8 @@ static const CGFloat _WLMarkTailIndent = 6.0;
         return YES;
     else if ([aKey isEqualToString:@"mark"])
         return YES;
+    else if ([aKey isEqualToString:@"contentsScale"])
+        return YES;
     else
         return [super needsDisplayForKey:aKey];
 }

@@ -24,6 +24,8 @@
 {
     if ([aKey isEqualToString:@"string"])
         return YES;
+    else if ([aKey isEqualToString:@"contentsScale"])
+        return YES;
     else
         return [super needsDisplayForKey:aKey];
 }

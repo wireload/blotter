@@ -183,6 +183,14 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 }
 
 
+#pragma mark CALayerDelegate
+
+- (BOOL)layer:(CALayer *)aLayer shouldInheritContentsScale:(CGFloat)aScale fromWindow:(NSWindow *)aWindow
+{
+    return YES;
+}
+
+
 #pragma mark WLLayerBackedView
 
 - (CALayer *)makeRootLayer
@@ -227,6 +235,8 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 {
     WLCalendarTaskLayer *l = [WLCalendarTaskLayer layer];
     l.needsDisplayOnBoundsChange = YES;
+    l.delegate = self;
+
 #ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor orangeColor] WL_CGColor];
 #endif

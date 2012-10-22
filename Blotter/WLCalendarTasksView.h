@@ -16,7 +16,7 @@
 @protocol WLCalendarTasksViewDataSource;
 
 
-@interface WLCalendarTasksView : WLLayerBackedView /*<CALayoutManager>*/ {
+@interface WLCalendarTasksView : WLLayerBackedView /*<CALayoutManager, CALayerDelegate>*/ {
     IBOutlet id<WLCalendarTasksViewDataSource> dataSource;
 }
 

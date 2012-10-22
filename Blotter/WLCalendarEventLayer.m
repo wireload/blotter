@@ -147,10 +147,10 @@ const CGFloat _WLMinimumStringHeight = 5.0;
         CGContextSetShouldAntialias(aContext, NO);
         CGContextSetStrokeColorWithColor(aContext, [self _lineColor]);
         CGContextBeginPath(aContext);
-        CGContextMoveToPoint(aContext, CGRectGetMinX(self.bounds), CGRectGetMinY(self.bounds) + 1.0);
-        CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), CGRectGetMinY(self.bounds) + 1.0);
-        CGContextMoveToPoint(aContext, CGRectGetMinX(self.bounds), CGRectGetMaxY(self.bounds));
-        CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), CGRectGetMaxY(self.bounds));
+        CGContextMoveToPoint(aContext, CGRectGetMinX(self.bounds), CGRectGetMinY(self.bounds) + 1.0 * 0.5);
+        CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), CGRectGetMinY(self.bounds) + 1.0 * 0.5);
+        CGContextMoveToPoint(aContext, CGRectGetMinX(self.bounds), CGRectGetMaxY(self.bounds) - 1.0 * 0.5);
+        CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), CGRectGetMaxY(self.bounds) - 1.0 * 0.5);
         CGContextStrokePath(aContext);
     }
     CGContextRestoreGState(aContext);
@@ -271,6 +271,8 @@ const CGFloat _WLMinimumStringHeight = 5.0;
     else if ([aKey isEqualToString:@"contentsBackgroundOpacity"])
         return YES;
     else if ([aKey isEqualToString:@"contentsBackgroundColor"])
+        return YES;
+    else if ([aKey isEqualToString:@"contentsScale"])
         return YES;
     else
         return [super needsDisplayForKey:aKey];

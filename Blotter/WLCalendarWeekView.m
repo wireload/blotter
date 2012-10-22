@@ -978,6 +978,11 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 }
 #endif
 
+- (BOOL)layer:(CALayer *)aLayer shouldInheritContentsScale:(CGFloat)aScale fromWindow:(NSWindow *)aWindow
+{
+    return YES;
+}
+
 
 #pragma mark WLCalendarTimeRuler
 
@@ -1114,8 +1119,9 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                              [NSNull null], @"contents",
                              nil];
     l.actions = actions;
-#ifdef DEBUG_LAYERS
     l.delegate = self;
+
+#ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor blackColor] WL_CGColor];
 #endif
 
@@ -1157,8 +1163,9 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                              [NSNull null], @"contents",
                              nil];
     l.actions = actions;
-#ifdef DEBUG_LAYERS
     l.delegate = self;
+
+#ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor darkGrayColor] WL_CGColor];
 #endif
 
@@ -1182,6 +1189,8 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                              [NSNull null], @"contents",
                              nil];
     l.actions = actions;
+    l.delegate = self;
+
 #ifndef DEBUG_LAYERS
     l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
         NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:[aLayer contentsAreFlipped]];
@@ -1247,7 +1256,6 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
         [NSGraphicsContext restoreGraphicsState];
     };
 #else
-    l.delegate = self;
     l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
 #endif
 
@@ -1272,8 +1280,9 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                              [NSNull null], @"contents",
                              nil];
     l.actions = actions;
-#ifdef DEBUG_LAYERS
     l.delegate = self;
+
+#ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor orangeColor] WL_CGColor];
 #endif
 
@@ -1289,7 +1298,6 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     WLCalendarTimeRulerLayer *l = [WLCalendarTimeRulerLayer layer];
     l.name = _WLTimeRulerLayerName;
     l.timeRuler = self;
-    l.markers = [self _timeRulerMarkers];
     l.onlyCompletelyVisibleMarkersShown = self.fitsDayEvents;
     NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
                              [NSNull null], kCAOnOrderIn,
@@ -1298,10 +1306,13 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                              [NSNull null], @"contents",
                              nil];
     l.actions = actions;
-#ifdef DEBUG_LAYERS
     l.delegate = self;
+    l.markers = [self _timeRulerMarkers];
+
+#ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor blueColor] WL_CGColor];
 #endif
+
     return l;
 }
 
@@ -1322,8 +1333,9 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                              [NSNull null], @"contents",
                              nil];
     l.actions = actions;
-#ifdef DEBUG_LAYERS
     l.delegate = self;
+
+#ifdef DEBUG_LAYERS
     l.backgroundColor = [[[NSColor darkGrayColor] colorWithAlphaComponent:0.5] WL_CGColor];
 #endif
 
@@ -1356,8 +1368,9 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                              [NSNull null], @"contents",
                              nil];
     l.actions = actions;
-#ifdef DEBUG_LAYERS
     l.delegate = self;
+
+#ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor redColor] WL_CGColor];
 #endif
 
@@ -1386,6 +1399,8 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                              [NSNull null], @"contents",
                              nil];
     l.actions = actions;
+    l.delegate = self;
+
 #ifndef DEBUG_LAYERS
     l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
         // (0, 0) is top left.
@@ -1413,7 +1428,6 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
         [NSGraphicsContext restoreGraphicsState];
     };
 #else
-    l.delegate = self;
     l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
 #endif
 
@@ -1436,8 +1450,9 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                              [NSNull null], @"contents",
                              nil];
     l.actions = actions;
-#ifdef DEBUG_LAYERS
     l.delegate = self;
+
+#ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
 #endif
 
@@ -1459,10 +1474,12 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                              [NSNull null], @"contents",
                              nil];
     l.actions = actions;
-#ifdef DEBUG_LAYERS
     l.delegate = self;
+
+#ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor blueColor] WL_CGColor];
 #endif
+
     return l;
 }
 
@@ -1478,8 +1495,9 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                              [NSNull null], @"contents",
                              nil];
     l.actions = actions;
-#ifdef DEBUG_LAYERS
     l.delegate = self;
+
+#ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor orangeColor] WL_CGColor];
 #endif
 
@@ -1503,11 +1521,13 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                              [NSNull null], @"contents",
                              nil];
     l.actions = actions;
-#ifdef DEBUG_LAYERS
     l.delegate = self;
+
+#ifdef DEBUG_LAYERS
     l.needsDisplayOnBoundsChange = YES;
     l.backgroundColor = [[NSColor blueColor] WL_CGColor];
 #endif
+
     return l;
 }
 
@@ -1528,8 +1548,9 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                              [NSNull null], @"contents",
                              nil];
     l.actions = actions;
-#ifdef DEBUG_LAYERS
     l.delegate = self;
+
+#ifdef DEBUG_LAYERS
     l.backgroundColor = [[[NSColor darkGrayColor] colorWithAlphaComponent:0.7] WL_CGColor];
 #endif
 
@@ -1553,10 +1574,12 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                              [NSNull null], @"contents",
                              nil];
     l.actions = actions;
-#ifdef DEBUG_LAYERS
     l.delegate = self;
+
+#ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor whiteColor] WL_CGColor];
 #endif
+
     return l;
 }
 

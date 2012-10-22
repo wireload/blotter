@@ -190,6 +190,8 @@
 {
     WLCalendarTimeRulerMarkerLayer *l = [WLCalendarTimeRulerMarkerLayer layer];
     l.needsDisplayOnBoundsChange = YES;
+    l.delegate = self.delegate;
+
 #ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif
