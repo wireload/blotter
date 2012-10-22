@@ -191,7 +191,6 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     l.layoutManager = self;
     l.masksToBounds = YES;
     l.name = _WLTasksLayerName;
-    l.geometryFlipped = YES;
     l.delegate = self;
     [l setValue:[NSMutableArray array] forKey:_WLOrderedSublayersKey];
     NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -209,6 +208,14 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     l.backgroundColor = [[NSColor blackColor] WL_CGColor];
 #endif
     return l;
+}
+
+
+#pragma mark NSView
+
+- (BOOL)isFlipped
+{
+    return YES;
 }
 
 @end
