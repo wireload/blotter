@@ -195,6 +195,7 @@
 #ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor greenColor] WL_CGColor];
 #endif
+
     return l;
 }
 

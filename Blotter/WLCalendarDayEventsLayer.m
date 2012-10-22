@@ -697,9 +697,11 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
     l.masksToBounds = YES;
     l.contentsGravity = kCAGravityBottom;
     l.anchorPoint = CGPointMake(0.0, 0.0);
+
 #ifndef DEBUG_LAYERS
     l.contentsBackgroundOpacity = 0.45;
 #endif
+
     return l;
 }
 

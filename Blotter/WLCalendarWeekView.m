@@ -1410,21 +1410,21 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
         [NSGraphicsContext setCurrentContext:c];
 
         [c setImageInterpolation:NSImageInterpolationHigh];
-        
+
         WLDrawScaledNinePartImage(NSRectFromCGRect(aLayer.bounds),
-                                  [NSImage imageNamed:@"all-day-top-left"], 
-                                  [NSImage imageNamed:@"all-day-top-middle"], 
-                                  [NSImage imageNamed:@"all-day-top-right"], 
-                                  [NSImage imageNamed:@"all-day-middle-left"], 
-                                  [NSImage imageNamed:@"all-day-middle-middle"], 
-                                  [NSImage imageNamed:@"all-day-middle-right"], 
-                                  [NSImage imageNamed:@"all-day-bottom-left"], 
-                                  [NSImage imageNamed:@"all-day-bottom-middle"], 
+                                  [NSImage imageNamed:@"all-day-top-left"],
+                                  [NSImage imageNamed:@"all-day-top-middle"],
+                                  [NSImage imageNamed:@"all-day-top-right"],
+                                  [NSImage imageNamed:@"all-day-middle-left"],
+                                  [NSImage imageNamed:@"all-day-middle-middle"],
+                                  [NSImage imageNamed:@"all-day-middle-right"],
+                                  [NSImage imageNamed:@"all-day-bottom-left"],
+                                  [NSImage imageNamed:@"all-day-bottom-middle"],
                                   [NSImage imageNamed:@"all-day-bottom-right"],
-                                  NSCompositeSourceOver, 
-                                  1.0, 
+                                  NSCompositeSourceOver,
+                                  1.0,
                                   YES);
-        
+
         [NSGraphicsContext restoreGraphicsState];
     };
 #else
@@ -1673,6 +1673,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 #ifdef DEBUG_LAYERS
     NSLog(@"%@: %@", NSStringFromSelector(_cmd), NSStringFromRect(NSRectFromCGRect(aRootLayer.frame)));
 #endif
+
     CALayer *timeRulerRootLayer = [aRootLayer valueForKey:_WLTimeRulerRootLayerName];
     NSParameterAssert(timeRulerRootLayer != nil);
     WLCalendarTimeRulerLayer *timeRulerLayer = [timeRulerRootLayer valueForKeyPath:[NSString stringWithFormat:@"%@.%@.%@",
@@ -1714,6 +1715,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 #ifdef DEBUG_LAYERS
     NSLog(@"%@: %@", NSStringFromSelector(_cmd), NSStringFromRect(NSRectFromCGRect(aTimeRulerRootLayer.frame)));
 #endif
+
     WLBlockLayer *timeRulerBackgroundLayer = [aTimeRulerRootLayer valueForKey:_WLTimeRulerBackgroundLayerName];
     NSParameterAssert(timeRulerBackgroundLayer != nil);
     timeRulerBackgroundLayer.frame = aTimeRulerRootLayer.bounds;
@@ -1728,6 +1730,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 #ifdef DEBUG_LAYERS
     NSLog(@"%@: %@", NSStringFromSelector(_cmd), NSStringFromRect(NSRectFromCGRect(aTimeRulerBackgroundLayer.frame)));
 #endif
+
     CAScrollLayer *timeRulerScrollLayer = [aTimeRulerBackgroundLayer valueForKey:_WLTimeRulerScrollLayerName];
     NSParameterAssert(timeRulerScrollLayer != nil);
     CGRect f = aTimeRulerBackgroundLayer.bounds;
@@ -1744,6 +1747,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 #ifdef DEBUG_LAYERS
     NSLog(@"%@: %@", NSStringFromSelector(_cmd), NSStringFromRect(NSRectFromCGRect(aTimeRulerScrollLayer.frame)));
 #endif
+
     WLCalendarTimeRulerLayer *timeRulerLayer = [aTimeRulerScrollLayer valueForKey:_WLTimeRulerLayerName];
     NSParameterAssert(timeRulerLayer != nil);
     CGSize preferredFrameSize = [timeRulerLayer preferredFrameSize];
@@ -1773,6 +1777,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 #ifdef DEBUG_LAYERS
     NSLog(@"%@: %@", NSStringFromSelector(_cmd), NSStringFromRect(NSRectFromCGRect(anEventsRootLayer.frame)));
 #endif
+
     NSArray *columnLayers = [anEventsRootLayer valueForKey:_WLColumnLayersKey];
 
     NSParameterAssert(columnLayers != nil);
@@ -1796,6 +1801,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 #ifdef DEBUG_LAYERS
     NSLog(@"%@: %@", NSStringFromSelector(_cmd), NSStringFromRect(NSRectFromCGRect(aColumnRootLayer.frame)));
 #endif
+
     WLBlockLayer *allDayBackgroundLayer = [aColumnRootLayer valueForKey:_WLAllDayBackgroundLayerName];
     NSParameterAssert(allDayBackgroundLayer != nil);
     if (self.showsAllDayEvents)

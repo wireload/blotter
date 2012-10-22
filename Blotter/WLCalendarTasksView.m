@@ -212,9 +212,11 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
                              [NSNull null], @"position",
                              nil];
     l.actions = actions;
+
 #ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor blackColor] WL_CGColor];
 #endif
+
     return l;
 }
 
@@ -240,6 +242,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 #ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor orangeColor] WL_CGColor];
 #endif
+
     return l;
 }
 

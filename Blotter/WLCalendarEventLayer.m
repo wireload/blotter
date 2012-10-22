@@ -312,9 +312,11 @@ const CGFloat _WLMinimumStringHeight = 5.0;
 - (void)drawInContext:(CGContextRef)aContext
 {
     CGContextSaveGState(aContext);
+
 #ifndef DEBUG_LAYERS
     [self _drawBackground:aContext];
 #endif
+
     // It's important to draw background before text to make antialiasing possible.
     [self _drawString:aContext];
     CGContextRestoreGState(aContext);
