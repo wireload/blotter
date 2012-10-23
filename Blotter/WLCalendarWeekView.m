@@ -970,13 +970,14 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 
 #pragma mark CALayerDelegate
 
-#ifdef DEBUG_LAYERS
 - (id<CAAction>)actionForLayer:(CALayer *)layer forKey:(NSString *)event
 {
+#ifdef DEBUG_LAYERS
     NSLog(@"    %@: %@", layer.name, event);
+#endif
+
     return nil;
 }
-#endif
 
 - (BOOL)layer:(CALayer *)aLayer shouldInheritContentsScale:(CGFloat)aScale fromWindow:(NSWindow *)aWindow
 {

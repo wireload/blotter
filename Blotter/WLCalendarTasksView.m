@@ -185,6 +185,11 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 
 #pragma mark CALayerDelegate
 
+- (id<CAAction>)actionForLayer:(CALayer *)layer forKey:(NSString *)event
+{
+    return nil;
+}
+
 - (BOOL)layer:(CALayer *)aLayer shouldInheritContentsScale:(CGFloat)aScale fromWindow:(NSWindow *)aWindow
 {
     return YES;
