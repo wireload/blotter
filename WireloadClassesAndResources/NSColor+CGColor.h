@@ -11,7 +11,7 @@
 
 @interface NSColor (WL_CGColor)
 
-+ (NSColor *)WL_NSColorFromCGColor:(CGColorRef)cgColor;
++ (NSColor *)WL_colorWithCGColor:(CGColorRef)aCGColor;
 
 - (CGColorRef)WL_CGColor;
 

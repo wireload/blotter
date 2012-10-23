@@ -11,15 +11,40 @@
 
 @implementation NSColor(WL_CGColor)
 
-+ (NSColor *)WL_NSColorFromCGColor:(CGColorRef)cgColor
++ (NSColor *)WL_fastColorWithCGColor:(CGColorRef)aCGColor
 {
-    NSColorSpace *colorSpace = [[[NSColorSpace alloc] initWithCGColorSpace:CGColorGetColorSpace(cgColor)] autorelease];
-    size_t numberOfComponents = CGColorGetNumberOfComponents(cgColor);
-    const CGFloat *components = CGColorGetComponents(cgColor);
+    if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_7)
+        return [self colorWithCGColor:aCGColor];
+    else
+        return nil;
+}
+
++ (NSColor *)WL_slowColorWithCGColor:(CGColorRef)aCGColor
+{
+    NSColorSpace *colorSpace = [[[NSColorSpace alloc] initWithCGColorSpace:CGColorGetColorSpace(aCGColor)] autorelease];
+    size_t numberOfComponents = CGColorGetNumberOfComponents(aCGColor);
+    const CGFloat *components = CGColorGetComponents(aCGColor);
     return [NSColor colorWithColorSpace:colorSpace components:components count:numberOfComponents];
 }
 
-- (CGColorRef)WL_CGColor {
++ (NSColor *)WL_colorWithCGColor:(CGColorRef)aCGColor
+{
+    NSColor *color = [self WL_fastColorWithCGColor:aCGColor];
+    if (!color)
+        color = [self WL_slowColorWithCGColor:aCGColor];
+    return color;
+}
+
+- (CGColorRef)WL_fastCGColor
+{
+    if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_7)
+        return [self CGColor];
+    else
+        return nil;
+}
+
+- (CGColorRef)WL_slowCGColor
+{
     CGColorSpaceRef colorSpace = [[self colorSpace] CGColorSpace];
     CGColorSpaceRetain(colorSpace);
     if (colorSpace == NULL)
@@ -30,7 +55,16 @@
     CGColorRef color = CGColorCreate(colorSpace, components);
     free((void*)components);
     CGColorSpaceRelease(colorSpace);
+
     return (CGColorRef)[(id)color autorelease];
+}
+
+- (CGColorRef)WL_CGColor
+{
+    CGColorRef CGColor = [self WL_fastCGColor];
+    if (!CGColor)
+        CGColor = [self WL_slowCGColor];
+    return CGColor;
 }
 
 @end

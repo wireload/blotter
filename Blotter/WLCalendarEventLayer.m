@@ -110,7 +110,7 @@ const CGFloat _WLMinimumStringHeight = 5.0;
 {
     CGContextSaveGState(aContext);
     CGColorRef backgroundColor = CGColorCreateCopyWithAlpha(self.contentsBackgroundColor, self.contentsBackgroundOpacity);
-    NSColor *nsBackgroundColor = [[NSColor WL_NSColorFromCGColor:backgroundColor] colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+    NSColor *nsBackgroundColor = [[NSColor WL_colorWithCGColor:backgroundColor] colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
     nsBackgroundColor = [NSColor colorWithCalibratedHue:[nsBackgroundColor hueComponent]
                                              saturation:fmin(1.0, [nsBackgroundColor saturationComponent] * 1.05)
                                              brightness:fmin(1.0, [nsBackgroundColor brightnessComponent] * 1.05)
