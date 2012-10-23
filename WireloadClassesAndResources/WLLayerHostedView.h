@@ -28,7 +28,7 @@
 
 /*!
  @abstract      Sets view's layer to [self makeRootLayer].
- @discussion    You can send this message only once.
+ @discussion    Method takes effect only if current layer property is nil.
  
  It also ensures that Root Layer's geometryFlipped matches Layer Hosting View's isFlipped.
  We have to do this due to differences introduced in ML.

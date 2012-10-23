@@ -54,7 +54,8 @@ static NSString *const _WLIsLayerPausedKey = @"WLLayerBackedView_IsLayerPaused";
 
 - (void)makeLayers
 {
-    NSAssert(![self wantsLayer], @"You cannot make layers twice.");
+    if (self.layer)
+        return;
 
     CALayer *rootLayer = [self makeRootLayer];
     rootLayer.geometryFlipped = [self isFlipped];
