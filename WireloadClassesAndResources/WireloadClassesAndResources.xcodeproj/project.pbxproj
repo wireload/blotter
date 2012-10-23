@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		E21677A814F56F0C008771A8 /* NSUserDefaults+WLApplicationDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = E21677A614F56F0C008771A8 /* NSUserDefaults+WLApplicationDefaults.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E21677A914F56F0C008771A8 /* NSUserDefaults+WLApplicationDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = E21677A714F56F0C008771A8 /* NSUserDefaults+WLApplicationDefaults.m */; };
-		E22ED0381505394800021A1C /* WLLayerBackedView.h in Headers */ = {isa = PBXBuildFile; fileRef = E22ED0361505394800021A1C /* WLLayerBackedView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E22ED0391505394800021A1C /* WLLayerBackedView.m in Sources */ = {isa = PBXBuildFile; fileRef = E22ED0371505394800021A1C /* WLLayerBackedView.m */; };
+		E22ED0381505394800021A1C /* WLLayerHostedView.h in Headers */ = {isa = PBXBuildFile; fileRef = E22ED0361505394800021A1C /* WLLayerHostedView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E22ED0391505394800021A1C /* WLLayerHostedView.m in Sources */ = {isa = PBXBuildFile; fileRef = E22ED0371505394800021A1C /* WLLayerHostedView.m */; };
 		E268AAB514C03F4700A24284 /* WLCountGreaterThanOneTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = E268AAB314C03F4700A24284 /* WLCountGreaterThanOneTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E268AAB614C03F4700A24284 /* WLCountGreaterThanOneTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = E268AAB414C03F4700A24284 /* WLCountGreaterThanOneTransformer.m */; };
 		E28AE1E614D58DA1003E4EFC /* CALayer+WLBlocks.h in Headers */ = {isa = PBXBuildFile; fileRef = E28AE1E414D58DA1003E4EFC /* CALayer+WLBlocks.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -65,8 +65,8 @@
 /* Begin PBXFileReference section */
 		E21677A614F56F0C008771A8 /* NSUserDefaults+WLApplicationDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+WLApplicationDefaults.h"; sourceTree = "<group>"; };
 		E21677A714F56F0C008771A8 /* NSUserDefaults+WLApplicationDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+WLApplicationDefaults.m"; sourceTree = "<group>"; };
-		E22ED0361505394800021A1C /* WLLayerBackedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayerBackedView.h; sourceTree = "<group>"; };
-		E22ED0371505394800021A1C /* WLLayerBackedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayerBackedView.m; sourceTree = "<group>"; };
+		E22ED0361505394800021A1C /* WLLayerHostedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayerHostedView.h; sourceTree = "<group>"; };
+		E22ED0371505394800021A1C /* WLLayerHostedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayerHostedView.m; sourceTree = "<group>"; };
 		E268AAB314C03F4700A24284 /* WLCountGreaterThanOneTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCountGreaterThanOneTransformer.h; sourceTree = "<group>"; };
 		E268AAB414C03F4700A24284 /* WLCountGreaterThanOneTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCountGreaterThanOneTransformer.m; sourceTree = "<group>"; };
 		E28AE1E414D58DA1003E4EFC /* CALayer+WLBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+WLBlocks.h"; sourceTree = "<group>"; };
@@ -200,8 +200,8 @@
 				E28AE1E514D58DA1003E4EFC /* CALayer+WLBlocks.m */,
 				E21677A614F56F0C008771A8 /* NSUserDefaults+WLApplicationDefaults.h */,
 				E21677A714F56F0C008771A8 /* NSUserDefaults+WLApplicationDefaults.m */,
-				E22ED0361505394800021A1C /* WLLayerBackedView.h */,
-				E22ED0371505394800021A1C /* WLLayerBackedView.m */,
+				E22ED0361505394800021A1C /* WLLayerHostedView.h */,
+				E22ED0371505394800021A1C /* WLLayerHostedView.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -266,7 +266,7 @@
 				E268AAB514C03F4700A24284 /* WLCountGreaterThanOneTransformer.h in Headers */,
 				E21677A814F56F0C008771A8 /* NSUserDefaults+WLApplicationDefaults.h in Headers */,
 				E2A18CAD146D7462004B727B /* IKPowerSources.h in Headers */,
-				E22ED0381505394800021A1C /* WLLayerBackedView.h in Headers */,
+				E22ED0381505394800021A1C /* WLLayerHostedView.h in Headers */,
 				E2EB28ED146D984400E975F6 /* WLEvents.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -360,7 +360,7 @@
 				E268AAB614C03F4700A24284 /* WLCountGreaterThanOneTransformer.m in Sources */,
 				E28AE1E714D58DA1003E4EFC /* CALayer+WLBlocks.m in Sources */,
 				E21677A914F56F0C008771A8 /* NSUserDefaults+WLApplicationDefaults.m in Sources */,
-				E22ED0391505394800021A1C /* WLLayerBackedView.m in Sources */,
+				E22ED0391505394800021A1C /* WLLayerHostedView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

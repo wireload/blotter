@@ -1,5 +1,5 @@
 //
-//  WLLayerBackedView.h
+//  WLLayerHostedView.h
 //  WireloadClassesAndResources
 //
 //  Created by Ilya Kulakov on 06/03/2012.
@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface WLLayerBackedView : NSView
+@interface WLLayerHostedView : NSView
 
 /*!
  @abstract  Stops animations applied to layer tree of the view.

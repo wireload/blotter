@@ -1,19 +1,19 @@
 //
-//  WLLayerBackedView.m
+//  WLLayerHostedView.m
 //  WireloadClassesAndResources
 //
 //  Created by Ilya Kulakov on 06/03/2012.
 //  Copyright (c) 2012 WireLoad Inc. All rights reserved.
 //
 
-#import "WLLayerBackedView.h"
+#import "WLLayerHostedView.h"
 #import "CALayer+WLBlocks.h"
 
 
 static NSString *const _WLIsLayerPausedKey = @"WLLayerBackedView_IsLayerPaused";
 
 
-@implementation WLLayerBackedView
+@implementation WLLayerHostedView
 
 #pragma mark Methods
 

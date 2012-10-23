@@ -29,7 +29,7 @@ typedef enum
 } WLDayAppearanceDirection;
 
 
-@interface WLCalendarWeekView : WLLayerBackedView <WLCalendarTimeRuler/*, CALayerManager, CALayerDelegate*/> {
+@interface WLCalendarWeekView : WLLayerHostedView <WLCalendarTimeRuler/*, CALayerManager, CALayerDelegate*/> {
     IBOutlet NSObject<WLCalendarWeekViewDataSource> *dataSource;
     CGFloat heightOfAllDayPartOfColumn;
     BOOL showsTimeIndicator;
