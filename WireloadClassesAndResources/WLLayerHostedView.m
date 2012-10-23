@@ -10,16 +10,13 @@
 #import "CALayer+WLBlocks.h"
 
 
-static NSString *const _WLIsLayerPausedKey = @"WLLayerBackedView_IsLayerPaused";
-
-
 @implementation WLLayerHostedView
 
 #pragma mark Methods
 
 - (void)stopAnimations
 {
-    [[self layer] WL_applyBlockToTree:^(CALayer *aLayer)
+    [self.layer WL_applyBlockToTree:^(CALayer *aLayer)
     {
         [aLayer removeAllAnimations];
     }];
@@ -27,9 +24,8 @@ static NSString *const _WLIsLayerPausedKey = @"WLLayerBackedView_IsLayerPaused";
 
 - (void)pauseAnimations
 {
-    [[self layer] WL_applyBlockToTree:^(CALayer *aLayer)
+    [self.layer WL_applyBlockToTree:^(CALayer *aLayer)
     {
-        [aLayer setValue:[NSNumber numberWithBool:YES] forKey:_WLIsLayerPausedKey];
         CFTimeInterval pausedTime = [aLayer convertTime:CACurrentMediaTime() fromLayer:nil];
         aLayer.speed = 0.0;
         aLayer.timeOffset = pausedTime;
@@ -38,17 +34,14 @@ static NSString *const _WLIsLayerPausedKey = @"WLLayerBackedView_IsLayerPaused";
 
 - (void)resumeAnimations
 {
-    [[self layer] WL_applyBlockToTree:^(CALayer *aLayer)
+    [self.layer WL_applyBlockToTree:^(CALayer *aLayer)
     {
-        if ([[aLayer valueForKey:_WLIsLayerPausedKey] boolValue])
-        {
             CFTimeInterval pausedTime = aLayer.timeOffset;
             aLayer.speed = 1.0;
             aLayer.timeOffset = 0.0;
             aLayer.beginTime = 0.0;
             CFTimeInterval timeSincePause = [aLayer convertTime:CACurrentMediaTime() fromLayer:nil] - pausedTime;
             aLayer.beginTime = timeSincePause;
-        }
     }];
 }
 
@@ -58,9 +51,15 @@ static NSString *const _WLIsLayerPausedKey = @"WLLayerBackedView_IsLayerPaused";
         return;
 
     CALayer *rootLayer = [self makeRootLayer];
-    rootLayer.geometryFlipped = [self isFlipped];
-    [self setLayer:rootLayer];
-    [self setWantsLayer:YES];
+
+    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_7)
+    {
+        rootLayer.geometryFlipped = [self isFlipped];
+        rootLayer.anchorPoint = CGPointZero;
+    }
+
+    self.layer = rootLayer;
+    self.wantsLayer = YES;
 }
 
 - (CALayer *)makeRootLayer
@@ -68,13 +67,63 @@ static NSString *const _WLIsLayerPausedKey = @"WLLayerBackedView_IsLayerPaused";
     return [CALayer layer];
 }
 
+- (void)setNeedsLayout
+{
+    [self.layer setNeedsLayout];
+}
+
 - (void)layoutIfNeeded
 {
-    [[self layer] layoutIfNeeded];
+    [self.layer layoutIfNeeded];
+}
+
+- (BOOL)needsLayout
+{
+    return [self.layer needsLayout];
+}
+
+
+#pragma mark CALayerDelegate
+
+- (id <CAAction>)actionForLayer:(CALayer *)aLayer forKey:(NSString *)aKey
+{
+    return nil;
+}
+
+- (BOOL)layer:(CALayer *)aLayer shouldInheritContentsScale:(CGFloat)aScale fromWindow:(NSWindow *)aWindow
+{
+    return YES;
 }
 
 
 #pragma mark NSView
+
+- (void)setFrameSize:(NSSize)newSize
+{
+    [self stopAnimations];
+
+#ifdef DEBUG_LAYERS
+    NSLog(@"set frame size: %@", NSStringFromSize(newSize));
+#endif
+
+    CGSize oldBoundsSize = self.layer.bounds.size;
+    [super setFrameSize:newSize];
+    CGSize newBoundsSize = self.layer.bounds.size;
+
+    if (!CGSizeEqualToSize(oldBoundsSize, newBoundsSize))
+        [self setNeedsLayout];
+}
+
+- (void)setBoundsRotation:(CGFloat)newAngle
+{
+    NSLog(@"Bounds rotation is always 0.0. New value (%f) is ignored", newAngle);
+    return;
+}
+
+- (CGFloat)boundsRotation
+{
+    return 0.0;
+}
 
 - (void)displayIfNeeded
 {
@@ -85,21 +134,9 @@ static NSString *const _WLIsLayerPausedKey = @"WLLayerBackedView_IsLayerPaused";
     }];
 }
 
-- (void)setFrameSize:(NSSize)newSize
+- (BOOL)wantsUpdateLayer
 {
-    [self stopAnimations];
-#ifdef DEBUG_LAYERS
-    NSLog(@"set frame size: %@", NSStringFromSize(newSize));
-#endif
-    [super setFrameSize:newSize];
-    CALayer *rootLayer = [self layer];
-    NSParameterAssert(rootLayer != nil);
-    [rootLayer setNeedsLayout];
-    if ([CATransaction disableActions])
-    {
-        [self layoutIfNeeded];
-        [self displayIfNeeded];
-    }
+    return NO;
 }
 
 @end
