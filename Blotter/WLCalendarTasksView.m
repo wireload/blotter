@@ -201,6 +201,11 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 - (CALayer *)makeRootLayer
 {
     CALayer *l = [CALayer layer];
+
+    NSWindow *window = [self window];
+    if (window)
+        l.contentsScale = [window backingScaleFactor];
+
     l.layoutManager = self;
     l.masksToBounds = YES;
     l.name = _WLTasksLayerName;
@@ -241,6 +246,11 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
 - (WLCalendarTaskLayer *)makeTaskLayer
 {
     WLCalendarTaskLayer *l = [WLCalendarTaskLayer layer];
+
+    NSWindow *window = [self window];
+    if (window)
+        l.contentsScale = [window backingScaleFactor];
+
     l.needsDisplayOnBoundsChange = YES;
     l.delegate = self;
 

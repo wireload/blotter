@@ -189,6 +189,8 @@
 - (WLCalendarTimeRulerMarkerLayer *)setupMarkerLayer
 {
     WLCalendarTimeRulerMarkerLayer *l = [WLCalendarTimeRulerMarkerLayer layer];
+    l.contentsScale = self.contentsScale;
+
     l.needsDisplayOnBoundsChange = YES;
     l.delegate = self.delegate;
 

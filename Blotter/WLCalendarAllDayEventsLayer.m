@@ -73,6 +73,8 @@ static const CGFloat _WLXPadding = 2.0;
         {
             // Create new layer for the event.
             usedLayer = [WLCalendarEventLayer allDayEventLayer];
+            usedLayer.delegate = self.delegate;
+            usedLayer.contentsScale = self.contentsScale;
             usedLayer.allDayEvent = event;
             [self addSublayer:usedLayer];
         }
@@ -215,6 +217,7 @@ static const CGFloat _WLXPadding = 2.0;
     NSColor *calendarColor = [[(CalEvent *)newEvent calendar] color];
     if (calendarColor == NULL || (id)calendarColor == [NSNull null])
         calendarColor = [NSColor WL_defaultCalendarColorIfFrameworkFails];
+
 #ifdef DEBUG_LAYERS
     self.backgroundColor = [calendarColor WL_CGColor];
 #else

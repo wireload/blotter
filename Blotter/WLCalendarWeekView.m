@@ -1153,6 +1153,11 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 - (CALayer *)setupTimeRulerRootLayer
 {
     CALayer *l = [CALayer layer];
+
+    NSWindow *window = [self window];
+    if (window)
+        l.contentsScale = [window backingScaleFactor];
+
     l.name = _WLTimeRulerRootLayerName;
     l.layoutManager = self;
     l.masksToBounds = YES;
@@ -1180,6 +1185,11 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 - (WLBlockLayer *)setupTimeRulerBackgroundLayer
 {
     __block WLBlockLayer *l = [WLBlockLayer layer];
+
+    NSWindow *window = [self window];
+    if (window)
+        l.contentsScale = [window backingScaleFactor];
+
     l.name = _WLTimeRulerBackgroundLayerName;
     l.needsDisplayOnBoundsChange = YES;
     l.layoutManager = self;
@@ -1270,6 +1280,11 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 - (CAScrollLayer *)setupTimeRulerScrollLayer
 {
     CAScrollLayer *l = [CAScrollLayer layer];
+
+    NSWindow *window = [self window];
+    if (window)
+        l.contentsScale = [window backingScaleFactor];
+
     l.name = _WLTimeRulerScrollLayerName;
     l.scrollMode = kCAScrollVertically;
     l.geometryFlipped = YES;
@@ -1297,6 +1312,11 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 - (WLCalendarTimeRulerLayer *)setupTimeRulerLayer
 {
     WLCalendarTimeRulerLayer *l = [WLCalendarTimeRulerLayer layer];
+
+    NSWindow *window = [self window];
+    if (window)
+        l.contentsScale = [window backingScaleFactor];
+
     l.name = _WLTimeRulerLayerName;
     l.timeRuler = self;
     l.onlyCompletelyVisibleMarkersShown = self.fitsDayEvents;
@@ -1323,6 +1343,11 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 - (CALayer *)setupEventsRootLayer
 {
     CALayer *l = [CALayer layer];
+
+    NSWindow *window = [self window];
+    if (window)
+        l.contentsScale = [window backingScaleFactor];
+
     l.masksToBounds = YES;
     l.name = _WLEventsRootLayerName;
     l.zPosition = 1;
@@ -1358,6 +1383,11 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 - (CALayer *)setupColumnRootLayer
 {
     CALayer *l = [CALayer layer];
+
+    NSWindow *window = [self window];
+    if (window)
+        l.contentsScale = [window backingScaleFactor];
+
     l.geometryFlipped = YES;
     l.name = _WLColumnRootLayerName;
     l.anchorPoint = CGPointMake(0.0, 0.0);
@@ -1389,6 +1419,11 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 - (WLBlockLayer *)setupAllDayBackgroundLayer
 {
     __block WLBlockLayer *l = [WLBlockLayer layer];
+
+    NSWindow *window = [self window];
+    if (window)
+        l.contentsScale = [window backingScaleFactor];
+
     l.name = _WLAllDayBackgroundLayerName;
     l.needsDisplayOnBoundsChange = YES;
     l.masksToBounds = YES;
@@ -1442,6 +1477,11 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 - (WLCalendarDayEventsBackgroundLayer *)setupDayBackgroundLayer
 {
     WLCalendarDayEventsBackgroundLayer *l = [WLCalendarDayEventsBackgroundLayer layer];
+
+    NSWindow *window = [self window];
+    if (window)
+        l.contentsScale = [window backingScaleFactor];
+
     l.name = _WLDayBackgroundLayerName;
     l.layoutManager = self;
     NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -1467,6 +1507,11 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 - (WLCalendarAllDayEventsLayer *)setupAllDayLayer
 {
     WLCalendarAllDayEventsLayer *l = [WLCalendarAllDayEventsLayer layer];
+
+    NSWindow *window = [self window];
+    if (window)
+        l.contentsScale = [window backingScaleFactor];
+
     l.name = _WLAllDayLayerName;
     NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
                              [NSNull null], kCAOnOrderIn,
@@ -1487,6 +1532,11 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 - (CAScrollLayer *)setupDayScrollLayer
 {
     CAScrollLayer *l = [CAScrollLayer layer];
+
+    NSWindow *window = [self window];
+    if (window)
+        l.contentsScale = [window backingScaleFactor];
+
     l.name = _WLDayScrollLayerName;
     l.layoutManager = self;
     NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -1512,6 +1562,11 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 - (WLCalendarDayEventsLayer *)setupDayLayer
 {
     WLCalendarDayEventsLayer *l = [WLCalendarDayEventsLayer layer];
+
+    NSWindow *window = [self window];
+    if (window)
+        l.contentsScale = [window backingScaleFactor];
+
     l.name = _WLDayLayerName;
     l.timeRuler = self;
     l.keepsTextOfEventsVisible = !self.fitsDayEvents;
@@ -1538,6 +1593,11 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 - (CALayer *)setupTimeIndicatorRootLayer
 {
     CALayer *l = [CALayer layer];
+
+    NSWindow *window = [self window];
+    if (window)
+        l.contentsScale = [window backingScaleFactor];
+
     l.name = _WLTimeIndicatorRootLayerName;
     l.masksToBounds = YES;
     l.zPosition = 2;
@@ -1565,6 +1625,11 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 - (WLCalendarTimeIndicatorLayer *)setupTimeIndicatorLayer
 {
     WLCalendarTimeIndicatorLayer *l = [WLCalendarTimeIndicatorLayer layer];
+
+    NSWindow *window = [self window];
+    if (window)
+        l.contentsScale = [window backingScaleFactor];
+
     l.name = _WLTimeIndicatorLayerName;
     l.anchorPoint = CGPointMake(0.0, 0.5);
     l.hidden = !self.showsTimeIndicator;

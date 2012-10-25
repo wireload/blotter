@@ -96,6 +96,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
             // Create new layer for the event.
             layer = [WLCalendarEventLayer dayEventLayer];
             layer.delegate = self.delegate;
+            layer.contentsScale = self.contentsScale;
             layer.keepsTextVisible = self.keepsTextOfEventsVisible;
             [self addSublayer:layer];
             layer.dayEvent = event;
