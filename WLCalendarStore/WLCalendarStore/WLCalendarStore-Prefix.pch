@@ -1,0 +1,8 @@
+//
+// Prefix header for all source files of the 'WLCalCalendarStore' target in the 'WLCalCalendarStore' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+
+#endif

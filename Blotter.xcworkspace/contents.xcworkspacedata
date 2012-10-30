@@ -2,6 +2,15 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Blotter-mini/Blotter-mini.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:WLCalendarStore/WLCalendarStore.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:WLFoundation/WLFoundation.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:WireloadClassesAndResources/WireloadClassesAndResources.xcodeproj">
    </FileRef>
    <FileRef

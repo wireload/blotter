@@ -1,0 +1,504 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BA81DA75160DA09D00C83DC3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA81DA73160DA09D00C83DC3 /* InfoPlist.strings */; };
+		BA81DA83160DA0C800C83DC3 /* NSArray+WLDelta.h in Headers */ = {isa = PBXBuildFile; fileRef = BA81DA7F160DA0C800C83DC3 /* NSArray+WLDelta.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA81DA84160DA0C800C83DC3 /* NSArray+WLDelta.m in Sources */ = {isa = PBXBuildFile; fileRef = BA81DA80160DA0C800C83DC3 /* NSArray+WLDelta.m */; };
+		BA81DA85160DA0C800C83DC3 /* WLDateRange.h in Headers */ = {isa = PBXBuildFile; fileRef = BA81DA81160DA0C800C83DC3 /* WLDateRange.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA81DA86160DA0C800C83DC3 /* WLDateRange.m in Sources */ = {isa = PBXBuildFile; fileRef = BA81DA82160DA0C800C83DC3 /* WLDateRange.m */; };
+		BA81DAC1160DA7FB00C83DC3 /* WLFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = BA81DAC0160DA7FB00C83DC3 /* WLFoundation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA9AFB90163AB3D400FAAAD3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA81DA6F160DA09D00C83DC3 /* Foundation.framework */; };
+		BA9AFB9B163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h in Headers */ = {isa = PBXBuildFile; fileRef = BA9AFB99163AB71D00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA9AFB9C163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9AFB9A163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m */; };
+		BAA049D11621A1040078DF12 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA049D01621A1040078DF12 /* SenTestingKit.framework */; };
+		BAA049D21621A1040078DF12 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA81DA6A160DA09D00C83DC3 /* Cocoa.framework */; };
+		BAA049D81621A1040078DF12 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BAA049D61621A1040078DF12 /* InfoPlist.strings */; };
+		BAA049DB1621A1040078DF12 /* WLFoundationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA049DA1621A1040078DF12 /* WLFoundationTests.m */; };
+		BAA049E31621A1810078DF12 /* NSArray+WLDelta_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */; };
+		BAA049E71621A3F20078DF12 /* WLFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA81DA67160DA09D00C83DC3 /* WLFoundation.framework */; };
+		BC5990F5AEA1445D0AB0EBB7 /* WLMutableDateRange.h in Headers */ = {isa = PBXBuildFile; fileRef = BC599BE72B03B538AA35A9D6 /* WLMutableDateRange.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC599131671997B089C3D4C8 /* WLASLLog.m in Sources */ = {isa = PBXBuildFile; fileRef = BC599C7F0C238E9F874213D0 /* WLASLLog.m */; };
+		BC5997565CBF60D87166061C /* WLMutableDateRange.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5992F4ACC7E7B0081717DB /* WLMutableDateRange.m */; };
+		BC5997CEDCD382068CDD26E3 /* WLASLLog.h in Headers */ = {isa = PBXBuildFile; fileRef = BC599C9AE6ABE5619B104BB3 /* WLASLLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BAA049E51621A3EA0078DF12 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA81DA5D160DA09D00C83DC3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BA81DA66160DA09D00C83DC3;
+			remoteInfo = WLFoundation;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		BA81DA67160DA09D00C83DC3 /* WLFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WLFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA81DA6A160DA09D00C83DC3 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		BA81DA6D160DA09D00C83DC3 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		BA81DA6E160DA09D00C83DC3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		BA81DA6F160DA09D00C83DC3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		BA81DA72160DA09D00C83DC3 /* WLFoundation-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WLFoundation-Info.plist"; sourceTree = "<group>"; };
+		BA81DA74160DA09D00C83DC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BA81DA76160DA09D00C83DC3 /* WLFoundation-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WLFoundation-Prefix.pch"; sourceTree = "<group>"; };
+		BA81DA7F160DA0C800C83DC3 /* NSArray+WLDelta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+WLDelta.h"; sourceTree = "<group>"; };
+		BA81DA80160DA0C800C83DC3 /* NSArray+WLDelta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+WLDelta.m"; sourceTree = "<group>"; };
+		BA81DA81160DA0C800C83DC3 /* WLDateRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDateRange.h; sourceTree = "<group>"; };
+		BA81DA82160DA0C800C83DC3 /* WLDateRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDateRange.m; sourceTree = "<group>"; };
+		BA81DAC0160DA7FB00C83DC3 /* WLFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLFoundation.h; sourceTree = "<group>"; };
+		BA9AFB99163AB71D00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+WLRemoveDuplicates.h"; sourceTree = "<group>"; };
+		BA9AFB9A163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+WLRemoveDuplicates.m"; sourceTree = "<group>"; };
+		BAA049CF1621A1040078DF12 /* WLFoundationTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WLFoundationTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BAA049D01621A1040078DF12 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		BAA049D51621A1040078DF12 /* WLFoundationTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WLFoundationTests-Info.plist"; sourceTree = "<group>"; };
+		BAA049D71621A1040078DF12 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BAA049D91621A1040078DF12 /* WLFoundationTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLFoundationTests.h; sourceTree = "<group>"; };
+		BAA049DA1621A1040078DF12 /* WLFoundationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLFoundationTests.m; sourceTree = "<group>"; };
+		BAA049DC1621A1040078DF12 /* WLFoundationTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WLFoundationTests-Prefix.pch"; sourceTree = "<group>"; };
+		BAA049E11621A1810078DF12 /* NSArray+WLDelta_Tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+WLDelta_Tests.h"; sourceTree = "<group>"; };
+		BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+WLDelta_Tests.m"; sourceTree = "<group>"; };
+		BAA049E81622FEE10078DF12 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
+		BC5992F4ACC7E7B0081717DB /* WLMutableDateRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLMutableDateRange.m; sourceTree = "<group>"; };
+		BC599BE72B03B538AA35A9D6 /* WLMutableDateRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLMutableDateRange.h; sourceTree = "<group>"; };
+		BC599C7F0C238E9F874213D0 /* WLASLLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLASLLog.m; sourceTree = "<group>"; };
+		BC599C9AE6ABE5619B104BB3 /* WLASLLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLASLLog.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BA81DA63160DA09D00C83DC3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA9AFB90163AB3D400FAAAD3 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BAA049CB1621A1040078DF12 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BAA049E71621A3F20078DF12 /* WLFoundation.framework in Frameworks */,
+				BAA049D11621A1040078DF12 /* SenTestingKit.framework in Frameworks */,
+				BAA049D21621A1040078DF12 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BA81DA5B160DA09D00C83DC3 = {
+			isa = PBXGroup;
+			children = (
+				BAA049E81622FEE10078DF12 /* ScriptingBridge.framework */,
+				BA81DA70160DA09D00C83DC3 /* WLFoundation */,
+				BAA049D31621A1040078DF12 /* WLFoundationTests */,
+				BA81DA69160DA09D00C83DC3 /* Frameworks */,
+				BA81DA68160DA09D00C83DC3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BA81DA68160DA09D00C83DC3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA81DA67160DA09D00C83DC3 /* WLFoundation.framework */,
+				BAA049CF1621A1040078DF12 /* WLFoundationTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BA81DA69160DA09D00C83DC3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BA81DA6A160DA09D00C83DC3 /* Cocoa.framework */,
+				BAA049D01621A1040078DF12 /* SenTestingKit.framework */,
+				BA81DA6C160DA09D00C83DC3 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BA81DA6C160DA09D00C83DC3 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BA81DA6D160DA09D00C83DC3 /* AppKit.framework */,
+				BA81DA6E160DA09D00C83DC3 /* CoreData.framework */,
+				BA81DA6F160DA09D00C83DC3 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		BA81DA70160DA09D00C83DC3 /* WLFoundation */ = {
+			isa = PBXGroup;
+			children = (
+				BC599C9AE6ABE5619B104BB3 /* WLASLLog.h */,
+				BC599C7F0C238E9F874213D0 /* WLASLLog.m */,
+				BC599BE72B03B538AA35A9D6 /* WLMutableDateRange.h */,
+				BC5992F4ACC7E7B0081717DB /* WLMutableDateRange.m */,
+				BA81DAC0160DA7FB00C83DC3 /* WLFoundation.h */,
+				BA81DA7F160DA0C800C83DC3 /* NSArray+WLDelta.h */,
+				BA81DA80160DA0C800C83DC3 /* NSArray+WLDelta.m */,
+				BA81DA81160DA0C800C83DC3 /* WLDateRange.h */,
+				BA81DA82160DA0C800C83DC3 /* WLDateRange.m */,
+				BA81DA71160DA09D00C83DC3 /* Supporting Files */,
+				BA9AFB99163AB71D00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h */,
+				BA9AFB9A163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m */,
+			);
+			path = WLFoundation;
+			sourceTree = "<group>";
+		};
+		BA81DA71160DA09D00C83DC3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BA81DA72160DA09D00C83DC3 /* WLFoundation-Info.plist */,
+				BA81DA73160DA09D00C83DC3 /* InfoPlist.strings */,
+				BA81DA76160DA09D00C83DC3 /* WLFoundation-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BAA049D31621A1040078DF12 /* WLFoundationTests */ = {
+			isa = PBXGroup;
+			children = (
+				BAA049D41621A1040078DF12 /* Supporting Files */,
+				BAA049D91621A1040078DF12 /* WLFoundationTests.h */,
+				BAA049DA1621A1040078DF12 /* WLFoundationTests.m */,
+				BAA049E11621A1810078DF12 /* NSArray+WLDelta_Tests.h */,
+				BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */,
+			);
+			path = WLFoundationTests;
+			sourceTree = "<group>";
+		};
+		BAA049D41621A1040078DF12 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BAA049D51621A1040078DF12 /* WLFoundationTests-Info.plist */,
+				BAA049D61621A1040078DF12 /* InfoPlist.strings */,
+				BAA049DC1621A1040078DF12 /* WLFoundationTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		BA81DA64160DA09D00C83DC3 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA81DA83160DA0C800C83DC3 /* NSArray+WLDelta.h in Headers */,
+				BA81DA85160DA0C800C83DC3 /* WLDateRange.h in Headers */,
+				BC5990F5AEA1445D0AB0EBB7 /* WLMutableDateRange.h in Headers */,
+				BA81DAC1160DA7FB00C83DC3 /* WLFoundation.h in Headers */,
+				BA9AFB9B163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h in Headers */,
+				BC5997CEDCD382068CDD26E3 /* WLASLLog.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		BA81DA66160DA09D00C83DC3 /* WLFoundation */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BA81DA7C160DA09D00C83DC3 /* Build configuration list for PBXNativeTarget "WLFoundation" */;
+			buildPhases = (
+				BA81DA62160DA09D00C83DC3 /* Sources */,
+				BA81DA63160DA09D00C83DC3 /* Frameworks */,
+				BA81DA64160DA09D00C83DC3 /* Headers */,
+				BA81DA65160DA09D00C83DC3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WLFoundation;
+			productName = WLFoundation;
+			productReference = BA81DA67160DA09D00C83DC3 /* WLFoundation.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		BAA049CE1621A1040078DF12 /* WLFoundationTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BAA049DF1621A1040078DF12 /* Build configuration list for PBXNativeTarget "WLFoundationTests" */;
+			buildPhases = (
+				BAA049CA1621A1040078DF12 /* Sources */,
+				BAA049CB1621A1040078DF12 /* Frameworks */,
+				BAA049CC1621A1040078DF12 /* Resources */,
+				BAA049CD1621A1040078DF12 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BAA049E61621A3EA0078DF12 /* PBXTargetDependency */,
+			);
+			name = WLFoundationTests;
+			productName = WLFoundationTests;
+			productReference = BAA049CF1621A1040078DF12 /* WLFoundationTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BA81DA5D160DA09D00C83DC3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = Wireload;
+			};
+			buildConfigurationList = BA81DA60160DA09D00C83DC3 /* Build configuration list for PBXProject "WLFoundation" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = BA81DA5B160DA09D00C83DC3;
+			productRefGroup = BA81DA68160DA09D00C83DC3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BA81DA66160DA09D00C83DC3 /* WLFoundation */,
+				BAA049CE1621A1040078DF12 /* WLFoundationTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BA81DA65160DA09D00C83DC3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA81DA75160DA09D00C83DC3 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BAA049CC1621A1040078DF12 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BAA049D81621A1040078DF12 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		BAA049CD1621A1040078DF12 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BA81DA62160DA09D00C83DC3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA81DA84160DA0C800C83DC3 /* NSArray+WLDelta.m in Sources */,
+				BA81DA86160DA0C800C83DC3 /* WLDateRange.m in Sources */,
+				BC5997565CBF60D87166061C /* WLMutableDateRange.m in Sources */,
+				BC599131671997B089C3D4C8 /* WLASLLog.m in Sources */,
+				BA9AFB9C163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BAA049CA1621A1040078DF12 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BAA049DB1621A1040078DF12 /* WLFoundationTests.m in Sources */,
+				BAA049E31621A1810078DF12 /* NSArray+WLDelta_Tests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BAA049E61621A3EA0078DF12 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BA81DA66160DA09D00C83DC3 /* WLFoundation */;
+			targetProxy = BAA049E51621A3EA0078DF12 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		BA81DA73160DA09D00C83DC3 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BA81DA74160DA09D00C83DC3 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		BAA049D61621A1040078DF12 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BAA049D71621A1040078DF12 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BA81DA7A160DA09D00C83DC3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
+			};
+			name = Debug;
+		};
+		BA81DA7B160DA09D00C83DC3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
+			};
+			name = Release;
+		};
+		BA81DA7D160DA09D00C83DC3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WLFoundation/WLFoundation-Prefix.pch";
+				INFOPLIST_FILE = "WLFoundation/WLFoundation-Info.plist";
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		BA81DA7E160DA09D00C83DC3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WLFoundation/WLFoundation-Prefix.pch";
+				INFOPLIST_FILE = "WLFoundation/WLFoundation-Info.plist";
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+		BAA049DD1621A1040078DF12 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WLFoundationTests/WLFoundationTests-Prefix.pch";
+				INFOPLIST_FILE = "WLFoundationTests/WLFoundationTests-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		BAA049DE1621A1040078DF12 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WLFoundationTests/WLFoundationTests-Prefix.pch";
+				INFOPLIST_FILE = "WLFoundationTests/WLFoundationTests-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BA81DA60160DA09D00C83DC3 /* Build configuration list for PBXProject "WLFoundation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA81DA7A160DA09D00C83DC3 /* Debug */,
+				BA81DA7B160DA09D00C83DC3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BA81DA7C160DA09D00C83DC3 /* Build configuration list for PBXNativeTarget "WLFoundation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA81DA7D160DA09D00C83DC3 /* Debug */,
+				BA81DA7E160DA09D00C83DC3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BAA049DF1621A1040078DF12 /* Build configuration list for PBXNativeTarget "WLFoundationTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BAA049DD1621A1040078DF12 /* Debug */,
+				BAA049DE1621A1040078DF12 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BA81DA5D160DA09D00C83DC3 /* Project object */;
+}
