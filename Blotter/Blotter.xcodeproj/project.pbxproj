@@ -60,6 +60,9 @@
 		28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 28F69CF4129CC12100D4BB97 /* Licenses.rtf */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		BA807F0F1645460C0033B85B /* IKApplicationPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA807F0C1645460C0033B85B /* IKApplicationPreferences.m */; };
+		BA807F101645460C0033B85B /* IKApplicationPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA807F0D1645460C0033B85B /* IKApplicationPreferencesWindow.xib */; };
+		BA81A834164548070058EB16 /* IKApplicationPreferences.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA81A832164548070058EB16 /* IKApplicationPreferences.strings */; };
 		E20DAC4F1428FF0B00EF65EA /* info-middle-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E20DAC4D1428FF0B00EF65EA /* info-middle-left.png */; };
 		E20DAC501428FF0B00EF65EA /* info-middle-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E20DAC4E1428FF0B00EF65EA /* info-middle-right.png */; };
 		E21A5F451403D2A4000B6634 /* WLCalendarTaskLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E21A5F441403D2A4000B6634 /* WLCalendarTaskLayer.m */; };
@@ -305,11 +308,21 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Blotter-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Blotter-Info.plist"; path = "../Blotter-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Blotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA807F0B1645460C0033B85B /* IKApplicationPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKApplicationPreferences.h; sourceTree = "<group>"; };
+		BA807F0C1645460C0033B85B /* IKApplicationPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKApplicationPreferences.m; sourceTree = "<group>"; };
+		BA807F0D1645460C0033B85B /* IKApplicationPreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IKApplicationPreferencesWindow.xib; sourceTree = "<group>"; };
+		BA807F0E1645460C0033B85B /* IKPreferencesRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKPreferencesRepresentation.h; sourceTree = "<group>"; };
+		BA81A833164548070058EB16 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
+		BA81A8351645480B0058EB16 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
+		BA81A8361645480D0058EB16 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
+		BA81A8371645480F0058EB16 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = Resources/fr.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
+		BA81A838164548110058EB16 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = Resources/ko.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
+		BA81A839164548120058EB16 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Resources/ru.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
+		BA81A83A164548140058EB16 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = Resources/sv.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
 		E20DAC4D1428FF0B00EF65EA /* info-middle-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-middle-left.png"; sourceTree = "<group>"; };
 		E20DAC4E1428FF0B00EF65EA /* info-middle-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-middle-right.png"; sourceTree = "<group>"; };
 		E21A5F431403D2A4000B6634 /* WLCalendarTaskLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTaskLayer.h; sourceTree = "<group>"; };
 		E21A5F441403D2A4000B6634 /* WLCalendarTaskLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarTaskLayer.m; sourceTree = "<group>"; };
-		E226B23215139BCC0014F120 /* Distribution.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Distribution.xcconfig; sourceTree = "<group>"; };
 		E22C78A913FFCD9F00EE44C0 /* NSColor+WLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+WLCalendar.h"; sourceTree = "<group>"; };
 		E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+WLCalendar.m"; sourceTree = "<group>"; };
 		E234BF7C14DAFADF00AB2262 /* WLCalendarTimeRulerMarkerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTimeRulerMarkerLayer.h; sourceTree = "<group>"; };
@@ -481,6 +494,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				BA807E8D164545950033B85B /* Preferences */,
 				E27196B713C5A19E008E5C43 /* WLCalendar */,
 				E27936431324F6BD00BC5224 /* WLGlassHud */,
 				256AC3D80F4B6AC300CF3369 /* DeskboardAppDelegate.h */,
@@ -528,7 +542,6 @@
 		29B97314FDCFA39411CA2CEA /* Deskboard */ = {
 			isa = PBXGroup;
 			children = (
-				E226B23215139BCC0014F120 /* Distribution.xcconfig */,
 				E2EB28C1146D8E6500E975F6 /* WireloadClassesAndResources.xcodeproj */,
 				E2EB2897146D8E1700E975F6 /* Blotter Preferences.xcodeproj */,
 				E2EB288B146D8E1100E975F6 /* ShortcutRecorder.xcodeproj */,
@@ -575,6 +588,26 @@
 			);
 			path = Resources;
 			sourceTree = "<group>";
+		};
+		BA807E8D164545950033B85B /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				BA807E901645459D0033B85B /* IKApplicationPreferences */,
+			);
+			name = Preferences;
+			sourceTree = "<group>";
+		};
+		BA807E901645459D0033B85B /* IKApplicationPreferences */ = {
+			isa = PBXGroup;
+			children = (
+				BA81A832164548070058EB16 /* IKApplicationPreferences.strings */,
+				BA807F0B1645460C0033B85B /* IKApplicationPreferences.h */,
+				BA807F0C1645460C0033B85B /* IKApplicationPreferences.m */,
+				BA807F0D1645460C0033B85B /* IKApplicationPreferencesWindow.xib */,
+				BA807F0E1645460C0033B85B /* IKPreferencesRepresentation.h */,
+			);
+			path = IKApplicationPreferences;
+			sourceTree = SOURCE_ROOT;
 		};
 		E2678AB214048AB400ABB89B /* background */ = {
 			isa = PBXGroup;
@@ -853,6 +886,28 @@
 				sv,
 				ko,
 				"zh-Hans",
+				ca,
+				cs,
+				da,
+				el,
+				"en-GB",
+				en,
+				fi,
+				he,
+				hr,
+				hu,
+				it,
+				ja,
+				"nb-NO",
+				nl,
+				pl,
+				pt,
+				ro,
+				sk,
+				th,
+				tr,
+				uk,
+				"zh-Hant",
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* Deskboard */;
 			projectDirPath = "";
@@ -1013,6 +1068,8 @@
 				28BED42E152A15A700D8ABE1 /* calendar-background-active-top-middle.png in Resources */,
 				28BED42F152A15A700D8ABE1 /* calendar-background-active-top-right.png in Resources */,
 				E252E9C71555670500B64F5F /* glass-hud-pop-up-button-arrows.png in Resources */,
+				BA807F101645460C0033B85B /* IKApplicationPreferencesWindow.xib in Resources */,
+				BA81A834164548070058EB16 /* IKApplicationPreferences.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1062,6 +1119,7 @@
 				E2957E5A152B117E00AE05E8 /* WLApplicationRunTimer.m in Sources */,
 				E2D6D8F9153335C8005F070D /* WLCalendarWindowBringToFrontAnimation.m in Sources */,
 				E252E9C515545AD300B64F5F /* WLGlassHudPopUpButtonCell.m in Sources */,
+				BA807F0F1645460C0033B85B /* IKApplicationPreferences.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1091,6 +1149,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		BA81A832164548070058EB16 /* IKApplicationPreferences.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BA81A833164548070058EB16 /* en */,
+				BA81A8351645480B0058EB16 /* de */,
+				BA81A8361645480D0058EB16 /* es */,
+				BA81A8371645480F0058EB16 /* fr */,
+				BA81A838164548110058EB16 /* ko */,
+				BA81A839164548120058EB16 /* ru */,
+				BA81A83A164548140058EB16 /* sv */,
+			);
+			name = IKApplicationPreferences.strings;
+			sourceTree = "<group>";
+		};
 		E2E826C7145023A6007035E5 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1243,56 +1315,6 @@
 			};
 			name = Release;
 		};
-		E299C321151273A500E56F17 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = E226B23215139BCC0014F120 /* Distribution.xcconfig */;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				DEAD_CODE_STRIPPING = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_SSE3_EXTENSIONS = YES;
-				GCC_UNROLL_LOOPS = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
-				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
-				GCC_WARN_PEDANTIC = NO;
-				GCC_WARN_SHADOW = YES;
-				GCC_WARN_SIGN_COMPARE = YES;
-				GCC_WARN_STRICT_SELECTOR_MATCH = NO;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"\"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Headers\"",
-					"\"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Headers\"",
-				);
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				ONLY_ACTIVE_ARCH = NO;
-				PROVISIONING_PROFILE = "";
-				SDKROOT = macosx;
-			};
-			name = Distribution;
-		};
-		E299C322151273A500E56F17 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = E226B23215139BCC0014F120 /* Distribution.xcconfig */;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/Blotter-afmungwxoqbjsjgrcljlthbrsuzt/Build/Products/Debug\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
-				INFOPLIST_FILE = "Blotter-Info.plist";
-				PRODUCT_NAME = Blotter;
-			};
-			name = Distribution;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1301,7 +1323,6 @@
 			buildConfigurations = (
 				C01FCF4B08A954540054247B /* Debug */,
 				C01FCF4C08A954540054247B /* Release */,
-				E299C322151273A500E56F17 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1311,7 +1332,6 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
-				E299C321151273A500E56F17 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
