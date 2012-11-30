@@ -149,7 +149,7 @@ static const NSStringDrawingOptions _WLTitleDrawingOptions = NSStringDrawingUses
     {
         NSDrawThreePartImage(topFrame,
                              [NSImage imageNamed:@"day-top-left"],
-                             [NSImage imageNamed:@"day-top"],
+                             [NSImage imageNamed:@"day-top-middle"],
                              [NSImage imageNamed:@"day-top-right"],
                              NO,
                              NSCompositeSourceOver,
@@ -172,7 +172,7 @@ static const NSStringDrawingOptions _WLTitleDrawingOptions = NSStringDrawingUses
                                                               fraction:1.0
                                                         respectFlipped:YES
                                                                  hints:nil];
-        [(NSImage *)[NSImage imageNamed:@"day-middle"] drawInRect:NSMakeRect(1.0,
+        [(NSImage *)[NSImage imageNamed:@"day-middle-middle"] drawInRect:NSMakeRect(1.0,
                                                                              middleFrame.origin.y,
                                                                              fdim(middleFrame.size.width, 2.0),
                                                                              middleFrame.size.height)
@@ -200,7 +200,7 @@ static const NSStringDrawingOptions _WLTitleDrawingOptions = NSStringDrawingUses
     {
         NSDrawThreePartImage(bottomFrame,
                              [NSImage imageNamed:@"day-bottom-left"],
-                             [NSImage imageNamed:@"day-bottom"],
+                             [NSImage imageNamed:@"day-bottom-middle"],
                              [NSImage imageNamed:@"day-bottom-right"],
                              NO,
                              NSCompositeSourceOver,
