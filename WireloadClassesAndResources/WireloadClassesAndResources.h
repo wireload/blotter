@@ -13,13 +13,10 @@
 #import <WireloadClassesAndResources/NSArray+WLDelta.h>
 #import <WireloadClassesAndResources/NSAttributedString+WLStringDrawing.h>
 #import <WireloadClassesAndResources/NSColor+CGColor.h>
-#import <WireloadClassesAndResources/SS_PreferencePaneProtocol.h>
-#import <WireloadClassesAndResources/SS_PrefsController.h>
 #import <WireloadClassesAndResources/WLBlockLayer.h>
 #import <WireloadClassesAndResources/WLClosableWindow.h>
 #import <WireloadClassesAndResources/WLCopyCompositingFilter.h>
 #import <WireloadClassesAndResources/WLDateRange.h>
-#import <WireloadClassesAndResources/WLPrefPaneView.h>
 #import <WireloadClassesAndResources/WLCalendarController.h>
 #import <WireloadClassesAndResources/IKPowerSources.h>
 #import <WireloadClassesAndResources/CATransaction+WLBlocks.h>

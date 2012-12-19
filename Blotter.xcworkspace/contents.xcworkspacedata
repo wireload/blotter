@@ -17,9 +17,6 @@
       location = "group:ShortcutRecorder/ShortcutRecorder.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Blotter Preferences/Blotter Preferences.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:Blotter/Blotter.xcodeproj">
    </FileRef>
 </Workspace>

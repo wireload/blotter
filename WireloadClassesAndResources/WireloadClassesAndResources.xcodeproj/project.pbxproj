@@ -26,9 +26,6 @@
 		E29A62B2146D68AB00EDDA1B /* NSAttributedString+WLStringDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = E29A6299146D68AB00EDDA1B /* NSAttributedString+WLStringDrawing.m */; };
 		E29A62B3146D68AB00EDDA1B /* NSColor+CGColor.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A629A146D68AB00EDDA1B /* NSColor+CGColor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E29A62B4146D68AB00EDDA1B /* NSColor+CGColor.m in Sources */ = {isa = PBXBuildFile; fileRef = E29A629B146D68AB00EDDA1B /* NSColor+CGColor.m */; };
-		E29A62B5146D68AB00EDDA1B /* SS_PreferencePaneProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A629C146D68AB00EDDA1B /* SS_PreferencePaneProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E29A62B6146D68AB00EDDA1B /* SS_PrefsController.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A629D146D68AB00EDDA1B /* SS_PrefsController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E29A62B7146D68AB00EDDA1B /* SS_PrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = E29A629E146D68AB00EDDA1B /* SS_PrefsController.m */; };
 		E29A62B8146D68AB00EDDA1B /* WLBlockLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A629F146D68AB00EDDA1B /* WLBlockLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E29A62B9146D68AB00EDDA1B /* WLBlockLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E29A62A0146D68AB00EDDA1B /* WLBlockLayer.m */; };
 		E29A62BA146D68AB00EDDA1B /* WLClosableWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A62A1146D68AB00EDDA1B /* WLClosableWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -39,8 +36,6 @@
 		E29A62BF146D68AB00EDDA1B /* WLDateRange.m in Sources */ = {isa = PBXBuildFile; fileRef = E29A62A6146D68AB00EDDA1B /* WLDateRange.m */; };
 		E29A62C0146D68AB00EDDA1B /* WLGraphics.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A62A7146D68AB00EDDA1B /* WLGraphics.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E29A62C1146D68AB00EDDA1B /* WLGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = E29A62A8146D68AB00EDDA1B /* WLGraphics.m */; };
-		E29A62C2146D68AB00EDDA1B /* WLPrefPaneView.h in Headers */ = {isa = PBXBuildFile; fileRef = E29A62A9146D68AB00EDDA1B /* WLPrefPaneView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E29A62C3146D68AB00EDDA1B /* WLPrefPaneView.m in Sources */ = {isa = PBXBuildFile; fileRef = E29A62AA146D68AB00EDDA1B /* WLPrefPaneView.m */; };
 		E29A62CE146D68DD00EDDA1B /* recessed-box-shadow-bottom-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62C5146D68DD00EDDA1B /* recessed-box-shadow-bottom-left.png */; };
 		E29A62CF146D68DD00EDDA1B /* recessed-box-shadow-bottom-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62C6146D68DD00EDDA1B /* recessed-box-shadow-bottom-right.png */; };
 		E29A62D0146D68DD00EDDA1B /* recessed-box-shadow-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = E29A62C7146D68DD00EDDA1B /* recessed-box-shadow-bottom.png */; };
@@ -85,9 +80,6 @@
 		E29A6299146D68AB00EDDA1B /* NSAttributedString+WLStringDrawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+WLStringDrawing.m"; sourceTree = "<group>"; };
 		E29A629A146D68AB00EDDA1B /* NSColor+CGColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+CGColor.h"; sourceTree = "<group>"; };
 		E29A629B146D68AB00EDDA1B /* NSColor+CGColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+CGColor.m"; sourceTree = "<group>"; };
-		E29A629C146D68AB00EDDA1B /* SS_PreferencePaneProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SS_PreferencePaneProtocol.h; sourceTree = "<group>"; };
-		E29A629D146D68AB00EDDA1B /* SS_PrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SS_PrefsController.h; sourceTree = "<group>"; };
-		E29A629E146D68AB00EDDA1B /* SS_PrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SS_PrefsController.m; sourceTree = "<group>"; };
 		E29A629F146D68AB00EDDA1B /* WLBlockLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLBlockLayer.h; sourceTree = "<group>"; };
 		E29A62A0146D68AB00EDDA1B /* WLBlockLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLBlockLayer.m; sourceTree = "<group>"; };
 		E29A62A1146D68AB00EDDA1B /* WLClosableWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLClosableWindow.h; sourceTree = "<group>"; };
@@ -98,8 +90,6 @@
 		E29A62A6146D68AB00EDDA1B /* WLDateRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDateRange.m; sourceTree = "<group>"; };
 		E29A62A7146D68AB00EDDA1B /* WLGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGraphics.h; sourceTree = "<group>"; };
 		E29A62A8146D68AB00EDDA1B /* WLGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGraphics.m; sourceTree = "<group>"; };
-		E29A62A9146D68AB00EDDA1B /* WLPrefPaneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLPrefPaneView.h; sourceTree = "<group>"; };
-		E29A62AA146D68AB00EDDA1B /* WLPrefPaneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLPrefPaneView.m; sourceTree = "<group>"; };
 		E29A62C5146D68DD00EDDA1B /* recessed-box-shadow-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-bottom-left.png"; sourceTree = "<group>"; };
 		E29A62C6146D68DD00EDDA1B /* recessed-box-shadow-bottom-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-bottom-right.png"; sourceTree = "<group>"; };
 		E29A62C7146D68DD00EDDA1B /* recessed-box-shadow-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recessed-box-shadow-bottom.png"; sourceTree = "<group>"; };
@@ -179,9 +169,6 @@
 				E29A6299146D68AB00EDDA1B /* NSAttributedString+WLStringDrawing.m */,
 				E29A629A146D68AB00EDDA1B /* NSColor+CGColor.h */,
 				E29A629B146D68AB00EDDA1B /* NSColor+CGColor.m */,
-				E29A629C146D68AB00EDDA1B /* SS_PreferencePaneProtocol.h */,
-				E29A629D146D68AB00EDDA1B /* SS_PrefsController.h */,
-				E29A629E146D68AB00EDDA1B /* SS_PrefsController.m */,
 				E29A629F146D68AB00EDDA1B /* WLBlockLayer.h */,
 				E29A62A0146D68AB00EDDA1B /* WLBlockLayer.m */,
 				E29A62A1146D68AB00EDDA1B /* WLClosableWindow.h */,
@@ -192,8 +179,6 @@
 				E29A62A6146D68AB00EDDA1B /* WLDateRange.m */,
 				E29A62A7146D68AB00EDDA1B /* WLGraphics.h */,
 				E29A62A8146D68AB00EDDA1B /* WLGraphics.m */,
-				E29A62A9146D68AB00EDDA1B /* WLPrefPaneView.h */,
-				E29A62AA146D68AB00EDDA1B /* WLPrefPaneView.m */,
 				E2EB28EB146D984400E975F6 /* WLEvents.h */,
 				E2EB28EC146D984400E975F6 /* WLEvents.m */,
 				E28AE1E414D58DA1003E4EFC /* CALayer+WLBlocks.h */,
@@ -252,14 +237,11 @@
 				E29A62AF146D68AB00EDDA1B /* NSArray+WLDelta.h in Headers */,
 				E29A62B1146D68AB00EDDA1B /* NSAttributedString+WLStringDrawing.h in Headers */,
 				E29A62B3146D68AB00EDDA1B /* NSColor+CGColor.h in Headers */,
-				E29A62B5146D68AB00EDDA1B /* SS_PreferencePaneProtocol.h in Headers */,
-				E29A62B6146D68AB00EDDA1B /* SS_PrefsController.h in Headers */,
 				E29A62B8146D68AB00EDDA1B /* WLBlockLayer.h in Headers */,
 				E29A62BA146D68AB00EDDA1B /* WLClosableWindow.h in Headers */,
 				E29A62BC146D68AB00EDDA1B /* WLCopyCompositingFilter.h in Headers */,
 				E29A62BE146D68AB00EDDA1B /* WLDateRange.h in Headers */,
 				E29A62C0146D68AB00EDDA1B /* WLGraphics.h in Headers */,
-				E29A62C2146D68AB00EDDA1B /* WLPrefPaneView.h in Headers */,
 				E29A62E1146D699300EDDA1B /* WireloadClassesAndResources.h in Headers */,
 				E2A18CA8146D7435004B727B /* WLCalendarController.h in Headers */,
 				E28AE1E614D58DA1003E4EFC /* CALayer+WLBlocks.h in Headers */,
@@ -347,13 +329,11 @@
 				E29A62B0146D68AB00EDDA1B /* NSArray+WLDelta.m in Sources */,
 				E29A62B2146D68AB00EDDA1B /* NSAttributedString+WLStringDrawing.m in Sources */,
 				E29A62B4146D68AB00EDDA1B /* NSColor+CGColor.m in Sources */,
-				E29A62B7146D68AB00EDDA1B /* SS_PrefsController.m in Sources */,
 				E29A62B9146D68AB00EDDA1B /* WLBlockLayer.m in Sources */,
 				E29A62BB146D68AB00EDDA1B /* WLClosableWindow.m in Sources */,
 				E29A62BD146D68AB00EDDA1B /* WLCopyCompositingFilter.m in Sources */,
 				E29A62BF146D68AB00EDDA1B /* WLDateRange.m in Sources */,
 				E29A62C1146D68AB00EDDA1B /* WLGraphics.m in Sources */,
-				E29A62C3146D68AB00EDDA1B /* WLPrefPaneView.m in Sources */,
 				E2A18CA9146D7435004B727B /* WLCalendarController.m in Sources */,
 				E2A18CAE146D7462004B727B /* IKPowerSources.m in Sources */,
 				E2EB28EE146D984400E975F6 /* WLEvents.m in Sources */,
@@ -370,7 +350,7 @@
 		E29A6261146D672900EDDA1B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -395,7 +375,7 @@
 		E29A6262146D672900EDDA1B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";

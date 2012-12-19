@@ -15,10 +15,8 @@
 
 - (BOOL)performKeyEquivalent:(NSEvent *)anEvent
 {
-    if (WLDoesEventContainShortcut(anEvent, NSCommandKeyMask, kVK_ANSI_W) ||
-        WLDoesEventContainShortcut(anEvent, 0, kVK_Escape))
+    if (WLDoesEventContainShortcut(anEvent, NSCommandKeyMask, kVK_ANSI_W))
     {
-        [self makeFirstResponder:nil];
         [self performClose:anEvent];
         return YES;
     }
