@@ -26,16 +26,15 @@ static const CGFloat RoundRadius = 2.0f;
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-        Images[0] = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"layout-area-top-left"]];
-        Images[1] = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"layout-area-top"]];
-        Images[2] = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"layout-area-top-right"]];
-        Images[3] = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"layout-area-middle-left"]];
-        Images[4] = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"layout-area-middle"]];
-        Images[5] = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"layout-area-middle-right"]];
-        Images[6] = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"layout-area-bottom-left"]];
-        Images[7] = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"layout-area-bottom"]];
-        Images[8] = [[NSImage alloc] initWithContentsOfURL:[bundle URLForImageResource:@"layout-area-bottom-right"]];
+        Images[0] = [NSImage imageNamed:@"layout-area-top-left"];
+        Images[1] = [NSImage imageNamed:@"layout-area-top"];
+        Images[2] = [NSImage imageNamed:@"layout-area-top-right"];
+        Images[3] = [NSImage imageNamed:@"layout-area-middle-left"];
+        Images[4] = [NSImage imageNamed:@"layout-area-middle"];
+        Images[5] = [NSImage imageNamed:@"layout-area-middle-right"];
+        Images[6] = [NSImage imageNamed:@"layout-area-bottom-left"];
+        Images[7] = [NSImage imageNamed:@"layout-area-bottom"];
+        Images[8] = [NSImage imageNamed:@"layout-area-bottom-right"];
         Tile = [[NSColor WL_layoutViewTileColor] retain];
     });
 }

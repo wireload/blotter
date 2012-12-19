@@ -13,13 +13,6 @@
 
 #pragma mark Methods
 
-- (NSImage *)bundleImage:(NSString *)aName
-{
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    NSURL *url = [bundle URLForImageResource:aName];
-    return [[[NSImage alloc] initWithContentsOfURL:url] autorelease];    
-}
-
 - (BOOL)isTall:(NSRect)cellFrame
 {
     return cellFrame.size.height == 50.0; 
@@ -46,9 +39,9 @@
         if (![self isHighlighted])
         {
             NSDrawThreePartImage(cellFrame,
-                                 [self bundleImage:@"about-blotter-button-bezel-left"],
-                                 [self bundleImage:@"about-blotter-button-bezel-centre"],
-                                 [self bundleImage:@"about-blotter-button-bezel-right"],
+                                 [NSImage imageNamed:@"about-blotter-button-bezel-left"],
+                                 [NSImage imageNamed:@"about-blotter-button-bezel-centre"],
+                                 [NSImage imageNamed:@"about-blotter-button-bezel-right"],
                                  NO,
                                  NSCompositeSourceOver,
                                  alpha,
@@ -57,9 +50,9 @@
         else
         {
             NSDrawThreePartImage(cellFrame,
-                                 [self bundleImage:@"about-blotter-button-bezel-active-left"],
-                                 [self bundleImage:@"about-blotter-button-bezel-active-centre"],
-                                 [self bundleImage:@"about-blotter-button-bezel-active-right"],
+                                 [NSImage imageNamed:@"about-blotter-button-bezel-active-left"],
+                                 [NSImage imageNamed:@"about-blotter-button-bezel-active-centre"],
+                                 [NSImage imageNamed:@"about-blotter-button-bezel-active-right"],
                                  NO,
                                  NSCompositeSourceOver,
                                  alpha,
@@ -80,9 +73,9 @@
         if (![self isHighlighted])
         {
             NSDrawThreePartImage(cellFrame,
-                                 [self bundleImage:@"about-blotter-tall-button-bezel-left"],
-                                 [self bundleImage:@"about-blotter-tall-button-bezel-centre"],
-                                 [self bundleImage:@"about-blotter-tall-button-bezel-right"],
+                                 [NSImage imageNamed:@"about-blotter-tall-button-bezel-left"],
+                                 [NSImage imageNamed:@"about-blotter-tall-button-bezel-centre"],
+                                 [NSImage imageNamed:@"about-blotter-tall-button-bezel-right"],
                                  NO,
                                  NSCompositeSourceOver,
                                  alpha,
@@ -91,9 +84,9 @@
         else
         {
             NSDrawThreePartImage(cellFrame,
-                                 [self bundleImage:@"about-blotter-tall-button-bezel-active-left"],
-                                 [self bundleImage:@"about-blotter-tall-button-bezel-active-centre"],
-                                 [self bundleImage:@"about-blotter-tall-button-bezel-active-right"],
+                                 [NSImage imageNamed:@"about-blotter-tall-button-bezel-active-left"],
+                                 [NSImage imageNamed:@"about-blotter-tall-button-bezel-active-centre"],
+                                 [NSImage imageNamed:@"about-blotter-tall-button-bezel-active-right"],
                                  NO,
                                  NSCompositeSourceOver,
                                  alpha,

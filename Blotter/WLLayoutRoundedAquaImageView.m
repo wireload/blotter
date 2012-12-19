@@ -40,8 +40,7 @@
                                          xRadius:RoundRadius
                                          yRadius:RoundRadius] setClip];
     }
-    NSURL *url = [[NSBundle bundleForClass:[self class]] URLForImageResource:@"Recreated-Aqua"];
-    NSImage *img = [[NSImage alloc] initWithContentsOfURL:url];
+    NSImage *img = [NSImage imageNamed:@"Recreated-Aqua"];
     [img drawInRect:imageFrame
            fromRect:NSZeroRect
           operation:NSCompositeSourceOver

@@ -179,7 +179,7 @@
     [super loadView];
     
     [_arrangement createLayers];
-    NSImage *backgroundImage = [[NSImage alloc] initWithContentsOfURL:[[NSBundle bundleForClass:[self class]] URLForImageResource:@"Recreated-Aqua"]];
+    NSImage *backgroundImage = [NSImage imageNamed:@"Recreated-Aqua"];
     _arrangement.backgroundImage = backgroundImage;
     [backgroundImage release];
     switch ([[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"]) {
