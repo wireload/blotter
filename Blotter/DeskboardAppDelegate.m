@@ -10,12 +10,17 @@
 #import "DeskboardAppDelegate.h"
 #import "WLNewEventWindowController.h"
 #import "WLNewTaskWindowController.h"
-#import "SRCommon.h"
 #import "PTHotKeyCenter.h"
 #import "PTHotKey+ShortcutRecorder.h"
 #import "WLCalendarWindow.h"
 #import "WLCalendarWindowController.h"
 #import "WLApplicationRunTimer.h"
+#import "WLGeneralPreferences.h"
+#import "WLShortcutsPreferences.h"
+#import "WLPositioningPreferences.h"
+#import "WLLayoutPreferences.h"
+#import "WLCalendarsPreferences.h"
+#import "WLAboutPreferences.h"
 
 enum {
     ShortcutsNameIdx,
@@ -35,6 +40,8 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 
 @implementation DeskboardAppDelegate
+@synthesize calendarWindowController;
+@synthesize preferencesController = _preferencesController;
 
 + (void)initialize
 {
@@ -78,7 +85,33 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 
 #pragma mark Properties
-@synthesize calendarWindowController;
+
+- (IKApplicationPreferences *)preferencesController
+{
+    if (_preferencesController == nil)
+    {
+        WLGeneralPreferences *general = [[[WLGeneralPreferences alloc] initWithNibName:@"GeneralPrefPaneView" bundle:nil] autorelease];
+        WLShortcutsPreferences *shortcuts = [[[WLShortcutsPreferences alloc] initWithNibName:@"ShortcutsPrefPaneView" bundle:nil] autorelease];
+        WLPositioningPreferences *positioning = [[[WLPositioningPreferences alloc] initWithNibName:@"PositionPrefPaneView" bundle:nil] autorelease];
+        WLLayoutPreferences *layout = [[[WLLayoutPreferences alloc] initWithNibName:@"LayoutPrefPaneView" bundle:nil] autorelease];
+        WLCalendarsPreferences *calendars = [[[WLCalendarsPreferences alloc] initWithNibName:@"CalendarsPrefPaneView" bundle:nil] autorelease];
+        WLAboutPreferences *about = [[[WLAboutPreferences alloc] initWithNibName:@"AboutPrefPaneView" bundle:nil] autorelease];
+        _preferencesController = [[IKApplicationPreferences preferencesWithWindowNibName:@"WLApplicationPreferencesWindow"
+                                                                            visualFormat:@"general,shortcuts,positioning,layout,calendars,-,about"
+                                                                         representations:@{
+                                                                            @"general": general,
+                                                                            @"shortcuts": shortcuts,
+                                                                            @"positioning": positioning,
+                                                                            @"layout": layout,
+                                                                            @"calendars": calendars,
+                                                                            @"about": about
+                                                                         }] retain];
+        _preferencesController.window.collectionBehavior = NSWindowCollectionBehaviorCanJoinAllSpaces;
+        _preferencesController.window.level = NSFloatingWindowLevel;
+    }
+
+    return _preferencesController;
+}
 
 
 #pragma mark Methods
@@ -115,28 +148,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (IBAction)showPreferences:(id)aSender
 {
-    if (_preferencesController == nil) {
-        // Determine path to the sample preference panes
-        NSString *pathToPanes = [[[NSBundle mainBundle] resourcePath] stringByStandardizingPath];
-
-        _preferencesController = [[SS_PrefsController alloc] initWithPanesSearchPath:pathToPanes];
-        [_preferencesController setDebug:YES];
-
-        // Set which panes are included, and their order.
-        [_preferencesController setPanesOrder:[NSArray arrayWithObjects:
-                                               NSLocalizedStringFromTableInBundle(@"General", nil, [_preferencesController bundle], nil),
-                                               NSLocalizedStringFromTableInBundle(@"Shortcuts", nil, [_preferencesController bundle], nil),
-                                               NSLocalizedStringFromTableInBundle(@"Positioning", nil, [_preferencesController bundle], nil),
-                                               NSLocalizedStringFromTableInBundle(@"Layout", nil, [_preferencesController bundle], nil),
-                                               NSLocalizedStringFromTableInBundle(@"Calendars", nil, [_preferencesController bundle], nil),
-                                               NSLocalizedStringFromTableInBundle(@"About", nil, [_preferencesController bundle], nil),
-                                               nil]];
-        [_preferencesController createPreferencesWindow];
-        [[_preferencesController preferencesWindow] setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
-        [[[_preferencesController preferencesWindow] toolbar] insertItemWithItemIdentifier:NSToolbarFlexibleSpaceItemIdentifier atIndex:5];
-        [[_preferencesController preferencesWindow] setLevel:NSFloatingWindowLevel];
-    }
-    [_preferencesController showPreferencesWindow];
+    [self.preferencesController showWindow:aSender];
     [self _removeAutoFadeTimerIfNeeded];
     self.calendarWindowController.isFadedOut = NO;
     [NSApp activateIgnoringOtherApps:YES];
@@ -178,9 +190,8 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (IBAction)showAbout:(id)aSender
 {
+    [self.preferencesController setSelectedRepresentationIdentifier:@"about" animated:NO];
     [self showPreferences:aSender];
-    NSToolbarItem *aboutItem = [[_preferencesController prefsToolbarItems] objectForKey:NSLocalizedStringFromTableInBundle(@"About", nil, [_preferencesController bundle], nil)];
-    [_preferencesController prefsToolbarItemClicked:aboutItem];
 }
 
 - (IBAction)showNextWeek:(id)aSender

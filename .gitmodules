@@ -5,3 +5,6 @@
 [submodule "IKPowerSources"]
 	path = WireloadClassesAndResources/IKPowerSources
 	url = git://github.com/Kentzo/IKPowerSources.git
+[submodule "Blotter/IKApplicationPreferences"]
+	path = Blotter/IKApplicationPreferences
+	url = git://github.com/Kentzo/IKApplicationPreferences.git

@@ -8,6 +8,7 @@
     #import <Carbon/Carbon.h>
     #import <QuartzCore/QuartzCore.h>
     #import <CoreServices/CoreServices.h>
+    #import <ScriptingBridge/ScriptingBridge.h>
     #include <IOKit/ps/IOPowerSources.h>
     #include <IOKit/ps/IOPSKeys.h>
 #endif

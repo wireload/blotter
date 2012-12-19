@@ -8,9 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import "WLCalendarWindowController.h"
+#import "IKApplicationPreferences.h"
 
-
-@class SS_PrefsController;
 
 @class WLApplicationRunTimer;
 
@@ -18,6 +17,7 @@
 @interface DeskboardAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate /*, NSMenuValidation*/>
 {
     WLCalendarWindowController *calendarWindowController;
+    IKApplicationPreferences *_preferencesController;
 
     NSStatusItem *_statusItem;
     IBOutlet NSMenu *_statusMenu;
@@ -28,7 +28,7 @@
     IBOutlet NSMenuItem *_showCurrentWeekMenuItem;
     IBOutlet NSMenuItem *_showPreviousWeekMenuItem;
     IBOutlet NSMenuItem *preferencesMenuItem;
-    SS_PrefsController *_preferencesController;
+
     NSTimer *_showCurrentWeekTimer;
     NSTimer *_autoFadeTimer;
     WLApplicationRunTimer *_applicationRunTimer;
@@ -36,6 +36,8 @@
 }
 
 @property (readonly) WLCalendarWindowController *calendarWindowController;
+
+@property (nonatomic, readonly) IKApplicationPreferences *preferencesController;
 
 - (IBAction)bringToFrontOrSendToBack:(id)sender;
 

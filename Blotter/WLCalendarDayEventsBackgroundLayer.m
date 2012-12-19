@@ -7,6 +7,7 @@
 //
 
 #include <tgmath.h>
+#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLCalendarDayEventsBackgroundLayer.h"
 #import "NSColor+WLCalendar.h"
 #import "NSFont+WLCalendar.h"
@@ -134,80 +135,22 @@ static const NSStringDrawingOptions _WLTitleDrawingOptions = NSStringDrawingUses
     
     NSRect dirtyRect = NSRectFromCGRect(CGContextGetClipBoundingBox(aContext));
 #ifndef DEBUG_LAYERS
-    NSSize bottomSize = NSMakeSize(self.bounds.size.width,
-                                   [[NSImage imageNamed:@"day-bottom"] size].height);
-    NSSize topSize = NSMakeSize(self.bounds.size.width,
-                                [[NSImage imageNamed:@"day-top"] size].height);
-    NSSize middleSize = NSMakeSize(self.bounds.size.width,
-                                   fdim(self.bounds.size.height, bottomSize.height + topSize.height));
+    NSRect bounds = [self bounds];
     
-    NSRect topFrame = NSMakeRect(0.0,
-                                 0.0,
-                                 topSize.width,
-                                 topSize.height);
-    if (NSIntersectsRect(topFrame, dirtyRect))
-    {
-        NSDrawThreePartImage(topFrame,
-                             [NSImage imageNamed:@"day-top-left"],
-                             [NSImage imageNamed:@"day-top"],
-                             [NSImage imageNamed:@"day-top-right"],
-                             NO,
-                             NSCompositeSourceOver,
-                             1.0,
-                             YES);
-    }
-    
-    NSRect middleFrame = NSMakeRect(0.0,
-                                    NSMaxY(topFrame),
-                                    middleSize.width,
-                                    middleSize.height);
-    if (NSIntersectsRect(middleFrame, dirtyRect))
-    {
-        [(NSImage *)[NSImage imageNamed:@"day-middle-left"] drawInRect:NSMakeRect(0.0,
-                                                                                  middleFrame.origin.y,
-                                                                                  1.0,
-                                                                                  middleFrame.size.height)
-                                                              fromRect:NSZeroRect
-                                                             operation:NSCompositeSourceOver
-                                                              fraction:1.0
-                                                        respectFlipped:YES
-                                                                 hints:nil];
-        [(NSImage *)[NSImage imageNamed:@"day-middle"] drawInRect:NSMakeRect(1.0,
-                                                                             middleFrame.origin.y,
-                                                                             fdim(middleFrame.size.width, 2.0),
-                                                                             middleFrame.size.height)
-                                                         fromRect:NSZeroRect
-                                                        operation:NSCompositeSourceOver
-                                                         fraction:1.0
-                                                   respectFlipped:YES
-                                                            hints:nil];
-        [(NSImage *)[NSImage imageNamed:@"day-middle-right"] drawInRect:NSMakeRect(fdim(middleFrame.size.width, 1.0),
-                                                                                   middleFrame.origin.y,
-                                                                                   1.0,
-                                                                                   middleFrame.size.height)
-                                                               fromRect:NSZeroRect
-                                                              operation:NSCompositeSourceOver
-                                                               fraction:1.0
-                                                         respectFlipped:YES
-                                                                  hints:nil];
-    }
-    
-    NSRect bottomFrame = NSMakeRect(0.0,
-                                    NSMaxY(middleFrame),
-                                    bottomSize.width,
-                                    bottomSize.height);
-    if (NSIntersectsRect(bottomFrame, dirtyRect))
-    {
-        NSDrawThreePartImage(bottomFrame,
-                             [NSImage imageNamed:@"day-bottom-left"],
-                             [NSImage imageNamed:@"day-bottom"],
-                             [NSImage imageNamed:@"day-bottom-right"],
-                             NO,
-                             NSCompositeSourceOver,
-                             1.0,
-                             YES);
-    }
-    
+    WLDrawScaledNinePartImage(bounds,
+                              [NSImage imageNamed:@"day-top-left"],
+                              [NSImage imageNamed:@"day-top-middle"],
+                              [NSImage imageNamed:@"day-top-right"],
+                              [NSImage imageNamed:@"day-middle-left"],
+                              [NSImage imageNamed:@"day-middle-middle"],
+                              [NSImage imageNamed:@"day-middle-right"],
+                              [NSImage imageNamed:@"day-bottom-left"],
+                              [NSImage imageNamed:@"day-bottom-middle"],
+                              [NSImage imageNamed:@"day-bottom-right"],
+                              NSCompositeCopy,
+                              1.0f,
+                              YES);
+
     // Inset layer bounds, since images have 1px stroke.
     [WhiteToTransparentGradient drawInRect:NSInsetRect(NSRectFromCGRect(self.bounds),
                                                        1.0,

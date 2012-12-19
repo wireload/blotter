@@ -1,0 +1,417 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BA81DBCE1614514200C83DC3 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA81DBCD1614514200C83DC3 /* Cocoa.framework */; };
+		BA81DBD81614514200C83DC3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA81DBD61614514200C83DC3 /* InfoPlist.strings */; };
+		BA81DBDA1614514200C83DC3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BA81DBD91614514200C83DC3 /* main.m */; };
+		BA81DBDE1614514200C83DC3 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = BA81DBDC1614514200C83DC3 /* Credits.rtf */; };
+		BA81DBE11614514200C83DC3 /* WLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA81DBE01614514200C83DC3 /* WLAppDelegate.m */; };
+		BA81DBE41614514200C83DC3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA81DBE21614514200C83DC3 /* MainMenu.xib */; };
+		BA9AFBBB163C128E00FAAAD3 /* WLCalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9AFBA5163C126A00FAAAD3 /* WLCalendarStore.framework */; };
+		BA9AFBBC163C129100FAAAD3 /* WLFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9AFBAE163C126F00FAAAD3 /* WLFoundation.framework */; };
+		BA9AFBBD163C129500FAAAD3 /* WLFoundation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA9AFBAE163C126F00FAAAD3 /* WLFoundation.framework */; };
+		BA9AFBBE163C129E00FAAAD3 /* WLCalendarStore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA9AFBA5163C126A00FAAAD3 /* WLCalendarStore.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BA9AFBA4163C126A00FAAAD3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA9AFB9F163C126900FAAAD3 /* WLCalendarStore.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BC599BE30F193B3CEA5830EB;
+			remoteInfo = WLCalendarStore;
+		};
+		BA9AFBA6163C126A00FAAAD3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA9AFB9F163C126900FAAAD3 /* WLCalendarStore.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BC599C634A6CD01B2871FAAC;
+			remoteInfo = WLCalendarStoreTests;
+		};
+		BA9AFBAD163C126F00FAAAD3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA9AFBA8163C126F00FAAAD3 /* WLFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BA81DA67160DA09D00C83DC3;
+			remoteInfo = WLFoundation;
+		};
+		BA9AFBAF163C126F00FAAAD3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA9AFBA8163C126F00FAAAD3 /* WLFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BAA049CF1621A1040078DF12;
+			remoteInfo = WLFoundationTests;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BA81DBEC1614516E00C83DC3 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				BA9AFBBE163C129E00FAAAD3 /* WLCalendarStore.framework in CopyFiles */,
+				BA9AFBBD163C129500FAAAD3 /* WLFoundation.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		BA81DBC91614514200C83DC3 /* Blotter-mini.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Blotter-mini.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA81DBCD1614514200C83DC3 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		BA81DBD01614514200C83DC3 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		BA81DBD11614514200C83DC3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		BA81DBD21614514200C83DC3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		BA81DBD51614514200C83DC3 /* Blotter-mini-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Blotter-mini-Info.plist"; sourceTree = "<group>"; };
+		BA81DBD71614514200C83DC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BA81DBD91614514200C83DC3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		BA81DBDB1614514200C83DC3 /* Blotter-mini-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Blotter-mini-Prefix.pch"; sourceTree = "<group>"; };
+		BA81DBDD1614514200C83DC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		BA81DBDF1614514200C83DC3 /* WLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLAppDelegate.h; sourceTree = "<group>"; };
+		BA81DBE01614514200C83DC3 /* WLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLAppDelegate.m; sourceTree = "<group>"; };
+		BA81DBE31614514200C83DC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		BA81DBF21614558600C83DC3 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		BA81DBF61615A72300C83DC3 /* Blotter-mini.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Blotter-mini.entitlements"; sourceTree = "<group>"; };
+		BA81DC091616E30C00C83DC3 /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = System/Library/Frameworks/CalendarStore.framework; sourceTree = SDKROOT; };
+		BA81DC0B1616E35500C83DC3 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
+		BA9AFB9F163C126900FAAAD3 /* WLCalendarStore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WLCalendarStore.xcodeproj; path = ../WLCalendarStore/WLCalendarStore.xcodeproj; sourceTree = "<group>"; };
+		BA9AFBA8163C126F00FAAAD3 /* WLFoundation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WLFoundation.xcodeproj; path = ../WLFoundation/WLFoundation.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BA81DBC61614514200C83DC3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA9AFBBC163C129100FAAAD3 /* WLFoundation.framework in Frameworks */,
+				BA9AFBBB163C128E00FAAAD3 /* WLCalendarStore.framework in Frameworks */,
+				BA81DBCE1614514200C83DC3 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BA81DBBE1614514200C83DC3 = {
+			isa = PBXGroup;
+			children = (
+				BA9AFBA8163C126F00FAAAD3 /* WLFoundation.xcodeproj */,
+				BA9AFB9F163C126900FAAAD3 /* WLCalendarStore.xcodeproj */,
+				BA81DC0B1616E35500C83DC3 /* ScriptingBridge.framework */,
+				BA81DC091616E30C00C83DC3 /* CalendarStore.framework */,
+				BA81DBF21614558600C83DC3 /* EventKit.framework */,
+				BA81DBCD1614514200C83DC3 /* Cocoa.framework */,
+				BA81DBD01614514200C83DC3 /* AppKit.framework */,
+				BA81DBD11614514200C83DC3 /* CoreData.framework */,
+				BA81DBD21614514200C83DC3 /* Foundation.framework */,
+				BA81DBD31614514200C83DC3 /* Blotter-mini */,
+				BA81DBCA1614514200C83DC3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BA81DBCA1614514200C83DC3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA81DBC91614514200C83DC3 /* Blotter-mini.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BA81DBD31614514200C83DC3 /* Blotter-mini */ = {
+			isa = PBXGroup;
+			children = (
+				BA81DBF61615A72300C83DC3 /* Blotter-mini.entitlements */,
+				BA81DBDF1614514200C83DC3 /* WLAppDelegate.h */,
+				BA81DBE01614514200C83DC3 /* WLAppDelegate.m */,
+				BA81DBE21614514200C83DC3 /* MainMenu.xib */,
+				BA81DBD41614514200C83DC3 /* Supporting Files */,
+			);
+			path = "Blotter-mini";
+			sourceTree = "<group>";
+		};
+		BA81DBD41614514200C83DC3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BA81DBD51614514200C83DC3 /* Blotter-mini-Info.plist */,
+				BA81DBD61614514200C83DC3 /* InfoPlist.strings */,
+				BA81DBD91614514200C83DC3 /* main.m */,
+				BA81DBDB1614514200C83DC3 /* Blotter-mini-Prefix.pch */,
+				BA81DBDC1614514200C83DC3 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BA9AFBA0163C126900FAAAD3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA9AFBA5163C126A00FAAAD3 /* WLCalendarStore.framework */,
+				BA9AFBA7163C126A00FAAAD3 /* WLCalendarStoreTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BA9AFBA9163C126F00FAAAD3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA9AFBAE163C126F00FAAAD3 /* WLFoundation.framework */,
+				BA9AFBB0163C126F00FAAAD3 /* WLFoundationTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BA81DBC81614514200C83DC3 /* Blotter-mini */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BA81DBE71614514200C83DC3 /* Build configuration list for PBXNativeTarget "Blotter-mini" */;
+			buildPhases = (
+				BA81DBC51614514200C83DC3 /* Sources */,
+				BA81DBC61614514200C83DC3 /* Frameworks */,
+				BA81DBC71614514200C83DC3 /* Resources */,
+				BA81DBEC1614516E00C83DC3 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Blotter-mini";
+			productName = "Blotter-mini";
+			productReference = BA81DBC91614514200C83DC3 /* Blotter-mini.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BA81DBC01614514200C83DC3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = WL;
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = Wireload;
+			};
+			buildConfigurationList = BA81DBC31614514200C83DC3 /* Build configuration list for PBXProject "Blotter-mini" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = BA81DBBE1614514200C83DC3;
+			productRefGroup = BA81DBCA1614514200C83DC3 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = BA9AFBA0163C126900FAAAD3 /* Products */;
+					ProjectRef = BA9AFB9F163C126900FAAAD3 /* WLCalendarStore.xcodeproj */;
+				},
+				{
+					ProductGroup = BA9AFBA9163C126F00FAAAD3 /* Products */;
+					ProjectRef = BA9AFBA8163C126F00FAAAD3 /* WLFoundation.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				BA81DBC81614514200C83DC3 /* Blotter-mini */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		BA9AFBA5163C126A00FAAAD3 /* WLCalendarStore.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = WLCalendarStore.framework;
+			remoteRef = BA9AFBA4163C126A00FAAAD3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BA9AFBA7163C126A00FAAAD3 /* WLCalendarStoreTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = WLCalendarStoreTests.octest;
+			remoteRef = BA9AFBA6163C126A00FAAAD3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BA9AFBAE163C126F00FAAAD3 /* WLFoundation.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = WLFoundation.framework;
+			remoteRef = BA9AFBAD163C126F00FAAAD3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BA9AFBB0163C126F00FAAAD3 /* WLFoundationTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = WLFoundationTests.octest;
+			remoteRef = BA9AFBAF163C126F00FAAAD3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BA81DBC71614514200C83DC3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA81DBD81614514200C83DC3 /* InfoPlist.strings in Resources */,
+				BA81DBDE1614514200C83DC3 /* Credits.rtf in Resources */,
+				BA81DBE41614514200C83DC3 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BA81DBC51614514200C83DC3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA81DBDA1614514200C83DC3 /* main.m in Sources */,
+				BA81DBE11614514200C83DC3 /* WLAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		BA81DBD61614514200C83DC3 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BA81DBD71614514200C83DC3 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		BA81DBDC1614514200C83DC3 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BA81DBDD1614514200C83DC3 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		BA81DBE21614514200C83DC3 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BA81DBE31614514200C83DC3 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BA81DBE51614514200C83DC3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		BA81DBE61614514200C83DC3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		BA81DBE81614514200C83DC3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Blotter-mini/Blotter-mini.entitlements";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Blotter-mini/Blotter-mini-Prefix.pch";
+				INFOPLIST_FILE = "Blotter-mini/Blotter-mini-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		BA81DBE91614514200C83DC3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Blotter-mini/Blotter-mini.entitlements";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Blotter-mini/Blotter-mini-Prefix.pch";
+				INFOPLIST_FILE = "Blotter-mini/Blotter-mini-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BA81DBC31614514200C83DC3 /* Build configuration list for PBXProject "Blotter-mini" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA81DBE51614514200C83DC3 /* Debug */,
+				BA81DBE61614514200C83DC3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BA81DBE71614514200C83DC3 /* Build configuration list for PBXNativeTarget "Blotter-mini" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA81DBE81614514200C83DC3 /* Debug */,
+				BA81DBE91614514200C83DC3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BA81DBC01614514200C83DC3 /* Project object */;
+}

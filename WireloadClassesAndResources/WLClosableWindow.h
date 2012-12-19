@@ -9,7 +9,5 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface WLClosableWindow : NSWindow {
-}
-
+@interface WLClosableWindow : NSWindow
 @end
