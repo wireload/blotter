@@ -15,7 +15,7 @@
 /*!
     @brief  A calendar store used to create the object.
  */
-@property (assign, readonly) id<WLCalStore> store;
+@property (readonly) id<WLCalStore> store;
 
 - (instancetype)initWithStore:(id<WLCalStore>)aStore;
 

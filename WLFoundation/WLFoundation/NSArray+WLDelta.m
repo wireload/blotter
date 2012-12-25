@@ -18,7 +18,7 @@
 {
     if (!aRelativeArray)
         [NSException raise:NSInvalidArgumentException format:@"You cannot compare to nil."];
-    
+
     if (!aComparator)
         [NSException raise:NSInvalidArgumentException format:@"You must pass a comparator."];
 
@@ -83,17 +83,17 @@
 }
 
 - (NSIndexSet *)WL_indexesOfInsertedObjects:(__autoreleasing NSIndexSet **)outInsertedIndexes
-                                  fromArray:(NSArray *)aFromArray
+                            relativeToArray:(NSArray *)aRelativeArray
                       sortedUsingComparator:(NSComparator)aComparator
 {
-    if (!aFromArray)
+    if (!aRelativeArray)
         [NSException raise:NSInvalidArgumentException format:@"You cannot compare to nil."];
-    
+
     if (!aComparator)
         [NSException raise:NSInvalidArgumentException format:@"You must pass a comparator."];
 
     NSUInteger selfCount = [self count];
-    NSUInteger fromArrayCount = [aFromArray count];
+    NSUInteger fromArrayCount = [aRelativeArray count];
 
     if (selfCount == 0)
     {
@@ -108,13 +108,13 @@
             *outInsertedIndexes = [NSIndexSet indexSet];
         return [NSIndexSet indexSet];
     }
-    
+
     if (outInsertedIndexes)
         *outInsertedIndexes = [NSMutableIndexSet indexSet];
     NSMutableIndexSet *selfInsertedIndexes = [NSMutableIndexSet indexSet];
-    
+
     __block NSRange selfSortedRange = NSMakeRange(0, selfCount);
-    [aFromArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
+    [aRelativeArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
     {
         NSUInteger i = [self indexOfObject:obj
                              inSortedRange:selfSortedRange
@@ -132,23 +132,23 @@
             selfSortedRange.length = selfCount - selfSortedRange.location;
         }
     }];
-    
+
     return selfInsertedIndexes;
 }
 
 - (NSIndexSet *)WL_indexesOfObjects:(__autoreleasing NSIndexSet **)outIndexes
-                          fromArray:(NSArray *)aFromArray
+                    relativeToArray:(NSArray *)aRelativeArray
               sortedUsingComparator:(NSComparator)aComparator
 {
-    if (!aFromArray)
+    if (!aRelativeArray)
         [NSException raise:NSInvalidArgumentException format:@"You cannot compare to nil."];
-    
+
     if (!aComparator)
         [NSException raise:NSInvalidArgumentException format:@"You must pass a comparator."];
 
-    if (([self count] == 0 || [aFromArray count] == 0) || // if either array is empty, they have no equal objects
-        (aComparator(self[0], [aFromArray lastObject]) == NSOrderedDescending) || // first object in the receiver is greater than last object from aFromArray => no equal objects
-        (aComparator([self lastObject], aFromArray[0]) == NSOrderedAscending)) // last object in the receiver is less than first object from aFromArray => no equal objects
+    if (([self count] == 0 || [aRelativeArray count] == 0) || // if either array is empty, they have no equal objects
+        (aComparator(self[0], [aRelativeArray lastObject]) == NSOrderedDescending) || // first object in the receiver is greater than last object from aFromArray => no equal objects
+        (aComparator([self lastObject], aRelativeArray[0]) == NSOrderedAscending)) // last object in the receiver is less than first object from aFromArray => no equal objects
     {
         if (outIndexes)
             *outIndexes = [NSIndexSet indexSet];
@@ -161,7 +161,7 @@
 
     NSUInteger count = [self count];
     __block NSRange sortedRange = NSMakeRange(0, count);
-    [aFromArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
+    [aRelativeArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
     {
         NSUInteger i = [self indexOfObject:obj
                              inSortedRange:sortedRange

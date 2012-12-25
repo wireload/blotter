@@ -6,7 +6,6 @@
 //  Copyright 2012 WireLoad. All rights reserved.
 //
 
-#import <CalendarStore/CalendarStore.h>
 #import <WLFoundation/WLFoundation.h>
 #import <EventKit/EventKit.h>
 #import "iCal_10_7.h"
@@ -15,11 +14,6 @@
 #import "WLCalSystemCalendar.h"
 #import "WLCalSystemEvent.h"
 #import "WLCalSystemReminder.h"
-
-
-NSString *WLCalSystemStoreChecksCalendarsAgainstICalKey = @"WLCalSystemStoreChecksCalendarsAgainstICal";
-
-NSString *WLCalSystemStoreAllowsAdvancedCalendarTypeCheckKey = @"WLCalSystemStoreAllowsAdvancedCalendarTypeCheck";
 
 
 static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
@@ -253,7 +247,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
     if (p)
         csReminders = [_store tasksWithPredicate:p];
     else
-        [_log logError:@"Cannot make task predicate with parameters: {completionMask: %d, calendars: %@", aReminderPredicate.completionMask, csCalendars];
+        [_log logError:@"Cannot make reminder predicate with parameters: {completionMask: %d, calendars: %@", aReminderPredicate.completionMask, csCalendars];
 
     return csReminders;
 }
@@ -527,6 +521,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
 
     NSMutableArray *cachedCalendars = [[self makeCalendarsFromCSCalendars:csCalendars] mutableCopy];
     [cachedCalendars sortWithOptions:NSSortStable | NSSortConcurrent usingComparator:WLCalCalendarsComparator];
+    [cachedCalendars WL_removeDuplicatesInSortedArrayUsingComparator:WLCalCalendarsComparator];
 
     NSMutableArray *events = [NSMutableArray arrayWithCapacity:[csEvents count]];
 
@@ -561,9 +556,15 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
             WLCalSystemEvent *event = [[WLCalSystemEvent alloc] initWithStore:self
                                                                       csEvent:csEvent
                                                                   calCalendar:calendar];
-            [events addObject:event];
+            NSUInteger i = [events indexOfObject:event
+                                   inSortedRange:NSMakeRange(0, [events count])
+                                         options:NSBinarySearchingInsertionIndex
+                                 usingComparator:WLCalEventsComparator];
+            [events insertObject:event atIndex:i];
         }
     }
+
+    [events WL_removeDuplicatesInSortedArrayUsingComparator:WLCalEventsComparator];
 
     return events;
 }
@@ -575,6 +576,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
 
     NSMutableArray *cachedCalendars = [[self makeCalendarsFromCSCalendars:csCalendars] mutableCopy];
     [cachedCalendars sortWithOptions:NSSortStable | NSSortConcurrent usingComparator:WLCalCalendarsComparator];
+    [cachedCalendars WL_removeDuplicatesInSortedArrayUsingComparator:WLCalCalendarsComparator];
 
     NSMutableArray *reminders = [NSMutableArray arrayWithCapacity:[csReminders count]];
 
@@ -609,9 +611,15 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
             WLCalSystemReminder *reminder = [[WLCalSystemReminder alloc] initWithStore:self
                                                                             csReminder:csReminder
                                                                            calCalendar:calendar];
-            [reminders addObject:reminder];
+            NSUInteger i = [reminders indexOfObject:reminder
+                                      inSortedRange:NSMakeRange(0, [reminders count])
+                                            options:NSBinarySearchingInsertionIndex
+                                    usingComparator:WLCalRemindersComparator];
+            [reminders insertObject:reminder atIndex:i];
         }
     }
+
+    [reminders WL_removeDuplicatesInSortedArrayUsingComparator:WLCalRemindersComparator];
 
     return reminders;
 }

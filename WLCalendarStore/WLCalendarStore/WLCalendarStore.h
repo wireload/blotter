@@ -21,18 +21,3 @@
 + (id <WLCalStore>)systemStore;
 
 @end
-
-
-extern NSComparator WLCalCalendarsComparator;
-
-extern NSComparator WLCalEventsComparator;
-
-extern NSComparator WLCalRemindersComparator;
-
-
-extern NSString *WLCalSystemStoreChecksCalendarsAgainstICalKey;
-
-extern NSString *WLCalSystemStoreAllowsAdvancedCalendarTypeCheckKey;
-
-
-extern NSString *WLCalStoreDidChangeNotification;

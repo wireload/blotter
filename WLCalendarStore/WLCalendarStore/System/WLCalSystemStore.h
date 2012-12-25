@@ -11,14 +11,9 @@
 #import <CalendarStore/CalendarStore.h>
 
 
-extern NSString *WLCalSystemStoreChecksCalendarsAgainstICalKey;
-
-extern NSString *WLCalSystemStoreAllowsAdvancedCalendarTypeCheckKey;
-
-
-extern NSComparator WLCalCalendarsComparator;
-
-
+/*!
+    @discussion Cal stands for WLCal, and CS stands for Apple's CalendarStore objects.
+ */
 @interface WLCalSystemStore : NSObject <WLCalStore>
 
 /*!

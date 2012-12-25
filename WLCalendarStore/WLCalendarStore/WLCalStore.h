@@ -16,6 +16,18 @@
 extern NSString *WLCalStoreDidChangeNotification;
 
 
+extern NSComparator WLCalCalendarsComparator;
+
+extern NSComparator WLCalEventsComparator;
+
+extern NSComparator WLCalRemindersComparator;
+
+
+extern NSString *WLCalSystemStoreChecksCalendarsAgainstICalKey;
+
+extern NSString *WLCalSystemStoreAllowsAdvancedCalendarTypeCheckKey;
+
+
 @protocol WLCalCalendar;
 
 

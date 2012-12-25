@@ -17,7 +17,6 @@
 		BA9AFB9B163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h in Headers */ = {isa = PBXBuildFile; fileRef = BA9AFB99163AB71D00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA9AFB9C163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9AFB9A163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m */; };
 		BAA049D11621A1040078DF12 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA049D01621A1040078DF12 /* SenTestingKit.framework */; };
-		BAA049D21621A1040078DF12 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA81DA6A160DA09D00C83DC3 /* Cocoa.framework */; };
 		BAA049D81621A1040078DF12 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BAA049D61621A1040078DF12 /* InfoPlist.strings */; };
 		BAA049DB1621A1040078DF12 /* WLFoundationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA049DA1621A1040078DF12 /* WLFoundationTests.m */; };
 		BAA049E31621A1810078DF12 /* NSArray+WLDelta_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */; };
@@ -40,9 +39,6 @@
 
 /* Begin PBXFileReference section */
 		BA81DA67160DA09D00C83DC3 /* WLFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WLFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA81DA6A160DA09D00C83DC3 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		BA81DA6D160DA09D00C83DC3 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		BA81DA6E160DA09D00C83DC3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		BA81DA6F160DA09D00C83DC3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BA81DA72160DA09D00C83DC3 /* WLFoundation-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WLFoundation-Info.plist"; sourceTree = "<group>"; };
 		BA81DA74160DA09D00C83DC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -63,7 +59,6 @@
 		BAA049DC1621A1040078DF12 /* WLFoundationTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WLFoundationTests-Prefix.pch"; sourceTree = "<group>"; };
 		BAA049E11621A1810078DF12 /* NSArray+WLDelta_Tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+WLDelta_Tests.h"; sourceTree = "<group>"; };
 		BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+WLDelta_Tests.m"; sourceTree = "<group>"; };
-		BAA049E81622FEE10078DF12 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		BC5992F4ACC7E7B0081717DB /* WLMutableDateRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLMutableDateRange.m; sourceTree = "<group>"; };
 		BC599BE72B03B538AA35A9D6 /* WLMutableDateRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLMutableDateRange.h; sourceTree = "<group>"; };
 		BC599C7F0C238E9F874213D0 /* WLASLLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLASLLog.m; sourceTree = "<group>"; };
@@ -85,7 +80,6 @@
 			files = (
 				BAA049E71621A3F20078DF12 /* WLFoundation.framework in Frameworks */,
 				BAA049D11621A1040078DF12 /* SenTestingKit.framework in Frameworks */,
-				BAA049D21621A1040078DF12 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,10 +89,10 @@
 		BA81DA5B160DA09D00C83DC3 = {
 			isa = PBXGroup;
 			children = (
-				BAA049E81622FEE10078DF12 /* ScriptingBridge.framework */,
+				BA81DA6F160DA09D00C83DC3 /* Foundation.framework */,
+				BAA049D01621A1040078DF12 /* SenTestingKit.framework */,
 				BA81DA70160DA09D00C83DC3 /* WLFoundation */,
 				BAA049D31621A1040078DF12 /* WLFoundationTests */,
-				BA81DA69160DA09D00C83DC3 /* Frameworks */,
 				BA81DA68160DA09D00C83DC3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -110,26 +104,6 @@
 				BAA049CF1621A1040078DF12 /* WLFoundationTests.octest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		BA81DA69160DA09D00C83DC3 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				BA81DA6A160DA09D00C83DC3 /* Cocoa.framework */,
-				BAA049D01621A1040078DF12 /* SenTestingKit.framework */,
-				BA81DA6C160DA09D00C83DC3 /* Other Frameworks */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		BA81DA6C160DA09D00C83DC3 /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				BA81DA6D160DA09D00C83DC3 /* AppKit.framework */,
-				BA81DA6E160DA09D00C83DC3 /* CoreData.framework */,
-				BA81DA6F160DA09D00C83DC3 /* Foundation.framework */,
-			);
-			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
 		BA81DA70160DA09D00C83DC3 /* WLFoundation */ = {

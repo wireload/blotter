@@ -13,7 +13,7 @@
 
 @protocol WLCalCalendarItem <WLCalObject>
 
-@property id<WLCalCalendar> calendar;
+@property (readonly) id<WLCalCalendar> calendar;
 
 @property (copy, readonly) NSString *notes;
 
