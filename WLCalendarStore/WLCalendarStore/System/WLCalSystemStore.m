@@ -554,14 +554,11 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
         if (calendar)
         {
             WLCalSystemEvent *event = [[WLCalSystemEvent alloc] initWithCSEvent:csEvent calCalendar:calendar];
-            NSUInteger i = [events indexOfObject:event
-                                   inSortedRange:NSMakeRange(0, [events count])
-                                         options:NSBinarySearchingInsertionIndex
-                                 usingComparator:WLCalEventsComparator];
-            [events insertObject:event atIndex:i];
+            [events addObject:event];
         }
     }
 
+    [events sortWithOptions:NSSortStable | NSSortConcurrent usingComparator:WLCalEventsComparator];
     [events WL_removeDuplicatesInSortedArrayUsingComparator:WLCalEventsComparator];
 
     return events;
@@ -607,14 +604,11 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
         if (calendar)
         {
             WLCalSystemReminder *reminder = [[WLCalSystemReminder alloc] initWithCSReminder:csReminder calCalendar:calendar];
-            NSUInteger i = [reminders indexOfObject:reminder
-                                      inSortedRange:NSMakeRange(0, [reminders count])
-                                            options:NSBinarySearchingInsertionIndex
-                                    usingComparator:WLCalRemindersComparator];
-            [reminders insertObject:reminder atIndex:i];
+            [reminders addObject:reminder];
         }
     }
 
+    [reminders sortWithOptions:NSSortStable | NSSortConcurrent usingComparator:WLCalRemindersComparator];
     [reminders WL_removeDuplicatesInSortedArrayUsingComparator:WLCalRemindersComparator];
 
     return reminders;

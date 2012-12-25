@@ -12,7 +12,7 @@
 
 
 /*!
-    @discussion Cal stands for WLCal, and CS stands for Apple's CalendarStore objects.
+    @discussion In method and variable naming Cal stands for WLCal, and CS stands for Apple's CalendarStore objects.
  */
 @interface WLCalSystemStore : NSObject <WLCalStore>
 
