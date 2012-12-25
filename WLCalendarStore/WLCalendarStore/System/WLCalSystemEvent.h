@@ -14,13 +14,6 @@
 
 
 @interface WLCalSystemEvent : WLCalSystemCalendarItem <WLCalEvent>
-{
-    BOOL _allDay;
-    NSDate *_startDate;
-    NSDate *_endDate;
-    BOOL _isDetached;
-    NSDate *_occurrenceDate;
-}
 
 - (WLCalSystemEvent *)initWithCSEvent:(CalEvent *)aCSEvent calCalendar:(id <WLCalCalendar>)aCalendar;
 

@@ -13,12 +13,6 @@
 
 
 @interface WLCalSystemReminder : WLCalSystemCalendarItem <WLCalReminder>
-{
-    BOOL _completed;
-    NSDate *_completionDate;
-    NSDateComponents *_dueDateComponents;
-    NSUInteger _priority;
-}
 
 - (WLCalSystemReminder *)initWithCSReminder:(CalTask *)aCSReminder calCalendar:(id <WLCalCalendar>)aCalendar;
 
