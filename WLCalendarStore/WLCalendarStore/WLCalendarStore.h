@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "WLCalStore.h"
+#import <WLCalendarStore/WLCalStore.h>
 #import <WLCalendarStore/WLCalObject.h>
 #import <WLCalendarStore/WLCalCalendar.h>
 #import <WLCalendarStore/WLCalCalendarItem.h>
