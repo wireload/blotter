@@ -42,12 +42,12 @@
     CGContextSetAllowsAntialiasing(cgContext, YES);
     CGContextSetShouldAntialias(cgContext, YES);
     CGContextSetAllowsFontSmoothing(cgContext, NO);
-    
+
     NSShadow *s = [[NSShadow alloc] init];
     [s setShadowColor:[NSColor WL_dateViewTextShadowColor]];
-    [s setShadowBlurRadius:0.0f];
+    [s setShadowBlurRadius:0.0];
     // Shadow direction is /not/ flipped.
-    [s setShadowOffset:NSMakeSize(0.0f, -1.0f)];
+    [s setShadowOffset:NSMakeSize(0.0, -1.0)];
     NSMutableParagraphStyle *p = [[NSMutableParagraphStyle alloc] init];
     [p setAlignment:NSCenterTextAlignment];
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -57,7 +57,7 @@
                                        p,                                   NSParagraphStyleAttributeName, nil];
     [p release];
     [s release];
-    NSRect monthDayFrame = NSMakeRect(bounds.origin.x, bounds.origin.y, bounds.size.width, 200.0f);
+    NSRect monthDayFrame = NSMakeRect(bounds.origin.x, bounds.origin.y, bounds.size.width, 200.0);
     if (NSIntersectsRect(monthDayFrame, aDirtyRect) && NSContainsRect(bounds, monthDayFrame))
     {
 #ifdef DEBUG_LAYERS
@@ -67,7 +67,7 @@
         [self.monthDay drawInRect:monthDayFrame withAttributes:attributes];
     }
 
-    NSRect monthAndYearFrame = NSMakeRect(bounds.origin.x, NSMaxY(monthDayFrame) + 10.0f, bounds.size.width, 35.0f);
+    NSRect monthAndYearFrame = NSMakeRect(bounds.origin.x, NSMaxY(monthDayFrame) + 10.0, bounds.size.width, 35.0);
     if (NSIntersectsRect(monthAndYearFrame, aDirtyRect) && NSContainsRect(bounds, monthAndYearFrame))
     {
 #ifdef DEBUG_LAYERS
@@ -78,7 +78,7 @@
         [self.monthAndYear drawInRect:monthAndYearFrame withAttributes:attributes];
     }
 
-    NSRect weekdayFrame = NSMakeRect(bounds.origin.x, NSMaxY(monthAndYearFrame), bounds.size.width, 35.0f);
+    NSRect weekdayFrame = NSMakeRect(bounds.origin.x, NSMaxY(monthAndYearFrame), bounds.size.width, 35.0);
     if (NSIntersectsRect(weekdayFrame, aDirtyRect) && NSContainsRect(bounds, weekdayFrame))
     {
 #ifdef DEBUG_LAYERS

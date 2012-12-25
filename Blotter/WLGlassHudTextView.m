@@ -9,8 +9,8 @@
 #import "WLGlassHudTextView.h"
 
 
-static const CGFloat _WLTextViewTopOffset = 3.0f;
-static const CGFloat _WLTextViewBottomOffset = 7.0f;
+static const CGFloat _WLTextViewTopOffset = 3.0;
+static const CGFloat _WLTextViewBottomOffset = 7.0;
 
 NSString* const WLViewSizeDidChangeNotification = @"WLViewSizeDidChangeNotification";
 NSString* const WLSizeDiff = @"WLSizeDiff";

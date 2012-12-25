@@ -7,7 +7,6 @@
 //
 
 #import <WireloadClassesAndResources/WireloadClassesAndResources.h>
-#include <tgmath.h>
 #import "WLCalendarTimeRulerLayer.h"
 #import "NSColor+WLCalendar.h"
 #import "NSFont+WLCalendar.h"

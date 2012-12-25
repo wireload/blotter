@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 WireLoad. All rights reserved.
 //
 
-#include <tgmath.h>
 #import <WireloadClassesAndResources/WireloadClassesAndResources.h>
 #import "WLCalendarDayEventsBackgroundLayer.h"
 #import "NSColor+WLCalendar.h"
@@ -126,17 +125,17 @@ static const NSStringDrawingOptions _WLTitleDrawingOptions = NSStringDrawingUses
         WhiteToTransparentGradient = [[NSGradient alloc] initWithStartingColor:[[NSColor whiteColor] colorWithAlphaComponent:0.1]
                                                                    endingColor:[NSColor clearColor]];
     });
-    
+
     NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:[self contentsAreFlipped]];
     [c setImageInterpolation:NSImageInterpolationHigh];
     [c setShouldAntialias:YES];
     [NSGraphicsContext saveGraphicsState];
     [NSGraphicsContext setCurrentContext:c];
-    
+
     NSRect dirtyRect = NSRectFromCGRect(CGContextGetClipBoundingBox(aContext));
 #ifndef DEBUG_LAYERS
     NSRect bounds = [self bounds];
-    
+
     WLDrawScaledNinePartImage(bounds,
                               [NSImage imageNamed:@"day-top-left"],
                               [NSImage imageNamed:@"day-top-middle"],
@@ -148,7 +147,7 @@ static const NSStringDrawingOptions _WLTitleDrawingOptions = NSStringDrawingUses
                               [NSImage imageNamed:@"day-bottom-middle"],
                               [NSImage imageNamed:@"day-bottom-right"],
                               NSCompositeCopy,
-                              1.0f,
+                              1.0,
                               YES);
 
     // Inset layer bounds, since images have 1px stroke.

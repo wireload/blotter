@@ -30,16 +30,16 @@ static const CGFloat _WLCalendarBackgroundNoiseOpacity = 0.03;
 #pragma mark Methods
 
 + (void)initialize
-{    
+{
     NSImage *noiseImage = [NSImage imageNamed:@"noise"];
-    
+
     // Redraw with the desired transparency.
     [noiseImage lockFocus];
     [[[NSColor clearColor] colorWithAlphaComponent:_WLCalendarBackgroundNoiseOpacity] set];
     NSSize noiseSize = [noiseImage size];
     NSRectFillUsingOperation(NSMakeRect(0, 0, noiseSize.width, noiseSize.height), NSCompositeDestinationIn);
     [noiseImage unlockFocus];
-    
+
     // Retained for the life time of the app since every calendar window can reuse the same pattern.
     _WLCalendarBackgroundNoisePatternColor = [[NSColor colorWithPatternImage:noiseImage] retain];
 }
@@ -106,7 +106,7 @@ static const CGFloat _WLCalendarBackgroundNoiseOpacity = 0.03;
 - (void)drawRect:(NSRect)aDirtyRect
 {
     BEGIN_TIMING();
-    
+
     [NSGraphicsContext saveGraphicsState];
     [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
 #ifndef DEBUG_LAYERS
@@ -120,17 +120,17 @@ static const CGFloat _WLCalendarBackgroundNoiseOpacity = 0.03;
         [innerPath addClip];
         CIImage *blurredBackgroundImage = [(WLCalendarWindow *)[self window] cachedBlurredBackgroundImage:NO];
         CGRect blurredRect = [blurredBackgroundImage extent];
-        
+
         [blurredBackgroundImage drawAtPoint:NSMakePoint(blurredRect.origin.x, blurredRect.origin.y)
                                    fromRect:NSRectFromCGRect(blurredRect)
                                   operation:NSCompositeCopy
                                    fraction:1.0];
-        
+
         // Slightly darken the background with a blueish tint.
         [[NSColor colorWithCalibratedRed:21.0 / 255.0 green:44.0 / 255.0 blue:73.0 / 255.0 alpha:_WLCalendarBackgroundActiveDarkness] set];
         [innerPath fill];
         [NSGraphicsContext restoreGraphicsState];
-        
+
         WLDrawScaledNinePartImage(bounds,
                                   [NSImage imageNamed:@"calendar-background-active-top-left"],
                                   [NSImage imageNamed:@"calendar-background-active-top-middle"],
@@ -142,10 +142,10 @@ static const CGFloat _WLCalendarBackgroundNoiseOpacity = 0.03;
                                   [NSImage imageNamed:@"calendar-background-active-bottom-middle"],
                                   [NSImage imageNamed:@"calendar-background-active-bottom-right"],
                                   NSCompositeSourceOver,
-                                  1.0f,
+                                  1.0,
                                   [self isFlipped]);
     }
-    else 
+    else
     {
         WLDrawScaledNinePartImage(bounds,
                                   [NSImage imageNamed:@"calendar-background-top-left"],
@@ -158,7 +158,7 @@ static const CGFloat _WLCalendarBackgroundNoiseOpacity = 0.03;
                                   [NSImage imageNamed:@"calendar-background-bottom-middle"],
                                   [NSImage imageNamed:@"calendar-background-bottom-right"],
                                   NSCompositeCopy,
-                                  1.0f,
+                                  1.0,
                                   [self isFlipped]);
     }
 

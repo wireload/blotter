@@ -26,7 +26,7 @@
     {
         if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
         {
-            NSRect checkboxRect = NSMakeRect(0.0f, 0.0f, 14.0f, 16.0f);
+            NSRect checkboxRect = NSMakeRect(0.0, 0.0, 14.0, 16.0);
 
             NSImage *overlayImage = [[[NSImage alloc] initWithSize:checkboxRect.size] autorelease];
             [overlayImage lockFocus];
@@ -56,11 +56,11 @@
         }
         else
         {
-            NSRect checkboxRect = NSMakeRect(0.0f, 0.0f, 16.0f, 16.0f);
-            
+            NSRect checkboxRect = NSMakeRect(0.0, 0.0, 16.0, 16.0);
+
             NSImage *overlayImage = [[[NSImage alloc] initWithSize:checkboxRect.size] autorelease];
             [overlayImage lockFocus];
-            [[aColor colorWithAlphaComponent:0.4f] set];
+            [[aColor colorWithAlphaComponent:0.4] set];
             [NSBezierPath fillRect:checkboxRect];
             [overlayImage unlockFocus];
 

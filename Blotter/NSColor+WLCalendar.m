@@ -18,63 +18,63 @@
 
 + (NSColor *)WL_columnColor
 {
-    return [NSColor colorWithCalibratedRed:101.0f / 255.0f
-                                     green:161.0f / 255.0f
-                                      blue:165.0f / 255.0f
-                                     alpha:1.0f];
+    return [NSColor colorWithCalibratedRed:101.0 / 255.0
+                                     green:161.0 / 255.0
+                                      blue:165.0 / 255.0
+                                     alpha:1.0];
 }
 
 + (NSColor *)WL_dateViewTextShadowColor
 {
-    return [NSColor colorWithCalibratedRed:47.0f / 255.0f
-                                     green:47.0f / 255.0f
-                                      blue:47.0f / 255.0f
-                                     alpha:0.25f];
+    return [NSColor colorWithCalibratedRed:47.0 / 255.0
+                                     green:47.0 / 255.0
+                                      blue:47.0 / 255.0
+                                     alpha:0.25];
 }
 
 + (NSColor *)WL_timelineShadowColor
 {
-    return [NSColor colorWithCalibratedRed:51.0f / 255.0f
-                                     green:51.0f / 255.0f
-                                      blue:51.0f / 255.0f
-                                     alpha:1.0f];
+    return [NSColor colorWithCalibratedRed:51.0 / 255.0
+                                     green:51.0 / 255.0
+                                      blue:51.0 / 255.0
+                                     alpha:1.0];
 }
 
 + (NSColor *)WL_timelineLineColor
 {
-    return [NSColor colorWithCalibratedRed:242.0f / 255.0f
-                                     green:242.0f / 255.0f
-                                      blue:242.0f / 255.0f
-                                     alpha:0.75f];
+    return [NSColor colorWithCalibratedRed:242.0 / 255.0
+                                     green:242.0 / 255.0
+                                      blue:242.0 / 255.0
+                                     alpha:0.75];
 }
 
 + (NSColor *)WL_timelineLineShadowColor
 {
-    return [NSColor colorWithCalibratedRed:0.0f / 255.0f
-                                     green:0.0f / 255.0f
-                                      blue:0.0f / 255.0f
-                                     alpha:0.25f];
+    return [NSColor colorWithCalibratedRed:0.0 / 255.0
+                                     green:0.0 / 255.0
+                                      blue:0.0 / 255.0
+                                     alpha:0.25];
 }
 
 + (NSColor *)WL_columnTitleShadowColor
 {
-    return [NSColor colorWithCalibratedRed:51.0f / 255.0f
-                                     green:51.0f / 255.0f
-                                      blue:51.0f / 255.0f
-                                     alpha:1.0f];
+    return [NSColor colorWithCalibratedRed:51.0 / 255.0
+                                     green:51.0 / 255.0
+                                      blue:51.0 / 255.0
+                                     alpha:1.0];
 }
 
 + (NSColor *)WL_eventLocationColor
 {
-    return [NSColor colorWithCalibratedWhite:210.0f / 255.0f alpha:1.0f];
+    return [NSColor colorWithCalibratedWhite:210.0 / 255.0 alpha:1.0];
 }
 
 + (NSColor *)WL_eventTextShadowColor
 {
-    return [NSColor colorWithCalibratedRed:0.0f / 255.0f
-                                     green:0.0f / 255.0f
-                                      blue:0.0f / 255.0f
-                                     alpha:0.3f];
+    return [NSColor colorWithCalibratedRed:0.0 / 255.0
+                                     green:0.0 / 255.0
+                                      blue:0.0 / 255.0
+                                     alpha:0.3];
 }
 
 + (NSColor *)WL_dateViewBackgroundColor
@@ -104,15 +104,15 @@
 
 + (NSColor *)WL_taskTextShadowColor
 {
-    return [NSColor colorWithCalibratedRed:47.0f / 255.0f
-                                     green:47.0f / 255.0f
-                                      blue:47.0f / 255.0f
-                                     alpha:0.3f];
+    return [NSColor colorWithCalibratedRed:47.0 / 255.0
+                                     green:47.0 / 255.0
+                                      blue:47.0 / 255.0
+                                     alpha:0.3];
 }
 
 + (NSColor *)WL_windowFrameBackgroundColor
 {
-    return [[NSColor blackColor] colorWithAlphaComponent:0.25f];
+    return [[NSColor blackColor] colorWithAlphaComponent:0.25];
 }
 
 + (NSColor *)WL_defaultCalendarColorIfFrameworkFails

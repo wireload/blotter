@@ -43,7 +43,7 @@
     // Width is persistant. Adjust height according to aspect ratio.
     WLCalendarWindowController *w = [(DeskboardAppDelegate *)[NSApp delegate] calendarWindowController];
     NSRect screenFrame = [[w windowScreen] visibleFrame];
-    CGFloat aspectRatio = !NSEqualRects(screenFrame, NSZeroRect) ? screenFrame.size.width / screenFrame.size.height : 16.0f / 10.0f;
+    CGFloat aspectRatio = !NSEqualRects(screenFrame, NSZeroRect) ? screenFrame.size.width / screenFrame.size.height : 16.0 / 10.0;
     CGFloat preferredLayoutControlHeight = (mainViewSize.width - layoutControlMargin.width) / aspectRatio;
     // Align frame.
     NSRect preferredLayoutControlFrame = [_layoutControl frame];
@@ -100,14 +100,14 @@
     // To prevent this, we are checking CalendarSize.
     if (splitView == _rootSplitView && [defaults integerForKey:@"CalendarSize"] != BLNarrowSize)
     {
-        CGFloat width = 0.0f;
+        CGFloat width = 0.0;
         if (![_rootSplitView isSubviewCollapsed:[_rootSplitView viewWithTag:WLLayoutInfoSplitViewTag]])
         {
-            NSSize infoViewsSize = NSMakeSize([_infoSplitView frame].size.width, 0.0f);
+            NSSize infoViewsSize = NSMakeSize([_infoSplitView frame].size.width, 0.0);
             infoViewsSize = [self._rootSplitViewToBlotterWindowTransform transformSize:infoViewsSize];
             width = infoViewsSize.width;
         }
-        [defaults setFloat:floorf(width) forKey:@"InfoViewsWidth"];
+        [defaults setFloat:floor(width) forKey:@"InfoViewsWidth"];
     }
     else
     {
@@ -117,38 +117,38 @@
             {
                 case WLLayoutDateViewTag:
                 {
-                    CGFloat height = 0.0f;
+                    CGFloat height = 0.0;
                     if (![_infoSplitView isSubviewCollapsed:v])
                     {
-                        NSSize dateViewSize = NSMakeSize(0.0f, [v frame].size.height);
+                        NSSize dateViewSize = NSMakeSize(0.0, [v frame].size.height);
                         dateViewSize = [self._infoSplitViewToBlotterWindowTransform transformSize:dateViewSize];
                         height = dateViewSize.height;
                     }
-                    [defaults setFloat:floorf(height) forKey:@"DateViewHeight"];
+                    [defaults setFloat:floor(height) forKey:@"DateViewHeight"];
                     break;
                 }
                 case WLLayoutTasksViewTag:
                 {
-                    CGFloat height = 0.0f;
+                    CGFloat height = 0.0;
                     if (![_infoSplitView isSubviewCollapsed:v])
                     {
-                        NSSize tasksViewSize = NSMakeSize(0.0f, [v frame].size.height);
+                        NSSize tasksViewSize = NSMakeSize(0.0, [v frame].size.height);
                         tasksViewSize = [self._infoSplitViewToBlotterWindowTransform transformSize:tasksViewSize];
                         height = tasksViewSize.height;
                     }
-                    [defaults setFloat:floorf(height) forKey:@"TasksViewHeight"];
+                    [defaults setFloat:floor(height) forKey:@"TasksViewHeight"];
                     break;
                 }
                 case WLLayoutAllDayViewTag:
                 {
-                    CGFloat height = 0.0f;
+                    CGFloat height = 0.0;
                     if (![_weekSplitView isSubviewCollapsed:v])
                     {
-                        NSSize allDayViewSize = NSMakeSize(0.0f, [v frame].size.height);
+                        NSSize allDayViewSize = NSMakeSize(0.0, [v frame].size.height);
                         allDayViewSize = [self._weekSplitViewToBlotterWindowTransform transformSize:allDayViewSize];
                         height = allDayViewSize.height;
                     }
-                    [defaults setFloat:floorf(height) forKey:@"AllDayViewHeight"];
+                    [defaults setFloat:floor(height) forKey:@"AllDayViewHeight"];
                     break;
                 }
                 default:
@@ -162,7 +162,7 @@
 {
     // Snap to grid if Alt is pressed.
     if ([NSEvent modifierFlags] & NSAlternateKeyMask)
-        return roundf(aProposedPosition / 10.0f) * 10.0f;
+        return round(aProposedPosition / 10.0) * 10.0;
     else
         return aProposedPosition;
 }
@@ -190,7 +190,7 @@
             return splitViewWidth - [aSplitView dividerThickness];
         else
         {
-            NSSize minWeekViewSize = NSMakeSize([defaults floatForKey:@"MinimumWeekViewWidth"], 0.0f);
+            NSSize minWeekViewSize = NSMakeSize([defaults floatForKey:@"MinimumWeekViewWidth"], 0.0);
             minWeekViewSize = [self._blotterWindowToRootSplitViewTransform transformSize:minWeekViewSize];
             return splitViewWidth - [aSplitView dividerThickness] - minWeekViewSize.width;
         }
@@ -273,13 +273,13 @@
     DeskboardAppDelegate *delegate = (DeskboardAppDelegate *)[[NSApplication sharedApplication] delegate];
     NSRect blotterViewFrame = [[delegate.calendarWindowController.window contentView] frame];
     CGFloat rootSplitViewXDividersThickness = [_rootSplitView dividerThickness];
-    CGFloat rootSplitViewYDividersThickness = 0.0f;
-    CGFloat weekSplitViewXDividerThickness = 0.0f;
+    CGFloat rootSplitViewYDividersThickness = 0.0;
+    CGFloat weekSplitViewXDividerThickness = 0.0;
     CGFloat weekSplitViewYDividerThickness = [_weekSplitView dividerThickness];
-    CGFloat infoSplitViewXDividerThickness = 0.0f;
+    CGFloat infoSplitViewXDividerThickness = 0.0;
     CGFloat infoSplitViewYDividerThickness = 2 * [_infoSplitView dividerThickness];
     if ([[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"] == BLNarrowSize)
-        rootSplitViewXDividersThickness = 0.0f;
+        rootSplitViewXDividersThickness = 0.0;
 
     [self._blotterWindowToRootSplitViewTransform scaleXBy:(NSWidth(layoutViewFrame) - rootSplitViewXDividersThickness) / NSWidth(blotterViewFrame)
                                                       yBy:(NSHeight(layoutViewFrame) - rootSplitViewYDividersThickness) / NSHeight(blotterViewFrame)];
@@ -303,19 +303,19 @@
     NSRect windowFrame = [delegate.calendarWindowController windowFrame];
     NSRect bounds = [_layoutControl bounds];
     // WLRecessedBoxShadow draws 1px horizontal white line at the bottom.
-    bounds.size.height -= 1.0f;
-    bounds.origin.y += 1.0f;
+    bounds.size.height -= 1.0;
+    bounds.origin.y += 1.0;
     // Add margin around calendar window view like on the position pref pane.
-    bounds = NSInsetRect(bounds, 3.0f, 3.0f);
+    bounds = NSInsetRect(bounds, 3.0, 3.0);
     NSSize viewFrameSize = NSMakeSize(NSHeight(bounds) * windowFrame.size.width / windowFrame.size.height,
                                       NSHeight(bounds));
     // Scale view Frame
-    CGFloat scaleFactor = fminf(NSWidth(bounds) / viewFrameSize.width, NSHeight(bounds) / viewFrameSize.height);
+    CGFloat scaleFactor = fmin(NSWidth(bounds) / viewFrameSize.width, NSHeight(bounds) / viewFrameSize.height);
     viewFrameSize.width *= scaleFactor;
     viewFrameSize.height *= scaleFactor;
-    
-    NSRect viewFrame = NSMakeRect(NSMinX(bounds) + (NSWidth(bounds) - viewFrameSize.width) / 2.0f,
-                                  NSMinY(bounds) + (NSHeight(bounds) - viewFrameSize.height) / 2.0f,
+
+    NSRect viewFrame = NSMakeRect(NSMinX(bounds) + (NSWidth(bounds) - viewFrameSize.width) / 2.0,
+                                  NSMinY(bounds) + (NSHeight(bounds) - viewFrameSize.height) / 2.0,
                                   viewFrameSize.width,
                                   viewFrameSize.height);
     [_calendarWindowView setFrame:[_layoutControl centerScanRect:viewFrame]];
@@ -329,10 +329,10 @@
     if ([[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"] != BLNarrowSize)
     {
         NSSize infoViewsSize = NSMakeSize([[aParameters objectForKey:@"InfoViewsWidth"] floatValue],
-                                          0.0f);
+                                          0.0);
         infoViewsSize = [self._blotterWindowToRootSplitViewTransform transformSize:infoViewsSize];
-        infoViewsSize.width = roundf(infoViewsSize.width);
-        [_rootSplitView setPosition:fminf([_rootSplitView maxPossiblePositionOfDividerAtIndex:0], NSMinX(bounds) + infoViewsSize.width)
+        infoViewsSize.width = round(infoViewsSize.width);
+        [_rootSplitView setPosition:fmin([_rootSplitView maxPossiblePositionOfDividerAtIndex:0], NSMinX(bounds) + infoViewsSize.width)
                    ofDividerAtIndex:0];
     }
     else
@@ -345,10 +345,10 @@
 {
     [_weekSplitView adjustSubviews];
     NSRect bounds = [_weekSplitView bounds];
-    NSSize allDayViewSize = NSMakeSize(0.0f, roundf([[aParameters objectForKey:@"AllDayViewHeight"] floatValue]));
+    NSSize allDayViewSize = NSMakeSize(0.0, round([[aParameters objectForKey:@"AllDayViewHeight"] floatValue]));
     allDayViewSize = [self._blotterWindowToWeekSplitViewTransform transformSize:allDayViewSize];
-    allDayViewSize.height = roundf(allDayViewSize.height);
-    [_weekSplitView setPosition:fminf([_weekSplitView maxPossiblePositionOfDividerAtIndex:0], NSMinY(bounds) + allDayViewSize.height)
+    allDayViewSize.height = round(allDayViewSize.height);
+    [_weekSplitView setPosition:fmin([_weekSplitView maxPossiblePositionOfDividerAtIndex:0], NSMinY(bounds) + allDayViewSize.height)
                ofDividerAtIndex:0];
 }
 
@@ -356,19 +356,19 @@
 {
     [_infoSplitView adjustSubviews];
     NSRect bounds = [_infoSplitView bounds];
-    NSSize dateViewSize = NSMakeSize(0.0f, [[aParameters objectForKey:@"DateViewHeight"] floatValue]);
+    NSSize dateViewSize = NSMakeSize(0.0, [[aParameters objectForKey:@"DateViewHeight"] floatValue]);
     dateViewSize = [self._blotterWindowToInfoSplitViewTransform transformSize:dateViewSize];
-    dateViewSize.height = roundf(dateViewSize.height);
-    [_infoSplitView setPosition:fminf([_infoSplitView maxPossiblePositionOfDividerAtIndex:0], NSMinY(bounds) + dateViewSize.height)
+    dateViewSize.height = round(dateViewSize.height);
+    [_infoSplitView setPosition:fmin([_infoSplitView maxPossiblePositionOfDividerAtIndex:0], NSMinY(bounds) + dateViewSize.height)
                ofDividerAtIndex:0];
 
 
-    NSSize tasksViewSize = NSMakeSize(0.0f, [[aParameters objectForKey:@"TasksViewHeight"] floatValue]);
+    NSSize tasksViewSize = NSMakeSize(0.0, [[aParameters objectForKey:@"TasksViewHeight"] floatValue]);
     tasksViewSize = [self._blotterWindowToInfoSplitViewTransform transformSize:tasksViewSize];
-    tasksViewSize.height = roundf(tasksViewSize.height);
+    tasksViewSize.height = round(tasksViewSize.height);
     NSView *dateView = [_infoSplitView viewWithTag:WLLayoutDateViewTag];
     NSParameterAssert(dateView != nil);
-    [_infoSplitView setPosition:fminf([_infoSplitView maxPossiblePositionOfDividerAtIndex:1], NSMaxY([dateView frame]) + [_infoSplitView dividerThickness] + tasksViewSize.height)
+    [_infoSplitView setPosition:fmin([_infoSplitView maxPossiblePositionOfDividerAtIndex:1], NSMaxY([dateView frame]) + [_infoSplitView dividerThickness] + tasksViewSize.height)
                ofDividerAtIndex:1];
 }
 
@@ -393,7 +393,7 @@
 
     NSMutableDictionary *defaults = [NSMutableDictionary dictionaryWithContentsOfURL:defaultsURL];
     DeskboardAppDelegate *delegate = (DeskboardAppDelegate *)[[NSApplication sharedApplication] delegate];
-    
+
     CGFloat taskViewHeight = 0;
     switch ([[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarLayout"])
     {
@@ -405,7 +405,7 @@
             break;
         default:
             taskViewHeight = [delegate.calendarWindowController defaultTasksViewHeight];
-    }       
+    }
     [defaults setObject:[NSNumber numberWithFloat:taskViewHeight] forKey:@"TasksViewHeight"];
 
     return defaults;

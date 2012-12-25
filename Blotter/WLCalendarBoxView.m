@@ -13,13 +13,13 @@
 #import "WLSoftEdgeLayer.h"
 
 
-static const CGFloat _WLXPadding = 26.0f;
+static const CGFloat _WLXPadding = 26.0;
 
-static const CGFloat _WLYPadding = 26.0f;
+static const CGFloat _WLYPadding = 26.0;
 
-static const CGFloat _WLMysteriousExtraLeftSpace = 2.0f;
+static const CGFloat _WLMysteriousExtraLeftSpace = 2.0;
 
-static const CGFloat _WLMysteriousExtraBottomSpace = 4.0f;
+static const CGFloat _WLMysteriousExtraBottomSpace = 4.0;
 
 @implementation WLCalendarBoxView
 
@@ -77,9 +77,9 @@ static const CGFloat _WLMysteriousExtraBottomSpace = 4.0f;
 {
     NSShadow *s = [[NSShadow alloc] init];
     [s setShadowColor:[NSColor WL_taskTextShadowColor]];
-    [s setShadowBlurRadius:0.0f];
+    [s setShadowBlurRadius:0.0];
     // View is flipped
-    [s setShadowOffset:NSMakeSize(0.0f, -1.0f)];
+    [s setShadowOffset:NSMakeSize(0.0, -1.0)];
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [NSFont WL_boxViewTitleFont],   NSFontAttributeName,
                                 [NSColor WL_boxViewTitleColor], NSForegroundColorAttributeName,
@@ -94,19 +94,19 @@ static const CGFloat _WLMysteriousExtraBottomSpace = 4.0f;
     return NSIntegralRect(NSMakeRect(NSMinX(bounds) + _WLXPadding / 2 + _WLMysteriousExtraLeftSpace,
                                      NSMinY(bounds) + _WLYPadding / 2,
                                      NSWidth(bounds) - _WLXPadding,
-                                     34.0f));
+                                     34.0));
 }
 
 - (NSRect)_contentFrame
 {
     NSRect bounds = [self bounds];
     NSRect titleFrame = [self _titleFrame];
-    CGFloat yTopMargin = 10.0f;
+    CGFloat yTopMargin = 10.0;
     CGFloat yBottomMargin = _WLYPadding / 2 + _WLMysteriousExtraBottomSpace;
     if (self.softEdges)
     {
-        yTopMargin = 5.0f;
-        yBottomMargin = 14.0f;
+        yTopMargin = 5.0;
+        yBottomMargin = 14.0;
     }
     return NSIntegralRect(NSMakeRect(NSMinX(bounds) + _WLXPadding / 2 + _WLMysteriousExtraLeftSpace,
                                      NSMaxY(titleFrame) + yTopMargin,
@@ -127,18 +127,18 @@ static const CGFloat _WLMysteriousExtraBottomSpace = 4.0f;
     [context setShouldAntialias:YES];
     [context setImageInterpolation:NSImageInterpolationHigh];
 
-    WLDrawScaledNinePartImage(bounds, 
-                              [NSImage imageNamed:@"info-top-left"], 
-                              [NSImage imageNamed:@"info-top-middle"], 
-                              [NSImage imageNamed:@"info-top-right"], 
-                              [NSImage imageNamed:@"info-middle-left"], 
-                              [NSImage imageNamed:@"info-middle-middle"], 
-                              [NSImage imageNamed:@"info-middle-right"], 
-                              [NSImage imageNamed:@"info-bottom-left"], 
-                              [NSImage imageNamed:@"info-bottom-middle"], 
+    WLDrawScaledNinePartImage(bounds,
+                              [NSImage imageNamed:@"info-top-left"],
+                              [NSImage imageNamed:@"info-top-middle"],
+                              [NSImage imageNamed:@"info-top-right"],
+                              [NSImage imageNamed:@"info-middle-left"],
+                              [NSImage imageNamed:@"info-middle-middle"],
+                              [NSImage imageNamed:@"info-middle-right"],
+                              [NSImage imageNamed:@"info-bottom-left"],
+                              [NSImage imageNamed:@"info-bottom-middle"],
                               [NSImage imageNamed:@"info-bottom-right"],
-                              NSCompositeSourceOver, 
-                              1.0, 
+                              NSCompositeSourceOver,
+                              1.0,
                               YES);
 
     [NSGraphicsContext restoreGraphicsState];
@@ -151,7 +151,7 @@ static const CGFloat _WLMysteriousExtraBottomSpace = 4.0f;
     CGContextSetAllowsAntialiasing(cgContext, YES);
     CGContextSetShouldAntialias(cgContext, YES);
     CGContextSetAllowsFontSmoothing(cgContext, NO);
-    
+
     NSRect titleFrame = [self _titleFrame];
     if (NSIntersectsRect(titleFrame, aDirtyRect) && NSContainsRect(bounds, titleFrame))
         [self.title drawInRect:titleFrame withAttributes:[self _titleAttributes]];

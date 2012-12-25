@@ -105,9 +105,9 @@
 {
     [super loadView];
 
-    [_eventsTableView setIntercellSpacing:NSMakeSize(3.0f, 0.0f)];
+    [_eventsTableView setIntercellSpacing:NSMakeSize(3.0, 0.0)];
     [_eventsTableView setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
-    [_remindersTableView setIntercellSpacing:NSMakeSize(3.0f, 0.0f)];
+    [_remindersTableView setIntercellSpacing:NSMakeSize(3.0, 0.0)];
     [_remindersTableView setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
     [(WLCalendarController *)[WLCalendarController sharedController] addObserver:self
                                                                       forKeyPath:@"calEventCalendars"

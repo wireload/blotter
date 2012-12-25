@@ -7,7 +7,6 @@
 //
 
 #import <WireloadClassesAndResources/WireloadClassesAndResources.h>
-#include <tgmath.h>
 #import "WLCalendarWeekView.h"
 #import "NSColor+WLCalendar.h"
 #import "NSFont+WLCalendar.h"
@@ -843,15 +842,10 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
         CGFloat availableHeight = fdim([self visibleHeightOfTimeRuler], [self originOffset]);
         if (self.fitsDayEvents)
         {
-#if CGFLOAT_IS_DOUBLE
             static const double DoubleValue = 0.0;
             memset_pattern8(_lengthOfHours, &DoubleValue, 8 * sizeof(_lengthOfHours) / sizeof(CGFloat));
             memset_pattern8(_locationOfHours, &DoubleValue, 8 * sizeof(_locationOfHours) / sizeof(CGFloat));
-#else
-            static const float FloatValue = 0.0f;
-            memset_pattern4(_lengthOfHours, &FloatValue, 4 * sizeof(_lengthOfHours) / sizeof(CGFloat));
-            memset_pattern4(_locationOfHours, &FloatValue, 4 * sizeof(_locationOfHours) / sizeof(CGFloat));
-#endif
+
             if (fabs(availableHeight) < CGFLOAT_EPSILON)
                 return;
 
@@ -1214,7 +1208,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
         NSSize middleBorderSize = NSMakeSize(aLayer.bounds.size.width, aLayer.bounds.size.height - bottomBorderSize.height - topBorderSize.height);
 
         NSRect dirtyRect = NSRectFromCGRect(aDirtyRect);
-        static CGFloat AlphaFraction = 0.5f;
+        static CGFloat AlphaFraction = 0.5;
 
         NSRect bottomBorderFrame = NSMakeRect(0.0, 0.0, bottomBorderSize.width, bottomBorderSize.height);
         if (NSIntersectsRect(bottomBorderFrame, dirtyRect))

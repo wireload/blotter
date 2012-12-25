@@ -15,7 +15,7 @@ static NSImage *Images[9];
 
 static NSColor *Tile = nil;
 
-static const CGFloat RoundRadius = 2.0f;
+static const CGFloat RoundRadius = 2.0;
 
 
 @implementation WLLayoutView
@@ -41,7 +41,7 @@ static const CGFloat RoundRadius = 2.0f;
 
 - (void)drawRect:(NSRect)aDirtyRect
 {
-    
+
     [NSGraphicsContext saveGraphicsState];
     [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
     WLDrawScaledNinePartImage([self bounds],
@@ -55,12 +55,12 @@ static const CGFloat RoundRadius = 2.0f;
                         Images[7],
                         Images[8],
                         NSCompositeSourceOver,
-                        1.0f,
+                        1.0,
                         YES);
     [NSGraphicsContext restoreGraphicsState];
 
     [NSGraphicsContext saveGraphicsState];
-    NSRect tileFrame = NSInsetRect([self bounds], 2.0f, 1.0f);
+    NSRect tileFrame = NSInsetRect([self bounds], 2.0, 1.0);
     if (NSWidth(tileFrame) >= RoundRadius && NSHeight(tileFrame) >= RoundRadius)
     {
         [[NSBezierPath bezierPathWithRoundedRect:tileFrame

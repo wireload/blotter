@@ -76,10 +76,10 @@ static const CGFloat _WLGlassHudBackgroundActiveDarkness = 0.90;
                               [NSImage imageNamed:@"calendar-background-active-bottom-middle"],
                               [NSImage imageNamed:@"calendar-background-active-bottom-right"],
                               NSCompositeSourceOver,
-                              1.0f,
+                              1.0,
                               [self isFlipped]);
 
-    
+
     [[WLCalendarWindowBackgroundView backgroundNoisePatternColor] setFill];
     [innerPath fill];
     [NSGraphicsContext restoreGraphicsState];

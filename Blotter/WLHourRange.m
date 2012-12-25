@@ -9,9 +9,9 @@
 #import "WLHourRange.h"
 
 
-const WLHourRange WLHourRangeZero = {0.0f, 0.0f};
+const WLHourRange WLHourRangeZero = {0.0, 0.0};
 
-const WLHourRange WLHourRangeInvalid = {CGFLOAT_MAX, 0.0f};
+const WLHourRange WLHourRangeInvalid = {CGFLOAT_MAX, 0.0};
 
 
 void WLEnumerateHourRange(WLHourRange anHourRange, NSCalendarUnit aUnit, WLHourRangeEnumerationBlock anEnumerateBlock)
@@ -21,7 +21,7 @@ void WLEnumerateHourRange(WLHourRange anHourRange, NSCalendarUnit aUnit, WLHourR
         {
             BOOL shouldStop = NO;
             for (NSUInteger i = 0, size = WLGetNumberOfCalendarUnitsInHourRange(anHourRange, aUnit); i < size && !shouldStop; ++i)
-                anEnumerateBlock(aUnit, i, ceilf(anHourRange.startHour) + (CGFloat)i, &shouldStop);
+                anEnumerateBlock(aUnit, i, ceil(anHourRange.startHour) + (CGFloat)i, &shouldStop);
             break;
         }
         default:

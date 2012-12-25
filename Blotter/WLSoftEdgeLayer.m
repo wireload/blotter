@@ -59,7 +59,7 @@ static NSString* const _WLBottomEdgeLayerKey = @"bottom";
 + (id)defaultValueForKey:(NSString *)aKey
 {
     if ([aKey isEqual:@"edgeHeight"])
-        return [NSNumber numberWithFloat:15.0f];
+        return [NSNumber numberWithFloat:15.0];
     else if ([aKey isEqual:@"geometryFlipped"])
         return [NSNumber numberWithBool:YES];
     else
@@ -71,7 +71,7 @@ static NSString* const _WLBottomEdgeLayerKey = @"bottom";
     [CATransaction WL_performWithDisabledActions:^(void) {
         CGFloat h = self.edgeHeight;
         if (self.bounds.size.height < 2 * h)
-            h = floorf(self.bounds.size.height / 2);
+            h = floor(self.bounds.size.height / 2);
 
         CAGradientLayer *topEdge = [self valueForKey:_WLTopEdgeLayerKey];
         NSParameterAssert(topEdge != nil);

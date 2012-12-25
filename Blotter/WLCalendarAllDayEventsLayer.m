@@ -7,7 +7,6 @@
 //
 
 #import <WireloadClassesAndResources/WireloadClassesAndResources.h>
-#import <tgmath.h>
 #import "WLCalendarAllDayEventsLayer.h"
 #import "WLCalendarEventLayer.h"
 #import "NSFont+WLCalendar.h"
@@ -86,7 +85,7 @@ static const CGFloat _WLXPadding = 2.0;
 
 - (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth
 {
-    CGFloat preferredHeight = 0.0f;
+    CGFloat preferredHeight = 0.0;
     for (WLCalendarEventLayer *layer in _icalSortedEventLayers)
         preferredHeight += _WLTopMargin + [layer preferredHeightWithWidth:aWidth];
     return preferredHeight;
@@ -172,7 +171,7 @@ static const CGFloat _WLXPadding = 2.0;
 
 - (CGSize)preferredFrameSize
 {
-    CGSize preferredSize = CGSizeMake(0.0f, 0.0f);
+    CGSize preferredSize = CGSizeMake(0.0, 0.0);
     for (WLCalendarEventLayer *layer in _icalSortedEventLayers)
     {
         CGSize layerSize = [layer preferredFrameSize];

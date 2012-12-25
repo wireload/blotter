@@ -15,7 +15,7 @@
 
 - (BOOL)isTall:(NSRect)cellFrame
 {
-    return cellFrame.size.height == 50.0; 
+    return cellFrame.size.height == 50.0;
 }
 
 - (NSBezierPath *)focusRingShapeForCellFrame:(NSRect)aCellFrame
@@ -35,7 +35,7 @@
     if (![self isTall:cellFrame])
     {
         float alpha = [self isEnabled] ? 1.0 : 0.75;
-        
+
         if (![self isHighlighted])
         {
             NSDrawThreePartImage(cellFrame,
@@ -58,15 +58,15 @@
                                  alpha,
                                  YES);
         }
-        
+
         NSRect titleFrame = [self titleRectForBounds:cellFrame];
         NSRect imageFrame = [self imageRectForBounds:cellFrame];
-        
+
         [self drawTitle:[self attributedTitle] withFrame:titleFrame inView:controlView];
-        
+
         [self drawImage:[self image] withFrame:imageFrame inView:controlView];
     }
-    else 
+    else
     {
         float alpha = [self isEnabled] ? 1.0 : 0.75;
 
@@ -122,9 +122,9 @@
     {
         // Prevent image from being cut off on the top or bottom and position it better than the default.
         NSSize size = [[self image] size];
-        return NSMakeRect(14.0, floorf((theRect.size.height - size.height) / 2.0), size.width, size.height);
+        return NSMakeRect(14.0, floor((theRect.size.height - size.height) / 2.0), size.width, size.height);
     }
-    
+
     return [super imageRectForBounds:theRect];
 }
 

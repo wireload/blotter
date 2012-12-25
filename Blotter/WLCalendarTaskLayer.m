@@ -7,7 +7,6 @@
 //
 
 #import <WireloadClassesAndResources/WireloadClassesAndResources.h>
-#include <tgmath.h>
 #import "WLCalendarTaskLayer.h"
 #import "NSFont+WLCalendar.h"
 #import "NSColor+WLCalendar.h"
@@ -118,7 +117,7 @@ static const CGFloat _WLMarkTailIndent = 6.0;
     if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6 || ![self contentsAreFlipped])
         CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, -1.0), 0.0, [[NSColor WL_taskTextShadowColor] WL_CGColor]);
     else
-        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f, 1.0), 0.0, [[NSColor WL_taskTextShadowColor] WL_CGColor]);
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0), 0.0, [[NSColor WL_taskTextShadowColor] WL_CGColor]);
     [self.mark WL_drawWithRect:[self _markFrame] context:aContext];
     [self.title WL_drawWithRect:[self _titleFrame] context:aContext];
 
@@ -130,7 +129,7 @@ static const CGFloat _WLMarkTailIndent = 6.0;
     CGSize titleSize = [self.title WL_preferredSize];
     CGSize markSize = [self.mark WL_preferredSize];
     return CGSizeMake(markSize.width + _WLMarkTailIndent + titleSize.width,
-                      fmaxf(titleSize.height, markSize.height));
+                      fmax(titleSize.height, markSize.height));
 }
 
 @end

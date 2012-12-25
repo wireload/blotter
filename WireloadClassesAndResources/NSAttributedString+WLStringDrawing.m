@@ -6,7 +6,6 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
-#include <tgmath.h>
 #import "NSAttributedString+WLStringDrawing.h"
 #import "CoreText+Additions.h"
 

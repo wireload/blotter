@@ -60,12 +60,12 @@
 - (void)layoutSublayers
 {
     CGSize size = [self bounds].size;
-    CGFloat middleWidth = fmaxf(1.0f, size.width - 2 * self.edgeSize.width);
-    CGFloat middleHeight = fmaxf(1.0f, size.height - 2 * self.edgeSize.height);
+    CGFloat middleWidth = fmax(1.0, size.width - 2 * self.edgeSize.width);
+    CGFloat middleHeight = fmax(1.0, size.height - 2 * self.edgeSize.height);
     for (NSUInteger i = 0; i < 9; ++i)
     {
         CALayer *sublayer = [_sublayers objectAtIndex:i];
-        CGRect frame = CGRectMake(0.0f, 0.0f, middleWidth, middleHeight);
+        CGRect frame = CGRectMake(0.0, 0.0, middleWidth, middleHeight);
         switch(i % 3)
         {
             case 0:
@@ -99,7 +99,7 @@
 - (void)displayLayer:(CALayer *)aLayer
 {
     NSAssert(_contents != NULL, @"_contents must be initialized at this point");
-    
+
     NSInteger i = [_sublayers indexOfObjectIdenticalTo:aLayer];
     if (i == NSNotFound)
     {

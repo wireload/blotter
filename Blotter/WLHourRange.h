@@ -33,14 +33,14 @@ NS_INLINE WLHourRange WLHourRangeMake(CGFloat aStartHour, CGFloat anEndHour)
 
 NS_INLINE BOOL WLHourRangeEqualToHourRange(WLHourRange aHourRange, WLHourRange bHourRange)
 {
-    return ((aHourRange.startHour == bHourRange.startHour || fabsf(aHourRange.startHour - bHourRange.startHour) < FLT_EPSILON) &&
-            (aHourRange.endHour == bHourRange.endHour || fabsf(aHourRange.endHour - bHourRange.endHour) < FLT_EPSILON));
+    return ((aHourRange.startHour == bHourRange.startHour || fabs(aHourRange.startHour - bHourRange.startHour) < FLT_EPSILON) &&
+            (aHourRange.endHour == bHourRange.endHour || fabs(aHourRange.endHour - bHourRange.endHour) < FLT_EPSILON));
 }
 
 
 NS_INLINE CGFloat WLHourRangeLength(WLHourRange anHourRange)
 {
-    return fdimf(anHourRange.endHour, anHourRange.startHour);
+    return fdim(anHourRange.endHour, anHourRange.startHour);
 }
 
 
@@ -49,7 +49,7 @@ NS_INLINE NSUInteger WLGetNumberOfCalendarUnitsInHourRange(WLHourRange anHourRan
     switch (aUnit)
     {
         case NSHourCalendarUnit:
-            return (NSUInteger)fdimf(floorf(anHourRange.endHour), floorf(anHourRange.startHour));
+            return (NSUInteger)fdim(floor(anHourRange.endHour), floor(anHourRange.startHour));
         default:
             return NSNotFound;
     }

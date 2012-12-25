@@ -6,7 +6,6 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
-#include <tgmath.h>
 #import "WLCalendarTasksView.h"
 #import "NSFont+WLCalendar.h"
 #import "NSColor+WLCalendar.h"

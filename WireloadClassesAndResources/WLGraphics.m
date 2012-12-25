@@ -37,36 +37,36 @@ void WLRecessedBoxShadow(NSRect frame)
                         Images[7],
                         Images[8],
                         NSCompositeSourceOver,
-                        1.0f,
+                        1.0,
                         NO);
     [NSGraphicsContext restoreGraphicsState];
 }
 
 #define NSRectFromSize(size) (NSMakeRect(0, 0, (size).width, (size).height))
 
-void WLDrawScaledThreePartImage(NSRect frame, 
-                                NSImage *startCap, 
-                                NSImage *centerFill, 
-                                NSImage *endCap, 
-                                BOOL vertical, 
-                                NSCompositingOperation op, 
+void WLDrawScaledThreePartImage(NSRect frame,
+                                NSImage *startCap,
+                                NSImage *centerFill,
+                                NSImage *endCap,
+                                BOOL vertical,
+                                NSCompositingOperation op,
                                 CGFloat alphaFraction,
                                 BOOL flipped)
-{   
+{
     NSSize startSize = [startCap size];
     NSSize endSize = [endCap size];
     CGFloat width = startSize.width;
     CGFloat startLength = vertical ? startSize.height : startSize.width;
     CGFloat endLength = vertical ? endSize.height : endSize.width;
-    
+
     CGFloat capAxisLength = startLength + endLength;
     CGFloat excess = vertical ? capAxisLength - frame.size.height : capAxisLength - frame.size.width;
     CGFloat startOffset = 0;
     CGFloat endOffset = 0;
 
     if (excess > 0) {
-        startLength -= floorf(excess / 2.0);
-        endOffset = ceilf(excess / 2.0);
+        startLength -= floor(excess / 2.0);
+        endOffset = ceil(excess / 2.0);
         endLength -= endOffset;
     }
 
@@ -74,7 +74,7 @@ void WLDrawScaledThreePartImage(NSRect frame,
     CGFloat startPosition = 0;
     CGFloat midLength = 0;
     CGFloat midPosition = 0;
-    
+
     if (vertical) {
         if (flipped)
         {
@@ -99,53 +99,53 @@ void WLDrawScaledThreePartImage(NSRect frame,
 
     if (vertical)
     {
-        [startCap drawInRect:NSMakeRect(0, startPosition, width, startLength) 
+        [startCap drawInRect:NSMakeRect(0, startPosition, width, startLength)
                     fromRect:NSMakeRect(0, flipped ? startOffset : 0, width, startLength)
-                   operation:op 
-                    fraction:alphaFraction 
-              respectFlipped:YES 
+                   operation:op
+                    fraction:alphaFraction
+              respectFlipped:YES
                        hints:nil];
 
         if (drawMiddle)
         {
-            [centerFill drawInRect:NSMakeRect(0, midPosition, width, midLength) 
+            [centerFill drawInRect:NSMakeRect(0, midPosition, width, midLength)
                           fromRect:NSMakeRect(0, flipped ? [centerFill size].height : 0, width, [centerFill size].height)
-                         operation:op 
-                          fraction:alphaFraction 
-                    respectFlipped:YES 
-                             hints:nil];           
+                         operation:op
+                          fraction:alphaFraction
+                    respectFlipped:YES
+                             hints:nil];
         }
 
-        [endCap drawInRect:NSMakeRect(0, endPosition, width, endLength) 
+        [endCap drawInRect:NSMakeRect(0, endPosition, width, endLength)
                   fromRect:NSMakeRect(0, flipped ? endOffset : 0, width, endLength)
-                 operation:op 
-                  fraction:alphaFraction 
-            respectFlipped:YES 
+                 operation:op
+                  fraction:alphaFraction
+            respectFlipped:YES
                      hints:nil];
     } else {
-        [startCap drawInRect:NSMakeRect(startPosition, 0, startLength, startSize.height) 
+        [startCap drawInRect:NSMakeRect(startPosition, 0, startLength, startSize.height)
                     fromRect:NSMakeRect(0, 0, startLength, startSize.height)
-                   operation:op 
-                    fraction:alphaFraction 
-              respectFlipped:YES 
+                   operation:op
+                    fraction:alphaFraction
+              respectFlipped:YES
                        hints:nil];
-        
+
         if (drawMiddle)
         {
-            [centerFill drawInRect:NSMakeRect(midPosition, 0, midLength, startSize.height) 
+            [centerFill drawInRect:NSMakeRect(midPosition, 0, midLength, startSize.height)
                           fromRect:NSMakeRect(0, 0, [centerFill size].width, startSize.height)
-                         operation:op 
-                          fraction:alphaFraction 
-                    respectFlipped:YES 
-                             hints:nil];           
+                         operation:op
+                          fraction:alphaFraction
+                    respectFlipped:YES
+                             hints:nil];
         }
-        
-        [endCap drawInRect:NSMakeRect(endPosition, 0, endLength, startSize.height) 
+
+        [endCap drawInRect:NSMakeRect(endPosition, 0, endLength, startSize.height)
                   fromRect:NSMakeRect(0, 0, endLength, startSize.height)
-                 operation:op 
-                  fraction:alphaFraction 
-            respectFlipped:YES 
-                     hints:nil];        
+                 operation:op
+                  fraction:alphaFraction
+            respectFlipped:YES
+                     hints:nil];
     }
 }
 
@@ -170,7 +170,7 @@ void WLDrawScaledNinePartImage(NSRect bounds,
 {
     NSSize topLeftSize = [topLeftCorner size];
     NSSize bottomRightSize = [bottomRightCorner size];
-    
+
     // If we are drawing in an area in which the corner parts don't fit, remove pixels
     // from the centre instead of from the edges (and avoid overlapping). This looks a
     // lot better when a border style 9-part image shrinks, assuming the top and bottom
@@ -180,20 +180,20 @@ void WLDrawScaledNinePartImage(NSRect bounds,
     CGFloat excessHeight = topLeftSize.height + bottomRightSize.height - bounds.size.height;
     NSPoint topLeftOffset = NSMakePoint(0, 0);
     NSPoint bottomRightOffset = NSMakePoint(0, 0);
-    
+
     if (excessWidth > 0) {
-        topLeftSize.width -= floorf(excessWidth / 2.0);
-        bottomRightOffset.x = ceilf(excessWidth / 2.0);
+        topLeftSize.width -= floor(excessWidth / 2.0);
+        bottomRightOffset.x = ceil(excessWidth / 2.0);
         bottomRightSize.width -= bottomRightOffset.x;
     }
-    
+
     if (excessHeight > 0) {
-        topLeftOffset.y = floorf(excessHeight / 2.0);;
+        topLeftOffset.y = floor(excessHeight / 2.0);;
         topLeftSize.height -= topLeftOffset.y;
-        bottomRightOffset.y = ceilf(excessHeight / 2.0);
+        bottomRightOffset.y = ceil(excessHeight / 2.0);
         bottomRightSize.height -= bottomRightOffset.y;
     }
-    
+
     CGFloat leftX = 0;
     CGFloat midX = topLeftSize.width;
     CGFloat rightX = bounds.size.width - bottomRightSize.width;
@@ -203,74 +203,74 @@ void WLDrawScaledNinePartImage(NSRect bounds,
     CGFloat midY = flipped ? topLeftSize.height : bottomRightSize.height;
     CGFloat topY = flipped ? 0 : bounds.size.height - topLeftSize.height;
     CGFloat midHeight = flipped ? bottomY - midY : topY - midY;
-    
+
     BOOL    drawMiddleX = midWidth > 0;
     BOOL    drawMiddleY = midHeight > 0;
 
-    [topLeftCorner drawInRect:NSMakeRect(leftX, topY, topLeftSize.width, topLeftSize.height) 
+    [topLeftCorner drawInRect:NSMakeRect(leftX, topY, topLeftSize.width, topLeftSize.height)
                      fromRect:NSMakeRect(0, flipped ? topLeftOffset.y : 0, topLeftSize.width, topLeftSize.height)
-                    operation:op 
-                     fraction:alphaFraction 
-               respectFlipped:YES 
+                    operation:op
+                     fraction:alphaFraction
+               respectFlipped:YES
                         hints:nil];
-    
+
     if (drawMiddleX)
-        [topEdgeFill drawInRect:NSMakeRect(midX, topY, midWidth, topLeftSize.height) 
+        [topEdgeFill drawInRect:NSMakeRect(midX, topY, midWidth, topLeftSize.height)
                        fromRect:NSMakeRect(0, flipped ? topLeftOffset.y : 0, topEdgeFill.size.width, topLeftSize.height)
-                      operation:op 
-                       fraction:alphaFraction 
-                 respectFlipped:YES 
+                      operation:op
+                       fraction:alphaFraction
+                 respectFlipped:YES
                           hints:nil];
-    
-    [topRightCorner drawInRect:NSMakeRect(rightX, topY, bottomRightSize.width, topLeftSize.height) 
+
+    [topRightCorner drawInRect:NSMakeRect(rightX, topY, bottomRightSize.width, topLeftSize.height)
                       fromRect:NSMakeRect(bottomRightOffset.x, flipped ? topLeftOffset.y : 0, bottomRightSize.width, topLeftSize.height)
-                     operation:op 
-                      fraction:alphaFraction 
-                respectFlipped:YES 
+                     operation:op
+                      fraction:alphaFraction
+                respectFlipped:YES
                          hints:nil];
-    
+
     if (drawMiddleY)
     {
-        [leftEdgeFill drawInRect:NSMakeRect(leftX, midY, topLeftSize.width, midHeight) 
-                        fromRect:NSRectFromSize([leftEdgeFill size]) 
-                       operation:op 
-                        fraction:alphaFraction 
-                  respectFlipped:YES 
+        [leftEdgeFill drawInRect:NSMakeRect(leftX, midY, topLeftSize.width, midHeight)
+                        fromRect:NSRectFromSize([leftEdgeFill size])
+                       operation:op
+                        fraction:alphaFraction
+                  respectFlipped:YES
                            hints:nil];
-        if (drawMiddleX) 
-            [centerFill drawInRect:NSMakeRect(midX, midY, midWidth, midHeight) 
-                          fromRect:NSRectFromSize([centerFill size]) 
-                         operation:op 
-                          fraction:alphaFraction 
-                    respectFlipped:YES 
+        if (drawMiddleX)
+            [centerFill drawInRect:NSMakeRect(midX, midY, midWidth, midHeight)
+                          fromRect:NSRectFromSize([centerFill size])
+                         operation:op
+                          fraction:alphaFraction
+                    respectFlipped:YES
                              hints:nil];
-        [rightEdgeFill drawInRect:NSMakeRect(rightX, midY, bottomRightSize.width, midHeight) 
-                         fromRect:NSRectFromSize([rightEdgeFill size]) 
-                        operation:op 
-                         fraction:alphaFraction 
-                   respectFlipped:YES 
+        [rightEdgeFill drawInRect:NSMakeRect(rightX, midY, bottomRightSize.width, midHeight)
+                         fromRect:NSRectFromSize([rightEdgeFill size])
+                        operation:op
+                         fraction:alphaFraction
+                   respectFlipped:YES
                             hints:nil];
     }
-    
-    [bottomLeftCorner drawInRect:NSMakeRect(leftX, bottomY, topLeftSize.width, bottomRightSize.height) 
-                        fromRect:NSMakeRect(0, !flipped ? bottomRightOffset.y : 0, topLeftSize.width, bottomRightSize.height) 
-                       operation:op 
-                        fraction:alphaFraction 
-                  respectFlipped:YES 
+
+    [bottomLeftCorner drawInRect:NSMakeRect(leftX, bottomY, topLeftSize.width, bottomRightSize.height)
+                        fromRect:NSMakeRect(0, !flipped ? bottomRightOffset.y : 0, topLeftSize.width, bottomRightSize.height)
+                       operation:op
+                        fraction:alphaFraction
+                  respectFlipped:YES
                            hints:nil];
-    
+
     if (drawMiddleX)
-        [bottomEdgeFill drawInRect:NSMakeRect(midX, bottomY, midWidth, bottomRightSize.height) 
+        [bottomEdgeFill drawInRect:NSMakeRect(midX, bottomY, midWidth, bottomRightSize.height)
                           fromRect:NSMakeRect(0, !flipped ? bottomRightOffset.y : 0, bottomEdgeFill.size.width, bottomRightSize.height)
-                         operation:op 
-                          fraction:alphaFraction 
-                    respectFlipped:YES 
+                         operation:op
+                          fraction:alphaFraction
+                    respectFlipped:YES
                              hints:nil];
-    
-    [bottomRightCorner drawInRect:NSMakeRect(rightX, bottomY, bottomRightSize.width, bottomRightSize.height) 
+
+    [bottomRightCorner drawInRect:NSMakeRect(rightX, bottomY, bottomRightSize.width, bottomRightSize.height)
                          fromRect:NSMakeRect(bottomRightOffset.x, !flipped ? bottomRightOffset.y : 0, bottomRightSize.width, bottomRightSize.height)
-                        operation:op 
-                         fraction:alphaFraction 
-                   respectFlipped:YES 
+                        operation:op
+                         fraction:alphaFraction
+                   respectFlipped:YES
                             hints:nil];
 }

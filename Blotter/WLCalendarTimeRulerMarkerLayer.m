@@ -34,16 +34,16 @@
 {
     CGContextSaveGState(aContext);
     CGContextSetTextMatrix(aContext, CGAffineTransformIdentity);
-    CGContextTranslateCTM(aContext, 0.0f, self.bounds.size.height);
-    CGContextScaleCTM(aContext, 1.0f, -1.0f);
+    CGContextTranslateCTM(aContext, 0.0, self.bounds.size.height);
+    CGContextScaleCTM(aContext, 1.0, -1.0);
     CGContextSetShouldAntialias(aContext, YES);
     CGContextSetAllowsAntialiasing(aContext, YES);
     CGContextSetAllowsFontSubpixelQuantization(aContext, NO);
     CGContextSetAllowsFontSmoothing(aContext, NO);
     if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f, -1.0f), 0.0f, [[NSColor WL_timelineShadowColor] WL_CGColor]);
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, -1.0), 0.0, [[NSColor WL_timelineShadowColor] WL_CGColor]);
     else
-        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f, 1.0f), 0.0f, [[NSColor WL_timelineShadowColor] WL_CGColor]);
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0), 0.0, [[NSColor WL_timelineShadowColor] WL_CGColor]);
     [self.marker WL_drawWithRect:self.bounds context:aContext];
     CGContextRestoreGState(aContext);
 }

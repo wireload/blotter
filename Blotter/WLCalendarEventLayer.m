@@ -7,7 +7,6 @@
 //
 
 #import <WireloadClassesAndResources/WireloadClassesAndResources.h>
-#include <tgmath.h>
 #import "WLCalendarEventLayer.h"
 #import "NSColor+WLCalendar.h"
 #import "NSFont+WLCalendar.h"
@@ -282,7 +281,7 @@ const CGFloat _WLMinimumStringHeight = 5.0;
     if ([aKey isEqualToString:@"keepsTextVisible"])
         return [NSNumber numberWithBool:NO];
     else if ([aKey isEqualToString:@"contentsBackgroundOpacity"])
-        return [NSNumber numberWithFloat:1.0f];
+        return [NSNumber numberWithFloat:1.0];
     else if ([aKey isEqualToString:@"contentsBackgroundColor"])
         return (id)[[NSColor clearColor] WL_CGColor];
     else

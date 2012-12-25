@@ -28,8 +28,8 @@
 
 - (void)drawDividerInRect:(NSRect)aRect
 {
-    static const CGFloat DotWidth = 3.0f;
-    static const CGFloat DotSpace = 6.0f;
+    static const CGFloat DotWidth = 3.0;
+    static const CGFloat DotSpace = 6.0;
 
     CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
     CGContextSetFillColorWithColor(context, [[NSColor WL_dotColor] WL_CGColor]);
@@ -37,31 +37,31 @@
 
     if ([self isVertical])
     {
-        CGContextFillEllipseInRect(context, CGRectMake(NSMinX(aRect) + (NSWidth(aRect) - DotWidth) / 2.0f,
-                                                       NSMinY(aRect) + (NSHeight(aRect) - DotWidth) / 2.0f - DotSpace,
+        CGContextFillEllipseInRect(context, CGRectMake(NSMinX(aRect) + (NSWidth(aRect) - DotWidth) / 2.0,
+                                                       NSMinY(aRect) + (NSHeight(aRect) - DotWidth) / 2.0 - DotSpace,
                                                        DotWidth,
                                                        DotWidth));
-        CGContextFillEllipseInRect(context, CGRectMake(NSMinX(aRect) + (NSWidth(aRect) - DotWidth) / 2.0f,
-                                                       NSMinY(aRect) + (NSHeight(aRect) - DotWidth) / 2.0f,
+        CGContextFillEllipseInRect(context, CGRectMake(NSMinX(aRect) + (NSWidth(aRect) - DotWidth) / 2.0,
+                                                       NSMinY(aRect) + (NSHeight(aRect) - DotWidth) / 2.0,
                                                        DotWidth,
                                                        DotWidth));
-        CGContextFillEllipseInRect(context, CGRectMake(NSMinX(aRect) + (NSWidth(aRect) - DotWidth) / 2.0f,
-                                                       NSMinY(aRect) + (NSHeight(aRect) - DotWidth) / 2.0f + DotSpace,
+        CGContextFillEllipseInRect(context, CGRectMake(NSMinX(aRect) + (NSWidth(aRect) - DotWidth) / 2.0,
+                                                       NSMinY(aRect) + (NSHeight(aRect) - DotWidth) / 2.0 + DotSpace,
                                                        DotWidth,
                                                        DotWidth));
     }
     else
     {
-        CGContextFillEllipseInRect(context, CGRectMake(NSMinX(aRect) + (NSWidth(aRect) - DotWidth) / 2.0f - DotSpace,
-                                                       NSMinY(aRect) + (NSHeight(aRect) - DotWidth) / 2.0f,
+        CGContextFillEllipseInRect(context, CGRectMake(NSMinX(aRect) + (NSWidth(aRect) - DotWidth) / 2.0 - DotSpace,
+                                                       NSMinY(aRect) + (NSHeight(aRect) - DotWidth) / 2.0,
                                                        DotWidth,
                                                        DotWidth));
-        CGContextFillEllipseInRect(context, CGRectMake(NSMinX(aRect) + (NSWidth(aRect) - DotWidth) / 2.0f,
-                                                       NSMinY(aRect) + (NSHeight(aRect) - DotWidth) / 2.0f,
+        CGContextFillEllipseInRect(context, CGRectMake(NSMinX(aRect) + (NSWidth(aRect) - DotWidth) / 2.0,
+                                                       NSMinY(aRect) + (NSHeight(aRect) - DotWidth) / 2.0,
                                                        DotWidth,
                                                        DotWidth));
-        CGContextFillEllipseInRect(context, CGRectMake(NSMinX(aRect) + (NSWidth(aRect) - DotWidth) / 2.0f + DotSpace,
-                                                       NSMinY(aRect) + (NSHeight(aRect) - DotWidth) / 2.0f,
+        CGContextFillEllipseInRect(context, CGRectMake(NSMinX(aRect) + (NSWidth(aRect) - DotWidth) / 2.0 + DotSpace,
+                                                       NSMinY(aRect) + (NSHeight(aRect) - DotWidth) / 2.0,
                                                        DotWidth,
                                                        DotWidth));
     }

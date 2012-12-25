@@ -27,13 +27,13 @@
 
 - (void)drawRect:(NSRect)aDirtyRect
 {
-    static const CGFloat RoundRadius = 1.25f;
+    static const CGFloat RoundRadius = 1.25;
 
     [NSGraphicsContext saveGraphicsState];
     NSRect imageFrame = [self bounds];
     // WLRecessedBoxShadow draws 1px horizontal white line at the bottom.
-    imageFrame.origin.y += 1.0f;
-    imageFrame.size.height -= 1.0f;
+    imageFrame.origin.y += 1.0;
+    imageFrame.size.height -= 1.0;
     if (NSWidth(imageFrame) >= RoundRadius && NSHeight(imageFrame) >= RoundRadius)
     {
         [[NSBezierPath bezierPathWithRoundedRect:imageFrame
@@ -44,10 +44,10 @@
     [img drawInRect:imageFrame
            fromRect:NSZeroRect
           operation:NSCompositeSourceOver
-           fraction:1.0f];
+           fraction:1.0];
     [img release];
     [NSGraphicsContext restoreGraphicsState];
-    
+
     WLRecessedBoxShadow([self bounds]);
 }
 

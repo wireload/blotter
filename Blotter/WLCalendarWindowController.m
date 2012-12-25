@@ -550,16 +550,16 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
     NSRect windowFrame = NSZeroRect;
     if (aSize != BLCustomSize)
     {
-        static const NSSize Margin = {.width = 14.0f, .height = 14.0f};
+        static const NSSize Margin = {.width = 14.0, .height = 14.0};
         screenFrame = NSInsetRect(screenFrame, Margin.width, Margin.height);
         switch (aSize) {
             case BLNarrowSize:
                 windowFrame.size.width = BLNarrowMinimumSize.width;
-                windowFrame.size.height = fminf(BLNarrowMinimumSize.height, NSHeight(screenFrame));
+                windowFrame.size.height = fmin(BLNarrowMinimumSize.height, NSHeight(screenFrame));
                 break;
             case BLNormalSize:
-                windowFrame.size.width = fmaxf(BLNormalMinimumSize.width, NSWidth(screenFrame) / 2);
-                windowFrame.size.height = fmaxf(BLNormalMinimumSize.height, NSHeight(screenFrame) / 2);
+                windowFrame.size.width = fmax(BLNormalMinimumSize.width, NSWidth(screenFrame) / 2);
+                windowFrame.size.height = fmax(BLNormalMinimumSize.height, NSHeight(screenFrame) / 2);
                 break;
             case BLFullSize:
                 windowFrame.size = screenFrame.size;
@@ -568,14 +568,14 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
                 break;
         }
 
-        CGFloat px = 0.0f;
-        CGFloat py = 0.0f;
+        CGFloat px = 0.0;
+        CGFloat py = 0.0;
 
         if (aPosition == BLPositionTopCenter ||
             aPosition == BLPositionCenterCenter ||
             aPosition == BLPositionBottomCenter)
         {
-            px = floor(NSWidth(screenFrame) / 2.0f - NSWidth(windowFrame) / 2.0f);
+            px = floor(NSWidth(screenFrame) / 2.0 - NSWidth(windowFrame) / 2.0);
         }
         else if (aPosition == BLPositionTopRight ||
             aPosition == BLPositionCenterRight ||
@@ -594,7 +594,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
             aPosition == BLPositionCenterCenter ||
             aPosition == BLPositionCenterRight)
         {
-            py = NSHeight(screenFrame) / 2.0f - NSHeight(windowFrame) / 2.0f;
+            py = NSHeight(screenFrame) / 2.0 - NSHeight(windowFrame) / 2.0;
         }
         windowFrame.origin = NSMakePoint(screenFrame.origin.x + px, screenFrame.origin.y + py);
     }
@@ -642,13 +642,13 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
 @implementation  WLCalendarWindowController (Layout)
 
 // Belongs to the right now view.
-static const CGFloat _WLYMarginBetweenTasksAndRightNow = 10.0f;
+static const CGFloat _WLYMarginBetweenTasksAndRightNow = 10.0;
 
 // Belongs to the calendar view.
-static const CGFloat _WLXMarginBetweenInfoAndWeek = 17.0f;
+static const CGFloat _WLXMarginBetweenInfoAndWeek = 17.0;
 
 // Belongs to the date view.
-static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
+static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0;
 
 - (void)_applyWindowSizeToViews
 {
@@ -774,7 +774,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     [contentView setWantsLayer:YES];
     [contentView setAutoresizesSubviews:NO];
     if ([[NSUserDefaults standardUserDefaults] WL_slowsAnimation])
-        [contentView layer].speed = 0.1f;
+        [contentView layer].speed = 0.1;
 
     NSView *dateView = [_dateViewController view];
     [dateView setWantsLayer:YES];
@@ -807,7 +807,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     CGFloat weekWidth = NSWidth(bounds) - infoViewWidth;
     if (weekWidth > minWeekWidth)
         return infoViewWidth;
-    else if (weekWidth < minWeekWidth / 2.0f)
+    else if (weekWidth < minWeekWidth / 2.0)
         return NSWidth(bounds);
     else
         return NSWidth(bounds) - minWeekWidth;
@@ -820,10 +820,10 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
                                                                NSMinY(bounds) + _WLYMarginBetweenBoundsAndDate,
                                                                [self fixedInfoViewsWidth],
                                                                [[NSUserDefaults standardUserDefaults] floatForKey:@"DateViewHeight"] - _WLYMarginBetweenBoundsAndDate)];
-    r.origin.x = fmaxf(NSMinX(bounds), fminf(NSMaxX(bounds), r.origin.x));
-    r.origin.y = fmaxf(NSMinY(bounds) + _WLYMarginBetweenBoundsAndDate, fminf(NSMaxY(bounds), r.origin.y));
-    r.size.width = fminf(NSMaxX(bounds) - r.origin.x, r.size.width);
-    r.size.height = fminf(NSMaxY(bounds) - r.origin.y, r.size.height);
+    r.origin.x = fmax(NSMinX(bounds), fmin(NSMaxX(bounds), r.origin.x));
+    r.origin.y = fmax(NSMinY(bounds) + _WLYMarginBetweenBoundsAndDate, fmin(NSMaxY(bounds), r.origin.y));
+    r.size.width = fmin(NSMaxX(bounds) - r.origin.x, r.size.width);
+    r.size.height = fmin(NSMaxY(bounds) - r.origin.y, r.size.height);
     return r;
 }
 
@@ -849,28 +849,28 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
                                                                NSMaxY([self dateViewFrame]),
                                                                [self fixedInfoViewsWidth],
                                                                [defaults floatForKey:@"TasksViewHeight"])];
-    r.origin.x = fmaxf(NSMinX(bounds), fminf(NSMaxX(bounds), r.origin.x));
-    r.origin.y = fmaxf(NSMinY(bounds), fminf(NSMaxY(bounds), r.origin.y));
-    r.size.width = fminf(NSMaxX(bounds) - r.origin.x, r.size.width);
-    r.size.height = fminf(NSMaxY(bounds) - r.origin.y, r.size.height);
+    r.origin.x = fmax(NSMinX(bounds), fmin(NSMaxX(bounds), r.origin.x));
+    r.origin.y = fmax(NSMinY(bounds), fmin(NSMaxY(bounds), r.origin.y));
+    r.size.width = fmin(NSMaxX(bounds) - r.origin.x, r.size.width);
+    r.size.height = fmin(NSMaxY(bounds) - r.origin.y, r.size.height);
     return r;
 }
 
 - (NSRect)rightNowViewFrame
 {
     NSRect tasksViewFrame = [self tasksViewFrame];
-    CGFloat margin = 0.0f;
-    if (fabsf(tasksViewFrame.size.height - 0.0f) > FLT_EPSILON)
+    CGFloat margin = 0.0;
+    if (fabs(tasksViewFrame.size.height - 0.0) > FLT_EPSILON)
         margin = _WLYMarginBetweenTasksAndRightNow;
     NSRect bounds = [[self.window contentView] bounds];
     NSRect r = [[[self window] contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
                                                                NSMaxY(tasksViewFrame) + margin,
                                                                [self fixedInfoViewsWidth],
                                                                NSHeight(bounds) - NSMaxY([self tasksViewFrame]) - margin)];
-    r.origin.x = fmaxf(NSMinX(bounds), fminf(NSMaxX(bounds), r.origin.x));
-    r.origin.y = fmaxf(NSMinY(bounds) + margin, fminf(NSMaxY(bounds), r.origin.y));
-    r.size.width = fminf(NSMaxX(bounds) - r.origin.x, r.size.width);
-    r.size.height = fminf(NSMaxY(bounds) - r.origin.y, r.size.height);
+    r.origin.x = fmax(NSMinX(bounds), fmin(NSMaxX(bounds), r.origin.x));
+    r.origin.y = fmax(NSMinY(bounds) + margin, fmin(NSMaxY(bounds), r.origin.y));
+    r.size.width = fmin(NSMaxX(bounds) - r.origin.x, r.size.width);
+    r.size.height = fmin(NSMaxY(bounds) - r.origin.y, r.size.height);
     return r;
 }
 
@@ -878,16 +878,16 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
 {
     NSRect bounds = [[[self window] contentView] bounds];
     CGFloat infoViewWidth = [self fixedInfoViewsWidth];
-    if (fabsf(infoViewWidth - 0.0f) > FLT_EPSILON)
+    if (fabs(infoViewWidth - 0.0) > FLT_EPSILON)
         infoViewWidth += _WLXMarginBetweenInfoAndWeek;
     NSRect r = [[[self window] contentView] centerScanRect:NSMakeRect(NSMinX(bounds) + infoViewWidth,
                                                                NSMinY(bounds),
                                                                NSWidth(bounds) - infoViewWidth,
                                                                NSHeight(bounds))];
-    r.origin.x = fmaxf(NSMinX(bounds), fminf(NSMaxX(bounds), r.origin.x));
-    r.origin.y = fmaxf(NSMinY(bounds), fminf(NSMaxY(bounds), r.origin.y));
-    r.size.width = fminf(NSMaxX(bounds) - r.origin.x, r.size.width);
-    r.size.height = fminf(NSMaxY(bounds) - r.origin.y, r.size.height);
+    r.origin.x = fmax(NSMinX(bounds), fmin(NSMaxX(bounds), r.origin.x));
+    r.origin.y = fmax(NSMinY(bounds), fmin(NSMaxY(bounds), r.origin.y));
+    r.size.width = fmin(NSMaxX(bounds) - r.origin.x, r.size.width);
+    r.size.height = fmin(NSMaxY(bounds) - r.origin.y, r.size.height);
     return r;
 }
 
@@ -896,7 +896,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     NSRect bounds = [[self.window contentView] bounds];
     NSURL *defaultsURL = [[NSBundle mainBundle] URLForResource:@"defaults" withExtension:@"plist"];
     NSDictionary *defaults = [NSDictionary dictionaryWithContentsOfURL:defaultsURL];
-    return roundf((NSHeight(bounds) - ([[defaults objectForKey:@"DateViewHeight"] floatValue]) - _WLYMarginBetweenTasksAndRightNow) / 2);
+    return round((NSHeight(bounds) - ([[defaults objectForKey:@"DateViewHeight"] floatValue]) - _WLYMarginBetweenTasksAndRightNow) / 2);
 }
 
 - (CGFloat)fullTasksViewHeight
@@ -904,7 +904,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0f;
     NSRect bounds = [[self.window contentView] bounds];
     NSURL *defaultsURL = [[NSBundle mainBundle] URLForResource:@"defaults" withExtension:@"plist"];
     NSDictionary *defaults = [NSDictionary dictionaryWithContentsOfURL:defaultsURL];
-    return roundf(NSHeight(bounds) - ([[defaults objectForKey:@"DateViewHeight"] floatValue]));
+    return round(NSHeight(bounds) - ([[defaults objectForKey:@"DateViewHeight"] floatValue]));
 }
 
 - (NSSize)minimumSize

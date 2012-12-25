@@ -35,8 +35,8 @@
      Since default size may be different for different localizations, the default frame size must have been saved in `defaultFrameSize`. It is assumed the initial aspect ratio of the positioner is 16:10 + 1 px height (for the bottom shine line), and that the margins are minX=20, minY=20, maxX=20, maxY=91. This size is 440x383 in English for a 400x251 positioner control.
      */
     // XXX This has to be changed if more controls are added on the top of the position pref pane.
-    static const NSSize PositionerMargins = {.width = 40.0f, .height = 111.0f};
-    static const NSSize DoubledPositionControlSize = {.width = 840.0f, .height = 611.0f};
+    static const NSSize PositionerMargins = {.width = 40.0, .height = 111.0};
+    static const NSSize DoubledPositionControlSize = {.width = 840.0, .height = 611.0};
     NSInteger calendarSize = [[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"];
     NSSize preferredSize = calendarSize == BLCustomSize ? DoubledPositionControlSize : _defaultFrameSize;
 
@@ -45,19 +45,19 @@
     NSScreen *windowScreen = [w windowScreen];
 
     NSRect screenFrame = [windowScreen visibleFrame];
-    CGFloat aspectRatio = screenFrame.size.height ? screenFrame.size.width / screenFrame.size.height : 16.0f / 10.0f;
+    CGFloat aspectRatio = screenFrame.size.height ? screenFrame.size.width / screenFrame.size.height : 16.0 / 10.0;
 
     // Remove the margins on the left and the right so we can calculate the desired height of the positioner alone.
     CGFloat desiredHeight = (preferredSize.width - PositionerMargins.width) / aspectRatio;
 
     // Round to nearest multiple of 20 so that we get whole grid squares. This will slightly distort the aspect
     // ratio but it's the lesser of two evils.
-    CGFloat adjustedDesiredHeight = 20.0f * roundf(desiredHeight / 20.0f);
+    CGFloat adjustedDesiredHeight = 20.0 * round(desiredHeight / 20.0);
 
     preferredSize.height = adjustedDesiredHeight + PositionerMargins.height;
 
     IKApplicationPreferences *windowController = self.view.window.windowController;
-    
+
     if (windowController != nil)
         [windowController setSelectedRepresentationViewSize:preferredSize animated:YES];
     else
@@ -104,8 +104,8 @@
     if (!NSEqualRects(screenFrame, NSZeroRect))
     {
         NSRect bounds = [anArrangement positionerBounds];
-        return NSMakeSize(ceilf([w minimumSize].width * bounds.size.width / screenFrame.size.width),
-                          ceilf([w minimumSize].height * bounds.size.height / screenFrame.size.height));
+        return NSMakeSize(ceil([w minimumSize].width * bounds.size.width / screenFrame.size.width),
+                          ceil([w minimumSize].height * bounds.size.height / screenFrame.size.height));
     }
     else
         return NSMakeSize(90, 70);
@@ -118,23 +118,23 @@
 
     if (NSMinX(aFrame) < NSMinX(bounds))
     {
-        aFrame.size.width = fminf(NSWidth(aFrame), NSWidth(bounds));
+        aFrame.size.width = fmin(NSWidth(aFrame), NSWidth(bounds));
         aFrame.origin.x = NSMinX(bounds);
     }
     if (NSMaxX(aFrame) > NSMaxX(bounds))
     {
-        aFrame.size.width = fminf(NSWidth(aFrame), NSWidth(bounds));
+        aFrame.size.width = fmin(NSWidth(aFrame), NSWidth(bounds));
         aFrame.origin.x = NSMaxX(bounds) - NSWidth(aFrame);
     }
 
     if (NSMinY(aFrame) < NSMinY(bounds))
     {
-        aFrame.size.height = fminf(NSHeight(aFrame), NSHeight(bounds));
+        aFrame.size.height = fmin(NSHeight(aFrame), NSHeight(bounds));
         aFrame.origin.y = NSMinY(bounds);
     }
     if (NSMaxY(aFrame) > NSMaxY(bounds))
     {
-        aFrame.size.height = fminf(NSHeight(aFrame), NSHeight(bounds));
+        aFrame.size.height = fmin(NSHeight(aFrame), NSHeight(bounds));
         aFrame.origin.y = NSMaxY(bounds) - NSHeight(aFrame);
     }
 
@@ -177,7 +177,7 @@
 - (void)loadView
 {
     [super loadView];
-    
+
     [_arrangement createLayers];
     NSImage *backgroundImage = [NSImage imageNamed:@"Recreated-Aqua"];
     _arrangement.backgroundImage = backgroundImage;
@@ -190,10 +190,10 @@
             _arrangement.arrangementMode = WLCalendarWindowPositioningArrangement;
             break;
     }
-    
+
     _defaultFrameSize = self.view.frame.size;
     [self updatePreferredFrameSizeOfPaneView];
-    
+
     [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:@"CalendarSize"
                                                options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionPrior
                                                context:NULL];
@@ -220,8 +220,8 @@
             NSScreen *screen = [appDelegate.calendarWindowController windowScreen];
             NSRect windowFrame = [appDelegate.calendarWindowController windowFrameOnScreen:screen withPosition:position size:oldSize];
             NSRect screenFrame = [screen visibleFrame];
-            NSRect customFrameFractos = NSMakeRect(fabsf(windowFrame.origin.x - screenFrame.origin.x) / screenFrame.size.width,
-                                                   fabsf(windowFrame.origin.y - screenFrame.origin.y) / screenFrame.size.height,
+            NSRect customFrameFractos = NSMakeRect(fabs(windowFrame.origin.x - screenFrame.origin.x) / screenFrame.size.width,
+                                                   fabs(windowFrame.origin.y - screenFrame.origin.y) / screenFrame.size.height,
                                                    windowFrame.size.width / screenFrame.size.width,
                                                    windowFrame.size.height / screenFrame.size.height);
             [[NSUserDefaults standardUserDefaults] setObject:NSStringFromRect(customFrameFractos) forKey:@"CustomFrameFactors"];

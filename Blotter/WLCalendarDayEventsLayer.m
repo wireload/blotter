@@ -8,7 +8,6 @@
 
 #import <CalendarStore/CalendarStore.h>
 #import <WireloadClassesAndResources/WireloadClassesAndResources.h>
-#include <tgmath.h>
 #import "WLCalendarDayEventsLayer.h"
 #import "WLCalendarEventLayer.h"
 #import "NSFont+WLCalendar.h"
@@ -611,7 +610,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
                 if (shouldRoundCorners)
                 l.cornerRadius = CornerRadius;
                 else
-                l.cornerRadius = 0.0f;
+                l.cornerRadius = 0.0;
 
                 if (self.keepsTextOfEventsVisible)
                 [l setNeedsDisplay];
@@ -624,7 +623,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
 - (CGSize)preferredFrameSize
 {
     return CGSizeMake([self preferredFrameWidth],
-    ceilf([self.timeRuler originOffset] + [self.timeRuler lengthForHourRange:[self.timeRuler hourRange]] + [self extent]));
+                      ceil([self.timeRuler originOffset] + [self.timeRuler lengthForHourRange:[self.timeRuler hourRange]] + [self extent]));
 }
 
 #ifdef DEBUG_LAYERS
@@ -641,7 +640,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
     WLHourRange h = [self.timeRuler hourRange];
     for (NSUInteger i = h.startHour, numberOfHours = WLHourRangeLength(h); i < numberOfHours; ++i)
     {
-        CGFloat y = roundf(self.bounds.origin.y + [self.timeRuler locationForHour:i]);
+        CGFloat y = round(self.bounds.origin.y + [self.timeRuler locationForHour:i]);
         CGContextMoveToPoint(aContext, self.bounds.origin.x, y);
         CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), y);
     }

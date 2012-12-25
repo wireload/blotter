@@ -13,12 +13,12 @@
 
 + (NSColor *)WL_activeDotColor
 {
-    return [NSColor colorWithCalibratedWhite:0.2f alpha:1.0];
+    return [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
 }
 
 + (NSColor *)WL_activeDotShadowColor
 {
-    return [[NSColor whiteColor] colorWithAlphaComponent:0.2f];
+    return [[NSColor whiteColor] colorWithAlphaComponent:0.2];
 }
 
 + (NSColor *)WL_dotColor
@@ -28,7 +28,7 @@
 
 + (NSColor *)WL_dotShadowColor
 {
-    return [[NSColor blackColor] colorWithAlphaComponent:0.2f];
+    return [[NSColor blackColor] colorWithAlphaComponent:0.2];
 }
 
 + (NSColor *)WL_layoutViewTileColor

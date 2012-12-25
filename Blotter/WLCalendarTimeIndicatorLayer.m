@@ -35,12 +35,12 @@
 - (void)drawInContext:(CGContextRef)aContext
 {
     CGContextSaveGState(aContext);
-    
-    CGContextSetShadowWithColor(aContext, CGSizeMake(0.0f,  -1.0f), 0, [[NSColor WL_timelineLineShadowColor] WL_CGColor]);
 
-    static const CGFloat lengths[] = { 3.0f, 3.0f };
+    CGContextSetShadowWithColor(aContext, CGSizeMake(0.0,  -1.0), 0, [[NSColor WL_timelineLineShadowColor] WL_CGColor]);
+
+    static const CGFloat lengths[] = { 3.0, 3.0 };
     CGContextSetLineDash(aContext, 0, lengths, sizeof(lengths) / sizeof(CGFloat));
-    CGContextSetLineWidth(aContext, 1.0f);
+    CGContextSetLineWidth(aContext, 1.0);
     CGContextSetAllowsAntialiasing(aContext, NO);
     CGContextMoveToPoint(aContext, CGRectGetMinX(self.bounds), CGRectGetMaxY(self.bounds) - 1.0);
     CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), CGRectGetMaxY(self.bounds) - 1.0);
@@ -51,7 +51,7 @@
 
 - (CGSize)preferredFrameSize
 {
-    return CGSizeMake(self.frame.size.width, 2.0f);
+    return CGSizeMake(self.frame.size.width, 2.0);
 }
 
 @end

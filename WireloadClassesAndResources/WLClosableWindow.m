@@ -26,7 +26,7 @@
 
 - (NSTimeInterval)animationResizeTime:(NSRect)newFrame
 {
-    return 0.20f;
+    return 0.2;
 }
 
 - (void)close
