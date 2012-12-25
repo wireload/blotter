@@ -31,7 +31,7 @@
         self->_title = [aCSReminder.title copy];
         self->_lastModifiedDate = [aCSReminder.dateStamp copy];
         self->_location = @"";
-        self->_itemIdentifier = [aCSReminder copy];
+        self->_itemIdentifier = [aCSReminder.uid copy];
 
         // WLCalReminder
         self->_completed = aCSReminder.isCompleted;
