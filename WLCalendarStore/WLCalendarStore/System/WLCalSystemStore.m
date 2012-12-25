@@ -43,7 +43,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
 
     if (self)
     {
-        _log = [[WLASLLog alloc] initWithName:@"net.wireload.WLCalendarStore"];
+        _log = [[WLASLLog alloc] initWithName:@"net.wireload.WLCalendarStore.System"];
         _store = [CalCalendarStore defaultCalendarStore];
 
         if (!_store)
@@ -53,7 +53,10 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
         }
 
         _iCalApp = [SBApplication applicationWithBundleIdentifier:@"com.apple.iCal"];
-        _iCalAppSemaphore = dispatch_semaphore_create(1); // ensure we don't use it from multiple threads
+        if (_iCalApp)
+            _iCalAppSemaphore = dispatch_semaphore_create(1); // ensure we don't use it from multiple threads
+        else
+            [_log logWarning:@"iCal either does not exist or does not support scripting anymore. Please contact our support."];
 
         if (NSClassFromString(@"EKEventStore"))
             _calendarTypeStore = [[EKEventStore alloc] initWithAccessToEntityTypes:EKEntityMaskEvent | EKEntityMaskReminder];
