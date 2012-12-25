@@ -16,6 +16,8 @@
 
 @property (readonly) WLDateRange *dateRange;
 
-- (instancetype)initWithDateRange:(WLDateRange *)aDateRange calendarIdentifiers:(NSArray *)calendarIdentifiers;
+- (instancetype)initWithDateRange:(WLDateRange *)aDateRange calendarIdentifiers:(NSArray *)aCalendarIdentifiers;
+
++ (instancetype)predicateWithDateRange:(WLDateRange *)aDateRange calendarIdentifiers:(NSArray *)aCalendarIdentifiers;
 
 @end

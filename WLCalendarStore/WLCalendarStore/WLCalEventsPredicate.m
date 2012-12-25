@@ -11,16 +11,16 @@
 
 @implementation WLCalEventsPredicate
 
-- (instancetype)initWithDateRange:(WLDateRange *)aDateRange calendarIdentifiers:(NSArray *)calendarIdentifiers
+- (instancetype)initWithDateRange:(WLDateRange *)aDateRange calendarIdentifiers:(NSArray *)aCalendarIdentifiers
 {
     self = [super init];
-    
+
     if (self)
     {
-        _calendarIdentifiers = [calendarIdentifiers copy];
+        _calendarIdentifiers = [aCalendarIdentifiers copy];
         _dateRange = [aDateRange copy];
     }
-    
+
     return self;
 }
 
@@ -30,14 +30,19 @@
 }
 
 
+#pragma mark Methods
+
++ (instancetype)predicateWithDateRange:(WLDateRange *)aDateRange calendarIdentifiers:(NSArray *)aCalendarIdentifiers
+{
+    return [[self alloc] initWithDateRange:aDateRange calendarIdentifiers:aCalendarIdentifiers];
+}
+
+
 #pragma mark NSCopying
 
 - (instancetype)copyWithZone:(NSZone *)zone
 {
-    WLCalEventsPredicate *p = [[WLCalEventsPredicate alloc] init];
-    p->_dateRange = [_dateRange copy];
-    p->_calendarIdentifiers = [_calendarIdentifiers copy];
-    return p;
+    return [[self class] predicateWithDateRange:_dateRange calendarIdentifiers:_calendarIdentifiers];
 }
 
 
