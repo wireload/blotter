@@ -16,11 +16,9 @@
 @synthesize isDetached = _isDetached;
 @synthesize occurrenceDate = _occurrenceDate;
 
-- (instancetype)initWithStore:(id <WLCalStore>)aStore
-                      csEvent:(CalEvent *)aCSEvent
-                  calCalendar:(id <WLCalCalendar>)aCalendar
+- (WLCalSystemEvent *)initWithCSEvent:(CalEvent *)aCSEvent calCalendar:(id <WLCalCalendar>)aCalendar
 {
-    self = [super initWithStore:aStore];
+    self = [super init];
 
     if (self)
     {
@@ -48,8 +46,8 @@
 
 - (BOOL)isEqual:(WLCalSystemEvent *)anObject
 {
-    if (![super isEqual:anObject])
-        return NO;
+    if ([super isEqual:anObject])
+        return YES;
     else if (self.allDay != anObject.allDay)
         return NO;
     else if (self.isDetached != anObject.isDetached)

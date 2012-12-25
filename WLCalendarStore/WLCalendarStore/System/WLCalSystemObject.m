@@ -31,24 +31,4 @@
     return [self initWithStore:nil];
 }
 
-
-#pragma mark NSObject
-
-- (BOOL)isEqual:(WLCalSystemObject *)anObject
-{
-    if (self == anObject)
-        return YES;
-    else if (![anObject isKindOfClass:[self class]])
-        return NO;
-    else if (self.store != anObject.store)
-        return NO;
-    else
-        return YES;
-}
-
-- (NSUInteger)hash
-{
-    return [self.store hash];
-}
-
 @end

@@ -11,7 +11,7 @@
 #import <WLCalendarStore/WLCalCalendar.h>
 #import <WLCalendarStore/WLCalCalendarItem.h>
 
-@interface WLCalSystemCalendarItem : WLCalSystemObject <WLCalCalendarItem>
+@interface WLCalSystemCalendarItem : NSObject <WLCalCalendarItem>
 {
     id<WLCalCalendar> _calendar;
     NSString *_notes;

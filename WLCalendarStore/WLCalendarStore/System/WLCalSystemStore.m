@@ -553,9 +553,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
 
         if (calendar)
         {
-            WLCalSystemEvent *event = [[WLCalSystemEvent alloc] initWithStore:self
-                                                                      csEvent:csEvent
-                                                                  calCalendar:calendar];
+            WLCalSystemEvent *event = [[WLCalSystemEvent alloc] initWithCSEvent:csEvent calCalendar:calendar];
             NSUInteger i = [events indexOfObject:event
                                    inSortedRange:NSMakeRange(0, [events count])
                                          options:NSBinarySearchingInsertionIndex
@@ -608,9 +606,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
 
         if (calendar)
         {
-            WLCalSystemReminder *reminder = [[WLCalSystemReminder alloc] initWithStore:self
-                                                                            csReminder:csReminder
-                                                                           calCalendar:calendar];
+            WLCalSystemReminder *reminder = [[WLCalSystemReminder alloc] initWithCSReminder:csReminder calCalendar:calendar];
             NSUInteger i = [reminders indexOfObject:reminder
                                       inSortedRange:NSMakeRange(0, [reminders count])
                                             options:NSBinarySearchingInsertionIndex

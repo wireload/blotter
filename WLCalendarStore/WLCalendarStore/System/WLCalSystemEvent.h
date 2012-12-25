@@ -22,8 +22,6 @@
     NSDate *_occurrenceDate;
 }
 
-- (instancetype)initWithStore:(id <WLCalStore>)aStore
-                      csEvent:(CalEvent *)aCSEvent
-                  calCalendar:(id <WLCalCalendar>)aCalendar;
+- (WLCalSystemEvent *)initWithCSEvent:(CalEvent *)aCSEvent calCalendar:(id <WLCalCalendar>)aCalendar;
 
 @end

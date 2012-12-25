@@ -11,5 +11,8 @@
 
 
 @interface WLCalSystemObject : NSObject <WLCalObject>
+{
+    id<WLCalStore> _store;
+}
 
 @end

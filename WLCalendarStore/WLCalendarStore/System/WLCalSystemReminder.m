@@ -15,13 +15,11 @@
 @synthesize dueDateComponents = _dueDateComponents;
 @synthesize priority = _priority;
 
-- (instancetype)initWithStore:(id <WLCalStore>)aStore
-                   csReminder:(CalTask *)aCSReminder
-                  calCalendar:(id <WLCalCalendar>)aCalendar
+- (WLCalSystemReminder *)initWithCSReminder:(CalTask *)aCSReminder calCalendar:(id <WLCalCalendar>)aCalendar
 {
     NSParameterAssert(aCalendar != nil);
 
-    self = [super initWithStore:aStore];
+    self = [super init];
 
     if (self)
     {
@@ -51,8 +49,8 @@
 
 - (BOOL)isEqual:(WLCalSystemReminder *)anObject
 {
-    if (![super isEqual:anObject])
-        return NO;
+    if ([super isEqual:anObject])
+        return YES;
     else if (self.completed != anObject.completed)
         return NO;
     else if (self.priority != anObject.priority)
