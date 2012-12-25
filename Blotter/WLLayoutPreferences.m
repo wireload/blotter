@@ -16,19 +16,12 @@
 
 - (void)dealloc
 {
-    [_blotterWindowToRootSplitViewTransform release];
-    [_rootSplitViewToBlotterWindowTransform release];
-    [_blotterWindowToWeekSplitViewTransform release];
-    [_weekSplitViewToBlotterWindowTransform release];
-    [_blotterWindowToInfoSplitViewTransform release];
-    [_infoSplitViewToBlotterWindowTransform release];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     if (self.isViewLoaded)
     {
         [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:@"CalendarLayout"];
         [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:WLScreenIdentifierKey];
     }
-    [super dealloc];
 }
 
 
@@ -262,12 +255,12 @@
 
 - (void)_recalculateTransforms
 {
-    self._blotterWindowToRootSplitViewTransform = [[[NSAffineTransform alloc] init] autorelease];
-    self._rootSplitViewToBlotterWindowTransform = [[[NSAffineTransform alloc] init] autorelease];
-    self._blotterWindowToWeekSplitViewTransform = [[[NSAffineTransform alloc] init] autorelease];
-    self._weekSplitViewToBlotterWindowTransform = [[[NSAffineTransform alloc] init] autorelease];
-    self._blotterWindowToInfoSplitViewTransform = [[[NSAffineTransform alloc] init] autorelease];
-    self._infoSplitViewToBlotterWindowTransform = [[[NSAffineTransform alloc] init] autorelease];
+    self._blotterWindowToRootSplitViewTransform = [[NSAffineTransform alloc] init];
+    self._rootSplitViewToBlotterWindowTransform = [[NSAffineTransform alloc] init];
+    self._blotterWindowToWeekSplitViewTransform = [[NSAffineTransform alloc] init];
+    self._weekSplitViewToBlotterWindowTransform = [[NSAffineTransform alloc] init];
+    self._blotterWindowToInfoSplitViewTransform = [[NSAffineTransform alloc] init];
+    self._infoSplitViewToBlotterWindowTransform = [[NSAffineTransform alloc] init];
 
     NSRect layoutViewFrame = [_rootSplitView frame];
     DeskboardAppDelegate *delegate = (DeskboardAppDelegate *)[[NSApplication sharedApplication] delegate];

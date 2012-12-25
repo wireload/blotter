@@ -19,5 +19,4 @@
     return WLLayoutDayViewTag;
 }
 
-
 @end

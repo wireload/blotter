@@ -14,8 +14,6 @@
 
 #pragma mark NSView
 
-
-
 - (NSInteger)tag
 {
     return WLLayoutAllDayViewTag;

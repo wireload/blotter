@@ -34,6 +34,4 @@
     [NSGraphicsContext restoreGraphicsState];
 }
 
-
-
 @end

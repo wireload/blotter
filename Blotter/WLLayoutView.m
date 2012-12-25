@@ -35,7 +35,7 @@ static const CGFloat RoundRadius = 2.0;
         Images[6] = [NSImage imageNamed:@"layout-area-bottom-left"];
         Images[7] = [NSImage imageNamed:@"layout-area-bottom"];
         Images[8] = [NSImage imageNamed:@"layout-area-bottom-right"];
-        Tile = [[NSColor WL_layoutViewTileColor] retain];
+        Tile = [NSColor WL_layoutViewTileColor];
     });
 }
 

@@ -74,7 +74,9 @@
 {
     if ([[self delegate] respondsToSelector:@selector(splitViewWillTrackMouse:)])
         [[self delegate] splitViewWillTrackMouse:self];
+
     [super mouseDown:anEvent];
+
     if ([[self delegate] respondsToSelector:@selector(splitViewDidTrackMouse:)])
         [[self delegate] splitViewDidTrackMouse:self];
 }

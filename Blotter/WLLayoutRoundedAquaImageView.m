@@ -45,7 +45,6 @@
            fromRect:NSZeroRect
           operation:NSCompositeSourceOver
            fraction:1.0];
-    [img release];
     [NSGraphicsContext restoreGraphicsState];
 
     WLRecessedBoxShadow([self bounds]);
