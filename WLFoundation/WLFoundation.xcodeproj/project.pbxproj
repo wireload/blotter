@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA1059A3168DE52E00A3DDF5 /* WLDateRangeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1059A2168DE52E00A3DDF5 /* WLDateRangeTests.m */; };
+		BA1059A5168DF37D00A3DDF5 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA1059A4168DF37D00A3DDF5 /* AppKit.framework */; };
 		BA81DA75160DA09D00C83DC3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA81DA73160DA09D00C83DC3 /* InfoPlist.strings */; };
 		BA81DA83160DA0C800C83DC3 /* NSArray+WLDelta.h in Headers */ = {isa = PBXBuildFile; fileRef = BA81DA7F160DA0C800C83DC3 /* NSArray+WLDelta.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA81DA84160DA0C800C83DC3 /* NSArray+WLDelta.m in Sources */ = {isa = PBXBuildFile; fileRef = BA81DA80160DA0C800C83DC3 /* NSArray+WLDelta.m */; };
@@ -38,6 +40,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BA1059A1168DE52E00A3DDF5 /* WLDateRangeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDateRangeTests.h; sourceTree = "<group>"; };
+		BA1059A2168DE52E00A3DDF5 /* WLDateRangeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDateRangeTests.m; sourceTree = "<group>"; };
+		BA1059A4168DF37D00A3DDF5 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		BA81DA67160DA09D00C83DC3 /* WLFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WLFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA81DA6F160DA09D00C83DC3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BA81DA72160DA09D00C83DC3 /* WLFoundation-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WLFoundation-Info.plist"; sourceTree = "<group>"; };
@@ -70,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA1059A5168DF37D00A3DDF5 /* AppKit.framework in Frameworks */,
 				BA9AFB90163AB3D400FAAAD3 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -89,6 +95,7 @@
 		BA81DA5B160DA09D00C83DC3 = {
 			isa = PBXGroup;
 			children = (
+				BA1059A4168DF37D00A3DDF5 /* AppKit.framework */,
 				BA81DA6F160DA09D00C83DC3 /* Foundation.framework */,
 				BAA049D01621A1040078DF12 /* SenTestingKit.framework */,
 				BA81DA70160DA09D00C83DC3 /* WLFoundation */,
@@ -143,6 +150,8 @@
 				BAA049DA1621A1040078DF12 /* WLFoundationTests.m */,
 				BAA049E11621A1810078DF12 /* NSArray+WLDelta_Tests.h */,
 				BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */,
+				BA1059A1168DE52E00A3DDF5 /* WLDateRangeTests.h */,
+				BA1059A2168DE52E00A3DDF5 /* WLDateRangeTests.m */,
 			);
 			path = WLFoundationTests;
 			sourceTree = "<group>";
@@ -294,6 +303,7 @@
 			files = (
 				BAA049DB1621A1040078DF12 /* WLFoundationTests.m in Sources */,
 				BAA049E31621A1810078DF12 /* NSArray+WLDelta_Tests.m in Sources */,
+				BA1059A3168DE52E00A3DDF5 /* WLDateRangeTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

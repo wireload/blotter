@@ -7,16 +7,30 @@
 //
 
 #import <WLFoundation/WLFoundation.h>
+#import <AppKit/AppKit.h>
 #import "WLDateRange.h"
 
 
 @implementation WLDateRange
-@synthesize startDate;
-@synthesize endDate;
 
-+ (instancetype)dateRangeWithStartDate:(NSDate *)aStartDate endDate:(NSDate *)anEndDate
+- (instancetype)initWithStartDate:(NSDate *)aStartDate endDate:(NSDate *)anEndDate
 {
-    return [[self alloc] initWithStartDate:aStartDate endDate:anEndDate];
+    self = [super init];
+
+    if (self)
+    {
+        if (aStartDate)
+            _startDate = [aStartDate copy];
+        else
+            _startDate = [NSDate date];
+
+        if (anEndDate)
+            _endDate = [anEndDate copy];
+        else
+            _endDate = [NSDate date];
+    }
+
+    return self;
 }
 
 - (instancetype)init
@@ -25,36 +39,35 @@
     return [self initWithStartDate:now endDate:now];
 }
 
+
+#pragma mark Methods
+
++ (instancetype)dateRangeWithStartDate:(NSDate *)aStartDate endDate:(NSDate *)anEndDate
+{
+    return [[self alloc] initWithStartDate:aStartDate endDate:anEndDate];
+}
+
 + (instancetype)emptyDateRange
 {
     return [[self alloc] init];
 }
 
-- (instancetype)initWithStartDate:(NSDate *)aStartDate endDate:(NSDate *)anEndDate
-{
-    self = [super init];
-
-    if (self != nil)
-    {
-        startDate = [aStartDate copy];
-        endDate = [anEndDate copy];
-    }
-
-    return self;
-}
-
 - (WLDateRange *)dateRangeByUnitingWithDateRange:(WLDateRange *)aDateRange
 {
+    if (!aDateRange)
+        [NSException raise:NSInvalidArgumentException format:@"You cannot unite date range with nil."];
+
     return [[self class] dateRangeWithStartDate:[self.startDate earlierDate:aDateRange.startDate]
                                         endDate:[self.endDate laterDate:aDateRange.endDate]];
 }
 
-
-#pragma mark Methods
-
 - (WLPositionRelativeToRange)positionOfDate:(NSDate *)aDate
 {
-    NSComparisonResult result = [aDate compare:startDate];
+    if (!aDate)
+        [NSException raise:NSInvalidArgumentException format:@"You cannot get position of nil."];
+
+    NSComparisonResult result = [aDate compare:self.startDate];
+
     if (result == NSOrderedAscending)
         return WLEarlierThanRange;
     else if (result == NSOrderedSame || [aDate compare:self.endDate] != NSOrderedDescending)
@@ -66,9 +79,11 @@
 - (BOOL)intersectsRange:(WLDateRange *)aRange
 {
     WLPositionRelativeToRange startDatePosition = [self positionOfDate:aRange.startDate];
+
     if (startDatePosition != WLLaterThanRange)
     {
         WLPositionRelativeToRange endDatePosition = [self positionOfDate:aRange.endDate];
+
         if (endDatePosition != WLEarlierThanRange)
             return YES;
     }
@@ -77,7 +92,14 @@
 
 - (BOOL)intersectsRange:(WLDateRange *)aRange position:(WLPositionRelativeToRange *)outPosition
 {
+    if (!aRange)
+        [NSException raise:NSInvalidArgumentException format:@"aRange MUST NOT be nil."];
+
+    if (!outPosition)
+        [NSException raise:NSInvalidArgumentException format:@"outPosition MUST NOT be NULL."];
+
     const WLPositionRelativeToRange startDatePosition = [self positionOfDate:aRange.startDate];
+
     if (startDatePosition != WLLaterThanRange)
     {
         const WLPositionRelativeToRange endDatePosition = [self positionOfDate:aRange.endDate];
@@ -98,6 +120,7 @@
     }
     else
         *outPosition = WLLaterThanRange;
+
     return NO;
 }
 
@@ -114,6 +137,7 @@
     return [[self class] dateRangeWithStartDate:self.startDate endDate:self.endDate];
 }
 
+
 #pragma mark NSMutableCopying
 
 - (id)mutableCopyWithZone:(NSZone *)zone
@@ -124,9 +148,217 @@
 
 #pragma mark NSObject
 
+- (NSUInteger)hash
+{
+    return [self.startDate hash];
+}
+
+- (BOOL)isEqual:(WLDateRange *)anObject
+{
+    if ([super isEqual:anObject])
+        return YES;
+    else if (![anObject isKindOfClass:[WLDateRange class]])
+        return NO;
+    else if (![self.startDate isEqual:anObject.startDate])
+        return NO;
+    else if (![self.endDate isEqual:anObject.endDate])
+        return NO;
+    else
+        return YES;
+}
+
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@: {%@, %@}", [super description], startDate, endDate];
+    return [NSString stringWithFormat:@"%@: {%@, %@}", [super description], self.startDate, self.endDate];
+}
+
+@end
+
+
+@implementation WLDateRange (Alignment)
+
+- (WLDateRange *)dateRangeByAligningEraWithCalendar:(NSCalendar *)aCalendar options:(WLDateRangeAlignmentOptions)anOptions
+{
+    return [self dateRangeByAligningCalendarUnit:NSEraCalendarUnit calendar:aCalendar options:anOptions];
+}
+
+- (WLDateRange *)dateRangeByAligningYearWithCalendar:(NSCalendar *)aCalendar options:(WLDateRangeAlignmentOptions)anOptions
+{
+    return [self dateRangeByAligningCalendarUnit:NSYearCalendarUnit calendar:aCalendar options:anOptions];
+}
+
+- (WLDateRange *)dateRangeByAligningMonthWithCalendar:(NSCalendar *)aCalendar options:(WLDateRangeAlignmentOptions)anOptions
+{
+    return [self dateRangeByAligningCalendarUnit:NSMonthCalendarUnit calendar:aCalendar options:anOptions];
+}
+
+- (WLDateRange *)dateRangeByAligningWeekWithCalendar:(NSCalendar *)aCalendar options:(WLDateRangeAlignmentOptions)anOptions
+{
+    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
+        return [self dateRangeByAligningCalendarUnit:NSWeekCalendarUnit calendar:aCalendar options:anOptions];
+    else
+        return [self dateRangeByAligningCalendarUnit:NSWeekOfMonthCalendarUnit calendar:aCalendar options:anOptions];
+}
+
+- (WLDateRange *)dateRangeByAligningDayWithCalendar:(NSCalendar *)aCalendar options:(WLDateRangeAlignmentOptions)anOptions
+{
+    return [self dateRangeByAligningCalendarUnit:NSDayCalendarUnit calendar:aCalendar options:anOptions];
+}
+
+- (WLDateRange *)dateRangeByAligningHourWithCalendar:(NSCalendar *)aCalendar options:(WLDateRangeAlignmentOptions)anOptions
+{
+    return [self dateRangeByAligningCalendarUnit:NSHourCalendarUnit calendar:aCalendar options:anOptions];
+}
+
+- (WLDateRange *)dateRangeByAligningMinuteWithCalendar:(NSCalendar *)aCalendar options:(WLDateRangeAlignmentOptions)anOptions
+{
+    return [self dateRangeByAligningCalendarUnit:NSMinuteCalendarUnit calendar:aCalendar options:anOptions];
+}
+
+- (WLDateRange *)dateRangeByAligningSecondWithCalendar:(NSCalendar *)aCalendar options:(WLDateRangeAlignmentOptions)anOptions
+{
+    return [self dateRangeByAligningCalendarUnit:NSSecondCalendarUnit calendar:aCalendar options:anOptions];
+}
+
+- (WLDateRange *)dateRangeByAligningCalendarUnit:(NSCalendarUnit)aCalendarUnit calendar:(NSCalendar *)aCalendar options:(WLDateRangeAlignmentOptions)anOptions
+{
+    if (!aCalendar)
+        aCalendar = [NSCalendar autoupdatingCurrentCalendar];
+
+    NSDate *startDateOutward = nil;
+    NSTimeInterval startDateInterval = 0.0;
+
+    if (![aCalendar rangeOfUnit:aCalendarUnit startDate:&startDateOutward interval:&startDateInterval forDate:self.startDate])
+    {
+        [NSException raise:NSInternalInconsistencyException
+                    format:@"Cannot align (calendar unit: %lu) date range (%@) with calendar (%@) and options (%lu)", aCalendarUnit, self, aCalendar, anOptions];
+    }
+
+    NSDate *endDateInward = nil;
+    NSTimeInterval endDateInterval = 0.0;
+
+    if (![aCalendar rangeOfUnit:aCalendarUnit startDate:&endDateInward interval:&endDateInterval forDate:self.endDate])
+    {
+        [NSException raise:NSInternalInconsistencyException
+                    format:@"Cannot align (calendar unit: %lu) date range (%@) with calendar (%@) and options (%lu)", aCalendarUnit, self, aCalendar, anOptions];
+    }
+
+    NSDate *startDateInward = [startDateOutward dateByAddingTimeInterval:startDateInterval];
+    NSDate *endDateOutward = [endDateInward dateByAddingTimeInterval:endDateInterval];
+    NSDate *startDateNearest = nil;
+    NSDate *endDateNearest = nil;
+
+    if (fabs([self.startDate timeIntervalSinceDate:startDateOutward]) <= fabs([self.startDate timeIntervalSinceDate:startDateInward]))
+        startDateNearest = startDateOutward;
+    else
+        startDateNearest = startDateInward;
+
+    if (fabs([self.endDate timeIntervalSinceDate:endDateOutward]) <= fabs([self.endDate timeIntervalSinceDate:endDateInward]))
+        endDateNearest = endDateOutward;
+    else
+        endDateNearest = endDateInward;
+
+    NSDate *startDate = nil;
+    NSDate *endDate = nil;
+
+    if (anOptions & WLAlignStartDateInward)
+        startDate = startDateInward;
+    else if (anOptions & WLAlignStartDateNearest)
+        startDate = startDateNearest;
+    else if (anOptions & WLAlignStartDateOutward)
+        startDate = startDateOutward;
+    else
+        [NSException raise:NSInvalidArgumentException format:@"anOptions (%lu) does not specify alignment option for start date.", anOptions];
+
+    if (anOptions & WLAlignEndDateInward)
+        endDate = endDateInward;
+    else if (anOptions & WLAlignEndDateNearest)
+        endDate = endDateNearest;
+    else if (anOptions & WLAlignEndDateOutward)
+        endDate = endDateOutward;
+    else
+        [NSException raise:NSInvalidArgumentException format:@"anOptions (%lu) does not specify alignment option for end date.", anOptions];
+
+    return [WLDateRange dateRangeWithStartDate:startDate endDate:endDate];
+}
+
+@end
+
+
+@implementation WLDateRange (Split)
+
+- (NSArray *)splitIntoErasWithCalendar:(NSCalendar *)aCalendar
+{
+    return [self splitIntoCalendarUnits:NSEraCalendarUnit calendar:aCalendar];
+}
+
+- (NSArray *)splitIntoYearsWithCalendar:(NSCalendar *)aCalendar
+{
+    return [self splitIntoCalendarUnits:NSYearCalendarUnit calendar:aCalendar];
+}
+
+- (NSArray *)splitIntoMonthsWithCalendar:(NSCalendar *)aCalendar
+{
+    return [self splitIntoCalendarUnits:NSMonthCalendarUnit calendar:aCalendar];
+}
+
+- (NSArray *)splitIntoWeeksWithCalendar:(NSCalendar *)aCalendar
+{
+    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
+        return [self splitIntoCalendarUnits:NSWeekCalendarUnit calendar:aCalendar];
+    else
+        return [self splitIntoCalendarUnits:NSWeekOfMonthCalendarUnit calendar:aCalendar];
+}
+
+- (NSArray *)splitIntoDaysWithCalendar:(NSCalendar *)aCalendar
+{
+    return [self splitIntoCalendarUnits:NSDayCalendarUnit calendar:aCalendar];
+}
+
+- (NSArray *)splitIntoHoursWithCalendar:(NSCalendar *)aCalendar
+{
+    return [self splitIntoCalendarUnits:NSHourCalendarUnit calendar:aCalendar];
+}
+
+- (NSArray *)splitIntoMinutesWithCalendar:(NSCalendar *)aCalendar
+{
+    return [self splitIntoCalendarUnits:NSMinuteCalendarUnit calendar:aCalendar];
+}
+
+- (NSArray *)splitIntoSecondsWithCalendar:(NSCalendar *)aCalendar
+{
+    return [self splitIntoCalendarUnits:NSSecondCalendarUnit calendar:aCalendar];
+}
+
+- (NSArray *)splitIntoCalendarUnits:(NSCalendarUnit)aCalendarUnit calendar:(NSCalendar *)aCalendar
+{
+    if ([self.startDate compare:self.endDate] == NSOrderedDescending)
+    {
+        [NSException raise:NSInternalInconsistencyException
+                    format:@"You cannot split reverse-date range (%@).", self];
+    }
+
+    NSMutableArray *parts = [NSMutableArray array];
+    NSDate *startUnitDate = nil;
+    NSTimeInterval startUnitDateInterval = 0.0;
+    NSDate *currentRangeStartDate = self.startDate;
+
+    do
+    {
+        if (![aCalendar rangeOfUnit:aCalendarUnit startDate:&startUnitDate interval:&startUnitDateInterval forDate:currentRangeStartDate])
+        {
+            [NSException raise:NSInternalInconsistencyException
+                        format:@"Cannot split date range (%@) into calendar units (%lu) with calendar (%@)", self, aCalendarUnit, aCalendar];
+        }
+
+        NSDate *endUnitDate = [startUnitDate dateByAddingTimeInterval:startUnitDateInterval];
+        [parts addObject:[WLDateRange dateRangeWithStartDate:currentRangeStartDate endDate:[endUnitDate earlierDate:self.endDate]]];
+        startUnitDate = endUnitDate;
+        currentRangeStartDate = startUnitDate;
+    }
+    while ([self.endDate compare:startUnitDate] == NSOrderedDescending);
+
+    return parts;
 }
 
 @end
