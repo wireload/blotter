@@ -245,41 +245,59 @@
 
     NSDate *startDateInward = [startDateOutward dateByAddingTimeInterval:startDateInterval];
     NSDate *endDateOutward = [endDateInward dateByAddingTimeInterval:endDateInterval];
-    NSDate *startDateNearest = nil;
-    NSDate *endDateNearest = nil;
 
-    if (fabs([self.startDate timeIntervalSinceDate:startDateOutward]) <= fabs([self.startDate timeIntervalSinceDate:startDateInward]))
-        startDateNearest = startDateOutward;
+    if (([self.startDate isEqualToDate:startDateInward] || [self.startDate isEqualToDate:startDateOutward]) &&
+        ([self.endDate isEqualToDate:endDateInward] || [self.endDate isEqualToDate:endDateOutward]))
+    {
+        // Current date range already aligned.
+        return [self copy];
+    }
+    else if ((anOptions & WLAlignStartDateInward) && (anOptions & WLAlignEndDateInward))
+        return [WLDateRange dateRangeWithStartDate:startDateInward endDate:endDateInward];
+    else if ((anOptions & WLAlignStartDateInward) && (anOptions & WLAlignEndDateOutward))
+        return [WLDateRange dateRangeWithStartDate:startDateInward endDate:endDateOutward];
+    else if ((anOptions & WLAlignStartDateOutward) && (anOptions & WLAlignEndDateInward))
+        return [WLDateRange dateRangeWithStartDate:startDateOutward endDate:endDateInward];
+    else if ((anOptions & WLAlignStartDateOutward) && (anOptions & WLAlignEndDateOutward))
+        return [WLDateRange dateRangeWithStartDate:startDateOutward endDate:endDateOutward];
     else
-        startDateNearest = startDateInward;
+    {
+        NSDate *startDateNearest = nil;
+        NSDate *endDateNearest = nil;
 
-    if (fabs([self.endDate timeIntervalSinceDate:endDateOutward]) <= fabs([self.endDate timeIntervalSinceDate:endDateInward]))
-        endDateNearest = endDateOutward;
-    else
-        endDateNearest = endDateInward;
+        if (fabs([self.startDate timeIntervalSinceDate:startDateOutward]) <= fabs([self.startDate timeIntervalSinceDate:startDateInward]))
+            startDateNearest = startDateOutward;
+        else
+            startDateNearest = startDateInward;
 
-    NSDate *startDate = nil;
-    NSDate *endDate = nil;
+        if (fabs([self.endDate timeIntervalSinceDate:endDateOutward]) <= fabs([self.endDate timeIntervalSinceDate:endDateInward]))
+            endDateNearest = endDateOutward;
+        else
+            endDateNearest = endDateInward;
 
-    if (anOptions & WLAlignStartDateInward)
-        startDate = startDateInward;
-    else if (anOptions & WLAlignStartDateNearest)
-        startDate = startDateNearest;
-    else if (anOptions & WLAlignStartDateOutward)
-        startDate = startDateOutward;
-    else
-        [NSException raise:NSInvalidArgumentException format:@"anOptions (%lu) does not specify alignment option for start date.", anOptions];
+        NSDate *startDate = nil;
+        NSDate *endDate = nil;
 
-    if (anOptions & WLAlignEndDateInward)
-        endDate = endDateInward;
-    else if (anOptions & WLAlignEndDateNearest)
-        endDate = endDateNearest;
-    else if (anOptions & WLAlignEndDateOutward)
-        endDate = endDateOutward;
-    else
-        [NSException raise:NSInvalidArgumentException format:@"anOptions (%lu) does not specify alignment option for end date.", anOptions];
+        if (anOptions & WLAlignStartDateInward)
+            startDate = startDateInward;
+        else if (anOptions & WLAlignStartDateNearest)
+            startDate = startDateNearest;
+        else if (anOptions & WLAlignStartDateOutward)
+            startDate = startDateOutward;
+        else
+            [NSException raise:NSInvalidArgumentException format:@"anOptions (%lu) does not specify alignment option for start date.", anOptions];
 
-    return [WLDateRange dateRangeWithStartDate:startDate endDate:endDate];
+        if (anOptions & WLAlignEndDateInward)
+            endDate = endDateInward;
+        else if (anOptions & WLAlignEndDateNearest)
+            endDate = endDateNearest;
+        else if (anOptions & WLAlignEndDateOutward)
+            endDate = endDateOutward;
+        else
+            [NSException raise:NSInvalidArgumentException format:@"anOptions (%lu) does not specify alignment option for end date.", anOptions];
+
+        return [WLDateRange dateRangeWithStartDate:startDate endDate:endDate];
+    }
 }
 
 @end
