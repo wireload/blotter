@@ -135,6 +135,20 @@
     STAssertEquals(WLLaterThanRange, [r1 positionOfDate:date], @"Date is not later");
 }
 
+- (void)testPositionOfStartDate
+{
+    WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:[NSDate date] endDate:[[NSDate date] dateByAddingTimeInterval:10]];
+    NSDate *date = r1.startDate;
+    STAssertEquals(WLWithinRange, [r1 positionOfDate:date], @"Date is not within");
+}
+
+- (void)testPositionOfEndDate
+{
+    WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:[NSDate date] endDate:[[NSDate date] dateByAddingTimeInterval:10]];
+    NSDate *date = r1.endDate;
+    STAssertEquals(WLLaterThanRange, [r1 positionOfDate:date], @"Date is not later");
+}
+
 - (void)testIntersectsRange1Earlier2
 {
     NSDate *startDate1 = [NSDate date];
@@ -145,9 +159,23 @@
     WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
     WLDateRange *r2 = [WLDateRange dateRangeWithStartDate:startDate2 endDate:endDate2];
     STAssertFalse([r1 intersectsRange:r2], @"Ranges intersect");
+    STAssertFalse([r2 intersectsRange:r1], @"Ranges intersect");
 }
 
-- (void)testIntersectsRange1EarlierIntersect2
+- (void)testIntersectsRange1Earlier2Touch
+{
+    NSDate *startDate1 = [NSDate date];
+    NSDate *endDate1 = [startDate1 dateByAddingTimeInterval:10];
+    NSDate *startDate2 = endDate1;
+    NSDate *endDate2 = [startDate2 dateByAddingTimeInterval:10];
+
+    WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
+    WLDateRange *r2 = [WLDateRange dateRangeWithStartDate:startDate2 endDate:endDate2];
+    STAssertFalse([r1 intersectsRange:r2], @"Ranges intersect");
+    STAssertFalse([r2 intersectsRange:r1], @"Ranges intersect");
+}
+
+- (void)testIntersectsRange1Earlier2Intersect
 {
     NSDate *startDate1 = [NSDate date];
     NSDate *endDate1 = [startDate1 dateByAddingTimeInterval:10];
@@ -157,6 +185,7 @@
     WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
     WLDateRange *r2 = [WLDateRange dateRangeWithStartDate:startDate2 endDate:endDate2];
     STAssertTrue([r1 intersectsRange:r2], @"Ranges do not intersect");
+    STAssertTrue([r2 intersectsRange:r1], @"Ranges do not intersect");
 }
 
 - (void)testIntersectsRange1Within2
@@ -169,9 +198,64 @@
     WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
     WLDateRange *r2 = [WLDateRange dateRangeWithStartDate:startDate2 endDate:endDate2];
     STAssertTrue([r1 intersectsRange:r2], @"Ranges do not intersect");
+    STAssertTrue([r2 intersectsRange:r1], @"Ranges do not intersect");
 }
 
-- (void)testIntersectsRange1LaterIntersects2
+- (void)testIntersectsRange1Within2CommonStartDate
+{
+    NSDate *startDate1 = [NSDate date];
+    NSDate *endDate1 = [startDate1 dateByAddingTimeInterval:10];
+    NSDate *startDate2 = startDate1;
+    NSDate *endDate2 = [endDate1 dateByAddingTimeInterval:10];
+
+    WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
+    WLDateRange *r2 = [WLDateRange dateRangeWithStartDate:startDate2 endDate:endDate2];
+    STAssertTrue([r1 intersectsRange:r2], @"Ranges do not intersect");
+    STAssertTrue([r2 intersectsRange:r1], @"Ranges do not intersect");
+}
+
+- (void)testIntersectsRange1Within2CommonStartDateEmpty
+{
+    NSDate *startDate1 = [NSDate date];
+    NSDate *endDate1 = startDate1;
+    NSDate *startDate2 = startDate1;
+    NSDate *endDate2 = [endDate1 dateByAddingTimeInterval:10];
+
+    WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
+    WLDateRange *r2 = [WLDateRange dateRangeWithStartDate:startDate2 endDate:endDate2];
+    STAssertTrue([r1 intersectsRange:r2], @"Ranges do not intersect");
+    STAssertTrue([r2 intersectsRange:r1], @"Ranges do not intersect");
+}
+
+- (void)testIntersectsRange1Within2CommonEndDate
+{
+    NSDate *startDate1 = [NSDate date];
+    NSDate *endDate1 = [startDate1 dateByAddingTimeInterval:10];
+    NSDate *startDate2 = [startDate1 dateByAddingTimeInterval:-5];
+    NSDate *endDate2 = endDate1;
+
+    WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
+    WLDateRange *r2 = [WLDateRange dateRangeWithStartDate:startDate2 endDate:endDate2];
+    STAssertTrue([r1 intersectsRange:r2], @"Ranges do not intersect");
+    STAssertTrue([r2 intersectsRange:r1], @"Ranges do not intersect");
+}
+
+- (void)testIntersectsRange1Within1
+{
+    NSDate *startDate1 = [NSDate date];
+    NSDate *endDate1 = [startDate1 dateByAddingTimeInterval:10];
+
+    WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
+    STAssertTrue([r1 intersectsRange:r1], @"Ranges do not intersect");
+}
+
+- (void)testIntersectsRange1Within1Empty
+{
+    WLDateRange *r1 = [WLDateRange emptyDateRange];
+    STAssertTrue([r1 intersectsRange:r1], @"Ranges do not intersect");
+}
+
+- (void)testIntersectsRange1Later2Intersect
 {
     NSDate *startDate1 = [NSDate date];
     NSDate *endDate1 = [startDate1 dateByAddingTimeInterval:10];
@@ -181,6 +265,33 @@
     WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
     WLDateRange *r2 = [WLDateRange dateRangeWithStartDate:startDate2 endDate:endDate2];
     STAssertTrue([r1 intersectsRange:r2], @"Ranges do not intersect");
+    STAssertTrue([r2 intersectsRange:r1], @"Ranges do not intersect");
+}
+
+- (void)testIntersectsRange1Later2Touch
+{
+    NSDate *startDate1 = [NSDate date];
+    NSDate *endDate1 = [startDate1 dateByAddingTimeInterval:10];
+    NSDate *startDate2 = [startDate1 dateByAddingTimeInterval:-15];
+    NSDate *endDate2 = startDate1;
+
+    WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
+    WLDateRange *r2 = [WLDateRange dateRangeWithStartDate:startDate2 endDate:endDate2];
+    STAssertFalse([r1 intersectsRange:r2], @"Ranges intersect");
+    STAssertFalse([r2 intersectsRange:r1], @"Ranges intersect");
+}
+
+- (void)testIntersectsRange1Later2TouchEmpty
+{
+    NSDate *startDate1 = [NSDate date];
+    NSDate *endDate1 = startDate1;
+    NSDate *startDate2 = [startDate1 dateByAddingTimeInterval:-15];
+    NSDate *endDate2 = startDate1;
+
+    WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
+    WLDateRange *r2 = [WLDateRange dateRangeWithStartDate:startDate2 endDate:endDate2];
+    STAssertFalse([r1 intersectsRange:r2], @"Ranges intersect");
+    STAssertFalse([r2 intersectsRange:r1], @"Ranges intersect");
 }
 
 - (void)testIntersectsRange1Later2
@@ -193,6 +304,7 @@
     WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
     WLDateRange *r2 = [WLDateRange dateRangeWithStartDate:startDate2 endDate:endDate2];
     STAssertFalse([r1 intersectsRange:r2], @"Ranges intersect");
+    STAssertFalse([r2 intersectsRange:r1], @"Ranges intersect");
 }
 
 - (void)testIntersectsRangePositionNULL
@@ -216,12 +328,34 @@
 
     WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
     WLDateRange *r2 = [WLDateRange dateRangeWithStartDate:startDate2 endDate:endDate2];
+
     WLPositionRelativeToRange p;
     STAssertFalse([r1 intersectsRange:r2 position:&p], @"Ranges intersect");
-    STAssertEquals(WLLaterThanRange, p, @"Position is not earlier");
+    STAssertEquals(WLLaterThanRange, p, @"1 is not earlier than 2");
+
+    STAssertFalse([r2 intersectsRange:r1 position:&p], @"Ranges intersect");
+    STAssertEquals(WLEarlierThanRange, p, @"2 is not later than 1");
 }
 
-- (void)testIntersectsRangePosition1EarlierIntersect2
+- (void)testIntersectsRangePosition1Earlier2Touch
+{
+    NSDate *startDate1 = [NSDate date];
+    NSDate *endDate1 = [startDate1 dateByAddingTimeInterval:10];
+    NSDate *startDate2 = endDate1;
+    NSDate *endDate2 = [startDate2 dateByAddingTimeInterval:10];
+
+    WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
+    WLDateRange *r2 = [WLDateRange dateRangeWithStartDate:startDate2 endDate:endDate2];
+
+    WLPositionRelativeToRange p;
+    STAssertFalse([r1 intersectsRange:r2 position:&p], @"Ranges intersect");
+    STAssertEquals(WLLaterThanRange, p, @"1 is not earlier than 2");
+
+    STAssertFalse([r2 intersectsRange:r1 position:&p], @"Ranges intersect");
+    STAssertEquals(WLEarlierThanRange, p, @"2 is not later than 1");
+}
+
+- (void)testIntersectsRangePosition1Earlier2Intersect
 {
     NSDate *startDate1 = [NSDate date];
     NSDate *endDate1 = [startDate1 dateByAddingTimeInterval:10];
@@ -230,9 +364,13 @@
 
     WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
     WLDateRange *r2 = [WLDateRange dateRangeWithStartDate:startDate2 endDate:endDate2];
+
     WLPositionRelativeToRange p;
     STAssertTrue([r1 intersectsRange:r2 position:&p], @"Ranges do not intersect");
-    STAssertEquals(WLLaterThanRange, p, @"Position is not earlier");
+    STAssertEquals(WLLaterThanRange, p, @"1 is not earlier than 2");
+
+    STAssertTrue([r2 intersectsRange:r1 position:&p], @"Ranges do not intersect");
+    STAssertEquals(WLEarlierThanRange, p, @"2 is not earlier than 1");
 }
 
 - (void)testIntersectsRangePosition1Within2
@@ -244,12 +382,89 @@
 
     WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
     WLDateRange *r2 = [WLDateRange dateRangeWithStartDate:startDate2 endDate:endDate2];
+
     WLPositionRelativeToRange p;
     STAssertTrue([r2 intersectsRange:r1 position:&p], @"Ranges do not intersect");
+    STAssertEquals(WLWithinRange, p, @"1 is not within 2");
+
+    STAssertTrue([r1 intersectsRange:r2 position:&p], @"Ranges do not intersect");
+    STAssertEquals(WLOverlapsRange, p, @"2 does not overlap 1");
+}
+
+- (void)testIntersectsRangePosition1Within2CommonStartDate
+{
+    NSDate *startDate1 = [NSDate date];
+    NSDate *endDate1 = [startDate1 dateByAddingTimeInterval:10];
+    NSDate *startDate2 = startDate1;
+    NSDate *endDate2 = [endDate1 dateByAddingTimeInterval:10];
+
+    WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
+    WLDateRange *r2 = [WLDateRange dateRangeWithStartDate:startDate2 endDate:endDate2];
+
+    WLPositionRelativeToRange p;
+    STAssertTrue([r2 intersectsRange:r1 position:&p], @"Ranges do not intersect");
+    STAssertEquals(WLWithinRange, p, @"1 is not within 2");
+
+    STAssertTrue([r1 intersectsRange:r2 position:&p], @"Ranges do not intersect");
+    STAssertEquals(WLOverlapsRange, p, @"2 does not overlap 1");
+}
+
+- (void)testIntersectsRangePosition1Within2CommonStartDateEmpty
+{
+    NSDate *startDate1 = [NSDate date];
+    NSDate *endDate1 = startDate1;
+    NSDate *startDate2 = startDate1;
+    NSDate *endDate2 = [endDate1 dateByAddingTimeInterval:10];
+
+    WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
+    WLDateRange *r2 = [WLDateRange dateRangeWithStartDate:startDate2 endDate:endDate2];
+
+    WLPositionRelativeToRange p;
+    STAssertTrue([r2 intersectsRange:r1 position:&p], @"Ranges do not intersect");
+    STAssertEquals(WLWithinRange, p, @"1 is not within 2");
+
+    STAssertTrue([r1 intersectsRange:r2 position:&p], @"Ranges do not intersect");
+    STAssertEquals(WLOverlapsRange, p, @"2 does not overlap 1");
+}
+
+- (void)testIntersectsRangePosition1Within2CommonEndDate
+{
+    NSDate *startDate1 = [NSDate date];
+    NSDate *endDate1 = [startDate1 dateByAddingTimeInterval:10];
+    NSDate *startDate2 = [startDate1 dateByAddingTimeInterval:-5];
+    NSDate *endDate2 = endDate1;
+
+    WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
+    WLDateRange *r2 = [WLDateRange dateRangeWithStartDate:startDate2 endDate:endDate2];
+
+    WLPositionRelativeToRange p;
+    STAssertTrue([r2 intersectsRange:r1 position:&p], @"Ranges do not intersect");
+    STAssertEquals(WLWithinRange, p, @"1 is not within 2");
+
+    STAssertTrue([r1 intersectsRange:r2 position:&p], @"Ranges do not intersect");
+    STAssertEquals(WLOverlapsRange, p, @"2 does not overlap 1");
+}
+
+- (void)testIntersectsRangePosition1Within1
+{
+    NSDate *startDate1 = [NSDate date];
+    NSDate *endDate1 = [startDate1 dateByAddingTimeInterval:10];
+
+    WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
+    WLPositionRelativeToRange p;
+    STAssertTrue([r1 intersectsRange:r1 position:&p], @"Ranges do not intersect");
     STAssertEquals(WLWithinRange, p, @"Position is not within");
 }
 
-- (void)testIntersectsRangePosition1LaterIntersect2
+- (void)testIntersectsRangePosition1Within1Empty
+{
+    WLDateRange *r1 = [WLDateRange emptyDateRange];
+    WLPositionRelativeToRange p;
+    STAssertTrue([r1 intersectsRange:r1 position:&p], @"Ranges do not intersect");
+    STAssertEquals(WLWithinRange, p, @"Position is not within");
+}
+
+- (void)testIntersectsRangePosition1Later2Intersect
 {
     NSDate *startDate1 = [NSDate date];
     NSDate *endDate1 = [startDate1 dateByAddingTimeInterval:10];
@@ -258,10 +473,51 @@
 
     WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
     WLDateRange *r2 = [WLDateRange dateRangeWithStartDate:startDate2 endDate:endDate2];
+
     WLPositionRelativeToRange p;
     STAssertTrue([r1 intersectsRange:r2 position:&p], @"Ranges do not intersect");
-    STAssertEquals(WLEarlierThanRange, p, @"Position is not earlier");
+    STAssertEquals(WLEarlierThanRange, p, @"1 is not later than 2");
+
+    STAssertTrue([r2 intersectsRange:r1 position:&p], @"Ranges do not intersect");
+    STAssertEquals(WLLaterThanRange, p, @"2 is not earlier than 1");
 }
+
+- (void)testIntersectsRangePosition1Later2Touch
+{
+    NSDate *startDate1 = [NSDate date];
+    NSDate *endDate1 = [startDate1 dateByAddingTimeInterval:10];
+    NSDate *startDate2 = [startDate1 dateByAddingTimeInterval:-15];
+    NSDate *endDate2 = startDate1;
+
+    WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
+    WLDateRange *r2 = [WLDateRange dateRangeWithStartDate:startDate2 endDate:endDate2];
+
+    WLPositionRelativeToRange p;
+    STAssertFalse([r1 intersectsRange:r2 position:&p], @"Ranges intersect");
+    STAssertEquals(WLEarlierThanRange, p, @"1 is not later than 2");
+
+    STAssertFalse([r2 intersectsRange:r1 position:&p], @"Ranges intersect");
+    STAssertEquals(WLLaterThanRange, p, @"2 is not earlier than 1");
+}
+
+- (void)testIntersectsRangePosition1Later2TouchEmpty
+{
+    NSDate *startDate1 = [NSDate date];
+    NSDate *endDate1 = startDate1;
+    NSDate *startDate2 = [startDate1 dateByAddingTimeInterval:-15];
+    NSDate *endDate2 = startDate1;
+
+    WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
+    WLDateRange *r2 = [WLDateRange dateRangeWithStartDate:startDate2 endDate:endDate2];
+
+    WLPositionRelativeToRange p;
+    STAssertFalse([r1 intersectsRange:r2 position:&p], @"Ranges intersect");
+    STAssertEquals(WLEarlierThanRange, p, @"1 is not later than 2");
+
+    STAssertFalse([r2 intersectsRange:r1 position:&p], @"Ranges intersect");
+    STAssertEquals(WLLaterThanRange, p, @"2 is not earlier than 1");
+}
+
 
 - (void)testIntersectsRangePosition1Later2
 {
@@ -272,9 +528,13 @@
 
     WLDateRange *r1 = [WLDateRange dateRangeWithStartDate:startDate1 endDate:endDate1];
     WLDateRange *r2 = [WLDateRange dateRangeWithStartDate:startDate2 endDate:endDate2];
+
     WLPositionRelativeToRange p;
     STAssertFalse([r1 intersectsRange:r2 position:&p], @"Ranges intersect");
-    STAssertEquals(WLEarlierThanRange, p, @"Position is not later");
+    STAssertEquals(WLEarlierThanRange, p, @"1 is not later than 2");
+
+    STAssertFalse([r2 intersectsRange:r1 position:&p], @"Ranges intersect");
+    STAssertEquals(WLLaterThanRange, p, @"2 is not earlier than 1");
 }
 
 - (void)testIsEmpty

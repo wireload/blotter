@@ -27,7 +27,7 @@
         if (anEndDate)
             _endDate = [anEndDate copy];
         else
-            _endDate = [NSDate date];
+            _endDate = [_startDate copy];
     }
 
     return self;
@@ -55,7 +55,7 @@
 - (WLDateRange *)dateRangeByUnitingWithDateRange:(WLDateRange *)aDateRange
 {
     if (!aDateRange)
-        [NSException raise:NSInvalidArgumentException format:@"You cannot unite date range with nil."];
+        [NSException raise:NSInvalidArgumentException format:@"aDateRange MUST NOT be nil."];
 
     return [[self class] dateRangeWithStartDate:[self.startDate earlierDate:aDateRange.startDate]
                                         endDate:[self.endDate laterDate:aDateRange.endDate]];
@@ -64,13 +64,13 @@
 - (WLPositionRelativeToRange)positionOfDate:(NSDate *)aDate
 {
     if (!aDate)
-        [NSException raise:NSInvalidArgumentException format:@"You cannot get position of nil."];
+        [NSException raise:NSInvalidArgumentException format:@"aDate MUST NOT be nil."];
 
     NSComparisonResult result = [aDate compare:self.startDate];
 
     if (result == NSOrderedAscending)
         return WLEarlierThanRange;
-    else if (result == NSOrderedSame || [aDate compare:self.endDate] != NSOrderedDescending)
+    else if (result == NSOrderedSame || [aDate compare:self.endDate] == NSOrderedAscending)
         return WLWithinRange;
     else
         return WLLaterThanRange;
@@ -78,15 +78,16 @@
 
 - (BOOL)intersectsRange:(WLDateRange *)aRange
 {
-    WLPositionRelativeToRange startDatePosition = [self positionOfDate:aRange.startDate];
+    WLPositionRelativeToRange rangeStartDatePositionInSelf = [self positionOfDate:aRange.startDate];
 
-    if (startDatePosition != WLLaterThanRange)
+    if (rangeStartDatePositionInSelf != WLLaterThanRange)
     {
-        WLPositionRelativeToRange endDatePosition = [self positionOfDate:aRange.endDate];
+        WLPositionRelativeToRange selfStartDatePositionInRange = [aRange positionOfDate:self.startDate];
 
-        if (endDatePosition != WLEarlierThanRange)
+        if (selfStartDatePositionInRange != WLLaterThanRange)
             return YES;
     }
+
     return NO;
 }
 
@@ -98,30 +99,33 @@
     if (!outPosition)
         [NSException raise:NSInvalidArgumentException format:@"outPosition MUST NOT be NULL."];
 
-    const WLPositionRelativeToRange startDatePosition = [self positionOfDate:aRange.startDate];
+    NSComparisonResult selfStartDateToRangeStartDate = [self.startDate compare:aRange.startDate];
+    NSComparisonResult selfStartDateToRangeEndDate = [self.startDate compare:aRange.endDate];
+    NSComparisonResult selfEndDateToRangeStartDate = [self.endDate compare:aRange.startDate];
+    NSComparisonResult selfEndDateToRangeEndDate = [self.endDate compare:aRange.endDate];
 
-    if (startDatePosition != WLLaterThanRange)
+    if (selfStartDateToRangeEndDate != NSOrderedAscending && selfStartDateToRangeStartDate != NSOrderedSame)
     {
-        const WLPositionRelativeToRange endDatePosition = [self positionOfDate:aRange.endDate];
-        if (endDatePosition != WLEarlierThanRange)
-        {
-            if (startDatePosition == WLEarlierThanRange && endDatePosition == WLWithinRange)
-                *outPosition = WLEarlierThanRange;
-            else if (startDatePosition == WLEarlierThanRange && endDatePosition == WLLaterThanRange)
-                *outPosition = WLOverlapsRange;
-            else if (startDatePosition == WLWithinRange && endDatePosition == WLWithinRange)
-                *outPosition = WLWithinRange;
-            else if (startDatePosition == WLWithinRange && endDatePosition == WLLaterThanRange)
-                *outPosition = WLLaterThanRange;
-            return YES;
-        }
-        else
-            *outPosition = WLEarlierThanRange;
+        *outPosition = WLEarlierThanRange;
+        return NO;
     }
-    else
-        *outPosition = WLLaterThanRange;
 
-    return NO;
+    if (selfEndDateToRangeStartDate != NSOrderedDescending && selfStartDateToRangeStartDate != NSOrderedSame)
+    {
+        *outPosition = WLLaterThanRange;
+        return NO;
+    }
+
+    if (selfStartDateToRangeStartDate == NSOrderedAscending && selfEndDateToRangeEndDate == NSOrderedAscending)
+        *outPosition = WLLaterThanRange;
+    else if (selfStartDateToRangeStartDate == NSOrderedDescending && selfEndDateToRangeEndDate == NSOrderedDescending)
+        *outPosition = WLEarlierThanRange;
+    else if (selfStartDateToRangeStartDate != NSOrderedDescending && selfEndDateToRangeEndDate != NSOrderedAscending)
+        *outPosition = WLWithinRange;
+    else
+        *outPosition = WLOverlapsRange;
+
+    return YES;
 }
 
 - (BOOL)isEmpty
@@ -132,15 +136,15 @@
 
 #pragma mark NSCopying
 
-- (id)copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone *)aZone
 {
-    return [[self class] dateRangeWithStartDate:self.startDate endDate:self.endDate];
+    return [WLDateRange dateRangeWithStartDate:self.startDate endDate:self.endDate];
 }
 
 
 #pragma mark NSMutableCopying
 
-- (id)mutableCopyWithZone:(NSZone *)zone
+- (id)mutableCopyWithZone:(NSZone *)aZone
 {
     return [WLMutableDateRange dateRangeWithStartDate:self.startDate endDate:self.endDate];
 }

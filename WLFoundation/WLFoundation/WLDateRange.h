@@ -71,20 +71,22 @@ typedef NS_ENUM(NSUInteger, WLPositionRelativeToRange)
 - (WLDateRange *)dateRangeByUnitingWithDateRange:(WLDateRange *)aDateRange;
 
 /*!
-    @brief  Determines position of aDate relative to the receiver.
+    @brief       Determines position of aDate relative to the receiver.
 
-    @param  aDate Date to compare. MUST NOT be nil.
+    @param      aDate Date to compare. MUST NOT be nil.
 
-    @result Returns position of the date relaitve to the receiver.
+    @result     Returns position of the date relative to the receiver.
+
+    @discussion If aDate is equal to endDate of the receiver, it's considered to lie later.
  */
 - (WLPositionRelativeToRange)positionOfDate:(NSDate *)aDate;
 
 /*!
-    @brief  Determines whether the receiver and aRange intersects.
+    @brief      Determines whether the receiver and aRange intersects.
 
-    @param  aRange Range to compare. MAY be nil.
+    @param      aRange Range to compare. MAY be nil.
 
-    @result Returns YES if the receiver and aRange intersect.
+    @result     Returns YES if the receiver and aRange intersect.
  */
 - (BOOL)intersectsRange:(WLDateRange *)aRange;
 
@@ -100,12 +102,12 @@ typedef NS_ENUM(NSUInteger, WLPositionRelativeToRange)
     @discussion [] - self, {} - aRange
                 YES and:
                     WLEarlierThanRange, then { [ } ]
-                    WLOverlapsRange, then { [ ] }
-                    WLWithinRange, then [ { } ]
+                    WLOverlapsRange, then { [ ] } or { [ ]}/{ [ }] or {[ ] }/[{ ] } or {[] } or { []}
+                    WLWithinRange, then [ { } ] or [ { }]/[ { ]} or [{ } ]/{[ } ] or [{} ] or [{ }]/{[ ]} or [{}]/{[]}
                     WLLaterThanRange, then [ { ] }
                 NO and:
-                    WLEarlierThanRange, then {} []
-                    WLLaterThanRange, then [] {}
+                    WLEarlierThanRange, then { } [ ] or {}[]
+                    WLLaterThanRange, then [ ] { } or [ ]{ }/[ {] }/[ {}]
  */
 - (BOOL)intersectsRange:(WLDateRange *)aRange position:(WLPositionRelativeToRange *)outPosition;
 
