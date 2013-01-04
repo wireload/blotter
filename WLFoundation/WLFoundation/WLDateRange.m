@@ -142,14 +142,6 @@
 }
 
 
-#pragma mark NSMutableCopying
-
-- (id)mutableCopyWithZone:(NSZone *)aZone
-{
-    return [WLMutableDateRange dateRangeWithStartDate:self.startDate endDate:self.endDate];
-}
-
-
 #pragma mark NSObject
 
 - (NSUInteger)hash
@@ -180,49 +172,6 @@
 
 
 @implementation WLDateRange (Alignment)
-
-- (WLDateRange *)dateRangeByAligningEraWithCalendar:(NSCalendar *)aCalendar options:(WLDateRangeAlignmentOptions)anOptions
-{
-    return [self dateRangeByAligningCalendarUnit:NSEraCalendarUnit calendar:aCalendar options:anOptions];
-}
-
-- (WLDateRange *)dateRangeByAligningYearWithCalendar:(NSCalendar *)aCalendar options:(WLDateRangeAlignmentOptions)anOptions
-{
-    return [self dateRangeByAligningCalendarUnit:NSYearCalendarUnit calendar:aCalendar options:anOptions];
-}
-
-- (WLDateRange *)dateRangeByAligningMonthWithCalendar:(NSCalendar *)aCalendar options:(WLDateRangeAlignmentOptions)anOptions
-{
-    return [self dateRangeByAligningCalendarUnit:NSMonthCalendarUnit calendar:aCalendar options:anOptions];
-}
-
-- (WLDateRange *)dateRangeByAligningWeekWithCalendar:(NSCalendar *)aCalendar options:(WLDateRangeAlignmentOptions)anOptions
-{
-    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-        return [self dateRangeByAligningCalendarUnit:NSWeekCalendarUnit calendar:aCalendar options:anOptions];
-    else
-        return [self dateRangeByAligningCalendarUnit:NSWeekOfMonthCalendarUnit calendar:aCalendar options:anOptions];
-}
-
-- (WLDateRange *)dateRangeByAligningDayWithCalendar:(NSCalendar *)aCalendar options:(WLDateRangeAlignmentOptions)anOptions
-{
-    return [self dateRangeByAligningCalendarUnit:NSDayCalendarUnit calendar:aCalendar options:anOptions];
-}
-
-- (WLDateRange *)dateRangeByAligningHourWithCalendar:(NSCalendar *)aCalendar options:(WLDateRangeAlignmentOptions)anOptions
-{
-    return [self dateRangeByAligningCalendarUnit:NSHourCalendarUnit calendar:aCalendar options:anOptions];
-}
-
-- (WLDateRange *)dateRangeByAligningMinuteWithCalendar:(NSCalendar *)aCalendar options:(WLDateRangeAlignmentOptions)anOptions
-{
-    return [self dateRangeByAligningCalendarUnit:NSMinuteCalendarUnit calendar:aCalendar options:anOptions];
-}
-
-- (WLDateRange *)dateRangeByAligningSecondWithCalendar:(NSCalendar *)aCalendar options:(WLDateRangeAlignmentOptions)anOptions
-{
-    return [self dateRangeByAligningCalendarUnit:NSSecondCalendarUnit calendar:aCalendar options:anOptions];
-}
 
 - (WLDateRange *)dateRangeByAligningCalendarUnit:(NSCalendarUnit)aCalendarUnit calendar:(NSCalendar *)aCalendar options:(WLDateRangeAlignmentOptions)anOptions
 {
@@ -309,49 +258,6 @@
 
 @implementation WLDateRange (Split)
 
-- (NSArray *)splitIntoErasWithCalendar:(NSCalendar *)aCalendar
-{
-    return [self splitIntoCalendarUnits:NSEraCalendarUnit calendar:aCalendar];
-}
-
-- (NSArray *)splitIntoYearsWithCalendar:(NSCalendar *)aCalendar
-{
-    return [self splitIntoCalendarUnits:NSYearCalendarUnit calendar:aCalendar];
-}
-
-- (NSArray *)splitIntoMonthsWithCalendar:(NSCalendar *)aCalendar
-{
-    return [self splitIntoCalendarUnits:NSMonthCalendarUnit calendar:aCalendar];
-}
-
-- (NSArray *)splitIntoWeeksWithCalendar:(NSCalendar *)aCalendar
-{
-    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-        return [self splitIntoCalendarUnits:NSWeekCalendarUnit calendar:aCalendar];
-    else
-        return [self splitIntoCalendarUnits:NSWeekOfMonthCalendarUnit calendar:aCalendar];
-}
-
-- (NSArray *)splitIntoDaysWithCalendar:(NSCalendar *)aCalendar
-{
-    return [self splitIntoCalendarUnits:NSDayCalendarUnit calendar:aCalendar];
-}
-
-- (NSArray *)splitIntoHoursWithCalendar:(NSCalendar *)aCalendar
-{
-    return [self splitIntoCalendarUnits:NSHourCalendarUnit calendar:aCalendar];
-}
-
-- (NSArray *)splitIntoMinutesWithCalendar:(NSCalendar *)aCalendar
-{
-    return [self splitIntoCalendarUnits:NSMinuteCalendarUnit calendar:aCalendar];
-}
-
-- (NSArray *)splitIntoSecondsWithCalendar:(NSCalendar *)aCalendar
-{
-    return [self splitIntoCalendarUnits:NSSecondCalendarUnit calendar:aCalendar];
-}
-
 - (NSArray *)splitIntoCalendarUnits:(NSCalendarUnit)aCalendarUnit calendar:(NSCalendar *)aCalendar
 {
     if ([self.startDate compare:self.endDate] == NSOrderedDescending)
@@ -359,6 +265,9 @@
         [NSException raise:NSInternalInconsistencyException
                     format:@"You cannot split reverse-date range (%@).", self];
     }
+
+    if (!aCalendar)
+        aCalendar = [NSCalendar autoupdatingCurrentCalendar];
 
     NSMutableArray *parts = [NSMutableArray array];
     NSDate *startUnitDate = nil;
