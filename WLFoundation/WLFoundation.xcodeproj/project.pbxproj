@@ -23,9 +23,7 @@
 		BAA049DB1621A1040078DF12 /* WLFoundationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA049DA1621A1040078DF12 /* WLFoundationTests.m */; };
 		BAA049E31621A1810078DF12 /* NSArray+WLDelta_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */; };
 		BAA049E71621A3F20078DF12 /* WLFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA81DA67160DA09D00C83DC3 /* WLFoundation.framework */; };
-		BC5990F5AEA1445D0AB0EBB7 /* WLMutableDateRange.h in Headers */ = {isa = PBXBuildFile; fileRef = BC599BE72B03B538AA35A9D6 /* WLMutableDateRange.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC599131671997B089C3D4C8 /* WLASLLog.m in Sources */ = {isa = PBXBuildFile; fileRef = BC599C7F0C238E9F874213D0 /* WLASLLog.m */; };
-		BC5997565CBF60D87166061C /* WLMutableDateRange.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5992F4ACC7E7B0081717DB /* WLMutableDateRange.m */; };
 		BC5997CEDCD382068CDD26E3 /* WLASLLog.h in Headers */ = {isa = PBXBuildFile; fileRef = BC599C9AE6ABE5619B104BB3 /* WLASLLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -64,8 +62,6 @@
 		BAA049DC1621A1040078DF12 /* WLFoundationTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WLFoundationTests-Prefix.pch"; sourceTree = "<group>"; };
 		BAA049E11621A1810078DF12 /* NSArray+WLDelta_Tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+WLDelta_Tests.h"; sourceTree = "<group>"; };
 		BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+WLDelta_Tests.m"; sourceTree = "<group>"; };
-		BC5992F4ACC7E7B0081717DB /* WLMutableDateRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLMutableDateRange.m; sourceTree = "<group>"; };
-		BC599BE72B03B538AA35A9D6 /* WLMutableDateRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLMutableDateRange.h; sourceTree = "<group>"; };
 		BC599C7F0C238E9F874213D0 /* WLASLLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLASLLog.m; sourceTree = "<group>"; };
 		BC599C9AE6ABE5619B104BB3 /* WLASLLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLASLLog.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -118,8 +114,6 @@
 			children = (
 				BC599C9AE6ABE5619B104BB3 /* WLASLLog.h */,
 				BC599C7F0C238E9F874213D0 /* WLASLLog.m */,
-				BC599BE72B03B538AA35A9D6 /* WLMutableDateRange.h */,
-				BC5992F4ACC7E7B0081717DB /* WLMutableDateRange.m */,
 				BA81DAC0160DA7FB00C83DC3 /* WLFoundation.h */,
 				BA81DA7F160DA0C800C83DC3 /* NSArray+WLDelta.h */,
 				BA81DA80160DA0C800C83DC3 /* NSArray+WLDelta.m */,
@@ -175,7 +169,6 @@
 			files = (
 				BA81DA83160DA0C800C83DC3 /* NSArray+WLDelta.h in Headers */,
 				BA81DA85160DA0C800C83DC3 /* WLDateRange.h in Headers */,
-				BC5990F5AEA1445D0AB0EBB7 /* WLMutableDateRange.h in Headers */,
 				BA81DAC1160DA7FB00C83DC3 /* WLFoundation.h in Headers */,
 				BA9AFB9B163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h in Headers */,
 				BC5997CEDCD382068CDD26E3 /* WLASLLog.h in Headers */,
@@ -291,7 +284,6 @@
 			files = (
 				BA81DA84160DA0C800C83DC3 /* NSArray+WLDelta.m in Sources */,
 				BA81DA86160DA0C800C83DC3 /* WLDateRange.m in Sources */,
-				BC5997565CBF60D87166061C /* WLMutableDateRange.m in Sources */,
 				BC599131671997B089C3D4C8 /* WLASLLog.m in Sources */,
 				BA9AFB9C163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m in Sources */,
 			);
