@@ -46,8 +46,8 @@
 
 - (BOOL)isEqual:(WLCalSystemEvent *)anObject
 {
-    if ([super isEqual:anObject])
-        return YES;
+    if (![super isEqual:anObject])
+        return NO;
     else if (self.allDay != anObject.allDay)
         return NO;
     else if (self.isDetached != anObject.isDetached)

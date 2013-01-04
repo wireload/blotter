@@ -49,8 +49,8 @@
 
 - (BOOL)isEqual:(WLCalSystemReminder *)anObject
 {
-    if ([super isEqual:anObject])
-        return YES;
+    if (![super isEqual:anObject])
+        return NO;
     else if (self.completed != anObject.completed)
         return NO;
     else if (self.priority != anObject.priority)
