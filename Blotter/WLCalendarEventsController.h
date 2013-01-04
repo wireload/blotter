@@ -11,48 +11,84 @@
 #import <WLCalendarStore/WLCalendarStore.h>
 
 
-typedef NS_ENUM(NSUInteger, WLCalendarEventsCachePolicy)
-{
-    WLCalendarEventsIgnoresCache,
-    WLCalendarEventsGroupsEventsByDay
-};
+extern NSString *WLCalendarEventsDidChangeNotification;
 
 
+/*!
+    @brief  The instance of WLCalendarEventsController listens to updates of calendar stores, fetches events within observed date ranges and
+            for given calendar identifiers and posts WLCalendarEventsDidChangeNotification.
+ */
 @interface WLCalendarEventsController : NSObject
 
 - (instancetype)initWithCalStores:(NSArray *)aStores;
 
-@property (nonatomic, copy) NSCalendar *calendar;
-
-@property (nonatomic) WLCalendarEventsCachePolicy cachePolicy;
+@property (copy, readonly) NSArray *calStores;
 
 /*!
-    @brief  Sets observed range of anObserver to aRange.
+    @brief  Returns currently observed date ranges.
  */
-- (NSArray *)setObserver:(NSObject *)anObserver forEventsInDateRange:(WLDateRange *)aRange;
+- (NSSet *)observedDateRanges;
 
 /*!
-    @brief  Extends observed range of anObserver by aRange.
+    @brief      Adds aRange to currently observed date ranges or increments its count.
+
+    @discussion Subsequent adds are counted therefore you have to remove the same aRange as many times as you added it.
  */
-- (NSArray *)addObserver:(NSObject *)anObserver forEventsInDateRange:(WLDateRange *)aRange;
+- (void)addObservedDateRange:(WLDateRange *)aRange;
 
 /*!
-    @brief      Reduces observed range of anObserver by aRange. If aRange can contain and overlap current observed range.
-
-    @discussion If aRange contains all observed ranges of anObserver, the call is similar to -removeObserver:
+    @brief  Removes aRange from currently observed date ranges or decrements its count.
  */
-- (void)removeObserver:(NSObject *)anObserver forEventsInDateRange:(WLDateRange *)aRange;
+- (void)removeObservedDateRange:(WLDateRange *)aRange;
 
 /*!
-    @brief  Removes anObserver from all observed ranges.
+    @brief  Removes all observed date ranges.
  */
-- (void)removeObserver:(NSObject *)anObserver;
+- (void)removeAllObservedDateRanges;
 
 /*!
-    @brief  Removes all observers from all observed ranges.
+    @brief  Sets calendar identifiers for a given store.
  */
-- (void)removeAllObservers;
+- (void)setObservedCalendarIdentifiers:(NSSet *)aCalendarIdentifiers forStore:(NSObject<WLCalStore> *)aStore;
 
-- (void)invalidateCaches;
+/*!
+    @brief  Returns calendar identifiers for a given store.
+ */
+- (NSArray *)observedCalendarIdentifiersForStore:(NSObject<WLCalStore> *)aStore;
+
+/*!
+    @brief      Optimizes date ranges.
+
+    @discussion The goal of optimization is to reduce number of calls to the store by uniting date ranges.
+ */
+- (NSArray *)optimizeDateRanges:(NSArray *)aRanges;
+
+/*!
+    @brief  Fetches all cal events on background thread with given priority.
+
+    @discussion You SHOULD not call this method directly.
+ */
+- (void)fetchCalEventsWithPriority:(NSOperationQueuePriority)aPriority;
+
+/*!
+    @brief      Fetches cal events within given date ranges on background thread with given priority.
+
+    @discussion You SHOULD not call this method directly.
+ */
+- (void)fetchCalEventsForDateRanges:(NSSet *)aRanges priority:(NSOperationQueuePriority)aPriority;
+
+/*!
+    @brief  Called when store posts WLCalStoreDidChangeNotification.
+
+    @discussion You SHOULD not call this method directly.
+ */
+- (void)calStoreDidChange:(NSNotification *)aNotification;
+
+/*!
+    @brief  Called when either calendar identifiers or observed ranges are changed.
+
+    @discussion You SHOULD not call this method directly.
+ */
+- (void)fetchPredicateDidChange;
 
 @end
