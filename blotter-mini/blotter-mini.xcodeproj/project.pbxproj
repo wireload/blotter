@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BA10599B168DADAA00A3DDF5 /* WLCalendarEventsController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA10599A168DADAA00A3DDF5 /* WLCalendarEventsController.m */; };
 		BA81DBCE1614514200C83DC3 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA81DBCD1614514200C83DC3 /* Cocoa.framework */; };
 		BA81DBD81614514200C83DC3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA81DBD61614514200C83DC3 /* InfoPlist.strings */; };
 		BA81DBDA1614514200C83DC3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BA81DBD91614514200C83DC3 /* main.m */; };
@@ -18,6 +17,7 @@
 		BA9AFBBC163C129100FAAAD3 /* WLFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9AFBAE163C126F00FAAAD3 /* WLFoundation.framework */; };
 		BA9AFBBD163C129500FAAAD3 /* WLFoundation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA9AFBAE163C126F00FAAAD3 /* WLFoundation.framework */; };
 		BA9AFBBE163C129E00FAAAD3 /* WLCalendarStore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA9AFBA5163C126A00FAAAD3 /* WLCalendarStore.framework */; };
+		E25B9FD016972ECB0058AEEE /* WLCalendarEventsController.m in Sources */ = {isa = PBXBuildFile; fileRef = E25B9FCF16972ECB0058AEEE /* WLCalendarEventsController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,8 +66,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		BA105999168DADAA00A3DDF5 /* WLCalendarEventsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WLCalendarEventsController.h; path = ../../Blotter/WLCalendarEventsController.h; sourceTree = "<group>"; };
-		BA10599A168DADAA00A3DDF5 /* WLCalendarEventsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WLCalendarEventsController.m; path = ../../Blotter/WLCalendarEventsController.m; sourceTree = "<group>"; };
 		BA81DBC91614514200C83DC3 /* Blotter-mini.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Blotter-mini.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA81DBCD1614514200C83DC3 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		BA81DBD01614514200C83DC3 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -87,6 +85,8 @@
 		BA81DC0B1616E35500C83DC3 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		BA9AFB9F163C126900FAAAD3 /* WLCalendarStore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WLCalendarStore.xcodeproj; path = ../WLCalendarStore/WLCalendarStore.xcodeproj; sourceTree = "<group>"; };
 		BA9AFBA8163C126F00FAAAD3 /* WLFoundation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WLFoundation.xcodeproj; path = ../WLFoundation/WLFoundation.xcodeproj; sourceTree = "<group>"; };
+		E25B9FCE16972ECB0058AEEE /* WLCalendarEventsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WLCalendarEventsController.h; path = ../../Blotter/WLCalendarEventsController.h; sourceTree = "<group>"; };
+		E25B9FCF16972ECB0058AEEE /* WLCalendarEventsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WLCalendarEventsController.m; path = ../../Blotter/WLCalendarEventsController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,8 +131,8 @@
 		BA81DBD31614514200C83DC3 /* Blotter-mini */ = {
 			isa = PBXGroup;
 			children = (
-				BA105999168DADAA00A3DDF5 /* WLCalendarEventsController.h */,
-				BA10599A168DADAA00A3DDF5 /* WLCalendarEventsController.m */,
+				E25B9FCE16972ECB0058AEEE /* WLCalendarEventsController.h */,
+				E25B9FCF16972ECB0058AEEE /* WLCalendarEventsController.m */,
 				BA81DBF61615A72300C83DC3 /* Blotter-mini.entitlements */,
 				BA81DBDF1614514200C83DC3 /* WLAppDelegate.h */,
 				BA81DBE01614514200C83DC3 /* WLAppDelegate.m */,
@@ -203,7 +203,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = Wireload;
 			};
-			buildConfigurationList = BA81DBC31614514200C83DC3 /* Build configuration list for PBXProject "Blotter-mini" */;
+			buildConfigurationList = BA81DBC31614514200C83DC3 /* Build configuration list for PBXProject "blotter-mini" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -281,7 +281,7 @@
 			files = (
 				BA81DBDA1614514200C83DC3 /* main.m in Sources */,
 				BA81DBE11614514200C83DC3 /* WLAppDelegate.m in Sources */,
-				BA10599B168DADAA00A3DDF5 /* WLCalendarEventsController.m in Sources */,
+				E25B9FD016972ECB0058AEEE /* WLCalendarEventsController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,7 +399,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BA81DBC31614514200C83DC3 /* Build configuration list for PBXProject "Blotter-mini" */ = {
+		BA81DBC31614514200C83DC3 /* Build configuration list for PBXProject "blotter-mini" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BA81DBE51614514200C83DC3 /* Debug */,

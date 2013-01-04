@@ -8,13 +8,15 @@
 
 #import "WLAppDelegate.h"
 #import <EventKit/EventKit.h>
+#import "WLCalendarEventsController.h"
 
 
 @implementation WLAppDelegate
 {
     NSOperationQueue *calendarsQueue;
-    NSOperationQueue *eventsQueue;
     NSOperationQueue *remindersQueue;
+
+    WLCalendarEventsController *eventsController;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -24,37 +26,36 @@
         WLCalSystemStoreChecksCalendarsAgainstICalKey : @(YES)
     };
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
-    
+
     calendarsQueue = [[NSOperationQueue alloc] init];
     [calendarsQueue setMaxConcurrentOperationCount:1];
     [calendarsQueue setName:@"Calendars"];
-    
-    eventsQueue = [[NSOperationQueue alloc] init];
-    [eventsQueue setMaxConcurrentOperationCount:1];
-    [eventsQueue setName:@"Events"];
-    
+
     remindersQueue = [[NSOperationQueue alloc] init];
     [remindersQueue setMaxConcurrentOperationCount:1];
     [remindersQueue setName:@"Reminders"];
-    
+
     self.store = [WLCalendarStore systemStore];
+    eventsController = [[WLCalendarEventsController alloc] initWithCalStores:@[self.store]];
     self.fromDatePicker.dateValue = [[NSDate date] dateByAddingTimeInterval:-3600*24*7];
     self.toDatePicker.dateValue = [[NSDate date] dateByAddingTimeInterval:3600*24*7];
-    
+
     [self _storeDidChange];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_storeDidChange) name:WLCalStoreDidChangeNotification object:self.store];
     [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(process:) name:NSWorkspaceDidLaunchApplicationNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(eventsDidChange:)
+                                                 name:WLCalendarEventsDidChangeNotification
+                                               object:eventsController];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification
 {
+    [eventsController removeAllObservedDateRanges];
     [calendarsQueue cancelAllOperations];
-    [eventsQueue cancelAllOperations];
     [remindersQueue cancelAllOperations];
-    
     [calendarsQueue waitUntilAllOperationsAreFinished];
-    [eventsQueue waitUntilAllOperationsAreFinished];
     [remindersQueue waitUntilAllOperationsAreFinished];
 }
 
@@ -87,20 +88,12 @@
 
 - (IBAction)eventPredicateDidChange:(id)sender
 {
-    [eventsQueue cancelAllOperations];
-    NSBlockOperation *b = [[NSBlockOperation alloc] init];
-    __unsafe_unretained NSBlockOperation *bBlock = b;
-    [b addExecutionBlock:^{
-        WLCalEventsPredicate *p = [[WLCalEventsPredicate alloc] initWithDateRange:[WLDateRange dateRangeWithStartDate:self.fromDatePicker.dateValue endDate:self.toDatePicker.dateValue]
-                                                              calendarIdentifiers:[[self.calendarsController selectedObjects] valueForKey:@"calendarIdentifier"]];
-        NSArray *events = [self.store eventsMatchingPredicate:p];
-        
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            if (![bBlock isCancelled])
-                self.events = events;
-        });
-    }];
-    [eventsQueue addOperation:b];
+    NSArray *calendarIdentifiers = [[self.calendarsController selectedObjects] valueForKey:@"calendarIdentifier"];
+    WLDateRange *r = [WLDateRange dateRangeWithStartDate:self.fromDatePicker.dateValue endDate:self.toDatePicker.dateValue];
+    [eventsController removeAllObservedDateRanges];
+    [eventsController addObservedDateRange:r];
+    [eventsController setObservedCalendarIdentifiers:[NSSet setWithArray:calendarIdentifiers]
+                                            forStore:self.store];
 }
 
 - (IBAction)reminderPredicateDidChage:(id)sender
@@ -116,7 +109,7 @@
             mask |= WLCalReminderCompletionMaskIncomplete;
         WLCalRemindersPredicate *p = [[WLCalRemindersPredicate alloc] initWithCompletionMask:mask calendarIdentifiers:[[self.calendarsController selectedObjects] valueForKey:@"calendarIdentifier"]];
         NSArray *reminders = [self.store remindersMatchingPredicate:p];
-        
+
         dispatch_sync(dispatch_get_main_queue(), ^{
             if (![bBlock isCancelled])
                 self.remidners = reminders;
@@ -132,6 +125,15 @@
 {
     [self eventPredicateDidChange:nil];
     [self reminderPredicateDidChage:nil];
+}
+
+- (void)eventsDidChange:(NSNotification *)aNotification
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        WLDateRange *r = [WLDateRange dateRangeWithStartDate:self.fromDatePicker.dateValue endDate:self.toDatePicker.dateValue];
+        NSArray *events = [[aNotification userInfo] objectForKey:r];
+        self.events = events;
+    });
 }
 
 @end
