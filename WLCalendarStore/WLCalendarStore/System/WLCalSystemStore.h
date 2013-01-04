@@ -18,14 +18,18 @@
 
 /*!
     @brief  Asks iCal for calendar identifiers using AE.
+
     @result Returns UIDs of calendars in iCal or nil if it's not running.
  */
 - (NSArray *)iCalCalendarUIDs;
 
 /*!
     @brief      Fetches CalCalendar instances from CalendarStore.
+
     @param      anUIDs UIDs of CalCalendar instances you want to fetch.
+
     @param      outInvalidUIDs Points to an array that will contain UIDs of CalCalendar instances that cannot be fetched.
+
     @discussion Size of the result array may be less than [anUIDs count].
 
                 Calendars have the same order as anUIDs.
@@ -37,35 +41,48 @@
 
 /*!
     @brief      Fetches CalEvent instances from CalendarStore.
+
     @param      anEventsPredicate Predicate used to fetch events. MUST NOT be nil.
+
     @param      outCSCalendars Points to an array of calendars created while fetching events.
                 It DOES NOT contain every calendar of fetched events. It SHOULD be used for caching only.
+
     @discussion Thread safe.
  */
 - (NSArray *)fetchCSEventsMatchingPredicate:(WLCalEventsPredicate *)anEventsPredicate csCalednars:(__autoreleasing NSArray **)outCSCalendars;
 
 /*!
     @brief      Fetches CalTask instances from CalendarStore.
+
     @param      aReminderPredicate Predicate used to fetch events. MUST NOT be nil.
+
     @param      outCSCalendars Points to an array of calendars created while fetching events.
                 It DOES NOT contain every calendar of fetched reminders. It SHOULD be used for caching only.
+
     @discussion Thread safe.
  */
 - (NSArray *)fetchCSRemindersMatchingPredicate:(WLCalRemindersPredicate *)aReminderPredicate csCalednars:(__autoreleasing NSArray **)outCSCalendars;
 
 /*!
     @brief      Makes WLCalSystemCalendar instances from CalCalendar instances.
+
     @param      aCSCalendars CalCalendar instances.
+
     @result     An array of WLCalSystemCalendar instances created from csCalendar instances.
+
     @discussion Thread safe.
+
     @see        WLCalAllowsAdvancedCalendarTypeCheck
  */
 - (NSArray *)makeCalendarsFromCSCalendars:(NSArray *)aCSCalendars;
 
 /*!
     @brief      Returns allowed entity types for a given CalCalendar.
+
     @param      aCSCalendar An instance of CalCalendar which allowed entity types you want to know.
+
     @throws     Throws an exception if aCSCalendar is nil.
+
     @discussion Thread Safe.
  */
 - (WLCalEntityMask)allowedEntityTypesForCSCalendar:(CalCalendar *)aCSCalendar;

@@ -180,10 +180,10 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
     if (!anEventsPredicate.dateRange || [anEventsPredicate.dateRange isEmpty])
         return @[];
 
-    if (anEventsPredicate.calendarIdentifiers && [anEventsPredicate.calendarIdentifiers count] == 0)
+    if ([anEventsPredicate.calendarIdentifiers count] == 0)
         return @[];
 
-    NSArray *csCalendars = nil; // means all calendars
+    NSArray *csCalendars = nil;
 
     if (anEventsPredicate.calendarIdentifiers)
     {
@@ -212,10 +212,10 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
 {
     NSParameterAssert(aReminderPredicate);
 
-    if (aReminderPredicate.calendarIdentifiers && [aReminderPredicate.calendarIdentifiers count] == 0)
+    if ([aReminderPredicate.calendarIdentifiers count] == 0)
         return @[];
 
-    NSArray *csCalendars = nil; // means all calendars
+    NSArray *csCalendars = nil;
 
     if (aReminderPredicate.calendarIdentifiers)
     {
