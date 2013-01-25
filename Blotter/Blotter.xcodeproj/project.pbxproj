@@ -30,7 +30,7 @@
 		2850CB501528FD2700DEEA82 /* all-day-top-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 2850CB471528FD2700DEEA82 /* all-day-top-left.png */; };
 		2850CB511528FD2700DEEA82 /* all-day-top-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = 2850CB481528FD2700DEEA82 /* all-day-top-middle.png */; };
 		2850CB521528FD2700DEEA82 /* all-day-top-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 2850CB491528FD2700DEEA82 /* all-day-top-right.png */; };
-		2898BE4F148E6FB5002C68EB /* Blotter-B10.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2898BE4E148E6FB5002C68EB /* Blotter-B10.icns */; };
+		289DE22216B2B1A700B82CC4 /* Blotter-B10.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 289DE22116B2B1A700B82CC4 /* Blotter-B10.iconset */; };
 		28BED427152A15A700D8ABE1 /* calendar-background-active-bottom-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 28BED41E152A15A700D8ABE1 /* calendar-background-active-bottom-left.png */; };
 		28BED428152A15A700D8ABE1 /* calendar-background-active-bottom-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = 28BED41F152A15A700D8ABE1 /* calendar-background-active-bottom-middle.png */; };
 		28BED429152A15A700D8ABE1 /* calendar-background-active-bottom-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 28BED420152A15A700D8ABE1 /* calendar-background-active-bottom-right.png */; };
@@ -389,7 +389,7 @@
 		2850CB471528FD2700DEEA82 /* all-day-top-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "all-day-top-left.png"; sourceTree = "<group>"; };
 		2850CB481528FD2700DEEA82 /* all-day-top-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "all-day-top-middle.png"; sourceTree = "<group>"; };
 		2850CB491528FD2700DEEA82 /* all-day-top-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "all-day-top-right.png"; sourceTree = "<group>"; };
-		2898BE4E148E6FB5002C68EB /* Blotter-B10.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Blotter-B10.icns"; sourceTree = "<group>"; };
+		289DE22116B2B1A700B82CC4 /* Blotter-B10.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = "Blotter-B10.iconset"; sourceTree = "<group>"; };
 		28BED41E152A15A700D8ABE1 /* calendar-background-active-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar-background-active-bottom-left.png"; sourceTree = "<group>"; };
 		28BED41F152A15A700D8ABE1 /* calendar-background-active-bottom-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar-background-active-bottom-middle.png"; sourceTree = "<group>"; };
 		28BED420152A15A700D8ABE1 /* calendar-background-active-bottom-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar-background-active-bottom-right.png"; sourceTree = "<group>"; };
@@ -879,12 +879,12 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				289DE22116B2B1A700B82CC4 /* Blotter-B10.iconset */,
 				BA08A7E0167735130085F40C /* README */,
 				BA08A7601675F7D00085F40C /* Preferences */,
 				E282E06D140448CF0007C401 /* calendar */,
 				E2F9E1D71322A4F4007598E2 /* glass-hud */,
 				BA08A7DE16772E640085F40C /* noise.png */,
-				2898BE4E148E6FB5002C68EB /* Blotter-B10.icns */,
 				E2E826C7145023A6007035E5 /* Localizable.strings */,
 				E2E826C9145023A6007035E5 /* MainMenu.xib */,
 				E2E826CB145023A6007035E5 /* NewEventWindow.xib */,
@@ -1525,7 +1525,6 @@
 				28CB50F714603CEC00810395 /* glass-hud-top-left.png in Resources */,
 				28CB50F814603CEC00810395 /* glass-hud-top.png in Resources */,
 				28CB50F914603CEC00810395 /* glass-hud-top-right.png in Resources */,
-				2898BE4F148E6FB5002C68EB /* Blotter-B10.icns in Resources */,
 				28C5E26B14FFC21C00CD35F5 /* glass-hud-button-active-left.png in Resources */,
 				28C5E26C14FFC21C00CD35F5 /* glass-hud-button-active-middle.png in Resources */,
 				28C5E26D14FFC21C00CD35F5 /* glass-hud-button-active-right.png in Resources */,
@@ -1667,6 +1666,7 @@
 				BA8337FF1682179800BADBDC /* timeruler-top-middle.png in Resources */,
 				BA8338001682179800BADBDC /* timeruler-top-middle@2x.png in Resources */,
 				BA8338011682179800BADBDC /* timeruler-top-right@2x.png in Resources */,
+				289DE22216B2B1A700B82CC4 /* Blotter-B10.iconset in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
