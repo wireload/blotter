@@ -46,15 +46,6 @@
 		28C5E26E14FFC21C00CD35F5 /* glass-hud-button-disabled-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C5E26814FFC21C00CD35F5 /* glass-hud-button-disabled-left.png */; };
 		28C5E26F14FFC21C00CD35F5 /* glass-hud-button-disabled-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C5E26914FFC21C00CD35F5 /* glass-hud-button-disabled-middle.png */; };
 		28C5E27014FFC21C00CD35F5 /* glass-hud-button-disabled-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C5E26A14FFC21C00CD35F5 /* glass-hud-button-disabled-right.png */; };
-		28CB50F114603CEC00810395 /* glass-hud-bottom-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50E814603CEC00810395 /* glass-hud-bottom-left.png */; };
-		28CB50F214603CEC00810395 /* glass-hud-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50E914603CEC00810395 /* glass-hud-bottom.png */; };
-		28CB50F314603CEC00810395 /* glass-hud-bottom-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50EA14603CEC00810395 /* glass-hud-bottom-right.png */; };
-		28CB50F414603CEC00810395 /* glass-hud-middle-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50EB14603CEC00810395 /* glass-hud-middle-left.png */; };
-		28CB50F514603CEC00810395 /* glass-hud-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50EC14603CEC00810395 /* glass-hud-middle.png */; };
-		28CB50F614603CEC00810395 /* glass-hud-middle-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50ED14603CEC00810395 /* glass-hud-middle-right.png */; };
-		28CB50F714603CEC00810395 /* glass-hud-top-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50EE14603CEC00810395 /* glass-hud-top-left.png */; };
-		28CB50F814603CEC00810395 /* glass-hud-top.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50EF14603CEC00810395 /* glass-hud-top.png */; };
-		28CB50F914603CEC00810395 /* glass-hud-top-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CB50F014603CEC00810395 /* glass-hud-top-right.png */; };
 		28F69A1B129C1CAA00D4BB97 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 28F69A1A129C1CAA00D4BB97 /* Credits.rtf */; };
 		28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 28F69CF4129CC12100D4BB97 /* Licenses.rtf */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -405,15 +396,6 @@
 		28C5E26814FFC21C00CD35F5 /* glass-hud-button-disabled-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-disabled-left.png"; sourceTree = "<group>"; };
 		28C5E26914FFC21C00CD35F5 /* glass-hud-button-disabled-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-disabled-middle.png"; sourceTree = "<group>"; };
 		28C5E26A14FFC21C00CD35F5 /* glass-hud-button-disabled-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-disabled-right.png"; sourceTree = "<group>"; };
-		28CB50E814603CEC00810395 /* glass-hud-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-bottom-left.png"; sourceTree = "<group>"; };
-		28CB50E914603CEC00810395 /* glass-hud-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-bottom.png"; sourceTree = "<group>"; };
-		28CB50EA14603CEC00810395 /* glass-hud-bottom-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-bottom-right.png"; sourceTree = "<group>"; };
-		28CB50EB14603CEC00810395 /* glass-hud-middle-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-middle-left.png"; sourceTree = "<group>"; };
-		28CB50EC14603CEC00810395 /* glass-hud-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-middle.png"; sourceTree = "<group>"; };
-		28CB50ED14603CEC00810395 /* glass-hud-middle-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-middle-right.png"; sourceTree = "<group>"; };
-		28CB50EE14603CEC00810395 /* glass-hud-top-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-top-left.png"; sourceTree = "<group>"; };
-		28CB50EF14603CEC00810395 /* glass-hud-top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-top.png"; sourceTree = "<group>"; };
-		28CB50F014603CEC00810395 /* glass-hud-top-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-top-right.png"; sourceTree = "<group>"; };
 		28F69A1A129C1CAA00D4BB97 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		28F69CF4129CC12100D4BB97 /* Licenses.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Licenses.rtf; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1330,15 +1312,6 @@
 				E2670357132CA21F003FBFC2 /* glass-hud-button-right.png */,
 				E2670358132CA21F003FBFC2 /* glass-hud-button-middle.png */,
 				E2670359132CA21F003FBFC2 /* glass-hud-button-left.png */,
-				28CB50E814603CEC00810395 /* glass-hud-bottom-left.png */,
-				28CB50E914603CEC00810395 /* glass-hud-bottom.png */,
-				28CB50EA14603CEC00810395 /* glass-hud-bottom-right.png */,
-				28CB50EB14603CEC00810395 /* glass-hud-middle-left.png */,
-				28CB50EC14603CEC00810395 /* glass-hud-middle.png */,
-				28CB50ED14603CEC00810395 /* glass-hud-middle-right.png */,
-				28CB50EE14603CEC00810395 /* glass-hud-top-left.png */,
-				28CB50EF14603CEC00810395 /* glass-hud-top.png */,
-				28CB50F014603CEC00810395 /* glass-hud-top-right.png */,
 			);
 			path = "glass-hud";
 			sourceTree = "<group>";
@@ -1516,15 +1489,6 @@
 				E2E826D0145023A6007035E5 /* MainMenu.xib in Resources */,
 				E2E826D1145023A6007035E5 /* NewEventWindow.xib in Resources */,
 				E2E826D2145023A6007035E5 /* NewTaskWindow.xib in Resources */,
-				28CB50F114603CEC00810395 /* glass-hud-bottom-left.png in Resources */,
-				28CB50F214603CEC00810395 /* glass-hud-bottom.png in Resources */,
-				28CB50F314603CEC00810395 /* glass-hud-bottom-right.png in Resources */,
-				28CB50F414603CEC00810395 /* glass-hud-middle-left.png in Resources */,
-				28CB50F514603CEC00810395 /* glass-hud-middle.png in Resources */,
-				28CB50F614603CEC00810395 /* glass-hud-middle-right.png in Resources */,
-				28CB50F714603CEC00810395 /* glass-hud-top-left.png in Resources */,
-				28CB50F814603CEC00810395 /* glass-hud-top.png in Resources */,
-				28CB50F914603CEC00810395 /* glass-hud-top-right.png in Resources */,
 				28C5E26B14FFC21C00CD35F5 /* glass-hud-button-active-left.png in Resources */,
 				28C5E26C14FFC21C00CD35F5 /* glass-hud-button-active-middle.png in Resources */,
 				28C5E26D14FFC21C00CD35F5 /* glass-hud-button-active-right.png in Resources */,
