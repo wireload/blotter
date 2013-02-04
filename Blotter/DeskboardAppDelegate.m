@@ -7,11 +7,11 @@
 //
 
 #import <WireloadClassesAndResources/WireloadClassesAndResources.h>
+#import <PTHotKey/PTHotKeyCenter.h>
+#import <PTHotKey/PTHotKey+ShortcutRecorder.h>
 #import "DeskboardAppDelegate.h"
 #import "WLNewEventWindowController.h"
 #import "WLNewTaskWindowController.h"
-#import "PTHotKeyCenter.h"
-#import "PTHotKey+ShortcutRecorder.h"
 #import "WLCalendarWindow.h"
 #import "WLCalendarWindowController.h"
 #import "WLApplicationRunTimer.h"
@@ -287,15 +287,6 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    _shortCuts = [[NSArray arrayWithObjects:
-                  [NSArray arrayWithObjects:@"shortcutNewEvent", @"newEvent:", _newEventMenuItem, nil],
-                  [NSArray arrayWithObjects:@"shortcutNewTask", @"newTask:", _newTaskMenuItem, nil],
-                  [NSArray arrayWithObjects:@"shortcutShowNextWeek", @"showNextWeek:", _showNextWeekMenuItem, nil],
-                  [NSArray arrayWithObjects:@"shortcutShowPreviousWeek", @"showPreviousWeek:", _showPreviousWeekMenuItem, nil],
-                  [NSArray arrayWithObjects:@"shortcutShowCurrentWeek", @"showCurrentWeek:", _showCurrentWeekMenuItem, nil],
-                  [NSArray arrayWithObjects:@"shortcutBringToFront", @"bringToFrontOrSendToBack:", _bringToFrontMenuItem, nil],
-                  nil] retain];
-
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
     // Configure status bar
@@ -304,6 +295,16 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     [defaults addObserver:self forKeyPath:@"ShowInMenuBar" options:NSKeyValueObservingOptionNew context:NULL];
 
     // Configure shortcuts
+    [NSValueTransformer setValueTransformer:[[[SRKeyEquivalentTransformer alloc] init] autorelease] forName:@"SRKeyEquivalentTransformer"];
+    [NSValueTransformer setValueTransformer:[[[SRKeyEquivalentModifierMaskTransformer alloc] init] autorelease] forName:@"SRKeyEquivalentModifierMaskTransformer"];
+    _shortCuts = [[NSArray arrayWithObjects:
+                   [NSArray arrayWithObjects:@"shortcutNewEvent", @"newEvent:", _newEventMenuItem, nil],
+                   [NSArray arrayWithObjects:@"shortcutNewTask", @"newTask:", _newTaskMenuItem, nil],
+                   [NSArray arrayWithObjects:@"shortcutShowNextWeek", @"showNextWeek:", _showNextWeekMenuItem, nil],
+                   [NSArray arrayWithObjects:@"shortcutShowPreviousWeek", @"showPreviousWeek:", _showPreviousWeekMenuItem, nil],
+                   [NSArray arrayWithObjects:@"shortcutShowCurrentWeek", @"showCurrentWeek:", _showCurrentWeekMenuItem, nil],
+                   [NSArray arrayWithObjects:@"shortcutBringToFront", @"bringToFrontOrSendToBack:", _bringToFrontMenuItem, nil],
+                   nil] retain];
     [_shortCuts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
     {
         NSString *shortcutName = [obj objectAtIndex:ShortcutsNameIdx];
@@ -412,10 +413,8 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
          NSMenuItem *shortcutMenuItem = [obj objectAtIndex:ShortcutsMenuItemIdx];
 
          if (shortcut != nil) {
-             NSInteger code = [[shortcut objectForKey:SRShortcutCodeKey] integerValue];
-             NSUInteger flags = [[shortcut objectForKey:SRShortcutFlagsKey] unsignedIntegerValue];
-             [shortcutMenuItem setKeyEquivalent:SRASCIIStringForKeyCode(code)];
-             [shortcutMenuItem setKeyEquivalentModifierMask:flags];
+             [shortcutMenuItem setKeyEquivalent:[[NSValueTransformer valueTransformerForName:@"SRKeyEquivalentTransformer"] transformedValue:shortcut]];
+             [shortcutMenuItem setKeyEquivalentModifierMask:[[[NSValueTransformer valueTransformerForName:@"SRKeyEquivalentModifierMaskTransformer"] transformedValue:shortcut] unsignedIntegerValue]];
          }
          else
          {

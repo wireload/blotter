@@ -10,6 +10,9 @@
 #import <ShortcutRecorder/ShortcutRecorder.h>
 
 
+/*!
+    @brief  Simple subclass of SRRecorderControl that pauses PTHotKeyCenter when control is become key.
+ */
 @interface WLRecorderControl : SRRecorderControl
 
 @end
