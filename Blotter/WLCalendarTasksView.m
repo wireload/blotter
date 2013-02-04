@@ -202,7 +202,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     CALayer *l = [CALayer layer];
 
     NSWindow *window = [self window];
-    if (window)
+    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
         l.contentsScale = [window backingScaleFactor];
 
     l.layoutManager = self;
@@ -247,7 +247,7 @@ static NSString* const _WLOrderedSublayersKey = @"orderedSublayers";
     WLCalendarTaskLayer *l = [WLCalendarTaskLayer layer];
 
     NSWindow *window = [self window];
-    if (window)
+    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
         l.contentsScale = [window backingScaleFactor];
 
     l.needsDisplayOnBoundsChange = YES;

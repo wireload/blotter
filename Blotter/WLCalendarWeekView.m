@@ -1149,7 +1149,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     CALayer *l = [CALayer layer];
 
     NSWindow *window = [self window];
-    if (window)
+    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
         l.contentsScale = [window backingScaleFactor];
 
     l.name = _WLTimeRulerRootLayerName;
@@ -1181,7 +1181,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     __block WLBlockLayer *l = [WLBlockLayer layer];
 
     NSWindow *window = [self window];
-    if (window)
+    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
         l.contentsScale = [window backingScaleFactor];
 
     l.name = _WLTimeRulerBackgroundLayerName;
@@ -1308,7 +1308,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     WLCalendarTimeRulerLayer *l = [WLCalendarTimeRulerLayer layer];
 
     NSWindow *window = [self window];
-    if (window)
+    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
         l.contentsScale = [window backingScaleFactor];
 
     l.name = _WLTimeRulerLayerName;
@@ -1339,7 +1339,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     CALayer *l = [CALayer layer];
 
     NSWindow *window = [self window];
-    if (window)
+    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
         l.contentsScale = [window backingScaleFactor];
 
     l.masksToBounds = YES;
@@ -1379,7 +1379,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     CALayer *l = [CALayer layer];
 
     NSWindow *window = [self window];
-    if (window)
+    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
         l.contentsScale = [window backingScaleFactor];
 
     l.geometryFlipped = YES;
@@ -1415,7 +1415,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     __block WLBlockLayer *l = [WLBlockLayer layer];
 
     NSWindow *window = [self window];
-    if (window)
+    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
         l.contentsScale = [window backingScaleFactor];
 
     l.name = _WLAllDayBackgroundLayerName;
@@ -1473,7 +1473,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     WLCalendarDayEventsBackgroundLayer *l = [WLCalendarDayEventsBackgroundLayer layer];
 
     NSWindow *window = [self window];
-    if (window)
+    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
         l.contentsScale = [window backingScaleFactor];
 
     l.name = _WLDayBackgroundLayerName;
@@ -1503,7 +1503,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     WLCalendarAllDayEventsLayer *l = [WLCalendarAllDayEventsLayer layer];
 
     NSWindow *window = [self window];
-    if (window)
+    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
         l.contentsScale = [window backingScaleFactor];
 
     l.name = _WLAllDayLayerName;
@@ -1528,7 +1528,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     CAScrollLayer *l = [CAScrollLayer layer];
 
     NSWindow *window = [self window];
-    if (window)
+    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
         l.contentsScale = [window backingScaleFactor];
 
     l.name = _WLDayScrollLayerName;
@@ -1558,7 +1558,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     WLCalendarDayEventsLayer *l = [WLCalendarDayEventsLayer layer];
 
     NSWindow *window = [self window];
-    if (window)
+    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
         l.contentsScale = [window backingScaleFactor];
 
     l.name = _WLDayLayerName;
@@ -1589,7 +1589,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     CALayer *l = [CALayer layer];
 
     NSWindow *window = [self window];
-    if (window)
+    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
         l.contentsScale = [window backingScaleFactor];
 
     l.name = _WLTimeIndicatorRootLayerName;
@@ -1621,7 +1621,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     WLCalendarTimeIndicatorLayer *l = [WLCalendarTimeIndicatorLayer layer];
 
     NSWindow *window = [self window];
-    if (window)
+    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
         l.contentsScale = [window backingScaleFactor];
 
     l.name = _WLTimeIndicatorLayerName;
