@@ -51,6 +51,8 @@
 		28F8AF9316C30E3000F513BA /* layout-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F8AF9116C30E3000F513BA /* layout-icon.png */; };
 		28F8AF9416C30E3000F513BA /* layout-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F8AF9216C30E3000F513BA /* layout-icon@2x.png */; };
 		28F8AF9616C3142100F513BA /* Blotter-toolbar-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F8AF9516C3142100F513BA /* Blotter-toolbar-icon@2x.png */; };
+		28F8AF9916C3165600F513BA /* blotter-status-bar-active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F8AF9716C3165600F513BA /* blotter-status-bar-active@2x.png */; };
+		28F8AF9A16C3165600F513BA /* blotter-status-bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F8AF9816C3165600F513BA /* blotter-status-bar@2x.png */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		BA08A6051675D9D60085F40C /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA08A6041675D9D60085F40C /* ScriptingBridge.framework */; };
@@ -403,6 +405,8 @@
 		28F8AF9116C30E3000F513BA /* layout-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "layout-icon.png"; sourceTree = "<group>"; };
 		28F8AF9216C30E3000F513BA /* layout-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "layout-icon@2x.png"; sourceTree = "<group>"; };
 		28F8AF9516C3142100F513BA /* Blotter-toolbar-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Blotter-toolbar-icon@2x.png"; sourceTree = "<group>"; };
+		28F8AF9716C3165600F513BA /* blotter-status-bar-active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blotter-status-bar-active@2x.png"; sourceTree = "<group>"; };
+		28F8AF9816C3165600F513BA /* blotter-status-bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blotter-status-bar@2x.png"; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Blotter-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Blotter-Info.plist"; path = "../Blotter-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Blotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -878,7 +882,9 @@
 				E28C418C13F081A1005789DD /* defaults.plist */,
 				8D1107310486CEB800E47090 /* Blotter-Info.plist */,
 				E271E5B313377E6100BF7F2B /* blotter-status-bar.png */,
+				28F8AF9816C3165600F513BA /* blotter-status-bar@2x.png */,
 				E271E5B413377E6100BF7F2B /* blotter-status-bar-active.png */,
+				28F8AF9716C3165600F513BA /* blotter-status-bar-active@2x.png */,
 				28F69A1A129C1CAA00D4BB97 /* Credits.rtf */,
 				28F69CF4129CC12100D4BB97 /* Licenses.rtf */,
 			);
@@ -1639,6 +1645,8 @@
 				28F8AF9316C30E3000F513BA /* layout-icon.png in Resources */,
 				28F8AF9416C30E3000F513BA /* layout-icon@2x.png in Resources */,
 				28F8AF9616C3142100F513BA /* Blotter-toolbar-icon@2x.png in Resources */,
+				28F8AF9916C3165600F513BA /* blotter-status-bar-active@2x.png in Resources */,
+				28F8AF9A16C3165600F513BA /* blotter-status-bar@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
