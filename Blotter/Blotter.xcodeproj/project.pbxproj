@@ -50,6 +50,7 @@
 		28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 28F69CF4129CC12100D4BB97 /* Licenses.rtf */; };
 		28F8AF9316C30E3000F513BA /* layout-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F8AF9116C30E3000F513BA /* layout-icon.png */; };
 		28F8AF9416C30E3000F513BA /* layout-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F8AF9216C30E3000F513BA /* layout-icon@2x.png */; };
+		28F8AF9616C3142100F513BA /* Blotter-toolbar-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F8AF9516C3142100F513BA /* Blotter-toolbar-icon@2x.png */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		BA08A6051675D9D60085F40C /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA08A6041675D9D60085F40C /* ScriptingBridge.framework */; };
@@ -401,6 +402,7 @@
 		28F69CF4129CC12100D4BB97 /* Licenses.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Licenses.rtf; sourceTree = "<group>"; };
 		28F8AF9116C30E3000F513BA /* layout-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "layout-icon.png"; sourceTree = "<group>"; };
 		28F8AF9216C30E3000F513BA /* layout-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "layout-icon@2x.png"; sourceTree = "<group>"; };
+		28F8AF9516C3142100F513BA /* Blotter-toolbar-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Blotter-toolbar-icon@2x.png"; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Blotter-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Blotter-Info.plist"; path = "../Blotter-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Blotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -930,6 +932,7 @@
 				BA08AA641677452B0085F40C /* about-blotter-tall-button-bezel-right.png */,
 				BA08AA651677452C0085F40C /* about-blotter-twitter-icon.png */,
 				BA08AA661677452D0085F40C /* Blotter-toolbar-icon.png */,
+				28F8AF9516C3142100F513BA /* Blotter-toolbar-icon@2x.png */,
 				BA08AA3F16773D6D0085F40C /* chkbxBackground_10_6.png */,
 				BA08AA4016773D6F0085F40C /* chkbxBackground_10_7.png */,
 				28F8AF9116C30E3000F513BA /* layout-icon.png */,
@@ -1635,6 +1638,7 @@
 				289DE22216B2B1A700B82CC4 /* Blotter-B10.iconset in Resources */,
 				28F8AF9316C30E3000F513BA /* layout-icon.png in Resources */,
 				28F8AF9416C30E3000F513BA /* layout-icon@2x.png in Resources */,
+				28F8AF9616C3142100F513BA /* Blotter-toolbar-icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
