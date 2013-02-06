@@ -6,8 +6,8 @@
 //  Copyright 2011 Wireload. All rights reserved.
 //
 
+#import <PTHotKey/PTHotKeyCenter.h>
 #import "WLRecorderControl.h"
-#import "PTHotKeyCenter.h"
 
 
 @implementation WLRecorderControl
@@ -26,14 +26,6 @@
     if (isResigned)
         [[PTHotKeyCenter sharedCenter] resume];
     return isResigned;
-}
-
-- (BOOL)performKeyEquivalent:(NSEvent *)anEvent
-{
-    BOOL result = [super performKeyEquivalent:anEvent];
-    if (result)
-        [[self window] makeFirstResponder:nil];
-    return result;
 }
 
 @end

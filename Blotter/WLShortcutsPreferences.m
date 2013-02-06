@@ -11,8 +11,6 @@
 
 @implementation WLShortcutsPreferences
 
-#pragma mark Methods
-
 #pragma mark IKPreferencesRepresentation
 
 - (void)configureToolbarItem:(NSToolbarItem *)anItem
@@ -23,54 +21,90 @@
 }
 
 
-#pragma mark NSView
+#pragma mark NSViewController
 
 - (void)loadView
 {
     [super loadView];
-    
+
     NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
-    [_bringToFrontRecroderControl setAllowsKeyOnly:NO escapeKeysRecord:YES];
-    [_bringToFrontRecroderControl setIsASCIIOnly:YES];
+
+    [_bringToFrontRecroderControl setAllowedModifierFlags:SRCocoaModifierFlagsMask requiredModifierFlags:0 allowsEmptyModifierFlags:NO];
+    _bringToFrontRecroderControl.drawsASCIIEquivalentOfShortcut = YES;
     [_bringToFrontRecroderControl bind:NSValueBinding toObject:defaultsController withKeyPath:@"values.shortcutBringToFront" options:nil];
-    [_newEventRecorderControl setAllowsKeyOnly:NO escapeKeysRecord:YES];
-    [_newEventRecorderControl setIsASCIIOnly:YES];
+
+    [_newEventRecorderControl setAllowedModifierFlags:SRCocoaModifierFlagsMask requiredModifierFlags:0 allowsEmptyModifierFlags:NO];
+    _newEventRecorderControl.drawsASCIIEquivalentOfShortcut = YES;
     [_newEventRecorderControl bind:NSValueBinding toObject:defaultsController withKeyPath:@"values.shortcutNewEvent" options:nil];
-    [_newReminderRecorderControl setAllowsKeyOnly:NO escapeKeysRecord:YES];
-    [_newReminderRecorderControl setIsASCIIOnly:YES];
+
+    [_newReminderRecorderControl setAllowedModifierFlags:SRCocoaModifierFlagsMask requiredModifierFlags:0 allowsEmptyModifierFlags:NO];
+    _newReminderRecorderControl.drawsASCIIEquivalentOfShortcut = YES;
     [_newReminderRecorderControl bind:NSValueBinding toObject:defaultsController withKeyPath:@"values.shortcutNewTask" options:nil];
-    [_showNextWeekControl setAllowsKeyOnly:NO escapeKeysRecord:YES];
-    [_showNextWeekControl setIsASCIIOnly:YES];
+
+    [_showNextWeekControl setAllowedModifierFlags:SRCocoaModifierFlagsMask requiredModifierFlags:0 allowsEmptyModifierFlags:NO];
+    _showNextWeekControl.drawsASCIIEquivalentOfShortcut = YES;
     [_showNextWeekControl bind:NSValueBinding toObject:defaultsController withKeyPath:@"values.shortcutShowNextWeek" options:nil];
-    [_showCurrentWeekControl setAllowsKeyOnly:NO escapeKeysRecord:YES];
-    [_showCurrentWeekControl setIsASCIIOnly:YES];
+
+    [_showCurrentWeekControl setAllowedModifierFlags:SRCocoaModifierFlagsMask requiredModifierFlags:0 allowsEmptyModifierFlags:NO];
+    _showCurrentWeekControl.drawsASCIIEquivalentOfShortcut = YES;
     [_showCurrentWeekControl bind:NSValueBinding toObject:defaultsController withKeyPath:@"values.shortcutShowCurrentWeek" options:nil];
-    [_showPrevWeekControl setAllowsKeyOnly:NO escapeKeysRecord:YES];
-    [_showPrevWeekControl setIsASCIIOnly:YES];
+
+    [_showPrevWeekControl setAllowedModifierFlags:SRCocoaModifierFlagsMask requiredModifierFlags:0 allowsEmptyModifierFlags:NO];
+    _showPrevWeekControl.drawsASCIIEquivalentOfShortcut = YES;
     [_showPrevWeekControl bind:NSValueBinding toObject:defaultsController withKeyPath:@"values.shortcutShowPreviousWeek" options:nil];
+
+    _validator = [[SRValidator alloc] initWithDelegate:self];
 }
 
 
 #pragma mark SRRecorderControlDelegate
 
-- (BOOL)shortcutRecorder:(SRRecorderControl *)aRecorder isKeyCode:(NSInteger)keyCode andFlagsTaken:(NSUInteger)flags reason:(NSString **)aReason
+- (BOOL)shortcutRecorder:(SRRecorderControl *)aRecorder canRecordShortcut:(NSDictionary *)aShortcut
 {
-    KeyCombo keyCombo = SRMakeKeyCombo(keyCode, flags);
-    if ((aRecorder != _newEventRecorderControl && SRKeyComboEqualToKeyCombo([_newEventRecorderControl keyCombo], keyCombo)) ||
-        (aRecorder != _bringToFrontRecroderControl && SRKeyComboEqualToKeyCombo([_bringToFrontRecroderControl keyCombo], keyCombo)) ||
-        (aRecorder != _newReminderRecorderControl && SRKeyComboEqualToKeyCombo([_newReminderRecorderControl keyCombo], keyCombo)) ||
-        (aRecorder != _showNextWeekControl && SRKeyComboEqualToKeyCombo([_showNextWeekControl keyCombo], keyCombo)) ||
-        (aRecorder != _showPrevWeekControl && SRKeyComboEqualToKeyCombo([_showPrevWeekControl keyCombo], keyCombo)) ||
-        (aRecorder != _showCurrentWeekControl && SRKeyComboEqualToKeyCombo([_showCurrentWeekControl keyCombo], keyCombo)))
+    __autoreleasing NSError *error = nil;
+    BOOL isTaken = [_validator isKeyCode:[aShortcut[SRShortcutKeyCode] unsignedShortValue] andFlagsTaken:[aShortcut[SRShortcutModifierFlagsKey] unsignedIntegerValue] error:&error];
+
+    if (isTaken)
     {
-        *aReason = NSLocalizedStringFromTableInBundle(@"it's already used as a different Blotter shortcut. To use this shortcut, first remove or change the other shortcut", nil, [NSBundle bundleForClass:[self class]], @"A reason to use other shortcut");;
+        NSBeep();
+        [self presentError:error modalForWindow:[[self view] window] delegate:nil didPresentSelector:NULL contextInfo:NULL];
+    }
+
+    return !isTaken;
+}
+
+
+#pragma mark SRValidatorDelegate
+
+- (BOOL)shortcutValidator:(SRValidator *)aValidator isKeyCode:(unsigned short)aKeyCode andFlagsTaken:(NSUInteger)aFlags reason:(NSString **)outReason
+{
+#define IS_TAKEN(aRecorder) (recorder != (aRecorder) && SRShortcutEqualToShortcut(shortcut, [(aRecorder) objectValue]))
+    WLRecorderControl *recorder = (WLRecorderControl *)self.view.window.firstResponder;
+
+    if (![recorder isKindOfClass:[WLRecorderControl class]])
+        return NO;
+     NSDictionary *shortcut = SRShortcutWithCocoaModifierFlagsAndKeyCode(aFlags, aKeyCode);
+
+    if (IS_TAKEN(_bringToFrontRecroderControl) ||
+        IS_TAKEN(_newEventRecorderControl) ||
+        IS_TAKEN(_newReminderRecorderControl) ||
+        IS_TAKEN(_showNextWeekControl) ||
+        IS_TAKEN(_showNextWeekControl) ||
+        IS_TAKEN(_showCurrentWeekControl) ||
+        IS_TAKEN(_showPrevWeekControl))
+    {
+        *outReason = NSLocalizedStringFromTableInBundle(@"it's already used as a different Blotter shortcut. To use this shortcut, first remove or change the other shortcut",
+                                                        nil,
+                                                        [NSBundle bundleForClass:[self class]],
+                                                        @"A reason to use other shortcut");
         return YES;
     }
     else
         return NO;
+#undef IS_TAKEN
 }
 
-- (BOOL)shortcutRecorderShouldCheckMenu:(SRRecorderControl *)aRecorder
+- (BOOL)shortcutValidatorShouldCheckMenu:(SRValidator *)aValidator
 {
     return NO;
 }

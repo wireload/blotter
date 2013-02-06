@@ -95,8 +95,11 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
             // Create new layer for the event.
             layer = [WLCalendarEventLayer dayEventLayer];
             layer.delegate = self.delegate;
-            layer.contentsScale = self.contentsScale;
             layer.keepsTextVisible = self.keepsTextOfEventsVisible;
+
+            if (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+                layer.contentsScale = self.contentsScale;
+
             [self addSublayer:layer];
             layer.dayEvent = event;
         }

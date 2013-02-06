@@ -10,16 +10,19 @@
 #import <ShortcutRecorder/ShortcutRecorder.h>
 #import "WLViewController.h"
 #import "IKPreferencesRepresentation.h"
+#import "WLRecorderControl.h"
 
 
-@interface WLShortcutsPreferences : WLViewController <IKPreferencesRepresentation /*, SRRecorderControlDelegate */>
+@interface WLShortcutsPreferences : WLViewController <IKPreferencesRepresentation, SRRecorderControlDelegate, SRValidatorDelegate>
 {
-    IBOutlet SRRecorderControl *_bringToFrontRecroderControl;
-    IBOutlet SRRecorderControl *_newEventRecorderControl;
-    IBOutlet SRRecorderControl *_newReminderRecorderControl;
-    IBOutlet SRRecorderControl *_showNextWeekControl;
-    IBOutlet SRRecorderControl *_showCurrentWeekControl;
-    IBOutlet SRRecorderControl *_showPrevWeekControl;
+    IBOutlet WLRecorderControl *_bringToFrontRecroderControl;
+    IBOutlet WLRecorderControl *_newEventRecorderControl;
+    IBOutlet WLRecorderControl *_newReminderRecorderControl;
+    IBOutlet WLRecorderControl *_showNextWeekControl;
+    IBOutlet WLRecorderControl *_showCurrentWeekControl;
+    IBOutlet WLRecorderControl *_showPrevWeekControl;
+
+    SRValidator *_validator;
 }
 
 @end

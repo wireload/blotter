@@ -73,8 +73,11 @@ static const CGFloat _WLXPadding = 2.0;
             // Create new layer for the event.
             usedLayer = [WLCalendarEventLayer allDayEventLayer];
             usedLayer.delegate = self.delegate;
-            usedLayer.contentsScale = self.contentsScale;
             usedLayer.allDayEvent = event;
+
+            if (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+                usedLayer.contentsScale = self.contentsScale;
+
             [self addSublayer:usedLayer];
         }
         [_icalSortedEventLayers addObject:usedLayer];

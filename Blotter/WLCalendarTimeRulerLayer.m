@@ -188,10 +188,11 @@
 - (WLCalendarTimeRulerMarkerLayer *)setupMarkerLayer
 {
     WLCalendarTimeRulerMarkerLayer *l = [WLCalendarTimeRulerMarkerLayer layer];
-    l.contentsScale = self.contentsScale;
-
     l.needsDisplayOnBoundsChange = YES;
     l.delegate = self.delegate;
+
+    if (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+        l.contentsScale = self.contentsScale;
 
 #ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor greenColor] WL_CGColor];
