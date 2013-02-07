@@ -226,36 +226,12 @@
 					<int key="connectionID">547</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">newEvent:</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="303983688"/>
-					</object>
-					<int key="connectionID">539</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">newTask:</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="1006149097"/>
-					</object>
-					<int key="connectionID">540</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">QuitMenuItem</string>
 						<reference key="source" ref="976324537"/>
 						<reference key="destination" ref="632727374"/>
 					</object>
 					<int key="connectionID">543</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">preferencesMenuItem</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="609285721"/>
-					</object>
-					<int key="connectionID">544</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -368,6 +344,30 @@
 						<reference key="destination" ref="168685719"/>
 					</object>
 					<int key="connectionID">581</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showNewEvent:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="303983688"/>
+					</object>
+					<int key="connectionID">582</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showNewTask:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="1006149097"/>
+					</object>
+					<int key="connectionID">583</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_preferencesMenuItem</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="609285721"/>
+					</object>
+					<int key="connectionID">584</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -615,7 +615,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">581</int>
+			<int key="maxID">584</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

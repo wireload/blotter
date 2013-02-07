@@ -61,6 +61,20 @@ extern NSString* const WLAutoFadeKey;
 
 extern NSString* const WLAutoFadeSecondsKey;
 
+extern NSString* const WLShowInMenuBar;
+
+extern NSString* const WLShortcutNewEvent;
+
+extern NSString* const WLShortcutNewTask;
+
+extern NSString* const WLShortcutShowNextWeek;
+
+extern NSString* const WLShortcutShowPreviousWeek;
+
+extern NSString* const WLShortcutShowCurrentWeek;
+
+extern NSString* const WLShortcutBringToFront;
+
 typedef void (^WLCalendarsUpdaterBlock)(NSMutableArray *aCalendars);
 
 extern NSComparator const WLCalendarsComparator;
@@ -180,5 +194,12 @@ extern NSComparator const WLCalendarsComparator;
 - (NSURL *)WL_wireloadURL;
 
 - (NSURL *)WL_bannerURL;
+
+@end
+
+
+@interface NSUserDefaults (WLGeneralPreferences)
+
+- (BOOL)WL_showInMenuBar;
 
 @end

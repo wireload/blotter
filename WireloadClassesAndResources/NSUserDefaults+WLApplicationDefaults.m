@@ -60,6 +60,21 @@ NSString* const WLAutoFadeKey = @"AutoFade";
 
 NSString* const WLAutoFadeSecondsKey = @"AutoFadeSeconds";
 
+NSString* const WLShowInMenuBar = @"ShowInMenuBar";
+
+NSString* const WLShortcutNewEvent = @"shortcutNewEvent";
+
+NSString* const WLShortcutNewTask = @"shortcutNewTask";
+
+NSString* const WLShortcutShowNextWeek = @"shortcutShowNextWeek";
+
+NSString* const WLShortcutShowPreviousWeek = @"shortcutShowPreviousWeek";
+
+NSString* const WLShortcutShowCurrentWeek = @"shortcutShowCurrentWeek";
+
+NSString* const WLShortcutBringToFront = @"shortcutBringToFront";
+
+
 NSComparator const WLCalendarsComparator = ^(id left, id right) {
     return [[left valueForKey:WLCalendarUIDKey] compare:[right valueForKey:WLCalendarUIDKey]];
 };
@@ -370,6 +385,16 @@ NSComparator const WLCalendarsComparator = ^(id left, id right) {
 {
     NSString *s = [self stringForKey:WLBannerURLKey];
     return [NSURL URLWithString:s];
+}
+
+@end
+
+
+@implementation NSUserDefaults (WLGeneralPreferences)
+
+- (BOOL)WL_showInMenuBar
+{
+    return [self boolForKey:WLShowInMenuBar];
 }
 
 @end
