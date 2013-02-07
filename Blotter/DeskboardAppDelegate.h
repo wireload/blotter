@@ -11,15 +11,8 @@
 #import "IKApplicationPreferences.h"
 
 
-@class WLApplicationRunTimer;
-
-
 @interface DeskboardAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate /*, NSMenuValidation*/>
 {
-    WLCalendarWindowController *calendarWindowController;
-    IKApplicationPreferences *_preferencesController;
-
-    NSStatusItem *_statusItem;
     IBOutlet NSMenu *_statusMenu;
     IBOutlet NSMenuItem *_bringToFrontMenuItem;
     IBOutlet NSMenuItem *_newEventMenuItem;
@@ -27,12 +20,7 @@
     IBOutlet NSMenuItem *_showNextWeekMenuItem;
     IBOutlet NSMenuItem *_showCurrentWeekMenuItem;
     IBOutlet NSMenuItem *_showPreviousWeekMenuItem;
-    IBOutlet NSMenuItem *preferencesMenuItem;
-
-    NSTimer *_showCurrentWeekTimer;
-    NSTimer *_autoFadeTimer;
-    WLApplicationRunTimer *_applicationRunTimer;
-    NSArray *_shortCuts;
+    IBOutlet NSMenuItem *_preferencesMenuItem;
 }
 
 @property (readonly) WLCalendarWindowController *calendarWindowController;
@@ -43,9 +31,9 @@
 
 - (IBAction)showPreferences:(id)aSender;
 
-- (IBAction)newEvent:(id)aSender;
+- (IBAction)showNewEvent:(id)aSender;
 
-- (IBAction)newTask:(id)aSender;
+- (IBAction)showNewTask:(id)aSender;
 
 - (IBAction)showAbout:(id)aSender;
 
@@ -58,18 +46,34 @@
 - (IBAction)showRateThisApp:(id)aSender;
 
 /*!
- @abstract Determines whether only calendar window is visible.
+    @brief  Toggles visibility of status item according to settings in user defaults.
+ */
+- (void)toggleStatusItem;
+
+/*!
+    @brief  Makes the Rate This App menu item visible.
+ */
+- (void)showRateThisAppMenuItem;
+
+/*!
+    @brief  Makes the Rate This App menu item hidden.
+ */
+- (void)hideRateThisAppMenuItem;
+
+/*!
+    @abstract Determines whether only calendar window is visible.
  */
 - (BOOL)isOnlyCalendarWindowVisible:(NSArray *)aVisibleWindows;
 
 /*!
- @abstract Autohides the calendar window if all conditions are met.
- @see https://tracker.wireload.net/projects/blotter/wiki/Autohide
+    @abstract Autohides the calendar window if all conditions are met.
+
+    @see https://tracker.wireload.net/projects/blotter/wiki/Autohide
  */
 - (void)scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:(NSArray *)aWindows;
 
 /*!
- @abstract Deactivates application by sending -hide: to NSApp.
+    @abstract Deactivates application by sending -hide: to NSApp.
  */
 - (void)deactivateAppIfAllConditionsAreMet:(NSArray *)aWindows;
 
@@ -78,24 +82,13 @@
 
 - (void)_removeShowCurrentWeekTimerIfNeeded;
 
-/*!
- @discussion    Automatically sent when _showCurrentWeekTimer fires.
- @see -_scheduleShowCurrentWeekTimerIfNeeded
- @see -_removeShowCurrentWeekTimerIfNeeded
- */
 - (void)_showCurrentWeekTimerDidFire;
+
 
 - (void)_scheduleAutoFadeTimerIfNeeded;
 
 - (void)_removeAutoFadeTimerIfNeeded;
 
-/*!
- @discussion    Automatically sent when _fadeOutTimer fires.
- */
 - (void)_autoFadeTimerDidFire;
-
-- (void)_addStatusItem;
-
-- (void)_applicationRunTimerDidFire:(NSNotification *)aNotification;
 
 @end
