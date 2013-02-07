@@ -342,8 +342,8 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     [NSValueTransformer setValueTransformer:[[SRKeyEquivalentTransformer alloc] init] forName:@"SRKeyEquivalentTransformer"];
     [NSValueTransformer setValueTransformer:[[SRKeyEquivalentModifierMaskTransformer alloc] init] forName:@"SRKeyEquivalentModifierMaskTransformer"];
     _shortcuts = @[
-                   @[@"shortcutNewEvent", @"newEvent:", _newEventMenuItem],
-                   @[@"shortcutNewTask", @"newTask:", _newTaskMenuItem],
+                   @[@"shortcutNewEvent", @"showNewEvent:", _newEventMenuItem],
+                   @[@"shortcutNewTask", @"showNewTask:", _newTaskMenuItem],
                    @[@"shortcutShowNextWeek", @"showNextWeek:", _showNextWeekMenuItem],
                    @[@"shortcutShowPreviousWeek", @"showPreviousWeek:", _showPreviousWeekMenuItem],
                    @[@"shortcutShowCurrentWeek", @"showCurrentWeek:", _showCurrentWeekMenuItem],
