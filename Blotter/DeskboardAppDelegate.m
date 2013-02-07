@@ -96,7 +96,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         WLLayoutPreferences *layout = [[[WLLayoutPreferences alloc] initWithNibName:@"LayoutPrefPaneView" bundle:nil] autorelease];
         WLCalendarsPreferences *calendars = [[[WLCalendarsPreferences alloc] initWithNibName:@"CalendarsPrefPaneView" bundle:nil] autorelease];
         WLAboutPreferences *about = [[[WLAboutPreferences alloc] initWithNibName:@"AboutPrefPaneView" bundle:nil] autorelease];
-        _preferencesController = [[IKApplicationPreferences preferencesWithWindowNibName:@"WLApplicationPreferencesWindow"
+        _preferencesController = [[WLApplicationPreferences preferencesWithWindowNibName:@"WLApplicationPreferencesWindow"
                                                                             visualFormat:@"general,shortcuts,positioning,layout,calendars,-,about"
                                                                          representations:@{
                                                                             @"general": general,
@@ -106,8 +106,6 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
                                                                             @"calendars": calendars,
                                                                             @"about": about
                                                                          }] retain];
-        _preferencesController.window.collectionBehavior = NSWindowCollectionBehaviorCanJoinAllSpaces;
-        _preferencesController.window.level = NSFloatingWindowLevel;
     }
 
     return _preferencesController;

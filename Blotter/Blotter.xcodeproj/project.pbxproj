@@ -200,6 +200,7 @@
 		BA9AA23616C2C2450084D898 /* glass-hud-button-middle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA9AA22C16C2C2450084D898 /* glass-hud-button-middle@2x.png */; };
 		BA9AA23716C2C2450084D898 /* glass-hud-button-right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA9AA22D16C2C2450084D898 /* glass-hud-button-right@2x.png */; };
 		BA9AA23816C2C2450084D898 /* glass-hud-pop-up-button-arrows@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA9AA22E16C2C2450084D898 /* glass-hud-pop-up-button-arrows@2x.png */; };
+		BA9AA24316C380AD0084D898 /* WLApplicationPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9AA24216C380AD0084D898 /* WLApplicationPreferences.m */; };
 		BACE01341663BE900072BD8A /* GeneralPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BACE01321663BE900072BD8A /* GeneralPrefPaneView.xib */; };
 		E20DAC4F1428FF0B00EF65EA /* info-middle-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E20DAC4D1428FF0B00EF65EA /* info-middle-left.png */; };
 		E20DAC501428FF0B00EF65EA /* info-middle-right.png in Resources */ = {isa = PBXBuildFile; fileRef = E20DAC4E1428FF0B00EF65EA /* info-middle-right.png */; };
@@ -622,6 +623,8 @@
 		BA9AA22C16C2C2450084D898 /* glass-hud-button-middle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-middle@2x.png"; sourceTree = "<group>"; };
 		BA9AA22D16C2C2450084D898 /* glass-hud-button-right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-button-right@2x.png"; sourceTree = "<group>"; };
 		BA9AA22E16C2C2450084D898 /* glass-hud-pop-up-button-arrows@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-pop-up-button-arrows@2x.png"; sourceTree = "<group>"; };
+		BA9AA24116C380AD0084D898 /* WLApplicationPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLApplicationPreferences.h; sourceTree = "<group>"; };
+		BA9AA24216C380AD0084D898 /* WLApplicationPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLApplicationPreferences.m; sourceTree = "<group>"; };
 		BACE01351663BEAD0072BD8A /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
 		BACE01361663BEAF0072BD8A /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
 		BACE01371663BEB20072BD8A /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
@@ -1065,6 +1068,8 @@
 				BA08A77A1675FEF80085F40C /* WLBlockLayoutManager.m */,
 				BA08A7761675FEE40085F40C /* WLNinePartBlockLayer.h */,
 				BA08A7771675FEE50085F40C /* WLNinePartBlockLayer.m */,
+				BA9AA24116C380AD0084D898 /* WLApplicationPreferences.h */,
+				BA9AA24216C380AD0084D898 /* WLApplicationPreferences.m */,
 				BA807E901645459D0033B85B /* IKApplicationPreferences */,
 				BA1F51D11663B23700ABD662 /* General */,
 				BA1F51D41663B23F00ABD662 /* Shortcuts */,
@@ -1729,6 +1734,7 @@
 				BA08AA51167743A50085F40C /* WLAboutPreferences.m in Sources */,
 				BA08AA52167743A50085F40C /* WLCustomCursorButton.m in Sources */,
 				BA08AA53167743A50085F40C /* WLPreferencesButtonCell.m in Sources */,
+				BA9AA24316C380AD0084D898 /* WLApplicationPreferences.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
