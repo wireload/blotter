@@ -139,6 +139,7 @@
 		BA1F51DB1663B2A400ABD662 /* WLGeneralPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1F51DA1663B2A400ABD662 /* WLGeneralPreferences.m */; };
 		BA5B3DAC16C3D1710056352F /* about-blotter-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA5B3DA816C3D1710056352F /* about-blotter-icon@2x.png */; };
 		BA5B3DAD16C3D1710056352F /* layout-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA5B3DA916C3D1710056352F /* layout-icon@2x.png */; };
+		BA5B3DD516C3ED230056352F /* WLApplicationPreferencesWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = BA5B3DD416C3ED230056352F /* WLApplicationPreferencesWindow.m */; };
 		BA807F0F1645460C0033B85B /* IKApplicationPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA807F0C1645460C0033B85B /* IKApplicationPreferences.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BA81A834164548070058EB16 /* IKApplicationPreferences.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA81A832164548070058EB16 /* IKApplicationPreferences.strings */; };
 		BA8337AC1682176100BADBDC /* calendar-background-active-bottom-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA83379A1682176100BADBDC /* calendar-background-active-bottom-left@2x.png */; };
@@ -556,6 +557,8 @@
 		BA1F51DC1663B30500ABD662 /* SystemPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemPreferences.h; sourceTree = "<group>"; };
 		BA5B3DA816C3D1710056352F /* about-blotter-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-blotter-icon@2x.png"; sourceTree = "<group>"; };
 		BA5B3DA916C3D1710056352F /* layout-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "layout-icon@2x.png"; sourceTree = "<group>"; };
+		BA5B3DD316C3ED230056352F /* WLApplicationPreferencesWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLApplicationPreferencesWindow.h; sourceTree = "<group>"; };
+		BA5B3DD416C3ED230056352F /* WLApplicationPreferencesWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLApplicationPreferencesWindow.m; sourceTree = "<group>"; };
 		BA807F0B1645460C0033B85B /* IKApplicationPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKApplicationPreferences.h; sourceTree = "<group>"; };
 		BA807F0C1645460C0033B85B /* IKApplicationPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKApplicationPreferences.m; sourceTree = "<group>"; };
 		BA807F0E1645460C0033B85B /* IKPreferencesRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKPreferencesRepresentation.h; sourceTree = "<group>"; };
@@ -1076,6 +1079,8 @@
 				BA08A7771675FEE50085F40C /* WLNinePartBlockLayer.m */,
 				BA9AA24116C380AD0084D898 /* WLApplicationPreferences.h */,
 				BA9AA24216C380AD0084D898 /* WLApplicationPreferences.m */,
+				BA5B3DD316C3ED230056352F /* WLApplicationPreferencesWindow.h */,
+				BA5B3DD416C3ED230056352F /* WLApplicationPreferencesWindow.m */,
 				BA807E901645459D0033B85B /* IKApplicationPreferences */,
 				BA1F51D11663B23700ABD662 /* General */,
 				BA1F51D41663B23F00ABD662 /* Shortcuts */,
@@ -1743,6 +1748,7 @@
 				BA08AA52167743A50085F40C /* WLCustomCursorButton.m in Sources */,
 				BA08AA53167743A50085F40C /* WLPreferencesButtonCell.m in Sources */,
 				BA9AA24316C380AD0084D898 /* WLApplicationPreferences.m in Sources */,
+				BA5B3DD516C3ED230056352F /* WLApplicationPreferencesWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
