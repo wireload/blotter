@@ -18,12 +18,14 @@
     
     if (!isPerformed)
     {
-        if (WLDoesEventContainShortcut(anEvent, NSCommandKeyMask | NSShiftKeyMask, kVK_ANSI_LeftBracket))
+        if (WLDoesEventContainShortcut(anEvent, NSCommandKeyMask | NSShiftKeyMask, kVK_ANSI_LeftBracket) ||
+            WLDoesEventContainShortcut(anEvent, NSCommandKeyMask | NSAlternateKeyMask, kVK_LeftArrow))
         {
             [self.windowController showPreviousRepresentationAnimated:YES];
             isPerformed = YES;
         }
-        else if (WLDoesEventContainShortcut(anEvent, NSCommandKeyMask | NSShiftKeyMask, kVK_ANSI_RightBracket))
+        else if (WLDoesEventContainShortcut(anEvent, NSCommandKeyMask | NSShiftKeyMask, kVK_ANSI_RightBracket) ||
+                 WLDoesEventContainShortcut(anEvent, NSCommandKeyMask | NSAlternateKeyMask, kVK_RightArrow))
         {
             [self.windowController showNextRepresentationAnimated:YES];
             isPerformed = YES;
