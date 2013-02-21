@@ -12,20 +12,20 @@
 
 @implementation WLRecorderControl
 
-- (BOOL)becomeFirstResponder
+- (BOOL)beginRecording
 {
-    BOOL isBecome = [super becomeFirstResponder];
-    if (isBecome)
+    BOOL didBegin = [super beginRecording];
+
+    if (didBegin)
         [[PTHotKeyCenter sharedCenter] pause];
-    return isBecome;
+
+    return didBegin;
 }
 
-- (BOOL)resignFirstResponder
+- (void)endRecordingWithObjectValue:(NSDictionary *)anObjectValue
 {
-    BOOL isResigned = [super resignFirstResponder];
-    if (isResigned)
-        [[PTHotKeyCenter sharedCenter] resume];
-    return isResigned;
+    [super endRecordingWithObjectValue:anObjectValue];
+    [[PTHotKeyCenter sharedCenter] resume];
 }
 
 @end
