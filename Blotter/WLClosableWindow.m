@@ -7,8 +7,8 @@
 //
 
 #import <Carbon/Carbon.h>
+#import <WLFoundation/WLFoundation.h>
 #import "WLClosableWindow.h"
-#import "WLEvents.h"
 
 
 @implementation WLClosableWindow

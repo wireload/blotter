@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 
 
+typedef BOOL (^WLUpdateChecker)(id aFromArrayObject, id aToArrayObject);
+
+
 @interface NSArray (WLDelta)
 
 /*!
@@ -47,5 +50,16 @@
 - (NSIndexSet *)WL_indexesOfObjects:(out __autoreleasing NSIndexSet **)outIndexes
                     relativeToArray:(NSArray *)aRelativeArray
               sortedUsingComparator:(NSComparator)aComparator;
+
+/*!
+    //TODO: REWRITE ME
+    @description   Both arrays must contain unique objects in terms of aSortDescriptors so it can distinguish updated events.
+ */
+- (void)WL_indexesOfDeletedObject:(out NSIndexSet **)outDeletedIndexes
+         indexesOfInsertedObjects:(out NSIndexSet **)outInsertedIndexes
+          indexesOfUpdatedObjects:(out NSIndexSet **)outUpdatedIndexes
+                    toSortedArray:(NSArray *)aToArray
+                  sortDescriptors:(NSArray *)aSortDescriptors
+                    updateChecker:(WLUpdateChecker)anUpdateChecker;
 
 @end

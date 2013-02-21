@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
+#import <WLFoundation/WLFoundation.h>
 #import "WLViewController.h"
 #import "WLCalendarWindowArrangementView.h"
 #import "IKPreferencesRepresentation.h"

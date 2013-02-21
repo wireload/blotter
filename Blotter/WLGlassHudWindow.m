@@ -7,7 +7,7 @@
 //
 
 #import <Carbon/Carbon.h>
-#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
+#import <WLFoundation/WLFoundation.h>
 #import "WLGlassHudWindow.h"
 #import "WLGlassHudWindowBackgroundView.h"
 

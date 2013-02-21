@@ -6,7 +6,7 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
-#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
+#import <WLFoundation/WLFoundation.h>
 #import "WLCalendarTaskLayer.h"
 #import "NSFont+WLCalendar.h"
 #import "NSColor+WLCalendar.h"

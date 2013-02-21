@@ -7,7 +7,7 @@
 //
 
 #import <CalendarStore/CalendarStore.h>
-#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
+#import <WLFoundation/WLFoundation.h>
 #import "WLCalendarDayEventsLayer.h"
 #import "WLCalendarEventLayer.h"
 #import "NSFont+WLCalendar.h"

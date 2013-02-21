@@ -10,6 +10,7 @@
 #import "WLLayoutCalendarWindowView.h"
 #import "DeskboardAppDelegate.h"
 #import "WLCalendarWindowController.h"
+#import "NSUserDefaults+WLApplicationDefaults.h"
 
 
 @implementation WLLayoutPreferences

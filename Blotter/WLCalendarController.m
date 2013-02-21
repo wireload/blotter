@@ -7,9 +7,8 @@
 //
 
 #import <CalendarStore/CalendarStore.h>
+#import <WLFoundation/WLFoundation.h>
 #import "WLCalendarController.h"
-#import "IKPowerSources.h"
-#import "NSArray+WLDelta.h"
 #import "NSUserDefaults+WLApplicationDefaults.h"
 
 

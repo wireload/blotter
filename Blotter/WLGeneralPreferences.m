@@ -6,7 +6,7 @@
 //  Copyright 2010 WireLoad, Inc. All rights reserved.
 //
 
-#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
+#import "NSUserDefaults+WLApplicationDefaults.h"
 #import "WLGeneralPreferences.h"
 #import "SystemPreferences.h"
 

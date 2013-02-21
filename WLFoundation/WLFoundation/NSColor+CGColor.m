@@ -21,7 +21,7 @@
 
 + (NSColor *)WL_slowColorWithCGColor:(CGColorRef)aCGColor
 {
-    NSColorSpace *colorSpace = [[[NSColorSpace alloc] initWithCGColorSpace:CGColorGetColorSpace(aCGColor)] autorelease];
+    NSColorSpace *colorSpace = [[NSColorSpace alloc] initWithCGColorSpace:CGColorGetColorSpace(aCGColor)];
     size_t numberOfComponents = CGColorGetNumberOfComponents(aCGColor);
     const CGFloat *components = CGColorGetComponents(aCGColor);
     return [NSColor colorWithColorSpace:colorSpace components:components count:numberOfComponents];
@@ -30,8 +30,10 @@
 + (NSColor *)WL_colorWithCGColor:(CGColorRef)aCGColor
 {
     NSColor *color = [self WL_fastColorWithCGColor:aCGColor];
+
     if (!color)
         color = [self WL_slowColorWithCGColor:aCGColor];
+
     return color;
 }
 
@@ -43,12 +45,14 @@
         return nil;
 }
 
-- (CGColorRef)WL_slowCGColor
+- (CGColorRef)WL_slowCGColor __attribute__((cf_returns_retained))
 {
     CGColorSpaceRef colorSpace = [[self colorSpace] CGColorSpace];
     CGColorSpaceRetain(colorSpace);
+
     if (colorSpace == NULL)
         colorSpace = CGColorSpaceCreateDeviceRGB();
+
     NSInteger componentCount = [self numberOfComponents];
     CGFloat *components = (CGFloat *)calloc(componentCount, sizeof(CGFloat));
     [self getComponents:components];
@@ -56,14 +60,16 @@
     free((void*)components);
     CGColorSpaceRelease(colorSpace);
 
-    return (CGColorRef)[(id)color autorelease];
+    return color;
 }
 
 - (CGColorRef)WL_CGColor
 {
-    CGColorRef CGColor = [self WL_fastCGColor];
+    CGColorRef CGColor = CGColorRetain([self WL_fastCGColor]);
+
     if (!CGColor)
         CGColor = [self WL_slowCGColor];
+
     return CGColor;
 }
 

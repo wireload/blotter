@@ -8,6 +8,7 @@
 
 #import "WLPositioningPreferences.h"
 #import "DeskboardAppDelegate.h"
+#import "NSUserDefaults+WLApplicationDefaults.h"
 #import "IKApplicationPreferences.h"
 
 

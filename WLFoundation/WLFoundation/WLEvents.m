@@ -1,6 +1,6 @@
 //
 //  WLEvents.m
-//  WireloadClassesAndResources
+//  WLFoundation
 //
 //  Created by Ilya Kulakov on 12.11.11.
 //  Copyright (c) 2011 WireLoad Inc. All rights reserved.

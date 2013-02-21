@@ -14,6 +14,7 @@
 #import "WLCalendarDateViewController.h"
 #import "WLCalendarBoxView.h"
 #import "WLCalendarWindowBringToFrontAnimation.h"
+#import "NSUserDefaults+WLApplicationDefaults.h"
 
 
 // Sizes are chosen so that when switching between these 2 modes only week view is disappeard. that is the date, todo and right now vies are visually unchanged.

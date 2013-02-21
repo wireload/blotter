@@ -11,9 +11,6 @@
       location = "group:WLFoundation/WLFoundation.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:WireloadClassesAndResources/WireloadClassesAndResources.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:ShortcutRecorder/ShortcutRecorder.xcodeproj">
    </FileRef>
    <FileRef

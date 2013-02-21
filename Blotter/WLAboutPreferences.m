@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 WireLoad. All rights reserved.
 //
 
+#import "NSUserDefaults+WLApplicationDefaults.h"
 #import "WLAboutPreferences.h"
 
 

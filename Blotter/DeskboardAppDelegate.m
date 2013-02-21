@@ -6,11 +6,11 @@
 //  Copyright 2010 SlevenBits. All rights reserved.
 //
 
-#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
+#import <WLFoundation/WLFoundation.h>
+#import <PTHotKey/PTHotKeyCenter.h>
 #import "DeskboardAppDelegate.h"
 #import "WLNewEventWindowController.h"
 #import "WLNewTaskWindowController.h"
-#import "PTHotKeyCenter.h"
 #import "PTHotKey+ShortcutRecorder.h"
 #import "WLCalendarWindow.h"
 #import "WLCalendarWindowController.h"
@@ -21,6 +21,7 @@
 #import "WLLayoutPreferences.h"
 #import "WLCalendarsPreferences.h"
 #import "WLAboutPreferences.h"
+#import "NSUserDefaults+WLApplicationDefaults.h"
 
 enum {
     ShortcutsNameIdx,

@@ -203,7 +203,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = Wireload;
 			};
-			buildConfigurationList = BA81DBC31614514200C83DC3 /* Build configuration list for PBXProject "blotter-mini" */;
+			buildConfigurationList = BA81DBC31614514200C83DC3 /* Build configuration list for PBXProject "Blotter-mini" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -399,7 +399,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BA81DBC31614514200C83DC3 /* Build configuration list for PBXProject "blotter-mini" */ = {
+		BA81DBC31614514200C83DC3 /* Build configuration list for PBXProject "Blotter-mini" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BA81DBE51614514200C83DC3 /* Debug */,
