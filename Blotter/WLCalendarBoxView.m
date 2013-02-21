@@ -6,7 +6,7 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
-#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
+#import "WLGraphics.h"
 #import "WLCalendarBoxView.h"
 #import "NSFont+WLCalendar.h"
 #import "NSColor+WLCalendar.h"

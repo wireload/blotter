@@ -13,15 +13,7 @@
 
 
 @interface WLCalSystemReminder : WLCalSystemCalendarItem <WLCalReminder>
-{
-    BOOL _completed;
-    NSDate *_completionDate;
-    NSDateComponents *_dueDateComponents;
-    NSUInteger _priority;
-}
 
-- (instancetype)initWithStore:(id <WLCalStore>)aStore
-                   csReminder:(CalTask *)aCSReminder
-                  calCalendar:(id<WLCalCalendar>)aCalendar;
+- (WLCalSystemReminder *)initWithCSReminder:(CalTask *)aCSReminder calCalendar:(id <WLCalCalendar>)aCalendar;
 
 @end

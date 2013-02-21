@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA1059A3168DE52E00A3DDF5 /* WLDateRangeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1059A2168DE52E00A3DDF5 /* WLDateRangeTests.m */; };
+		BA1059A5168DF37D00A3DDF5 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA1059A4168DF37D00A3DDF5 /* AppKit.framework */; };
 		BA81DA75160DA09D00C83DC3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA81DA73160DA09D00C83DC3 /* InfoPlist.strings */; };
 		BA81DA83160DA0C800C83DC3 /* NSArray+WLDelta.h in Headers */ = {isa = PBXBuildFile; fileRef = BA81DA7F160DA0C800C83DC3 /* NSArray+WLDelta.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA81DA84160DA0C800C83DC3 /* NSArray+WLDelta.m in Sources */ = {isa = PBXBuildFile; fileRef = BA81DA80160DA0C800C83DC3 /* NSArray+WLDelta.m */; };
@@ -17,14 +19,31 @@
 		BA9AFB9B163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h in Headers */ = {isa = PBXBuildFile; fileRef = BA9AFB99163AB71D00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA9AFB9C163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9AFB9A163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m */; };
 		BAA049D11621A1040078DF12 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA049D01621A1040078DF12 /* SenTestingKit.framework */; };
-		BAA049D21621A1040078DF12 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA81DA6A160DA09D00C83DC3 /* Cocoa.framework */; };
 		BAA049D81621A1040078DF12 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BAA049D61621A1040078DF12 /* InfoPlist.strings */; };
 		BAA049DB1621A1040078DF12 /* WLFoundationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA049DA1621A1040078DF12 /* WLFoundationTests.m */; };
 		BAA049E31621A1810078DF12 /* NSArray+WLDelta_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */; };
 		BAA049E71621A3F20078DF12 /* WLFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA81DA67160DA09D00C83DC3 /* WLFoundation.framework */; };
-		BC5990F5AEA1445D0AB0EBB7 /* WLMutableDateRange.h in Headers */ = {isa = PBXBuildFile; fileRef = BC599BE72B03B538AA35A9D6 /* WLMutableDateRange.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BAF67C9016D604200047FE2A /* IKPowerSources.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C8E16D604200047FE2A /* IKPowerSources.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BAF67C9116D604200047FE2A /* IKPowerSources.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C8F16D604200047FE2A /* IKPowerSources.m */; };
+		BAF67CA216D606090047FE2A /* CALayer+WLBlocks.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9216D606080047FE2A /* CALayer+WLBlocks.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BAF67CA316D606090047FE2A /* CALayer+WLBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9316D606080047FE2A /* CALayer+WLBlocks.m */; };
+		BAF67CA416D606090047FE2A /* CATransaction+WLBlocks.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9416D606080047FE2A /* CATransaction+WLBlocks.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BAF67CA516D606090047FE2A /* CATransaction+WLBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9516D606080047FE2A /* CATransaction+WLBlocks.m */; };
+		BAF67CA616D606090047FE2A /* CoreText+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9616D606080047FE2A /* CoreText+Additions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BAF67CA716D606090047FE2A /* CoreText+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9716D606080047FE2A /* CoreText+Additions.m */; };
+		BAF67CA816D606090047FE2A /* NSAttributedString+WLStringDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9816D606080047FE2A /* NSAttributedString+WLStringDrawing.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BAF67CA916D606090047FE2A /* NSAttributedString+WLStringDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9916D606080047FE2A /* NSAttributedString+WLStringDrawing.m */; };
+		BAF67CAA16D606090047FE2A /* NSColor+CGColor.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9A16D606080047FE2A /* NSColor+CGColor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BAF67CAB16D606090047FE2A /* NSColor+CGColor.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9B16D606080047FE2A /* NSColor+CGColor.m */; };
+		BAF67CAC16D606090047FE2A /* WLBlockLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9C16D606090047FE2A /* WLBlockLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BAF67CAD16D606090047FE2A /* WLBlockLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9D16D606090047FE2A /* WLBlockLayer.m */; };
+		BAF67CAE16D606090047FE2A /* WLEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9E16D606090047FE2A /* WLEvents.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BAF67CAF16D606090047FE2A /* WLEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9F16D606090047FE2A /* WLEvents.m */; };
+		BAF67CB016D606090047FE2A /* WLLayerHostedView.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67CA016D606090047FE2A /* WLLayerHostedView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BAF67CB116D606090047FE2A /* WLLayerHostedView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67CA116D606090047FE2A /* WLLayerHostedView.m */; };
+		BAF67CD216D60D470047FE2A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF67CD116D60D470047FE2A /* QuartzCore.framework */; };
+		BAF67CD416D60D520047FE2A /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF67CD316D60D520047FE2A /* IOKit.framework */; };
 		BC599131671997B089C3D4C8 /* WLASLLog.m in Sources */ = {isa = PBXBuildFile; fileRef = BC599C7F0C238E9F874213D0 /* WLASLLog.m */; };
-		BC5997565CBF60D87166061C /* WLMutableDateRange.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5992F4ACC7E7B0081717DB /* WLMutableDateRange.m */; };
 		BC5997CEDCD382068CDD26E3 /* WLASLLog.h in Headers */ = {isa = PBXBuildFile; fileRef = BC599C9AE6ABE5619B104BB3 /* WLASLLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -39,10 +58,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BA1059A1168DE52E00A3DDF5 /* WLDateRangeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDateRangeTests.h; sourceTree = "<group>"; };
+		BA1059A2168DE52E00A3DDF5 /* WLDateRangeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDateRangeTests.m; sourceTree = "<group>"; };
+		BA1059A4168DF37D00A3DDF5 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		BA81DA67160DA09D00C83DC3 /* WLFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WLFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA81DA6A160DA09D00C83DC3 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		BA81DA6D160DA09D00C83DC3 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		BA81DA6E160DA09D00C83DC3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		BA81DA6F160DA09D00C83DC3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BA81DA72160DA09D00C83DC3 /* WLFoundation-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WLFoundation-Info.plist"; sourceTree = "<group>"; };
 		BA81DA74160DA09D00C83DC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -63,9 +82,26 @@
 		BAA049DC1621A1040078DF12 /* WLFoundationTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WLFoundationTests-Prefix.pch"; sourceTree = "<group>"; };
 		BAA049E11621A1810078DF12 /* NSArray+WLDelta_Tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+WLDelta_Tests.h"; sourceTree = "<group>"; };
 		BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+WLDelta_Tests.m"; sourceTree = "<group>"; };
-		BAA049E81622FEE10078DF12 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
-		BC5992F4ACC7E7B0081717DB /* WLMutableDateRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLMutableDateRange.m; sourceTree = "<group>"; };
-		BC599BE72B03B538AA35A9D6 /* WLMutableDateRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLMutableDateRange.h; sourceTree = "<group>"; };
+		BAF67C8E16D604200047FE2A /* IKPowerSources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKPowerSources.h; sourceTree = "<group>"; };
+		BAF67C8F16D604200047FE2A /* IKPowerSources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKPowerSources.m; sourceTree = "<group>"; };
+		BAF67C9216D606080047FE2A /* CALayer+WLBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+WLBlocks.h"; sourceTree = "<group>"; };
+		BAF67C9316D606080047FE2A /* CALayer+WLBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+WLBlocks.m"; sourceTree = "<group>"; };
+		BAF67C9416D606080047FE2A /* CATransaction+WLBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CATransaction+WLBlocks.h"; sourceTree = "<group>"; };
+		BAF67C9516D606080047FE2A /* CATransaction+WLBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CATransaction+WLBlocks.m"; sourceTree = "<group>"; };
+		BAF67C9616D606080047FE2A /* CoreText+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreText+Additions.h"; sourceTree = "<group>"; };
+		BAF67C9716D606080047FE2A /* CoreText+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CoreText+Additions.m"; sourceTree = "<group>"; };
+		BAF67C9816D606080047FE2A /* NSAttributedString+WLStringDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+WLStringDrawing.h"; sourceTree = "<group>"; };
+		BAF67C9916D606080047FE2A /* NSAttributedString+WLStringDrawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+WLStringDrawing.m"; sourceTree = "<group>"; };
+		BAF67C9A16D606080047FE2A /* NSColor+CGColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+CGColor.h"; sourceTree = "<group>"; };
+		BAF67C9B16D606080047FE2A /* NSColor+CGColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+CGColor.m"; sourceTree = "<group>"; };
+		BAF67C9C16D606090047FE2A /* WLBlockLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLBlockLayer.h; sourceTree = "<group>"; };
+		BAF67C9D16D606090047FE2A /* WLBlockLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLBlockLayer.m; sourceTree = "<group>"; };
+		BAF67C9E16D606090047FE2A /* WLEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLEvents.h; sourceTree = "<group>"; };
+		BAF67C9F16D606090047FE2A /* WLEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLEvents.m; sourceTree = "<group>"; };
+		BAF67CA016D606090047FE2A /* WLLayerHostedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayerHostedView.h; sourceTree = "<group>"; };
+		BAF67CA116D606090047FE2A /* WLLayerHostedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayerHostedView.m; sourceTree = "<group>"; };
+		BAF67CD116D60D470047FE2A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		BAF67CD316D60D520047FE2A /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		BC599C7F0C238E9F874213D0 /* WLASLLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLASLLog.m; sourceTree = "<group>"; };
 		BC599C9AE6ABE5619B104BB3 /* WLASLLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLASLLog.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -75,6 +111,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAF67CD416D60D520047FE2A /* IOKit.framework in Frameworks */,
+				BAF67CD216D60D470047FE2A /* QuartzCore.framework in Frameworks */,
+				BA1059A5168DF37D00A3DDF5 /* AppKit.framework in Frameworks */,
 				BA9AFB90163AB3D400FAAAD3 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -85,7 +124,6 @@
 			files = (
 				BAA049E71621A3F20078DF12 /* WLFoundation.framework in Frameworks */,
 				BAA049D11621A1040078DF12 /* SenTestingKit.framework in Frameworks */,
-				BAA049D21621A1040078DF12 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,10 +133,13 @@
 		BA81DA5B160DA09D00C83DC3 = {
 			isa = PBXGroup;
 			children = (
-				BAA049E81622FEE10078DF12 /* ScriptingBridge.framework */,
+				BAF67CD316D60D520047FE2A /* IOKit.framework */,
+				BAF67CD116D60D470047FE2A /* QuartzCore.framework */,
+				BA1059A4168DF37D00A3DDF5 /* AppKit.framework */,
+				BA81DA6F160DA09D00C83DC3 /* Foundation.framework */,
+				BAA049D01621A1040078DF12 /* SenTestingKit.framework */,
 				BA81DA70160DA09D00C83DC3 /* WLFoundation */,
 				BAA049D31621A1040078DF12 /* WLFoundationTests */,
-				BA81DA69160DA09D00C83DC3 /* Frameworks */,
 				BA81DA68160DA09D00C83DC3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -112,41 +153,36 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		BA81DA69160DA09D00C83DC3 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				BA81DA6A160DA09D00C83DC3 /* Cocoa.framework */,
-				BAA049D01621A1040078DF12 /* SenTestingKit.framework */,
-				BA81DA6C160DA09D00C83DC3 /* Other Frameworks */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		BA81DA6C160DA09D00C83DC3 /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				BA81DA6D160DA09D00C83DC3 /* AppKit.framework */,
-				BA81DA6E160DA09D00C83DC3 /* CoreData.framework */,
-				BA81DA6F160DA09D00C83DC3 /* Foundation.framework */,
-			);
-			name = "Other Frameworks";
-			sourceTree = "<group>";
-		};
 		BA81DA70160DA09D00C83DC3 /* WLFoundation */ = {
 			isa = PBXGroup;
 			children = (
-				BC599C9AE6ABE5619B104BB3 /* WLASLLog.h */,
-				BC599C7F0C238E9F874213D0 /* WLASLLog.m */,
-				BC599BE72B03B538AA35A9D6 /* WLMutableDateRange.h */,
-				BC5992F4ACC7E7B0081717DB /* WLMutableDateRange.m */,
-				BA81DAC0160DA7FB00C83DC3 /* WLFoundation.h */,
+				BAF67C8D16D604200047FE2A /* IKPowerSources */,
+				BA81DA71160DA09D00C83DC3 /* Supporting Files */,
+				BAF67C9216D606080047FE2A /* CALayer+WLBlocks.h */,
+				BAF67C9316D606080047FE2A /* CALayer+WLBlocks.m */,
+				BAF67C9416D606080047FE2A /* CATransaction+WLBlocks.h */,
+				BAF67C9516D606080047FE2A /* CATransaction+WLBlocks.m */,
+				BAF67C9616D606080047FE2A /* CoreText+Additions.h */,
+				BAF67C9716D606080047FE2A /* CoreText+Additions.m */,
 				BA81DA7F160DA0C800C83DC3 /* NSArray+WLDelta.h */,
 				BA81DA80160DA0C800C83DC3 /* NSArray+WLDelta.m */,
-				BA81DA81160DA0C800C83DC3 /* WLDateRange.h */,
-				BA81DA82160DA0C800C83DC3 /* WLDateRange.m */,
-				BA81DA71160DA09D00C83DC3 /* Supporting Files */,
+				BAF67C9816D606080047FE2A /* NSAttributedString+WLStringDrawing.h */,
+				BAF67C9916D606080047FE2A /* NSAttributedString+WLStringDrawing.m */,
+				BAF67C9A16D606080047FE2A /* NSColor+CGColor.h */,
+				BAF67C9B16D606080047FE2A /* NSColor+CGColor.m */,
 				BA9AFB99163AB71D00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h */,
 				BA9AFB9A163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m */,
+				BC599C9AE6ABE5619B104BB3 /* WLASLLog.h */,
+				BC599C7F0C238E9F874213D0 /* WLASLLog.m */,
+				BAF67C9C16D606090047FE2A /* WLBlockLayer.h */,
+				BAF67C9D16D606090047FE2A /* WLBlockLayer.m */,
+				BA81DA81160DA0C800C83DC3 /* WLDateRange.h */,
+				BA81DA82160DA0C800C83DC3 /* WLDateRange.m */,
+				BAF67C9E16D606090047FE2A /* WLEvents.h */,
+				BAF67C9F16D606090047FE2A /* WLEvents.m */,
+				BA81DAC0160DA7FB00C83DC3 /* WLFoundation.h */,
+				BAF67CA016D606090047FE2A /* WLLayerHostedView.h */,
+				BAF67CA116D606090047FE2A /* WLLayerHostedView.m */,
 			);
 			path = WLFoundation;
 			sourceTree = "<group>";
@@ -169,6 +205,8 @@
 				BAA049DA1621A1040078DF12 /* WLFoundationTests.m */,
 				BAA049E11621A1810078DF12 /* NSArray+WLDelta_Tests.h */,
 				BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */,
+				BA1059A1168DE52E00A3DDF5 /* WLDateRangeTests.h */,
+				BA1059A2168DE52E00A3DDF5 /* WLDateRangeTests.m */,
 			);
 			path = WLFoundationTests;
 			sourceTree = "<group>";
@@ -183,6 +221,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		BAF67C8D16D604200047FE2A /* IKPowerSources */ = {
+			isa = PBXGroup;
+			children = (
+				BAF67C8E16D604200047FE2A /* IKPowerSources.h */,
+				BAF67C8F16D604200047FE2A /* IKPowerSources.m */,
+			);
+			path = IKPowerSources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -192,10 +239,18 @@
 			files = (
 				BA81DA83160DA0C800C83DC3 /* NSArray+WLDelta.h in Headers */,
 				BA81DA85160DA0C800C83DC3 /* WLDateRange.h in Headers */,
-				BC5990F5AEA1445D0AB0EBB7 /* WLMutableDateRange.h in Headers */,
 				BA81DAC1160DA7FB00C83DC3 /* WLFoundation.h in Headers */,
 				BA9AFB9B163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h in Headers */,
 				BC5997CEDCD382068CDD26E3 /* WLASLLog.h in Headers */,
+				BAF67C9016D604200047FE2A /* IKPowerSources.h in Headers */,
+				BAF67CA216D606090047FE2A /* CALayer+WLBlocks.h in Headers */,
+				BAF67CA416D606090047FE2A /* CATransaction+WLBlocks.h in Headers */,
+				BAF67CA616D606090047FE2A /* CoreText+Additions.h in Headers */,
+				BAF67CA816D606090047FE2A /* NSAttributedString+WLStringDrawing.h in Headers */,
+				BAF67CAA16D606090047FE2A /* NSColor+CGColor.h in Headers */,
+				BAF67CAC16D606090047FE2A /* WLBlockLayer.h in Headers */,
+				BAF67CAE16D606090047FE2A /* WLEvents.h in Headers */,
+				BAF67CB016D606090047FE2A /* WLLayerHostedView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,9 +363,17 @@
 			files = (
 				BA81DA84160DA0C800C83DC3 /* NSArray+WLDelta.m in Sources */,
 				BA81DA86160DA0C800C83DC3 /* WLDateRange.m in Sources */,
-				BC5997565CBF60D87166061C /* WLMutableDateRange.m in Sources */,
 				BC599131671997B089C3D4C8 /* WLASLLog.m in Sources */,
 				BA9AFB9C163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m in Sources */,
+				BAF67C9116D604200047FE2A /* IKPowerSources.m in Sources */,
+				BAF67CA316D606090047FE2A /* CALayer+WLBlocks.m in Sources */,
+				BAF67CA516D606090047FE2A /* CATransaction+WLBlocks.m in Sources */,
+				BAF67CA716D606090047FE2A /* CoreText+Additions.m in Sources */,
+				BAF67CA916D606090047FE2A /* NSAttributedString+WLStringDrawing.m in Sources */,
+				BAF67CAB16D606090047FE2A /* NSColor+CGColor.m in Sources */,
+				BAF67CAD16D606090047FE2A /* WLBlockLayer.m in Sources */,
+				BAF67CAF16D606090047FE2A /* WLEvents.m in Sources */,
+				BAF67CB116D606090047FE2A /* WLLayerHostedView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,6 +383,7 @@
 			files = (
 				BAA049DB1621A1040078DF12 /* WLFoundationTests.m in Sources */,
 				BAA049E31621A1810078DF12 /* NSArray+WLDelta_Tests.m in Sources */,
+				BA1059A3168DE52E00A3DDF5 /* WLDateRangeTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

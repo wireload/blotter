@@ -1,6 +1,6 @@
 //
 //  NSUserDefaults+WLApplicationDefaults.m
-//  WireloadClassesAndResources
+//  WLFoundation
 //
 //  Created by Ilya Kulakov on 23.02.12.
 //  Copyright (c) 2012 WireLoad Inc. All rights reserved.

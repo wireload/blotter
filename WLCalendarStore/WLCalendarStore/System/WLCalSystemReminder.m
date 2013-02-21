@@ -15,13 +15,11 @@
 @synthesize dueDateComponents = _dueDateComponents;
 @synthesize priority = _priority;
 
-- (instancetype)initWithStore:(id <WLCalStore>)aStore
-                   csReminder:(CalTask *)aCSReminder
-                  calCalendar:(id <WLCalCalendar>)aCalendar
+- (WLCalSystemReminder *)initWithCSReminder:(CalTask *)aCSReminder calCalendar:(id <WLCalCalendar>)aCalendar
 {
     NSParameterAssert(aCalendar != nil);
 
-    self = [super initWithStore:aStore];
+    self = [super init];
 
     if (self)
     {
@@ -31,7 +29,7 @@
         self->_title = [aCSReminder.title copy];
         self->_lastModifiedDate = [aCSReminder.dateStamp copy];
         self->_location = @"";
-        self->_itemIdentifier = [aCSReminder copy];
+        self->_itemIdentifier = [aCSReminder.uid copy];
 
         // WLCalReminder
         self->_completed = aCSReminder.isCompleted;

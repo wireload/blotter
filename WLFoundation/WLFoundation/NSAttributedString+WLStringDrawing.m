@@ -15,14 +15,14 @@
 - (void)WL_drawWithRect:(CGRect)aRect context:(CGContextRef)aContext
 {
     CGContextSaveGState(aContext);
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self);
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)self);
     if (framesetter != NULL)
     {
         CGPathRef framePath = CGPathCreateWithRect(aRect, NULL);
         CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
         if (frame != NULL)
         {
-            __block NSArray *lines = (NSArray *)CTFrameGetLines(frame);
+            __block NSArray *lines = (__bridge NSArray *)CTFrameGetLines(frame);
             NSUInteger numberOfLines = [lines count];
             if (numberOfLines > 0)
             {
@@ -39,28 +39,27 @@
                     CGPoint origin = lineOrigins[idx];
                     CGContextSetTextPosition(aContext, aRect.origin.x + origin.x, aRect.origin.y + origin.y);
 
-                    CGRect lineImageBounds = CTLineGetImageBounds((CTLineRef)line, aContext);
+                    CGRect lineImageBounds = CTLineGetImageBounds((__bridge CTLineRef)line, aContext);
                     if (fdim(CGRectGetWidth(aRect), origin.x) < CGRectGetWidth(lineImageBounds))
                         return;
 
                     if (idx != numberOfLines - 1 || !shouldTruncateLastLine)
-                        CTLineDraw((CTLineRef)line, aContext);
+                        CTLineDraw((__bridge CTLineRef)line, aContext);
                     else
                     {
-                        CFRange lineRange = CTLineGetStringRange((CTLineRef)line);
+                        CFRange lineRange = CTLineGetStringRange((__bridge CTLineRef)line);
                         NSRange range = NSMakeRange(lineRange.location, lineRange.length);
                         NSMutableAttributedString *truncatedString = [[NSMutableAttributedString alloc] initWithAttributedString:
                                                                       [self attributedSubstringFromRange:range]];
                         NSString *trimmedString = [[truncatedString string] stringByTrimmingCharactersInSet:
                                                    [NSCharacterSet whitespaceAndNewlineCharacterSet]];
                         static const CFStringRef Token = CFSTR("\u2026");
-                        [[truncatedString mutableString] setString:[trimmedString stringByAppendingString:(NSString *)Token]];
-                        CTLineRef truncatedLine = CTLineCreateWithAttributedString((CFAttributedStringRef)truncatedString);
-                        [truncatedString release];
+                        [[truncatedString mutableString] setString:[trimmedString stringByAppendingString:(__bridge NSString *)Token]];
+                        CTLineRef truncatedLine = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)truncatedString);
                         if (truncatedLine != NULL)
                         {
                             CTLineRef truncationToken = NULL;
-                            CFDictionaryRef tokenAttributes = (CFDictionaryRef)[self attributesAtIndex:0 effectiveRange:NULL];
+                            CFDictionaryRef tokenAttributes = (__bridge CFDictionaryRef)[self attributesAtIndex:0 effectiveRange:NULL];
                             CFAttributedStringRef truncationString = CFAttributedStringCreate(NULL,
                                                                                               Token,
                                                                                               tokenAttributes);
@@ -82,7 +81,7 @@
                             CFRelease(truncatedLine);
                         }
                         else
-                            CTLineDraw((CTLineRef)line, aContext);
+                            CTLineDraw((__bridge CTLineRef)line, aContext);
                     }
                 }];
                 free(lineOrigins);
@@ -98,7 +97,7 @@
 - (CGSize)WL_preferredSize
 {
     CGSize preferredFrameSize = CGSizeZero;
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self);
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)self);
     if (framesetter != NULL)
     {
         static CGPathRef FramePath = NULL;
@@ -125,7 +124,7 @@
 - (CGFloat)WL_preferredHeightWithWidth:(CGFloat)aWidth
 {
     CGSize preferredFrameSize = CGSizeZero;
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self);
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)self);
     if (framesetter != NULL)
     {
         CGPathRef framePath = CGPathCreateWithRect(CGRectMake(0.0,
@@ -147,7 +146,7 @@
 
 - (CGFloat)WL_firstLineHeightWithWidth:(CGFloat)aWidth
 {
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self);
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)self);
     CGFloat height = 0.0;
     if (framesetter != NULL)
     {
@@ -159,7 +158,7 @@
         CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), framePath, NULL);
         if (frame != NULL)
         {
-            NSArray *lines = (NSArray *)CTFrameGetLines(frame);
+            NSArray *lines = (__bridge NSArray *)CTFrameGetLines(frame);
             if ([lines count] == 1)
                 height = AB_CTFrameGetSize(frame).height;
             else

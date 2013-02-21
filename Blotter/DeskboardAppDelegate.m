@@ -6,7 +6,7 @@
 //  Copyright 2010 SlevenBits. All rights reserved.
 //
 
-#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
+#import <WLFoundation/WLFoundation.h>
 #import <PTHotKey/PTHotKeyCenter.h>
 #import <PTHotKey/PTHotKey+ShortcutRecorder.h>
 #import "DeskboardAppDelegate.h"
@@ -21,6 +21,7 @@
 #import "WLLayoutPreferences.h"
 #import "WLCalendarsPreferences.h"
 #import "WLAboutPreferences.h"
+#import "NSUserDefaults+WLApplicationDefaults.h"
 
 
 enum {

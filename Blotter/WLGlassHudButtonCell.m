@@ -6,8 +6,7 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
-#import <WireloadClassesAndResources/WLGraphics.h>
-
+#import "WLGraphics.h"
 #import "WLGlassHudButtonCell.h"
 
 

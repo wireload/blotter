@@ -7,6 +7,7 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import "WLGraphics.h"
 #import "WLCalendarWindowArrangementView.h"
 #import "WLNinePartBlockLayer.h"
 #import "WLBlockLayoutManager.h"

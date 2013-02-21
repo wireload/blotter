@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 #import <CalendarStore/CalendarStore.h>
-#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
+#import <WLFoundation/WLFoundation.h>
 #import "WLCalendarTimeRuler.h"
 #import "WLCalendarTimeRulerLayer.h"
 #import "WLCalendarDayEventsLayer.h"

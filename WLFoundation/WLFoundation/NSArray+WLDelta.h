@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 
 
+typedef BOOL (^WLUpdateChecker)(id aFromArrayObject, id aToArrayObject);
+
+
 @interface NSArray (WLDelta)
 
 /*!
@@ -25,28 +28,38 @@
             sortedUsingComparator:(NSComparator)aComparator;
 
 /*!
-    @brief      Computes indexes of inserted objects and their position in the receiver.
-    @param      outInsertedIndexes Points to indexes of objects in aFromArray that are considered as inserted in the receiver.
-    @param      aFromArray Array to compare. If nil, NSInvalidArgumentException is thrown.
-    @param      aComparator Comparator used to sort both the receiver and aFromArray.
-    @result     Indexes of inserted objects in the receiver.
-    @discussion Throws an exception if either aFromArray or comparator is nil.
+    @brief      Computes indexes of objects that are considered inserted in the receiver and their position in the receiver.
+    @param      outInsertedIndexes Points to indexes of objects in aRelativeArray that are considered as inserted in the receiver.
+    @param      aRelativeArray Array to compare. If nil, NSInvalidArgumentException is thrown.
+    @param      aComparator Comparator used to sort both the receiver and aRelativeArray.
+    @result     Indexes of objects that are considered inserted in the receiver.
+    @discussion Throws an exception if either aRelativeArray or comparator is nil.
  */
 - (NSIndexSet *)WL_indexesOfInsertedObjects:(out __autoreleasing NSIndexSet **)outInsertedIndexes
-                                  fromArray:(NSArray *)aFromArray
+                            relativeToArray:(NSArray *)aRelativeArray
                       sortedUsingComparator:(NSComparator)aComparator;
 
 /*!
-    @brief      Computes indexes of objects represented both the receiver and aFromArray (in terms of isEqual:).
-    @param      outIndexes  Indexes of objects in aFromArray.
-    @param      aFromArray Array to compare. If nil, NSInvalidArgumentException is thrown.
+    @brief      Computes indexes of objects represented by both the receiver and aFromArray (in terms of isEqual:).
+    @param      outIndexes  Indexes of objects in aRelativeArray.
+    @param      aRelativeArray Array to compare. If nil, NSInvalidArgumentException is thrown.
     @param      aComparator Comparator used to sort both self and aFromArray.
     @result     Indexes of objects in the receiver.
     @discussion Throws an exception if either aFromArray or comparator is nil.
  */
 - (NSIndexSet *)WL_indexesOfObjects:(out __autoreleasing NSIndexSet **)outIndexes
-                          fromArray:(NSArray *)aFromArray
+                    relativeToArray:(NSArray *)aRelativeArray
               sortedUsingComparator:(NSComparator)aComparator;
 
+/*!
+    //TODO: REWRITE ME
+    @description   Both arrays must contain unique objects in terms of aSortDescriptors so it can distinguish updated events.
+ */
+- (void)WL_indexesOfDeletedObject:(out NSIndexSet **)outDeletedIndexes
+         indexesOfInsertedObjects:(out NSIndexSet **)outInsertedIndexes
+          indexesOfUpdatedObjects:(out NSIndexSet **)outUpdatedIndexes
+                    toSortedArray:(NSArray *)aToArray
+                  sortDescriptors:(NSArray *)aSortDescriptors
+                    updateChecker:(WLUpdateChecker)anUpdateChecker;
 
 @end

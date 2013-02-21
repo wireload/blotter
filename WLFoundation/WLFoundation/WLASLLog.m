@@ -32,6 +32,7 @@ static void _WLFreeASLClient(aslclient aClient)
 
 #ifdef DEBUG
         aslClient = asl_open(NULL, [aName UTF8String], ASL_OPT_STDERR);
+        asl_set_filter(aslClient, ASL_FILTER_MASK_UPTO(ASL_LEVEL_DEBUG));
 #else
         aslClient = asl_open(NULL, [aName UTF8String], 0);
 #endif // DEBUG

@@ -10,6 +10,7 @@
 #import "WLCalendarsPreferences.h"
 #import "WLColorCheckboxCell.h"
 #import "NSColor+WLCalendar.h"
+#import "WLCalendarController.h"
 
 
 @implementation WLCalendarsPreferences

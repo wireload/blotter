@@ -1,6 +1,6 @@
 //
 //  CALayer+WLBlocks.h
-//  WireloadClassesAndResources
+//  WLFoundation
 //
 //  Created by Ilya Kulakov on 29.01.12.
 //  Copyright (c) 2012 WireLoad Inc. All rights reserved.

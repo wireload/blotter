@@ -1,6 +1,6 @@
 //
 //  WLLayerHostedView.m
-//  WireloadClassesAndResources
+//  WLFoundation
 //
 //  Created by Ilya Kulakov on 06/03/2012.
 //  Copyright (c) 2012 WireLoad Inc. All rights reserved.

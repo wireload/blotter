@@ -22,8 +22,8 @@
 
 - (BOOL)isEqual:(WLCalSystemCalendarItem *)anObject
 {
-    if (![super isEqual:anObject])
-        return NO;
+    if ([super isEqual:anObject])
+        return YES;
     else if (![self.lastModifiedDate isEqual:anObject.lastModifiedDate])
         return NO;
     else if (![self.itemIdentifier isEqual:anObject.itemIdentifier])

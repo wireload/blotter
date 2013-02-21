@@ -6,7 +6,7 @@
 //  Copyright (c) 2011 WireLoad. All rights reserved.
 //
 
-#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
+#import <WLFoundation/WLFoundation.h>
 #import "WLLayoutSplitView.h"
 #import "NSColor+WLPrefColors.h"
 

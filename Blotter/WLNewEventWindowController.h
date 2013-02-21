@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
+#import "WLCalendarController.h"
 #import "WLGlassHudDatePicker.h"
 
 

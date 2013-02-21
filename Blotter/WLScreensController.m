@@ -7,8 +7,9 @@
 //
 
 #import <IOKit/graphics/IOGraphicsLib.h>
-#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
+#import <WLFoundation/WLFoundation.h>
 #import "WLScreensController.h"
+#import "NSUserDefaults+WLApplicationDefaults.h"
 
 
 NSString* const WLScreenLocalizedName = @"ScreenName";

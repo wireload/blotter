@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <WLCalendarStore/WLCalendarStore.h>
+#import <WLFoundation/WLFoundation.h>
 
 @interface WLAppDelegate : NSObject <NSApplicationDelegate, NSTableViewDelegate>
 
@@ -36,5 +37,7 @@
 - (IBAction)eventPredicateDidChange:(id)sender;
 
 - (IBAction)reminderPredicateDidChage:(id)sender;
+
+- (void)eventsDidChange:(NSNotification *)aNotification;
 
 @end

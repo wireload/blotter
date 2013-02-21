@@ -14,13 +14,13 @@
 - (instancetype)initWithCompletionMask:(WLCalReminderCompletionMask)aCompletionMask calendarIdentifiers:(NSArray *)aCalendarIdentifiers
 {
     self = [super init];
-    
+
     if (self)
     {
         _calendarIdentifiers = [aCalendarIdentifiers copy];
         _completionMask = aCompletionMask;
     }
-    
+
     return self;
 }
 
@@ -30,14 +30,19 @@
 }
 
 
+#pragma mark Methods
+
++ (instancetype)predicateWithCompletionMask:(WLCalReminderCompletionMask)aCompletionMask calendarIdentifiers:(NSArray *)aCalendarIdentifiers
+{
+    return [[self alloc] initWithCompletionMask:aCompletionMask calendarIdentifiers:aCalendarIdentifiers];
+}
+
+
 #pragma mark NSCopying
 
 - (instancetype)copyWithZone:(NSZone *)zone
 {
-    WLCalRemindersPredicate *p = [[WLCalRemindersPredicate alloc] init];
-    p->_calendarIdentifiers = [_calendarIdentifiers copy];
-    p->_completionMask = _completionMask;
-    return p;
+    return [[self class] predicateWithCompletionMask:_completionMask calendarIdentifiers:_calendarIdentifiers];
 }
 
 

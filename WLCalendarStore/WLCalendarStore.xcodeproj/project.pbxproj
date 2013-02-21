@@ -47,6 +47,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		BA1059221689C86A00A3DDF5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA9AFBB1163C127B00FAAAD3 /* WLFoundation.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BA81DA66160DA09D00C83DC3;
+			remoteInfo = WLFoundation;
+		};
 		BA9AFBB6163C127C00FAAAD3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BA9AFBB1163C127B00FAAAD3 /* WLFoundation.xcodeproj */;
@@ -203,16 +210,16 @@
 		BC59980A80E0C6ADD67BE874 = {
 			isa = PBXGroup;
 			children = (
-				BA9AFBBF163E57D100FAAAD3 /* AppKit.framework */,
 				BA9AFBB1163C127B00FAAAD3 /* WLFoundation.xcodeproj */,
+				BA9AFBBF163E57D100FAAAD3 /* AppKit.framework */,
 				BAA049EA1622FF3A0078DF12 /* ScriptingBridge.framework */,
 				BC599035D1785C53BC1F0A6A /* CalendarStore.framework */,
 				BC59927A9F62AFFBDFEB239D /* EventKit.framework */,
 				BC59932EAF5AAA38C142A6DA /* SenTestingKit.framework */,
 				BC59936A34B37B3E7AEF352D /* Foundation.framework */,
-				BC599CB3C645C2E78B8BFA57 /* Products */,
 				BC599E9E8A733E27199A9F8F /* WLCalendarStore */,
 				BC5995BF4B6D4CD75888B8D4 /* WLCalendarStoreTests */,
+				BC599CB3C645C2E78B8BFA57 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -290,6 +297,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				BA1059231689C86A00A3DDF5 /* PBXTargetDependency */,
 			);
 			name = WLCalendarStore;
 			productName = WLCalendarStore;
@@ -424,6 +432,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		BA1059231689C86A00A3DDF5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = WLFoundation;
+			targetProxy = BA1059221689C86A00A3DDF5 /* PBXContainerItemProxy */;
+		};
 		BC599F7E17BB3BE545C72351 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BC5994818693DDB7C473D9C8 /* WLCalendarStore */;
@@ -474,6 +487,10 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -486,7 +503,11 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
@@ -545,13 +566,21 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;

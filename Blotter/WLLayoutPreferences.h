@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
+#import <WLFoundation/WLFoundation.h>
 #import "WLLayoutSplitView.h"
 #import "WLViewController.h"
 #import "IKPreferencesRepresentation.h"

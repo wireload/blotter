@@ -3,6 +3,9 @@
 //
 
 #ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
-
+    #import <AppKit/AppKit.h>
+    #import <ScriptingBridge/ScriptingBridge.h>
+    #import <CalendarStore/CalendarStore.h>
+    #import <EventKit/EventKit.h>
+    #import <Foundation/Foundation.h>
 #endif

@@ -274,3 +274,5 @@ void WLDrawScaledNinePartImage(NSRect bounds,
                    respectFlipped:YES
                             hints:nil];
 }
+
+#undef NSRectFromSize

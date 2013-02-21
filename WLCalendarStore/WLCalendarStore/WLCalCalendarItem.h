@@ -11,9 +11,9 @@
 #import <WLCalendarStore/WLCalCalendar.h>
 
 
-@protocol WLCalCalendarItem <WLCalObject>
+@protocol WLCalCalendarItem <NSObject>
 
-@property id<WLCalCalendar> calendar;
+@property (readonly) id<WLCalCalendar> calendar;
 
 @property (copy, readonly) NSString *notes;
 

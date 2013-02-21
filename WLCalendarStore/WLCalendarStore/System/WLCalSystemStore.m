@@ -6,7 +6,6 @@
 //  Copyright 2012 WireLoad. All rights reserved.
 //
 
-#import <CalendarStore/CalendarStore.h>
 #import <WLFoundation/WLFoundation.h>
 #import <EventKit/EventKit.h>
 #import "iCal_10_7.h"
@@ -17,11 +16,6 @@
 #import "WLCalSystemReminder.h"
 
 
-NSString *WLCalSystemStoreChecksCalendarsAgainstICalKey = @"WLCalSystemStoreChecksCalendarsAgainstICal";
-
-NSString *WLCalSystemStoreAllowsAdvancedCalendarTypeCheckKey = @"WLCalSystemStoreAllowsAdvancedCalendarTypeCheck";
-
-
 static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
 
 
@@ -29,6 +23,8 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
 {
     CalCalendarStore *_store;
     EKEventStore *_calendarTypeStore;
+    id _iCalApp;
+    dispatch_semaphore_t _iCalAppSemaphore;
 
     NSCache *_calendarTypeCache;
 
@@ -41,7 +37,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
 
     if (self)
     {
-        _log = [[WLASLLog alloc] initWithName:@"net.wireload.WLCalendarStore"];
+        _log = [[WLASLLog alloc] initWithName:@"net.wireload.WLCalendarStore.System"];
         _store = [CalCalendarStore defaultCalendarStore];
 
         if (!_store)
@@ -50,12 +46,18 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
             return nil;
         }
 
+        _iCalApp = [SBApplication applicationWithBundleIdentifier:@"com.apple.iCal"];
+        if (_iCalApp)
+            _iCalAppSemaphore = dispatch_semaphore_create(1); // ensure we don't use it from multiple threads
+        else
+            [_log logWarning:@"iCal either does not exist or does not support scripting anymore. Please contact our support."];
+
         if (NSClassFromString(@"EKEventStore"))
             _calendarTypeStore = [[EKEventStore alloc] initWithAccessToEntityTypes:EKEntityMaskEvent | EKEntityMaskReminder];
 
         _calendarTypeCache = [[NSCache alloc] init];
         [_calendarTypeCache setName:@"net.wireload.WLCalendarStore.CalendarTypeCache"];
-        
+
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(_systemStoreDidChange:)
                                                      name:CalCalendarsChangedNotification
@@ -112,7 +114,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self
                                                                   name:NSWorkspaceDidLaunchApplicationNotification
                                                                 object:nil];
-    
+
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_notifyObservers) object:nil];
 }
 
@@ -122,25 +124,22 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
 
 - (NSArray *)iCalCalendarUIDs
 {
-    static id iCalApp = nil;
-    static dispatch_semaphore_t iCalAppSemaphore = NULL;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        iCalApp = [SBApplication applicationWithBundleIdentifier:@"com.apple.iCal"];
-        iCalAppSemaphore = dispatch_semaphore_create(1);
-    });
+    if (_iCalApp)
+    {
+        dispatch_semaphore_wait(_iCalAppSemaphore, DISPATCH_TIME_FOREVER);
 
-    dispatch_semaphore_wait(iCalAppSemaphore, DISPATCH_TIME_FOREVER);
+        NSArray *UIDs = nil;
+        if ([_iCalApp isRunning])
+            UIDs = [[_iCalApp calendars] valueForKey:@"uid"];
+        else
+            [_log logNotice:@"Cannot get calendar UIDs from iCal since it's not running."];
 
-    NSArray *UIDs = nil;
-    if ([iCalApp isRunning])
-        UIDs = [[iCalApp calendars] valueForKey:@"uid"];
+        dispatch_semaphore_signal(_iCalAppSemaphore);
+
+        return UIDs;
+    }
     else
-        [_log logNotice:@"Cannot get calendar UIDs from iCal since it's not running."];
-
-    dispatch_semaphore_signal(iCalAppSemaphore);
-
-    return UIDs;
+        return @[];
 }
 
 - (NSArray *)fetchCSCalendarsForUIDs:(NSArray *)anUIDs
@@ -181,10 +180,10 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
     if (!anEventsPredicate.dateRange || [anEventsPredicate.dateRange isEmpty])
         return @[];
 
-    if (anEventsPredicate.calendarIdentifiers && [anEventsPredicate.calendarIdentifiers count] == 0)
+    if ([anEventsPredicate.calendarIdentifiers count] == 0)
         return @[];
 
-    NSArray *csCalendars = nil; // means all calendars
+    NSArray *csCalendars = nil;
 
     if (anEventsPredicate.calendarIdentifiers)
     {
@@ -213,10 +212,10 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
 {
     NSParameterAssert(aReminderPredicate);
 
-    if (aReminderPredicate.calendarIdentifiers && [aReminderPredicate.calendarIdentifiers count] == 0)
+    if ([aReminderPredicate.calendarIdentifiers count] == 0)
         return @[];
 
-    NSArray *csCalendars = nil; // means all calendars
+    NSArray *csCalendars = nil;
 
     if (aReminderPredicate.calendarIdentifiers)
     {
@@ -248,7 +247,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
     if (p)
         csReminders = [_store tasksWithPredicate:p];
     else
-        [_log logError:@"Cannot make task predicate with parameters: {completionMask: %d, calendars: %@", aReminderPredicate.completionMask, csCalendars];
+        [_log logError:@"Cannot make reminder predicate with parameters: {completionMask: %d, calendars: %@", aReminderPredicate.completionMask, csCalendars];
 
     return csReminders;
 }
@@ -472,12 +471,12 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
     {
         static NSString* const iCalBundleIdentifier = @"com.apple.iCal";
         static NSString* const remindersBundleIdentifier = @"com.apple.reminders";
-        
+
         NSString *senderApplicationIdentifier = [[aNotification userInfo] objectForKey:@"NSApplicationBundleIdentifier"];
         if (![senderApplicationIdentifier isEqual:iCalBundleIdentifier] && ![senderApplicationIdentifier isEqual:remindersBundleIdentifier])
             return;
     }
-    
+
     @synchronized (self)
     {
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_notifyObservers) object:nil];
@@ -506,7 +505,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
 
     [calendars sortWithOptions:NSSortStable | NSSortConcurrent usingComparator:WLCalCalendarsComparator];
     [calendars WL_removeDuplicatesInSortedArrayUsingComparator:WLCalCalendarsComparator];
-    
+
     return calendars;
 }
 
@@ -522,6 +521,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
 
     NSMutableArray *cachedCalendars = [[self makeCalendarsFromCSCalendars:csCalendars] mutableCopy];
     [cachedCalendars sortWithOptions:NSSortStable | NSSortConcurrent usingComparator:WLCalCalendarsComparator];
+    [cachedCalendars WL_removeDuplicatesInSortedArrayUsingComparator:WLCalCalendarsComparator];
 
     NSMutableArray *events = [NSMutableArray arrayWithCapacity:[csEvents count]];
 
@@ -553,12 +553,13 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
 
         if (calendar)
         {
-            WLCalSystemEvent *event = [[WLCalSystemEvent alloc] initWithStore:self
-                                                                      csEvent:csEvent
-                                                                  calCalendar:calendar];
+            WLCalSystemEvent *event = [[WLCalSystemEvent alloc] initWithCSEvent:csEvent calCalendar:calendar];
             [events addObject:event];
         }
     }
+
+    [events sortWithOptions:NSSortStable | NSSortConcurrent usingComparator:WLCalEventsComparator];
+    [events WL_removeDuplicatesInSortedArrayUsingComparator:WLCalEventsComparator];
 
     return events;
 }
@@ -570,6 +571,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
 
     NSMutableArray *cachedCalendars = [[self makeCalendarsFromCSCalendars:csCalendars] mutableCopy];
     [cachedCalendars sortWithOptions:NSSortStable | NSSortConcurrent usingComparator:WLCalCalendarsComparator];
+    [cachedCalendars WL_removeDuplicatesInSortedArrayUsingComparator:WLCalCalendarsComparator];
 
     NSMutableArray *reminders = [NSMutableArray arrayWithCapacity:[csReminders count]];
 
@@ -601,12 +603,13 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
 
         if (calendar)
         {
-            WLCalSystemReminder *reminder = [[WLCalSystemReminder alloc] initWithStore:self
-                                                                            csReminder:csReminder
-                                                                           calCalendar:calendar];
+            WLCalSystemReminder *reminder = [[WLCalSystemReminder alloc] initWithCSReminder:csReminder calCalendar:calendar];
             [reminders addObject:reminder];
         }
     }
+
+    [reminders sortWithOptions:NSSortStable | NSSortConcurrent usingComparator:WLCalRemindersComparator];
+    [reminders WL_removeDuplicatesInSortedArrayUsingComparator:WLCalRemindersComparator];
 
     return reminders;
 }

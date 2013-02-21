@@ -8,7 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import <CalendarStore/CalendarStore.h>
-#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
+#import "WLCalendarController.h"
+#import <WLFoundation/WLFoundation.h>
 #import "WLCalendarWeekView.h"
 
 
