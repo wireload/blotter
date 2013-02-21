@@ -182,7 +182,7 @@
     [_arrangement createLayers];
     NSImage *backgroundImage = [NSImage imageNamed:@"preferences-recreated-aqua"];
     _arrangement.backgroundImage = backgroundImage;
-    [backgroundImage release];
+
     switch ([[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"]) {
         case BLCustomSize:
             _arrangement.arrangementMode = WLCalendarWindowPositioningArrangement | WLCalendarWindowResizingArrangement;
