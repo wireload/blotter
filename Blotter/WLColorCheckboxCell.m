@@ -35,12 +35,12 @@
             [NSBezierPath fillRect:checkboxRect];
             [overlayImage unlockFocus];
 
-            NSImage *colormaskImage = [[[NSImage imageNamed:@"chkbxColormask_10_6"] copy] autorelease];
+            NSImage *colormaskImage = [[[NSImage imageNamed:@"checkbox-colormask-10_6"] copy] autorelease];
             [colormaskImage lockFocus];
             [overlayImage drawInRect:checkboxRect fromRect:checkboxRect operation:NSCompositeSourceIn fraction:1.0];
             [colormaskImage unlockFocus];
 
-            NSImage *backgroundImage = [NSImage imageNamed:@"chkbxBackground_10_6"];
+            NSImage *backgroundImage = [NSImage imageNamed:@"checkbox-background-10_6"];
             checkboxImage = [[[NSImage alloc] initWithSize:checkboxRect.size] autorelease];
             [checkboxImage lockFocus];
             [colormaskImage drawInRect:checkboxRect fromRect:checkboxRect operation:NSCompositeSourceOver fraction:1.0];
@@ -48,7 +48,7 @@
 
             if (aState == NSOnState)
             {
-                NSImage *checkImage = [NSImage imageNamed:@"chkbxCheck_10_6"];
+                NSImage *checkImage = [NSImage imageNamed:@"checkbox-check-10_6"];
                 [checkImage drawInRect:checkboxRect fromRect:checkboxRect operation:NSCompositeSourceOver fraction:1.0];
             }
 
@@ -64,7 +64,7 @@
             [NSBezierPath fillRect:checkboxRect];
             [overlayImage unlockFocus];
 
-            NSImage *colormaskImage = [[[NSImage imageNamed:@"chkbxColormask_10_7"] copy] autorelease];
+            NSImage *colormaskImage = [[[NSImage imageNamed:@"checkbox-colormask-10_7"] copy] autorelease];
             [colormaskImage lockFocus];
             [overlayImage drawInRect:checkboxRect fromRect:checkboxRect operation:NSCompositeSourceIn fraction:1.0];
             [colormaskImage unlockFocus];
@@ -76,13 +76,13 @@
             {
                 case NSOnState:
                 {
-                    NSImage *checkImage = [NSImage imageNamed:@"chkbxCheck_10_7"];
+                    NSImage *checkImage = [NSImage imageNamed:@"checkbox-check-10_7"];
                     [checkImage drawInRect:checkboxRect fromRect:checkboxRect operation:NSCompositeSourceOver fraction:1.0];
                     break;
                 }
                 case NSOffState:
                 {
-                    NSImage *backgroundImage = [NSImage imageNamed:@"chkbxBackground_10_7"];
+                    NSImage *backgroundImage = [NSImage imageNamed:@"checkbox-background-10_7"];
                     [backgroundImage drawInRect:checkboxRect fromRect:checkboxRect operation:NSCompositeSourceOver fraction:1.0];
                     break;
                 }

@@ -43,7 +43,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="1005">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -251,7 +251,6 @@
 																<int key="NSvFlags">268</int>
 																<string key="NSFrame">{{0, 117}, {263, 114}}</string>
 																<reference key="NSSuperview" ref="209585813"/>
-																<reference key="NSNextKeyView"/>
 																<string key="NSReuseIdentifierKey">_NS:549</string>
 																<string key="NSClassName">WLLayoutDayView</string>
 															</object>
@@ -294,7 +293,6 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{440, 326}</string>
-				<reference key="NSSuperview"/>
 				<reference key="NSNextKeyView" ref="322597722"/>
 				<string key="NSClassName">NSView</string>
 			</object>
@@ -803,7 +801,7 @@
 			<integer value="3000" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
-		<int key="IBDocument.defaultPropertyAccessControl">3</int>
+		<int key="IBDocument.defaultPropertyAccessControl">1</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSArray" key="dict.sortedKeys">

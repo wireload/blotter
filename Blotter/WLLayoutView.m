@@ -26,15 +26,15 @@ static const CGFloat RoundRadius = 2.0;
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        Images[0] = [NSImage imageNamed:@"layout-area-top-left"];
-        Images[1] = [NSImage imageNamed:@"layout-area-top"];
-        Images[2] = [NSImage imageNamed:@"layout-area-top-right"];
-        Images[3] = [NSImage imageNamed:@"layout-area-middle-left"];
-        Images[4] = [NSImage imageNamed:@"layout-area-middle"];
-        Images[5] = [NSImage imageNamed:@"layout-area-middle-right"];
-        Images[6] = [NSImage imageNamed:@"layout-area-bottom-left"];
-        Images[7] = [NSImage imageNamed:@"layout-area-bottom"];
-        Images[8] = [NSImage imageNamed:@"layout-area-bottom-right"];
+        Images[0] = [NSImage imageNamed:@"preferences-layout-area-top-left"];
+        Images[1] = [NSImage imageNamed:@"preferences-layout-area-top"];
+        Images[2] = [NSImage imageNamed:@"preferences-layout-area-top-right"];
+        Images[3] = [NSImage imageNamed:@"preferences-layout-area-middle-left"];
+        Images[4] = [NSImage imageNamed:@"preferences-layout-area-middle"];
+        Images[5] = [NSImage imageNamed:@"preferences-layout-area-middle-right"];
+        Images[6] = [NSImage imageNamed:@"preferences-layout-area-bottom-left"];
+        Images[7] = [NSImage imageNamed:@"preferences-layout-area-bottom"];
+        Images[8] = [NSImage imageNamed:@"preferences-layout-area-bottom-right"];
         Tile = [NSColor WL_layoutViewTileColor];
     });
 }

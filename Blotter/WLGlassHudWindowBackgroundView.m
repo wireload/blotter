@@ -12,13 +12,13 @@
 
 static const CGFloat _WLGlassHudBackgroundShadowTop = 6.0;
 
-static const CGFloat _WLGlassHudBackgroundShadowRight = 9.0;
+static const CGFloat _WLGlassHudBackgroundShadowRight = 10.0;
 
 static const CGFloat _WLGlassHudBackgroundShadowBottom = 12.0;
 
-static const CGFloat _WLGlassHudBackgroundShadowLeft = 9.0;
+static const CGFloat _WLGlassHudBackgroundShadowLeft = 8.0;
 
-static const CGFloat _WLGlassHudBackgroundActiveDarkness = 0.90;
+static const CGFloat _WLGlassHudBackgroundActiveDarkness = 0.70;
 
 
 @implementation WLGlassHudWindowBackgroundView

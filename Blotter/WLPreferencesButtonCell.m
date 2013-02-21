@@ -39,9 +39,9 @@
         if (![self isHighlighted])
         {
             NSDrawThreePartImage(cellFrame,
-                                 [NSImage imageNamed:@"about-blotter-button-bezel-left"],
-                                 [NSImage imageNamed:@"about-blotter-button-bezel-centre"],
-                                 [NSImage imageNamed:@"about-blotter-button-bezel-right"],
+                                 [NSImage imageNamed:@"preferences-about-blotter-button-bezel-left"],
+                                 [NSImage imageNamed:@"preferences-about-blotter-button-bezel-centre"],
+                                 [NSImage imageNamed:@"preferences-about-blotter-button-bezel-right"],
                                  NO,
                                  NSCompositeSourceOver,
                                  alpha,
@@ -50,9 +50,9 @@
         else
         {
             NSDrawThreePartImage(cellFrame,
-                                 [NSImage imageNamed:@"about-blotter-button-bezel-active-left"],
-                                 [NSImage imageNamed:@"about-blotter-button-bezel-active-centre"],
-                                 [NSImage imageNamed:@"about-blotter-button-bezel-active-right"],
+                                 [NSImage imageNamed:@"preferences-about-blotter-button-bezel-active-left"],
+                                 [NSImage imageNamed:@"preferences-about-blotter-button-bezel-active-centre"],
+                                 [NSImage imageNamed:@"preferences-about-blotter-button-bezel-active-right"],
                                  NO,
                                  NSCompositeSourceOver,
                                  alpha,
@@ -73,9 +73,9 @@
         if (![self isHighlighted])
         {
             NSDrawThreePartImage(cellFrame,
-                                 [NSImage imageNamed:@"about-blotter-tall-button-bezel-left"],
-                                 [NSImage imageNamed:@"about-blotter-tall-button-bezel-centre"],
-                                 [NSImage imageNamed:@"about-blotter-tall-button-bezel-right"],
+                                 [NSImage imageNamed:@"preferences-about-blotter-tall-button-bezel-left"],
+                                 [NSImage imageNamed:@"preferences-about-blotter-tall-button-bezel-centre"],
+                                 [NSImage imageNamed:@"preferences-about-blotter-tall-button-bezel-right"],
                                  NO,
                                  NSCompositeSourceOver,
                                  alpha,
@@ -84,9 +84,9 @@
         else
         {
             NSDrawThreePartImage(cellFrame,
-                                 [NSImage imageNamed:@"about-blotter-tall-button-bezel-active-left"],
-                                 [NSImage imageNamed:@"about-blotter-tall-button-bezel-active-centre"],
-                                 [NSImage imageNamed:@"about-blotter-tall-button-bezel-active-right"],
+                                 [NSImage imageNamed:@"preferences-about-blotter-tall-button-bezel-active-left"],
+                                 [NSImage imageNamed:@"preferences-about-blotter-tall-button-bezel-active-centre"],
+                                 [NSImage imageNamed:@"preferences-about-blotter-tall-button-bezel-active-right"],
                                  NO,
                                  NSCompositeSourceOver,
                                  alpha,

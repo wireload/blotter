@@ -101,7 +101,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         WLLayoutPreferences *layout = [[WLLayoutPreferences alloc] initWithNibName:@"LayoutPrefPaneView" bundle:nil];
         WLCalendarsPreferences *calendars = [[WLCalendarsPreferences alloc] initWithNibName:@"CalendarsPrefPaneView" bundle:nil];
         WLAboutPreferences *about = [[WLAboutPreferences alloc] initWithNibName:@"AboutPrefPaneView" bundle:nil];
-        _preferencesController = [IKApplicationPreferences preferencesWithWindowNibName:@"WLApplicationPreferencesWindow"
+        _preferencesController = [WLApplicationPreferences preferencesWithWindowNibName:@"WLApplicationPreferencesWindow"
                                                                            visualFormat:@"general,shortcuts,positioning,layout,calendars,-,about"
                                                                         representations:@{
                                                                            @"general": general,
@@ -111,8 +111,6 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
                                                                            @"calendars": calendars,
                                                                            @"about": about
                                                                         }];
-        _preferencesController.window.collectionBehavior = NSWindowCollectionBehaviorCanJoinAllSpaces;
-        _preferencesController.window.level = NSFloatingWindowLevel;
     }
 
     return _preferencesController;
@@ -276,8 +274,8 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         [_statusItem setHighlightMode:YES];
         [_statusItem setMenu:_statusMenu];
 
-        NSImage *statusImage = [NSImage imageNamed:@"blotter-status-bar"];
-        NSImage *statusHighlightImage = [NSImage imageNamed:@"blotter-status-bar-active"];
+        NSImage *statusImage = [NSImage imageNamed:@"status-bar"];
+        NSImage *statusHighlightImage = [NSImage imageNamed:@"status-bar-active"];
         [_statusItem setImage:statusImage];
         [_statusItem setAlternateImage:statusHighlightImage];
     }
@@ -345,8 +343,8 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     [NSValueTransformer setValueTransformer:[[SRKeyEquivalentTransformer alloc] init] forName:@"SRKeyEquivalentTransformer"];
     [NSValueTransformer setValueTransformer:[[SRKeyEquivalentModifierMaskTransformer alloc] init] forName:@"SRKeyEquivalentModifierMaskTransformer"];
     _shortcuts = @[
-                   @[@"shortcutNewEvent", @"newEvent:", _newEventMenuItem],
-                   @[@"shortcutNewTask", @"newTask:", _newTaskMenuItem],
+                   @[@"shortcutNewEvent", @"showNewEvent:", _newEventMenuItem],
+                   @[@"shortcutNewTask", @"showNewTask:", _newTaskMenuItem],
                    @[@"shortcutShowNextWeek", @"showNextWeek:", _showNextWeekMenuItem],
                    @[@"shortcutShowPreviousWeek", @"showPreviousWeek:", _showPreviousWeekMenuItem],
                    @[@"shortcutShowCurrentWeek", @"showCurrentWeek:", _showCurrentWeekMenuItem],
@@ -355,7 +353,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     [_shortcuts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
     {
         NSString *shortcutName = obj[ShortcutsNameIdx];
-        [defaults addObserver:self forKeyPath:shortcutName options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:idx];
+        [defaults addObserver:self forKeyPath:shortcutName options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:(void *)idx];
     }];
 
     // Configure windows.

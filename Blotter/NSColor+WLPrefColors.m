@@ -33,7 +33,7 @@
 
 + (NSColor *)WL_layoutViewTileColor
 {
-    return [NSColor colorWithPatternImage:[NSImage imageNamed:@"layout-noise"]];
+    return [NSColor colorWithPatternImage:[NSImage imageNamed:@"preferences-layout-noise"]];
 }
 
 @end

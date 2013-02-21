@@ -15,7 +15,7 @@
 
 - (void)configureToolbarItem:(NSToolbarItem *)anItem
 {
-    anItem.image = [NSImage imageNamed:@"shortcuts-icon"];
+    anItem.image = [NSImage imageNamed:@"preferences-shortcuts-icon"];
     anItem.label = NSLocalizedStringFromTableInBundle(@"Shortcuts", nil, [NSBundle bundleForClass:[self class]], @"Shortcuts pref pane title");
     anItem.toolTip = NSLocalizedStringFromTableInBundle(@"Keyboard shortcuts preferences", nil, [NSBundle bundleForClass:[self class]], @"Shortcuts pref pane tooltip");
 }

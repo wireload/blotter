@@ -49,7 +49,6 @@
     }
     // Title frame is the button frame without round parts and shadows.
     NSRect titleFrame = NSInsetRect(cellFrame, 7, 2);
-    titleFrame.size.height -= 1;
     [self drawTitle:[self attributedTitle] withFrame:titleFrame inView:controlView];
     
     if ([self showsFirstResponder])

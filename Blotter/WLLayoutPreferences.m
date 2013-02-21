@@ -53,7 +53,7 @@
 
 - (void)configureToolbarItem:(NSToolbarItem *)anItem
 {
-    anItem.image = [NSImage imageNamed:@"Layout-Icon"];
+    anItem.image = [NSImage imageNamed:@"preferences-layout-icon"];
     anItem.label = NSLocalizedStringFromTableInBundle(@"Layout", nil, [NSBundle bundleForClass:[self class]], @"Layout pref pane title");
     anItem.toolTip = NSLocalizedStringFromTableInBundle(@"Layout Preferences", nil, [NSBundle bundleForClass:[self class]], @"Layout pref pane tooltip");
 }

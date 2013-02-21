@@ -1203,8 +1203,8 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
         [NSGraphicsContext saveGraphicsState];
         [NSGraphicsContext setCurrentContext:c];
 
-        NSSize bottomBorderSize = NSMakeSize(aLayer.bounds.size.width, [[NSImage imageNamed:@"timeruler-bottom"] size].height);
-        NSSize topBorderSize = NSMakeSize(aLayer.bounds.size.width, [[NSImage imageNamed:@"timeruler-top"] size].height);
+        NSSize bottomBorderSize = NSMakeSize(aLayer.bounds.size.width, [[NSImage imageNamed:@"calendar-week-timeruler-bottom"] size].height);
+        NSSize topBorderSize = NSMakeSize(aLayer.bounds.size.width, [[NSImage imageNamed:@"calendar-week-timeruler-top"] size].height);
         NSSize middleBorderSize = NSMakeSize(aLayer.bounds.size.width, aLayer.bounds.size.height - bottomBorderSize.height - topBorderSize.height);
 
         NSRect dirtyRect = NSRectFromCGRect(aDirtyRect);
@@ -1214,9 +1214,9 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
         if (NSIntersectsRect(bottomBorderFrame, dirtyRect))
         {
             NSDrawThreePartImage(bottomBorderFrame,
-                                 [NSImage imageNamed:@"timeruler-bottom-left"],
-                                 [NSImage imageNamed:@"timeruler-bottom"],
-                                 [NSImage imageNamed:@"timeruler-bottom-right"],
+                                 [NSImage imageNamed:@"calendar-week-timeruler-bottom-left"],
+                                 [NSImage imageNamed:@"calendar-week-timeruler-bottom"],
+                                 [NSImage imageNamed:@"calendar-week-timeruler-bottom-right"],
                                  NO,
                                  NSCompositeSourceOver,
                                  AlphaFraction,
@@ -1226,19 +1226,19 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
         NSRect middleBorderFrame = NSMakeRect(0.0, NSMaxY(bottomBorderFrame), middleBorderSize.width, middleBorderSize.height);
         if (NSIntersectsRect(middleBorderFrame, dirtyRect))
         {
-            [(NSImage *)[NSImage imageNamed:@"timeruler-middle-left"] drawInRect:NSMakeRect(0.0, middleBorderFrame.origin.y, 1.0, middleBorderFrame.size.height)
+            [(NSImage *)[NSImage imageNamed:@"calendar-week-timeruler-middle-left"] drawInRect:NSMakeRect(0.0, middleBorderFrame.origin.y, 1.0, middleBorderFrame.size.height)
                                                                         fromRect:NSZeroRect
                                                                        operation:NSCompositeSourceOver
                                                                         fraction:AlphaFraction
                                                                   respectFlipped:YES
                                                                            hints:nil];
-            [(NSImage *)[NSImage imageNamed:@"timeruler-middle"] drawInRect:NSMakeRect(1.0, middleBorderFrame.origin.y, middleBorderFrame.size.width - 2.0, middleBorderFrame.size.height)
+            [(NSImage *)[NSImage imageNamed:@"calendar-week-timeruler-middle"] drawInRect:NSMakeRect(1.0, middleBorderFrame.origin.y, middleBorderFrame.size.width - 2.0, middleBorderFrame.size.height)
                                                                    fromRect:NSZeroRect
                                                                   operation:NSCompositeSourceOver
                                                                    fraction:AlphaFraction
                                                              respectFlipped:YES
                                                                       hints:nil];
-            [(NSImage *)[NSImage imageNamed:@"timeruler-middle-right"] drawInRect:NSMakeRect(middleBorderFrame.size.width - 1.0, middleBorderFrame.origin.y, 1.0, middleBorderFrame.size.height)
+            [(NSImage *)[NSImage imageNamed:@"calendar-week-timeruler-middle-right"] drawInRect:NSMakeRect(middleBorderFrame.size.width - 1.0, middleBorderFrame.origin.y, 1.0, middleBorderFrame.size.height)
                                                                          fromRect:NSZeroRect
                                                                         operation:NSCompositeSourceOver
                                                                          fraction:AlphaFraction
@@ -1250,9 +1250,9 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
         if (NSIntersectsRect(topBorderFrame, topBorderFrame))
         {
             NSDrawThreePartImage(topBorderFrame,
-                                 [NSImage imageNamed:@"timeruler-top-left"],
-                                 [NSImage imageNamed:@"timeruler-top"],
-                                 [NSImage imageNamed:@"timeruler-top-right"],
+                                 [NSImage imageNamed:@"calendar-week-timeruler-top-left"],
+                                 [NSImage imageNamed:@"calendar-week-timeruler-top"],
+                                 [NSImage imageNamed:@"calendar-week-timeruler-top-right"],
                                  NO,
                                  NSCompositeSourceOver,
                                  AlphaFraction,
@@ -1442,15 +1442,15 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
         [c setImageInterpolation:NSImageInterpolationHigh];
 
         WLDrawScaledNinePartImage(NSRectFromCGRect(aLayer.bounds),
-                                  [NSImage imageNamed:@"all-day-top-left"],
-                                  [NSImage imageNamed:@"all-day-top-middle"],
-                                  [NSImage imageNamed:@"all-day-top-right"],
-                                  [NSImage imageNamed:@"all-day-middle-left"],
-                                  [NSImage imageNamed:@"all-day-middle-middle"],
-                                  [NSImage imageNamed:@"all-day-middle-right"],
-                                  [NSImage imageNamed:@"all-day-bottom-left"],
-                                  [NSImage imageNamed:@"all-day-bottom-middle"],
-                                  [NSImage imageNamed:@"all-day-bottom-right"],
+                                  [NSImage imageNamed:@"calendar-week-all-day-top-left"],
+                                  [NSImage imageNamed:@"calendar-week-all-day-top-middle"],
+                                  [NSImage imageNamed:@"calendar-week-all-day-top-right"],
+                                  [NSImage imageNamed:@"calendar-week-all-day-middle-left"],
+                                  [NSImage imageNamed:@"calendar-week-all-day-middle-middle"],
+                                  [NSImage imageNamed:@"calendar-week-all-day-middle-right"],
+                                  [NSImage imageNamed:@"calendar-week-all-day-bottom-left"],
+                                  [NSImage imageNamed:@"calendar-week-all-day-bottom-middle"],
+                                  [NSImage imageNamed:@"calendar-week-all-day-bottom-right"],
                                   NSCompositeSourceOver,
                                   1.0,
                                   YES);

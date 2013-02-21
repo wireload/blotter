@@ -40,7 +40,7 @@
                                          xRadius:RoundRadius
                                          yRadius:RoundRadius] setClip];
     }
-    NSImage *img = [NSImage imageNamed:@"Recreated-Aqua"];
+    NSImage *img = [NSImage imageNamed:@"preferences-recreated-aqua"];
     [img drawInRect:imageFrame
            fromRect:NSZeroRect
           operation:NSCompositeSourceOver

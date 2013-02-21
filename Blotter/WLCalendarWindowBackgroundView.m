@@ -31,7 +31,7 @@ static const CGFloat _WLCalendarBackgroundNoiseOpacity = 0.03;
 
 + (void)initialize
 {
-    NSImage *noiseImage = [NSImage imageNamed:@"noise"];
+    NSImage *noiseImage = [NSImage imageNamed:@"calendar-background-noise"];
 
     // Redraw with the desired transparency.
     [noiseImage lockFocus];

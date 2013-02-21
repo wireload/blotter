@@ -275,7 +275,7 @@ typedef enum iCal_10_7_CALViewTypeForScripting iCal_10_7_CALViewTypeForScripting
 @property (copy) NSString *objectDescription;  // The events notes.
 @property (copy) NSDate *startDate;  // The event start date.
 @property (copy) NSDate *endDate;  // The event end date.
-@property BOOL alldayEvent;  // True if the event is an all-day event
+@property BOOL alldayEvent;  // True if the event is an calendar-week-all-day event
 @property (copy) NSString *recurrence;  // The iCalendar (RFC 2445) string describing the event recurrence, if defined
 @property (readonly) NSInteger sequence;  // The event version.
 @property (copy) NSDate *stampDate;  // The event modification date.
