@@ -254,7 +254,7 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
 {
     dispatch_sync(_fetchOperationQueueManageQueue, ^
     {
-        [self fetchCalEventsWithPriority:NSOperationQueuePriorityNormal];
+        [self fetchCalEventsWithPriority:NSOperationQueuePriorityLow];
     });
 }
 
