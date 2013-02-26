@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "WLViewController.h"
+#import <WLFoundation/WLFoundation.h>
 #import "IKPreferencesRepresentation.h"
 
 

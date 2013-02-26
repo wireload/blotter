@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <WLFoundation/WLFoundation.h>
-#import "WLViewController.h"
+#import <WLFoundation/WLFoundation.h>
 #import "WLCalendarWindowArrangementView.h"
 #import "IKPreferencesRepresentation.h"
 #import "WLScreensController.h"

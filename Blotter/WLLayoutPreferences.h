@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <WLFoundation/WLFoundation.h>
 #import "WLLayoutSplitView.h"
-#import "WLViewController.h"
 #import "IKPreferencesRepresentation.h"
 
 

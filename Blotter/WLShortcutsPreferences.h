@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <ShortcutRecorder/ShortcutRecorder.h>
-#import "WLViewController.h"
+#import <WLFoundation/WLFoundation.h>
 #import "IKPreferencesRepresentation.h"
 #import "WLRecorderControl.h"
 

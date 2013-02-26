@@ -28,7 +28,6 @@
 		BA08A77E1675FF160085F40C /* NSCursor+WLPositioningPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A77D1675FF160085F40C /* NSCursor+WLPositioningPreferences.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BA08A7811675FF390085F40C /* NSColor+WLPrefColors.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7801675FF390085F40C /* NSColor+WLPrefColors.m */; };
 		BA08A78D167601790085F40C /* WLPositioningPaneView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A78C167601790085F40C /* WLPositioningPaneView.m */; };
-		BA08A798167609420085F40C /* WLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A797167609410085F40C /* WLViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BA08A7A6167729A90085F40C /* WLLayoutPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7A5167729A90085F40C /* WLLayoutPreferences.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BA08A7BD167729E50085F40C /* WLLayoutAllDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7A8167729E30085F40C /* WLLayoutAllDayView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BA08A7BE167729E50085F40C /* WLLayoutCalendarWindowView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7AA167729E30085F40C /* WLLayoutCalendarWindowView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -426,8 +425,6 @@
 		BA08A7801675FF390085F40C /* NSColor+WLPrefColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+WLPrefColors.m"; sourceTree = "<group>"; };
 		BA08A78B167601790085F40C /* WLPositioningPaneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLPositioningPaneView.h; sourceTree = "<group>"; };
 		BA08A78C167601790085F40C /* WLPositioningPaneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLPositioningPaneView.m; sourceTree = "<group>"; };
-		BA08A796167609410085F40C /* WLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLViewController.h; sourceTree = "<group>"; };
-		BA08A797167609410085F40C /* WLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLViewController.m; sourceTree = "<group>"; };
 		BA08A7A4167729A90085F40C /* WLLayoutPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutPreferences.h; sourceTree = "<group>"; };
 		BA08A7A5167729A90085F40C /* WLLayoutPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutPreferences.m; sourceTree = "<group>"; };
 		BA08A7A7167729E30085F40C /* WLLayoutAllDayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutAllDayView.h; sourceTree = "<group>"; };
@@ -915,8 +912,6 @@
 				E29F38ED1319694C00A865D9 /* WLNewTaskWindowController.m */,
 				E2E64B4C1402483500912A92 /* WLSoftEdgeLayer.h */,
 				E2E64B4D1402483500912A92 /* WLSoftEdgeLayer.m */,
-				BA08A796167609410085F40C /* WLViewController.h */,
-				BA08A797167609410085F40C /* WLViewController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1850,7 +1845,6 @@
 				BA08A77E1675FF160085F40C /* NSCursor+WLPositioningPreferences.m in Sources */,
 				BA08A7811675FF390085F40C /* NSColor+WLPrefColors.m in Sources */,
 				BA08A78D167601790085F40C /* WLPositioningPaneView.m in Sources */,
-				BA08A798167609420085F40C /* WLViewController.m in Sources */,
 				BA08A7A6167729A90085F40C /* WLLayoutPreferences.m in Sources */,
 				BA08A7BD167729E50085F40C /* WLLayoutAllDayView.m in Sources */,
 				BA08A7BE167729E50085F40C /* WLLayoutCalendarWindowView.m in Sources */,
