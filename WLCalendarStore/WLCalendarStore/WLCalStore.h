@@ -23,11 +23,6 @@ extern NSComparator WLCalEventsComparator;
 extern NSComparator WLCalRemindersComparator;
 
 
-extern NSString *WLCalSystemStoreChecksCalendarsAgainstICalKey;
-
-extern NSString *WLCalSystemStoreAllowsAdvancedCalendarTypeCheckKey;
-
-
 @protocol WLCalCalendar;
 
 
@@ -37,8 +32,16 @@ extern NSString *WLCalSystemStoreAllowsAdvancedCalendarTypeCheckKey;
 
 - (id<WLCalCalendar>)calendarWithIdentifier:(NSString *)anIdentifier;
 
+/*!
+    @discussion Events in the returned array is guaranteed to be unique in terms of WLCalEventsComparator.
+                That is, there are no 2 objects that would return NSOrderedSame with this comparator.
+ */
 - (NSArray *)eventsMatchingPredicate:(WLCalEventsPredicate *)aPredicate;
 
+/*!
+    @discussion Reminders in the returned array is guaranteed to be unique in terms of WLCalRemindersComparator.
+                That is, there are no 2 objects that would return NSOrderedSame with this comparator.
+ */
 - (NSArray *)remindersMatchingPredicate:(WLCalRemindersPredicate *)aPredicate;
 
 @end

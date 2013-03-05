@@ -8,6 +8,7 @@
 
 #import <WLFoundation/WLFoundation.h>
 #import <EventKit/EventKit.h>
+#import <WLCalendarStore/WLCalendarStore.h>
 #import "iCal_10_7.h"
 #import "iCal_10_8.h"
 #import "WLCalSystemStore.h"

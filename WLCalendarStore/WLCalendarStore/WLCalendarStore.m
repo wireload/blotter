@@ -42,11 +42,6 @@ NSComparator WLCalRemindersComparator = ^(NSObject<WLCalReminder> *aReminder1, N
 NSString *WLCalStoreDidChangeNotification = @"WLCalStoreDidChangeNotification";
 
 
-NSString *WLCalSystemStoreChecksCalendarsAgainstICalKey = @"WLCalSystemStoreChecksCalendarsAgainstICal";
-
-NSString *WLCalSystemStoreAllowsAdvancedCalendarTypeCheckKey = @"WLCalSystemStoreAllowsAdvancedCalendarTypeCheck";
-
-
 @implementation WLCalendarStore
 
 + (id <WLCalStore>)systemStore
