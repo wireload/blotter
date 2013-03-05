@@ -27,7 +27,12 @@
     if (self)
     {
         self->_allowsContentModifications = aCSCalendar.isEditable;
-        self->_color = [aCSCalendar.color copy];
+
+        if (aCSCalendar && aCSCalendar != [NSNull null])
+            self->_color = [aCSCalendar.color copy];
+        else
+            self->_color = [NSColor blueColor];
+
         self->_immutable = !aCSCalendar.isEditable;
         self->_title = [aCSCalendar.title copy];
 
