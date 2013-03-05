@@ -279,7 +279,9 @@
 		BAF67F9D16D624C90047FE2A /* WLApplicationPreferencesWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67F9B16D624C90047FE2A /* WLApplicationPreferencesWindow.m */; };
 		BAF67F9F16D624FE0047FE2A /* WLApplicationPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAF67F9E16D624FE0047FE2A /* WLApplicationPreferencesWindow.xib */; };
 		BAF67FA116D625590047FE2A /* preferences-shortcuts-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67FA016D625590047FE2A /* preferences-shortcuts-icon.png */; };
-		E21A5F451403D2A4000B6634 /* WLCalendarTaskLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E21A5F441403D2A4000B6634 /* WLCalendarTaskLayer.m */; };
+		BC59936C5289978FDEB105AA /* WLCalendarRemindersController.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BC599C059FEEE82BA1037863 /* WLCalendarRemindersController.h */; };
+		BC5994A0A3B188B70572162C /* WLCalendarRemindersController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC59945B22C693D17FB3C086 /* WLCalendarRemindersController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		E21A5F451403D2A4000B6634 /* WLCalendarReminderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E21A5F441403D2A4000B6634 /* WLCalendarReminderLayer.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		E22C78AB13FFCD9F00EE44C0 /* NSColor+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */; };
 		E234BF7E14DAFADF00AB2262 /* WLCalendarTimeRulerMarkerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E234BF7D14DAFADF00AB2262 /* WLCalendarTimeRulerMarkerLayer.m */; };
 		E23F746F14434DE40055D6CE /* WLHourRange.m in Sources */ = {isa = PBXBuildFile; fileRef = E23F746E14434DE40055D6CE /* WLHourRange.m */; };
@@ -288,9 +290,9 @@
 		E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */; };
 		E2670391132CA887003FBFC2 /* WLGlassHudButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2670390132CA887003FBFC2 /* WLGlassHudButtonCell.m */; };
 		E2701FA9133B563B0098CD79 /* WLGlassHudTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2701FA8133B563B0098CD79 /* WLGlassHudTextView.m */; };
-		E27196BB13C5A1C3008E5C43 /* WLCalendarTasksView.m in Sources */ = {isa = PBXBuildFile; fileRef = E27196BA13C5A1C3008E5C43 /* WLCalendarTasksView.m */; };
+		E27196BB13C5A1C3008E5C43 /* WLCalendarRemindersView.m in Sources */ = {isa = PBXBuildFile; fileRef = E27196BA13C5A1C3008E5C43 /* WLCalendarRemindersView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		E27433BE13CB3E1B00F531B6 /* WLCalendarWeekViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E27433BD13CB3E1B00F531B6 /* WLCalendarWeekViewController.m */; };
-		E278ECF413C8B73D00B327EB /* WLCalendarTasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E278ECF313C8B73D00B327EB /* WLCalendarTasksViewController.m */; };
+		E278ECF413C8B73D00B327EB /* WLCalendarRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E278ECF313C8B73D00B327EB /* WLCalendarRemindersViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		E278F19E13C9EA6700B327EB /* WLCalendarWeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = E278F19D13C9EA6700B327EB /* WLCalendarWeekView.m */; };
 		E279363A1324F05800BC5224 /* WLGlassHudWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E27936391324F05800BC5224 /* WLGlassHudWindow.m */; };
 		E27936461324F6E200BC5224 /* WLGlassHudWindowBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = E27936451324F6E200BC5224 /* WLGlassHudWindowBackgroundView.m */; };
@@ -382,6 +384,7 @@
 				BAF67D0B16D617300047FE2A /* WLFoundation.framework in Copy Frameworks */,
 				BA08A6C61675DBF80085F40C /* ShortcutRecorder.framework in Copy Frameworks */,
 				BA08A6C51675DBF30085F40C /* PTHotKey.framework in Copy Frameworks */,
+				BC59936C5289978FDEB105AA /* WLCalendarRemindersController.h in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -743,8 +746,10 @@
 		BAF67F9B16D624C90047FE2A /* WLApplicationPreferencesWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLApplicationPreferencesWindow.m; sourceTree = "<group>"; };
 		BAF67F9E16D624FE0047FE2A /* WLApplicationPreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WLApplicationPreferencesWindow.xib; sourceTree = "<group>"; };
 		BAF67FA016D625590047FE2A /* preferences-shortcuts-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "preferences-shortcuts-icon.png"; sourceTree = "<group>"; };
-		E21A5F431403D2A4000B6634 /* WLCalendarTaskLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTaskLayer.h; sourceTree = "<group>"; };
-		E21A5F441403D2A4000B6634 /* WLCalendarTaskLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarTaskLayer.m; sourceTree = "<group>"; };
+		BC59945B22C693D17FB3C086 /* WLCalendarRemindersController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarRemindersController.m; sourceTree = "<group>"; };
+		BC599C059FEEE82BA1037863 /* WLCalendarRemindersController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarRemindersController.h; sourceTree = "<group>"; };
+		E21A5F431403D2A4000B6634 /* WLCalendarReminderLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarReminderLayer.h; sourceTree = "<group>"; };
+		E21A5F441403D2A4000B6634 /* WLCalendarReminderLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarReminderLayer.m; sourceTree = "<group>"; };
 		E22C78A913FFCD9F00EE44C0 /* NSColor+WLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+WLCalendar.h"; sourceTree = "<group>"; };
 		E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+WLCalendar.m"; sourceTree = "<group>"; };
 		E234BF7C14DAFADF00AB2262 /* WLCalendarTimeRulerMarkerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTimeRulerMarkerLayer.h; sourceTree = "<group>"; };
@@ -761,12 +766,12 @@
 		E2670390132CA887003FBFC2 /* WLGlassHudButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudButtonCell.m; sourceTree = "<group>"; };
 		E2701FA7133B563B0098CD79 /* WLGlassHudTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudTextView.h; sourceTree = "<group>"; };
 		E2701FA8133B563B0098CD79 /* WLGlassHudTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudTextView.m; sourceTree = "<group>"; };
-		E27196B913C5A1C3008E5C43 /* WLCalendarTasksView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTasksView.h; sourceTree = "<group>"; };
-		E27196BA13C5A1C3008E5C43 /* WLCalendarTasksView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarTasksView.m; sourceTree = "<group>"; };
+		E27196B913C5A1C3008E5C43 /* WLCalendarRemindersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarRemindersView.h; sourceTree = "<group>"; };
+		E27196BA13C5A1C3008E5C43 /* WLCalendarRemindersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarRemindersView.m; sourceTree = "<group>"; };
 		E27433BC13CB3E1B00F531B6 /* WLCalendarWeekViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWeekViewController.h; sourceTree = "<group>"; };
 		E27433BD13CB3E1B00F531B6 /* WLCalendarWeekViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWeekViewController.m; sourceTree = "<group>"; };
-		E278ECF213C8B73D00B327EB /* WLCalendarTasksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTasksViewController.h; sourceTree = "<group>"; };
-		E278ECF313C8B73D00B327EB /* WLCalendarTasksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarTasksViewController.m; sourceTree = "<group>"; };
+		E278ECF213C8B73D00B327EB /* WLCalendarRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarRemindersViewController.h; sourceTree = "<group>"; };
+		E278ECF313C8B73D00B327EB /* WLCalendarRemindersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarRemindersViewController.m; sourceTree = "<group>"; };
 		E278F19C13C9EA6700B327EB /* WLCalendarWeekView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWeekView.h; sourceTree = "<group>"; };
 		E278F19D13C9EA6700B327EB /* WLCalendarWeekView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWeekView.m; sourceTree = "<group>"; };
 		E27936381324F05800BC5224 /* WLGlassHudWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudWindow.h; sourceTree = "<group>"; };
@@ -892,8 +897,8 @@
 				E28F83F914B454B7008458C1 /* WLCalendarFloatingWeekViewController.m */,
 				E28F83F314B451A9008458C1 /* WLCalendarRightNowViewController.h */,
 				E28F83F414B451A9008458C1 /* WLCalendarRightNowViewController.m */,
-				E278ECF213C8B73D00B327EB /* WLCalendarTasksViewController.h */,
-				E278ECF313C8B73D00B327EB /* WLCalendarTasksViewController.m */,
+				E278ECF213C8B73D00B327EB /* WLCalendarRemindersViewController.h */,
+				E278ECF313C8B73D00B327EB /* WLCalendarRemindersViewController.m */,
 				E27433BC13CB3E1B00F531B6 /* WLCalendarWeekViewController.h */,
 				E27433BD13CB3E1B00F531B6 /* WLCalendarWeekViewController.m */,
 				E2F1133B13E70B4F001C2B7B /* WLCalendarWindowController.h */,
@@ -1348,6 +1353,8 @@
 			children = (
 				BA105996168DAD8F00A3DDF5 /* WLCalendarEventsController.h */,
 				BA105997168DAD8F00A3DDF5 /* WLCalendarEventsController.m */,
+				BC59945B22C693D17FB3C086 /* WLCalendarRemindersController.m */,
+				BC599C059FEEE82BA1037863 /* WLCalendarRemindersController.h */,
 			);
 			name = "Calendar Data Engine";
 			sourceTree = "<group>";
@@ -1357,8 +1364,8 @@
 			children = (
 				E234BF7C14DAFADF00AB2262 /* WLCalendarTimeRulerMarkerLayer.h */,
 				E234BF7D14DAFADF00AB2262 /* WLCalendarTimeRulerMarkerLayer.m */,
-				E27196B913C5A1C3008E5C43 /* WLCalendarTasksView.h */,
-				E27196BA13C5A1C3008E5C43 /* WLCalendarTasksView.m */,
+				E27196B913C5A1C3008E5C43 /* WLCalendarRemindersView.h */,
+				E27196BA13C5A1C3008E5C43 /* WLCalendarRemindersView.m */,
 				E278F19C13C9EA6700B327EB /* WLCalendarWeekView.h */,
 				E278F19D13C9EA6700B327EB /* WLCalendarWeekView.m */,
 				E2A701EB13EFE4C500A4BF3A /* WLCalendarDateView.h */,
@@ -1375,8 +1382,8 @@
 				E27DE06913CF18B1003E8E9A /* WLCalendarAllDayEventsLayer.m */,
 				E27DE07413D03E19003E8E9A /* WLCalendarEventLayer.h */,
 				E27DE07513D03E19003E8E9A /* WLCalendarEventLayer.m */,
-				E21A5F431403D2A4000B6634 /* WLCalendarTaskLayer.h */,
-				E21A5F441403D2A4000B6634 /* WLCalendarTaskLayer.m */,
+				E21A5F431403D2A4000B6634 /* WLCalendarReminderLayer.h */,
+				E21A5F441403D2A4000B6634 /* WLCalendarReminderLayer.m */,
 				E2C774C213D1C02A0067102F /* WLCalendarDayEventsLayer.h */,
 				E2C774C313D1C02A0067102F /* WLCalendarDayEventsLayer.m */,
 				E2C776E413D20A970067102F /* WLCalendarTimeRuler.h */,
@@ -1804,8 +1811,8 @@
 				E2670391132CA887003FBFC2 /* WLGlassHudButtonCell.m in Sources */,
 				E2701FA9133B563B0098CD79 /* WLGlassHudTextView.m in Sources */,
 				E2FCE09D133F9264006E713F /* WLGlassHudDatePicker.m in Sources */,
-				E27196BB13C5A1C3008E5C43 /* WLCalendarTasksView.m in Sources */,
-				E278ECF413C8B73D00B327EB /* WLCalendarTasksViewController.m in Sources */,
+				E27196BB13C5A1C3008E5C43 /* WLCalendarRemindersView.m in Sources */,
+				E278ECF413C8B73D00B327EB /* WLCalendarRemindersViewController.m in Sources */,
 				E278F19E13C9EA6700B327EB /* WLCalendarWeekView.m in Sources */,
 				E27433BE13CB3E1B00F531B6 /* WLCalendarWeekViewController.m in Sources */,
 				E27DE06A13CF18B1003E8E9A /* WLCalendarAllDayEventsLayer.m in Sources */,
@@ -1822,7 +1829,7 @@
 				E22C78AB13FFCD9F00EE44C0 /* NSColor+WLCalendar.m in Sources */,
 				E2948D941401484B007122BC /* NSCalendar+WLWeekend.m in Sources */,
 				E2E64B4E1402483500912A92 /* WLSoftEdgeLayer.m in Sources */,
-				E21A5F451403D2A4000B6634 /* WLCalendarTaskLayer.m in Sources */,
+				E21A5F451403D2A4000B6634 /* WLCalendarReminderLayer.m in Sources */,
 				E286C00314068703008C0CDB /* NSFont+WLCalendar.m in Sources */,
 				E2A61A80140745FC0059F201 /* WLCalendarBoxView.m in Sources */,
 				E23F746F14434DE40055D6CE /* WLHourRange.m in Sources */,
@@ -1870,6 +1877,7 @@
 				BAF67CBD16D607280047FE2A /* WLGraphics.m in Sources */,
 				BAF67F9C16D624C90047FE2A /* WLApplicationPreferences.m in Sources */,
 				BAF67F9D16D624C90047FE2A /* WLApplicationPreferencesWindow.m in Sources */,
+				BC5994A0A3B188B70572162C /* WLCalendarRemindersController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
