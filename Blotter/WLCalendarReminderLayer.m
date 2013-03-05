@@ -1,5 +1,5 @@
 //
-//  WLCalendarTaskLayer.m
+//  WLCalendarReminderLayer.m
 //  Blotter
 //
 //  Created by Ilya Kulakov on 23.08.11.
@@ -7,7 +7,7 @@
 //
 
 #import <WLFoundation/WLFoundation.h>
-#import "WLCalendarTaskLayer.h"
+#import "WLCalendarReminderLayer.h"
 #import "NSFont+WLCalendar.h"
 #import "NSColor+WLCalendar.h"
 
@@ -15,8 +15,7 @@
 static const CGFloat _WLMarkTailIndent = 6.0;
 
 
-@implementation WLCalendarTaskLayer
-
+@implementation WLCalendarReminderLayer
 
 #pragma mark Properties
 @dynamic mark;
@@ -57,6 +56,7 @@ static const CGFloat _WLMarkTailIndent = 6.0;
 {
     CGSize preferredSize = [self.mark WL_preferredSize];
     CGFloat topMargin = -1.0;
+
     if ([self contentsAreFlipped])
     {
         return CGRectIntegral(CGRectMake(0.0,
@@ -112,12 +112,14 @@ static const CGFloat _WLMarkTailIndent = 6.0;
         CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0), 0.0, [[[NSColor whiteColor] colorWithAlphaComponent:0.25] WL_CGColor]);
     else
         CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, -1.0), 0.0, [[[NSColor whiteColor] colorWithAlphaComponent:0.25] WL_CGColor]);
+
     [self.mark WL_drawWithRect:[self _markFrame] context:aContext];
 
     if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6 || ![self contentsAreFlipped])
         CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, -1.0), 0.0, [[NSColor WL_taskTextShadowColor] WL_CGColor]);
     else
         CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0), 0.0, [[NSColor WL_taskTextShadowColor] WL_CGColor]);
+
     [self.mark WL_drawWithRect:[self _markFrame] context:aContext];
     [self.title WL_drawWithRect:[self _titleFrame] context:aContext];
 
@@ -135,9 +137,9 @@ static const CGFloat _WLMarkTailIndent = 6.0;
 @end
 
 
-@implementation NSAttributedString (WLCalendarTaskLayer)
+@implementation NSAttributedString (WLCalendarReminderLayer)
 
-+ (NSAttributedString *)WL_taskTitleWithString:(NSString *)aString
++ (NSAttributedString *)WL_reminderTitleWithString:(NSString *)aString
 {
     if ([aString length] == 0)
         return nil;
@@ -150,11 +152,11 @@ static const CGFloat _WLMarkTailIndent = 6.0;
                            (id)[[NSColor WL_taskTitleColor] WL_CGColor],  (id)kCTForegroundColorAttributeName,
                            nil];
     });
-    return [[[NSAttributedString alloc] initWithString:[aString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
-                                            attributes:TitleAttributes] autorelease];
+    return [[NSAttributedString alloc] initWithString:[aString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
+                                           attributes:TitleAttributes];
 }
 
-+ (NSAttributedString *)WL_taskMarkWithColor:(CGColorRef)aColor
++ (NSAttributedString *)WL_reminderMarkWithColor:(CGColorRef)aColor
 {
     if(aColor == NULL)
         return nil;
@@ -166,10 +168,10 @@ static const CGFloat _WLMarkTailIndent = 6.0;
                           (id)[NSFont WL_taskFont],                      (id)kCTFontAttributeName,
                           nil];
     });
-    NSMutableDictionary *a = [[MarkAttributes mutableCopy] autorelease];
-    [a setObject:(id)aColor forKey:(id)kCTForegroundColorAttributeName];
-    return [[[NSAttributedString alloc] initWithString:NSLocalizedString(@"●", @"Task's mark")
-                                            attributes:a] autorelease];
+    NSMutableDictionary *a = [MarkAttributes mutableCopy];
+    [a setObject:(__bridge NSColor *)aColor forKey:(id)kCTForegroundColorAttributeName];
+    return [[NSAttributedString alloc] initWithString:NSLocalizedString(@"●", @"Task's mark")
+                                           attributes:a];
 }
 
 @end

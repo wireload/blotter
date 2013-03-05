@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "WLViewController.h"
+#import <WLFoundation/WLFoundation.h>
 #import "IKPreferencesRepresentation.h"
 #import "WLCustomCursorButton.h"
 

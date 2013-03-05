@@ -10,11 +10,12 @@
 #import "WLCalendarWeekViewController.h"
 #import "WLCalendarRightNowViewController.h"
 #import "WLCalendarFloatingWeekViewController.h"
-#import "WLCalendarTasksViewController.h"
+#import "WLCalendarRemindersViewController.h"
 #import "WLCalendarDateViewController.h"
 #import "WLCalendarBoxView.h"
 #import "WLCalendarWindowBringToFrontAnimation.h"
 #import "NSUserDefaults+WLApplicationDefaults.h"
+#import "WLCalendarRemindersController.h"
 
 
 // Sizes are chosen so that when switching between these 2 modes only week view is disappeard. that is the date, todo and right now vies are visually unchanged.
@@ -32,6 +33,9 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
 
 
 @implementation WLCalendarWindowController
+{
+    WLCalendarRemindersController *_remindersController;
+}
 
 - (id)init
 {
@@ -63,16 +67,11 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
         _rightNowViewController = [[WLCalendarRightNowViewController alloc] init];
         [_rightNowViewController setRepresentedObject:[WLCalendarController sharedController]];
 
-        _tasksViewController = [[WLCalendarTasksViewController alloc] initWithNibName:nil bundle:nil];
-        [_tasksViewController setRepresentedObject:[WLCalendarController sharedController]];
-        NSArray *sortDescriptors = [NSArray arrayWithObjects:
-                                    [NSSortDescriptor sortDescriptorWithKey:@"dueDate" ascending:YES],
-                                    [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:YES],
-                                    [NSSortDescriptor sortDescriptorWithKey:@"calendar.title" ascending:YES selector:@selector(localizedStandardCompare:)],
-                                    [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedStandardCompare:)],
-                                    [NSSortDescriptor sortDescriptorWithKey:@"dateStamp" ascending:YES],
-                                    nil];
-        _tasksViewController.sortDescriptors = sortDescriptors;
+        _remindersController = [[WLCalendarRemindersController alloc] initWithCalStores:@[[WLCalendarStore systemStore]]];
+        [_remindersController setObservedCalendarIdentifiers:[[NSUserDefaults standardUserDefaults] valueForKeyPath:@"Calendars.uid"]
+                                                    forStore:_remindersController.calStores[0]];
+        _remindersViewController = [[WLCalendarRemindersViewController alloc] initWithNibName:nil bundle:nil];
+        _remindersViewController.representedObject = _remindersController;
 
         _dateViewController = [[WLCalendarDateViewController alloc] init];
         [_dateViewController setRepresentedObject:[WLCalendarController sharedController]];
@@ -98,7 +97,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
 {
     [_weekViewController release];
     [_rightNowViewController release];
-    [_tasksViewController release];
+    [_remindersViewController release];
     [_dateViewController release];
     [_tasksViewBox release];
     [_rightNowViewBox release];
@@ -783,7 +782,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0;
 
     _tasksViewBox = [[WLCalendarBoxView alloc] initWithFrame:NSZeroRect];
     _tasksViewBox.title = NSLocalizedString(@"To Do", @"Header of To Do items list");
-    _tasksViewBox.contentView = [_tasksViewController view];
+    _tasksViewBox.contentView = [_remindersViewController view];
     [_tasksViewBox setWantsLayer:YES];
     [contentView addSubview:_tasksViewBox];
     [_tasksViewBox release];

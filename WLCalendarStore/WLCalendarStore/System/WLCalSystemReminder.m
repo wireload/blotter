@@ -34,10 +34,15 @@
         // WLCalReminder
         self->_completed = aCSReminder.isCompleted;
         self->_completionDate = [aCSReminder.completedDate copy];
-        NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        [gregorianCalendar setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
-        self->_dueDateComponents = [gregorianCalendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSCalendarCalendarUnit | NSTimeZoneCalendarUnit
-                                                        fromDate:aCSReminder.dueDate];
+
+        if (aCSReminder.dueDate)
+        {
+            NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+            gregorianCalendar.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+            gregorianCalendar.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+            self->_dueDateComponents = [gregorianCalendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSCalendarCalendarUnit | NSTimeZoneCalendarUnit
+                                                            fromDate:aCSReminder.dueDate];
+        }
         self->_priority = aCSReminder.priority;
     }
 
@@ -62,6 +67,5 @@
     else
         return YES;
 }
-
 
 @end

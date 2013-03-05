@@ -8,13 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 #import <WLFoundation/WLFoundation.h>
+#import <WLCalendarStore/WLCalendarStore.h>
+#import "WLCalendarRemindersController.h"
 #import "WLCalendarWindow.h"
 
 
 @class WLCalendarWeekViewController;
 @class WLCalendarRightNowViewController;
 @class WLCalendarFloatingWeekViewController;
-@class WLCalendarTasksViewController;
+@class WLCalendarRemindersViewController;
 @class WLCalendarDateViewController;
 @class WLCalendarBoxView;
 @class WLCalendarWindowBringToFrontAnimation;
@@ -37,11 +39,11 @@ typedef enum
 {
     WLCalendarWindowState windowState;
     BOOL isFadedOut;
-    
+
     BOOL _isWindowShowed;
     WLCalendarFloatingWeekViewController *_weekViewController;
     WLCalendarRightNowViewController *_rightNowViewController;
-    WLCalendarTasksViewController *_tasksViewController;
+    WLCalendarRemindersViewController *_remindersViewController;
     WLCalendarDateViewController *_dateViewController;
     WLCalendarBoxView *_tasksViewBox;
     WLCalendarBoxView *_rightNowViewBox;

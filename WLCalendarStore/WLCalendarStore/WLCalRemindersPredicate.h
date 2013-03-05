@@ -11,6 +11,7 @@
 
 typedef NS_ENUM(NSUInteger, WLCalReminderCompletionMask)
 {
+    WLCalReminderCompletionMaskNothing = 0,
     WLCalReminderCompletionMaskComplete = 1 << 0,
     WLCalReminderCompletionMaskIncomplete = 1 << 1,
     WLCalReminderCompletionMaskAny = WLCalReminderCompletionMaskComplete | WLCalReminderCompletionMaskIncomplete

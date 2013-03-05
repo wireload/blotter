@@ -136,50 +136,6 @@
     return selfInsertedIndexes;
 }
 
-- (NSIndexSet *)WL_indexesOfObjects:(__autoreleasing NSIndexSet **)outIndexes
-                    relativeToArray:(NSArray *)aRelativeArray
-              sortedUsingComparator:(NSComparator)aComparator
-{
-    if (!aRelativeArray)
-        [NSException raise:NSInvalidArgumentException format:@"You cannot compare to nil."];
-
-    if (!aComparator)
-        [NSException raise:NSInvalidArgumentException format:@"You must pass a comparator."];
-
-    if (([self count] == 0 || [aRelativeArray count] == 0) || // if either array is empty, they have no equal objects
-        (aComparator(self[0], [aRelativeArray lastObject]) == NSOrderedDescending) || // first object in the receiver is greater than last object from aFromArray => no equal objects
-        (aComparator([self lastObject], aRelativeArray[0]) == NSOrderedAscending)) // last object in the receiver is less than first object from aFromArray => no equal objects
-    {
-        if (outIndexes)
-            *outIndexes = [NSIndexSet indexSet];
-        return [NSIndexSet indexSet];
-    }
-
-    if (outIndexes)
-        *outIndexes = [NSMutableIndexSet indexSet];
-    NSMutableIndexSet *indexesInSelf = [NSMutableIndexSet indexSet];
-
-    NSUInteger count = [self count];
-    __block NSRange sortedRange = NSMakeRange(0, count);
-    [aRelativeArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
-    {
-        NSUInteger i = [self indexOfObject:obj
-                             inSortedRange:sortedRange
-                                   options:NSBinarySearchingFirstEqual
-                           usingComparator:aComparator];
-        if (i != NSNotFound)
-        {
-            sortedRange.length -= i + 1 - sortedRange.location;
-            sortedRange.location = i + 1;
-
-            if (i >= count)
-                *stop = YES;
-        }
-    }];
-
-    return indexesInSelf;
-}
-
 - (void)WL_indexesOfDeletedObject:(out NSIndexSet **)outDeletedIndexes
          indexesOfInsertedObjects:(out NSIndexSet **)outInsertedIndexes
           indexesOfUpdatedObjects:(out NSIndexSet **)outUpdatedIndexes
@@ -190,7 +146,7 @@
     NSParameterAssert(aSortDescriptors != nil);
     NSParameterAssert((outUpdatedIndexes != nil && anUpdateChecker != nil) ||
                       (outUpdatedIndexes == nil && anUpdateChecker == nil));
-    
+
     NSComparisonResult (^Comparator)(id, id) = ^(id aObject, id bObject)
     {
         NSComparisonResult result = NSOrderedSame;
@@ -206,7 +162,7 @@
         }
         return result;
     };
-    
+
     if ([self count] == 0)
     {
         if (outInsertedIndexes != NULL)
@@ -227,21 +183,21 @@
             *outUpdatedIndexes = [NSIndexSet indexSet];
         return;
     }
-    
+
     if (outInsertedIndexes != NULL)
         *outInsertedIndexes = [NSMutableIndexSet indexSet];
     if (outDeletedIndexes != NULL)
         *outDeletedIndexes = [NSMutableIndexSet indexSet];
     if (outUpdatedIndexes != NULL)
         *outUpdatedIndexes = [NSMutableIndexSet indexSet];
-    
+
     NSUInteger fromObjectIdx = 0, fromArraySize = [self count];
     NSUInteger toObjectIdx = 0, toArraySize = [aToArray count];
     while (fromObjectIdx < fromArraySize && toObjectIdx < toArraySize)
     {
         id fromObject = [self objectAtIndex:fromObjectIdx];
         id toObject = [aToArray objectAtIndex:toObjectIdx];
-        
+
         NSComparisonResult r = Comparator(fromObject, toObject);
         switch (r) {
             case NSOrderedAscending:
@@ -270,7 +226,7 @@
             }
         }
     }
-    
+
     if (fromArraySize < toArraySize && outInsertedIndexes != NULL)
         [(NSMutableIndexSet *)*outInsertedIndexes addIndexesInRange:NSMakeRange(toObjectIdx, toArraySize - toObjectIdx)];
     else if (fromArraySize > toArraySize && outDeletedIndexes != NULL)

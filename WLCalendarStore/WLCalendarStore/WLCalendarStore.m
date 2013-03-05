@@ -17,7 +17,10 @@ NSComparator WLCalCalendarsComparator = ^(NSObject<WLCalCalendar> *aCalendar1, N
 
 NSComparator WLCalEventsComparator = ^(NSObject<WLCalEvent> *anEvent1, NSObject<WLCalEvent> *anEvent2)
 {
-    NSComparisonResult r = [[anEvent1 valueForKey:@"itemIdentifier"] compare:[anEvent2 valueForKey:@"itemIdentifier"]];
+    NSComparisonResult r = [[anEvent1 valueForKeyPath:@"calendar.calendarIdentifier"] compare:[anEvent2 valueForKeyPath:@"calendar.calendarIdentifier"]];
+
+    if (r == NSOrderedSame)
+        [[anEvent1 valueForKey:@"itemIdentifier"] compare:[anEvent2 valueForKey:@"itemIdentifier"]];
 
     if (r == NSOrderedSame)
         r = [[anEvent1 valueForKey:@"startDate"] compare:[anEvent2 valueForKey:@"startDate"]];
@@ -40,11 +43,6 @@ NSComparator WLCalRemindersComparator = ^(NSObject<WLCalReminder> *aReminder1, N
 
 
 NSString *WLCalStoreDidChangeNotification = @"WLCalStoreDidChangeNotification";
-
-
-NSString *WLCalSystemStoreChecksCalendarsAgainstICalKey = @"WLCalSystemStoreChecksCalendarsAgainstICal";
-
-NSString *WLCalSystemStoreAllowsAdvancedCalendarTypeCheckKey = @"WLCalSystemStoreAllowsAdvancedCalendarTypeCheck";
 
 
 @implementation WLCalendarStore

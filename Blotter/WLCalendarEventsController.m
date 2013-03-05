@@ -18,7 +18,7 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
     NSMapTable *_observedCalendarIdentifiers;
     NSOperationQueue *_fetchOperationsQueue;
     BOOL _isObserving;
-    dispatch_queue_t _fetchOperationQueueManageQueue;
+    dispatch_queue_t _accessQueue;
 }
 
 - (instancetype)initWithCalStores:(NSArray *)aStores
@@ -36,9 +36,9 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
             _observedCalendarIdentifiers = [NSMapTable strongToStrongObjectsMapTable];
 
         _fetchOperationsQueue = [[NSOperationQueue alloc] init];
-        [_fetchOperationsQueue setName:@"Fetch Operations Queue"];
+        [_fetchOperationsQueue setName:@"Fetch Operations Queue (Events)"];
         [_fetchOperationsQueue setMaxConcurrentOperationCount:1];
-        _fetchOperationQueueManageQueue = dispatch_queue_create("Fetch Operations Manager Queue", 0);
+        _accessQueue = dispatch_queue_create("Access Queue (Events)", 0);
     }
 
     return self;
@@ -48,7 +48,7 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_fetchOperationsQueue cancelAllOperations];
-    dispatch_release(_fetchOperationQueueManageQueue);
+    dispatch_release(_accessQueue);
 }
 
 
@@ -56,7 +56,7 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
 
 - (NSSet *)observedDateRanges
 {
-    return [NSSet setWithSet:_observedDateRanges];
+    return [NSSet setWithSet:_observedDateRanges];;
 }
 
 - (void)addObservedDateRange:(WLDateRange *)aRange
@@ -64,12 +64,14 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
     if ([aRange isEmpty])
         return;
 
-    dispatch_sync(_fetchOperationQueueManageQueue, ^
+    [self willChangeValueForKey:@"observedDateRanges"];
+    dispatch_sync(_accessQueue, ^
     {
         [_observedDateRanges addObject:[aRange copy]];
         [self fetchPredicateDidChange];
         [self fetchCalEventsForDateRanges:[NSSet setWithObject:aRange] priority:NSOperationQueuePriorityNormal];
     });
+    [self didChangeValueForKey:@"observedDateRanges"];
 }
 
 - (void)removeObservedDateRange:(WLDateRange *)aRange
@@ -77,30 +79,37 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
     if ([aRange isEmpty])
         return;
 
-    dispatch_sync(_fetchOperationQueueManageQueue, ^
+    [self willChangeValueForKey:@"observedDateRanges"];
+    dispatch_sync(_accessQueue, ^
     {
         [_observedDateRanges removeObject:aRange];
         [self fetchPredicateDidChange];
     });
+    [self didChangeValueForKey:@"observedDateRanges"];
 }
 
 - (void)removeAllObservedDateRanges
 {
-    dispatch_sync(_fetchOperationQueueManageQueue, ^
+    if (![_observedDateRanges count])
+        return;
+
+    [self willChangeValueForKey:@"observedDateRanges"];
+    dispatch_sync(_accessQueue, ^
     {
         [_observedDateRanges removeAllObjects];
         [self fetchPredicateDidChange];
     });
+    [self didChangeValueForKey:@"observedDateRanges"];
 }
 
 - (NSArray *)observedCalendarIdentifiersForStore:(NSObject <WLCalStore> *)aStore
 {
-    return [_observedCalendarIdentifiers objectForKey:aStore];
+    return  [NSArray arrayWithArray:[_observedCalendarIdentifiers objectForKey:aStore]];
 }
 
 - (void)setObservedCalendarIdentifiers:(NSSet *)aCalendarIdentifiers forStore:(NSObject <WLCalStore> *)aStore
 {
-    dispatch_sync(_fetchOperationQueueManageQueue, ^
+    dispatch_sync(_accessQueue, ^
     {
         [_observedCalendarIdentifiers setObject:[aCalendarIdentifiers copy] forKey:aStore];
         [self fetchPredicateDidChange];
@@ -252,21 +261,21 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
 
 - (void)calStoreDidChange:(NSNotification *)aNotification
 {
-    dispatch_sync(_fetchOperationQueueManageQueue, ^
+    dispatch_sync(_accessQueue, ^
     {
-        [self fetchCalEventsWithPriority:NSOperationQueuePriorityNormal];
+        [self fetchCalEventsWithPriority:NSOperationQueuePriorityLow];
     });
 }
 
 - (void)fetchPredicateDidChange
 {
-    if (_isObserving && ![self observedDateRanges])
+    if (_isObserving && ![self.observedDateRanges count])
     {
         [[NSNotificationCenter defaultCenter] removeObserver:self];
         [_fetchOperationsQueue cancelAllOperations];
         _isObserving = NO;
     }
-    else if (!_isObserving && [self observedDateRanges])
+    else if (!_isObserving && [self.observedDateRanges count])
     {
         for (NSObject<WLCalStore> *store in _calStores)
         {

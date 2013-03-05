@@ -11,18 +11,35 @@
 #import <WLCalendarStore/WLCalendarStore.h>
 
 
+/*
+    @brief      The notification which is posted when calendar events are changed.
+
+    @discussion User Info dictionary representes events per date range. The receiver should query this dictionary using the same date range
+                it used to addObservedDateRange.
+ */
 extern NSString *WLCalendarEventsDidChangeNotification;
 
 
 /*!
     @brief  The instance of WLCalendarEventsController listens to updates of calendar stores, fetches events within observed date ranges and
             for given calendar identifiers and posts WLCalendarEventsDidChangeNotification.
+            Users should not make any expectations about target thread of this notification.
+
+    @see    WLCalendarEventsDidChangeNotification
  */
 @interface WLCalendarEventsController : NSObject
 
-- (instancetype)initWithCalStores:(NSArray *)aStores;
-
+/*!
+    @brief  Instances of objects that adapt WLCalStore protocol which the receiver observes.
+ */
 @property (copy, readonly) NSArray *calStores;
+
+/*!
+    @brief      Initialized the receiver with aStores.
+
+    @discussion Designated initializer.
+ */
+- (instancetype)initWithCalStores:(NSArray *)aStores;
 
 /*!
     @brief  Returns currently observed date ranges.
@@ -64,7 +81,7 @@ extern NSString *WLCalendarEventsDidChangeNotification;
 - (NSArray *)optimizeDateRanges:(NSArray *)aRanges;
 
 /*!
-    @brief  Fetches all cal events on background thread with given priority.
+    @brief      Fetches all cal events on background thread with given priority.
 
     @discussion You SHOULD not call this method directly.
  */
@@ -78,14 +95,14 @@ extern NSString *WLCalendarEventsDidChangeNotification;
 - (void)fetchCalEventsForDateRanges:(NSSet *)aRanges priority:(NSOperationQueuePriority)aPriority;
 
 /*!
-    @brief  Called when store posts WLCalStoreDidChangeNotification.
+    @brief      Called when an observed store posts WLCalStoreDidChangeNotification.
 
     @discussion You SHOULD not call this method directly.
  */
 - (void)calStoreDidChange:(NSNotification *)aNotification;
 
 /*!
-    @brief  Called when either calendar identifiers or observed ranges are changed.
+    @brief      Called when either calendar identifiers or observed ranges are changed.
 
     @discussion You SHOULD not call this method directly.
  */
