@@ -40,18 +40,6 @@ typedef BOOL (^WLUpdateChecker)(id aFromArrayObject, id aToArrayObject);
                       sortedUsingComparator:(NSComparator)aComparator;
 
 /*!
-    @brief      Computes indexes of objects represented by both the receiver and aFromArray (in terms of isEqual:).
-    @param      outIndexes  Indexes of objects in aRelativeArray.
-    @param      aRelativeArray Array to compare. If nil, NSInvalidArgumentException is thrown.
-    @param      aComparator Comparator used to sort both self and aFromArray.
-    @result     Indexes of objects in the receiver.
-    @discussion Throws an exception if either aFromArray or comparator is nil.
- */
-- (NSIndexSet *)WL_indexesOfObjects:(out __autoreleasing NSIndexSet **)outIndexes
-                    relativeToArray:(NSArray *)aRelativeArray
-              sortedUsingComparator:(NSComparator)aComparator;
-
-/*!
     //TODO: REWRITE ME
     @description   Both arrays must contain unique objects in terms of aSortDescriptors so it can distinguish updated events.
  */
