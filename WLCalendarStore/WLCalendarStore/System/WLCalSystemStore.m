@@ -339,7 +339,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
         [minus4Years setYear:-4];
         StartOf4YearsPeriod = [calendar dateByAddingComponents:minus4Years toDate:EndOf4YearsPeriod options:0];
 
-        TmpItemsTitle = [NSString stringWithFormat:@"Quit %@ and delete it.", [[NSProcessInfo processInfo] processName]];
+        TmpItemsTitle = [NSString stringWithFormat:@"Quit %@ and delete me.", [[NSProcessInfo processInfo] processName]];
         TmpItemsNotes = [[NSBundle mainBundle] bundleIdentifier];
         CFUUIDRef uuid = CFUUIDCreate(NULL);
 
