@@ -216,6 +216,9 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
     if ([aReminderPredicate.calendarIdentifiers count] == 0)
         return @[];
 
+    if (aReminderPredicate.completionMask == WLCalReminderCompletionMaskNothing)
+        return @[];
+
     NSArray *csCalendars = nil;
 
     if (aReminderPredicate.calendarIdentifiers)
