@@ -29,8 +29,16 @@ extern NSString *WLCalendarEventsDidChangeNotification;
  */
 @interface WLCalendarEventsController : NSObject
 
+/*!
+    @brief  Instances of objects that adapt WLCalStore protocol which the receiver observes.
+ */
 @property (copy, readonly) NSArray *calStores;
 
+/*!
+    @brief      Initialized the receiver with aStores.
+
+    @discussion Designated initializer.
+ */
 - (instancetype)initWithCalStores:(NSArray *)aStores;
 
 /*!
@@ -87,7 +95,7 @@ extern NSString *WLCalendarEventsDidChangeNotification;
 - (void)fetchCalEventsForDateRanges:(NSSet *)aRanges priority:(NSOperationQueuePriority)aPriority;
 
 /*!
-    @brief      Called when store posts WLCalStoreDidChangeNotification.
+    @brief      Called when an observed store posts WLCalStoreDidChangeNotification.
 
     @discussion You SHOULD not call this method directly.
  */
