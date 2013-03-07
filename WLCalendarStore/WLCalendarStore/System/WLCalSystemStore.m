@@ -17,7 +17,7 @@
 #import "WLCalSystemReminder.h"
 
 
-static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
+static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 0.1;
 
 
 @implementation WLCalSystemStore
