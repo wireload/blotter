@@ -11,10 +11,10 @@
 
 @implementation NSArray (WLDelta)
 
-- (void)WL_indexesOfDeletedObject:(out NSIndexSet * __autoreleasing *)outDeletedIndexes
-         indexesOfInsertedObjects:(out NSIndexSet * __autoreleasing *)outInsertedIndexes
-                  relativeToArray:(NSArray *)aRelativeArray
-            sortedUsingComparator:(NSComparator)aComparator
+- (void)WL_indexesOfDeletedObjects:(out NSIndexSet * __autoreleasing *)outDeletedIndexes
+          indexesOfInsertedObjects:(out NSIndexSet * __autoreleasing *)outInsertedIndexes
+                   relativeToArray:(NSArray *)aRelativeArray
+             sortedUsingComparator:(NSComparator)aComparator
 {
     if (!aRelativeArray)
         [NSException raise:NSInvalidArgumentException format:@"You cannot compare to nil."];

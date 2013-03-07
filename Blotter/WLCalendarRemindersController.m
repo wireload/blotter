@@ -52,7 +52,6 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
 }
 
 
-
 #pragma mark Methods
 
 - (WLCalReminderCompletionMask)observedCompletionMask

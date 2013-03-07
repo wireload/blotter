@@ -22,10 +22,10 @@ typedef BOOL (^WLUpdateChecker)(id aFromArrayObject, id aToArrayObject);
     @param      aComparator Comparator used to sort both self and aRelativeArray.
     @discussion Throws an exception if either aRelativeArray or aComparator is nil.
  */
-- (void)WL_indexesOfDeletedObject:(out NSIndexSet * __autoreleasing *)outDeletedIndexes
-         indexesOfInsertedObjects:(out NSIndexSet * __autoreleasing *)outInsertedIndexes
-                  relativeToArray:(NSArray *)aRelativeArray
-            sortedUsingComparator:(NSComparator)aComparator;
+- (void)WL_indexesOfDeletedObjects:(out NSIndexSet * __autoreleasing *)outDeletedIndexes
+          indexesOfInsertedObjects:(out NSIndexSet * __autoreleasing *)outInsertedIndexes
+                   relativeToArray:(NSArray *)aRelativeArray
+             sortedUsingComparator:(NSComparator)aComparator;
 
 /*!
     @brief      Computes indexes of objects that are considered inserted in the receiver and their position in the receiver.
