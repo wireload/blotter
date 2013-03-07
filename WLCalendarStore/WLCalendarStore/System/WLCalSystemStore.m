@@ -629,4 +629,22 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
     return @"net.wireload.WLCalendarStore.System";
 }
 
+
+#pragma mark NSObject
+
+- (BOOL)isEqual:(NSObject<WLCalStore> *)anObject
+{
+    if ([super isEqual:anObject])
+        return YES;
+    else if (![anObject conformsToProtocol:@protocol(WLCalStore)])
+        return NO;
+    else
+        return [self.storeIdentifier isEqual:anObject.storeIdentifier];
+}
+
+- (NSUInteger)hash
+{
+    return [self.storeIdentifier hash];
+}
+
 @end
