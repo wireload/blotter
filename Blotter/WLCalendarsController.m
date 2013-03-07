@@ -104,7 +104,7 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
     NSIndexSet *indexesOfCalRemindersCalendars = [calCalendars indexesOfObjectsWithOptions:NSEnumerationConcurrent
                                                                                passingTest:^BOOL(NSObject<WLCalCalendar> *aCalCalendar, NSUInteger idx, BOOL *stop)
     {
-        return (aCalCalendar.allowedEntityTypes & WLCalEntityMaskReminder) != 0;
+        return aCalCalendar.allowedEntityTypes == WLCalEntityMaskUnknown || (aCalCalendar.allowedEntityTypes & WLCalEntityMaskReminder) != 0;
     }];
     return [calCalendars objectsAtIndexes:indexesOfCalRemindersCalendars];
 }
@@ -115,7 +115,7 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
     NSIndexSet *indexesOfCalRemindersCalendars = [calCalendars indexesOfObjectsWithOptions:NSEnumerationConcurrent
                                                                                passingTest:^BOOL(NSObject<WLCalCalendar> *aCalCalendar, NSUInteger idx, BOOL *stop)
     {
-        return (aCalCalendar.allowedEntityTypes & WLCalEntityMaskEvent) != 0;
+        return aCalCalendar.allowedEntityTypes == WLCalEntityMaskUnknown || (aCalCalendar.allowedEntityTypes & WLCalEntityMaskEvent) != 0;
     }];
     return [calCalendars objectsAtIndexes:indexesOfCalRemindersCalendars];
 }
@@ -138,7 +138,7 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
 {
     NSString *keyPath = [NSString stringWithFormat:@"%@.%@", self.autosaveKeyPath, aStore.storeIdentifier];
     NSDictionary *defaultsCalCalendars = [[NSUserDefaults standardUserDefaults] valueForKeyPath:keyPath];
-    NSArray *calCalendars = [self calCalendarsForStore:aStore];
+    NSArray *calCalendars = [self calReminderCalendarsForStore:aStore];
     NSIndexSet *indexesOfCalReminderCalendarsToDisplay = [calCalendars indexesOfObjectsWithOptions:NSEnumerationConcurrent
                                                                                        passingTest:^BOOL(NSObject<WLCalCalendar> *aCalCalendar, NSUInteger idx, BOOL *stop)
     {
@@ -152,7 +152,7 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
 {
     NSString *keyPath = [NSString stringWithFormat:@"%@.%@", self.autosaveKeyPath, aStore.storeIdentifier];
     NSDictionary *defaultsCalCalendars = [[NSUserDefaults standardUserDefaults] valueForKeyPath:keyPath];
-    NSArray *calCalendars = [self calCalendarsForStore:aStore];
+    NSArray *calCalendars = [self calEventCalendarsForStore:aStore];
     NSIndexSet *indexesOfCalEventsCalendarsToDisplay = [calCalendars indexesOfObjectsWithOptions:NSEnumerationConcurrent
                                                                                      passingTest:^BOOL(NSObject<WLCalCalendar> *aCalCalendar, NSUInteger idx, BOOL *stop)
     {
