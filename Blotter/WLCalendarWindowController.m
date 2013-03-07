@@ -15,7 +15,6 @@
 #import "WLCalendarBoxView.h"
 #import "WLCalendarWindowBringToFrontAnimation.h"
 #import "NSUserDefaults+WLApplicationDefaults.h"
-#import "WLCalendarRemindersController.h"
 
 
 // Sizes are chosen so that when switching between these 2 modes only week view is disappeard. that is the date, todo and right now vies are visually unchanged.
@@ -34,7 +33,6 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
 
 @implementation WLCalendarWindowController
 {
-    WLCalendarRemindersController *_remindersController;
 }
 
 - (id)init
@@ -57,6 +55,25 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
         windowState = WLFinderLevelState;
 
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+
+        // It's important to allocate calendars "consumers" before calendars controller because they MUST exists at time
+        // when WLCalCalendarsToDisplayDidChangeNotification is fired which can happen just after calendarsController is initialized.
+        // TODO: This should be configurable.
+        NSArray *calStores = @[[WLCalendarStore systemStore]];
+        _remindersController = [[WLCalendarRemindersController alloc] initWithCalStores:calStores];
+        _calendarsController = [[WLCalendarsController alloc] initWithCalStores:calStores
+                                                                autosaveKeyPath:@"NewCalendars"];
+        [defaultCenter addObserver:self
+                          selector:@selector(calendarsDidChange:)
+                              name:WLCalCalendarsToDisplayDidChangeNotification
+                            object:_calendarsController];
+
+        for (NSObject<WLCalStore> *s in _calendarsController.calStores)
+        {
+            NSSet *identifiers = [NSSet setWithArray:[[self.calendarsController calReminderCalendarsToDisplayForStore:s] valueForKey:@"calendarIdentifier"]];
+            [_remindersController setObservedCalendarIdentifiers:identifiers forStore:s];
+        }
 
         _weekViewController = [[WLCalendarFloatingWeekViewController alloc] init];
         [_weekViewController setRepresentedObject:[WLCalendarController sharedController]];
@@ -67,9 +84,6 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
         _rightNowViewController = [[WLCalendarRightNowViewController alloc] init];
         [_rightNowViewController setRepresentedObject:[WLCalendarController sharedController]];
 
-        _remindersController = [[WLCalendarRemindersController alloc] initWithCalStores:@[[WLCalendarStore systemStore]]];
-        [_remindersController setObservedCalendarIdentifiers:[[NSUserDefaults standardUserDefaults] valueForKeyPath:@"Calendars.uid"]
-                                                    forStore:_remindersController.calStores[0]];
         _remindersViewController = [[WLCalendarRemindersViewController alloc] initWithNibName:nil bundle:nil];
         _remindersViewController.representedObject = _remindersController;
 
@@ -85,10 +99,10 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
         [defaults addObserver:self forKeyPath:@"TasksViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
         [defaults addObserver:self forKeyPath:@"AllDayViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
 
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(_updateFrame)
-                                                     name:NSApplicationDidChangeScreenParametersNotification
-                                                   object:NSApp];
+        [defaultCenter addObserver:self
+                          selector:@selector(_updateFrame)
+                              name:NSApplicationDidChangeScreenParametersNotification
+                            object:NSApp];
     }
     return self;
 }
@@ -118,6 +132,8 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
     [defaults removeObserver:self forKeyPath:WLScreenIdentifierKey];
     [defaults removeObserver:self forKeyPath:@"CustomFrameFactors"];
 
+    [_remindersController release];
+    [_calendarsController release];
     [super dealloc];
 }
 
@@ -404,6 +420,19 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
 - (BOOL)isAnimatingWindowState
 {
     return (_fadeOutAnimation != nil || _fadeInAnimation != nil);
+}
+
+- (void)calendarsDidChange:(NSNotification *)aNotification
+{
+#ifdef DEBUG
+    NSLog(@"calCalendarsDidChange: %@", aNotification);
+#endif
+    NSArray *changedStores = [[aNotification userInfo] objectForKey:WLChangedCalStoresKey];
+    for (NSObject<WLCalStore> *s in changedStores)
+    {
+        NSSet *identifiers = [NSSet setWithArray:[[self.calendarsController calReminderCalendarsToDisplayForStore:s] valueForKey:@"calendarIdentifier"]];
+        [self.remindersController setObservedCalendarIdentifiers:identifiers forStore:s];
+    }
 }
 
 

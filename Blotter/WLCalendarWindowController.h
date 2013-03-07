@@ -11,6 +11,8 @@
 #import <WLCalendarStore/WLCalendarStore.h>
 #import "WLCalendarRemindersController.h"
 #import "WLCalendarWindow.h"
+#import "WLCalendarRemindersController.h"
+#import "WLCalendarsController.h"
 
 
 @class WLCalendarWeekViewController;
@@ -54,6 +56,10 @@ typedef enum
 @property (nonatomic) WLCalendarWindowState windowState;
 
 @property (nonatomic) BOOL isFadedOut;
+
+@property (readonly) WLCalendarsController *calendarsController;
+
+@property (readonly) WLCalendarRemindersController *remindersController;
 
 - (id)initWithWindow:(WLCalendarWindow *)aWindow;
 
