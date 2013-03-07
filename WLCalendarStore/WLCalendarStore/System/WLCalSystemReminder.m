@@ -17,7 +17,11 @@
 
 - (WLCalSystemReminder *)initWithCSReminder:(CalTask *)aCSReminder calCalendar:(id <WLCalCalendar>)aCalendar
 {
+    NSParameterAssert(aCSReminder != nil);
     NSParameterAssert(aCalendar != nil);
+
+    if (![aCSReminder.uid length])
+        return nil;
 
     self = [super init];
 

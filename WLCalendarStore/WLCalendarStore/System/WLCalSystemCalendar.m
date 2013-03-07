@@ -22,6 +22,11 @@
                    csCalendar:(CalCalendar *)aCSCalendar
            allowedEntityTypes:(WLCalEntityMask)anAllowedEntityTypes
 {
+    NSParameterAssert(aCSCalendar != nil);
+
+    if (![aCSCalendar.uid length])
+        return nil;
+
     self = [super initWithStore:aStore];
 
     if (self)

@@ -269,7 +269,9 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
         WLCalSystemCalendar *calendar = [[WLCalSystemCalendar alloc] initWithStore:self
                                                                         csCalendar:csCalendar
                                                                 allowedEntityTypes:allowedEntityTypes];
-        [calendars addObject:calendar];
+
+        if (calendar)
+            [calendars addObject:calendar];
     }
 
     return calendars;
@@ -558,7 +560,9 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
         if (calendar)
         {
             WLCalSystemEvent *event = [[WLCalSystemEvent alloc] initWithCSEvent:csEvent calCalendar:calendar];
-            [events addObject:event];
+
+            if (event)
+                [events addObject:event];
         }
     }
 
@@ -608,7 +612,9 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
         if (calendar)
         {
             WLCalSystemReminder *reminder = [[WLCalSystemReminder alloc] initWithCSReminder:csReminder calCalendar:calendar];
-            [reminders addObject:reminder];
+
+            if (reminder)
+                [reminders addObject:reminder];
         }
     }
 
