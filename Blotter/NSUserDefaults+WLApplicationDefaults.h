@@ -29,8 +29,6 @@ extern NSString* const WLCalendarIsUsedForEventsKey;
 
 extern NSString* const WLCalendarIsUsedForRemindersKey;
 
-extern NSString* const WLCalendarTypeKey;
-
 extern NSString* const WLAllowsAdvancedCalendarTypeCheck;
 
 extern NSString* const WLSlowAnimationKey;

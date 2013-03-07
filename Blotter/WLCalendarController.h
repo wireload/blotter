@@ -81,8 +81,6 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType);
 
 + (id)sharedController;
 
-+ (void)synchronizeCalendarInUserDefaultsWithCalCalendars;
-
 - (void)updateDate;
 
 - (void)updateCalendar;
@@ -139,26 +137,5 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType);
  @abstract  Returns calendars represented by the Calendars setting.
  */
 - (NSArray *)_filteredCalCalendars:(NSPredicate *)aPredicate;
-
-- (WLCalendarType)_typeForCalCalendar:(CalCalendar *)aCalCalendar;
-
-+ (WLCalendarType)_typeForCalCalendar:(CalCalendar *)aCalCalendar;
-
-@end
-
-
-extern NSString* const WLTempEventNotes;
-
-extern NSString* const WLTempTaskNotes;
-
-
-@interface CalCalendar (WLCalendarController)
-
-/*
- @discussion If AllowsAdvancedCalendarTypeCheck is set to YES in user defaults, may cause CalCalendarsChangedNotification, CalEventsChangedNotification, CalTasksChangedNotification,
- CalCalendarsChangedExternallyNotification, CalEventsChangedExternallyNotification or CalTasksChangedExternallyNotification to be posted.
- Ensure you properly update observers before sending this message.
- */
-- (WLCalendarType)WL_type;
 
 @end

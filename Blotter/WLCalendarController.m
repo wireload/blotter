@@ -8,6 +8,7 @@
 
 #import <CalendarStore/CalendarStore.h>
 #import <WLFoundation/WLFoundation.h>
+#import <WLCalendarStore/WLCalendarStore.h>
 #import "WLCalendarController.h"
 #import "NSUserDefaults+WLApplicationDefaults.h"
 
@@ -51,6 +52,9 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType)
 
 
 @implementation WLCalendarController
+{
+    id<WLCalStore> _calStore;
+}
 
 + (WLCalendarController *)sharedController
 {
@@ -70,6 +74,8 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType)
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 
         NSNotificationCenter *n = [NSNotificationCenter defaultCenter];
+
+        _calStore = [WLCalendarStore systemStore];
 
         calendar = [[NSCalendar autoupdatingCurrentCalendar] retain];
         date = [[NSDate date] retain];
@@ -185,40 +191,6 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType)
 
 #pragma mark Methods
 
-+ (void)synchronizeCalendarInUserDefaultsWithCalCalendars
-{
-    // Delete calCalendars that are deleted from the CalCalendarStore.
-    // Add new calCalendars that are added to the CalCalendarStore.
-    [[NSUserDefaults standardUserDefaults] WL_updateCalendars:^(NSMutableArray *aCalendars) {
-        NSMutableArray *calendarsToDelete = [NSMutableArray arrayWithArray:aCalendars];
-        for (CalCalendar *c in [[CalCalendarStore defaultCalendarStore] calendars])
-        {
-            NSUInteger index = [aCalendars WL_indexOfCalendarWithUID:c.uid];
-            if (index != NSNotFound)
-            {
-                NSDictionary *calendarDict = [aCalendars objectAtIndex:index];
-                [calendarsToDelete removeObjectIdenticalTo:calendarDict];
-                // Try to determine type of a calendar.
-                WLCalendarType oldType = [[calendarDict objectForKey:WLCalendarTypeKey] integerValue];
-                if (oldType != WLCalendarUnknownType)
-                    continue;
-                WLCalendarType newType = [self _typeForCalCalendar:c];
-                if (newType != oldType)
-                {
-                    NSMutableDictionary *newCalendarDict = [calendarDict mutableCopy];
-                    [newCalendarDict setObject:[NSNumber numberWithInteger:newType] forKey:WLCalendarTypeKey];
-                    [aCalendars replaceObjectAtIndex:index withObject:newCalendarDict];
-                    [newCalendarDict release];
-                }
-            }
-            else
-                [aCalendars WL_insertCalendar:[NSDictionary WL_makeCalendarWithCalCalendar:c]];
-        }
-        for (NSDictionary *c in calendarsToDelete)
-            [aCalendars removeObjectIdenticalTo:c];
-    }];
-}
-
 - (void)updateCalendar
 {
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateCalendar) object:nil];
@@ -237,45 +209,18 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType)
 
 - (NSArray *)calEventCalendarsFromCalCalendars:(NSArray *)aCalCalendars
 {
-    NSArray *calendars = [[NSUserDefaults standardUserDefaults] WL_calendars];
-    return [aCalCalendars filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CalCalendar *c, NSDictionary *b) {
-        WLCalendarType type = [[[calendars WL_calendarWithUID:c.uid] objectForKey:WLCalendarTypeKey] integerValue];
-        if (type == WLCalendarUnknownType)
-        {
-            // Calendar may be changed since last time we updated user defaults it.
-            type = [self _typeForCalCalendar:c];
-        }
-        switch (type)
-        {
-            case WLCalendarEventType:
-            case WLCalendarBothType:
-            case WLCalendarUnknownType:
-                return YES;
-            default:
-                return NO;
-        }
+    return [aCalCalendars filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CalCalendar *c, NSDictionary *b)
+    {
+        WLCalEntityMask types = [_calStore calendarWithIdentifier:c.uid].allowedEntityTypes;
+        return types == WLCalEntityMaskUnknown || (types & WLCalEntityMaskEvent) != 0;
     }]];
 }
 
 - (NSArray *)calReminderCalendarsFromCalCalendars:(NSArray *)aCalCalendars
 {
-    NSArray *calendars = [[NSUserDefaults standardUserDefaults] WL_calendars];
     return [aCalCalendars filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CalCalendar *c, NSDictionary *b) {
-        WLCalendarType type = [[[calendars WL_calendarWithUID:c.uid] objectForKey:WLCalendarTypeKey] integerValue];
-        if (type == WLCalendarUnknownType)
-        {
-            // Calendar may be changed since last time we updated user defaults it.
-            type = [self _typeForCalCalendar:c];
-        }
-        switch (type)
-        {
-            case WLCalendarReminderType:
-            case WLCalendarBothType:
-            case WLCalendarUnknownType:
-                return YES;
-            default:
-                return NO;
-        }
+        WLCalEntityMask types = [_calStore calendarWithIdentifier:c.uid].allowedEntityTypes;
+        return types == WLCalEntityMaskUnknown || (types & WLCalEntityMaskReminder) != 0;
     }]];
 }
 
@@ -475,53 +420,6 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType)
     return filteredCalCalendars;
 }
 
-- (WLCalendarType)_typeForCalCalendar:(CalCalendar *)aCalCalendar
-{
-    WLCalendarType type = WLCalendarUnknownType;
-    NSNotificationCenter *n = [NSNotificationCenter defaultCenter];
-    if ([[NSUserDefaults standardUserDefaults] WL_allowsAdvancedCalendarTypeCheck])
-        [n removeObserver:self name:CalCalendarsChangedNotification object:[CalCalendarStore defaultCalendarStore]];
-    @try
-    {
-        type = [aCalCalendar WL_type];
-    }
-    @catch (...)
-    {
-        NSLog(@"Unable to get type of calendar with UID %@.", aCalCalendar.uid);
-    }
-    @finally
-    {
-        if ([[NSUserDefaults standardUserDefaults] WL_allowsAdvancedCalendarTypeCheck])
-        {
-            [n addObserver:self
-                  selector:@selector(_calCalendarsDidChange:)
-                      name:CalCalendarsChangedNotification
-                    object:[CalCalendarStore defaultCalendarStore]];
-        }
-    }
-#ifdef DEBUG
-    NSLog(@"Type of calendar %@(%@) is %@", aCalCalendar.title, aCalCalendar.uid, WLStringFromCalendarType(type));
-#endif
-    return type;
-}
-
-+ (WLCalendarType)_typeForCalCalendar:(CalCalendar *)aCalCalendar
-{
-    WLCalendarType type = WLCalendarUnknownType;
-    @try
-    {
-        type = [aCalCalendar WL_type];
-    }
-    @catch (...)
-    {
-        NSLog(@"Unable to get type of calendar with UID %@.", aCalCalendar.uid);
-    }
-#ifdef DEBUG
-    NSLog(@"Type of calendar %@(%@) is %@", aCalCalendar.title, aCalCalendar.uid, WLStringFromCalendarType(type));
-#endif
-    return type;
-}
-
 
 #pragma mark NSObject
 
@@ -592,127 +490,6 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType)
     }
     else
         [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];
-}
-
-@end
-
-
-NSString* const WLTempEventNotes = @"net.wireload.blotter.tempevent";
-
-NSString* const WLTempTaskNotes = @"net.wireload.blotter.temptask";
-
-
-@implementation CalCalendar (WLCalendarController)
-
-- (WLCalendarType)WL_type
-{
-    static const NSUInteger MaximumNumberOfAttemptsToAddOrDelete = 5;
-    static const NSTimeInterval AttemptDelay = 0.1;
-
-    WLCalendarType type = WLCalendarUnknownType;
-
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDate *startOfYear = nil;
-    NSDate *endOfYear = nil;
-    NSTimeInterval yearInterval = 0.0;
-    if ([calendar rangeOfUnit:NSYearCalendarUnit startDate:&startOfYear interval:&yearInterval forDate:[NSDate date]])
-    {
-        endOfYear = [startOfYear dateByAddingTimeInterval:yearInterval];
-    }
-    else
-    {
-        startOfYear = [NSDate distantPast];
-        endOfYear = [NSDate distantFuture];
-    }
-    [calendar release];
-
-    NSPredicate *allEventsPredicate = [CalCalendarStore eventPredicateWithStartDate:startOfYear
-                                                                            endDate:endOfYear
-                                                                          calendars:[NSArray arrayWithObject:self]];
-    NSArray *events = [[CalCalendarStore defaultCalendarStore] eventsWithPredicate:allEventsPredicate];
-    if ([events count] > 0)
-        type |= WLCalendarEventType;
-    else if ([[NSUserDefaults standardUserDefaults] WL_allowsAdvancedCalendarTypeCheck])
-    {
-        CalEvent *tmpEvent = [CalEvent event];
-        tmpEvent.calendar = self;
-        tmpEvent.notes = WLTempEventNotes;
-        tmpEvent.title = @"Blotter's tmp event";
-        tmpEvent.startDate = [NSDate date];
-        tmpEvent.endDate = [[NSDate date] dateByAddingTimeInterval:1];
-        NSError *error = nil;
-        BOOL canSaveEvent = NO;
-        NSUInteger currentAttempt = 0;
-        while (self.isEditable &&
-               currentAttempt < MaximumNumberOfAttemptsToAddOrDelete &&
-               !canSaveEvent &&
-               [error code] != CalCalendarNotEditableError)
-        {
-            if (currentAttempt > 0)
-                [NSThread sleepForTimeInterval:AttemptDelay];
-            canSaveEvent = [[CalCalendarStore defaultCalendarStore] saveEvent:tmpEvent span:CalSpanThisEvent error:&error];
-            ++currentAttempt;
-        }
-        if (canSaveEvent)
-        {
-            currentAttempt = 0;
-            while (currentAttempt < MaximumNumberOfAttemptsToAddOrDelete)
-            {
-                if (currentAttempt > 0)
-                    [NSThread sleepForTimeInterval:AttemptDelay];
-                if ([[CalCalendarStore defaultCalendarStore] removeEvent:tmpEvent span:CalSpanThisEvent error:&error])
-                    break;
-                ++currentAttempt;
-            }
-            if (currentAttempt == MaximumNumberOfAttemptsToAddOrDelete)
-                NSLog(@"Unable to delete event: %@\nError:%@", tmpEvent, error);
-            type |= WLCalendarEventType;
-        }
-    }
-
-    NSPredicate *allRemindersPredicate = [CalCalendarStore taskPredicateWithCalendars:[NSArray arrayWithObject:self]];
-    NSArray *reminders = [[CalCalendarStore defaultCalendarStore] tasksWithPredicate:allRemindersPredicate];
-    if ([reminders count] > 0)
-        type |= WLCalendarReminderType;
-    else if ([[NSUserDefaults standardUserDefaults] WL_allowsAdvancedCalendarTypeCheck])
-    {
-        CalTask *tmpReminder = [CalTask task];
-        tmpReminder.notes = WLTempTaskNotes;
-        tmpReminder.calendar = self;
-        tmpReminder.title = @"Blotter's tmp task";
-        tmpReminder.isCompleted = YES;
-        tmpReminder.dueDate = [[NSDate date] dateByAddingTimeInterval:1];
-        tmpReminder.priority = CalPriorityNone;
-        NSError *error = nil;
-        BOOL canSaveTask = NO;
-        NSUInteger currentAttempt = 0;
-        while (self.isEditable &&
-               currentAttempt < MaximumNumberOfAttemptsToAddOrDelete &&
-               !canSaveTask &&
-               [error code] != CalCalendarNotEditableError)
-        {
-            if (currentAttempt > 0)
-                [NSThread sleepForTimeInterval:AttemptDelay];
-            canSaveTask = [[CalCalendarStore defaultCalendarStore] saveTask:tmpReminder error:&error];
-            ++currentAttempt;
-        }
-        if (canSaveTask)
-        {
-            currentAttempt = 0;
-            while (currentAttempt < MaximumNumberOfAttemptsToAddOrDelete)
-            {
-                if (currentAttempt > 0)
-                    [NSThread sleepForTimeInterval:AttemptDelay];
-                if ([[CalCalendarStore defaultCalendarStore] removeTask:tmpReminder error:&error])
-                    break;
-                ++currentAttempt;
-            }
-            if (currentAttempt == MaximumNumberOfAttemptsToAddOrDelete)
-                NSLog(@"Unable to delete task: %@\nError:%@", tmpReminder, error);
-            type |= WLCalendarReminderType;
-        }
-    }
-    return type;
 }
 
 @end

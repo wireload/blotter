@@ -26,8 +26,6 @@ NSString* const WLCalendarIsUsedForEventsKey = @"isUsedForEvents";
 
 NSString* const WLCalendarIsUsedForRemindersKey = @"isUsedForReminders";
 
-NSString* const WLCalendarTypeKey = @"type";
-
 NSString* const WLDisplayAllCalendarsKey = @"DisplayAllCalendars";
 
 NSString* const WLAllowsAdvancedCalendarTypeCheck = @"AllowsAdvancedCalendarTypeCheck";
@@ -265,7 +263,6 @@ NSComparator const WLCalendarsComparator = ^(id left, id right) {
                               aCalCalendar.uid,                                                                     WLCalendarUIDKey,
                               [NSNumber numberWithBool:YES],                                                        WLCalendarIsUsedForEventsKey,
                               [NSNumber numberWithBool:YES],                                                        WLCalendarIsUsedForRemindersKey,
-                              [NSNumber numberWithInteger:[WLCalendarController _typeForCalCalendar:aCalCalendar]], WLCalendarTypeKey,
                               nil];
     return calendar;
 }
