@@ -13,7 +13,7 @@
 
 @interface WLCalSystemCalendarItem : NSObject <WLCalCalendarItem>
 {
-    id<WLCalCalendar> _calendar;
+    NSObject<WLCalCalendar> *_calendar;
     NSString *_notes;
     NSURL *_URL;
     NSString *_title;
