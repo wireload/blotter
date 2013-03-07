@@ -39,6 +39,6 @@ static NSString* const WLCalSystemStoreAllowsAdvancedCalendarTypeCheckKey = @"WL
 
 @interface WLCalendarStore : NSObject
 
-+ (id <WLCalStore>)systemStore;
++ (NSObject <WLCalStore> *)systemStore;
 
 @end
