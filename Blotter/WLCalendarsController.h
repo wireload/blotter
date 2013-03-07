@@ -51,10 +51,6 @@ extern NSString *WLChangedCalStoresKey;
 
 - (NSArray *)calEventCalendarsToDisplayForStore:(NSObject<WLCalStore> *)aStore;
 
-- (BOOL)displaysAllCalCalendarsForStore:(NSObject<WLCalStore> *)aStore;
-
-- (void)setDisplaysAllCalCalendars:(BOOL)isDisplayed forStore:(NSObject<WLCalStore> *)aStore;
-
 - (BOOL)isCalCalendarUsedToDisplayReminders:(NSObject<WLCalCalendar> *)aCalendar;
 
 - (void)setCalCalendar:(NSObject<WLCalCalendar> *)aCalendar usedToDisplayReminders:(BOOL)isUsed;
