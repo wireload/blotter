@@ -51,13 +51,25 @@ extern NSString *WLChangedCalStoresKey;
 
 - (NSArray *)calEventCalendarsToDisplayForStore:(NSObject<WLCalStore> *)aStore;
 
-- (BOOL)isUsedToDisplayRemindersCalCalendarWithUID:(NSString *)anUID ofStore:(NSObject <WLCalStore> *)aStore;
+- (BOOL)displaysAllCalCalendarsForStore:(NSObject<WLCalStore> *)aStore;
 
-- (void)setCalCalendarWithUID:(NSString *)anUID ofStore:(NSObject <WLCalStore> *)aStore usedToDisplayReminders:(BOOL)isUsed;
+- (void)setDisplaysAllCalCalendars:(BOOL)isDisplayed forStore:(NSObject<WLCalStore> *)aStore;
 
-- (BOOL)isUsedToDisplayEventsCalCalendarWithUID:(NSString *)anUID ofStore:(NSObject <WLCalStore> *)aStore;
+- (BOOL)isCalCalendarUsedToDisplayReminders:(NSObject<WLCalCalendar> *)aCalendar;
 
-- (void)setCalCalendarWithUID:(NSString *)anUID ofStore:(NSObject <WLCalStore> *)aStore usedToDisplayEvents:(BOOL)isUsed;
+- (void)setCalCalendar:(NSObject<WLCalCalendar> *)aCalendar usedToDisplayReminders:(BOOL)isUsed;
+
+- (BOOL)isCalCalendarUsedToDisplayEvents:(NSObject<WLCalCalendar> *)aCalendar;
+
+- (void)setCalCalendar:(NSObject<WLCalCalendar> *)aCalendar usedToDisplayEvents:(BOOL)isUsed;
+
+- (BOOL)isCalCalendarWithIdentifierUsedToDisplayReminders:(NSString *)anIdentifier ofStore:(NSObject <WLCalStore> *)aStore;
+
+- (void)setCalCalendarWithIdentifier:(NSString *)anIdentifier ofStore:(NSObject <WLCalStore> *)aStore usedToDisplayReminders:(BOOL)isUsed;
+
+- (BOOL)isCalCalendarWithIdentifierUsedToDisplayEvents:(NSString *)anIdentifier ofStore:(NSObject <WLCalStore> *)aStore;
+
+- (void)setCalCalendarWithIdentifier:(NSString *)anIdentifier ofStore:(NSObject <WLCalStore> *)aStore usedToDisplayEvents:(BOOL)isUsed;
 
 - (void)fetchCalCalendarsForStore:(NSObject <WLCalStore> *)aStore withPriority:(NSOperationQueuePriority)aPriority;
 

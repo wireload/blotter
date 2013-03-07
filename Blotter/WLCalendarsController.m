@@ -122,97 +122,178 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
 
 - (NSArray *)calCalendarsToDisplayForStore:(NSObject <WLCalStore> *)aStore
 {
-    NSString *keyPath = [NSString stringWithFormat:@"%@.%@", self.autosaveKeyPath, aStore.storeIdentifier];
-    NSDictionary *defaultsCalCalendars = [[NSUserDefaults standardUserDefaults] valueForKeyPath:keyPath];
-    NSArray *calCalendars = [self calCalendarsForStore:aStore];
-    NSIndexSet *indexesOfCalCalendarsToDisplay = [calCalendars indexesOfObjectsWithOptions:NSEnumerationConcurrent
-                                                                               passingTest:^BOOL(NSObject<WLCalCalendar> *aCalCalendar, NSUInteger idx, BOOL *stop)
+    if ([self displaysAllCalCalendarsForStore:aStore])
+        return [self calCalendarsForStore:aStore];
+    else
     {
-        NSDictionary *value = defaultsCalCalendars[aCalCalendar.calendarIdentifier];
-        return [value[WLCalendarIsUsedForEventsKey] boolValue] || [value[WLCalendarIsUsedForRemindersKey] boolValue];
-    }];
-    return [calCalendars objectsAtIndexes:indexesOfCalCalendarsToDisplay];
+        NSDictionary *defaultsCalendars = [[NSUserDefaults standardUserDefaults] dictionaryForKey:self.autosaveKeyPath];
+        NSDictionary *defaultsStore = defaultsCalendars[aStore.storeIdentifier];
+        NSArray *calCalendars = [self calCalendarsForStore:aStore];
+        NSIndexSet *indexesOfCalCalendarsToDisplay = [calCalendars indexesOfObjectsWithOptions:NSEnumerationConcurrent
+                                                                                   passingTest:^BOOL(NSObject<WLCalCalendar> *aCalCalendar, NSUInteger idx, BOOL *stop)
+        {
+            NSDictionary *value = defaultsStore[aCalCalendar.calendarIdentifier];
+            return [value[WLCalendarIsUsedForEventsKey] boolValue] || [value[WLCalendarIsUsedForRemindersKey] boolValue];
+        }];
+        return [calCalendars objectsAtIndexes:indexesOfCalCalendarsToDisplay];
+    }
 }
 
 - (NSArray *)calReminderCalendarsToDisplayForStore:(NSObject <WLCalStore> *)aStore
 {
-    NSString *keyPath = [NSString stringWithFormat:@"%@.%@", self.autosaveKeyPath, aStore.storeIdentifier];
-    NSDictionary *defaultsCalCalendars = [[NSUserDefaults standardUserDefaults] valueForKeyPath:keyPath];
-    NSArray *calCalendars = [self calReminderCalendarsForStore:aStore];
-    NSIndexSet *indexesOfCalReminderCalendarsToDisplay = [calCalendars indexesOfObjectsWithOptions:NSEnumerationConcurrent
-                                                                                       passingTest:^BOOL(NSObject<WLCalCalendar> *aCalCalendar, NSUInteger idx, BOOL *stop)
+    if ([self displaysAllCalCalendarsForStore:aStore])
+        return [self calReminderCalendarsForStore:aStore];
+    else
     {
-        NSDictionary *value = defaultsCalCalendars[aCalCalendar.calendarIdentifier];
-        return [value[WLCalendarIsUsedForRemindersKey] boolValue];
-    }];
-    return [calCalendars objectsAtIndexes:indexesOfCalReminderCalendarsToDisplay];
+        NSDictionary *defaultsCalendars = [[NSUserDefaults standardUserDefaults] dictionaryForKey:self.autosaveKeyPath];
+        NSDictionary *defaultsStore = defaultsCalendars[aStore.storeIdentifier];
+        NSArray *calCalendars = [self calReminderCalendarsForStore:aStore];
+        NSIndexSet *indexesOfCalReminderCalendarsToDisplay = [calCalendars indexesOfObjectsWithOptions:NSEnumerationConcurrent
+                                                                                           passingTest:^BOOL(NSObject<WLCalCalendar> *aCalCalendar, NSUInteger idx, BOOL *stop)
+        {
+            NSDictionary *value = defaultsStore[aCalCalendar.calendarIdentifier];
+            return [value[WLCalendarIsUsedForRemindersKey] boolValue];
+        }];
+        return [calCalendars objectsAtIndexes:indexesOfCalReminderCalendarsToDisplay];
+    }
 }
 
 - (NSArray *)calEventCalendarsToDisplayForStore:(NSObject <WLCalStore> *)aStore
 {
-    NSString *keyPath = [NSString stringWithFormat:@"%@.%@", self.autosaveKeyPath, aStore.storeIdentifier];
-    NSDictionary *defaultsCalCalendars = [[NSUserDefaults standardUserDefaults] valueForKeyPath:keyPath];
-    NSArray *calCalendars = [self calEventCalendarsForStore:aStore];
-    NSIndexSet *indexesOfCalEventsCalendarsToDisplay = [calCalendars indexesOfObjectsWithOptions:NSEnumerationConcurrent
-                                                                                     passingTest:^BOOL(NSObject<WLCalCalendar> *aCalCalendar, NSUInteger idx, BOOL *stop)
+    if ([self displaysAllCalCalendarsForStore:aStore])
+        return [self calEventCalendarsForStore:aStore];
+    else
     {
-        NSDictionary *value = defaultsCalCalendars[aCalCalendar.calendarIdentifier];
-        return [value[WLCalendarIsUsedForEventsKey] boolValue];
-    }];
-    return [calCalendars objectsAtIndexes:indexesOfCalEventsCalendarsToDisplay];
+        NSDictionary *defaultsCalendars = [[NSUserDefaults standardUserDefaults] dictionaryForKey:self.autosaveKeyPath];
+        NSDictionary *defaultsStore = defaultsCalendars[aStore.storeIdentifier];
+        NSArray *calCalendars = [self calEventCalendarsForStore:aStore];
+        NSIndexSet *indexesOfCalEventsCalendarsToDisplay = [calCalendars indexesOfObjectsWithOptions:NSEnumerationConcurrent
+                                                                                         passingTest:^BOOL(NSObject<WLCalCalendar> *aCalCalendar, NSUInteger idx, BOOL *stop)
+        {
+            NSDictionary *value = defaultsStore[aCalCalendar.calendarIdentifier];
+            return [value[WLCalendarIsUsedForEventsKey] boolValue];
+        }];
+        return [calCalendars objectsAtIndexes:indexesOfCalEventsCalendarsToDisplay];
+    }
 }
 
-- (BOOL)isUsedToDisplayRemindersCalCalendarWithUID:(NSString *)anUID ofStore:(NSObject <WLCalStore> *)aStore
+- (BOOL)displaysAllCalCalendarsForStore:(NSObject <WLCalStore> *)aStore
 {
-    NSString *keyPath = [NSString stringWithFormat:@"%@.%@.%@.%@", self.autosaveKeyPath, aStore.storeIdentifier, anUID, WLCalendarIsUsedForRemindersKey];
-    return [[[NSUserDefaults standardUserDefaults] valueForKeyPath:keyPath] boolValue];
+    NSDictionary *defaultsCalendars = [[NSUserDefaults standardUserDefaults] dictionaryForKey:self.autosaveKeyPath];
+    NSDictionary *defaultsStore = defaultsCalendars[aStore.storeIdentifier];
+    return [defaultsStore[WLDisplayAllCalendarsKey] boolValue];
 }
 
-- (void)setCalCalendarWithUID:(NSString *)anUID ofStore:(NSObject <WLCalStore> *)aStore usedToDisplayReminders:(BOOL)isUsed
+- (void)setDisplaysAllCalCalendars:(BOOL)isDisplayed forStore:(NSObject <WLCalStore> *)aStore
 {
     dispatch_sync(_accessUserDefaultsQueue, ^
     {
         NSMutableDictionary *defaultsCalendars = [[[NSUserDefaults standardUserDefaults] dictionaryForKey:self.autosaveKeyPath] mutableCopy];
         NSMutableDictionary *defaultsStore = [defaultsCalendars[aStore.storeIdentifier] mutableCopy];
-        NSMutableDictionary *defaultsCalCalendar = [defaultsStore[anUID] mutableCopy];
 
-        if (!anUID)
+        if (!defaultsStore)
             return;
 
-        defaultsCalCalendar[WLCalendarIsUsedForRemindersKey] = @(isUsed);
-        defaultsStore[anUID] = defaultsCalCalendar;
+        defaultsStore[WLDisplayAllCalendarsKey] = @(isDisplayed);
         defaultsCalendars[aStore.storeIdentifier] = defaultsStore;
         [[NSUserDefaults standardUserDefaults] setObject:defaultsCalendars forKey:self.autosaveKeyPath];
     });
-
     [[NSNotificationCenter defaultCenter] postNotificationName:WLCalCalendarsToDisplayDidChangeNotification
                                                         object:self
                                                       userInfo:@{WLChangedCalStoresKey : @[aStore]}];
 }
 
-- (BOOL)isUsedToDisplayEventsCalCalendarWithUID:(NSString *)anUID ofStore:(NSObject <WLCalStore> *)aStore
+- (BOOL)isCalCalendarUsedToDisplayReminders:(NSObject <WLCalCalendar> *)aCalendar
 {
-    NSString *keyPath = [NSString stringWithFormat:@"%@.%@.%@.%@", self.autosaveKeyPath, aStore.storeIdentifier, anUID, WLCalendarIsUsedForEventsKey];
-    return [[[NSUserDefaults standardUserDefaults] valueForKeyPath:keyPath] boolValue];
+    return [self isCalCalendarWithIdentifierUsedToDisplayReminders:aCalendar.calendarIdentifier
+                                                           ofStore:aCalendar.store];
 }
 
-- (void)setCalCalendarWithUID:(NSString *)anUID ofStore:(NSObject <WLCalStore> *)aStore usedToDisplayEvents:(BOOL)isUsed
+- (void)setCalCalendar:(NSObject<WLCalCalendar> *)aCalendar usedToDisplayReminders:(BOOL)isUsed
 {
+    [self setCalCalendarWithIdentifier:aCalendar.calendarIdentifier
+                               ofStore:aCalendar.store
+                usedToDisplayReminders:isUsed];
+}
+
+- (BOOL)isCalCalendarUsedToDisplayEvents:(NSObject <WLCalCalendar> *)aCalendar
+{
+    return [self isCalCalendarWithIdentifierUsedToDisplayEvents:aCalendar.calendarIdentifier
+                                                        ofStore:aCalendar.store];
+}
+
+- (void)setCalCalendar:(NSObject <WLCalCalendar> *)aCalendar usedToDisplayEvents:(BOOL)isUsed
+{
+    [self setCalCalendarWithIdentifier:aCalendar.calendarIdentifier
+                               ofStore:aCalendar.store
+                   usedToDisplayEvents:isUsed];
+}
+
+- (BOOL)isCalCalendarWithIdentifierUsedToDisplayReminders:(NSString *)anIdentifier ofStore:(NSObject <WLCalStore> *)aStore
+{
+    if (![self.calStores containsObject:aStore])
+        return NO;
+
+    NSDictionary *defaultsCalendars = [[NSUserDefaults standardUserDefaults] dictionaryForKey:self.autosaveKeyPath];
+    NSDictionary *defaultsStore = defaultsCalendars[aStore.storeIdentifier];
+    NSDictionary *defaultsCalCalendar = defaultsStore[anIdentifier];
+    return [defaultsCalCalendar[WLCalendarIsUsedForRemindersKey] boolValue];
+}
+
+- (void)setCalCalendarWithIdentifier:(NSString *)anIdentifier ofStore:(NSObject <WLCalStore> *)aStore usedToDisplayReminders:(BOOL)isUsed
+{
+    if (![self.calStores containsObject:aStore])
+        return;
+
     dispatch_sync(_accessUserDefaultsQueue, ^
     {
         NSMutableDictionary *defaultsCalendars = [[[NSUserDefaults standardUserDefaults] dictionaryForKey:self.autosaveKeyPath] mutableCopy];
         NSMutableDictionary *defaultsStore = [defaultsCalendars[aStore.storeIdentifier] mutableCopy];
-        NSMutableDictionary *defaultsCalCalendar = [defaultsStore[anUID] mutableCopy];
+        NSMutableDictionary *defaultsCalCalendar = [defaultsStore[anIdentifier] mutableCopy];
 
-        if (!anUID)
+        if (!defaultsCalCalendar)
             return;
 
-        defaultsCalCalendar[WLCalendarIsUsedForEventsKey] = @(isUsed);
-        defaultsStore[anUID] = defaultsCalCalendar;
+        defaultsCalCalendar[WLCalendarIsUsedForRemindersKey] = @(isUsed);
+        defaultsStore[anIdentifier] = defaultsCalCalendar;
         defaultsCalendars[aStore.storeIdentifier] = defaultsStore;
         [[NSUserDefaults standardUserDefaults] setObject:defaultsCalendars forKey:self.autosaveKeyPath];
     });
+    [[NSNotificationCenter defaultCenter] postNotificationName:WLCalCalendarsToDisplayDidChangeNotification
+                                                        object:self
+                                                      userInfo:@{WLChangedCalStoresKey : @[aStore]}];
+}
 
+- (BOOL)isCalCalendarWithIdentifierUsedToDisplayEvents:(NSString *)anIdentifier ofStore:(NSObject <WLCalStore> *)aStore
+{
+    if (![self.calStores containsObject:aStore])
+        return NO;
+
+    NSDictionary *defaultsCalendars = [[NSUserDefaults standardUserDefaults] dictionaryForKey:self.autosaveKeyPath];
+    NSDictionary *defaultsStore = defaultsCalendars[aStore.storeIdentifier];
+    NSDictionary *defaultsCalCalendar = defaultsStore[anIdentifier];
+    return [defaultsCalCalendar[WLCalendarIsUsedForEventsKey] boolValue];
+}
+
+- (void)setCalCalendarWithIdentifier:(NSString *)anIdentifier ofStore:(NSObject <WLCalStore> *)aStore usedToDisplayEvents:(BOOL)isUsed
+{
+    if (![self.calStores containsObject:aStore])
+        return;
+
+    dispatch_sync(_accessUserDefaultsQueue, ^
+    {
+        NSMutableDictionary *defaultsCalendars = [[[NSUserDefaults standardUserDefaults] dictionaryForKey:self.autosaveKeyPath] mutableCopy];
+        NSMutableDictionary *defaultsStore = [defaultsCalendars[aStore.storeIdentifier] mutableCopy];
+        NSMutableDictionary *defaultsCalCalendar = [defaultsStore[anIdentifier] mutableCopy];
+
+        if (!defaultsCalCalendar)
+            return;
+
+        defaultsCalCalendar[WLCalendarIsUsedForEventsKey] = @(isUsed);
+        defaultsStore[anIdentifier] = defaultsCalCalendar;
+        defaultsCalendars[aStore.storeIdentifier] = defaultsStore;
+        [[NSUserDefaults standardUserDefaults] setObject:defaultsCalendars forKey:self.autosaveKeyPath];
+    });
     [[NSNotificationCenter defaultCenter] postNotificationName:WLCalCalendarsToDisplayDidChangeNotification
                                                         object:self
                                                       userInfo:@{WLChangedCalStoresKey : @[aStore]}];
@@ -241,7 +322,7 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:WLCalCalendarsDidChangeNotification
                                                                 object:unretainedSelf
-                                                              userInfo:@{WLChangedCalStoresKey : @[aStore]}];
+                                                              userInfo:@{WLChangedCalStoresKey: @[aStore]}];
         });
 
         // Since can be more than one store simultaneously writing new calendars, we should take care that all changes will be saved.
@@ -269,7 +350,7 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
             {
                 [[NSNotificationCenter defaultCenter] postNotificationName:WLCalCalendarsToDisplayDidChangeNotification
                                                                     object:unretainedSelf
-                                                                  userInfo:@{WLChangedCalStoresKey : @[aStore]}];
+                                                                  userInfo:@{WLChangedCalStoresKey: @[aStore]}];
             });
         });
     }];
