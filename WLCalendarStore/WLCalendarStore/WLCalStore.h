@@ -26,6 +26,10 @@ extern NSComparator WLCalRemindersComparator;
 @protocol WLCalCalendar;
 
 
+/*!
+    @brief  Object that adapts WLCalStore protocol is usually the top level object in the hierarchy (facade).
+            It's responsible for fetching events observing external data and notifying users about changes.
+ */
 @protocol WLCalStore <NSObject>
 
 - (NSArray *)calendars;
@@ -43,5 +47,14 @@ extern NSComparator WLCalRemindersComparator;
                 That is, there are no 2 objects that would return NSOrderedSame with this comparator.
  */
 - (NSArray *)remindersMatchingPredicate:(WLCalRemindersPredicate *)aPredicate;
+
+/*!
+    @brief      Unique identifier of the store.
+
+    @discussion Framework does not use it, however it's useful to have unique identifier per store.
+                If your store may have multiple instances (e.g. with different credentials), you're encouraged
+                to have unique identifier per configuration.
+ */
+- (NSString *)storeIdentifier;
 
 @end

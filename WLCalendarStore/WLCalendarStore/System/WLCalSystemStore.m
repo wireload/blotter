@@ -618,4 +618,9 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
     return reminders;
 }
 
+- (NSString *)storeIdentifier
+{
+    return @"net.wireload.WLCalendarStore.System";
+}
+
 @end
