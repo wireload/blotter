@@ -66,11 +66,11 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
 
         for (NSObject<WLCalStore> *s in aStores)
         {
-            [self fetchCalCalendarsForStore:s withPriority:_defaultFetchPriority];
             [[NSNotificationCenter defaultCenter] addObserver:self
                                                      selector:@selector(calStoreDidChange:)
                                                          name:WLCalStoreDidChangeNotification
                                                        object:s];
+            [self fetchCalCalendarsForStore:s withPriority:_defaultFetchPriority];
         }
 
         [[NSUserDefaults standardUserDefaults] addObserver:self
