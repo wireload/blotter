@@ -14,37 +14,43 @@
 @protocol WLCalCalendar <WLCalObject>
 
 /*!
-    Indicates whether you can add, edit, and delete items in the calendar.
+    @brief  Indicates whether you can add, edit, and delete items in the calendar.
  */
 @property (readonly) BOOL allowsContentModifications;
 
 /*!
-    Calendar’s color.
+    @brief      Calendar’s color.
+
+    @discussion MUST be non nil.
  */
-@property (copy, readonly) NSColor *color;
+@property (readonly) NSColor *color;
 
 /*!
-    A Boolean value indicating whether the calendar’s properties can be edited or deleted.
+    @brief  A Boolean value indicating whether the calendar’s properties can be edited or deleted.
  */
 @property (readonly, getter=isImmutable) BOOL immutable;
 
 /*!
-    Calendar’s title.
+    @brief      Calendar’s title.
+
+    @discussion MUST be non nil.
  */
-@property (copy, readonly) NSString *title;
+@property (readonly) NSString *title;
 
 /*!
-    Calendar’s type
+    @brief  Calendar’s type
 */
 @property (readonly) WLCalCalendarType type;
 
 /*!
-    The entity types this calendar can contain.
+    @brief  The entity types this calendar can contain.
  */
 @property (readonly) WLCalEntityMask allowedEntityTypes;
 
 /*!
-    An unique identifier for the calendar.
+    @brief      An unique identifier for the calendar.
+
+    @discussion MUST be non empty string.
  */
 @property (readonly) NSString *calendarIdentifier;
 
