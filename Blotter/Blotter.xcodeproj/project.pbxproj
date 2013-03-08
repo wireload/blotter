@@ -50,15 +50,14 @@
 		BA1F51DB1663B2A400ABD662 /* WLGeneralPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1F51DA1663B2A400ABD662 /* WLGeneralPreferences.m */; };
 		BA807F0F1645460C0033B85B /* IKApplicationPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA807F0C1645460C0033B85B /* IKApplicationPreferences.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BA81A834164548070058EB16 /* IKApplicationPreferences.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA81A832164548070058EB16 /* IKApplicationPreferences.strings */; };
+		BABB682E16E9D8C200FFDCC5 /* Blotter-B10.iconset in Resources */ = {isa = PBXBuildFile; fileRef = BABB682D16E9D8C200FFDCC5 /* Blotter-B10.iconset */; };
 		BAF67C8C16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C8B16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.m */; };
 		BAF67CBA16D607280047FE2A /* WLCalendarController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67CB316D607270047FE2A /* WLCalendarController.m */; };
 		BAF67CBB16D607280047FE2A /* WLClosableWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67CB516D607270047FE2A /* WLClosableWindow.m */; };
 		BAF67CBC16D607280047FE2A /* WLCountGreaterThanOneTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67CB716D607270047FE2A /* WLCountGreaterThanOneTransformer.m */; };
 		BAF67CBD16D607280047FE2A /* WLGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67CB916D607280047FE2A /* WLGraphics.m */; };
-		BAF67CE216D616D50047FE2A /* WLFoundation.xcodeproj in Resources */ = {isa = PBXBuildFile; fileRef = BAF67CE116D616D40047FE2A /* WLFoundation.xcodeproj */; };
 		BAF67D0A16D6172C0047FE2A /* WLFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF67D0316D616E50047FE2A /* WLFoundation.framework */; };
 		BAF67D0B16D617300047FE2A /* WLFoundation.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BAF67D0316D616E50047FE2A /* WLFoundation.framework */; };
-		BAF67D7F16D619250047FE2A /* WLCalendarStore.xcodeproj in Resources */ = {isa = PBXBuildFile; fileRef = BAF67D7E16D619250047FE2A /* WLCalendarStore.xcodeproj */; };
 		BAF67DA016D619320047FE2A /* WLCalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF67D9D16D6192B0047FE2A /* WLCalendarStore.framework */; };
 		BAF67DA116D6193C0047FE2A /* WLCalendarStore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BAF67D9D16D6192B0047FE2A /* WLCalendarStore.framework */; };
 		BAF67DCA16D622820047FE2A /* AboutPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAF67DBE16D622820047FE2A /* AboutPrefPaneView.xib */; };
@@ -279,10 +278,8 @@
 		BAF67F9D16D624C90047FE2A /* WLApplicationPreferencesWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67F9B16D624C90047FE2A /* WLApplicationPreferencesWindow.m */; };
 		BAF67F9F16D624FE0047FE2A /* WLApplicationPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAF67F9E16D624FE0047FE2A /* WLApplicationPreferencesWindow.xib */; };
 		BAF67FA116D625590047FE2A /* preferences-shortcuts-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67FA016D625590047FE2A /* preferences-shortcuts-icon.png */; };
-		BC59936C5289978FDEB105AA /* WLCalendarRemindersController.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BC599C059FEEE82BA1037863 /* WLCalendarRemindersController.h */; };
 		BC5994A0A3B188B70572162C /* WLCalendarRemindersController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC59945B22C693D17FB3C086 /* WLCalendarRemindersController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BC59962B9F05EFB31F00E8AC /* WLCalendarsController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC599D1A78BB9F6271BF2CE6 /* WLCalendarsController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		BC599C9C4E454DC085A2D05F /* WLCalendarsController.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BC599CF26AB7137B7108C87C /* WLCalendarsController.h */; };
 		E21A5F451403D2A4000B6634 /* WLCalendarReminderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E21A5F441403D2A4000B6634 /* WLCalendarReminderLayer.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		E22C78AB13FFCD9F00EE44C0 /* NSColor+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */; };
 		E234BF7E14DAFADF00AB2262 /* WLCalendarTimeRulerMarkerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E234BF7D14DAFADF00AB2262 /* WLCalendarTimeRulerMarkerLayer.m */; };
@@ -386,8 +383,6 @@
 				BAF67D0B16D617300047FE2A /* WLFoundation.framework in Copy Frameworks */,
 				BA08A6C61675DBF80085F40C /* ShortcutRecorder.framework in Copy Frameworks */,
 				BA08A6C51675DBF30085F40C /* PTHotKey.framework in Copy Frameworks */,
-				BC59936C5289978FDEB105AA /* WLCalendarRemindersController.h in Copy Frameworks */,
-				BC599C9C4E454DC085A2D05F /* WLCalendarsController.h in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -481,6 +476,7 @@
 		BA81A838164548110058EB16 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = Resources/ko.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
 		BA81A839164548120058EB16 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Resources/ru.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
 		BA81A83A164548140058EB16 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = Resources/sv.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
+		BABB682D16E9D8C200FFDCC5 /* Blotter-B10.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = "Blotter-B10.iconset"; sourceTree = "<group>"; };
 		BAF67C8A16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+WLApplicationDefaults.h"; sourceTree = "<group>"; };
 		BAF67C8B16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+WLApplicationDefaults.m"; sourceTree = "<group>"; };
 		BAF67CB216D607270047FE2A /* WLCalendarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarController.h; sourceTree = "<group>"; };
@@ -967,6 +963,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BABB682D16E9D8C200FFDCC5 /* Blotter-B10.iconset */,
 				BAF67DF416D623170047FE2A /* recessed-box-shadow-bottom-left.png */,
 				BAF67DF516D623170047FE2A /* recessed-box-shadow-bottom-right.png */,
 				BAF67DF616D623170047FE2A /* recessed-box-shadow-bottom.png */,
@@ -1581,8 +1578,6 @@
 				E2E826D2145023A6007035E5 /* NewTaskWindow.xib in Resources */,
 				BA81A834164548070058EB16 /* IKApplicationPreferences.strings in Resources */,
 				BA08A7E1167735130085F40C /* README in Resources */,
-				BAF67CE216D616D50047FE2A /* WLFoundation.xcodeproj in Resources */,
-				BAF67D7F16D619250047FE2A /* WLCalendarStore.xcodeproj in Resources */,
 				BAF67DCA16D622820047FE2A /* AboutPrefPaneView.xib in Resources */,
 				BAF67DCB16D622820047FE2A /* CalendarsPrefPaneView.xib in Resources */,
 				BAF67DCC16D622820047FE2A /* GeneralPrefPaneView.xib in Resources */,
@@ -1799,6 +1794,7 @@
 				BAF67F9616D6231B0047FE2A /* preferences-recreated-aqua.jpg in Resources */,
 				BAF67F9F16D624FE0047FE2A /* WLApplicationPreferencesWindow.xib in Resources */,
 				BAF67FA116D625590047FE2A /* preferences-shortcuts-icon.png in Resources */,
+				BABB682E16E9D8C200FFDCC5 /* Blotter-B10.iconset in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
