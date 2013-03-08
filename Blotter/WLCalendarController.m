@@ -11,23 +11,8 @@
 #import <WLCalendarStore/WLCalendarStore.h>
 #import "WLCalendarController.h"
 #import "NSUserDefaults+WLApplicationDefaults.h"
-
-
-NSString * WLStringFromCalendarType(WLCalendarType aCalendarType)
-{
-    switch (aCalendarType) {
-        case WLCalendarUnknownType:
-            return @"Unknown";
-        case WLCalendarEventType:
-            return @"Event";
-        case WLCalendarReminderType:
-            return @"Reminder";
-        case WLCalendarBothType:
-            return @"Both";
-        default:
-            return [NSString stringWithFormat:@"%d", aCalendarType];
-    }
-}
+#import "WLCalendarsController.h"
+#import "DeskboardAppDelegate.h"
 
 
 @interface WLCalendarController (/*Private*/)
@@ -53,7 +38,6 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType)
 
 @implementation WLCalendarController
 {
-    id<WLCalStore> _calStore;
 }
 
 + (WLCalendarController *)sharedController
@@ -71,20 +55,25 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType)
     self = [super init];
     if (self != nil)
     {
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-
         NSNotificationCenter *n = [NSNotificationCenter defaultCenter];
 
-        _calStore = [WLCalendarStore systemStore];
+        [n addObserver:self
+              selector:@selector(_calCalendarsDidChange:)
+                  name:WLCalCalendarsDidChangeNotification
+                object:nil];
+        [n addObserver:self
+              selector:@selector(_calCalendarsDidChange:)
+                  name:WLCalCalendarsToDisplayDidChangeNotification
+                object:nil];
 
         calendar = [[NSCalendar autoupdatingCurrentCalendar] retain];
         date = [[NSDate date] retain];
-        calCalendarsToDisplay = [[self _calCalendarsToDisplay] mutableCopy];
-        calEventCalendarsToDisplay = [[self calEventCalendarsFromCalCalendars:[self _calCalendarsToDisplayEvents]] mutableCopy];
-        calReminderCalendarsToDisplay = [[self calReminderCalendarsFromCalCalendars:[self _calCalendarsToDisplayReminders]] mutableCopy];
-        calCalendars = [[self _filteredCalCalendars:nil] mutableCopy];
-        calEventCalendars = [[self calEventCalendarsFromCalCalendars:calCalendars] mutableCopy];
-        calReminderCalendars = [[self calReminderCalendarsFromCalCalendars:calCalendars] mutableCopy];
+        calCalendarsToDisplay = [[self _calCalendarsToDisplay] copy];
+        calEventCalendarsToDisplay = [[self calEventCalendarsFromCalCalendars:[self _calCalendarsToDisplayEvents]] copy];
+        calReminderCalendarsToDisplay = [[self calReminderCalendarsFromCalCalendars:[self _calCalendarsToDisplayReminders]] copy];
+        calCalendars = [[self _calCalendars] copy];
+        calEventCalendars = [[self calEventCalendarsFromCalCalendars:calCalendars] copy];
+        calReminderCalendars = [[self calReminderCalendarsFromCalCalendars:calCalendars] copy];
 
         [n addObserver:self
               selector:@selector(_localeDidChange:)
@@ -98,27 +87,12 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType)
               selector:@selector(_timeZoneDidChange:)
                   name:NSSystemTimeZoneDidChangeNotification
                 object:nil];
-        [n addObserver:self
-              selector:@selector(_calCalendarsDidChange:)
-                  name:CalCalendarsChangedNotification
-                object:[CalCalendarStore defaultCalendarStore]];
-        [n addObserver:self
-              selector:@selector(_calCalendarsDidChange:)
-                  name:CalCalendarsChangedExternallyNotification
-                object:[CalCalendarStore defaultCalendarStore]];
 
         [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self
                                                                selector:@selector(updateDate)
                                                                    name:NSWorkspaceDidWakeNotification
                                                                  object:nil];
-        [userDefaults addObserver:self
-                       forKeyPath:WLCalendarsKey
-                          options:NSKeyValueObservingOptionNew
-                          context:NULL];
-        [userDefaults addObserver:self
-                       forKeyPath:WLDisplayAllCalendarsKey
-                          options:NSKeyValueObservingOptionNew
-                          context:NULL];
+
         [self _scheduleNextDayTimer];
         [self _scheduleNextMinuteTimer];
     }
@@ -139,9 +113,6 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType)
     [_nextDayTimer invalidate];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults removeObserver:self forKeyPath:WLCalendarsKey];
-    [userDefaults removeObserver:self forKeyPath:WLDisplayAllCalendarsKey];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateCalendar) object:nil];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateDate) object:nil];
     [super dealloc];
@@ -157,36 +128,6 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType)
 @synthesize calCalendars;
 @synthesize calEventCalendars;
 @synthesize calReminderCalendars;
-
-+ (BOOL)automaticallyNotifiesObserversOfCalCalendarsToDisplay
-{
-    return NO;
-}
-
-+ (BOOL)automaticallyNotifiesObserversOfCalEventCalendarsToDisplay
-{
-    return NO;
-}
-
-+ (BOOL)automaticallyNotifiesObserversOfCalReminderCalendarsToDisplay
-{
-    return NO;
-}
-
-+ (BOOL)automaticallyNotifiesObserversOfCalCalendars
-{
-    return NO;
-}
-
-+ (BOOL)automaticallyNotifiesObserversOfCalEventCalendars
-{
-    return NO;
-}
-
-+ (BOOL)automaticallyNotifiesObserversOfCalReminderCalendars
-{
-    return NO;
-}
 
 
 #pragma mark Methods
@@ -211,7 +152,7 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType)
 {
     return [aCalCalendars filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CalCalendar *c, NSDictionary *b)
     {
-        WLCalEntityMask types = [_calStore calendarWithIdentifier:c.uid].allowedEntityTypes;
+        WLCalEntityMask types = [[WLCalendarStore systemStore] calendarWithIdentifier:c.uid].allowedEntityTypes;
         return types == WLCalEntityMaskUnknown || (types & WLCalEntityMaskEvent) != 0;
     }]];
 }
@@ -219,47 +160,9 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType)
 - (NSArray *)calReminderCalendarsFromCalCalendars:(NSArray *)aCalCalendars
 {
     return [aCalCalendars filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CalCalendar *c, NSDictionary *b) {
-        WLCalEntityMask types = [_calStore calendarWithIdentifier:c.uid].allowedEntityTypes;
+        WLCalEntityMask types = [[WLCalendarStore systemStore] calendarWithIdentifier:c.uid].allowedEntityTypes;
         return types == WLCalEntityMaskUnknown || (types & WLCalEntityMaskReminder) != 0;
     }]];
-}
-
-- (void)setIsUsedForEvents:(BOOL)newIsUsed forCalendarWithUID:(NSString *)anUID
-{
-    [[NSUserDefaults standardUserDefaults] WL_updateCalendars:^(NSMutableArray *aCalendars) {
-        NSUInteger index = [aCalendars WL_indexOfCalendarWithUID:anUID];
-        if (index != NSNotFound)
-        {
-            NSMutableDictionary *calendarDict = [[aCalendars objectAtIndex:index] mutableCopy];
-            [calendarDict setObject:[NSNumber numberWithBool:newIsUsed] forKey:WLCalendarIsUsedForEventsKey];
-            [aCalendars replaceObjectAtIndex:index withObject:calendarDict];
-            [calendarDict release];
-        }
-    }];
-}
-
-- (BOOL)isCalendarWithUIDUsedForEvents:(NSString *)anUID
-{
-    return [[[[[NSUserDefaults standardUserDefaults] WL_calendars] WL_calendarWithUID:anUID] objectForKey:WLCalendarIsUsedForEventsKey] boolValue];
-}
-
-- (void)setIsUsedForReminders:(BOOL)newIsUsed forCalendarWithUID:(NSString *)anUID
-{
-    [[NSUserDefaults standardUserDefaults] WL_updateCalendars:^(NSMutableArray *aCalendars) {
-        NSUInteger index = [aCalendars WL_indexOfCalendarWithUID:anUID];
-        if (index != NSNotFound)
-        {
-            NSMutableDictionary *calendarDict = [[aCalendars objectAtIndex:index] mutableCopy];
-            [calendarDict setObject:[NSNumber numberWithBool:newIsUsed] forKey:WLCalendarIsUsedForRemindersKey];
-            [aCalendars replaceObjectAtIndex:index withObject:calendarDict];
-            [calendarDict release];
-        }
-    }];
-}
-
-- (BOOL)isCalendarWithUIDUsedForReminders:(NSString *)anUID
-{
-    return [[[[[NSUserDefaults standardUserDefaults] WL_calendars] WL_calendarWithUID:anUID] objectForKey:WLCalendarIsUsedForRemindersKey] boolValue];
 }
 
 
@@ -342,154 +245,67 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType)
 
 - (void)_calCalendarsDidChange:(NSNotification *)aNotification
 {
-    [[NSUserDefaults standardUserDefaults] WL_updateCalendars:^(NSMutableArray *aCalendars) {
-        NSArray *deletedCalCalendarUIDs = [[aNotification userInfo] objectForKey:CalDeletedRecordsKey];
-        for (NSString *uid in deletedCalCalendarUIDs)
-            [aCalendars WL_removeCalendarWithUID:uid];
-        NSArray *insertedCalCalendarUIDs = [[aNotification userInfo] objectForKey:CalInsertedRecordsKey];
-        for (NSString *uid in insertedCalCalendarUIDs)
-        {
-            CalCalendar *c = [[CalCalendarStore defaultCalendarStore] calendarWithUID:uid];
-            if (c != nil)
-            {
-                NSDictionary *calendarDict = [NSDictionary WL_makeCalendarWithCalCalendar:c];
-                [aCalendars WL_insertCalendar:calendarDict];
-            }
-        }
-    }];
+    dispatch_async(dispatch_get_main_queue(), ^
+    {
+        self.calCalendarsToDisplay = [self _calCalendarsToDisplay];
+        self.calEventCalendarsToDisplay = [self calEventCalendarsFromCalCalendars:[self _calCalendarsToDisplayEvents]];
+        self.calReminderCalendarsToDisplay = [self calReminderCalendarsFromCalCalendars:[self _calCalendarsToDisplayReminders]];
+        self.calCalendars = [self _calCalendars];
+        self.calEventCalendars = [self calEventCalendarsFromCalCalendars:calCalendars];
+        self.calReminderCalendars = [self calReminderCalendarsFromCalCalendars:calCalendars];
+    });
 }
 
 - (NSArray *)_calCalendarsToDisplayEvents
 {
-    if ([[NSUserDefaults standardUserDefaults] WL_displaysAllCalendars])
-        return [self _filteredCalCalendars:nil];
-    else
+    NSMutableArray *csCalendars = [NSMutableArray array];
+
+    for (NSObject<WLCalCalendar> *c in [[[[NSApp delegate] calendarWindowController] calendarsController] calEventCalendarsToDisplayForStore:[WLCalendarStore systemStore]])
     {
-        NSPredicate *p = [NSPredicate predicateWithFormat:@"%K == YES", WLCalendarIsUsedForEventsKey];
-        return [self _filteredCalCalendars:p];
+        CalCalendar *csCalendar = [[CalCalendarStore defaultCalendarStore] calendarWithUID:c.calendarIdentifier];
+        [csCalendars addObject:csCalendar];
     }
+
+    return csCalendars;
 }
 
 - (NSArray *)_calCalendarsToDisplayReminders
 {
-    if ([[NSUserDefaults standardUserDefaults] WL_displaysAllCalendars])
-        return [self _filteredCalCalendars:nil];
-    else
+    NSMutableArray *csCalendars = [NSMutableArray array];
+
+    for (NSObject<WLCalCalendar> *c in [[[[NSApp delegate] calendarWindowController] calendarsController] calReminderCalendarsToDisplayForStore:[WLCalendarStore systemStore]])
     {
-        NSPredicate *p = [NSPredicate predicateWithFormat:@"%K == YES", WLCalendarIsUsedForRemindersKey];
-        return [self _filteredCalCalendars:p];
+        CalCalendar *csCalendar = [[CalCalendarStore defaultCalendarStore] calendarWithUID:c.calendarIdentifier];
+        [csCalendars addObject:csCalendar];
     }
+
+    return csCalendars;
 }
 
 - (NSArray *)_calCalendarsToDisplay
 {
-    if ([[NSUserDefaults standardUserDefaults] WL_displaysAllCalendars])
-        return [self _filteredCalCalendars:nil];
-    else
+    NSMutableArray *csCalendars = [NSMutableArray array];
+
+    for (NSObject<WLCalCalendar> *c in [[[[NSApp delegate] calendarWindowController] calendarsController] calCalendarsToDisplayForStore:[WLCalendarStore systemStore]])
     {
-        NSPredicate *p = [NSPredicate predicateWithFormat:@"(%K == YES) || (%K == YES)", WLCalendarIsUsedForEventsKey, WLCalendarIsUsedForRemindersKey];
-        return [self _filteredCalCalendars:p];
+        CalCalendar *csCalendar = [[CalCalendarStore defaultCalendarStore] calendarWithUID:c.calendarIdentifier];
+        [csCalendars addObject:csCalendar];
     }
+
+    return csCalendars;
 }
 
-- (NSArray *)_filteredCalCalendars:(NSPredicate *)aPredicate
+- (NSArray *)_calCalendars
 {
-    NSArray *calendars = [[NSUserDefaults standardUserDefaults] WL_calendars];
-    NSMutableArray *filteredCalCalendars = [NSMutableArray arrayWithCapacity:[calendars count]];
-    for (NSDictionary *calendarDict in calendars)
+    NSMutableArray *csCalendars = [NSMutableArray array];
+
+    for (NSObject<WLCalCalendar> *c in [[[[NSApp delegate] calendarWindowController] calendarsController] calCalendarsForStore:[WLCalendarStore systemStore]])
     {
-        if (aPredicate != nil &&
-            ![aPredicate evaluateWithObject:calendarDict])
-        {
-            continue;
-        }
-
-        NSString *uid = [calendarDict objectForKey:WLCalendarUIDKey];
-        if ([uid length] > 0)
-        {
-            CalCalendar *c = [[CalCalendarStore defaultCalendarStore] calendarWithUID:uid];
-            if (c != nil)
-                [filteredCalCalendars addObject:c];
-        }
-        else
-        {
-            NSLog(@"UID of a calendar of the Calendars setting is invalid. It MUST be set to non-empty string.\
-                  If you don't know how to modify app's settings plist, please contact us.");
-        }
+        CalCalendar *csCalendar = [[CalCalendarStore defaultCalendarStore] calendarWithUID:c.calendarIdentifier];
+        [csCalendars addObject:csCalendar];
     }
-    return filteredCalCalendars;
-}
 
-
-#pragma mark NSObject
-
-- (void)observeValueForKeyPath:(NSString *)aKeyPath
-                      ofObject:(id)anObject
-                        change:(NSDictionary *)aChange
-                       context:(void *)aContext
-{
-    if ([aKeyPath isEqualToString:WLDisplayAllCalendarsKey] || [aKeyPath isEqualToString:WLCalendarsKey])
-    {
-        static void (^UpdateCalendars)(WLCalendarController *aSelf, NSMutableArray *aProperty, NSString *aPropertyName, NSArray *aNewCalendars) = ^(WLCalendarController *aSelf, NSMutableArray *aProperty, NSString *aPropertyName, NSArray *aNewCalendars)
-        {
-            NSIndexSet *inserted = nil;
-            NSIndexSet *deleted = nil;
-            NSIndexSet *updated = nil;
-            NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"uid" ascending:YES]];
-
-            [aProperty WL_indexesOfDeletedObject:&deleted
-                        indexesOfInsertedObjects:&inserted
-                         indexesOfUpdatedObjects:&updated
-                                   toSortedArray:aNewCalendars
-                                 sortDescriptors:sortDescriptors
-                                   updateChecker:^BOOL(CalCalendar *aFromArrayObject, CalCalendar *aToArrayObject)
-                                                 {
-                                                     return (![aFromArrayObject.color isEqual:aToArrayObject.color] ||
-                                                             ![aFromArrayObject.title isEqual:aToArrayObject.title]);
-                                                 }];
-
-            if ([deleted count] > 0)
-            {
-                [aSelf willChange:NSKeyValueChangeRemoval valuesAtIndexes:deleted forKey:aPropertyName];
-                [aProperty removeObjectsAtIndexes:deleted];
-                [aSelf didChange:NSKeyValueChangeRemoval valuesAtIndexes:deleted forKey:aPropertyName];
-            }
-
-            if ([inserted count] > 0)
-            {
-                [aSelf willChange:NSKeyValueChangeInsertion valuesAtIndexes:inserted forKey:aPropertyName];
-                [aProperty insertObjects:[aNewCalendars objectsAtIndexes:inserted] atIndexes:inserted];
-                [aSelf didChange:NSKeyValueChangeInsertion valuesAtIndexes:inserted forKey:aPropertyName];
-            }
-
-            if ([updated count] > 0)
-            {
-                [aSelf willChange:NSKeyValueChangeReplacement valuesAtIndexes:updated forKey:aPropertyName];
-                [aProperty replaceObjectsAtIndexes:updated withObjects:[aNewCalendars objectsAtIndexes:updated]];
-                [aSelf didChange:NSKeyValueChangeReplacement valuesAtIndexes:updated forKey:aPropertyName];
-            }
-        };
-
-        NSArray *newCalCalendarsToDisplay = [self _calCalendarsToDisplay];
-        UpdateCalendars(self, calCalendarsToDisplay, @"calCalendarsToDisplay", newCalCalendarsToDisplay);
-
-        NSArray *newCalEventCalendarsToDisplay = [self calEventCalendarsFromCalCalendars:[self _calCalendarsToDisplayEvents]];
-        UpdateCalendars(self, calEventCalendarsToDisplay, @"calEventCalendarsToDisplay", newCalEventCalendarsToDisplay);
-
-        NSArray *newCalReminderCalendarsToDisplay = [self calReminderCalendarsFromCalCalendars:[self _calCalendarsToDisplayReminders]];
-        UpdateCalendars(self, calReminderCalendarsToDisplay, @"calReminderCalendarsToDisplay", newCalReminderCalendarsToDisplay);
-
-        NSArray *newCalCalendars = [self _filteredCalCalendars:nil];
-        UpdateCalendars(self, calCalendars, @"calCalendars", newCalCalendars);
-
-        NSArray *newCalEventCalendars = [self calEventCalendarsFromCalCalendars:newCalCalendars];
-        UpdateCalendars(self, calEventCalendars, @"calEventCalendars", newCalEventCalendars);
-
-        NSArray *newCalReminderCalendars = [self calReminderCalendarsFromCalCalendars:newCalCalendars];
-        UpdateCalendars(self, calReminderCalendars, @"calReminderCalendars", newCalReminderCalendars);
-    }
-    else
-        [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];
+    return csCalendars;
 }
 
 @end
