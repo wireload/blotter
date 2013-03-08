@@ -63,7 +63,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
         NSArray *calStores = @[[WLCalendarStore systemStore]];
         _remindersController = [[WLCalendarRemindersController alloc] initWithCalStores:calStores];
         _calendarsController = [[WLCalendarsController alloc] initWithCalStores:calStores
-                                                                autosaveKeyPath:@"NewCalendars"];
+                                                                autosaveKeyPath:@"Calendars"];
         [defaultCenter addObserver:self
                           selector:@selector(calendarsDidChange:)
                               name:WLCalCalendarsToDisplayDidChangeNotification
