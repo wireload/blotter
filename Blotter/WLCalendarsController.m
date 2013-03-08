@@ -231,7 +231,7 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
         NSMutableDictionary *defaultsStore = [defaultsCalendars[aStore.storeIdentifier] mutableCopy];
         NSMutableDictionary *defaultsCalCalendar = [defaultsStore[anIdentifier] mutableCopy];
 
-        if (!anIdentifier)
+        if (!defaultsCalCalendar)
             return;
 
         defaultsCalCalendar[WLCalendarIsUsedForRemindersKey] = @(isUsed);
@@ -267,7 +267,7 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
         NSMutableDictionary *defaultsStore = [defaultsCalendars[aStore.storeIdentifier] mutableCopy];
         NSMutableDictionary *defaultsCalCalendar = [defaultsStore[anIdentifier] mutableCopy];
 
-        if (!anIdentifier)
+        if (!defaultsCalCalendar)
             return;
 
         defaultsCalCalendar[WLCalendarIsUsedForEventsKey] = @(isUsed);
