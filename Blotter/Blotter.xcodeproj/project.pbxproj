@@ -46,8 +46,11 @@
 		BA08AA51167743A50085F40C /* WLAboutPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08AA4C167743A50085F40C /* WLAboutPreferences.m */; };
 		BA08AA52167743A50085F40C /* WLCustomCursorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08AA4E167743A50085F40C /* WLCustomCursorButton.m */; };
 		BA08AA53167743A50085F40C /* WLPreferencesButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08AA50167743A50085F40C /* WLPreferencesButtonCell.m */; };
+		BA0A55D816F73FB700E4D6BD /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA0A55D716F73FB700E4D6BD /* ServiceManagement.framework */; };
+		BA0A563916F742FB00E4D6BD /* LoginItem.app in Copy Login Item */ = {isa = PBXBuildFile; fileRef = BA0A563616F7428E00E4D6BD /* LoginItem.app */; };
 		BA105998168DAD8F00A3DDF5 /* WLCalendarEventsController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA105997168DAD8F00A3DDF5 /* WLCalendarEventsController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BA1F51DB1663B2A400ABD662 /* WLGeneralPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1F51DA1663B2A400ABD662 /* WLGeneralPreferences.m */; };
+		BA23662416F7371300779487 /* StartAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA23662316F7371300779487 /* StartAtLoginController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BA807F0F1645460C0033B85B /* IKApplicationPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA807F0C1645460C0033B85B /* IKApplicationPreferences.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BA81A834164548070058EB16 /* IKApplicationPreferences.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA81A832164548070058EB16 /* IKApplicationPreferences.strings */; };
 		BABB682E16E9D8C200FFDCC5 /* Blotter-B10.iconset in Resources */ = {isa = PBXBuildFile; fileRef = BABB682D16E9D8C200FFDCC5 /* Blotter-B10.iconset */; };
@@ -342,6 +345,48 @@
 			remoteGlobalIDString = E273122E1349EC9000A84433;
 			remoteInfo = PTHotKey.framework;
 		};
+		BA0A563516F7428E00E4D6BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA0A563116F7428D00E4D6BD /* LoginItem.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BA0A561116F7428D00E4D6BD;
+			remoteInfo = LoginItem;
+		};
+		BA0A563716F742F500E4D6BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA0A563116F7428D00E4D6BD /* LoginItem.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BA0A561016F7428D00E4D6BD;
+			remoteInfo = LoginItem;
+		};
+		BA23661A16F7241600779487 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BAF67D7E16D619250047FE2A /* WLCalendarStore.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BC5994818693DDB7C473D9C8;
+			remoteInfo = WLCalendarStore;
+		};
+		BA23661C16F7241900779487 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BAF67CE116D616D40047FE2A /* WLFoundation.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BA81DA66160DA09D00C83DC3;
+			remoteInfo = WLFoundation;
+		};
+		BA23661E16F7241B00779487 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA08A68C1675DB9E0085F40C /* ShortcutRecorder.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9398377F0DA42965007F53F3;
+			remoteInfo = ShortcutRecorder.framework;
+		};
+		BA23662016F7241D00779487 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA08A68C1675DB9E0085F40C /* ShortcutRecorder.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E273122D1349EC9000A84433;
+			remoteInfo = PTHotKey.framework;
+		};
 		BAF67D0216D616E50047FE2A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BAF67CE116D616D40047FE2A /* WLFoundation.xcodeproj */;
@@ -385,6 +430,17 @@
 				BA08A6C51675DBF30085F40C /* PTHotKey.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BA23664F16F739F200779487 /* Copy Login Item */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LoginItems;
+			dstSubfolderSpec = 1;
+			files = (
+				BA0A563916F742FB00E4D6BD /* LoginItem.app in Copy Login Item */,
+			);
+			name = "Copy Login Item";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -461,12 +517,16 @@
 		BA08AA4E167743A50085F40C /* WLCustomCursorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCustomCursorButton.m; sourceTree = "<group>"; };
 		BA08AA4F167743A50085F40C /* WLPreferencesButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLPreferencesButtonCell.h; sourceTree = "<group>"; };
 		BA08AA50167743A50085F40C /* WLPreferencesButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = WLPreferencesButtonCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		BA0A55D716F73FB700E4D6BD /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
+		BA0A563116F7428D00E4D6BD /* LoginItem.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LoginItem.xcodeproj; path = ../LoginItem/LoginItem.xcodeproj; sourceTree = "<group>"; };
 		BA105996168DAD8F00A3DDF5 /* WLCalendarEventsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarEventsController.h; sourceTree = "<group>"; };
 		BA105997168DAD8F00A3DDF5 /* WLCalendarEventsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarEventsController.m; sourceTree = "<group>"; };
 		BA1F51D91663B2A400ABD662 /* WLGeneralPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGeneralPreferences.h; sourceTree = "<group>"; };
 		BA1F51DA1663B2A400ABD662 /* WLGeneralPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGeneralPreferences.m; sourceTree = "<group>"; };
 		BA1F51DC1663B30500ABD662 /* SystemPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemPreferences.h; sourceTree = "<group>"; };
 		BA23660816F706B600779487 /* Blotter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Blotter.entitlements; path = ../Blotter.entitlements; sourceTree = "<group>"; };
+		BA23662216F7371300779487 /* StartAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartAtLoginController.h; sourceTree = "<group>"; };
+		BA23662316F7371300779487 /* StartAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartAtLoginController.m; sourceTree = "<group>"; };
 		BA807F0B1645460C0033B85B /* IKApplicationPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKApplicationPreferences.h; sourceTree = "<group>"; };
 		BA807F0C1645460C0033B85B /* IKApplicationPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKApplicationPreferences.m; sourceTree = "<group>"; };
 		BA807F0E1645460C0033B85B /* IKPreferencesRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKPreferencesRepresentation.h; sourceTree = "<group>"; };
@@ -859,6 +919,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA0A55D816F73FB700E4D6BD /* ServiceManagement.framework in Frameworks */,
 				BAF67DA016D619320047FE2A /* WLCalendarStore.framework in Frameworks */,
 				BAF67D0A16D6172C0047FE2A /* WLFoundation.framework in Frameworks */,
 				BA08A6C21675DBE10085F40C /* ShortcutRecorder.framework in Frameworks */,
@@ -934,6 +995,7 @@
 		29B97314FDCFA39411CA2CEA /* Deskboard */ = {
 			isa = PBXGroup;
 			children = (
+				BA0A563116F7428D00E4D6BD /* LoginItem.xcodeproj */,
 				BAF67D7E16D619250047FE2A /* WLCalendarStore.xcodeproj */,
 				BA08A68C1675DB9E0085F40C /* ShortcutRecorder.xcodeproj */,
 				BAF67CE116D616D40047FE2A /* WLFoundation.xcodeproj */,
@@ -943,6 +1005,7 @@
 				E27951BA131AA060008AE1DA /* Carbon.framework */,
 				E2BA531913C5A873005F0045 /* QuartzCore.framework */,
 				E2D6488F1441062300A03FAD /* IOKit.framework */,
+				BA0A55D716F73FB700E4D6BD /* ServiceManagement.framework */,
 				E2957E5D152B13E500AE05E8 /* CoreServices.framework */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -1204,9 +1267,19 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		BA0A563216F7428D00E4D6BD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA0A563616F7428E00E4D6BD /* LoginItem.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		BA1F51D11663B23700ABD662 /* General */ = {
 			isa = PBXGroup;
 			children = (
+				BA23662216F7371300779487 /* StartAtLoginController.h */,
+				BA23662316F7371300779487 /* StartAtLoginController.m */,
 				BA1F51DC1663B30500ABD662 /* SystemPreferences.h */,
 				BA1F51D91663B2A400ABD662 /* WLGeneralPreferences.h */,
 				BA1F51DA1663B2A400ABD662 /* WLGeneralPreferences.m */,
@@ -1433,14 +1506,21 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Blotter" */;
 			buildPhases = (
+				BA23661916F7225900779487 /* Code Sign Frameworks */,
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
 				2840647F12833643000816FF /* Copy Frameworks */,
+				BA23664F16F739F200779487 /* Copy Login Item */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				BA0A563816F742F500E4D6BD /* PBXTargetDependency */,
+				BA23662116F7241D00779487 /* PBXTargetDependency */,
+				BA23661F16F7241B00779487 /* PBXTargetDependency */,
+				BA23661D16F7241900779487 /* PBXTargetDependency */,
+				BA23661B16F7241600779487 /* PBXTargetDependency */,
 			);
 			name = Blotter;
 			productInstallPath = "$(HOME)/Applications";
@@ -1502,6 +1582,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = BA0A563216F7428D00E4D6BD /* Products */;
+					ProjectRef = BA0A563116F7428D00E4D6BD /* LoginItem.xcodeproj */;
+				},
+				{
 					ProductGroup = BA08A6AA1675DBCA0085F40C /* Products */;
 					ProjectRef = BA08A68C1675DB9E0085F40C /* ShortcutRecorder.xcodeproj */;
 				},
@@ -1534,6 +1618,13 @@
 			fileType = wrapper.framework;
 			path = PTHotKey.framework;
 			remoteRef = BA08A6B31675DBCA0085F40C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BA0A563616F7428E00E4D6BD /* LoginItem.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = LoginItem.app;
+			remoteRef = BA0A563516F7428E00E4D6BD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		BAF67D0316D616E50047FE2A /* WLFoundation.framework */ = {
@@ -1802,6 +1893,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		BA23661916F7225900779487 /* Code Sign Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Versions/A",
+				"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Versions/A",
+				"$(BUILT_PRODUCTS_DIR)/WLFoundation.framework/Versions/A",
+				"$(BUILT_PRODUCTS_DIR)/WLCalendarStore.framework/Versions/A",
+			);
+			name = "Code Sign Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "codesign -f -v -s \"$CODE_SIGN_IDENTITY\" $BUILT_PRODUCTS_DIR/PTHotKey.framework/Versions/A\ncodesign -f -v -s \"$CODE_SIGN_IDENTITY\" $BUILT_PRODUCTS_DIR/ShortcutRecorder.framework/Versions/A\ncodesign -f -v -s \"$CODE_SIGN_IDENTITY\" $BUILT_PRODUCTS_DIR/WLFoundation.framework/Versions/A\ncodesign -f -v -s \"$CODE_SIGN_IDENTITY\" $BUILT_PRODUCTS_DIR/WLCalendarStore.framework/Versions/A";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8D11072C0486CEB800E47090 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1884,10 +1996,39 @@
 				BAF67F9D16D624C90047FE2A /* WLApplicationPreferencesWindow.m in Sources */,
 				BC5994A0A3B188B70572162C /* WLCalendarRemindersController.m in Sources */,
 				BC59962B9F05EFB31F00E8AC /* WLCalendarsController.m in Sources */,
+				BA23662416F7371300779487 /* StartAtLoginController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BA0A563816F742F500E4D6BD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = LoginItem;
+			targetProxy = BA0A563716F742F500E4D6BD /* PBXContainerItemProxy */;
+		};
+		BA23661B16F7241600779487 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = WLCalendarStore;
+			targetProxy = BA23661A16F7241600779487 /* PBXContainerItemProxy */;
+		};
+		BA23661D16F7241900779487 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = WLFoundation;
+			targetProxy = BA23661C16F7241900779487 /* PBXContainerItemProxy */;
+		};
+		BA23661F16F7241B00779487 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ShortcutRecorder.framework;
+			targetProxy = BA23661E16F7241B00779487 /* PBXContainerItemProxy */;
+		};
+		BA23662116F7241D00779487 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PTHotKey.framework;
+			targetProxy = BA23662016F7241D00779487 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		BA81A832164548070058EB16 /* IKApplicationPreferences.strings */ = {
@@ -2084,6 +2225,7 @@
 		BAF67FF116D62B460047FE2A /* Archiving */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Blotter.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2099,6 +2241,7 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Blotter.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2115,6 +2258,7 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Blotter.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

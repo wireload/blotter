@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
-		<string key="IBDocument.SystemVersion">12C60</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
-		<string key="IBDocument.AppKitVersion">1187.34</string>
-		<string key="IBDocument.HIToolboxVersion">625.00</string>
+		<string key="IBDocument.SystemVersion">12D78</string>
+		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
+		<string key="IBDocument.AppKitVersion">1187.37</string>
+		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">2844</string>
+			<string key="NS.object.0">3084</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>NSCustomObject</string>
@@ -34,7 +34,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="1005">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSCustomView" id="679026233">
@@ -42,6 +42,7 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{119, 20}, {206, 25}}</string>
 						<reference key="NSSuperview" ref="1005"/>
+						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSClassName">WLRecorderControl</string>
 					</object>
@@ -50,6 +51,7 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{119, 53}, {206, 25}}</string>
 						<reference key="NSSuperview" ref="1005"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="936125333"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSClassName">WLRecorderControl</string>
@@ -59,6 +61,7 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{119, 86}, {206, 25}}</string>
 						<reference key="NSSuperview" ref="1005"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="586591065"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSClassName">WLRecorderControl</string>
@@ -68,6 +71,7 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{119, 119}, {206, 25}}</string>
 						<reference key="NSSuperview" ref="1005"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="693703876"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSClassName">WLRecorderControl</string>
@@ -77,6 +81,7 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{119, 152}, {206, 25}}</string>
 						<reference key="NSSuperview" ref="1005"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="893918348"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSClassName">WLRecorderControl</string>
@@ -86,6 +91,7 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{119, 185}, {206, 25}}</string>
 						<reference key="NSSuperview" ref="1005"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="208704751"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSClassName">WLRecorderControl</string>
@@ -95,6 +101,7 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 25}, {100, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="679026233"/>
 						<string key="NSReuseIdentifierKey">_NS:1505</string>
 						<bool key="NSEnabled">YES</bool>
@@ -135,6 +142,7 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 58}, {100, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="34011471"/>
 						<string key="NSReuseIdentifierKey">_NS:1505</string>
 						<bool key="NSEnabled">YES</bool>
@@ -155,6 +163,7 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 91}, {100, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1042687099"/>
 						<string key="NSReuseIdentifierKey">_NS:1505</string>
 						<bool key="NSEnabled">YES</bool>
@@ -175,6 +184,7 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 124}, {100, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="559454778"/>
 						<string key="NSReuseIdentifierKey">_NS:1505</string>
 						<bool key="NSEnabled">YES</bool>
@@ -195,6 +205,7 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 157}, {100, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="692390506"/>
 						<string key="NSReuseIdentifierKey">_NS:1505</string>
 						<bool key="NSEnabled">YES</bool>
@@ -215,6 +226,7 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 190}, {100, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1019188103"/>
 						<string key="NSReuseIdentifierKey">_NS:1505</string>
 						<bool key="NSEnabled">YES</bool>
@@ -232,6 +244,8 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{345, 230}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="951232649"/>
 				<string key="NSClassName">NSView</string>
 			</object>
@@ -733,7 +747,7 @@
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>
-			<real value="4500" key="NS.object.0"/>
+			<real value="4600" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">1</int>

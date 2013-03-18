@@ -21,8 +21,6 @@
 
 + (NSColor *)WL_boxViewTitleColor;
 
-+ (NSColor *)WL_boxViewTitleColor;
-
 
 + (NSColor *)WL_timelineShadowColor;
 
