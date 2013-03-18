@@ -545,7 +545,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 - (void)_scheduleAutoFadeTimerIfNeeded
 {
     [self _removeAutoFadeTimerIfNeeded];
-    BOOL isAutoFadeEnabled = [[NSUserDefaults standardUserDefaults] WL_autoFadeSeconds];
+    BOOL isAutoFadeEnabled = [[NSUserDefaults standardUserDefaults] WL_autoFadeSeconds] > 0;
     NSTimeInterval delay = [[NSUserDefaults standardUserDefaults] WL_autoFadeSeconds];
     if (isAutoFadeEnabled && delay > 0)
     {

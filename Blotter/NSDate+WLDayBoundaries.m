@@ -44,7 +44,7 @@
 {
     NSDateComponents *dateNoonComponents = [aCalendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self];
     NSRange hoursRange = [aCalendar rangeOfUnit:NSHourCalendarUnit inUnit:NSDayCalendarUnit forDate:self];
-    [dateNoonComponents setHour:hoursRange.location + hoursRange.length / 2];
+    [dateNoonComponents setHour:(NSInteger)(hoursRange.location + hoursRange.length / 2)];
     [dateNoonComponents setMinute:0];
     [dateNoonComponents setSecond:0];
     return [aCalendar dateFromComponents:dateNoonComponents];
