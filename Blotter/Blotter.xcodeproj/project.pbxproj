@@ -342,6 +342,34 @@
 			remoteGlobalIDString = E273122E1349EC9000A84433;
 			remoteInfo = PTHotKey.framework;
 		};
+		BA23661A16F7241600779487 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BAF67D7E16D619250047FE2A /* WLCalendarStore.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BC5994818693DDB7C473D9C8;
+			remoteInfo = WLCalendarStore;
+		};
+		BA23661C16F7241900779487 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BAF67CE116D616D40047FE2A /* WLFoundation.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BA81DA66160DA09D00C83DC3;
+			remoteInfo = WLFoundation;
+		};
+		BA23661E16F7241B00779487 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA08A68C1675DB9E0085F40C /* ShortcutRecorder.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9398377F0DA42965007F53F3;
+			remoteInfo = ShortcutRecorder.framework;
+		};
+		BA23662016F7241D00779487 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA08A68C1675DB9E0085F40C /* ShortcutRecorder.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E273122D1349EC9000A84433;
+			remoteInfo = PTHotKey.framework;
+		};
 		BAF67D0216D616E50047FE2A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BAF67CE116D616D40047FE2A /* WLFoundation.xcodeproj */;
@@ -1433,6 +1461,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Blotter" */;
 			buildPhases = (
+				BA23661916F7225900779487 /* Sign Frameworks */,
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
@@ -1441,6 +1470,10 @@
 			buildRules = (
 			);
 			dependencies = (
+				BA23662116F7241D00779487 /* PBXTargetDependency */,
+				BA23661F16F7241B00779487 /* PBXTargetDependency */,
+				BA23661D16F7241900779487 /* PBXTargetDependency */,
+				BA23661B16F7241600779487 /* PBXTargetDependency */,
 			);
 			name = Blotter;
 			productInstallPath = "$(HOME)/Applications";
@@ -1802,6 +1835,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		BA23661916F7225900779487 /* Sign Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/PTHotKey.framework/Versions/A",
+				"$(BUILT_PRODUCTS_DIR)/ShortcutRecorder.framework/Versions/A",
+				"$(BUILT_PRODUCTS_DIR)/WLFoundation.framework/Versions/A",
+				"$(BUILT_PRODUCTS_DIR)/WLCalendarStore.framework/Versions/A",
+			);
+			name = "Sign Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "codesign -f -v -s \"$CODE_SIGN_IDENTITY\" $BUILT_PRODUCTS_DIR/PTHotKey.framework/Versions/A\ncodesign -f -v -s \"$CODE_SIGN_IDENTITY\" $BUILT_PRODUCTS_DIR/ShortcutRecorder.framework/Versions/A\ncodesign -f -v -s \"$CODE_SIGN_IDENTITY\" $BUILT_PRODUCTS_DIR/WLFoundation.framework/Versions/A\ncodesign -f -v -s \"$CODE_SIGN_IDENTITY\" $BUILT_PRODUCTS_DIR/WLCalendarStore.framework/Versions/A";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8D11072C0486CEB800E47090 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1888,6 +1942,29 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BA23661B16F7241600779487 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = WLCalendarStore;
+			targetProxy = BA23661A16F7241600779487 /* PBXContainerItemProxy */;
+		};
+		BA23661D16F7241900779487 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = WLFoundation;
+			targetProxy = BA23661C16F7241900779487 /* PBXContainerItemProxy */;
+		};
+		BA23661F16F7241B00779487 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ShortcutRecorder.framework;
+			targetProxy = BA23661E16F7241B00779487 /* PBXContainerItemProxy */;
+		};
+		BA23662116F7241D00779487 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PTHotKey.framework;
+			targetProxy = BA23662016F7241D00779487 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		BA81A832164548070058EB16 /* IKApplicationPreferences.strings */ = {
