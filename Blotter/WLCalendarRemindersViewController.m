@@ -96,10 +96,10 @@
         // Delete old and Insert new
         __autoreleasing NSIndexSet *deleted = nil;
         __autoreleasing NSIndexSet *inserted = nil;
-        [_reminders WL_indexesOfDeletedObject:&deleted
-                     indexesOfInsertedObjects:&inserted
-                              relativeToArray:newReminders
-                        sortedUsingComparator:aComparator];
+        [_reminders WL_indexesOfDeletedObjects:&deleted
+                      indexesOfInsertedObjects:&inserted
+                               relativeToArray:newReminders
+                         sortedUsingComparator:aComparator];
 
         [deleted enumerateIndexesWithOptions:NSEnumerationReverse usingBlock:^(NSUInteger idx, BOOL *stop)
         {

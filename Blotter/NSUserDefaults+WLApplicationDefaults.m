@@ -12,6 +12,8 @@
 
 NSInteger const WLBlotterBundleVersion2_1 = 9;
 
+NSInteger const WLBlotterBundleVersion2_2 = 10;
+
 NSString* const WLLastMigratedBundleVersionKey = @"LastMigratedBundleVersion";
 
 NSString* const WLCalendarSizeKey = @"CalendarSize";
@@ -20,13 +22,9 @@ NSString* const WLScreenIdentifierKey = @"ScreenIdentifier";
 
 NSString* const WLCalendarsKey = @"Calendars";
 
-NSString* const WLCalendarUIDKey = @"uid";
-
 NSString* const WLCalendarIsUsedForEventsKey = @"isUsedForEvents";
 
 NSString* const WLCalendarIsUsedForRemindersKey = @"isUsedForReminders";
-
-NSString* const WLCalendarTypeKey = @"type";
 
 NSString* const WLDisplayAllCalendarsKey = @"DisplayAllCalendars";
 
@@ -75,21 +73,23 @@ NSString* const WLShortcutShowCurrentWeek = @"shortcutShowCurrentWeek";
 NSString* const WLShortcutBringToFront = @"shortcutBringToFront";
 
 
-NSComparator const WLCalendarsComparator = ^(id left, id right) {
-    return [[left valueForKey:WLCalendarUIDKey] compare:[right valueForKey:WLCalendarUIDKey]];
-};
-
-
 @implementation NSUserDefaults (WLApplicationDefaults)
 
 - (void)WL_migrateIfNeeded
 {
     [[NSProcessInfo processInfo] disableSuddenTermination];
     NSInteger lastMigratedBundleVersion = [self integerForKey:WLLastMigratedBundleVersionKey];
+
     if (lastMigratedBundleVersion < WLBlotterBundleVersion2_1)
     {
         [self WL_migrateTo2_1];
         lastMigratedBundleVersion = WLBlotterBundleVersion2_1;
+    }
+
+    if (lastMigratedBundleVersion < WLBlotterBundleVersion2_2)
+    {
+        [self WL_migrateTo2_2];
+        lastMigratedBundleVersion = WLBlotterBundleVersion2_2;
     }
 
     NSBundle *blotterBundle = [NSBundle bundleWithIdentifier:@"net.wireload.blotter.mac"];
@@ -100,7 +100,7 @@ NSComparator const WLCalendarsComparator = ^(id left, id right) {
 
 - (void)WL_migrateTo2_1
 {
-    NSLog(@"Migrate to %d", (int)WLBlotterBundleVersion2_1);
+    NSLog(@"Migrate Preferences to %d", (int)WLBlotterBundleVersion2_1);
     // In pre 1.3 versions of Blotter CalendarSize was a string.
     if ([[self stringForKey:WLCalendarSizeKey] isEqualToString:@"Narrow"])
         [self setInteger:BLNarrowSize forKey:WLCalendarSizeKey];
@@ -131,6 +131,28 @@ NSComparator const WLCalendarsComparator = ^(id left, id right) {
     }];
 }
 
+- (void)WL_migrateTo2_2
+{
+    NSLog(@"Migrate Preferences to %d", (int)WLBlotterBundleVersion2_2);
+    NSArray *calendars = [self objectForKey:WLCalendarsKey];
+    NSMutableDictionary *defaultsCalendars = [NSMutableDictionary dictionary];
+    NSMutableDictionary *defaultsStore = [NSMutableDictionary dictionaryWithCapacity:[calendars count]];
+
+    for (NSDictionary *d in calendars)
+    {
+        if ([d[WLCalendarUIDKey] length] > 0)
+        {
+            defaultsStore[d[WLCalendarUIDKey]] = @{
+                WLCalendarIsUsedForEventsKey: d[WLCalendarIsUsedForEventsKey],
+                WLCalendarIsUsedForRemindersKey: d[WLCalendarIsUsedForRemindersKey]
+            };
+        }
+    }
+
+    defaultsCalendars[[WLCalendarStore systemStore].storeIdentifier] = defaultsStore;
+    [self setObject:defaultsCalendars forKey:WLCalendarsKey];
+}
+
 @end
 
 
@@ -157,117 +179,6 @@ NSComparator const WLCalendarsComparator = ^(id left, id right) {
 - (NSNumber *)WL_screenIdentifier
 {
     return [self objectForKey:WLScreenIdentifierKey];
-}
-
-@end
-
-
-#pragma mark -
-
-
-@implementation NSUserDefaults (WLCalendarController)
-
-- (void)WL_setCalendars:(NSArray *)newCalendars
-{
-    [self setObject:newCalendars forKey:WLCalendarsKey];
-}
-
-- (NSArray *)WL_calendars
-{
-    return [self arrayForKey:WLCalendarsKey];
-}
-
-- (void)WL_updateCalendars:(WLCalendarsUpdaterBlock)anUpdaterBlock
-{
-    if (anUpdaterBlock == NULL)
-        return;
-    NSMutableArray *calendars = [[self arrayForKey:WLCalendarsKey] mutableCopy];
-    anUpdaterBlock(calendars);
-    [self setObject:calendars forKey:WLCalendarsKey];
-    [calendars release];
-}
-
-- (void)WL_setDisplaysAllCalendars:(BOOL)newDisplaysAllCalendars
-{
-    [self setBool:newDisplaysAllCalendars forKey:WLDisplayAllCalendarsKey];
-}
-
-- (BOOL)WL_displaysAllCalendars
-{
-    return [self boolForKey:WLDisplayAllCalendarsKey];
-}
-
-- (void)WL_setAllowsAdvancedCalendarTypeCheck:(BOOL)newAllowsAdvancedCalendarTypeCheck
-{
-    [self setBool:newAllowsAdvancedCalendarTypeCheck forKey:WLAllowsAdvancedCalendarTypeCheck];
-}
-
-- (BOOL)WL_allowsAdvancedCalendarTypeCheck
-{
-    return [self boolForKey:WLAllowsAdvancedCalendarTypeCheck];
-}
-
-@end
-
-
-@implementation NSArray (WLCalendarController)
-
-- (NSUInteger)WL_indexOfCalendarWithUID:(NSString *)anUID
-{
-    return [self indexOfObject:[NSDictionary dictionaryWithObject:anUID forKey:WLCalendarUIDKey]
-                 inSortedRange:NSMakeRange(0, [self count])
-                       options:NSBinarySearchingFirstEqual
-               usingComparator:WLCalendarsComparator];
-}
-
-- (NSDictionary *)WL_calendarWithUID:(NSString *)anUID
-{
-    NSUInteger index = [self WL_indexOfCalendarWithUID:anUID];
-    if (index != NSNotFound)
-        return [self objectAtIndex:index];
-    else
-        return nil;
-}
-
-@end
-
-
-@implementation NSMutableArray (WLCalendarController)
-
-- (void)WL_insertCalendar:(NSDictionary *)aCalendar
-{
-    NSParameterAssert([aCalendar objectForKey:WLCalendarUIDKey]);
-
-    NSUInteger index = [self indexOfObject:aCalendar
-                                  inSortedRange:NSMakeRange(0, [self count])
-                                        options:NSBinarySearchingInsertionIndex
-                                usingComparator:WLCalendarsComparator];
-    [self insertObject:aCalendar atIndex:index];
-}
-
-- (void)WL_removeCalendarWithUID:(NSString *)anUID
-{
-    NSUInteger index = [self WL_indexOfCalendarWithUID:anUID];
-    if (index != NSNotFound)
-        [self removeObjectAtIndex:index];
-}
-
-@end
-
-
-@implementation NSDictionary (WLCalendarController)
-
-+ (NSDictionary *)WL_makeCalendarWithCalCalendar:(CalCalendar *)aCalCalendar
-{
-    NSParameterAssert(aCalCalendar != nil);
-
-    NSDictionary *calendar = [NSDictionary dictionaryWithObjectsAndKeys:
-                              aCalCalendar.uid,                                                                     WLCalendarUIDKey,
-                              [NSNumber numberWithBool:YES],                                                        WLCalendarIsUsedForEventsKey,
-                              [NSNumber numberWithBool:YES],                                                        WLCalendarIsUsedForRemindersKey,
-                              [NSNumber numberWithInteger:[WLCalendarController _typeForCalCalendar:aCalCalendar]], WLCalendarTypeKey,
-                              nil];
-    return calendar;
 }
 
 @end
@@ -395,6 +306,128 @@ NSComparator const WLCalendarsComparator = ^(id left, id right) {
 - (BOOL)WL_showInMenuBar
 {
     return [self boolForKey:WLShowInMenuBar];
+}
+
+@end
+
+
+@implementation NSUserDefaults (WLCalendarsPreferences)
+
+- (BOOL)WL_displaysAllCalendars
+{
+    return [self boolForKey:WLDisplayAllCalendarsKey];
+}
+
+- (void)WL_setDisplaysAllCalendars:(BOOL)newDisplaysAllCalendars
+{
+    [self setBool:newDisplaysAllCalendars forKey:WLDisplayAllCalendarsKey];
+}
+
+@end
+
+
+#pragma mark - Deprecated
+
+NSString* const WLCalendarUIDKey = @"uid";
+
+
+NSComparator const WLCalendarsComparator = ^(id left, id right) {
+    return [[left valueForKey:WLCalendarUIDKey] compare:[right valueForKey:WLCalendarUIDKey]];
+};
+
+
+@implementation NSUserDefaults (WLCalendarController)
+
+- (void)WL_setCalendars:(NSArray *)newCalendars
+{
+    [self setObject:newCalendars forKey:WLCalendarsKey];
+}
+
+- (NSArray *)WL_calendars
+{
+    return [self arrayForKey:WLCalendarsKey];
+}
+
+- (void)WL_updateCalendars:(WLCalendarsUpdaterBlock)anUpdaterBlock
+{
+    if (anUpdaterBlock == NULL)
+        return;
+    NSMutableArray *calendars = [[self arrayForKey:WLCalendarsKey] mutableCopy];
+    anUpdaterBlock(calendars);
+    [self setObject:calendars forKey:WLCalendarsKey];
+    [calendars release];
+}
+
+- (void)WL_setAllowsAdvancedCalendarTypeCheck:(BOOL)newAllowsAdvancedCalendarTypeCheck
+{
+    [self setBool:newAllowsAdvancedCalendarTypeCheck forKey:WLAllowsAdvancedCalendarTypeCheck];
+}
+
+- (BOOL)WL_allowsAdvancedCalendarTypeCheck
+{
+    return [self boolForKey:WLAllowsAdvancedCalendarTypeCheck];
+}
+
+@end
+
+
+@implementation NSArray (WLCalendarController)
+
+- (NSUInteger)WL_indexOfCalendarWithUID:(NSString *)anUID
+{
+    return [self indexOfObject:[NSDictionary dictionaryWithObject:anUID forKey:WLCalendarUIDKey]
+                 inSortedRange:NSMakeRange(0, [self count])
+                       options:NSBinarySearchingFirstEqual
+               usingComparator:WLCalendarsComparator];
+}
+
+- (NSDictionary *)WL_calendarWithUID:(NSString *)anUID
+{
+    NSUInteger index = [self WL_indexOfCalendarWithUID:anUID];
+    if (index != NSNotFound)
+        return [self objectAtIndex:index];
+    else
+        return nil;
+}
+
+@end
+
+
+@implementation NSMutableArray (WLCalendarController)
+
+- (void)WL_insertCalendar:(NSDictionary *)aCalendar
+{
+    NSParameterAssert([aCalendar objectForKey:WLCalendarUIDKey]);
+
+    NSUInteger index = [self indexOfObject:aCalendar
+                             inSortedRange:NSMakeRange(0, [self count])
+                                   options:NSBinarySearchingInsertionIndex
+                           usingComparator:WLCalendarsComparator];
+    [self insertObject:aCalendar atIndex:index];
+}
+
+- (void)WL_removeCalendarWithUID:(NSString *)anUID
+{
+    NSUInteger index = [self WL_indexOfCalendarWithUID:anUID];
+    if (index != NSNotFound)
+        [self removeObjectAtIndex:index];
+}
+
+@end
+
+
+@implementation NSDictionary (WLCalendarController)
+
++ (NSDictionary *)WL_makeCalendarWithCalCalendar:(CalCalendar *)aCalCalendar
+{
+    NSParameterAssert(aCalCalendar != nil);
+
+    NSDictionary *calendar = [NSDictionary dictionaryWithObjectsAndKeys:
+                                               aCalCalendar.uid,                                                                     WLCalendarUIDKey,
+                                               [NSNumber numberWithBool:YES],                                                        WLCalendarIsUsedForEventsKey,
+                                               [NSNumber numberWithBool:YES],                                                        WLCalendarIsUsedForRemindersKey,
+                                               nil];
+    return calendar;
 }
 
 @end

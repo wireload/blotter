@@ -17,4 +17,6 @@
     IBOutlet NSTableView *_remindersTableView;
 }
 
+- (void)calCalendarsDidChange:(NSNotification *)aNotification;
+
 @end

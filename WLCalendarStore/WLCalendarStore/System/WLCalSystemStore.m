@@ -17,7 +17,7 @@
 #import "WLCalSystemReminder.h"
 
 
-static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
+static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 0.1;
 
 
 @implementation WLCalSystemStore
@@ -246,6 +246,9 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
         case WLCalReminderCompletionMaskAny:
             p = [[_store class] taskPredicateWithCalendars:csCalendars];
             break;
+        case WLCalReminderCompletionMaskNothing:
+            __builtin_unreachable();
+            break;
     }
 
     if (p)
@@ -269,7 +272,9 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
         WLCalSystemCalendar *calendar = [[WLCalSystemCalendar alloc] initWithStore:self
                                                                         csCalendar:csCalendar
                                                                 allowedEntityTypes:allowedEntityTypes];
-        [calendars addObject:calendar];
+
+        if (calendar)
+            [calendars addObject:calendar];
     }
 
     return calendars;
@@ -558,7 +563,9 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
         if (calendar)
         {
             WLCalSystemEvent *event = [[WLCalSystemEvent alloc] initWithCSEvent:csEvent calCalendar:calendar];
-            [events addObject:event];
+
+            if (event)
+                [events addObject:event];
         }
     }
 
@@ -608,7 +615,9 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
         if (calendar)
         {
             WLCalSystemReminder *reminder = [[WLCalSystemReminder alloc] initWithCSReminder:csReminder calCalendar:calendar];
-            [reminders addObject:reminder];
+
+            if (reminder)
+                [reminders addObject:reminder];
         }
     }
 
@@ -616,6 +625,29 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 5.0;
     [reminders WL_removeDuplicatesInSortedArrayUsingComparator:WLCalRemindersComparator];
 
     return reminders;
+}
+
+- (NSString *)storeIdentifier
+{
+    return @"net.wireload.WLCalendarStore.System";
+}
+
+
+#pragma mark NSObject
+
+- (BOOL)isEqual:(NSObject<WLCalStore> *)anObject
+{
+    if ([super isEqual:anObject])
+        return YES;
+    else if (![anObject conformsToProtocol:@protocol(WLCalStore)])
+        return NO;
+    else
+        return [self.storeIdentifier isEqual:anObject.storeIdentifier];
+}
+
+- (NSUInteger)hash
+{
+    return [self.storeIdentifier hash];
 }
 
 @end

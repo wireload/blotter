@@ -6,24 +6,36 @@
 //  Copyright 2011 Wireload. All rights reserved.
 //
 
-#import <CalendarStore/CalendarStore.h>
 #import "WLCalendarsPreferences.h"
 #import "WLColorCheckboxCell.h"
 #import "NSColor+WLCalendar.h"
-#import "WLCalendarController.h"
+#import "DeskboardAppDelegate.h"
 
 
 @implementation WLCalendarsPreferences
+{
+    NSArray *_calEventCalendars;
+    NSArray *_calReminderCalendars;
+}
 
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    if (self.isViewLoaded)
+}
+
+
+#pragma mark Methods
+
+- (void)calCalendarsDidChange:(NSNotification *)aNotification
+{
+    dispatch_async(dispatch_get_main_queue(), ^
     {
-        [(WLCalendarController *)[WLCalendarController sharedController] removeObserver:self forKeyPath:@"calEventCalendars"];
-        [(WLCalendarController *)[WLCalendarController sharedController] removeObserver:self forKeyPath:@"calReminderCalendars"];
-    }
-    [super dealloc];
+        WLCalendarsController *c = [[[NSApp delegate] calendarWindowController] calendarsController];
+        _calEventCalendars = [[c calEventCalendarsForStore:[WLCalendarStore systemStore]] copy];
+        _calReminderCalendars = [[c calReminderCalendarsForStore:[WLCalendarStore systemStore]] copy];
+        [_eventsTableView reloadData];
+        [_remindersTableView reloadData];
+    });
 }
 
 
@@ -45,13 +57,12 @@
     {
         WLColorCheckboxCell *cell = aCell;
         NSColor *calColor = nil;
-        WLCalendarController *c = [WLCalendarController sharedController];
+
         if (aTableView == _eventsTableView)
-            calColor = [[c.calEventCalendars objectAtIndex:rowIndex] color];
+            calColor = [_calEventCalendars[rowIndex] color];
         else
-            calColor = [[c.calReminderCalendars objectAtIndex:rowIndex] color];
-        if (calColor == nil || (id)calColor == [NSNull null])
-            calColor = [NSColor WL_defaultCalendarColorIfFrameworkFails];
+            calColor = [_calReminderCalendars[rowIndex] color];
+
         [cell setButtonColor:calColor];
     }
 }
@@ -61,29 +72,28 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-    WLCalendarController *c = [WLCalendarController sharedController];
     if (aTableView == _eventsTableView)
-        return [c.calEventCalendars count];
+        return [_calEventCalendars count];
     else
-        return [c.calReminderCalendars count];
+        return [_calReminderCalendars count];
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-    WLCalendarController *c = [WLCalendarController sharedController];
+    WLCalendarsController *c = [[[NSApp delegate] calendarWindowController] calendarsController];
     if ([[aTableColumn identifier] isEqualToString:@"check"])
     {
         if (aTableView == _eventsTableView)
-            return [NSNumber numberWithBool:[c isCalendarWithUIDUsedForEvents:[[c.calEventCalendars objectAtIndex:rowIndex] uid]]];
+            return @([c isCalCalendarUsedToDisplayEvents:_calEventCalendars[rowIndex]]);
         else
-            return [NSNumber numberWithBool:[c isCalendarWithUIDUsedForReminders:[[c.calReminderCalendars objectAtIndex:rowIndex] uid]]];
+            return @([c isCalCalendarUsedToDisplayReminders:_calReminderCalendars[rowIndex]]);
     }
     else
     {
         if (aTableView == _eventsTableView)
-            return [[c.calEventCalendars objectAtIndex:rowIndex] title];
+            return [_calEventCalendars[rowIndex] title];
         else
-            return [[c.calReminderCalendars objectAtIndex:rowIndex] title];
+            return [_calReminderCalendars[rowIndex] title];
     }
 }
 
@@ -91,11 +101,11 @@
 {
     if ([[aTableColumn identifier] isEqualToString:@"check"])
     {
-        WLCalendarController *c = [WLCalendarController sharedController];
+        WLCalendarsController *c = [[[NSApp delegate] calendarWindowController] calendarsController];
         if (aTableView == _eventsTableView)
-            [c setIsUsedForEvents:[anObject boolValue] forCalendarWithUID:[[c.calEventCalendars objectAtIndex:rowIndex] uid]];
+            [c setCalCalendar:_calEventCalendars[rowIndex] usedToDisplayEvents:[anObject boolValue]];
         else
-            [c setIsUsedForReminders:[anObject boolValue] forCalendarWithUID:[[c.calReminderCalendars objectAtIndex:rowIndex] uid]];
+            [c setCalCalendar:_calReminderCalendars[rowIndex] usedToDisplayReminders:[anObject boolValue]];
     }
 }
 
@@ -110,27 +120,16 @@
     [_eventsTableView setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
     [_remindersTableView setIntercellSpacing:NSMakeSize(3.0, 0.0)];
     [_remindersTableView setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
-    [(WLCalendarController *)[WLCalendarController sharedController] addObserver:self
-                                                                      forKeyPath:@"calEventCalendars"
-                                                                         options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
-                                                                         context:NULL];
-    [(WLCalendarController *)[WLCalendarController sharedController] addObserver:self
-                                                                      forKeyPath:@"calReminderCalendars"
-                                                                         options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
-                                                                         context:NULL];
-}
 
-
-#pragma mark NSObject
-
-- (void)observeValueForKeyPath:(NSString *)aKeyPath ofObject:(id)anObject change:(NSDictionary *)aChange context:(void *)aContext
-{
-    if ([aKeyPath isEqualToString:@"calEventCalendars"])
-        [_eventsTableView reloadData];
-    else if ([aKeyPath isEqualToString:@"calReminderCalendars"])
-        [_remindersTableView reloadData];
-    else
-        [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aChange];
+    WLCalendarsController *c = [[[NSApp delegate] calendarWindowController] calendarsController];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(calCalendarsDidChange:)
+                                                 name:WLCalCalendarsDidChangeNotification
+                                               object:c];
+    _calEventCalendars = [[c calEventCalendarsForStore:[WLCalendarStore systemStore]] copy];
+    _calReminderCalendars = [[c calReminderCalendarsForStore:[WLCalendarStore systemStore]] copy];
+    [_eventsTableView reloadData];
+    [_remindersTableView reloadData];
 }
 
 @end

@@ -25,12 +25,12 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType);
 @interface WLCalendarController : NSObject {
     NSCalendar *calendar;
     NSDate *date;
-    NSMutableArray *calCalendarsToDisplay;
-    NSMutableArray *calEventCalendarsToDisplay;
-    NSMutableArray *calReminderCalendarsToDisplay;
-    NSMutableArray *calCalendars;
-    NSMutableArray *calEventCalendars;
-    NSMutableArray *calReminderCalendars;
+    NSArray *calCalendarsToDisplay;
+    NSArray *calEventCalendarsToDisplay;
+    NSArray *calReminderCalendarsToDisplay;
+    NSArray *calCalendars;
+    NSArray *calEventCalendars;
+    NSArray *calReminderCalendars;
 
     NSTimer *_nextMinuteTimer;
     NSTimer *_nextDayTimer;
@@ -81,8 +81,6 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType);
 
 + (id)sharedController;
 
-+ (void)synchronizeCalendarInUserDefaultsWithCalCalendars;
-
 - (void)updateDate;
 
 - (void)updateCalendar;
@@ -90,14 +88,6 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType);
 - (NSArray *)calEventCalendarsFromCalCalendars:(NSArray *)aCalCalendars;
 
 - (NSArray *)calReminderCalendarsFromCalCalendars:(NSArray *)aCalCalendars;
-
-- (void)setIsUsedForEvents:(BOOL)newIsUsed forCalendarWithUID:(NSString *)anUID;
-
-- (BOOL)isCalendarWithUIDUsedForEvents:(NSString *)anUID;
-
-- (void)setIsUsedForReminders:(BOOL)newIsUsed forCalendarWithUID:(NSString *)anUID;
-
-- (BOOL)isCalendarWithUIDUsedForReminders:(NSString *)anUID;
 
 
 - (void)_scheduleNextMinuteTimer;
@@ -134,31 +124,6 @@ NSString * WLStringFromCalendarType(WLCalendarType aCalendarType);
 
 - (NSArray *)_calCalendarsToDisplay;
 
-/*!
- @param     aPredicate which will be evaluated with calendar dict or nil.
- @abstract  Returns calendars represented by the Calendars setting.
- */
-- (NSArray *)_filteredCalCalendars:(NSPredicate *)aPredicate;
-
-- (WLCalendarType)_typeForCalCalendar:(CalCalendar *)aCalCalendar;
-
-+ (WLCalendarType)_typeForCalCalendar:(CalCalendar *)aCalCalendar;
-
-@end
-
-
-extern NSString* const WLTempEventNotes;
-
-extern NSString* const WLTempTaskNotes;
-
-
-@interface CalCalendar (WLCalendarController)
-
-/*
- @discussion If AllowsAdvancedCalendarTypeCheck is set to YES in user defaults, may cause CalCalendarsChangedNotification, CalEventsChangedNotification, CalTasksChangedNotification,
- CalCalendarsChangedExternallyNotification, CalEventsChangedExternallyNotification or CalTasksChangedExternallyNotification to be posted.
- Ensure you properly update observers before sending this message.
- */
-- (WLCalendarType)WL_type;
+- (NSArray *)_calCalendars;
 
 @end

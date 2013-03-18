@@ -22,19 +22,27 @@
                    csCalendar:(CalCalendar *)aCSCalendar
            allowedEntityTypes:(WLCalEntityMask)anAllowedEntityTypes
 {
+    NSParameterAssert(aCSCalendar != nil);
+
+    if (![aCSCalendar.uid length])
+        return nil;
+
     self = [super initWithStore:aStore];
 
     if (self)
     {
         self->_allowsContentModifications = aCSCalendar.isEditable;
 
-        if (aCSCalendar && aCSCalendar != [NSNull null])
+        if (aCSCalendar && (id)aCSCalendar != [NSNull null])
             self->_color = [aCSCalendar.color copy];
         else
             self->_color = [NSColor blueColor];
 
         self->_immutable = !aCSCalendar.isEditable;
         self->_title = [aCSCalendar.title copy];
+
+        if (!self->_title)
+            self->_title = @"";
 
         if ([aCSCalendar.type isEqualToString:CalCalendarTypeLocal])
             self->_type = WLCalendarTypeLocal;

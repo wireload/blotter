@@ -41,7 +41,7 @@
 		BA08A7C6167729E50085F40C /* WLLayoutView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7BA167729E40085F40C /* WLLayoutView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BA08A7C7167729E50085F40C /* WLLayoutWeekSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7BC167729E50085F40C /* WLLayoutWeekSplitView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BA08A7E1167735130085F40C /* README in Resources */ = {isa = PBXBuildFile; fileRef = BA08A7E0167735130085F40C /* README */; };
-		BA08A981167737730085F40C /* WLCalendarsPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7E3167737730085F40C /* WLCalendarsPreferences.m */; };
+		BA08A981167737730085F40C /* WLCalendarsPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7E3167737730085F40C /* WLCalendarsPreferences.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BA08AA34167737730085F40C /* WLColorCheckboxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A980167737730085F40C /* WLColorCheckboxCell.m */; };
 		BA08AA51167743A50085F40C /* WLAboutPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08AA4C167743A50085F40C /* WLAboutPreferences.m */; };
 		BA08AA52167743A50085F40C /* WLCustomCursorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08AA4E167743A50085F40C /* WLCustomCursorButton.m */; };
@@ -50,15 +50,14 @@
 		BA1F51DB1663B2A400ABD662 /* WLGeneralPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1F51DA1663B2A400ABD662 /* WLGeneralPreferences.m */; };
 		BA807F0F1645460C0033B85B /* IKApplicationPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA807F0C1645460C0033B85B /* IKApplicationPreferences.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BA81A834164548070058EB16 /* IKApplicationPreferences.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA81A832164548070058EB16 /* IKApplicationPreferences.strings */; };
+		BABB682E16E9D8C200FFDCC5 /* Blotter-B10.iconset in Resources */ = {isa = PBXBuildFile; fileRef = BABB682D16E9D8C200FFDCC5 /* Blotter-B10.iconset */; };
 		BAF67C8C16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C8B16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.m */; };
 		BAF67CBA16D607280047FE2A /* WLCalendarController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67CB316D607270047FE2A /* WLCalendarController.m */; };
 		BAF67CBB16D607280047FE2A /* WLClosableWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67CB516D607270047FE2A /* WLClosableWindow.m */; };
 		BAF67CBC16D607280047FE2A /* WLCountGreaterThanOneTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67CB716D607270047FE2A /* WLCountGreaterThanOneTransformer.m */; };
 		BAF67CBD16D607280047FE2A /* WLGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67CB916D607280047FE2A /* WLGraphics.m */; };
-		BAF67CE216D616D50047FE2A /* WLFoundation.xcodeproj in Resources */ = {isa = PBXBuildFile; fileRef = BAF67CE116D616D40047FE2A /* WLFoundation.xcodeproj */; };
 		BAF67D0A16D6172C0047FE2A /* WLFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF67D0316D616E50047FE2A /* WLFoundation.framework */; };
 		BAF67D0B16D617300047FE2A /* WLFoundation.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BAF67D0316D616E50047FE2A /* WLFoundation.framework */; };
-		BAF67D7F16D619250047FE2A /* WLCalendarStore.xcodeproj in Resources */ = {isa = PBXBuildFile; fileRef = BAF67D7E16D619250047FE2A /* WLCalendarStore.xcodeproj */; };
 		BAF67DA016D619320047FE2A /* WLCalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF67D9D16D6192B0047FE2A /* WLCalendarStore.framework */; };
 		BAF67DA116D6193C0047FE2A /* WLCalendarStore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BAF67D9D16D6192B0047FE2A /* WLCalendarStore.framework */; };
 		BAF67DCA16D622820047FE2A /* AboutPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAF67DBE16D622820047FE2A /* AboutPrefPaneView.xib */; };
@@ -279,8 +278,8 @@
 		BAF67F9D16D624C90047FE2A /* WLApplicationPreferencesWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67F9B16D624C90047FE2A /* WLApplicationPreferencesWindow.m */; };
 		BAF67F9F16D624FE0047FE2A /* WLApplicationPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAF67F9E16D624FE0047FE2A /* WLApplicationPreferencesWindow.xib */; };
 		BAF67FA116D625590047FE2A /* preferences-shortcuts-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67FA016D625590047FE2A /* preferences-shortcuts-icon.png */; };
-		BC59936C5289978FDEB105AA /* WLCalendarRemindersController.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BC599C059FEEE82BA1037863 /* WLCalendarRemindersController.h */; };
 		BC5994A0A3B188B70572162C /* WLCalendarRemindersController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC59945B22C693D17FB3C086 /* WLCalendarRemindersController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		BC59962B9F05EFB31F00E8AC /* WLCalendarsController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC599D1A78BB9F6271BF2CE6 /* WLCalendarsController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		E21A5F451403D2A4000B6634 /* WLCalendarReminderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E21A5F441403D2A4000B6634 /* WLCalendarReminderLayer.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		E22C78AB13FFCD9F00EE44C0 /* NSColor+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */; };
 		E234BF7E14DAFADF00AB2262 /* WLCalendarTimeRulerMarkerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E234BF7D14DAFADF00AB2262 /* WLCalendarTimeRulerMarkerLayer.m */; };
@@ -384,7 +383,6 @@
 				BAF67D0B16D617300047FE2A /* WLFoundation.framework in Copy Frameworks */,
 				BA08A6C61675DBF80085F40C /* ShortcutRecorder.framework in Copy Frameworks */,
 				BA08A6C51675DBF30085F40C /* PTHotKey.framework in Copy Frameworks */,
-				BC59936C5289978FDEB105AA /* WLCalendarRemindersController.h in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -468,6 +466,7 @@
 		BA1F51D91663B2A400ABD662 /* WLGeneralPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGeneralPreferences.h; sourceTree = "<group>"; };
 		BA1F51DA1663B2A400ABD662 /* WLGeneralPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGeneralPreferences.m; sourceTree = "<group>"; };
 		BA1F51DC1663B30500ABD662 /* SystemPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemPreferences.h; sourceTree = "<group>"; };
+		BA23660816F706B600779487 /* Blotter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Blotter.entitlements; path = ../Blotter.entitlements; sourceTree = "<group>"; };
 		BA807F0B1645460C0033B85B /* IKApplicationPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKApplicationPreferences.h; sourceTree = "<group>"; };
 		BA807F0C1645460C0033B85B /* IKApplicationPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKApplicationPreferences.m; sourceTree = "<group>"; };
 		BA807F0E1645460C0033B85B /* IKPreferencesRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKPreferencesRepresentation.h; sourceTree = "<group>"; };
@@ -478,6 +477,7 @@
 		BA81A838164548110058EB16 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = Resources/ko.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
 		BA81A839164548120058EB16 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Resources/ru.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
 		BA81A83A164548140058EB16 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = Resources/sv.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
+		BABB682D16E9D8C200FFDCC5 /* Blotter-B10.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = "Blotter-B10.iconset"; sourceTree = "<group>"; };
 		BAF67C8A16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+WLApplicationDefaults.h"; sourceTree = "<group>"; };
 		BAF67C8B16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+WLApplicationDefaults.m"; sourceTree = "<group>"; };
 		BAF67CB216D607270047FE2A /* WLCalendarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarController.h; sourceTree = "<group>"; };
@@ -748,6 +748,8 @@
 		BAF67FA016D625590047FE2A /* preferences-shortcuts-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "preferences-shortcuts-icon.png"; sourceTree = "<group>"; };
 		BC59945B22C693D17FB3C086 /* WLCalendarRemindersController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarRemindersController.m; sourceTree = "<group>"; };
 		BC599C059FEEE82BA1037863 /* WLCalendarRemindersController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarRemindersController.h; sourceTree = "<group>"; };
+		BC599CF26AB7137B7108C87C /* WLCalendarsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarsController.h; sourceTree = "<group>"; };
+		BC599D1A78BB9F6271BF2CE6 /* WLCalendarsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarsController.m; sourceTree = "<group>"; };
 		E21A5F431403D2A4000B6634 /* WLCalendarReminderLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarReminderLayer.h; sourceTree = "<group>"; };
 		E21A5F441403D2A4000B6634 /* WLCalendarReminderLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarReminderLayer.m; sourceTree = "<group>"; };
 		E22C78A913FFCD9F00EE44C0 /* NSColor+WLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+WLCalendar.h"; sourceTree = "<group>"; };
@@ -962,104 +964,12 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				BAF67DF416D623170047FE2A /* recessed-box-shadow-bottom-left.png */,
-				BAF67DF516D623170047FE2A /* recessed-box-shadow-bottom-right.png */,
-				BAF67DF616D623170047FE2A /* recessed-box-shadow-bottom.png */,
-				BAF67DF716D623170047FE2A /* recessed-box-shadow-middle-left.png */,
-				BAF67DF816D623170047FE2A /* recessed-box-shadow-middle-right.png */,
-				BAF67DF916D623170047FE2A /* recessed-box-shadow-middle.png */,
-				BAF67DFA16D623170047FE2A /* recessed-box-shadow-top-left.png */,
-				BAF67DFB16D623170047FE2A /* recessed-box-shadow-top-right.png */,
-				BAF67DFC16D623170047FE2A /* recessed-box-shadow-top.png */,
-				BAF67DFD16D623170047FE2A /* icon_32x32.png */,
-				BAF67DFE16D623170047FE2A /* icon_128x128.png */,
-				BAF67DFF16D623170047FE2A /* icon_128x128@2x.png */,
-				BAF67E0016D623170047FE2A /* icon_256x256.png */,
-				BAF67E0116D623170047FE2A /* icon_256x256@2x.png */,
-				BAF67E0216D623170047FE2A /* icon_512x512.png */,
-				BAF67E0316D623170047FE2A /* icon_512x512@2x.png */,
-				BAF67E0416D623180047FE2A /* preferences-about-blotter-banner-overlay.png */,
-				BAF67E0516D623180047FE2A /* preferences-about-blotter-bg.png */,
-				BAF67E0616D623180047FE2A /* glass-hud-button-active-left.png */,
-				BAF67E0716D623180047FE2A /* glass-hud-button-active-left@2x.png */,
-				BAF67E0816D623180047FE2A /* glass-hud-button-active-middle.png */,
-				BAF67E0916D623180047FE2A /* glass-hud-button-active-middle@2x.png */,
-				BAF67E0A16D623180047FE2A /* glass-hud-button-active-right.png */,
-				BAF67E0B16D623180047FE2A /* glass-hud-button-active-right@2x.png */,
-				BAF67E0C16D623180047FE2A /* glass-hud-button-disabled-left.png */,
-				BAF67E0D16D623180047FE2A /* glass-hud-button-disabled-left@2x.png */,
-				BAF67E0E16D623180047FE2A /* glass-hud-button-disabled-middle.png */,
-				BAF67E0F16D623180047FE2A /* glass-hud-button-disabled-middle@2x.png */,
-				BAF67E1016D623180047FE2A /* glass-hud-button-disabled-right.png */,
-				BAF67E1116D623180047FE2A /* glass-hud-button-disabled-right@2x.png */,
-				BAF67E1216D623180047FE2A /* glass-hud-button-left.png */,
-				BAF67E1316D623180047FE2A /* glass-hud-button-left@2x.png */,
-				BAF67E1416D623180047FE2A /* glass-hud-button-middle.png */,
-				BAF67E1516D623180047FE2A /* glass-hud-button-middle@2x.png */,
-				BAF67E1616D623180047FE2A /* glass-hud-button-right.png */,
-				BAF67E1716D623180047FE2A /* glass-hud-button-right@2x.png */,
-				BAF67E1816D623180047FE2A /* glass-hud-pop-up-button-arrows.png */,
-				BAF67E1916D623180047FE2A /* glass-hud-pop-up-button-arrows@2x.png */,
-				BAF67E1A16D623180047FE2A /* preferences-about-blotter-bg@2x.png */,
-				BAF67E1B16D623180047FE2A /* preferences-about-blotter-five-star-icon.png */,
-				BAF67E1C16D623180047FE2A /* preferences-about-blotter-five-star-icon@2x.png */,
-				BAF67E1D16D623180047FE2A /* preferences-about-blotter-icon.png */,
-				BAF67E1E16D623180047FE2A /* preferences-about-blotter-icon@2x.png */,
-				BAF67E1F16D623180047FE2A /* preferences-about-blotter-twitter-icon.png */,
-				BAF67E2016D623180047FE2A /* preferences-about-blotter-twitter-icon@2x.png */,
-				BAF67E2116D623180047FE2A /* preferences-layout-icon@2x.png */,
-				BAF67E2216D623180047FE2A /* status-bar-active.png */,
-				BAF67E2316D623180047FE2A /* status-bar-active@2x.png */,
-				BAF67E2416D623180047FE2A /* status-bar.png */,
-				BAF67E2516D623180047FE2A /* status-bar@2x.png */,
-				BAF67E2616D623180047FE2A /* preferences-about-blotter-banner-overlay@2x.png */,
-				BAF67E2816D623180047FE2A /* checkbox-background-10_7.png */,
-				BAF67E2916D623180047FE2A /* calendar-week-timeruler-bottom.png */,
-				BAF67E2A16D623180047FE2A /* calendar-week-timeruler-middle.png */,
-				BAF67E2B16D623180047FE2A /* calendar-week-timeruler-top.png */,
-				BAF67E2C16D623180047FE2A /* glass-hud-textview-bottom-left.png */,
-				BAF67E2D16D623180047FE2A /* glass-hud-textview-bottom-right.png */,
-				BAF67E2E16D623180047FE2A /* glass-hud-textview-bottom.png */,
-				BAF67E2F16D623180047FE2A /* glass-hud-textview-middle-left.png */,
-				BAF67E3016D623180047FE2A /* glass-hud-textview-middle-right.png */,
-				BAF67E3116D623180047FE2A /* glass-hud-textview-middle.png */,
-				BAF67E3216D623180047FE2A /* glass-hud-textview-top-left.png */,
-				BAF67E3316D623180047FE2A /* glass-hud-textview-top-right.png */,
-				BAF67E3416D623180047FE2A /* glass-hud-textview-top.png */,
-				BAF67E3516D623180047FE2A /* calendar-background-noise.png */,
-				BAF67E3616D623180047FE2A /* calendar-background-active-bottom-left.png */,
-				BAF67E3716D623180047FE2A /* calendar-background-active-bottom-left@2x.png */,
-				BAF67E3816D623180047FE2A /* calendar-background-active-bottom-middle.png */,
-				BAF67E3916D623180047FE2A /* calendar-background-active-bottom-middle@2x.png */,
-				BAF67E3A16D623180047FE2A /* calendar-background-active-bottom-right.png */,
-				BAF67E3B16D623180047FE2A /* calendar-background-active-bottom-right@2x.png */,
-				BAF67E3C16D623190047FE2A /* calendar-background-active-middle-left.png */,
-				BAF67E3D16D623190047FE2A /* calendar-background-active-middle-left@2x.png */,
-				BAF67E3E16D623190047FE2A /* calendar-background-active-middle-middle.png */,
-				BAF67E3F16D623190047FE2A /* calendar-background-active-middle-middle@2x.png */,
-				BAF67E4016D623190047FE2A /* calendar-background-active-middle-right.png */,
-				BAF67E4116D623190047FE2A /* calendar-background-active-middle-right@2x.png */,
-				BAF67E4216D623190047FE2A /* calendar-background-active-top-left.png */,
-				BAF67E4316D623190047FE2A /* calendar-background-active-top-left@2x.png */,
-				BAF67E4416D623190047FE2A /* calendar-background-active-top-middle.png */,
-				BAF67E4516D623190047FE2A /* calendar-week-all-day-bottom-left.png */,
-				BAF67E4616D623190047FE2A /* calendar-week-all-day-bottom-left@2x.png */,
-				BAF67E4716D623190047FE2A /* calendar-week-all-day-bottom-middle.png */,
-				BAF67E4816D623190047FE2A /* calendar-week-all-day-bottom-middle@2x.png */,
-				BAF67E4916D623190047FE2A /* calendar-week-all-day-bottom-right.png */,
-				BAF67E4A16D623190047FE2A /* calendar-week-all-day-bottom-right@2x.png */,
-				BAF67E4B16D623190047FE2A /* calendar-week-all-day-middle-left.png */,
-				BAF67E4C16D623190047FE2A /* calendar-week-all-day-middle-left@2x.png */,
-				BAF67E4D16D623190047FE2A /* calendar-week-all-day-middle-middle.png */,
-				BAF67E4E16D623190047FE2A /* calendar-week-all-day-middle-middle@2x.png */,
-				BAF67E4F16D623190047FE2A /* calendar-week-all-day-middle-right.png */,
-				BAF67E5016D623190047FE2A /* calendar-week-all-day-middle-right@2x.png */,
-				BAF67E5116D623190047FE2A /* calendar-week-all-day-top-left.png */,
-				BAF67E5216D623190047FE2A /* calendar-week-all-day-top-left@2x.png */,
-				BAF67E5316D623190047FE2A /* calendar-week-all-day-top-middle.png */,
-				BAF67E5416D623190047FE2A /* calendar-week-all-day-top-middle@2x.png */,
-				BAF67E5516D623190047FE2A /* calendar-week-all-day-top-right.png */,
-				BAF67E5616D623190047FE2A /* calendar-week-all-day-top-right@2x.png */,
+				BA08A7E0167735130085F40C /* README */,
+				BA23660816F706B600779487 /* Blotter.entitlements */,
+				BABB682D16E9D8C200FFDCC5 /* Blotter-B10.iconset */,
+				BAF67EC416D6231B0047FE2A /* preferences-recreated-aqua.jpg */,
+				8D1107310486CEB800E47090 /* Blotter-Info.plist */,
+				E28C418C13F081A1005789DD /* defaults.plist */,
 				BAF67E5716D623190047FE2A /* box-bottom-left.png */,
 				BAF67E5816D623190047FE2A /* box-bottom-left@2x.png */,
 				BAF67E5916D623190047FE2A /* box-bottom-middle.png */,
@@ -1078,6 +988,21 @@
 				BAF67E6616D623190047FE2A /* box-top-middle@2x.png */,
 				BAF67E6716D623190047FE2A /* box-top-right.png */,
 				BAF67E6816D623190047FE2A /* box-top-right@2x.png */,
+				BAF67E3616D623180047FE2A /* calendar-background-active-bottom-left.png */,
+				BAF67E3716D623180047FE2A /* calendar-background-active-bottom-left@2x.png */,
+				BAF67E3816D623180047FE2A /* calendar-background-active-bottom-middle.png */,
+				BAF67E3916D623180047FE2A /* calendar-background-active-bottom-middle@2x.png */,
+				BAF67E3A16D623180047FE2A /* calendar-background-active-bottom-right.png */,
+				BAF67E3B16D623180047FE2A /* calendar-background-active-bottom-right@2x.png */,
+				BAF67E3C16D623190047FE2A /* calendar-background-active-middle-left.png */,
+				BAF67E3D16D623190047FE2A /* calendar-background-active-middle-left@2x.png */,
+				BAF67E3E16D623190047FE2A /* calendar-background-active-middle-middle.png */,
+				BAF67E3F16D623190047FE2A /* calendar-background-active-middle-middle@2x.png */,
+				BAF67E4016D623190047FE2A /* calendar-background-active-middle-right.png */,
+				BAF67E4116D623190047FE2A /* calendar-background-active-middle-right@2x.png */,
+				BAF67E4216D623190047FE2A /* calendar-background-active-top-left.png */,
+				BAF67E4316D623190047FE2A /* calendar-background-active-top-left@2x.png */,
+				BAF67E4416D623190047FE2A /* calendar-background-active-top-middle.png */,
 				BAF67E6916D623190047FE2A /* calendar-background-active-top-middle@2x.png */,
 				BAF67E6A16D623190047FE2A /* calendar-background-active-top-right.png */,
 				BAF67E6B16D623190047FE2A /* calendar-background-active-top-right@2x.png */,
@@ -1093,12 +1018,31 @@
 				BAF67E7516D6231A0047FE2A /* calendar-background-middle-middle@2x.png */,
 				BAF67E7616D6231A0047FE2A /* calendar-background-middle-right.png */,
 				BAF67E7716D6231A0047FE2A /* calendar-background-middle-right@2x.png */,
+				BAF67E3516D623180047FE2A /* calendar-background-noise.png */,
 				BAF67E7816D6231A0047FE2A /* calendar-background-top-left.png */,
 				BAF67E7916D6231A0047FE2A /* calendar-background-top-left@2x.png */,
 				BAF67E7A16D6231A0047FE2A /* calendar-background-top-middle.png */,
 				BAF67E7B16D6231A0047FE2A /* calendar-background-top-middle@2x.png */,
 				BAF67E7C16D6231A0047FE2A /* calendar-background-top-right.png */,
 				BAF67E7D16D6231A0047FE2A /* calendar-background-top-right@2x.png */,
+				BAF67E4516D623190047FE2A /* calendar-week-all-day-bottom-left.png */,
+				BAF67E4616D623190047FE2A /* calendar-week-all-day-bottom-left@2x.png */,
+				BAF67E4716D623190047FE2A /* calendar-week-all-day-bottom-middle.png */,
+				BAF67E4816D623190047FE2A /* calendar-week-all-day-bottom-middle@2x.png */,
+				BAF67E4916D623190047FE2A /* calendar-week-all-day-bottom-right.png */,
+				BAF67E4A16D623190047FE2A /* calendar-week-all-day-bottom-right@2x.png */,
+				BAF67E4B16D623190047FE2A /* calendar-week-all-day-middle-left.png */,
+				BAF67E4C16D623190047FE2A /* calendar-week-all-day-middle-left@2x.png */,
+				BAF67E4D16D623190047FE2A /* calendar-week-all-day-middle-middle.png */,
+				BAF67E4E16D623190047FE2A /* calendar-week-all-day-middle-middle@2x.png */,
+				BAF67E4F16D623190047FE2A /* calendar-week-all-day-middle-right.png */,
+				BAF67E5016D623190047FE2A /* calendar-week-all-day-middle-right@2x.png */,
+				BAF67E5116D623190047FE2A /* calendar-week-all-day-top-left.png */,
+				BAF67E5216D623190047FE2A /* calendar-week-all-day-top-left@2x.png */,
+				BAF67E5316D623190047FE2A /* calendar-week-all-day-top-middle.png */,
+				BAF67E5416D623190047FE2A /* calendar-week-all-day-top-middle@2x.png */,
+				BAF67E5516D623190047FE2A /* calendar-week-all-day-top-right.png */,
+				BAF67E5616D623190047FE2A /* calendar-week-all-day-top-right@2x.png */,
 				BAF67E7E16D6231A0047FE2A /* calendar-week-day-bottom-left.png */,
 				BAF67E7F16D6231A0047FE2A /* calendar-week-day-bottom-left@2x.png */,
 				BAF67E8016D6231A0047FE2A /* calendar-week-day-bottom-middle.png */,
@@ -1123,19 +1067,23 @@
 				BAF67E9316D6231A0047FE2A /* calendar-week-timeruler-bottom-middle@2x.png */,
 				BAF67E9416D6231A0047FE2A /* calendar-week-timeruler-bottom-right.png */,
 				BAF67E9516D6231A0047FE2A /* calendar-week-timeruler-bottom-right@2x.png */,
+				BAF67E2916D623180047FE2A /* calendar-week-timeruler-bottom.png */,
 				BAF67E9616D6231A0047FE2A /* calendar-week-timeruler-middle-left.png */,
 				BAF67E9716D6231A0047FE2A /* calendar-week-timeruler-middle-left@2x.png */,
 				BAF67E9816D6231A0047FE2A /* calendar-week-timeruler-middle-middle.png */,
 				BAF67E9916D6231A0047FE2A /* calendar-week-timeruler-middle-middle@2x.png */,
 				BAF67E9A16D6231A0047FE2A /* calendar-week-timeruler-middle-right.png */,
 				BAF67E9B16D6231A0047FE2A /* calendar-week-timeruler-middle-right@2x.png */,
+				BAF67E2A16D623180047FE2A /* calendar-week-timeruler-middle.png */,
 				BAF67E9C16D6231A0047FE2A /* calendar-week-timeruler-top-left.png */,
 				BAF67E9D16D6231A0047FE2A /* calendar-week-timeruler-top-left@2x.png */,
 				BAF67E9E16D6231A0047FE2A /* calendar-week-timeruler-top-middle.png */,
 				BAF67E9F16D6231A0047FE2A /* calendar-week-timeruler-top-middle@2x.png */,
 				BAF67EA016D6231A0047FE2A /* calendar-week-timeruler-top-right.png */,
 				BAF67EA116D6231A0047FE2A /* calendar-week-timeruler-top-right@2x.png */,
+				BAF67E2B16D623180047FE2A /* calendar-week-timeruler-top.png */,
 				BAF67EA216D6231A0047FE2A /* checkbox-background-10_6.png */,
+				BAF67E2816D623180047FE2A /* checkbox-background-10_7.png */,
 				BAF67EA316D6231A0047FE2A /* checkbox-check-10_6.png */,
 				BAF67EA416D6231A0047FE2A /* checkbox-check-10_7.png */,
 				BAF67EA516D6231A0047FE2A /* checkbox-colormask-10_6.png */,
@@ -1145,12 +1093,56 @@
 				BAF67EA916D6231A0047FE2A /* cursor-resize-up-left.png */,
 				BAF67EAA16D6231A0047FE2A /* cursor-resize-up-right.png */,
 				BAF67EAB16D6231A0047FE2A /* exclamation.png */,
+				BAF67E0616D623180047FE2A /* glass-hud-button-active-left.png */,
+				BAF67E0716D623180047FE2A /* glass-hud-button-active-left@2x.png */,
+				BAF67E0816D623180047FE2A /* glass-hud-button-active-middle.png */,
+				BAF67E0916D623180047FE2A /* glass-hud-button-active-middle@2x.png */,
+				BAF67E0A16D623180047FE2A /* glass-hud-button-active-right.png */,
+				BAF67E0B16D623180047FE2A /* glass-hud-button-active-right@2x.png */,
+				BAF67E0C16D623180047FE2A /* glass-hud-button-disabled-left.png */,
+				BAF67E0D16D623180047FE2A /* glass-hud-button-disabled-left@2x.png */,
+				BAF67E0E16D623180047FE2A /* glass-hud-button-disabled-middle.png */,
+				BAF67E0F16D623180047FE2A /* glass-hud-button-disabled-middle@2x.png */,
+				BAF67E1016D623180047FE2A /* glass-hud-button-disabled-right.png */,
+				BAF67E1116D623180047FE2A /* glass-hud-button-disabled-right@2x.png */,
+				BAF67E1216D623180047FE2A /* glass-hud-button-left.png */,
+				BAF67E1316D623180047FE2A /* glass-hud-button-left@2x.png */,
+				BAF67E1416D623180047FE2A /* glass-hud-button-middle.png */,
+				BAF67E1516D623180047FE2A /* glass-hud-button-middle@2x.png */,
+				BAF67E1616D623180047FE2A /* glass-hud-button-right.png */,
+				BAF67E1716D623180047FE2A /* glass-hud-button-right@2x.png */,
+				BAF67E1816D623180047FE2A /* glass-hud-pop-up-button-arrows.png */,
+				BAF67E1916D623180047FE2A /* glass-hud-pop-up-button-arrows@2x.png */,
+				BAF67E2C16D623180047FE2A /* glass-hud-textview-bottom-left.png */,
+				BAF67E2D16D623180047FE2A /* glass-hud-textview-bottom-right.png */,
+				BAF67E2E16D623180047FE2A /* glass-hud-textview-bottom.png */,
+				BAF67E2F16D623180047FE2A /* glass-hud-textview-middle-left.png */,
+				BAF67E3016D623180047FE2A /* glass-hud-textview-middle-right.png */,
+				BAF67E3116D623180047FE2A /* glass-hud-textview-middle.png */,
+				BAF67E3216D623180047FE2A /* glass-hud-textview-top-left.png */,
+				BAF67E3316D623180047FE2A /* glass-hud-textview-top-right.png */,
+				BAF67E3416D623180047FE2A /* glass-hud-textview-top.png */,
+				BAF67DFE16D623170047FE2A /* icon_128x128.png */,
+				BAF67DFF16D623170047FE2A /* icon_128x128@2x.png */,
+				BAF67E0016D623170047FE2A /* icon_256x256.png */,
+				BAF67E0116D623170047FE2A /* icon_256x256@2x.png */,
+				BAF67DFD16D623170047FE2A /* icon_32x32.png */,
+				BAF67E0216D623170047FE2A /* icon_512x512.png */,
+				BAF67E0316D623170047FE2A /* icon_512x512@2x.png */,
+				BAF67E0416D623180047FE2A /* preferences-about-blotter-banner-overlay.png */,
+				BAF67E2616D623180047FE2A /* preferences-about-blotter-banner-overlay@2x.png */,
+				BAF67E0516D623180047FE2A /* preferences-about-blotter-bg.png */,
+				BAF67E1A16D623180047FE2A /* preferences-about-blotter-bg@2x.png */,
 				BAF67EAC16D6231B0047FE2A /* preferences-about-blotter-button-bezel-active-centre.png */,
 				BAF67EAD16D6231B0047FE2A /* preferences-about-blotter-button-bezel-active-left.png */,
 				BAF67EAE16D6231B0047FE2A /* preferences-about-blotter-button-bezel-active-right.png */,
 				BAF67EAF16D6231B0047FE2A /* preferences-about-blotter-button-bezel-centre.png */,
 				BAF67EB016D6231B0047FE2A /* preferences-about-blotter-button-bezel-left.png */,
 				BAF67EB116D6231B0047FE2A /* preferences-about-blotter-button-bezel-right.png */,
+				BAF67E1B16D623180047FE2A /* preferences-about-blotter-five-star-icon.png */,
+				BAF67E1C16D623180047FE2A /* preferences-about-blotter-five-star-icon@2x.png */,
+				BAF67E1D16D623180047FE2A /* preferences-about-blotter-icon.png */,
+				BAF67E1E16D623180047FE2A /* preferences-about-blotter-icon@2x.png */,
 				BAF67EB216D6231B0047FE2A /* preferences-about-blotter-rate-bezel-active.png */,
 				BAF67EB316D6231B0047FE2A /* preferences-about-blotter-rate-bezel.png */,
 				BAF67EB416D6231B0047FE2A /* preferences-about-blotter-tall-button-bezel-active-centre.png */,
@@ -1159,6 +1151,8 @@
 				BAF67EB716D6231B0047FE2A /* preferences-about-blotter-tall-button-bezel-centre.png */,
 				BAF67EB816D6231B0047FE2A /* preferences-about-blotter-tall-button-bezel-left.png */,
 				BAF67EB916D6231B0047FE2A /* preferences-about-blotter-tall-button-bezel-right.png */,
+				BAF67E1F16D623180047FE2A /* preferences-about-blotter-twitter-icon.png */,
+				BAF67E2016D623180047FE2A /* preferences-about-blotter-twitter-icon@2x.png */,
 				BAF67EBA16D6231B0047FE2A /* preferences-layout-area-bottom-left.png */,
 				BAF67EBB16D6231B0047FE2A /* preferences-layout-area-bottom-right.png */,
 				BAF67EBC16D6231B0047FE2A /* preferences-layout-area-bottom.png */,
@@ -1168,25 +1162,35 @@
 				BAF67EC016D6231B0047FE2A /* preferences-layout-area-top-left.png */,
 				BAF67EC116D6231B0047FE2A /* preferences-layout-area-top-right.png */,
 				BAF67EC216D6231B0047FE2A /* preferences-layout-area-top.png */,
+				BAF67E2116D623180047FE2A /* preferences-layout-icon@2x.png */,
 				BAF67EC316D6231B0047FE2A /* preferences-layout-noise.png */,
-				BAF67EC416D6231B0047FE2A /* preferences-recreated-aqua.jpg */,
 				BAF67FA016D625590047FE2A /* preferences-shortcuts-icon.png */,
+				BAF67DF416D623170047FE2A /* recessed-box-shadow-bottom-left.png */,
+				BAF67DF516D623170047FE2A /* recessed-box-shadow-bottom-right.png */,
+				BAF67DF616D623170047FE2A /* recessed-box-shadow-bottom.png */,
+				BAF67DF716D623170047FE2A /* recessed-box-shadow-middle-left.png */,
+				BAF67DF816D623170047FE2A /* recessed-box-shadow-middle-right.png */,
+				BAF67DF916D623170047FE2A /* recessed-box-shadow-middle.png */,
+				BAF67DFA16D623170047FE2A /* recessed-box-shadow-top-left.png */,
+				BAF67DFB16D623170047FE2A /* recessed-box-shadow-top-right.png */,
+				BAF67DFC16D623170047FE2A /* recessed-box-shadow-top.png */,
+				BAF67E2216D623180047FE2A /* status-bar-active.png */,
+				BAF67E2316D623180047FE2A /* status-bar-active@2x.png */,
+				BAF67E2416D623180047FE2A /* status-bar.png */,
+				BAF67E2516D623180047FE2A /* status-bar@2x.png */,
+				28F69A1A129C1CAA00D4BB97 /* Credits.rtf */,
+				28F69CF4129CC12100D4BB97 /* Licenses.rtf */,
+				BAF67F9E16D624FE0047FE2A /* WLApplicationPreferencesWindow.xib */,
 				BAF67DBE16D622820047FE2A /* AboutPrefPaneView.xib */,
 				BAF67DC016D622820047FE2A /* CalendarsPrefPaneView.xib */,
 				BAF67DC216D622820047FE2A /* GeneralPrefPaneView.xib */,
 				BAF67DC416D622820047FE2A /* LayoutPrefPaneView.xib */,
-				BAF67DC616D622820047FE2A /* PositionPrefPaneView.xib */,
-				BAF67DC816D622820047FE2A /* ShortcutsPrefPaneView.xib */,
+				E2E826C7145023A6007035E5 /* Localizable.strings */,
 				E2E826C9145023A6007035E5 /* MainMenu.xib */,
 				E2E826CB145023A6007035E5 /* NewEventWindow.xib */,
 				E2E826CD145023A6007035E5 /* NewTaskWindow.xib */,
-				BAF67F9E16D624FE0047FE2A /* WLApplicationPreferencesWindow.xib */,
-				E2E826C7145023A6007035E5 /* Localizable.strings */,
-				BA08A7E0167735130085F40C /* README */,
-				E28C418C13F081A1005789DD /* defaults.plist */,
-				8D1107310486CEB800E47090 /* Blotter-Info.plist */,
-				28F69A1A129C1CAA00D4BB97 /* Credits.rtf */,
-				28F69CF4129CC12100D4BB97 /* Licenses.rtf */,
+				BAF67DC616D622820047FE2A /* PositionPrefPaneView.xib */,
+				BAF67DC816D622820047FE2A /* ShortcutsPrefPaneView.xib */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1355,6 +1359,8 @@
 				BA105997168DAD8F00A3DDF5 /* WLCalendarEventsController.m */,
 				BC59945B22C693D17FB3C086 /* WLCalendarRemindersController.m */,
 				BC599C059FEEE82BA1037863 /* WLCalendarRemindersController.h */,
+				BC599D1A78BB9F6271BF2CE6 /* WLCalendarsController.m */,
+				BC599CF26AB7137B7108C87C /* WLCalendarsController.h */,
 			);
 			name = "Calendar Data Engine";
 			sourceTree = "<group>";
@@ -1574,8 +1580,6 @@
 				E2E826D2145023A6007035E5 /* NewTaskWindow.xib in Resources */,
 				BA81A834164548070058EB16 /* IKApplicationPreferences.strings in Resources */,
 				BA08A7E1167735130085F40C /* README in Resources */,
-				BAF67CE216D616D50047FE2A /* WLFoundation.xcodeproj in Resources */,
-				BAF67D7F16D619250047FE2A /* WLCalendarStore.xcodeproj in Resources */,
 				BAF67DCA16D622820047FE2A /* AboutPrefPaneView.xib in Resources */,
 				BAF67DCB16D622820047FE2A /* CalendarsPrefPaneView.xib in Resources */,
 				BAF67DCC16D622820047FE2A /* GeneralPrefPaneView.xib in Resources */,
@@ -1792,6 +1796,7 @@
 				BAF67F9616D6231B0047FE2A /* preferences-recreated-aqua.jpg in Resources */,
 				BAF67F9F16D624FE0047FE2A /* WLApplicationPreferencesWindow.xib in Resources */,
 				BAF67FA116D625590047FE2A /* preferences-shortcuts-icon.png in Resources */,
+				BABB682E16E9D8C200FFDCC5 /* Blotter-B10.iconset in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1878,6 +1883,7 @@
 				BAF67F9C16D624C90047FE2A /* WLApplicationPreferences.m in Sources */,
 				BAF67F9D16D624C90047FE2A /* WLApplicationPreferencesWindow.m in Sources */,
 				BC5994A0A3B188B70572162C /* WLCalendarRemindersController.m in Sources */,
+				BC59962B9F05EFB31F00E8AC /* WLCalendarsController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2045,29 +2051,33 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CLANG_X86_VECTOR_INSTRUCTIONS = ssse3;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_UNROLL_LOOPS = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_PEDANTIC = NO;
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
-				GCC_WARN_STRICT_SELECTOR_MATCH = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 			};
 			name = Archiving;
 		};
@@ -2090,19 +2100,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/Blotter-dbysecrboudvpphaqyfhpprxxpua/Build/Products/Debug\"",
 				);
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
 				INFOPLIST_FILE = "Blotter-Info.plist";
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CFLAGS = "-DDEBUG=1";
 				PRODUCT_NAME = Blotter;
-				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -2125,21 +2131,35 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CODE_SIGN_IDENTITY = "";
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CLANG_X86_VECTOR_INSTRUCTIONS = ssse3;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_UNROLL_LOOPS = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
 		};
@@ -2147,29 +2167,33 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CLANG_X86_VECTOR_INSTRUCTIONS = ssse3;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_UNROLL_LOOPS = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_PEDANTIC = NO;
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
-				GCC_WARN_STRICT_SELECTOR_MATCH = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};

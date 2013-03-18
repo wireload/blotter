@@ -18,6 +18,12 @@
 
 - (WLCalSystemEvent *)initWithCSEvent:(CalEvent *)aCSEvent calCalendar:(id <WLCalCalendar>)aCalendar
 {
+    NSParameterAssert(aCSEvent != nil);
+    NSParameterAssert(aCalendar != nil);
+
+    if (![aCSEvent.uid length])
+        return nil;
+
     self = [super init];
 
     if (self)

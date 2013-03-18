@@ -22,10 +22,10 @@ typedef BOOL (^WLUpdateChecker)(id aFromArrayObject, id aToArrayObject);
     @param      aComparator Comparator used to sort both self and aRelativeArray.
     @discussion Throws an exception if either aRelativeArray or aComparator is nil.
  */
-- (void)WL_indexesOfDeletedObject:(out NSIndexSet * __autoreleasing *)outDeletedIndexes
-         indexesOfInsertedObjects:(out NSIndexSet * __autoreleasing *)outInsertedIndexes
-                  relativeToArray:(NSArray *)aRelativeArray
-            sortedUsingComparator:(NSComparator)aComparator;
+- (void)WL_indexesOfDeletedObjects:(out NSIndexSet * __autoreleasing *)outDeletedIndexes
+          indexesOfInsertedObjects:(out NSIndexSet * __autoreleasing *)outInsertedIndexes
+                   relativeToArray:(NSArray *)aRelativeArray
+             sortedUsingComparator:(NSComparator)aComparator;
 
 /*!
     @brief      Computes indexes of objects that are considered inserted in the receiver and their position in the receiver.
@@ -38,16 +38,5 @@ typedef BOOL (^WLUpdateChecker)(id aFromArrayObject, id aToArrayObject);
 - (NSIndexSet *)WL_indexesOfInsertedObjects:(out __autoreleasing NSIndexSet **)outInsertedIndexes
                             relativeToArray:(NSArray *)aRelativeArray
                       sortedUsingComparator:(NSComparator)aComparator;
-
-/*!
-    //TODO: REWRITE ME
-    @description   Both arrays must contain unique objects in terms of aSortDescriptors so it can distinguish updated events.
- */
-- (void)WL_indexesOfDeletedObject:(out NSIndexSet **)outDeletedIndexes
-         indexesOfInsertedObjects:(out NSIndexSet **)outInsertedIndexes
-          indexesOfUpdatedObjects:(out NSIndexSet **)outUpdatedIndexes
-                    toSortedArray:(NSArray *)aToArray
-                  sortDescriptors:(NSArray *)aSortDescriptors
-                    updateChecker:(WLUpdateChecker)anUpdateChecker;
 
 @end

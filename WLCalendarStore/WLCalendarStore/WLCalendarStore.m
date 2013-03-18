@@ -47,9 +47,15 @@ NSString *WLCalStoreDidChangeNotification = @"WLCalStoreDidChangeNotification";
 
 @implementation WLCalendarStore
 
-+ (id <WLCalStore>)systemStore
++ (NSObject <WLCalStore> *)systemStore
 {
-    return [[WLCalSystemStore alloc] init];
+    static dispatch_once_t OncePredicate;
+    static WLCalSystemStore *SystemStore = nil;
+    dispatch_once(&OncePredicate, ^
+    {
+        SystemStore = [[WLCalSystemStore alloc] init];
+    });
+    return SystemStore;
 }
 
 @end

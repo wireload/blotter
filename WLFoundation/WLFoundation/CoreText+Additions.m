@@ -41,7 +41,7 @@ CGSize AB_CTFrameGetSize(CTFrameRef frame)
 		// Get the origin of the last line. We add the descent to this
 		// (below) to get the bottom edge of the last line of text.
 		CGPoint lastLineOrigin;
-		CTFrameGetLineOrigins(frame, CFRangeMake(lines.count - 1, 1), &lastLineOrigin);
+		CTFrameGetLineOrigins(frame, CFRangeMake((CFIndex)lines.count - 1, 1), &lastLineOrigin);
 		
 		CGPathRef framePath = CTFrameGetPath(frame);
 		CGRect frameRect = CGPathGetBoundingBox(framePath);
@@ -58,14 +58,14 @@ CGSize AB_CTFrameGetSize(CTFrameRef frame)
 CGFloat AB_CTFrameGetHeight(CTFrameRef f)
 {
 	NSArray *lines = (__bridge NSArray *)CTFrameGetLines(f);
-	NSInteger n = (NSInteger)[lines count];
+	NSUInteger n = [lines count];
 	CGPoint lineOrigins[n];
-	CTFrameGetLineOrigins(f, CFRangeMake(0, n), lineOrigins);
+	CTFrameGetLineOrigins(f, CFRangeMake(0, (CFIndex)n), lineOrigins);
 	
 	CGPoint first, last;
 	
 	CGFloat h = 0.0;
-	for(int i = 0; i < n; ++i) {
+	for(NSUInteger i = 0; i < n; ++i) {
 		CTLineRef line = (__bridge CTLineRef)[lines objectAtIndex:i];
 		CGFloat ascent, descent, leading;
 		CTLineGetTypographicBounds(line, &ascent, &descent, &leading);
@@ -92,14 +92,14 @@ CFIndex AB_CTFrameGetStringIndexForPosition(CTFrameRef frame, CGPoint p)
 //	NSLog(@"frame = %@", f);
 	NSArray *lines = (__bridge NSArray *)CTFrameGetLines(frame);
 	
-	CFIndex linesCount = [lines count];
+	NSUInteger linesCount = [lines count];
 	CGPoint lineOrigins[linesCount];
-	CTFrameGetLineOrigins(frame, CFRangeMake(0, linesCount), lineOrigins);
+	CTFrameGetLineOrigins(frame, CFRangeMake(0, (CFIndex)linesCount), lineOrigins);
 	
 	CTLineRef line = NULL;
 	CGPoint lineOrigin = CGPointZero;
 	
-	for(CFIndex i = 0; i < linesCount; ++i) {
+	for(NSUInteger i = 0; i < linesCount; ++i) {
 		line = (__bridge CTLineRef)[lines objectAtIndex:i];
 		lineOrigin = lineOrigins[i];
 //		NSLog(@"%d origin = %@", i, NSStringFromCGPoint(lineOrigin));
@@ -154,11 +154,11 @@ void AB_CTFrameGetRectsForRangeWithAggregationType(CTFrameRef frame, CFRange ran
 	CFIndex endIndex = startIndex + range.length;
 	
 	NSArray *lines = (__bridge NSArray *)CTFrameGetLines(frame);
-	CFIndex linesCount = [lines count];
+	NSUInteger linesCount = [lines count];
 	CGPoint lineOrigins[linesCount];
-	CTFrameGetLineOrigins(frame, CFRangeMake(0, linesCount), lineOrigins);
+	CTFrameGetLineOrigins(frame, CFRangeMake(0, (CFIndex)linesCount), lineOrigins);
 	
-	for(CFIndex i = 0; i < linesCount; ++i) {
+	for(NSUInteger i = 0; i < linesCount; ++i) {
 		CTLineRef line = (__bridge CTLineRef)[lines objectAtIndex:i];
 		
 		CGPoint lineOrigin = lineOrigins[i];

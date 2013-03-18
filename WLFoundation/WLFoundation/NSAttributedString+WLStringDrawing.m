@@ -27,12 +27,12 @@
             if (numberOfLines > 0)
             {
                 __block CGPoint *lineOrigins = calloc(numberOfLines, sizeof(CGPoint));
-                CTFrameGetLineOrigins(frame, CFRangeMake(0, numberOfLines), lineOrigins);
+                CTFrameGetLineOrigins(frame, CFRangeMake(0, (CFIndex)numberOfLines), lineOrigins);
 
                 CFRange frameRange = CTFrameGetVisibleStringRange(frame);
-                CFIndex stringLength = [self length];
-                NSParameterAssert((NSUInteger)stringLength == [self length]);
-                BOOL shouldTruncateLastLine = (frameRange.location + frameRange.length) < stringLength;
+                NSUInteger stringLength = [self length];
+                NSParameterAssert(stringLength == [self length]);
+                BOOL shouldTruncateLastLine = (NSUInteger)(frameRange.location + frameRange.length) < stringLength;
 
                 [lines enumerateObjectsUsingBlock:^(id line, NSUInteger idx, BOOL *stop)
                 {
@@ -48,7 +48,7 @@
                     else
                     {
                         CFRange lineRange = CTLineGetStringRange((__bridge CTLineRef)line);
-                        NSRange range = NSMakeRange(lineRange.location, lineRange.length);
+                        NSRange range = NSMakeRange((NSUInteger)lineRange.location, (NSUInteger)lineRange.length);
                         NSMutableAttributedString *truncatedString = [[NSMutableAttributedString alloc] initWithAttributedString:
                                                                       [self attributedSubstringFromRange:range]];
                         NSString *trimmedString = [[truncatedString string] stringByTrimmingCharactersInSet:

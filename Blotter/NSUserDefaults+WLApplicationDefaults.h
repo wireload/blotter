@@ -13,6 +13,8 @@
 
 extern NSInteger const WLBlotterBundleVersion2_1;
 
+extern NSInteger const WLBlotterBundleVersion2_2;
+
 extern NSString* const WLLastMigratedBundleVersionKey;
 
 extern NSString* const WLCalendarSizeKey;
@@ -23,13 +25,9 @@ extern NSString* const WLDisplayAllCalendarsKey;
 
 extern NSString* const WLCalendarsKey;
 
-extern NSString* const WLCalendarUIDKey;
-
 extern NSString* const WLCalendarIsUsedForEventsKey;
 
 extern NSString* const WLCalendarIsUsedForRemindersKey;
-
-extern NSString* const WLCalendarTypeKey;
 
 extern NSString* const WLAllowsAdvancedCalendarTypeCheck;
 
@@ -100,53 +98,6 @@ extern NSComparator const WLCalendarsComparator;
 @end
 
 
-@interface NSUserDefaults (WLCalendarController)
-
-- (void)WL_setCalendars:(NSArray *)newCalendars;
-
-- (NSArray *)WL_calendars;
-
-- (void)WL_updateCalendars:(WLCalendarsUpdaterBlock)anUpdaterBlock;
-
-- (void)WL_setDisplaysAllCalendars:(BOOL)newDisplaysAllCalendars;
-
-- (BOOL)WL_displaysAllCalendars;
-
-- (void)WL_setAllowsAdvancedCalendarTypeCheck:(BOOL)newAllowsAdvancedCalendarTypeCheck;
-
-- (BOOL)WL_allowsAdvancedCalendarTypeCheck;
-
-@end
-
-
-@interface NSArray (WLCalendarController)
-
-- (NSUInteger)WL_indexOfCalendarWithUID:(NSString *)anUID;
-
-- (NSDictionary *)WL_calendarWithUID:(NSString *)anUID;
-
-@end
-
-
-@interface NSMutableArray (WLCalendarController)
-
-- (void)WL_insertCalendar:(NSDictionary *)aCalendar;
-
-- (void)WL_removeCalendarWithUID:(NSString *)anUID;
-
-@end
-
-
-@interface NSDictionary (WLCalendarController)
-
-/*!
- @param aCalCalendar    MUST be non-nil.
- */
-+ (NSDictionary *)WL_makeCalendarWithCalCalendar:(CalCalendar *)aCalCalendar;
-
-@end
-
-
 @interface NSUserDefaults (WLCalendarWindow)
 
 - (BOOL)WL_slowsAnimation;
@@ -201,5 +152,62 @@ extern NSComparator const WLCalendarsComparator;
 @interface NSUserDefaults (WLGeneralPreferences)
 
 - (BOOL)WL_showInMenuBar;
+
+@end
+
+
+@interface NSUserDefaults (WLCalendarsPreferences)
+
+- (BOOL)WL_displaysAllCalendars;
+
+- (void)WL_setDisplaysAllCalendars:(BOOL)newDisplaysAllCalendars;
+
+@end
+
+
+#pragma mark - Deprecated
+
+__attribute__((deprecated("Deprecated since 2.2"))) extern NSString* const WLCalendarUIDKey;
+
+
+@interface NSUserDefaults (WLCalendarController)
+
+- (void)WL_setCalendars:(NSArray *)newCalendars __attribute__((deprecated("Deprecated since 2.2")));
+
+- (NSArray *)WL_calendars __attribute__((deprecated("Deprecated since 2.2")));
+
+- (void)WL_updateCalendars:(WLCalendarsUpdaterBlock)anUpdaterBlock __attribute__((deprecated("Deprecated since 2.2")));
+
+- (void)WL_setAllowsAdvancedCalendarTypeCheck:(BOOL)newAllowsAdvancedCalendarTypeCheck __attribute__((deprecated("Deprecated since 2.2")));
+
+- (BOOL)WL_allowsAdvancedCalendarTypeCheck __attribute__((deprecated("Deprecated since 2.2")));
+
+@end
+
+
+@interface NSArray (WLCalendarController)
+
+- (NSUInteger)WL_indexOfCalendarWithUID:(NSString *)anUID __attribute__((deprecated("Deprecated since 2.2")));
+
+- (NSDictionary *)WL_calendarWithUID:(NSString *)anUID __attribute__((deprecated("Deprecated since 2.2")));
+
+@end
+
+
+@interface NSMutableArray (WLCalendarController)
+
+- (void)WL_insertCalendar:(NSDictionary *)aCalendar __attribute__((deprecated("Deprecated since 2.2")));
+
+- (void)WL_removeCalendarWithUID:(NSString *)anUID __attribute__((deprecated("Deprecated since 2.2")));
+
+@end
+
+
+@interface NSDictionary (WLCalendarController)
+
+/*!
+ @param aCalCalendar    MUST be non-nil.
+ */
++ (NSDictionary *)WL_makeCalendarWithCalCalendar:(CalCalendar *)aCalCalendar __attribute__((deprecated("Deprecated since 2.2")));
 
 @end

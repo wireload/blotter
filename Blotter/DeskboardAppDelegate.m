@@ -60,7 +60,6 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         NSDictionary *defaults = [NSDictionary dictionaryWithContentsOfURL:defaultsURL];
         [userDefaults registerDefaults:defaults];
         // @see -[WLCalendarWindowController tasksViewFrame] for default value of TasksViewHeight.
-        [WLCalendarController synchronizeCalendarInUserDefaultsWithCalCalendars];
     }
 }
 
