@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1080</int>
+		<int key="IBDocument.SystemTarget">1060</int>
 		<string key="IBDocument.SystemVersion">12D78</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
 		<string key="IBDocument.AppKitVersion">1187.37</string>
@@ -507,7 +507,7 @@
 				<reference key="NSNextKeyView" ref="762517277"/>
 				<string key="NSClassName">NSView</string>
 			</object>
-			<object class="NSCustomObject" id="40308582">
+			<object class="NSCustomObject" id="410127397">
 				<string key="NSClassName">StartAtLoginController</string>
 			</object>
 			<object class="NSUserDefaultsController" id="282032805">
@@ -560,10 +560,10 @@
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: startAtLogin</string>
 						<reference key="source" ref="932265259"/>
-						<reference key="destination" ref="40308582"/>
+						<reference key="destination" ref="410127397"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="932265259"/>
-							<reference key="NSDestination" ref="40308582"/>
+							<reference key="NSDestination" ref="410127397"/>
 							<string key="NSLabel">value: startAtLogin</string>
 							<string key="NSBinding">value</string>
 							<string key="NSKeyPath">startAtLogin</string>
@@ -1071,7 +1071,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">203</int>
-						<reference key="object" ref="40308582"/>
+						<reference key="object" ref="410127397"/>
 						<reference key="parent" ref="0"/>
 					</object>
 				</array>
@@ -1092,7 +1092,7 @@
 					<string key="NS.key.0">IBUserDefinedRuntimeAttributesPlaceholderName</string>
 					<object class="IBUserDefinedRuntimeAttributesPlaceholder" key="NS.object.0">
 						<string key="name">IBUserDefinedRuntimeAttributesPlaceholderName</string>
-						<reference key="object" ref="40308582"/>
+						<reference key="object" ref="410127397"/>
 						<array key="userDefinedRuntimeAttributes">
 							<object class="IBUserDefinedRuntimeAttribute">
 								<string key="typeIdentifier">com.apple.InterfaceBuilder.userDefinedRuntimeAttributeType.string</string>
@@ -1190,9 +1190,13 @@
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
+			<real value="1060" key="NS.object.0"/>
+		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>
-			<real value="4200" key="NS.object.0"/>
+			<real value="4600" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">1</int>
