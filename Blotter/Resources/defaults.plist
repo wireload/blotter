@@ -64,6 +64,8 @@
 	<false/>
 	<key>RateThisAppURL</key>
 	<string>macappstore://itunes.apple.com/app/id406580224?mt=12</string>
+	<key>WLCalSystemStoreChecksCalendarsAgainstICal</key>
+	<true/>
 	<key>GetHelpURL</key>
 	<string>http://wireload.net/products/blotter/faq/?utm_source=Blotter&amp;utm_medium=app&amp;utm_content=about_page_help&amp;utm_campaign=Blotter_app</string>
 	<key>GetSupportURL</key>
@@ -75,6 +77,8 @@
 	<key>BannerURL</key>
 	<string>http://www.yippiemove.com/?utm_source=Blotter&amp;utm_medium=app&amp;utm_content=about-page&amp;utm_campaign=Blotter%2Bapp</string>
 	<key>AnimateBringToFront</key>
+	<true/>
+	<key>WLCalSystemStoreAllowsAdvancedCalendarTypeCheck</key>
 	<true/>
 </dict>
 </plist>
