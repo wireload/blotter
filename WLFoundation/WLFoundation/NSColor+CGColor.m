@@ -24,7 +24,8 @@
     NSColorSpace *colorSpace = [[[NSColorSpace alloc] initWithCGColorSpace:CGColorGetColorSpace(aCGColor)] autorelease];
     size_t numberOfComponents = CGColorGetNumberOfComponents(aCGColor);
     const CGFloat *components = CGColorGetComponents(aCGColor);
-    return [NSColor colorWithColorSpace:colorSpace components:components count:numberOfComponents];
+    NSParameterAssert(numberOfComponents < NSIntegerMax);
+    return [NSColor colorWithColorSpace:colorSpace components:components count:(NSInteger)numberOfComponents];
 }
 
 + (NSColor *)WL_colorWithCGColor:(CGColorRef)aCGColor
@@ -54,7 +55,8 @@
         colorSpace = CGColorSpaceCreateDeviceRGB();
 
     NSInteger componentCount = [self numberOfComponents];
-    CGFloat *components = (CGFloat *)calloc(componentCount, sizeof(CGFloat));
+    NSParameterAssert(componentCount > 0);
+    CGFloat *components = (CGFloat *)calloc((size_t)componentCount, sizeof(CGFloat));
     [self getComponents:components];
     CGColorRef color = CGColorCreate(colorSpace, components);
     free((void*)components);

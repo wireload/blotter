@@ -246,6 +246,9 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 0.1;
         case WLCalReminderCompletionMaskAny:
             p = [[_store class] taskPredicateWithCalendars:csCalendars];
             break;
+        case WLCalReminderCompletionMaskNothing:
+            __builtin_unreachable();
+            break;
     }
 
     if (p)
