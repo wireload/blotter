@@ -8,3 +8,6 @@
 [submodule "Blotter/IKApplicationPreferences"]
 	path = Blotter/IKApplicationPreferences
 	url = git://github.com/Kentzo/IKApplicationPreferences.git
+[submodule "StartAtLoginController"]
+	path = StartAtLoginController
+	url = git://github.com/alexzielenski/StartAtLoginController.git
