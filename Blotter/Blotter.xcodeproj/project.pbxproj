@@ -278,8 +278,8 @@
 		BAF67F9416D6231B0047FE2A /* preferences-layout-area-top.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67EC216D6231B0047FE2A /* preferences-layout-area-top.png */; };
 		BAF67F9516D6231B0047FE2A /* preferences-layout-noise.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67EC316D6231B0047FE2A /* preferences-layout-noise.png */; };
 		BAF67F9616D6231B0047FE2A /* preferences-recreated-aqua.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BAF67EC416D6231B0047FE2A /* preferences-recreated-aqua.jpg */; };
-		BAF67F9C16D624C90047FE2A /* WLApplicationPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67F9916D624C80047FE2A /* WLApplicationPreferences.m */; };
-		BAF67F9D16D624C90047FE2A /* WLApplicationPreferencesWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67F9B16D624C90047FE2A /* WLApplicationPreferencesWindow.m */; };
+		BAF67F9C16D624C90047FE2A /* WLApplicationPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67F9916D624C80047FE2A /* WLApplicationPreferences.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		BAF67F9D16D624C90047FE2A /* WLApplicationPreferencesWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67F9B16D624C90047FE2A /* WLApplicationPreferencesWindow.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BAF67F9F16D624FE0047FE2A /* WLApplicationPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAF67F9E16D624FE0047FE2A /* WLApplicationPreferencesWindow.xib */; };
 		BAF67FA116D625590047FE2A /* preferences-shortcuts-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67FA016D625590047FE2A /* preferences-shortcuts-icon.png */; };
 		BC5994A0A3B188B70572162C /* WLCalendarRemindersController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC59945B22C693D17FB3C086 /* WLCalendarRemindersController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
