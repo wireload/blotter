@@ -48,6 +48,7 @@
 		BA08AA53167743A50085F40C /* WLPreferencesButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08AA50167743A50085F40C /* WLPreferencesButtonCell.m */; };
 		BA0A55D816F73FB700E4D6BD /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA0A55D716F73FB700E4D6BD /* ServiceManagement.framework */; };
 		BA0A563916F742FB00E4D6BD /* LoginItem.app in Copy Login Item */ = {isa = PBXBuildFile; fileRef = BA0A563616F7428E00E4D6BD /* LoginItem.app */; };
+		BA0A564216F8293400E4D6BD /* preferences-layout-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BA0A564116F8293400E4D6BD /* preferences-layout-icon.png */; };
 		BA105998168DAD8F00A3DDF5 /* WLCalendarEventsController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA105997168DAD8F00A3DDF5 /* WLCalendarEventsController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BA1F51DB1663B2A400ABD662 /* WLGeneralPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1F51DA1663B2A400ABD662 /* WLGeneralPreferences.m */; };
 		BA23662416F7371300779487 /* StartAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA23662316F7371300779487 /* StartAtLoginController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -519,6 +520,7 @@
 		BA08AA50167743A50085F40C /* WLPreferencesButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = WLPreferencesButtonCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		BA0A55D716F73FB700E4D6BD /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		BA0A563116F7428D00E4D6BD /* LoginItem.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LoginItem.xcodeproj; path = ../LoginItem/LoginItem.xcodeproj; sourceTree = "<group>"; };
+		BA0A564116F8293400E4D6BD /* preferences-layout-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "preferences-layout-icon.png"; sourceTree = "<group>"; };
 		BA105996168DAD8F00A3DDF5 /* WLCalendarEventsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarEventsController.h; sourceTree = "<group>"; };
 		BA105997168DAD8F00A3DDF5 /* WLCalendarEventsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarEventsController.m; sourceTree = "<group>"; };
 		BA1F51D91663B2A400ABD662 /* WLGeneralPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGeneralPreferences.h; sourceTree = "<group>"; };
@@ -1225,6 +1227,7 @@
 				BAF67EC016D6231B0047FE2A /* preferences-layout-area-top-left.png */,
 				BAF67EC116D6231B0047FE2A /* preferences-layout-area-top-right.png */,
 				BAF67EC216D6231B0047FE2A /* preferences-layout-area-top.png */,
+				BA0A564116F8293400E4D6BD /* preferences-layout-icon.png */,
 				BAF67E2116D623180047FE2A /* preferences-layout-icon@2x.png */,
 				BAF67EC316D6231B0047FE2A /* preferences-layout-noise.png */,
 				BAF67FA016D625590047FE2A /* preferences-shortcuts-icon.png */,
@@ -1888,6 +1891,7 @@
 				BAF67F9F16D624FE0047FE2A /* WLApplicationPreferencesWindow.xib in Resources */,
 				BAF67FA116D625590047FE2A /* preferences-shortcuts-icon.png in Resources */,
 				BABB682E16E9D8C200FFDCC5 /* Blotter-B10.iconset in Resources */,
+				BA0A564216F8293400E4D6BD /* preferences-layout-icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
