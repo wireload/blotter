@@ -132,6 +132,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         WLDateRange *r = [WLDateRange dateRangeWithStartDate:self.fromDatePicker.dateValue endDate:self.toDatePicker.dateValue];
         NSArray *events = [[aNotification userInfo] objectForKey:r];
+        NSLog(@"Events: %@", events);
         self.events = events;
     });
 }
