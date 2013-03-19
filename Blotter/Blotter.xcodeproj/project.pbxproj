@@ -45,7 +45,7 @@
 		BA08AA34167737730085F40C /* WLColorCheckboxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A980167737730085F40C /* WLColorCheckboxCell.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BA08AA51167743A50085F40C /* WLAboutPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08AA4C167743A50085F40C /* WLAboutPreferences.m */; };
 		BA08AA52167743A50085F40C /* WLCustomCursorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08AA4E167743A50085F40C /* WLCustomCursorButton.m */; };
-		BA08AA53167743A50085F40C /* WLPreferencesButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08AA50167743A50085F40C /* WLPreferencesButtonCell.m */; };
+		BA08AA53167743A50085F40C /* WLPreferencesButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08AA50167743A50085F40C /* WLPreferencesButtonCell.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BA0A55D816F73FB700E4D6BD /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA0A55D716F73FB700E4D6BD /* ServiceManagement.framework */; };
 		BA0A563916F742FB00E4D6BD /* LoginItem.app in Copy Login Item */ = {isa = PBXBuildFile; fileRef = BA0A563616F7428E00E4D6BD /* LoginItem.app */; };
 		BA0A564216F8293400E4D6BD /* preferences-layout-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BA0A564116F8293400E4D6BD /* preferences-layout-icon.png */; };
