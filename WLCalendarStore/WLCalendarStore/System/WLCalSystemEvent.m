@@ -70,4 +70,21 @@
         return YES;
 }
 
+- (NSString *)description
+{
+    NSMutableString *d = [NSMutableString stringWithFormat:@"%@: {", [super description]];
+    [d appendFormat:@"Identifier: %@, ", self.itemIdentifier];
+    [d appendFormat:@"Title: %@, ", self.title];
+    [d appendFormat:@"Location: %@, ", self.location];
+    [d appendFormat:@"Is All Day: %d, ", self.allDay];
+    [d appendFormat:@"Is Detached: %d, ", self.isDetached];
+    [d appendFormat:@"Start Date: %@, ", self.startDate];
+    [d appendFormat:@"End Date: %@, ", self.endDate];
+    [d appendFormat:@"Occurrence Date: %@, ", self.occurrenceDate];
+    [d appendFormat:@"Last Modified Date: %@, ", self.lastModifiedDate];
+    [d appendFormat:@"Notes: %@", self.notes];
+    [d appendString:@"}"];
+    return d;
+}
+
 @end
