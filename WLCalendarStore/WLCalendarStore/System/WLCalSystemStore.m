@@ -131,9 +131,12 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 0.1;
 
         NSArray *UIDs = nil;
         if ([_iCalApp isRunning])
+        {
             UIDs = [[_iCalApp calendars] valueForKey:@"uid"];
+            [_log logDebug:@"Successfuly fetched calendar UIDs from iCal: %@", UIDs];
+        }
         else
-            [_log logNotice:@"Cannot get calendar UIDs from iCal since it's not running."];
+            [_log logWarning:@"Cannot fetch calendar UIDs from iCal since it's not running."];
 
         dispatch_semaphore_signal(_iCalAppSemaphore);
 
