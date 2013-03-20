@@ -19,7 +19,6 @@
 		BA0A561116F7428D00E4D6BD /* LoginItem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoginItem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA0A561416F7428D00E4D6BD /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		BA0A561716F7428D00E4D6BD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		BA0A561816F7428D00E4D6BD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		BA0A561916F7428D00E4D6BD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BA0A561C16F7428D00E4D6BD /* LoginItem-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LoginItem-Info.plist"; sourceTree = "<group>"; };
 		BA0A561E16F7428D00E4D6BD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -47,8 +46,10 @@
 		BA0A560816F7428D00E4D6BD = {
 			isa = PBXGroup;
 			children = (
+				BA0A561416F7428D00E4D6BD /* Cocoa.framework */,
+				BA0A561716F7428D00E4D6BD /* AppKit.framework */,
+				BA0A561916F7428D00E4D6BD /* Foundation.framework */,
 				BA0A561A16F7428D00E4D6BD /* LoginItem */,
-				BA0A561316F7428D00E4D6BD /* Frameworks */,
 				BA0A561216F7428D00E4D6BD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -59,25 +60,6 @@
 				BA0A561116F7428D00E4D6BD /* LoginItem.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		BA0A561316F7428D00E4D6BD /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				BA0A561416F7428D00E4D6BD /* Cocoa.framework */,
-				BA0A561616F7428D00E4D6BD /* Other Frameworks */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		BA0A561616F7428D00E4D6BD /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				BA0A561716F7428D00E4D6BD /* AppKit.framework */,
-				BA0A561816F7428D00E4D6BD /* CoreData.framework */,
-				BA0A561916F7428D00E4D6BD /* Foundation.framework */,
-			);
-			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
 		BA0A561A16F7428D00E4D6BD /* LoginItem */ = {
@@ -218,6 +200,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -356,6 +339,7 @@
 				BA0A563C16F7485A00E4D6BD /* Archiving */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
