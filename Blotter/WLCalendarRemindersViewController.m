@@ -30,6 +30,7 @@
 
 - (void)dealloc
 {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(remindersComparatorDidChange) object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
