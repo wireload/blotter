@@ -564,7 +564,7 @@
 
     NSDateComponents *endDateComponents = [NSDateComponents new];
     [endDateComponents setDay:3];
-    [endDateComponents setHour:11 ];
+    [endDateComponents setHour:11];
 
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
 
@@ -651,6 +651,40 @@
 
     WLDateRange *a18 = [r2 dateRangeByAligningCalendarUnit:NSDayCalendarUnit calendar:calendar options:WLAlignStartDateNearest | WLAlignEndDateNearest];
     STAssertEqualObjects(r2, a18, @"Date ranges are not equal");
+
+    // Test empty date range
+    WLDateRange *r3 = [WLDateRange dateRangeWithStartDate:startDate endDate:startDate];
+
+    WLDateRange *a19 = [r3 dateRangeByAligningCalendarUnit:NSDayCalendarUnit calendar:calendar options:WLAlignStartDateInward | WLAlignEndDateInward];
+    WLDateRange *e19 = [WLDateRange dateRangeWithStartDate:startDateStart endDate:startDateEnd];
+    STAssertEqualObjects(e19, a19, @"Date ranges are not equal");
+
+    WLDateRange *a20 = [r3 dateRangeByAligningCalendarUnit:NSDayCalendarUnit calendar:calendar options:WLAlignStartDateInward | WLAlignEndDateOutward];
+    WLDateRange *e20 = [WLDateRange dateRangeWithStartDate:startDateEnd endDate:startDateEnd];
+    STAssertEqualObjects(e20, a20, @"Date ranges are not equal");
+
+    WLDateRange *a21 = [r3 dateRangeByAligningCalendarUnit:NSDayCalendarUnit calendar:calendar options:WLAlignStartDateInward | WLAlignEndDateNearest];
+    WLDateRange *e21 = [WLDateRange dateRangeWithStartDate:startDateEnd endDate:startDateNearest];
+    STAssertEqualObjects(e21, a21, @"Date ranges are not equal");
+
+    WLDateRange *a22 = [r3 dateRangeByAligningCalendarUnit:NSDayCalendarUnit calendar:calendar options:WLAlignStartDateOutward | WLAlignEndDateInward];
+    WLDateRange *e22 = [WLDateRange dateRangeWithStartDate:startDateStart endDate:startDateStart];
+    STAssertEqualObjects(e22, a22, @"Date ranges are not equal");
+
+    WLDateRange *a23 = [r3 dateRangeByAligningCalendarUnit:NSDayCalendarUnit calendar:calendar options:WLAlignStartDateOutward | WLAlignEndDateOutward];
+    STAssertEqualObjects(e19, a23, @"Date ranges are not equal");
+
+    WLDateRange *a24 = [r3 dateRangeByAligningCalendarUnit:NSDayCalendarUnit calendar:calendar options:WLAlignStartDateOutward | WLAlignEndDateNearest];
+    STAssertEqualObjects(e19, a24, @"Date ranges are not equal");
+
+    WLDateRange *a25 = [r3 dateRangeByAligningCalendarUnit:NSDayCalendarUnit calendar:calendar options:WLAlignStartDateNearest | WLAlignEndDateInward];
+    STAssertEqualObjects(e19, a25, @"Date ranges are not equal");
+
+    WLDateRange *a26 = [r3 dateRangeByAligningCalendarUnit:NSDayCalendarUnit calendar:calendar options:WLAlignStartDateNearest | WLAlignEndDateOutward];
+    STAssertEqualObjects(e20, a26, @"Date ranges are not equal");
+
+    WLDateRange *a27 = [r3 dateRangeByAligningCalendarUnit:NSDayCalendarUnit calendar:calendar options:WLAlignStartDateNearest | WLAlignEndDateNearest];
+    STAssertEqualObjects(e21, a27, @"Date ranges are not equal");
 }
 
 - (void)testSplitIntoCalendarUnitsCalendar
