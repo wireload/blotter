@@ -36,7 +36,7 @@
 		BAF67CA816D606090047FE2A /* NSAttributedString+WLStringDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9816D606080047FE2A /* NSAttributedString+WLStringDrawing.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BAF67CA916D606090047FE2A /* NSAttributedString+WLStringDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9916D606080047FE2A /* NSAttributedString+WLStringDrawing.m */; };
 		BAF67CAA16D606090047FE2A /* NSColor+CGColor.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9A16D606080047FE2A /* NSColor+CGColor.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BAF67CAB16D606090047FE2A /* NSColor+CGColor.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9B16D606080047FE2A /* NSColor+CGColor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		BAF67CAB16D606090047FE2A /* NSColor+CGColor.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9B16D606080047FE2A /* NSColor+CGColor.m */; };
 		BAF67CAC16D606090047FE2A /* WLBlockLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9C16D606090047FE2A /* WLBlockLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BAF67CAD16D606090047FE2A /* WLBlockLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9D16D606090047FE2A /* WLBlockLayer.m */; };
 		BAF67CAE16D606090047FE2A /* WLEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9E16D606090047FE2A /* WLEvents.h */; settings = {ATTRIBUTES = (Public, ); }; };
