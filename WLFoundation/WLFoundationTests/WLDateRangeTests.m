@@ -21,6 +21,16 @@
     STAssertEqualObjects(endDate, range.endDate, @"End dates don't match");
 }
 
+- (void)testInitWithEndDateStartDate
+{
+    NSDate *endDate = [NSDate date];
+    NSDate *startDate = [endDate dateByAddingTimeInterval:10];
+    WLDateRange *range = [[WLDateRange alloc] initWithStartDate:startDate endDate:endDate];
+
+    STAssertEqualObjects(endDate, range.startDate, @"Start dates don't match");
+    STAssertEqualObjects(startDate, range.endDate, @"End dates don't match");
+}
+
 - (void)testEmptyDateRange
 {
     WLDateRange *dateRange = [WLDateRange emptyDateRange];

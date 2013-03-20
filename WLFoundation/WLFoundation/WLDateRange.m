@@ -19,15 +19,14 @@
 
     if (self)
     {
-        if (aStartDate)
-            _startDate = [aStartDate copy];
-        else
-            _startDate = [NSDate date];
+        if (!aStartDate)
+            aStartDate = [NSDate date];
 
-        if (anEndDate)
-            _endDate = [anEndDate copy];
-        else
-            _endDate = [_startDate copy];
+        if (!anEndDate)
+            anEndDate = [NSDate date];
+
+        _startDate = [[aStartDate earlierDate:anEndDate] copy];
+        _endDate = [[aStartDate laterDate:anEndDate] copy];
     }
 
     return self;
@@ -260,12 +259,6 @@
 
 - (NSArray *)splitIntoCalendarUnits:(NSCalendarUnit)aCalendarUnit calendar:(NSCalendar *)aCalendar
 {
-    if ([self.startDate compare:self.endDate] == NSOrderedDescending)
-    {
-        [NSException raise:NSInternalInconsistencyException
-                    format:@"You cannot split reverse-date range (%@).", self];
-    }
-
     if (!aCalendar)
         aCalendar = [NSCalendar autoupdatingCurrentCalendar];
 

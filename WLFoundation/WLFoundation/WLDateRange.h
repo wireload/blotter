@@ -22,17 +22,17 @@ typedef NS_ENUM(NSUInteger, WLPositionRelativeToRange)
 
 
 /*!
-    @brief  Represents date range.
+    @brief      Represents date range.
  */
 @interface WLDateRange : NSObject <NSCopying>
 
 /*!
-    @brief  Start date of range.
+    @brief  Start date of range. CANNOT be later than endDate.
  */
 @property (copy, readonly) NSDate *startDate;
 
 /*!
-    @brief  End date of range.
+    @brief  End date of range. CANNOT be earlier than startDate.
  */
 @property (copy, readonly) NSDate *endDate;
 
@@ -44,6 +44,7 @@ typedef NS_ENUM(NSUInteger, WLPositionRelativeToRange)
     @param      anEndDate End date of range. If nil, -[NSDate date] is used.
 
     @discussion Designated initializer.
+                Automatically standardizes range so that start date is never later than end Date.
  */
 - (instancetype)initWithStartDate:(NSDate *)aStartDate endDate:(NSDate *)anEndDate;
 
@@ -71,7 +72,7 @@ typedef NS_ENUM(NSUInteger, WLPositionRelativeToRange)
 - (WLDateRange *)dateRangeByUnitingWithDateRange:(WLDateRange *)aDateRange;
 
 /*!
-    @brief       Determines position of aDate relative to the receiver.
+    @brief      Determines position of aDate relative to the receiver.
 
     @param      aDate Date to compare. MUST NOT be nil.
 
@@ -141,7 +142,7 @@ typedef NS_ENUM(NSUInteger, WLDateRangeAlignmentOptions)
 /*!
     @brief      Aligns aCalendarUnit of the receiver.
 
-    @param      aCalendarUnit Calendar unit of the receiver for alignment.
+    @param      aCalendarUnit Calendar calendarUnit of the receiver for alignment.
 
     @param      aCalendar Instance of NSCalendar used for alignment. May be nil (means current calendar).
 
@@ -149,7 +150,7 @@ typedef NS_ENUM(NSUInteger, WLDateRangeAlignmentOptions)
 
     @throws     NSInternalInconsistencyException
 
-    @discussion If the underlying system (NSCalendar) is unable to align aCalendarUnit, 
+    @discussion If the underlying system (NSCalendar) is unable to align aCalendarUnit,
                 NSInternalInconsistencyException is thrown.
  */
 - (WLDateRange *)dateRangeByAligningCalendarUnit:(NSCalendarUnit)aCalendarUnit calendar:(NSCalendar *)aCalendar options:(WLDateRangeAlignmentOptions)anOptions;
@@ -170,8 +171,6 @@ typedef NS_ENUM(NSUInteger, WLDateRangeAlignmentOptions)
 
     @discussion Result is guaranteed to be sorted by start date.
                 If the underlying system (NSCalendar) is unable to split the receiver into aCalendarUnit,
-                NSInternalInconsistencyException is thrown.
-                If the receiver is reverted (that is, end date is earlier than start date),
                 NSInternalInconsistencyException is thrown.
  */
 - (NSArray *)splitIntoCalendarUnits:(NSCalendarUnit)aCalendarUnit calendar:(NSCalendar *)aCalendar;
