@@ -10,11 +10,30 @@
 #import <WLCalendarStore/WLCalendarStore.h>
 
 
+/*
+    @brief      The notification which is posted when calendars are changed.
+
+    @discussion User Info dictionary contains changed calendar stores. Observer may access it by using WLChangedCalStoresKey.
+                Users should not make any expectations about target thread of this notification.
+
+    @see        WLChangedCalStoresKey
+ */
 extern NSString *WLCalCalendarsDidChangeNotification;
 
+/*
+    @brief      The notification which is posted when calendars to display are changed.
+
+    @discussion User Info dictionary contains changed calendar stores. Observer may access it by using WLChangedCalStoresKey.
+                Users should not make any expectations about target thread of this notification.
+
+    @see        WLChangedCalStoresKey
+ */
 extern NSString *WLCalCalendarsToDisplayDidChangeNotification;
 
 
+/*!
+    @brief  Key used to access changed calendar stores in notification's user info dictionary.
+ */
 extern NSString *WLChangedCalStoresKey;
 
 

@@ -139,6 +139,7 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
                                                                                    passingTest:^BOOL(NSObject<WLCalCalendar> *aCalCalendar, NSUInteger idx, BOOL *stop)
         {
             NSDictionary *value = defaultsStore[aCalCalendar.calendarIdentifier];
+            // value may be nil in case that calendar is already added, but not written to the user defaults yet.
             return [value[WLCalendarIsUsedForEventsKey] boolValue] || [value[WLCalendarIsUsedForRemindersKey] boolValue];
         }];
         return [calCalendars objectsAtIndexes:indexesOfCalCalendarsToDisplay];
@@ -158,6 +159,7 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
                                                                                            passingTest:^BOOL(NSObject<WLCalCalendar> *aCalCalendar, NSUInteger idx, BOOL *stop)
         {
             NSDictionary *value = defaultsStore[aCalCalendar.calendarIdentifier];
+            // value may be nil in case that calendar is already added, but not written to the user defaults yet.
             return [value[WLCalendarIsUsedForRemindersKey] boolValue];
         }];
         return [calCalendars objectsAtIndexes:indexesOfCalReminderCalendarsToDisplay];
@@ -177,6 +179,7 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
                                                                                          passingTest:^BOOL(NSObject<WLCalCalendar> *aCalCalendar, NSUInteger idx, BOOL *stop)
         {
             NSDictionary *value = defaultsStore[aCalCalendar.calendarIdentifier];
+            // value may be nil in case that calendar is already added, but not written to the user defaults yet.
             return [value[WLCalendarIsUsedForEventsKey] boolValue];
         }];
         return [calCalendars objectsAtIndexes:indexesOfCalEventsCalendarsToDisplay];
@@ -307,7 +310,8 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
                                                               userInfo:@{WLChangedCalStoresKey : @[aStore]}];
         });
 
-        // Since can be more than one store simultaneously writing new calendars, we should take care that all changes will be saved.
+        // Since there can be more than one store simultaneously updating calendars in user defaults,
+        // we should take additional care to ensure that all changes will be saved.
         dispatch_async(_accessUserDefaultsQueue, ^
         {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
