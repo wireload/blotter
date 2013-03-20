@@ -282,7 +282,7 @@
 }
 
 
-#pragma mark NSView
+#pragma mark NSViewController
 
 - (void)loadView
 {
