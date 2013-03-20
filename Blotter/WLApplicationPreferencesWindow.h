@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 WireLoad. All rights reserved.
 //
 
-#import <WireloadClassesAndResources/WireloadClassesAndResources.h>
+#import "WLClosableWindow.h"
 
 
 @interface WLApplicationPreferencesWindow : WLClosableWindow
