@@ -54,7 +54,7 @@
         [_reminders enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(NSObject<WLCalReminder> *oldReminder, NSUInteger oldReminderIndex, BOOL *stop)
         {
             NSUInteger newReminderIndex = [newReminders indexOfObjectWithOptions:NSEnumerationConcurrent
-                                                                     passingTest:^BOOL(NSObject<WLCalReminder> *newReminder, NSUInteger i, BOOL *stop)
+                                                                     passingTest:^BOOL(NSObject<WLCalReminder> *newReminder, NSUInteger i, BOOL *stop2)
             {
                 return [newReminder.calendar.calendarIdentifier isEqualToString:oldReminder.calendar.calendarIdentifier] &&
                        [newReminder.itemIdentifier isEqualToString:oldReminder.itemIdentifier];
