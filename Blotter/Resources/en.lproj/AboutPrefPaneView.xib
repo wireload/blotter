@@ -54,7 +54,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="349496589">
 							<int key="NSCellFlags">67108864</int>
 							<int key="NSCellFlags2">306184192</int>
-							<string type="base64-UTF8" key="NSContents">wqkgMjAxMC0xMiBXaXJlTG9hZCBJbmMuCkFsbCByaWdodHMgcmVzZXJ2ZWQuA</string>
+							<string type="base64-UTF8" key="NSContents">wqkgMjAxMC0xMyBXaXJlTG9hZCBJbmMuCkFsbCByaWdodHMgcmVzZXJ2ZWQuA</string>
 							<object class="NSFont" key="NSSupport">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">10</double>
@@ -148,6 +148,7 @@
 						<string key="NSFrame">{{394, -1}, {246, 88}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:22</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="673781184">
@@ -809,7 +810,7 @@
 			<real value="4600" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
-		<int key="IBDocument.defaultPropertyAccessControl">1</int>
+		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="preferences-about-blotter-banner-overlay">{640, 96}</string>
 			<string key="preferences-about-blotter-bg">{640, 512}</string>
