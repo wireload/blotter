@@ -846,7 +846,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
             memset_pattern8(_lengthOfHours, &DoubleValue, 8 * sizeof(_lengthOfHours) / sizeof(CGFloat));
             memset_pattern8(_locationOfHours, &DoubleValue, 8 * sizeof(_locationOfHours) / sizeof(CGFloat));
 
-            if (fabs(availableHeight) < CGFLOAT_EPSILON)
+            if (fabs(availableHeight) < DBL_EPSILON)
                 return;
 
             WLHourRange fixedVisibleHourRange = [self visibleHourRange];
