@@ -1250,19 +1250,19 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
         case WLCalendarWindowTopLeftEdge:
             return [NSCursor WL_resizeUpLeftCursor];
         case WLCalendarWindowTopCenterEdge:
-            return [NSCursor resizeUpDownCursor];
+            return [NSCursor WL_resizeUpDownCursor];
         case WLCalendarWindowTopRightEdge:
             return [NSCursor WL_resizeUpRightCursor];
         case WLCalendarWindowCenterLeftEdge:
-            return [NSCursor resizeLeftRightCursor];
+            return [NSCursor WL_resizeLeftRightCursor];
         case WLCalendarWindowCenterCenterEdge:
             return [NSCursor openHandCursor];
         case WLCalendarWindowCenterRightEdge:
-            return [NSCursor resizeLeftRightCursor];
+            return [NSCursor WL_resizeLeftRightCursor];
         case WLCalendarWindowBottomLeftEdge:
             return [NSCursor WL_resizeDownLeftCursor];
         case WLCalendarWindowBottomCenterEdge:
-            return [NSCursor resizeUpDownCursor];
+            return [NSCursor WL_resizeUpDownCursor];
         case WLCalendarWindowBottomRightEdge:
             return [NSCursor WL_resizeDownRightCursor];
         default:
