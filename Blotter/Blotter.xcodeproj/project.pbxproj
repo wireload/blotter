@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		256AC3DA0F4B6AC300CF3369 /* DeskboardAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		284064FC12834B98000816FF /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 284064FB12834B98000816FF /* CalendarStore.framework */; };
+		28A2F9D117008E5C006808F8 /* checkbox-background-10_7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28A2F9CF17008E5C006808F8 /* checkbox-background-10_7@2x.png */; };
+		28A2F9D217008E5C006808F8 /* checkbox-check-10_7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28A2F9D017008E5C006808F8 /* checkbox-check-10_7@2x.png */; };
 		28F69A1B129C1CAA00D4BB97 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 28F69A1A129C1CAA00D4BB97 /* Credits.rtf */; };
 		28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 28F69CF4129CC12100D4BB97 /* Licenses.rtf */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -449,6 +451,8 @@
 		256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeskboardAppDelegate.m; sourceTree = "<group>"; };
 		256AC3F00F4B6AF500CF3369 /* Deskboard_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deskboard_Prefix.pch; sourceTree = "<group>"; };
 		284064FB12834B98000816FF /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = System/Library/Frameworks/CalendarStore.framework; sourceTree = SDKROOT; };
+		28A2F9CF17008E5C006808F8 /* checkbox-background-10_7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-background-10_7@2x.png"; sourceTree = "<group>"; };
+		28A2F9D017008E5C006808F8 /* checkbox-check-10_7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-check-10_7@2x.png"; sourceTree = "<group>"; };
 		28F69A1A129C1CAA00D4BB97 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		28F69CF4129CC12100D4BB97 /* Licenses.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Licenses.rtf; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1140,8 +1144,10 @@
 				BAF67EA116D6231A0047FE2A /* calendar-week-timeruler-top-right@2x.png */,
 				BAF67EA216D6231A0047FE2A /* checkbox-background-10_6.png */,
 				BAF67E2816D623180047FE2A /* checkbox-background-10_7.png */,
+				28A2F9CF17008E5C006808F8 /* checkbox-background-10_7@2x.png */,
 				BAF67EA316D6231A0047FE2A /* checkbox-check-10_6.png */,
 				BAF67EA416D6231A0047FE2A /* checkbox-check-10_7.png */,
+				28A2F9D017008E5C006808F8 /* checkbox-check-10_7@2x.png */,
 				BAF67EA516D6231A0047FE2A /* checkbox-colormask-10_6.png */,
 				BAF67EA616D6231A0047FE2A /* checkbox-colormask-10_7.png */,
 				BAF67EA716D6231A0047FE2A /* cursor-resize-down-left.png */,
@@ -1880,6 +1886,8 @@
 				BAF67FA116D625590047FE2A /* preferences-shortcuts-icon.png in Resources */,
 				BABB682E16E9D8C200FFDCC5 /* Blotter-B10.iconset in Resources */,
 				BA0A564216F8293400E4D6BD /* preferences-layout-icon.png in Resources */,
+				28A2F9D117008E5C006808F8 /* checkbox-background-10_7@2x.png in Resources */,
+				28A2F9D217008E5C006808F8 /* checkbox-check-10_7@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
