@@ -13,6 +13,6 @@
 
 + (NSColor *)WL_colorWithCGColor:(CGColorRef)aCGColor;
 
-- (CGColorRef)WL_CGColor __attribute__((cf_returns_retained));
+- (CGColorRef)WL_CGColor;
 
 @end
