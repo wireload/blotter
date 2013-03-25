@@ -16,6 +16,7 @@
 
     @discussion User Info dictionary representes events per date range. The receiver should query this dictionary using the same date range
                 it used to addObservedDateRange.
+                If value for observed range is nil, the receiver should interpret value as "nothing changed" and therefore ignore the notification.
  */
 extern NSString *WLCalendarEventsDidChangeNotification;
 
@@ -93,6 +94,13 @@ extern NSString *WLCalendarEventsDidChangeNotification;
     @discussion You SHOULD not call this method directly.
  */
 - (void)fetchCalEventsForDateRanges:(NSSet *)aRanges priority:(NSOperationQueuePriority)aPriority;
+
+/*!
+    @brief  Synchronously fetches and returns events within aRange.
+
+    @param  aRange Date range of events.
+ */
+- (NSArray *)calEventsForDateRange:(WLDateRange *)aRange;
 
 /*!
     @brief      Called when an observed store posts WLCalStoreDidChangeNotification.

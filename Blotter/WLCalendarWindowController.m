@@ -15,6 +15,10 @@
 #import "WLCalendarBoxView.h"
 #import "WLCalendarWindowBringToFrontAnimation.h"
 #import "NSUserDefaults+WLApplicationDefaults.h"
+#import "WLCalendarRemindersController.h"
+#import "WLCalendarEventsController.h"
+#import "WLCalendarFloatingWeekEventsViewController.h"
+#import "WLCalendarRightNowEventsViewController.h"
 
 
 // Sizes are chosen so that when switching between these 2 modes only week view is disappeard. that is the date, todo and right now vies are visually unchanged.
@@ -33,6 +37,12 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
 
 @implementation WLCalendarWindowController
 {
+    id _calendarsObserver;
+    WLCalendarRemindersController *_remindersController;
+    WLCalendarEventsController *_eventsController;
+    WLSmartClock *_smartClock;
+
+    WLASLLog *_log;
 }
 
 - (id)init
@@ -48,8 +58,10 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
 {
     NSParameterAssert([aWindow isKindOfClass:[WLCalendarWindow class]]);
     self = [super initWithWindow:aWindow];
+
     if (self != nil)
     {
+        _log = [[WLASLLog alloc] initWithName:@"Calendar Window"];
         [aWindow setDelegate:self];
 
         windowState = WLFinderLevelState;
@@ -57,32 +69,53 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 
-        // It's important to allocate calendars "consumers" before calendars controller because they MUST exists at time
+        // It's important to allocate "consumers" before calendars controller because they MUST exists at time
         // when WLCalCalendarsToDisplayDidChangeNotification is fired which can happen just after calendarsController is initialized.
-        // TODO: This should be configurable.
-        NSArray *calStores = @[[WLCalendarStore systemStore]];
+        NSArray *calStores = @[[WLCalendarStore systemStore]]; // TODO: should be configurable
         _remindersController = [[WLCalendarRemindersController alloc] initWithCalStores:calStores];
+        _eventsController = [[WLCalendarEventsController alloc] initWithCalStores:calStores];
         _calendarsController = [[WLCalendarsController alloc] initWithCalStores:calStores
                                                                 autosaveKeyPath:@"Calendars"];
-        [defaultCenter addObserver:self
-                          selector:@selector(calendarsDidChange:)
-                              name:WLCalCalendarsToDisplayDidChangeNotification
-                            object:_calendarsController];
 
-        for (NSObject<WLCalStore> *s in _calendarsController.calStores)
+        void (^updateCalendars)(NSArray *aStores) = ^(NSArray *aStores)
         {
-            NSSet *identifiers = [NSSet setWithArray:[[self.calendarsController calReminderCalendarsToDisplayForStore:s] valueForKey:@"calendarIdentifier"]];
-            [_remindersController setObservedCalendarIdentifiers:identifiers forStore:s];
-        }
+            for (NSObject<WLCalStore> *s in aStores)
+            {
+                NSSet *reminderCalendars = [NSSet setWithArray:[[self.calendarsController calReminderCalendarsToDisplayForStore:s] valueForKey:@"calendarIdentifier"]];
+#ifdef DEBUG
+                [_log logDebug:@"Observed Reminder Calendars: %@", reminderCalendars];
+#endif
+                [_remindersController setObservedCalendarIdentifiers:reminderCalendars forStore:s];
 
-        _weekViewController = [[WLCalendarFloatingWeekViewController alloc] init];
-        [_weekViewController setRepresentedObject:[WLCalendarController sharedController]];
-        [_weekViewController bind:@"mode" toObject:defaults withKeyPath:@"RollingCalendar" options:nil];
-        [_weekViewController bind:@"titleFormat" toObject:defaults withKeyPath:@"PerDayDate" options:nil];
-        _weekViewController.highlightsWeekends = YES;
+                NSSet *eventCalendars = [NSSet setWithArray:[[self.calendarsController calEventCalendarsToDisplayForStore:s] valueForKey:@"calendarIdentifier"]];
+#ifdef DEBUG
+                [_log logDebug:@"Observed Event Calendars: %@", eventCalendars];
+#endif
+                [_eventsController setObservedCalendarIdentifiers:eventCalendars forStore:s];
+            }
+        };
 
-        _rightNowViewController = [[WLCalendarRightNowViewController alloc] init];
-        [_rightNowViewController setRepresentedObject:[WLCalendarController sharedController]];
+        _calendarsObserver = [defaultCenter addObserverForName:WLCalCalendarsToDisplayDidChangeNotification
+                                                        object:_calendarsController
+                                                         queue:nil
+                                                    usingBlock:^(NSNotification *aNotification)
+        {
+            updateCalendars([[aNotification userInfo] objectForKey:WLChangedCalStoresKey]);
+        }];
+
+        updateCalendars([_calendarsController calStores]);
+
+        _weekViewController = [[WLCalendarFloatingWeekEventsViewController alloc] initWithNibName:nil bundle:nil];
+        _weekViewController.representedObject = _eventsController;
+        [_weekViewController bind:@"titleFormat" toObject:defaults withKeyPath:WLTitleFormatKey options:nil];
+
+        _rightNowViewController = [[WLCalendarRightNowEventsViewController alloc] init];
+        [_rightNowViewController setAlignmentUnit:NSDayCalendarUnit number:1 animated:NO];
+        _rightNowViewController.representedObject = _eventsController;
+
+        _smartClock = [WLSmartClock defaultSmartClock];
+        [_smartClock addObserver:self forKeyPath:@"calendar" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:NULL];
+        [_smartClock addObserver:self forKeyPath:@"date" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:NULL];
 
         _remindersViewController = [[WLCalendarRemindersViewController alloc] initWithNibName:nil bundle:nil];
         _remindersViewController.representedObject = _remindersController;
@@ -98,12 +131,14 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
         [defaults addObserver:self forKeyPath:@"DateViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
         [defaults addObserver:self forKeyPath:@"TasksViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
         [defaults addObserver:self forKeyPath:@"AllDayViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
+        [defaults addObserver:self forKeyPath:WLShowsNext7DaysKey options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:NULL];
 
         [defaultCenter addObserver:self
                           selector:@selector(_updateFrame)
                               name:NSApplicationDidChangeScreenParametersNotification
                             object:NSApp];
     }
+
     return self;
 }
 
@@ -132,8 +167,12 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
     [defaults removeObserver:self forKeyPath:WLScreenIdentifierKey];
     [defaults removeObserver:self forKeyPath:@"CustomFrameFactors"];
 
+    [_smartClock removeObserver:self forKeyPath:@"calendar"];
+    [_smartClock removeObserver:self forKeyPath:@"date"];
+
     [_remindersController release];
     [_calendarsController release];
+    [_log release];
     [super dealloc];
 }
 
@@ -188,19 +227,19 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
 - (IBAction)showNextWeek:(id)aSender
 {
     if ([self canShowNextWeek])
-        [_weekViewController showNextWeek:aSender];
+        [_weekViewController showNextWeek:aSender animated:YES];
 }
 
 - (IBAction)showPreviousWeek:(id)aSender
 {
     if ([self canShowPreviousWeek])
-        [_weekViewController showPreviousWeek:aSender];
+        [_weekViewController showPreviousWeek:aSender animated:YES];
 }
 
 - (IBAction)showCurrentWeek:(id)aSender
 {
     if ([self canShowCurrentWeek])
-        [_weekViewController showCurrentWeek:aSender];
+        [_weekViewController showCurrentWeek:aSender animated:YES];
 }
 
 - (BOOL)canShowNextWeek
@@ -222,7 +261,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
 {
     NSParameterAssert(_isWindowShowed);
 
-    return _weekViewController.weeksOffset == 0;
+    return _weekViewController.weekOffset == 0;
 }
 
 - (void)setWindowState:(WLCalendarWindowState)newWindowState animated:(BOOL)isAnimated duration:(NSTimeInterval)aDuration;
@@ -422,19 +461,6 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
     return (_fadeOutAnimation != nil || _fadeInAnimation != nil);
 }
 
-- (void)calendarsDidChange:(NSNotification *)aNotification
-{
-#ifdef DEBUG
-    NSLog(@"calCalendarsDidChange: %@", aNotification);
-#endif
-    NSArray *changedStores = [[aNotification userInfo] objectForKey:WLChangedCalStoresKey];
-    for (NSObject<WLCalStore> *s in changedStores)
-    {
-        NSSet *identifiers = [NSSet setWithArray:[[self.calendarsController calReminderCalendarsToDisplayForStore:s] valueForKey:@"calendarIdentifier"]];
-        [self.remindersController setObservedCalendarIdentifiers:identifiers forStore:s];
-    }
-}
-
 
 #pragma mark NSAnimationDelegate
 
@@ -552,6 +578,28 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
             if (_isWindowShowed)
                 [self _updateFrame];
         }
+    }
+    else if ([aKeyPath isEqualToString:WLShowsNext7DaysKey])
+    {
+        if ([aChange[NSKeyValueChangeNewKey] boolValue])
+            [_weekViewController setAlignmentUnit:NSDayCalendarUnit number:7 animated:YES];
+        else
+        {
+            if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
+                [_weekViewController setAlignmentUnit:NSWeekCalendarUnit number:1 animated:YES];
+            else
+                [_weekViewController setAlignmentUnit:NSWeekOfMonthCalendarUnit number:1 animated:YES];
+        }
+    }
+    else if ([aKeyPath isEqualToString:@"calendar"])
+    {
+        [_weekViewController setCalendar:aChange[NSKeyValueChangeNewKey] animated:YES];
+        [_rightNowViewController setCalendar:aChange[NSKeyValueChangeNewKey] animated:YES];
+    }
+    else if ([aKeyPath isEqualToString:@"date"])
+    {
+        [_weekViewController setDate:aChange[NSKeyValueChangeNewKey] animated:YES];
+        [_rightNowViewController setDate:aChange[NSKeyValueChangeNewKey] animated:YES];
     }
     else
         [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];

@@ -7,6 +7,7 @@
 //
 
 #import <WLFoundation/WLFoundation.h>
+#import <WLCalendarStore/WLCalendarStore.h>
 #import "WLCalendarAllDayEventsLayer.h"
 #import "WLCalendarEventLayer.h"
 #import "NSFont+WLCalendar.h"
@@ -54,10 +55,10 @@ static const CGFloat _WLXPadding = 2.0;
     {
         NSUInteger indexOfUsedLayer = [unusedSublayers indexOfObjectPassingTest:^BOOL(WLCalendarEventLayer *l, NSUInteger idx, BOOL *stop)
         {
-            id layerEvent = l.allDayEvent;
+            NSObject<WLCalEvent> *layerEvent = l.allDayEvent;
             return [layerEvent isEqual:event] || (
-                                                  [[layerEvent uid] isEqual:[event uid]] &&
-                                                  [[[(CalEvent *)layerEvent calendar] uid] isEqual:[[(CalEvent *)event calendar] uid]]
+                                                  [[layerEvent itemIdentifier] isEqual:[event itemIdentifier]] &&
+                                                  [[[layerEvent calendar] calendarIdentifier] isEqual:[[event calendar] calendarIdentifier]]
                                                   );
         }];
         WLCalendarEventLayer *usedLayer = nil;
@@ -208,15 +209,15 @@ static const CGFloat _WLXPadding = 2.0;
     return [self valueForKey:_WLEventKey];
 }
 
-- (void)setAllDayEvent:(id)newEvent
+- (void)setAllDayEvent:(NSObject<WLCalEvent> *)newEvent
 {
     [self setValue:newEvent forKey:_WLEventKey];
 
-    self.name = [newEvent uid];
+    self.name = [newEvent itemIdentifier];
     self.title = [NSAttributedString WL_eventTitleWithString:[newEvent title]];
-    self.location = [NSAttributedString WL_eventLocationWithString:[(CalEvent *)newEvent location]];
+    self.location = [NSAttributedString WL_eventLocationWithString:[newEvent location]];
 
-    NSColor *calendarColor = [[(CalEvent *)newEvent calendar] color];
+    NSColor *calendarColor = [[newEvent calendar] color];
     if (calendarColor == NULL || (id)calendarColor == [NSNull null])
         calendarColor = [NSColor WL_defaultCalendarColorIfFrameworkFails];
 

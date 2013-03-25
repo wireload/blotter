@@ -72,6 +72,10 @@ NSString* const WLShortcutShowCurrentWeek = @"shortcutShowCurrentWeek";
 
 NSString* const WLShortcutBringToFront = @"shortcutBringToFront";
 
+NSString* const WLTitleFormatKey = @"PerDayDate";
+
+NSString* const WLShowsNext7DaysKey = @"RollingCalendar";
+
 
 @implementation NSUserDefaults (WLApplicationDefaults)
 
@@ -306,6 +310,11 @@ NSString* const WLShortcutBringToFront = @"shortcutBringToFront";
 - (BOOL)WL_showInMenuBar
 {
     return [self boolForKey:WLShowInMenuBar];
+}
+
+- (BOOL)WL_showsNext7Days
+{
+    return [self boolForKey:WLShowsNext7DaysKey];
 }
 
 @end

@@ -61,7 +61,7 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
 
 - (void)addObservedDateRange:(WLDateRange *)aRange
 {
-    if ([aRange isEmpty])
+    if (!aRange || [aRange isEmpty])
         return;
 
     [self willChangeValueForKey:@"observedDateRanges"];
@@ -76,7 +76,7 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
 
 - (void)removeObservedDateRange:(WLDateRange *)aRange
 {
-    if ([aRange isEmpty])
+    if (!aRange || [aRange isEmpty])
         return;
 
     [self willChangeValueForKey:@"observedDateRanges"];
@@ -263,6 +263,23 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
         [[NSNotificationCenter defaultCenter] postNotificationName:WLCalendarEventsDidChangeNotification object:self userInfo:userInfo];
     }];
     [_fetchOperationsQueue addOperation:operation];
+}
+
+- (NSArray *)calEventsForDateRange:(WLDateRange *)aRange
+{
+    NSMutableArray *events = [NSMutableArray array];
+
+    dispatch_sync(_accessQueue, ^
+    {
+        for (NSObject<WLCalStore> *store in self.calStores)
+        {
+            WLCalEventsPredicate *p = [WLCalEventsPredicate predicateWithDateRange:aRange
+                                                               calendarIdentifiers:[_observedCalendarIdentifiers objectForKey:store]];
+            [events addObjectsFromArray:[store eventsMatchingPredicate:p]];
+        }
+    });
+
+    return events;
 }
 
 - (void)calStoreDidChange:(NSNotification *)aNotification

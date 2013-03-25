@@ -23,6 +23,7 @@
 
     if (self)
     {
+        _events = [anEvents copy];
         _calendarUnit = aUnit;
         _calendar = [aCalendar copy];
 
@@ -44,6 +45,7 @@
 
         dispatch_group_t g = dispatch_group_create();
 
+        NSCalendar *allDayEventsCalendarCopy = [_calendar copy];
         dispatch_group_async(g, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
         {
             NSArray *allDayEvents = [eventParts objectsAtIndexes:indexesOfAllDayEvents];
@@ -64,12 +66,11 @@
             }];
 
             NSMutableDictionary *allDayEventsPerDateRange = [NSMutableDictionary dictionary];
-            NSCalendar *localCalendar = [_calendar copy];
 
             for (NSObject<WLCalEvent> *e in allDayEvents)
             {
                 WLDateRange *r = [WLDateRange dateRangeWithStartDate:e.startDate endDate:e.endDate];
-                r = [r dateRangeByAligningCalendarUnit:aUnit calendar:localCalendar options:WLAlignOutward];
+                r = [r dateRangeByAligningCalendarUnit:aUnit calendar:allDayEventsCalendarCopy options:WLAlignOutward];
 
                 NSMutableArray *events = allDayEventsPerDateRange[r];
 
@@ -85,6 +86,7 @@
             _allDayEventsPerDateRange = [allDayEventsPerDateRange copy];
         });
 
+        NSCalendar *dayEventsCalendarCopy = [_calendar copy];
         dispatch_group_async(g, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
         {
             NSArray *dayEvents = [eventParts objectsAtIndexes:indexesOfDayEvents];
@@ -95,12 +97,11 @@
             }];
 
             NSMutableDictionary *dayEventsPerDateRange = [NSMutableDictionary dictionary];
-            NSCalendar *localCalendar = [_calendar copy];
 
             for (NSObject<WLCalEvent> *e in dayEvents)
             {
                 WLDateRange *r = [WLDateRange dateRangeWithStartDate:e.startDate endDate:e.endDate];
-                r = [r dateRangeByAligningCalendarUnit:aUnit calendar:localCalendar options:WLAlignOutward];
+                r = [r dateRangeByAligningCalendarUnit:aUnit calendar:dayEventsCalendarCopy options:WLAlignOutward];
                 NSMutableArray *events = dayEventsPerDateRange[r];
 
                 if (!events)

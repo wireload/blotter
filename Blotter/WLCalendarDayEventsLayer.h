@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
+#import <WLCalendarStore/WLCalendarStore.h>
 #import "WLCalendarTimeRuler.h"
 #import "WLCalendarEventLayer.h"
 #import "WLHourRange.h"
@@ -99,7 +100,7 @@ NS_INLINE CGFloat WLSegmentGetMaxLocation(WLSegment aSegment)
 
 @interface WLCalendarEventLayer (WLCalendarDayEventsLayer)
 
-@property (nonatomic, retain) id dayEvent;
+@property (nonatomic, retain) NSObject<WLCalEvent> *dayEvent;
 
 @property (nonatomic) NSUInteger numberOfColumnsToSkip;
 

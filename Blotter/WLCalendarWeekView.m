@@ -1033,21 +1033,16 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 {
     [self setNeedsUpdateHoursLengthAndLocation];
 
-    NSMutableArray *columnEvents = [[[self.dataSource weekView:self eventsForColumnAtIndex:anIndex] mutableCopy] autorelease];
-    NSIndexSet *allDayEventIndexes = [columnEvents indexesOfObjectsPassingTest:^BOOL(CalEvent *e, NSUInteger idx, BOOL *stop) {
-        return e.isAllDay;
-    }];
-    NSArray *allDayEvents = [[[columnEvents objectsAtIndexes:allDayEventIndexes] retain] autorelease];
-    [columnEvents removeObjectsAtIndexes:allDayEventIndexes];
-    NSSet *dayEvents = [NSSet setWithArray:columnEvents];
-
     WLCalendarDayEventsLayer *dayLayer = [[self dayLayers] objectAtIndex:anIndex];
     NSParameterAssert(dayLayer != nil);
-    [dayLayer setEvents:dayEvents];
+    [dayLayer setEvents:[NSSet setWithArray:[self.dataSource weekView:self eventsForColumnAtIndex:anIndex]]];
 
-    WLCalendarAllDayEventsLayer *allDayLayer = [[self allDayLayers] objectAtIndex:anIndex];
-    NSParameterAssert(allDayLayer != nil);
-    [allDayLayer setEvents:allDayEvents];
+    if (self.showsAllDayEvents)
+    {
+        WLCalendarAllDayEventsLayer *allDayLayer = [[self allDayLayers] objectAtIndex:anIndex];
+        NSParameterAssert(allDayLayer != nil);
+        [allDayLayer setEvents:[NSSet setWithArray:[self.dataSource weekView:self allDayEventsForColumnAtIndex:anIndex]]];
+    }
 }
 
 - (void)_updateTitleOfColumnAtIndex:(NSUInteger)anIndex
