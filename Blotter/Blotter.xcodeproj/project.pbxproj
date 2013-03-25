@@ -269,8 +269,6 @@
 		BAF67F8116D6231B0047FE2A /* preferences-about-blotter-button-bezel-centre.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67EAF16D6231B0047FE2A /* preferences-about-blotter-button-bezel-centre.png */; };
 		BAF67F8216D6231B0047FE2A /* preferences-about-blotter-button-bezel-left.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67EB016D6231B0047FE2A /* preferences-about-blotter-button-bezel-left.png */; };
 		BAF67F8316D6231B0047FE2A /* preferences-about-blotter-button-bezel-right.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67EB116D6231B0047FE2A /* preferences-about-blotter-button-bezel-right.png */; };
-		BAF67F8416D6231B0047FE2A /* preferences-about-blotter-rate-bezel-active.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67EB216D6231B0047FE2A /* preferences-about-blotter-rate-bezel-active.png */; };
-		BAF67F8516D6231B0047FE2A /* preferences-about-blotter-rate-bezel.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67EB316D6231B0047FE2A /* preferences-about-blotter-rate-bezel.png */; };
 		BAF67F8616D6231B0047FE2A /* preferences-about-blotter-tall-button-bezel-active-centre.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67EB416D6231B0047FE2A /* preferences-about-blotter-tall-button-bezel-active-centre.png */; };
 		BAF67F8716D6231B0047FE2A /* preferences-about-blotter-tall-button-bezel-active-left.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67EB516D6231B0047FE2A /* preferences-about-blotter-tall-button-bezel-active-left.png */; };
 		BAF67F8816D6231B0047FE2A /* preferences-about-blotter-tall-button-bezel-active-right.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67EB616D6231B0047FE2A /* preferences-about-blotter-tall-button-bezel-active-right.png */; };
@@ -803,8 +801,6 @@
 		BAF67EAF16D6231B0047FE2A /* preferences-about-blotter-button-bezel-centre.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "preferences-about-blotter-button-bezel-centre.png"; sourceTree = "<group>"; };
 		BAF67EB016D6231B0047FE2A /* preferences-about-blotter-button-bezel-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "preferences-about-blotter-button-bezel-left.png"; sourceTree = "<group>"; };
 		BAF67EB116D6231B0047FE2A /* preferences-about-blotter-button-bezel-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "preferences-about-blotter-button-bezel-right.png"; sourceTree = "<group>"; };
-		BAF67EB216D6231B0047FE2A /* preferences-about-blotter-rate-bezel-active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "preferences-about-blotter-rate-bezel-active.png"; sourceTree = "<group>"; };
-		BAF67EB316D6231B0047FE2A /* preferences-about-blotter-rate-bezel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "preferences-about-blotter-rate-bezel.png"; sourceTree = "<group>"; };
 		BAF67EB416D6231B0047FE2A /* preferences-about-blotter-tall-button-bezel-active-centre.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "preferences-about-blotter-tall-button-bezel-active-centre.png"; sourceTree = "<group>"; };
 		BAF67EB516D6231B0047FE2A /* preferences-about-blotter-tall-button-bezel-active-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "preferences-about-blotter-tall-button-bezel-active-left.png"; sourceTree = "<group>"; };
 		BAF67EB616D6231B0047FE2A /* preferences-about-blotter-tall-button-bezel-active-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "preferences-about-blotter-tall-button-bezel-active-right.png"; sourceTree = "<group>"; };
@@ -1238,8 +1234,6 @@
 				BAF67E1C16D623180047FE2A /* preferences-about-blotter-five-star-icon@2x.png */,
 				BAF67E1D16D623180047FE2A /* preferences-about-blotter-icon.png */,
 				BAF67E1E16D623180047FE2A /* preferences-about-blotter-icon@2x.png */,
-				BAF67EB216D6231B0047FE2A /* preferences-about-blotter-rate-bezel-active.png */,
-				BAF67EB316D6231B0047FE2A /* preferences-about-blotter-rate-bezel.png */,
 				BAF67EB416D6231B0047FE2A /* preferences-about-blotter-tall-button-bezel-active-centre.png */,
 				BAF67EB516D6231B0047FE2A /* preferences-about-blotter-tall-button-bezel-active-left.png */,
 				BAF67EB616D6231B0047FE2A /* preferences-about-blotter-tall-button-bezel-active-right.png */,
@@ -1892,8 +1886,6 @@
 				BAF67F8116D6231B0047FE2A /* preferences-about-blotter-button-bezel-centre.png in Resources */,
 				BAF67F8216D6231B0047FE2A /* preferences-about-blotter-button-bezel-left.png in Resources */,
 				BAF67F8316D6231B0047FE2A /* preferences-about-blotter-button-bezel-right.png in Resources */,
-				BAF67F8416D6231B0047FE2A /* preferences-about-blotter-rate-bezel-active.png in Resources */,
-				BAF67F8516D6231B0047FE2A /* preferences-about-blotter-rate-bezel.png in Resources */,
 				BAF67F8616D6231B0047FE2A /* preferences-about-blotter-tall-button-bezel-active-centre.png in Resources */,
 				BAF67F8716D6231B0047FE2A /* preferences-about-blotter-tall-button-bezel-active-left.png in Resources */,
 				BAF67F8816D6231B0047FE2A /* preferences-about-blotter-tall-button-bezel-active-right.png in Resources */,
