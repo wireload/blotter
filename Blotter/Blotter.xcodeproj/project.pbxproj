@@ -122,9 +122,6 @@
 		BAF67EF716D6231B0047FE2A /* status-bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67E2516D623180047FE2A /* status-bar@2x.png */; };
 		BAF67EF816D6231B0047FE2A /* preferences-about-blotter-banner-overlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67E2616D623180047FE2A /* preferences-about-blotter-banner-overlay@2x.png */; };
 		BAF67EFA16D6231B0047FE2A /* checkbox-background-10_7.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67E2816D623180047FE2A /* checkbox-background-10_7.png */; };
-		BAF67EFB16D6231B0047FE2A /* calendar-week-timeruler-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67E2916D623180047FE2A /* calendar-week-timeruler-bottom.png */; };
-		BAF67EFC16D6231B0047FE2A /* calendar-week-timeruler-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67E2A16D623180047FE2A /* calendar-week-timeruler-middle.png */; };
-		BAF67EFD16D6231B0047FE2A /* calendar-week-timeruler-top.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67E2B16D623180047FE2A /* calendar-week-timeruler-top.png */; };
 		BAF67EFE16D6231B0047FE2A /* glass-hud-textview-bottom-left.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67E2C16D623180047FE2A /* glass-hud-textview-bottom-left.png */; };
 		BAF67EFF16D6231B0047FE2A /* glass-hud-textview-bottom-right.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67E2D16D623180047FE2A /* glass-hud-textview-bottom-right.png */; };
 		BAF67F0016D6231B0047FE2A /* glass-hud-textview-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67E2E16D623180047FE2A /* glass-hud-textview-bottom.png */; };
@@ -646,9 +643,6 @@
 		BAF67E2516D623180047FE2A /* status-bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status-bar@2x.png"; sourceTree = "<group>"; };
 		BAF67E2616D623180047FE2A /* preferences-about-blotter-banner-overlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "preferences-about-blotter-banner-overlay@2x.png"; sourceTree = "<group>"; };
 		BAF67E2816D623180047FE2A /* checkbox-background-10_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-background-10_7.png"; sourceTree = "<group>"; };
-		BAF67E2916D623180047FE2A /* calendar-week-timeruler-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar-week-timeruler-bottom.png"; sourceTree = "<group>"; };
-		BAF67E2A16D623180047FE2A /* calendar-week-timeruler-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar-week-timeruler-middle.png"; sourceTree = "<group>"; };
-		BAF67E2B16D623180047FE2A /* calendar-week-timeruler-top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar-week-timeruler-top.png"; sourceTree = "<group>"; };
 		BAF67E2C16D623180047FE2A /* glass-hud-textview-bottom-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-textview-bottom-left.png"; sourceTree = "<group>"; };
 		BAF67E2D16D623180047FE2A /* glass-hud-textview-bottom-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-textview-bottom-right.png"; sourceTree = "<group>"; };
 		BAF67E2E16D623180047FE2A /* glass-hud-textview-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glass-hud-textview-bottom.png"; sourceTree = "<group>"; };
@@ -1132,21 +1126,18 @@
 				BAF67E9316D6231A0047FE2A /* calendar-week-timeruler-bottom-middle@2x.png */,
 				BAF67E9416D6231A0047FE2A /* calendar-week-timeruler-bottom-right.png */,
 				BAF67E9516D6231A0047FE2A /* calendar-week-timeruler-bottom-right@2x.png */,
-				BAF67E2916D623180047FE2A /* calendar-week-timeruler-bottom.png */,
 				BAF67E9616D6231A0047FE2A /* calendar-week-timeruler-middle-left.png */,
 				BAF67E9716D6231A0047FE2A /* calendar-week-timeruler-middle-left@2x.png */,
 				BAF67E9816D6231A0047FE2A /* calendar-week-timeruler-middle-middle.png */,
 				BAF67E9916D6231A0047FE2A /* calendar-week-timeruler-middle-middle@2x.png */,
 				BAF67E9A16D6231A0047FE2A /* calendar-week-timeruler-middle-right.png */,
 				BAF67E9B16D6231A0047FE2A /* calendar-week-timeruler-middle-right@2x.png */,
-				BAF67E2A16D623180047FE2A /* calendar-week-timeruler-middle.png */,
 				BAF67E9C16D6231A0047FE2A /* calendar-week-timeruler-top-left.png */,
 				BAF67E9D16D6231A0047FE2A /* calendar-week-timeruler-top-left@2x.png */,
 				BAF67E9E16D6231A0047FE2A /* calendar-week-timeruler-top-middle.png */,
 				BAF67E9F16D6231A0047FE2A /* calendar-week-timeruler-top-middle@2x.png */,
 				BAF67EA016D6231A0047FE2A /* calendar-week-timeruler-top-right.png */,
 				BAF67EA116D6231A0047FE2A /* calendar-week-timeruler-top-right@2x.png */,
-				BAF67E2B16D623180047FE2A /* calendar-week-timeruler-top.png */,
 				BAF67EA216D6231A0047FE2A /* checkbox-background-10_6.png */,
 				BAF67E2816D623180047FE2A /* checkbox-background-10_7.png */,
 				BAF67EA316D6231A0047FE2A /* checkbox-check-10_6.png */,
@@ -1732,9 +1723,6 @@
 				BAF67EF716D6231B0047FE2A /* status-bar@2x.png in Resources */,
 				BAF67EF816D6231B0047FE2A /* preferences-about-blotter-banner-overlay@2x.png in Resources */,
 				BAF67EFA16D6231B0047FE2A /* checkbox-background-10_7.png in Resources */,
-				BAF67EFB16D6231B0047FE2A /* calendar-week-timeruler-bottom.png in Resources */,
-				BAF67EFC16D6231B0047FE2A /* calendar-week-timeruler-middle.png in Resources */,
-				BAF67EFD16D6231B0047FE2A /* calendar-week-timeruler-top.png in Resources */,
 				BAF67EFE16D6231B0047FE2A /* glass-hud-textview-bottom-left.png in Resources */,
 				BAF67EFF16D6231B0047FE2A /* glass-hud-textview-bottom-right.png in Resources */,
 				BAF67F0016D6231B0047FE2A /* glass-hud-textview-bottom.png in Resources */,
@@ -2230,6 +2218,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Blotter.entitlements;
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2239,6 +2228,7 @@
 				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
 				INFOPLIST_FILE = "Blotter-Info.plist";
 				PRODUCT_NAME = Blotter;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Archiving;
 		};
@@ -2246,6 +2236,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Blotter.entitlements;
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2256,6 +2247,7 @@
 				INFOPLIST_FILE = "Blotter-Info.plist";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = Blotter;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -2263,6 +2255,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Blotter.entitlements;
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2272,6 +2265,7 @@
 				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
 				INFOPLIST_FILE = "Blotter-Info.plist";
 				PRODUCT_NAME = Blotter;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
