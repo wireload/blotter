@@ -16,16 +16,21 @@
 
     @discussion User Info dictionary representes reminders per completion mask. The receiver should query this dictionary using the same completion mask
                 it used to addObservedCompletionMask.
+
+                If user info does not contain object for a given completion mask (i.e. returns nil) that means either mask is not observed
+                or there are no changes. User info will contain empty array if there are no reminders for a given mask.
  */
 extern NSString *WLCalendarRemindersDidChangeNotification;
 
 
 /*!
-    @brief  The instance of WLCalendarEventsController listens to updates of calendar stores, fetches reminders for observed completion masks and
-            for given calendar identifiers and posts WLCalendarEventsDidChangeNotification.
-            Users should not make any expectations about target thread of this notification.
+    @brief      The instance of WLCalendarEventsController listens to updates of calendar stores, fetches reminders for observed completion masks and
+                for given calendar identifiers and posts WLCalendarEventsDidChangeNotification.
 
-    @see    WLCalendarRemindersDidChangeNotification
+    @discussion Users should not make any expectations about target thread of this notification. It's guaranteed that notifications are posted one after another
+                and there won't be more than 1 notification posted concurrently.
+
+    @see        WLCalendarRemindersDidChangeNotification
  */
 @interface WLCalendarRemindersController : NSObject
 
@@ -49,7 +54,7 @@ extern NSString *WLCalendarRemindersDidChangeNotification;
 /*!
     @brief      Adds aCompletionMask to currently observed completion mask or increments its count.
 
-    @discussion Subsequent adds are counted therefore you have to remove the same aCompletionMask as many times as you added it.
+    @discussion Subsequent adds are counted therefore you have to remove aCompletionMask as many times as you added it.
  */
 - (void)addObservedCompletionMask:(WLCalReminderCompletionMask)aCompletionMask;
 
@@ -89,6 +94,7 @@ extern NSString *WLCalendarRemindersDidChangeNotification;
 
 /*!
     @brief      Called when an observed store posts WLCalStoreDidChangeNotification.
+                Schedules fetch operations.
 
     @discussion You SHOULD not call this method directly.
  */
@@ -96,6 +102,7 @@ extern NSString *WLCalendarRemindersDidChangeNotification;
 
 /*!
     @brief      Called when either calendar identifiers or observed ranges are changed.
+                Manages subscription to the calStore notifications.
 
     @discussion You SHOULD not call this method directly.
  */
