@@ -137,7 +137,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"{%@, %@}: %@", self.startDate, self.endDate, self.originalEvent];
+    return [NSString stringWithFormat:@"%@", [WLDateRange dateRangeWithStartDate:self.startDate endDate:self.endDate]];
 }
 
 @end
