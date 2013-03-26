@@ -23,7 +23,7 @@
             CALayer *subLayer = [CALayer layer];
 
             if (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
-                subLayer.contentsScale = l.contentsScale;
+                subLayer.contentsScale = self.contentsScale;
 
             subLayer.magnificationFilter = kCAFilterLinear;
             subLayer.minificationFilter = kCAFilterLinear;
