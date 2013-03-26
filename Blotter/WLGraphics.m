@@ -53,6 +53,9 @@ void WLDrawScaledThreePartImage(NSRect frame,
                                 CGFloat alphaFraction,
                                 BOOL flipped)
 {
+    bool matchesOnlyOnBestFittingAxisCenterFill = [centerFill matchesOnlyOnBestFittingAxis];
+    [centerFill setMatchesOnlyOnBestFittingAxis:YES];   
+
     NSSize startSize = [startCap size];
     NSSize endSize = [endCap size];
     CGFloat width = startSize.width;
@@ -147,6 +150,8 @@ void WLDrawScaledThreePartImage(NSRect frame,
             respectFlipped:YES
                      hints:nil];
     }
+    
+    [centerFill setMatchesOnlyOnBestFittingAxis:matchesOnlyOnBestFittingAxisCenterFill];
 }
 
 
@@ -168,6 +173,17 @@ void WLDrawScaledNinePartImage(NSRect bounds,
                                CGFloat alphaFraction,
                                BOOL flipped)
 {
+    bool matchesOnlyOnBestFittingAxisTopEdgeFill = [topEdgeFill matchesOnlyOnBestFittingAxis];
+    bool matchesOnlyOnBestFittingAxisLeftEdgeFill = [leftEdgeFill matchesOnlyOnBestFittingAxis];
+    bool matchesOnlyOnBestFittingAxisCenterFill = [centerFill matchesOnlyOnBestFittingAxis];
+    bool matchesOnlyOnBestFittingAxisRightEdgeFill = [rightEdgeFill matchesOnlyOnBestFittingAxis];
+    bool matchesOnlyOnBestFittingAxisBottomEdgeFill = [bottomEdgeFill matchesOnlyOnBestFittingAxis];
+    [topEdgeFill setMatchesOnlyOnBestFittingAxis:YES];
+    [leftEdgeFill setMatchesOnlyOnBestFittingAxis:YES];
+    [centerFill setMatchesOnlyOnBestFittingAxis:YES];
+    [rightEdgeFill setMatchesOnlyOnBestFittingAxis:YES];
+    [bottomEdgeFill setMatchesOnlyOnBestFittingAxis:YES];
+    
     NSSize topLeftSize = [topLeftCorner size];
     NSSize bottomRightSize = [bottomRightCorner size];
 
@@ -232,20 +248,20 @@ void WLDrawScaledNinePartImage(NSRect bounds,
     if (drawMiddleY)
     {
         [leftEdgeFill drawInRect:NSMakeRect(leftX, midY, topLeftSize.width, midHeight)
-                        fromRect:NSRectFromSize([leftEdgeFill size])
+                        fromRect:NSZeroRect
                        operation:op
                         fraction:alphaFraction
                   respectFlipped:YES
                            hints:nil];
         if (drawMiddleX)
             [centerFill drawInRect:NSMakeRect(midX, midY, midWidth, midHeight)
-                          fromRect:NSRectFromSize([centerFill size])
+                          fromRect:NSZeroRect
                          operation:op
                           fraction:alphaFraction
                     respectFlipped:YES
                              hints:nil];
         [rightEdgeFill drawInRect:NSMakeRect(rightX, midY, bottomRightSize.width, midHeight)
-                         fromRect:NSRectFromSize([rightEdgeFill size])
+                         fromRect:NSZeroRect
                         operation:op
                          fraction:alphaFraction
                    respectFlipped:YES
@@ -273,6 +289,12 @@ void WLDrawScaledNinePartImage(NSRect bounds,
                          fraction:alphaFraction
                    respectFlipped:YES
                             hints:nil];
+
+    [topEdgeFill setMatchesOnlyOnBestFittingAxis:matchesOnlyOnBestFittingAxisTopEdgeFill];
+    [leftEdgeFill setMatchesOnlyOnBestFittingAxis:matchesOnlyOnBestFittingAxisLeftEdgeFill];
+    [centerFill setMatchesOnlyOnBestFittingAxis:matchesOnlyOnBestFittingAxisCenterFill];
+    [rightEdgeFill setMatchesOnlyOnBestFittingAxis:matchesOnlyOnBestFittingAxisRightEdgeFill];
+    [bottomEdgeFill setMatchesOnlyOnBestFittingAxis:matchesOnlyOnBestFittingAxisBottomEdgeFill];
 }
 
 #undef NSRectFromSize
