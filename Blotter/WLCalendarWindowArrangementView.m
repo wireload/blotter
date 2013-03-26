@@ -959,6 +959,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
         rootLayer.layoutManager = self;
         rootLayer.masksToBounds = YES;
         rootLayer.cornerRadius = 1.5;
+        rootLayer.delegate = self;
 
         recessedLayer = [CALayer layer];
         recessedLayer.layoutManager = self;
@@ -966,6 +967,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
         recessedLayer.masksToBounds = YES;
         recessedLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
         recessedLayer.opaque = YES;
+        recessedLayer.delegate = self;
 
         NSWindow *window = [self window];
         if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
