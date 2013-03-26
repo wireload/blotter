@@ -84,7 +84,7 @@
 		BA08A7C7167729E50085F40C /* WLLayoutWeekSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7BC167729E50085F40C /* WLLayoutWeekSplitView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BA08A7E1167735130085F40C /* README in Resources */ = {isa = PBXBuildFile; fileRef = BA08A7E0167735130085F40C /* README */; };
 		BA08A981167737730085F40C /* WLCalendarsPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7E3167737730085F40C /* WLCalendarsPreferences.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		BA08AA34167737730085F40C /* WLColorCheckboxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A980167737730085F40C /* WLColorCheckboxCell.m */; };
+		BA08AA34167737730085F40C /* WLColorCheckboxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A980167737730085F40C /* WLColorCheckboxCell.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BA08AA51167743A50085F40C /* WLAboutPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08AA4C167743A50085F40C /* WLAboutPreferences.m */; };
 		BA08AA52167743A50085F40C /* WLCustomCursorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08AA4E167743A50085F40C /* WLCustomCursorButton.m */; };
 		BA08AA53167743A50085F40C /* WLPreferencesButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08AA50167743A50085F40C /* WLPreferencesButtonCell.m */; };

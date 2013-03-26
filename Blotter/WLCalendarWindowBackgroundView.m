@@ -6,6 +6,7 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
+#import <WLFoundation/WLFoundation.h>
 #import "WLGraphics.h"
 #import "WLCalendarWindowBackgroundView.h"
 #import "WLCalendarWindow.h"
@@ -21,32 +22,34 @@ static const CGFloat _WLCalendarBackgroundShadowLeft = 9.0;
 
 static const CGFloat _WLCalendarBackgroundActiveDarkness = 0.20;
 
-static const NSColor *_WLCalendarBackgroundNoisePatternColor = nil;
-
-static const CGFloat _WLCalendarBackgroundNoiseOpacity = 0.03;
 
 @implementation WLCalendarWindowBackgroundView
 
 #pragma mark Methods
 
-+ (void)initialize
++ (NSColor *)backgroundNoisePatternColor
 {
-    NSImage *noiseImage = [NSImage imageNamed:@"calendar-background-noise"];
+    static const CGFloat NoiseOpacity = 0.03;
+    static NSColor *NoisePatternColor = nil;
+    static dispatch_once_t Once;
+    dispatch_once(&Once, ^
+    {
+        NSImage *transparentNoiseImage = [NSImage WL_imageWithSize:[[NSImage imageNamed:@"calendar-background-noise"] size]
+                                                           flipped:NO
+                                                    drawingHandler:^BOOL(NSRect aDestinationRect)
+            {
+                [[NSImage imageNamed:@"calendar-background-noise"] drawInRect:aDestinationRect
+                                                                     fromRect:aDestinationRect
+                                                                    operation:NSCompositeSourceOver
+                                                                     fraction:1.0];
+                [[[NSColor clearColor] colorWithAlphaComponent:NoiseOpacity] set];
+                NSRectFillUsingOperation(aDestinationRect, NSCompositeDestinationIn);
+                return YES;
+            }];
 
-    // Redraw with the desired transparency.
-    [noiseImage lockFocus];
-    [[[NSColor clearColor] colorWithAlphaComponent:_WLCalendarBackgroundNoiseOpacity] set];
-    NSSize noiseSize = [noiseImage size];
-    NSRectFillUsingOperation(NSMakeRect(0, 0, noiseSize.width, noiseSize.height), NSCompositeDestinationIn);
-    [noiseImage unlockFocus];
-
-    // Retained for the life time of the app since every calendar window can reuse the same pattern.
-    _WLCalendarBackgroundNoisePatternColor = [[NSColor colorWithPatternImage:noiseImage] retain];
-}
-
-+ (const NSColor *)backgroundNoisePatternColor
-{
-    return _WLCalendarBackgroundNoisePatternColor;
+        NoisePatternColor = [[NSColor colorWithPatternImage:transparentNoiseImage] retain];
+    });
+    return NoisePatternColor;
 }
 
 + (NSRect)glassRectForBounds:(NSRect)aBounds
