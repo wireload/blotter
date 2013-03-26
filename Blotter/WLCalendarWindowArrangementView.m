@@ -1214,6 +1214,10 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
         if (i == WLCalendarWindowCenterCenterEdge)
             continue;
         WLBlockLayer *sublayer = [WLBlockLayer layer];
+        sublayer.delegate = l.delegate;
+
+        if (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+            sublayer.contentsScale = l.contentsScale;
 
         sublayer.autoresizingMask = 0;
 
