@@ -18,6 +18,8 @@
 		BA9AFB90163AB3D400FAAAD3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA81DA6F160DA09D00C83DC3 /* Foundation.framework */; };
 		BA9AFB9B163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h in Headers */ = {isa = PBXBuildFile; fileRef = BA9AFB99163AB71D00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA9AFB9C163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9AFB9A163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m */; };
+		BA9FD5F31701E22C007CE5B1 /* NSImage+WLHiDPIDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = BA9FD5F11701E22C007CE5B1 /* NSImage+WLHiDPIDrawing.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA9FD5F41701E22C007CE5B1 /* NSImage+WLHiDPIDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9FD5F21701E22C007CE5B1 /* NSImage+WLHiDPIDrawing.m */; };
 		BAA049D11621A1040078DF12 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA049D01621A1040078DF12 /* SenTestingKit.framework */; };
 		BAA049D81621A1040078DF12 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BAA049D61621A1040078DF12 /* InfoPlist.strings */; };
 		BAA049DB1621A1040078DF12 /* WLFoundationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA049DA1621A1040078DF12 /* WLFoundationTests.m */; };
@@ -75,6 +77,8 @@
 		BA81DAC0160DA7FB00C83DC3 /* WLFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLFoundation.h; sourceTree = "<group>"; };
 		BA9AFB99163AB71D00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+WLRemoveDuplicates.h"; sourceTree = "<group>"; };
 		BA9AFB9A163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+WLRemoveDuplicates.m"; sourceTree = "<group>"; };
+		BA9FD5F11701E22C007CE5B1 /* NSImage+WLHiDPIDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+WLHiDPIDrawing.h"; sourceTree = "<group>"; };
+		BA9FD5F21701E22C007CE5B1 /* NSImage+WLHiDPIDrawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+WLHiDPIDrawing.m"; sourceTree = "<group>"; };
 		BAA049CF1621A1040078DF12 /* WLFoundationTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WLFoundationTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAA049D01621A1040078DF12 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		BAA049D51621A1040078DF12 /* WLFoundationTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WLFoundationTests-Info.plist"; sourceTree = "<group>"; };
@@ -163,6 +167,8 @@
 				BAF67C8D16D604200047FE2A /* IKPowerSources */,
 				BA81DA71160DA09D00C83DC3 /* Supporting Files */,
 				BAF67C9216D606080047FE2A /* CALayer+WLBlocks.h */,
+				BA9FD5F11701E22C007CE5B1 /* NSImage+WLHiDPIDrawing.h */,
+				BA9FD5F21701E22C007CE5B1 /* NSImage+WLHiDPIDrawing.m */,
 				BAF67C9316D606080047FE2A /* CALayer+WLBlocks.m */,
 				BAF67C9416D606080047FE2A /* CATransaction+WLBlocks.h */,
 				BAF67C9516D606080047FE2A /* CATransaction+WLBlocks.m */,
@@ -258,6 +264,7 @@
 				BAF67CAE16D606090047FE2A /* WLEvents.h in Headers */,
 				BABB670316DCB2A600FFDCC5 /* WLViewController.h in Headers */,
 				BAF67CB016D606090047FE2A /* WLLayerHostedView.h in Headers */,
+				BA9FD5F31701E22C007CE5B1 /* NSImage+WLHiDPIDrawing.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,6 +389,7 @@
 				BAF67CAF16D606090047FE2A /* WLEvents.m in Sources */,
 				BAF67CB116D606090047FE2A /* WLLayerHostedView.m in Sources */,
 				BABB670416DCB2A600FFDCC5 /* WLViewController.m in Sources */,
+				BA9FD5F41701E22C007CE5B1 /* NSImage+WLHiDPIDrawing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

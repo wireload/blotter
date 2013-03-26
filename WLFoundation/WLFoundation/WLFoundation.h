@@ -13,6 +13,7 @@
 #import <WLFoundation/NSAttributedString+WLStringDrawing.h>
 #import <WLFoundation/NSColor+CGColor.h>
 #import <WLFoundation/NSMutableArray+WLRemoveDuplicates.h>
+#import <WLFoundation/NSImage+WLHiDPIDrawing.h>
 #import <WLFoundation/IKPowerSources.h>
 #import <WLFoundation/WLASLLog.h>
 #import <WLFoundation/WLBlockLayer.h>
