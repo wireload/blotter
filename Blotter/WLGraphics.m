@@ -15,13 +15,13 @@ void WLRecessedBoxShadow(NSRect frame)
     static NSImage *Images[9];
     dispatch_once(&onceToken, ^{
         Images[0] = [NSImage imageNamed:@"recessed-box-shadow-top-left"];
-        Images[1] = [NSImage imageNamed:@"recessed-box-shadow-top"];
+        Images[1] = [NSImage imageNamed:@"recessed-box-shadow-top-centre"];
         Images[2] = [NSImage imageNamed:@"recessed-box-shadow-top-right"];
-        Images[3] = [NSImage imageNamed:@"recessed-box-shadow-middle-left"];
-        Images[4] = [NSImage imageNamed:@"recessed-box-shadow-middle"];
-        Images[5] = [NSImage imageNamed:@"recessed-box-shadow-middle-right"];
+        Images[3] = [NSImage imageNamed:@"recessed-box-shadow-centre-left"];
+        Images[4] = [NSImage imageNamed:@"recessed-box-shadow-centre-centre"];
+        Images[5] = [NSImage imageNamed:@"recessed-box-shadow-centre-right"];
         Images[6] = [NSImage imageNamed:@"recessed-box-shadow-bottom-left"];
-        Images[7] = [NSImage imageNamed:@"recessed-box-shadow-bottom"];
+        Images[7] = [NSImage imageNamed:@"recessed-box-shadow-bottom-centre"];
         Images[8] = [NSImage imageNamed:@"recessed-box-shadow-bottom-right"];
     });
 
