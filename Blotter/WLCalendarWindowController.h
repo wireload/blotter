@@ -14,9 +14,6 @@
 #import "WLCalendarsController.h"
 
 
-@class WLCalendarWeekViewController;
-@class WLCalendarRightNowViewController;
-@class WLCalendarFloatingWeekViewController;
 @class WLCalendarRemindersViewController;
 @class WLCalendarDateViewController;
 @class WLCalendarBoxView;

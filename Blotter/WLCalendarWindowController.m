@@ -7,9 +7,6 @@
 //
 
 #import "WLCalendarWindowController.h"
-#import "WLCalendarWeekViewController.h"
-#import "WLCalendarRightNowViewController.h"
-#import "WLCalendarFloatingWeekViewController.h"
 #import "WLCalendarRemindersViewController.h"
 #import "WLCalendarDateViewController.h"
 #import "WLCalendarBoxView.h"
