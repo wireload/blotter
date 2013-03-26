@@ -21,6 +21,10 @@
         for (NSUInteger i = 0; i < 9; ++i)
         {
             CALayer *subLayer = [CALayer layer];
+
+            if (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+                subLayer.contentsScale = l.contentsScale;
+
             subLayer.magnificationFilter = kCAFilterLinear;
             subLayer.minificationFilter = kCAFilterLinear;
             subLayer.autoresizingMask = 0;
@@ -45,6 +49,36 @@
 
 #pragma mark Properties
 @dynamic edgeSize;
+
+
+#pragma mark CALayerDelegate
+
+- (void)displayLayer:(CALayer *)aLayer
+{
+    NSAssert(_contents != NULL, @"_contents must be initialized at this point");
+
+    NSInteger i = [_sublayers indexOfObjectIdenticalTo:aLayer];
+    if (i == NSNotFound)
+    {
+        NSLog(@"Unknown sublayer: %@", aLayer);
+        return;
+    }
+    CALayer *sublayer = [_sublayers objectAtIndex:i];
+    CGRect sliceFrame = [sublayer frame];
+    if (!self.geometryFlipped)
+        sliceFrame.origin.y = self.bounds.size.height - sliceFrame.size.height - sliceFrame.origin.y;
+    CGImageRef sliceImage = CGImageCreateWithImageInRect(_contents, sliceFrame);
+    if (sliceImage != NULL)
+    {
+        sublayer.contents = (id)sliceImage;
+        CGImageRelease(sliceImage);
+    }
+}
+
+- (BOOL)layer:(CALayer *)aLayer shouldInheritContentsScale:(CGFloat)aScale fromWindow:(NSWindow *)aWindow
+{
+    return YES;
+}
 
 
 #pragma mark CALayer
@@ -93,28 +127,6 @@
             frame.size.height = self.edgeSize.height;
         }
         sublayer.frame = frame;
-    }
-}
-
-- (void)displayLayer:(CALayer *)aLayer
-{
-    NSAssert(_contents != NULL, @"_contents must be initialized at this point");
-
-    NSInteger i = [_sublayers indexOfObjectIdenticalTo:aLayer];
-    if (i == NSNotFound)
-    {
-        NSLog(@"Unknown sublayer: %@", aLayer);
-        return;
-    }
-    CALayer *sublayer = [_sublayers objectAtIndex:i];
-    CGRect sliceFrame = [sublayer frame];
-    if (!self.geometryFlipped)
-        sliceFrame.origin.y = self.bounds.size.height - sliceFrame.size.height - sliceFrame.origin.y;
-    CGImageRef sliceImage = CGImageCreateWithImageInRect(_contents, sliceFrame);
-    if (sliceImage != NULL)
-    {
-        sublayer.contents = (id)sliceImage;
-        CGImageRelease(sliceImage);
     }
 }
 

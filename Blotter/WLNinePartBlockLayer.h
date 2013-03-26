@@ -9,7 +9,8 @@
 #import <WLFoundation/WLFoundation.h>
 
 
-@interface WLNinePartBlockLayer : WLBlockLayer {
+@interface WLNinePartBlockLayer : WLBlockLayer // <CALayerDelegate>
+{
     CGImageRef _contents;
     NSArray *_sublayers;
 }
