@@ -22,4 +22,14 @@
 
 @property (copy, readonly) NSDate *occurrenceDate;
 
+/*!
+    @brief      Determines whether receiver represents anEvent in time.
+
+    @discussion Event representes another event in time if:
+                1. itemIdentifier match
+                2. calendar.calendarIdentifier match
+                3. occurrenceDate match
+ */
+- (BOOL)isEqualToEventInTime:(NSObject <WLCalEvent> *)anEvent;
+
 @end

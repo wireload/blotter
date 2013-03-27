@@ -64,6 +64,25 @@
 }
 
 
+#pragma mark WLCalEvent
+
+- (BOOL)isEqualToEventInTime:(NSObject <WLCalEvent> *)anEvent
+{
+    if (![anEvent isKindOfClass:[WLCalSystemEvent  class]])
+        return NO;
+    else if (![self.itemIdentifier isEqualToString:anEvent.itemIdentifier])
+        return NO;
+    else if (![self.calendar.calendarIdentifier isEqualToString:anEvent.calendar.calendarIdentifier])
+        return NO;
+    else if (!self.occurrenceDate && !anEvent.occurrenceDate)
+        return YES;
+    else if (self.occurrenceDate && anEvent.occurrenceDate)
+        return [self.occurrenceDate isEqualToDate:anEvent.occurrenceDate];
+    else
+        return NO;
+}
+
+
 #pragma mark NSObject
 
 - (BOOL)isEqual:(WLCalSystemEvent *)anObject
@@ -80,10 +99,12 @@
         return NO;
     else if (![self.startDate isEqual:anObject.startDate])
         return NO;
-    else if (![self.occurrenceDate isEqual:anObject.occurrenceDate])
-        return NO;
-    else
+    else if (!self.occurrenceDate && !anObject.occurrenceDate)
         return YES;
+    else if (self.occurrenceDate && anObject.occurrenceDate)
+        return [self.occurrenceDate isEqual:anObject.occurrenceDate];
+    else
+        return NO;
 }
 
 - (NSString *)description
