@@ -51,15 +51,12 @@ static const CGFloat _WLXPadding = 2.0;
 {
     NSMutableArray *unusedSublayers = [_icalSortedEventLayers mutableCopy];
     [_icalSortedEventLayers removeAllObjects];
-    for (id event in newEvents)
+    for (NSObject <WLCalEvent> *event in newEvents)
     {
         NSUInteger indexOfUsedLayer = [unusedSublayers indexOfObjectPassingTest:^BOOL(WLCalendarEventLayer *l, NSUInteger idx, BOOL *stop)
         {
             NSObject<WLCalEvent> *layerEvent = l.allDayEvent;
-            return [layerEvent isEqual:event] || (
-                                                  [[layerEvent itemIdentifier] isEqual:[event itemIdentifier]] &&
-                                                  [[[layerEvent calendar] calendarIdentifier] isEqual:[[event calendar] calendarIdentifier]]
-                                                  );
+            return [l.allDayEvent isEqualToEventInTime:event];
         }];
         WLCalendarEventLayer *usedLayer = nil;
         if (indexOfUsedLayer != NSNotFound)
