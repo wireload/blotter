@@ -17,6 +17,7 @@
 		BA9AFBBC163C129100FAAAD3 /* WLFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9AFBAE163C126F00FAAAD3 /* WLFoundation.framework */; };
 		BA9AFBBD163C129500FAAAD3 /* WLFoundation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA9AFBAE163C126F00FAAAD3 /* WLFoundation.framework */; };
 		BA9AFBBE163C129E00FAAAD3 /* WLCalendarStore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA9AFBA5163C126A00FAAAD3 /* WLCalendarStore.framework */; };
+		BA9FD6181703169E007CE5B1 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA81DBF21614558600C83DC3 /* EventKit.framework */; };
 		E25B9FD016972ECB0058AEEE /* WLCalendarEventsController.m in Sources */ = {isa = PBXBuildFile; fileRef = E25B9FCF16972ECB0058AEEE /* WLCalendarEventsController.m */; };
 /* End PBXBuildFile section */
 
@@ -94,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA9FD6181703169E007CE5B1 /* EventKit.framework in Frameworks */,
 				BA9AFBBC163C129100FAAAD3 /* WLFoundation.framework in Frameworks */,
 				BA9AFBBB163C128E00FAAAD3 /* WLCalendarStore.framework in Frameworks */,
 				BA81DBCE1614514200C83DC3 /* Cocoa.framework in Frameworks */,
