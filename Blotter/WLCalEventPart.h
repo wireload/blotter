@@ -31,7 +31,7 @@
 
     @discussion Designated initializer.
  
-                If either parameter is nil or aDateRange lies (partially or completly) outside of abEvent's range.
+                If either parameter is nil or aDateRange lies (partially or completly) outside of anEvent's range.
 */
 - (instancetype)initWithCalEvent:(NSObject <WLCalEvent> *)anEvent dateRange:(WLDateRange *)aDateRange;
 
