@@ -47,7 +47,6 @@
     return self;
 }
 
-
 - (void)dealloc
 {
     [self.representedObject removeObservedDateRange:self.dateRangeOfColumns];
@@ -321,7 +320,9 @@
                 if ([localRepresentedDateRange isEqual:self.dateRangeOfColumns])
                 {
                     _storage = s;
-
+#ifdef DEBUG
+                    [_log logDebug:@"New Events Storage: %@", _storage];
+#endif
                     if (self.isViewLoaded)
                     {
                         NSIndexSet *allColumnIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.numberOfColumns)];
