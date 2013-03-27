@@ -137,7 +137,10 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@", [WLDateRange dateRangeWithStartDate:self.startDate endDate:self.endDate]];
+    return [NSString stringWithFormat:@"%@ (of %@): %@",
+                     [WLDateRange dateRangeWithStartDate:self.startDate endDate:self.endDate],
+                     [WLDateRange dateRangeWithStartDate:self.originalEvent.startDate endDate:self.originalEvent.endDate],
+                     self.itemIdentifier];
 }
 
 @end
