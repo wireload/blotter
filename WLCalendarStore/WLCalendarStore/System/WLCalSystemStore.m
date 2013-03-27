@@ -529,6 +529,8 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 0.1;
 - (NSArray *)eventsMatchingPredicate:(WLCalEventsPredicate *)aPredicate
 {
     NSArray *csCalendars = nil;
+    // Calendar engines internally use Gregorian Calendar (see EKReminder documentation)
+    NSCalendar *currentCalendar = [NSCalendar currentCalendar];
     NSArray *csEvents = [self fetchCSEventsMatchingPredicate:aPredicate csCalednars:&csCalendars];
 
     NSMutableArray *cachedCalendars = [[self makeCalendarsFromCSCalendars:csCalendars] mutableCopy];
@@ -565,7 +567,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 0.1;
 
         if (calendar)
         {
-            WLCalSystemEvent *event = [[WLCalSystemEvent alloc] initWithCSEvent:csEvent calCalendar:calendar];
+            WLCalSystemEvent *event = [[WLCalSystemEvent alloc] initWithCSEvent:csEvent calCalendar:calendar currentCalendar:currentCalendar];
 
             if (event)
                 [events addObject:event];

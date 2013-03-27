@@ -6,6 +6,7 @@
 //  Copyright 2012 WireLoad. All rights reserved.
 //
 
+#import <WLFoundation/WLFoundation.h>
 #import "WLCalSystemEvent.h"
 
 
@@ -16,10 +17,11 @@
 @synthesize isDetached = _isDetached;
 @synthesize occurrenceDate = _occurrenceDate;
 
-- (WLCalSystemEvent *)initWithCSEvent:(CalEvent *)aCSEvent calCalendar:(id <WLCalCalendar>)aCalendar
+- (WLCalSystemEvent *)initWithCSEvent:(CalEvent *)aCSEvent calCalendar:(NSObject <WLCalCalendar> *)aCalCalendar currentCalendar:(NSCalendar *)aCurrentCalendar
 {
     NSParameterAssert(aCSEvent != nil);
-    NSParameterAssert(aCalendar != nil);
+    NSParameterAssert(aCalCalendar != nil);
+    NSParameterAssert(aCurrentCalendar != nil);
 
     if (![aCSEvent.uid length])
         return nil;
@@ -29,7 +31,7 @@
     if (self)
     {
         // WLCalCalendarItem
-        self->_calendar = aCalendar;
+        self->_calendar = aCalCalendar;
         self->_notes = [aCSEvent.notes copy];
         self->_title = [aCSEvent.title copy];
         self->_lastModifiedDate = [aCSEvent.dateStamp copy];
@@ -38,8 +40,22 @@
 
         // WLCalEvent
         self->_allDay = aCSEvent.isAllDay;
-        self->_startDate = [aCSEvent.startDate copy];
-        self->_endDate = [aCSEvent.endDate copy];
+
+        if (self->_allDay)
+        {
+            // It's known issue that CalendarStore fails to properly compute date range
+            // of the floating event when timeZone changes (e.g. switching from summer to winder time).
+            WLDateRange *r = [WLDateRange dateRangeWithStartDate:aCSEvent.startDate endDate:aCSEvent.endDate];
+            r = [r dateRangeByAligningCalendarUnit:NSDayCalendarUnit calendar:aCurrentCalendar options:WLAlignInward];
+            self->_startDate = r.startDate;
+            self->_endDate = r.endDate;
+        }
+        else
+        {
+            self->_startDate = [aCSEvent.startDate copy];
+            self->_endDate = [aCSEvent.endDate copy];
+        }
+
         self->_isDetached = aCSEvent.isDetached;
         self->_occurrenceDate = [aCSEvent.occurrence copy];
     }

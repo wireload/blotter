@@ -15,6 +15,9 @@
 
 @interface WLCalSystemEvent : WLCalSystemCalendarItem <WLCalEvent>
 
-- (WLCalSystemEvent *)initWithCSEvent:(CalEvent *)aCSEvent calCalendar:(id <WLCalCalendar>)aCalendar;
+/*!
+    @param  aCurrentCalendar Value of +[NSCalendar currentCalendar] at the time when events was fetched.
+ */
+- (WLCalSystemEvent *)initWithCSEvent:(CalEvent *)aCSEvent calCalendar:(NSObject <WLCalCalendar> *)aCalCalendar currentCalendar:(NSCalendar *)aCurrentCalendar;
 
 @end
