@@ -175,7 +175,7 @@
 - (WLDateRange *)dateRangeByAligningCalendarUnit:(NSCalendarUnit)aCalendarUnit calendar:(NSCalendar *)aCalendar options:(WLDateRangeAlignmentOptions)anOptions
 {
     if (!aCalendar)
-        aCalendar = [NSCalendar autoupdatingCurrentCalendar];
+        aCalendar = [NSCalendar currentCalendar];
 
     NSDate *startDateOutward = nil;
     NSTimeInterval startDateInterval = 0.0;
@@ -197,10 +197,10 @@
 
     NSDate *startDateInward = [startDateOutward dateByAddingTimeInterval:startDateInterval];
     NSDate *endDateOutward = [endDateInward dateByAddingTimeInterval:endDateInterval];
-    
+
     NSDate *startDate = self.startDate;
     NSDate *endDate = self.endDate;
-    
+
     if (![startDate isEqualToDate:startDateInward] && ![startDate isEqualToDate:startDateOutward])
     {
         if (anOptions & WLAlignStartDateInward)
@@ -210,18 +210,18 @@
         else if (anOptions & WLAlignStartDateNearest)
         {
             NSDate *startDateNearest = nil;
-            
+
             if (fabs([self.startDate timeIntervalSinceDate:startDateOutward]) <= fabs([self.startDate timeIntervalSinceDate:startDateInward]))
                 startDateNearest = startDateOutward;
             else
                 startDateNearest = startDateInward;
-            
+
             startDate = startDateNearest;
         }
         else
             [NSException raise:NSInvalidArgumentException format:@"anOptions (%lu) does not specify alignment option for start date.", anOptions];
     }
-    
+
     if (![endDate isEqualToDate:endDateInward] && ![endDate isEqualToDate:endDateOutward])
     {
         if (anOptions & WLAlignEndDateInward)
@@ -231,18 +231,18 @@
         else if (anOptions & WLAlignEndDateNearest)
         {
             NSDate *endDateNearest = nil;
-            
+
             if (fabs([self.endDate timeIntervalSinceDate:endDateOutward]) <= fabs([self.endDate timeIntervalSinceDate:endDateInward]))
                 endDateNearest = endDateOutward;
             else
                 endDateNearest = endDateInward;
-            
+
             endDate = endDateNearest;
         }
         else
             [NSException raise:NSInvalidArgumentException format:@"anOptions (%lu) does not specify alignment option for end date.", anOptions];
     }
-    
+
     return [WLDateRange dateRangeWithStartDate:startDate endDate:endDate];
 }
 
@@ -254,7 +254,7 @@
 - (NSArray *)splitIntoCalendarUnits:(NSCalendarUnit)aCalendarUnit calendar:(NSCalendar *)aCalendar
 {
     if (!aCalendar)
-        aCalendar = [NSCalendar autoupdatingCurrentCalendar];
+        aCalendar = [NSCalendar currentCalendar];
 
     NSMutableArray *parts = [NSMutableArray array];
     NSDate *startUnitDate = nil;

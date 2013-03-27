@@ -141,7 +141,6 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
 
     NSMutableArray *optimizedDateRanges = [NSMutableArray arrayWithCapacity:[sortedRanges count]];
     __block WLDateRange *currentDateRange = [sortedRanges objectAtIndex:0];
-    NSCalendar *calendar = [[NSCalendar autoupdatingCurrentCalendar] copy];
 
     [sortedRanges enumerateObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, [sortedRanges count] - 1)]
                                     options:0
@@ -151,18 +150,10 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
             currentDateRange = [currentDateRange dateRangeByUnitingWithDateRange:aRange];
         else
         {
-            currentDateRange = [currentDateRange dateRangeByAligningCalendarUnit:NSDayCalendarUnit calendar:calendar options:WLAlignOutward];
-
-            if ([aRange.startDate compare:currentDateRange.endDate] != NSOrderedDescending)
-                currentDateRange = [currentDateRange dateRangeByUnitingWithDateRange:aRange];
-            else
-            {
-                [optimizedDateRanges addObject:currentDateRange];
-                currentDateRange = aRange;
-            }
+            [optimizedDateRanges addObject:currentDateRange];
+            currentDateRange = aRange;
         }
     }];
-    currentDateRange = [currentDateRange dateRangeByAligningCalendarUnit:NSDayCalendarUnit calendar:calendar options:WLAlignOutward];
     [optimizedDateRanges addObject:currentDateRange];
     return optimizedDateRanges;
 }
