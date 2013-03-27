@@ -896,17 +896,17 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
             _lengthOfHours[0] = baseHeightOfHour; // Guaranteed to be baseHeightOfHour
             _locationOfHours[0] = 0.0;
             size_t indexOfHour = 1;
-            for (size_t end = fdim(extendedHourRange.startHour, timeRulerHourRange.startHour); indexOfHour < end; ++indexOfHour)
+            for (size_t end = (size_t)fdim(extendedHourRange.startHour, timeRulerHourRange.startHour); indexOfHour < end; ++indexOfHour)
             {
                 _lengthOfHours[indexOfHour] = baseHeightOfHour;
                 _locationOfHours[indexOfHour] = _locationOfHours[indexOfHour - 1] + baseHeightOfHour;
             }
-            for (size_t end = fdim(extendedHourRange.endHour, timeRulerHourRange.startHour); indexOfHour <= end; ++indexOfHour)
+            for (size_t end = (size_t)fdim(extendedHourRange.endHour, timeRulerHourRange.startHour); indexOfHour <= end; ++indexOfHour)
             {
                 _lengthOfHours[indexOfHour] = extendedHeightOfHour;
                 _locationOfHours[indexOfHour] = _locationOfHours[indexOfHour - 1] + extendedHeightOfHour;
             }
-            for (size_t end = fdim(timeRulerHourRange.endHour, timeRulerHourRange.startHour); indexOfHour <= end; ++indexOfHour)
+            for (size_t end = (size_t)fdim(timeRulerHourRange.endHour, timeRulerHourRange.startHour); indexOfHour <= end; ++indexOfHour)
             {
                 _lengthOfHours[indexOfHour] = baseHeightOfHour;
                 _locationOfHours[indexOfHour] = _locationOfHours[indexOfHour - 1] + baseHeightOfHour;
