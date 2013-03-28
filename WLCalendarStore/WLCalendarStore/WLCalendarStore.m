@@ -20,13 +20,10 @@ NSComparator WLCalEventsComparator = ^(NSObject<WLCalEvent> *anEvent1, NSObject<
     NSComparisonResult r = [[anEvent1 valueForKeyPath:@"calendar.calendarIdentifier"] compare:[anEvent2 valueForKeyPath:@"calendar.calendarIdentifier"]];
 
     if (r == NSOrderedSame)
-        [[anEvent1 valueForKey:@"itemIdentifier"] compare:[anEvent2 valueForKey:@"itemIdentifier"]];
+        r = [[anEvent1 valueForKey:@"itemIdentifier"] compare:[anEvent2 valueForKey:@"itemIdentifier"]];
 
     if (r == NSOrderedSame)
-        r = [[anEvent1 valueForKey:@"startDate"] compare:[anEvent2 valueForKey:@"startDate"]];
-
-    if (r == NSOrderedSame)
-        r = [[anEvent1 valueForKey:@"endDate"] compare:[anEvent2 valueForKey:@"endDate"]];
+        r = [[anEvent1 valueForKey:@"occurrenceDate"] compare:[anEvent2 valueForKey:@"occurrenceDate"]];
 
     return r;
 };
