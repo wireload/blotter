@@ -320,9 +320,12 @@
                 if ([localRepresentedDateRange isEqual:self.dateRangeOfColumns])
                 {
                     _storage = s;
-#ifdef DEBUG
-                    [_log logDebug:@"New Events Storage: %@", _storage];
-#endif
+
+                    [_log logDebugWithMessenger:^
+                    {
+                        return [NSString stringWithFormat:@"New Events Storage (%@): %@", self, s];
+                    }];
+
                     if (self.isViewLoaded)
                     {
                         NSIndexSet *allColumnIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.numberOfColumns)];
