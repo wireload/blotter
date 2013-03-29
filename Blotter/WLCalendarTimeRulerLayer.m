@@ -150,28 +150,30 @@
             WLCalendarTimeRulerMarkerLayer *hourMarker = [_sortedMarkerLayers objectAtIndex:anIndex];
             CGSize size = [hourMarker preferredFrameSize];
             CGFloat hourPosition = [self.timeRuler locationForHour:aMatchedValue];
-            hourMarker.frame = CGRectIntegral(CGRectMake(0.0,
-                                                         hourPosition - size.height / 2.0,
-                                                         self.bounds.size.width,
-                                                         size.height));
+            CGRect frame = CGRectIntegral(CGRectMake(0.0,
+                                                     hourPosition - size.height / 2.0,
+                                                     self.bounds.size.width,
+                                                     size.height));
             if (self.onlyCompletelyVisibleMarkersShown &&
-                !CGRectContainsRect(self.visibleRect, hourMarker.frame) &&
-                CGRectIntersectsRect(self.visibleRect, hourMarker.frame))
+                !CGRectContainsRect(self.visibleRect, frame) &&
+                CGRectIntersectsRect(self.visibleRect, frame))
             {
-                CGRect intersection = CGRectIntersection(self.visibleRect, hourMarker.frame);
-                if (CGRectGetMinY(self.visibleRect) > CGRectGetMinY(hourMarker.frame))
+                CGRect intersection = CGRectIntersection(self.visibleRect, frame);
+                if (CGRectGetMinY(self.visibleRect) > CGRectGetMinY(frame))
                 {
-                    hourMarker.frame = CGRectOffset(hourMarker.frame,
-                                                    0.0,
-                                                    -CGRectGetHeight(intersection));
+                    frame = CGRectOffset(hourMarker.frame,
+                                         0.0,
+                                         -CGRectGetHeight(intersection));
                 }
                 else
                 {
-                    hourMarker.frame = CGRectOffset(hourMarker.frame,
-                                                    0.0,
-                                                    CGRectGetHeight(intersection));
+                    frame = CGRectOffset(hourMarker.frame,
+                                         0.0,
+                                         CGRectGetHeight(intersection));
                 }
             }
+
+            hourMarker.frame = frame;
         }
         else
             *aShouldStop = YES;
