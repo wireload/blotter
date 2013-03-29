@@ -116,9 +116,8 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
                                                                   name:NSWorkspaceDidLaunchApplicationNotification
                                                                 object:nil];
 
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_notifyObservers) object:nil];
+    [[NSRunLoop mainRunLoop] cancelPerformSelector:@selector(_notifyObservers) target:self argument:nil];
 }
-
 
 
 #pragma mark - Methods
@@ -479,6 +478,8 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
 - (void)_systemStoreDidChange:(NSNotification *)aNotification
 {
+    [_log logNotice:@"System Calendar Store did change: %@", aNotification];
+
     if ([[aNotification name] isEqual:NSWorkspaceDidLaunchApplicationNotification])
     {
         static NSString* const iCalBundleIdentifier = @"com.apple.iCal";
@@ -489,11 +490,11 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
             return;
     }
 
-    @synchronized (self)
+    dispatch_async(dispatch_get_main_queue(), ^
     {
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_notifyObservers) object:nil];
         [self performSelector:@selector(_notifyObservers) withObject:nil afterDelay:_WLAccumulateSystemNotificationsInterval];
-    }
+    });
 }
 
 - (void)_notifyObservers
