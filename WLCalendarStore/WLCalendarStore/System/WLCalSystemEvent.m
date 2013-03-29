@@ -37,6 +37,7 @@
         self->_lastModifiedDate = [aCSEvent.dateStamp copy];
         self->_location = [aCSEvent.location copy];
         self->_itemIdentifier = [aCSEvent.uid copy];
+        self->_hasRecurrenceRules = aCSEvent.recurrenceRule != nil;
 
         // WLCalEvent
         self->_allDay = aCSEvent.isAllDay;
@@ -57,7 +58,11 @@
         }
 
         self->_isDetached = aCSEvent.isDetached;
-        self->_occurrenceDate = [aCSEvent.occurrence copy];
+
+        if (!aCSEvent.occurrence)
+            self->_occurrenceDate = self.startDate;
+        else
+            self->_occurrenceDate = [aCSEvent.occurrence copy];
     }
 
     return self;
@@ -66,7 +71,7 @@
 
 #pragma mark WLCalEvent
 
-- (BOOL)isEqualToEventInTime:(NSObject <WLCalEvent> *)anEvent
+- (BOOL)isLikeEvent:(NSObject <WLCalEvent> *)anEvent
 {
     if (![anEvent isKindOfClass:[WLCalSystemEvent  class]])
         return NO;
@@ -74,12 +79,8 @@
         return NO;
     else if (![self.calendar.calendarIdentifier isEqualToString:anEvent.calendar.calendarIdentifier])
         return NO;
-    else if (!self.occurrenceDate && !anEvent.occurrenceDate)
-        return YES;
-    else if (self.occurrenceDate && anEvent.occurrenceDate)
-        return [self.occurrenceDate isEqualToDate:anEvent.occurrenceDate];
     else
-        return NO;
+        return [self.occurrenceDate isEqualToDate:anEvent.occurrenceDate];
 }
 
 
@@ -93,18 +94,14 @@
         return NO;
     else if (self.isDetached != anObject.isDetached)
         return NO;
-    else if (![self.startDate isEqual:anObject.startDate])
+    else if (![self.startDate isEqualToDate:anObject.startDate])
         return NO;
-    else if (![self.endDate isEqual:anObject.endDate])
+    else if (![self.endDate isEqualToDate:anObject.endDate])
         return NO;
-    else if (![self.startDate isEqual:anObject.startDate])
+    else if (![self.startDate isEqualToDate:anObject.startDate])
         return NO;
-    else if (!self.occurrenceDate && !anObject.occurrenceDate)
-        return YES;
-    else if (self.occurrenceDate && anObject.occurrenceDate)
-        return [self.occurrenceDate isEqual:anObject.occurrenceDate];
     else
-        return NO;
+        return [self.occurrenceDate isEqualToDate:anObject.occurrenceDate];
 }
 
 - (NSString *)description

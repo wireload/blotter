@@ -23,13 +23,13 @@
 @property (copy, readonly) NSDate *occurrenceDate;
 
 /*!
-    @brief      Determines whether receiver represents anEvent in time.
+    @brief      Determines if the receiver is like anEvent.
 
-    @discussion Event representes another event in time if:
+    @discussion Events are alike if:
                 1. itemIdentifier match
                 2. calendar.calendarIdentifier match
                 3. occurrenceDate match
  */
-- (BOOL)isEqualToEventInTime:(NSObject <WLCalEvent> *)anEvent;
+- (BOOL)isLikeEvent:(NSObject <WLCalEvent> *)anEvent;
 
 @end
