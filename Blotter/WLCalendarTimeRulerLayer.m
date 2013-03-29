@@ -159,7 +159,7 @@
                 CGRectIntersectsRect(self.visibleRect, hourMarker.frame))
             {
                 CGRect intersection = CGRectIntersection(self.visibleRect, hourMarker.frame);
-                if (CGRectGetMinX(self.visibleRect) > CGRectGetMinX(hourMarker.frame))
+                if (CGRectGetMinY(self.visibleRect) > CGRectGetMinY(hourMarker.frame))
                 {
                     hourMarker.frame = CGRectOffset(hourMarker.frame,
                                                     0.0,
