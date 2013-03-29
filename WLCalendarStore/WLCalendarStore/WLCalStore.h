@@ -25,12 +25,12 @@ extern NSString *WLCalStoreDidChangeNotification;
 extern NSComparator WLCalCalendarsComparator;
 
 /*!
-    @brief  Comparator used to sort events returned by the object that adopts the WLCalStore protocol.
+    @brief  Comparator used to sort and filter events returned by the object that adopts the WLCalStore protocol.
  */
 extern NSComparator WLCalEventsComparator;
 
 /*!
-    @brief  Comparator used to sort reminders returned by the object that adopts the WLCalStore protocol.
+    @brief  Comparator used to sort and filter reminders returned by the object that adopts the WLCalStore protocol.
  */
 extern NSComparator WLCalRemindersComparator;
 
