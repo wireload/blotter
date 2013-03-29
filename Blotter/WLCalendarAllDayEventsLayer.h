@@ -8,27 +8,26 @@
 
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
+#import <WLCalendarStore/WLCalendarStore.h>
 #import "WLCalendarEventLayer.h"
 
 
 @class WLCalendarEventLayer;
 
 
-@interface WLCalendarAllDayEventsLayer : CALayer {
-    NSMutableArray *_icalSortedEventLayers;
-}
+@interface WLCalendarAllDayEventsLayer : CALayer
 
 @property (nonatomic, copy) NSArray *events;
 
 - (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth;
+
+- (WLCalendarEventLayer *)makeAllDayEventLayer;
 
 @end
 
 
 @interface WLCalendarEventLayer (WLCalendarAllDayEventsLayer)
 
-+ (WLCalendarEventLayer *)allDayEventLayer;
-
-@property (nonatomic, retain) id allDayEvent;
+@property (nonatomic) NSObject <WLCalEvent> *allDayEvent;
 
 @end

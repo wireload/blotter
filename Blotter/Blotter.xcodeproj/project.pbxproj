@@ -311,7 +311,7 @@
 		BAF67F9F16D624FE0047FE2A /* WLApplicationPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAF67F9E16D624FE0047FE2A /* WLApplicationPreferencesWindow.xib */; };
 		BAF67FA116D625590047FE2A /* preferences-shortcuts-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BAF67FA016D625590047FE2A /* preferences-shortcuts-icon.png */; };
 		BC599050D9AE63765C1774AE /* WLCalendarRightNowEventsViewController.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BC59963231B7F8FCEC17BA2D /* WLCalendarRightNowEventsViewController.h */; };
-		BC5991C3493EE347942823FD /* WLCalendarAllDayEventsLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5990857F56C36A9052CD73 /* WLCalendarAllDayEventsLayer.m */; };
+		BC5991C3493EE347942823FD /* WLCalendarAllDayEventsLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5990857F56C36A9052CD73 /* WLCalendarAllDayEventsLayer.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BC5992938A36F5C335797DC6 /* WLCalEventPart.m in Sources */ = {isa = PBXBuildFile; fileRef = BC59953630502CB8677131C0 /* WLCalEventPart.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BC5992DF714338D62CE3D801 /* WLCalendarTimeIndicatorLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5991DEA0F674C9A3ED2D49 /* WLCalendarTimeIndicatorLayer.m */; };
 		BC5993B71E2EDB1F83491648 /* WLCalendarTimeRulerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5998F2F8C4CC877317D22E /* WLCalendarTimeRulerLayer.m */; };
