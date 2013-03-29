@@ -9,6 +9,20 @@
 #import <Foundation/Foundation.h>
 
 
+typedef NSString * (^WLASLLogMessenger)();
+
+
+/*!
+    @brief  Provides logging facility which is supposed to be alternate to NSLog.
+            It's ASL-based, and asynchronous and up to x378 faster.
+
+            There are 2 group of methods that represent semi-async and async approaches:
+
+            - Semi-async means that while logging is done in the concurrent queue, the message itself is composed in call place.
+
+            - Async means that both logging and composing is done in the concurrent queue. This approach may be not suitable for
+              mutable data, because logging time is undefined and therefore data might change.
+ */
 @interface WLASLLog : NSObject
 
 - (instancetype)initWithName:(NSString *)aName;
@@ -17,7 +31,12 @@
 
 - (instancetype)initWithFile:(NSFileHandle *)aFileHandle name:(NSString *)aName;
 
-- (void)logEmergency:(NSString *)aFormat, ...;
++ (instancetype)logForKey:(NSString *)aName;
+
+@end
+
+
+@interface WLASLLog (SemiAsynchronous)
 
 - (void)logAlert:(NSString *)aFormat, ...;
 
@@ -32,5 +51,24 @@
 - (void)logInfo:(NSString *)aFormat, ...;
 
 - (void)logDebug:(NSString *)aFormat, ...;
+
+@end
+
+
+@interface WLASLLog (Asynchronous)
+
+- (void)logAlertWithMessenger:(WLASLLogMessenger)aMessenger;
+
+- (void)logCriticalWithMessenger:(WLASLLogMessenger)aMessenger;
+
+- (void)logErrorWithMessenger:(WLASLLogMessenger)aMessenger;
+
+- (void)logWarningWithMessenger:(WLASLLogMessenger)aMessenger;
+
+- (void)logNoticeWithMessenger:(WLASLLogMessenger)aMessenger;
+
+- (void)logInfoWithMessenger:(WLASLLogMessenger)aMessenger;
+
+- (void)logDebugWithMessenger:(WLASLLogMessenger)aMessenger;
 
 @end

@@ -36,7 +36,7 @@
 		BAF67CA816D606090047FE2A /* NSAttributedString+WLStringDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9816D606080047FE2A /* NSAttributedString+WLStringDrawing.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BAF67CA916D606090047FE2A /* NSAttributedString+WLStringDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9916D606080047FE2A /* NSAttributedString+WLStringDrawing.m */; };
 		BAF67CAA16D606090047FE2A /* NSColor+CGColor.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9A16D606080047FE2A /* NSColor+CGColor.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BAF67CAB16D606090047FE2A /* NSColor+CGColor.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9B16D606080047FE2A /* NSColor+CGColor.m */; };
+		BAF67CAB16D606090047FE2A /* NSColor+CGColor.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9B16D606080047FE2A /* NSColor+CGColor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAF67CAC16D606090047FE2A /* WLBlockLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9C16D606090047FE2A /* WLBlockLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BAF67CAD16D606090047FE2A /* WLBlockLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9D16D606090047FE2A /* WLBlockLayer.m */; };
 		BAF67CAE16D606090047FE2A /* WLEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9E16D606090047FE2A /* WLEvents.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -45,8 +45,12 @@
 		BAF67CB116D606090047FE2A /* WLLayerHostedView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67CA116D606090047FE2A /* WLLayerHostedView.m */; };
 		BAF67CD216D60D470047FE2A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF67CD116D60D470047FE2A /* QuartzCore.framework */; };
 		BAF67CD416D60D520047FE2A /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF67CD316D60D520047FE2A /* IOKit.framework */; };
+		BC59903C1814714E1923496C /* NSDateComponents+WLCalendarUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5994D0FCFBADB881B2BF32 /* NSDateComponents+WLCalendarUnit.m */; };
 		BC599131671997B089C3D4C8 /* WLASLLog.m in Sources */ = {isa = PBXBuildFile; fileRef = BC599C7F0C238E9F874213D0 /* WLASLLog.m */; };
 		BC5997CEDCD382068CDD26E3 /* WLASLLog.h in Headers */ = {isa = PBXBuildFile; fileRef = BC599C9AE6ABE5619B104BB3 /* WLASLLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC59995288D5277796C817DC /* NSDateComponents+WLCalendarUnit.h in Headers */ = {isa = PBXBuildFile; fileRef = BC599DBB8AF5EF567A984112 /* NSDateComponents+WLCalendarUnit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC599E2DFEB2244DCB9952E8 /* WLSmartClock.h in Headers */ = {isa = PBXBuildFile; fileRef = BC5995CD6AFDCECCAD38C456 /* WLSmartClock.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC599F8A6F0C3B7C3E67165E /* WLSmartClock.m in Sources */ = {isa = PBXBuildFile; fileRef = BC599A9B15C63A85CA872284 /* WLSmartClock.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,8 +110,12 @@
 		BAF67CA116D606090047FE2A /* WLLayerHostedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayerHostedView.m; sourceTree = "<group>"; };
 		BAF67CD116D60D470047FE2A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BAF67CD316D60D520047FE2A /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		BC5994D0FCFBADB881B2BF32 /* NSDateComponents+WLCalendarUnit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateComponents+WLCalendarUnit.m"; sourceTree = "<group>"; };
+		BC5995CD6AFDCECCAD38C456 /* WLSmartClock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLSmartClock.h; sourceTree = "<group>"; };
+		BC599A9B15C63A85CA872284 /* WLSmartClock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLSmartClock.m; sourceTree = "<group>"; };
 		BC599C7F0C238E9F874213D0 /* WLASLLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLASLLog.m; sourceTree = "<group>"; };
 		BC599C9AE6ABE5619B104BB3 /* WLASLLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLASLLog.h; sourceTree = "<group>"; };
+		BC599DBB8AF5EF567A984112 /* NSDateComponents+WLCalendarUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDateComponents+WLCalendarUnit.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +197,10 @@
 				BAF67CA116D606090047FE2A /* WLLayerHostedView.m */,
 				BABB670116DCB2A600FFDCC5 /* WLViewController.h */,
 				BABB670216DCB2A600FFDCC5 /* WLViewController.m */,
+				BC599A9B15C63A85CA872284 /* WLSmartClock.m */,
+				BC5995CD6AFDCECCAD38C456 /* WLSmartClock.h */,
+				BC5994D0FCFBADB881B2BF32 /* NSDateComponents+WLCalendarUnit.m */,
+				BC599DBB8AF5EF567A984112 /* NSDateComponents+WLCalendarUnit.h */,
 			);
 			path = WLFoundation;
 			sourceTree = "<group>";
@@ -257,6 +269,8 @@
 				BAF67CAC16D606090047FE2A /* WLBlockLayer.h in Headers */,
 				BAF67CAE16D606090047FE2A /* WLEvents.h in Headers */,
 				BABB670316DCB2A600FFDCC5 /* WLViewController.h in Headers */,
+				BC599E2DFEB2244DCB9952E8 /* WLSmartClock.h in Headers */,
+				BC59995288D5277796C817DC /* NSDateComponents+WLCalendarUnit.h in Headers */,
 				BAF67CB016D606090047FE2A /* WLLayerHostedView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -382,6 +396,8 @@
 				BAF67CAF16D606090047FE2A /* WLEvents.m in Sources */,
 				BAF67CB116D606090047FE2A /* WLLayerHostedView.m in Sources */,
 				BABB670416DCB2A600FFDCC5 /* WLViewController.m in Sources */,
+				BC599F8A6F0C3B7C3E67165E /* WLSmartClock.m in Sources */,
+				BC59903C1814714E1923496C /* NSDateComponents+WLCalendarUnit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -514,7 +530,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WLFoundation/WLFoundation-Prefix.pch";
 				INFOPLIST_FILE = "WLFoundation/WLFoundation-Info.plist";
-				INSTALL_PATH = "@executable_path/../Frameworks";
+				INSTALL_PATH = "@rpath";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -530,7 +546,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WLFoundation/WLFoundation-Prefix.pch";
 				INFOPLIST_FILE = "WLFoundation/WLFoundation-Info.plist";
-				INSTALL_PATH = "@executable_path/../Frameworks";
+				INSTALL_PATH = "@rpath";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -609,7 +625,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WLFoundation/WLFoundation-Prefix.pch";
 				INFOPLIST_FILE = "WLFoundation/WLFoundation-Info.plist";
-				INSTALL_PATH = "@executable_path/../Frameworks";
+				INSTALL_PATH = "@rpath";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};

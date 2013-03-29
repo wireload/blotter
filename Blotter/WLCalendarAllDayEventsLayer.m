@@ -23,75 +23,100 @@ static const CGFloat _WLXPadding = 2.0;
 
 
 @implementation WLCalendarAllDayEventsLayer
-@dynamic events;
+{
+    NSMutableArray *_eventLayers;
+}
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
-    if (self != nil)
+
+    if (self)
     {
-        _icalSortedEventLayers = [[NSMutableArray alloc] init];
+        _eventLayers = [[NSMutableArray alloc] init];
     }
+
     return self;
 }
 
-- (void)dealloc
-{
-    [_icalSortedEventLayers release];
-    [super dealloc];
-}
+
+#pragma mark Properties
+@dynamic events;
 
 - (NSArray *)events
 {
-    return [_icalSortedEventLayers valueForKey:@"allDayEvent"];;
+    return [_eventLayers valueForKey:@"allDayEvent"];
 }
 
 - (void)setEvents:(NSArray *)newEvents
 {
-    NSMutableArray *unusedSublayers = [_icalSortedEventLayers mutableCopy];
-    [_icalSortedEventLayers removeAllObjects];
-    for (id event in newEvents)
+    NSMutableArray *unusedSublayers = [_eventLayers mutableCopy];
+    [_eventLayers removeAllObjects];
+
+    for (NSObject <WLCalEvent> *event in newEvents)
     {
         NSUInteger indexOfUsedLayer = [unusedSublayers indexOfObjectPassingTest:^BOOL(WLCalendarEventLayer *l, NSUInteger idx, BOOL *stop)
         {
-            id layerEvent = l.allDayEvent;
-            return [layerEvent isEqual:event] || (
-                                                  [[layerEvent uid] isEqual:[event uid]] &&
-                                                  [[[(CalEvent *)layerEvent calendar] uid] isEqual:[[(CalEvent *)event calendar] uid]]
-                                                  );
+            return [event isLikeEvent:l.allDayEvent];
         }];
+
         WLCalendarEventLayer *usedLayer = nil;
+
         if (indexOfUsedLayer != NSNotFound)
         {
             // Layer for the event already exist. Update it.
-            usedLayer = [unusedSublayers objectAtIndex:indexOfUsedLayer];
+            usedLayer = unusedSublayers[indexOfUsedLayer];
             usedLayer.allDayEvent = event;
             [unusedSublayers removeObjectAtIndex:indexOfUsedLayer];
         }
         else
         {
             // Create new layer for the event.
-            usedLayer = [WLCalendarEventLayer allDayEventLayer];
-            usedLayer.delegate = self.delegate;
+            usedLayer = [self makeAllDayEventLayer];
             usedLayer.allDayEvent = event;
-
-            if (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
-                usedLayer.contentsScale = self.contentsScale;
-
             [self addSublayer:usedLayer];
         }
-        [_icalSortedEventLayers addObject:usedLayer];
+
+        [_eventLayers addObject:usedLayer];
     }
+
     [unusedSublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
-    [unusedSublayers release];
 }
+
+
+#pragma mark Methods
 
 - (CGFloat)preferredHeightWithWidth:(CGFloat)aWidth
 {
     CGFloat preferredHeight = 0.0;
-    for (WLCalendarEventLayer *layer in _icalSortedEventLayers)
+
+    for (WLCalendarEventLayer *layer in _eventLayers)
         preferredHeight += _WLTopMargin + [layer preferredHeightWithWidth:aWidth];
+
     return preferredHeight;
+}
+
+- (WLCalendarEventLayer *)makeAllDayEventLayer
+{
+    WLCalendarEventLayer *l = [WLCalendarEventLayer layer];
+    l.needsDisplayOnBoundsChange = YES;
+    l.delegate = self;
+#ifndef DEBUG_LAYERS
+    l.contentsBackgroundOpacity = 0.45;
+#endif
+
+    if (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+        l.contentsScale = self.contentsScale;
+
+    return l;
+}
+
+
+#pragma mark CALayerDelegate
+
+- (BOOL)layer:(CALayer *)aLayer shouldInheritContentsScale:(CGFloat)aNewScale fromWindow:(NSWindow *)aWindow
+{
+    return [self.delegate layer:self shouldInheritContentsScale:aNewScale fromWindow:aWindow];
 }
 
 
@@ -99,73 +124,82 @@ static const CGFloat _WLXPadding = 2.0;
 
 - (void)layoutSublayers
 {
-    if ([_icalSortedEventLayers count] == 0 || self.bounds.size.width == 0.0 || self.bounds.size.height == 0.0)
+    if ([_eventLayers count] == 0 || self.bounds.size.width == 0.0 || self.bounds.size.height == 0.0)
         return;
 
     // Origin is top left
-    NSMutableArray *preferredHeightOfLayers = [NSMutableArray arrayWithCapacity:[_icalSortedEventLayers count]];
-    NSMutableArray *minimumHeightOfLayers = [NSMutableArray arrayWithCapacity:[_icalSortedEventLayers count]];
+    NSMutableArray *preferredHeightOfLayers = [NSMutableArray arrayWithCapacity:[_eventLayers count]];
+    NSMutableArray *minimumHeightOfLayers = [NSMutableArray arrayWithCapacity:[_eventLayers count]];
     CGFloat totalPreferredHeight = CGRectGetMinY(self.bounds);
     CGFloat totalMinimumHeight = CGRectGetMinY(self.bounds);
     CGFloat totalVisibleHeight = CGRectGetHeight(self.bounds);
-    for (WLCalendarEventLayer *l in _icalSortedEventLayers)
-    {
-        CGFloat preferredHeight = [l preferredHeightWithWidth:CGRectGetWidth(self.bounds) - _WLXPadding];
-        totalPreferredHeight += _WLTopMargin + preferredHeight;
-        [preferredHeightOfLayers addObject:[NSNumber numberWithDouble:preferredHeight]];
+    CGFloat availableWidth = CGRectGetWidth(self.bounds) - _WLXPadding;
 
-        CGFloat minimumHeight = [l minimumHumanVisibleHeightWithWidth:CGRectGetWidth(self.bounds) - _WLXPadding];
+    for (WLCalendarEventLayer *l in _eventLayers)
+    {
+        CGFloat preferredHeight = [l preferredHeightWithWidth:availableWidth];
+        totalPreferredHeight += _WLTopMargin + preferredHeight;
+        [preferredHeightOfLayers addObject:@(preferredHeight)];
+
+        CGFloat minimumHeight = [l minimumHumanVisibleHeightWithWidth:availableWidth];
         totalMinimumHeight += _WLTopMargin + minimumHeight;
         [minimumHeightOfLayers addObject:[NSNumber numberWithDouble:minimumHeight]];
     }
 
+    CGFloat frameX = floor(CGRectGetMinX(self.bounds) + _WLXPadding / 2.0);
+
     if (totalVisibleHeight >= totalPreferredHeight)
     {
         __block CGFloat offset = CGRectGetMinY(self.bounds) + _WLTopMargin;
-        [_icalSortedEventLayers enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger idx, BOOL *stop)
+        [_eventLayers enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger idx, BOOL *stop)
         {
-            CGFloat preferredHeight = [[preferredHeightOfLayers objectAtIndex:idx] doubleValue];
-            l.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(self.bounds) + _WLXPadding / 2.0,
-                                                offset,
-                                                CGRectGetWidth(self.bounds) - _WLXPadding,
-                                                preferredHeight));
-            offset += _WLTopMargin + preferredHeight;
+            CGFloat preferredHeight = [preferredHeightOfLayers[idx] doubleValue];
+            l.frame = CGRectMake(frameX,
+                                 offset,
+                                 availableWidth,
+                                 preferredHeight);
+            offset = CGRectGetMaxY(l.frame) + _WLTopMargin;
         }];
     }
     else if (totalVisibleHeight >= totalMinimumHeight/* && totalVisibleHeight < totalPreferredHeight */)
     {
         __block CGFloat availableHeight = totalVisibleHeight - totalMinimumHeight;
         __block CGFloat offset = CGRectGetMinY(self.bounds) + _WLTopMargin;
-        [_icalSortedEventLayers enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger idx, BOOL *stop)
+        [_eventLayers enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger idx, BOOL *stop)
         {
-            CGFloat preferredHeight = [[preferredHeightOfLayers objectAtIndex:idx] doubleValue];
-            CGFloat minimumHeight = [[minimumHeightOfLayers objectAtIndex:idx] doubleValue];
+            CGFloat preferredHeight = [preferredHeightOfLayers[idx] doubleValue];
+            CGFloat minimumHeight = [minimumHeightOfLayers[idx] doubleValue];
             CGFloat height = minimumHeight;
-            height += fmin(fdim(preferredHeight, minimumHeight), availableHeight);
-            availableHeight = fdim(availableHeight, fdim(preferredHeight, minimumHeight));
-            l.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(self.bounds) + _WLXPadding / 2.0,
-                                                offset,
-                                                CGRectGetWidth(self.bounds) - _WLXPadding,
-                                                height));
+            // If there is available space, it's wise to provide it layers that need it.
+            CGFloat additionalHeight = fmin(fdim(preferredHeight, minimumHeight), availableHeight);
+            height += additionalHeight;
+            availableHeight = fdim(availableHeight, additionalHeight);
+            l.frame = CGRectMake(frameX,
+                                 offset,
+                                 availableWidth,
+                                 height);
             offset += _WLTopMargin + height;
         }];
 
     }
-    else/* ( totalVisibleHeight < totalMinimumHeight) */
+    else /* (totalVisibleHeight < totalMinimumHeight) */
     {
         __block CGFloat offset = CGRectGetMinY(self.bounds) + _WLTopMargin;
         __block BOOL crossedMinimumHeight = NO;
-        [_icalSortedEventLayers enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger idx, BOOL *stop)
+        [_eventLayers enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger idx, BOOL *stop)
         {
-            CGFloat minimumHeight = [[minimumHeightOfLayers objectAtIndex:idx] doubleValue];
+            CGFloat minimumHeight = [minimumHeightOfLayers[idx] doubleValue];
+
             if (!crossedMinimumHeight && (offset + minimumHeight) > totalVisibleHeight)
             {
                 crossedMinimumHeight = YES;
+                // If for a given height layer cannot show at least one line of event's title, there is no reason to show it at all.
                 offset = CGRectGetMinY(self.bounds) + totalVisibleHeight + _WLTopMargin;
             }
-            l.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(self.bounds) + _WLXPadding / 2.0,
+
+            l.frame = CGRectIntegral(CGRectMake(frameX,
                                                 offset,
-                                                CGRectGetWidth(self.bounds) - _WLXPadding,
+                                                availableWidth,
                                                 minimumHeight));
             offset += _WLTopMargin + minimumHeight;
         }];
@@ -175,12 +209,14 @@ static const CGFloat _WLXPadding = 2.0;
 - (CGSize)preferredFrameSize
 {
     CGSize preferredSize = CGSizeMake(0.0, 0.0);
-    for (WLCalendarEventLayer *layer in _icalSortedEventLayers)
+
+    for (WLCalendarEventLayer *layer in _eventLayers)
     {
         CGSize layerSize = [layer preferredFrameSize];
         preferredSize.width = MAX(preferredSize.width + _WLXPadding, layerSize.width + _WLXPadding);
         preferredSize.height += _WLTopMargin + layerSize.height;
     }
+
     return preferredSize;
 }
 
@@ -188,17 +224,6 @@ static const CGFloat _WLXPadding = 2.0;
 
 
 @implementation WLCalendarEventLayer (WLCalendarAllDayEventsLayer)
-
-+ (WLCalendarEventLayer *)allDayEventLayer
-{
-    WLCalendarEventLayer *l = [WLCalendarEventLayer layer];
-    l.needsDisplayOnBoundsChange = YES;
-#ifndef DEBUG_LAYERS
-    l.contentsBackgroundOpacity = 0.45;
-#endif
-    return l;
-}
-
 
 #pragma mark Properties
 @dynamic allDayEvent;
@@ -208,24 +233,18 @@ static const CGFloat _WLXPadding = 2.0;
     return [self valueForKey:_WLEventKey];
 }
 
-- (void)setAllDayEvent:(id)newEvent
+- (void)setAllDayEvent:(NSObject <WLCalEvent> *)newEvent
 {
     [self setValue:newEvent forKey:_WLEventKey];
 
-    self.name = [newEvent uid];
-    self.title = [NSAttributedString WL_eventTitleWithString:[newEvent title]];
-    self.location = [NSAttributedString WL_eventLocationWithString:[(CalEvent *)newEvent location]];
-
-    NSColor *calendarColor = [[(CalEvent *)newEvent calendar] color];
-    if (calendarColor == NULL || (id)calendarColor == [NSNull null])
-        calendarColor = [NSColor WL_defaultCalendarColorIfFrameworkFails];
-
+    self.name = newEvent.itemIdentifier;
+    self.title = [NSAttributedString WL_eventTitleWithString:newEvent.title];
+    self.location = [NSAttributedString WL_eventLocationWithString:newEvent.location];
 #ifdef DEBUG_LAYERS
     self.backgroundColor = [calendarColor WL_CGColor];
 #else
-    self.contentsBackgroundColor = [calendarColor WL_CGColor];
+    self.contentsBackgroundColor = [newEvent.calendar.color WL_CGColor];
 #endif
 }
-
 
 @end

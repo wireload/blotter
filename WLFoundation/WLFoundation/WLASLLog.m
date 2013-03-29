@@ -70,6 +70,34 @@ static void _WLFreeASLClient(aslclient aClient)
 
 #pragma mark Methods
 
++ (instancetype)logForKey:(NSString *)aName
+{
+    static dispatch_once_t Once;
+    static NSMutableDictionary *Logs = nil;
+    dispatch_once(&Once, ^
+    {
+        Logs = [NSMutableDictionary dictionary];
+    });
+
+    @synchronized (Logs)
+    {
+        WLASLLog *l = Logs[aName];
+
+        if (!l)
+        {
+            l = [[WLASLLog alloc] initWithName:aName];
+            Logs[aName] = l;
+        }
+        
+        return l;
+    }
+}
+
+@end
+
+
+@implementation WLASLLog (SemiAsynchronous)
+
 NS_INLINE void LogMessage(WLASLLog *self, int aLevel, NSString *aFormat, va_list args)
 {
     NSString *message = [[NSString alloc] initWithFormat:aFormat arguments:args];
@@ -142,5 +170,53 @@ NS_INLINE void LogMessage(WLASLLog *self, int aLevel, NSString *aFormat, va_list
     LogMessage(self, ASL_LEVEL_INFO, aFormat, args);
     va_end(args);
 }
+
+@end
+
+
+@implementation WLASLLog (Asynchronous)
+
+NS_INLINE void LogMessageWithMessager(WLASLLog *self, int aLevel, WLASLLogMessenger aMessager)
+{
+    dispatch_async(self->loggerQueue, ^{
+        asl_log(self->aslClient, NULL, aLevel, "%s", [aMessager() UTF8String]);
+    });
+}
+
+- (void)logAlertWithMessenger:(WLASLLogMessenger)aMessenger
+{
+    LogMessageWithMessager(self, ASL_LEVEL_ALERT, aMessenger);
+}
+
+- (void)logCriticalWithMessenger:(WLASLLogMessenger)aMessenger
+{
+    LogMessageWithMessager(self, ASL_LEVEL_CRIT, aMessenger);
+}
+
+- (void)logErrorWithMessenger:(WLASLLogMessenger)aMessenger
+{
+    LogMessageWithMessager(self, ASL_LEVEL_ERR, aMessenger);
+}
+
+- (void)logWarningWithMessenger:(WLASLLogMessenger)aMessenger
+{
+    LogMessageWithMessager(self, ASL_LEVEL_WARNING, aMessenger);
+}
+
+- (void)logNoticeWithMessenger:(WLASLLogMessenger)aMessenger
+{
+    LogMessageWithMessager(self, ASL_LEVEL_NOTICE, aMessenger);
+}
+
+- (void)logInfoWithMessenger:(WLASLLogMessenger)aMessenger
+{
+    LogMessageWithMessager(self, ASL_LEVEL_INFO, aMessenger);
+}
+
+- (void)logDebugWithMessenger:(WLASLLogMessenger)aMessenger
+{
+    LogMessageWithMessager(self, ASL_LEVEL_DEBUG, aMessenger);
+}
+
 
 @end

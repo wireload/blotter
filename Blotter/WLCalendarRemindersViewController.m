@@ -14,6 +14,7 @@
 {
     NSMutableArray *_reminders;
     NSComparator _comparator;
+    dispatch_semaphore_t _comparatorSemaphore;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -23,6 +24,7 @@
     if (self)
     {
         _reminders = [NSMutableArray array];
+        _comparatorSemaphore = dispatch_semaphore_create(1);
     }
 
     return self;
@@ -30,7 +32,9 @@
 
 - (void)dealloc
 {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(remindersComparatorDidChange) object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    dispatch_release(_comparatorSemaphore);
 }
 
 
@@ -50,7 +54,7 @@
         [_reminders enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(NSObject<WLCalReminder> *oldReminder, NSUInteger oldReminderIndex, BOOL *stop)
         {
             NSUInteger newReminderIndex = [newReminders indexOfObjectWithOptions:NSEnumerationConcurrent
-                                                                     passingTest:^BOOL(NSObject<WLCalReminder> *newReminder, NSUInteger i, BOOL *stop)
+                                                                     passingTest:^BOOL(NSObject<WLCalReminder> *newReminder, NSUInteger i, BOOL *stop2)
             {
                 return [newReminder.calendar.calendarIdentifier isEqualToString:oldReminder.calendar.calendarIdentifier] &&
                        [newReminder.itemIdentifier isEqualToString:oldReminder.itemIdentifier];
@@ -79,7 +83,7 @@
 
         // Move
         NSArray *unsortedOldReminders = [_reminders copy];
-        NSArray *sortedOldReminders = [_reminders sortedArrayWithOptions:NSSortConcurrent | NSSortStable usingComparator:aComparator];
+        NSArray *sortedOldReminders = [_reminders sortedArrayWithOptions:NSSortStable usingComparator:aComparator];
         [unsortedOldReminders enumerateObjectsUsingBlock:^(NSObject<WLCalReminder> *aReminder, NSUInteger idx, BOOL *stop)
         {
             NSUInteger oldReminderIndex = [_reminders indexOfObjectIdenticalTo:aReminder];
@@ -133,7 +137,7 @@
     else
     {
         floatingCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        floatingCalendar.locale = [NSLocale autoupdatingCurrentLocale];
+        floatingCalendar.locale = [NSLocale currentLocale];
         floatingCalendar.timeZone = [NSTimeZone systemTimeZone];
     }
 
@@ -229,16 +233,18 @@
 
 - (void)remindersDidChange:(NSNotification *)aNotification
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSComparator c = _comparator;
+    dispatch_semaphore_wait(_comparatorSemaphore, DISPATCH_TIME_FOREVER);
+    NSComparator c = _comparator;
 
-        if (!c)
-            c = [self makeRemindersComparator];
+    if (!c)
+        c = [self makeRemindersComparator];
 
-        NSArray *r = [[aNotification userInfo][@(WLCalReminderCompletionMaskIncomplete)] sortedArrayWithOptions:NSSortStable | NSSortConcurrent
-                                                                                                usingComparator:c];
+    NSArray *r = [[aNotification userInfo][@(WLCalReminderCompletionMaskIncomplete)] sortedArrayWithOptions:NSSortStable
+                                                                                            usingComparator:c];
+    dispatch_sync(dispatch_get_main_queue(), ^{
         [self setReminders:r sortedUsingComparator:c animated:YES];
     });
+    dispatch_semaphore_signal(_comparatorSemaphore);
 }
 
 - (void)timeZoneDidChange:(NSNotification *)aNotification
@@ -259,14 +265,13 @@
 {
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(remindersComparatorDidChange) object:nil];
     dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_semaphore_wait(_comparatorSemaphore, DISPATCH_TIME_FOREVER);
         NSComparator c = [self makeRemindersComparator];
-
-        NSArray *reminders = [_reminders sortedArrayWithOptions:NSSortStable | NSSortConcurrent
-                                                usingComparator:c];
+        NSArray *reminders = [_reminders sortedArrayWithOptions:NSSortStable usingComparator:c];
         [self setReminders:reminders sortedUsingComparator:c animated:YES];
+        dispatch_semaphore_signal(_comparatorSemaphore);
     });
 }
-
 
 
 #pragma mark WLCalendarTasksViewDataSource
@@ -282,7 +287,7 @@
 }
 
 
-#pragma mark NSView
+#pragma mark NSViewController
 
 - (void)loadView
 {
@@ -303,9 +308,9 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self];
     }
 
-    [super setRepresentedObject:newRepresentedObject];
+    super.representedObject = newRepresentedObject;
 
-    if (newRepresentedObject)
+    if (self.representedObject)
     {
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(remindersDidChange:)

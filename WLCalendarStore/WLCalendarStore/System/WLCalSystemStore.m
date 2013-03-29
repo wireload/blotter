@@ -17,7 +17,7 @@
 #import "WLCalSystemReminder.h"
 
 
-static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 0.1;
+static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
 
 @implementation WLCalSystemStore
@@ -116,9 +116,8 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 0.1;
                                                                   name:NSWorkspaceDidLaunchApplicationNotification
                                                                 object:nil];
 
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_notifyObservers) object:nil];
+    [[NSRunLoop mainRunLoop] cancelPerformSelector:@selector(_notifyObservers) target:self argument:nil];
 }
-
 
 
 #pragma mark - Methods
@@ -479,6 +478,8 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 0.1;
 
 - (void)_systemStoreDidChange:(NSNotification *)aNotification
 {
+    [_log logNotice:@"System Calendar Store did change: %@", aNotification];
+
     if ([[aNotification name] isEqual:NSWorkspaceDidLaunchApplicationNotification])
     {
         static NSString* const iCalBundleIdentifier = @"com.apple.iCal";
@@ -489,11 +490,11 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 0.1;
             return;
     }
 
-    @synchronized (self)
+    dispatch_async(dispatch_get_main_queue(), ^
     {
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_notifyObservers) object:nil];
         [self performSelector:@selector(_notifyObservers) withObject:nil afterDelay:_WLAccumulateSystemNotificationsInterval];
-    }
+    });
 }
 
 - (void)_notifyObservers
@@ -529,6 +530,8 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 0.1;
 - (NSArray *)eventsMatchingPredicate:(WLCalEventsPredicate *)aPredicate
 {
     NSArray *csCalendars = nil;
+    // Calendar engines internally use Gregorian Calendar (see EKReminder documentation)
+    NSCalendar *currentCalendar = [NSCalendar currentCalendar];
     NSArray *csEvents = [self fetchCSEventsMatchingPredicate:aPredicate csCalednars:&csCalendars];
 
     NSMutableArray *cachedCalendars = [[self makeCalendarsFromCSCalendars:csCalendars] mutableCopy];
@@ -565,7 +568,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 0.1;
 
         if (calendar)
         {
-            WLCalSystemEvent *event = [[WLCalSystemEvent alloc] initWithCSEvent:csEvent calCalendar:calendar];
+            WLCalSystemEvent *event = [[WLCalSystemEvent alloc] initWithCSEvent:csEvent calCalendar:calendar currentCalendar:currentCalendar];
 
             if (event)
                 [events addObject:event];

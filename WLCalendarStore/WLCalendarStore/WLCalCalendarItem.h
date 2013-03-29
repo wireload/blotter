@@ -27,4 +27,6 @@
 
 @property (copy, readonly) NSString *itemIdentifier;
 
+@property (readonly) BOOL hasRecurrenceRules;
+
 @end

@@ -23,15 +23,7 @@
 #endif
 
 
-#ifndef CGFLOAT_EPSILON
-    #if CGFLOAT_IS_DOUBLE
-        #define CGFLOAT_EPSILON DBL_EPSILON
-    #else
-        #define CGFLOAT_EPSILON FLT_EPSILON
-    #endif
-#endif
-
-#define IS_EQ_CGFLOAT(a, b) (BOOL)(fabs((b) - (a)) < CGFLOAT_EPSILON)
+#define IS_EQ_CGFLOAT(a, b) (BOOL)(fabs((b) - (a)) < DBL_EPSILON)
 
 #define IS_LESS_OR_EQ_CGFLOAT(a, b) (BOOL)((a) <= (b) || IS_EQ_CGFLOAT(a, b))
 

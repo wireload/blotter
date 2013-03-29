@@ -73,9 +73,9 @@ extern NSString* const WLShortcutShowCurrentWeek;
 
 extern NSString* const WLShortcutBringToFront;
 
-typedef void (^WLCalendarsUpdaterBlock)(NSMutableArray *aCalendars);
+extern NSString* const WLTitleFormatKey;
 
-extern NSComparator const WLCalendarsComparator;
+extern NSString* const WLShowsNext7DaysKey;
 
 
 @interface NSUserDefaults (WLApplicationDefaults)
@@ -153,6 +153,8 @@ extern NSComparator const WLCalendarsComparator;
 
 - (BOOL)WL_showInMenuBar;
 
+- (BOOL)WL_showsNext7Days;
+
 @end
 
 
@@ -168,6 +170,10 @@ extern NSComparator const WLCalendarsComparator;
 #pragma mark - Deprecated
 
 __attribute__((deprecated("Deprecated since 2.2"))) extern NSString* const WLCalendarUIDKey;
+
+__attribute__((deprecated("Deprecated since 2.2"))) typedef void (^WLCalendarsUpdaterBlock)(NSMutableArray *aCalendars);
+
+__attribute__((deprecated("Deprecated since 2.2"))) extern NSComparator const WLCalendarsComparator;
 
 
 @interface NSUserDefaults (WLCalendarController)

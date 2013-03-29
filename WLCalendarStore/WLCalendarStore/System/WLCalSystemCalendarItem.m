@@ -17,6 +17,7 @@
 @synthesize lastModifiedDate = _lastModifiedDate;
 @synthesize location = _location;
 @synthesize itemIdentifier = _itemIdentifier;
+@synthesize hasRecurrenceRules = _hasRecurrenceRules;
 
 #pragma mark NSObject
 
@@ -24,6 +25,8 @@
 {
     if ([super isEqual:anObject])
         return YES;
+    else if (self.hasRecurrenceRules != anObject.hasRecurrenceRules)
+        return NO;
     else if (![self.lastModifiedDate isEqual:anObject.lastModifiedDate])
         return NO;
     else if (![self.itemIdentifier isEqual:anObject.itemIdentifier])

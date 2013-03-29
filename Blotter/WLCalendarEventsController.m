@@ -61,7 +61,7 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
 
 - (void)addObservedDateRange:(WLDateRange *)aRange
 {
-    if ([aRange isEmpty])
+    if (!aRange || [aRange isEmpty])
         return;
 
     [self willChangeValueForKey:@"observedDateRanges"];
@@ -76,7 +76,7 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
 
 - (void)removeObservedDateRange:(WLDateRange *)aRange
 {
-    if ([aRange isEmpty])
+    if (!aRange || [aRange isEmpty])
         return;
 
     [self willChangeValueForKey:@"observedDateRanges"];
@@ -141,7 +141,6 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
 
     NSMutableArray *optimizedDateRanges = [NSMutableArray arrayWithCapacity:[sortedRanges count]];
     __block WLDateRange *currentDateRange = [sortedRanges objectAtIndex:0];
-    NSCalendar *calendar = [[NSCalendar autoupdatingCurrentCalendar] copy];
 
     [sortedRanges enumerateObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, [sortedRanges count] - 1)]
                                     options:0
@@ -151,18 +150,10 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
             currentDateRange = [currentDateRange dateRangeByUnitingWithDateRange:aRange];
         else
         {
-            currentDateRange = [currentDateRange dateRangeByAligningCalendarUnit:NSDayCalendarUnit calendar:calendar options:WLAlignOutward];
-
-            if ([aRange.startDate compare:currentDateRange.endDate] != NSOrderedDescending)
-                currentDateRange = [currentDateRange dateRangeByUnitingWithDateRange:aRange];
-            else
-            {
-                [optimizedDateRanges addObject:currentDateRange];
-                currentDateRange = aRange;
-            }
+            [optimizedDateRanges addObject:currentDateRange];
+            currentDateRange = aRange;
         }
     }];
-    currentDateRange = [currentDateRange dateRangeByAligningCalendarUnit:NSDayCalendarUnit calendar:calendar options:WLAlignOutward];
     [optimizedDateRanges addObject:currentDateRange];
     return optimizedDateRanges;
 }
@@ -263,6 +254,23 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
         [[NSNotificationCenter defaultCenter] postNotificationName:WLCalendarEventsDidChangeNotification object:self userInfo:userInfo];
     }];
     [_fetchOperationsQueue addOperation:operation];
+}
+
+- (NSArray *)calEventsForDateRange:(WLDateRange *)aRange
+{
+    NSMutableArray *events = [NSMutableArray array];
+
+    dispatch_sync(_accessQueue, ^
+    {
+        for (NSObject<WLCalStore> *store in self.calStores)
+        {
+            WLCalEventsPredicate *p = [WLCalEventsPredicate predicateWithDateRange:aRange
+                                                               calendarIdentifiers:[_observedCalendarIdentifiers objectForKey:store]];
+            [events addObjectsFromArray:[store eventsMatchingPredicate:p]];
+        }
+    });
+
+    return events;
 }
 
 - (void)calStoreDidChange:(NSNotification *)aNotification

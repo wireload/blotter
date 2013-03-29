@@ -11,6 +11,7 @@
 #import <WLCalendarStore/WLCalCalendar.h>
 #import <WLCalendarStore/WLCalCalendarItem.h>
 
+
 @interface WLCalSystemCalendarItem : NSObject <WLCalCalendarItem>
 {
     NSObject<WLCalCalendar> *_calendar;
@@ -20,6 +21,7 @@
     NSDate *_lastModifiedDate;
     NSString *_location;
     NSString *_itemIdentifier;
+    BOOL _hasRecurrenceRules;
 }
 
 @end

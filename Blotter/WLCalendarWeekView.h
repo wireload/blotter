@@ -282,6 +282,8 @@ enum
 
 - (NSArray *)weekView:(WLCalendarWeekView *)aWeekView eventsForColumnAtIndex:(NSUInteger)anIndex;
 
+- (NSArray *)weekView:(WLCalendarWeekView *)aWeekView allDayEventsForColumnAtIndex:(NSUInteger)anIndex;
+
 - (CGFloat)weekView:(WLCalendarWeekView *)aWeekView convertDateToHour:(NSDate *)aDate;
 
 - (NSUInteger)numberOfColumnsInWeekView:(WLCalendarWeekView *)aWeekView;

@@ -6,6 +6,7 @@
 //  Copyright 2012 WireLoad. All rights reserved.
 //
 
+#import <WLFoundation/WLFoundation.h>
 #import "WLCalSystemEvent.h"
 
 
@@ -16,10 +17,11 @@
 @synthesize isDetached = _isDetached;
 @synthesize occurrenceDate = _occurrenceDate;
 
-- (WLCalSystemEvent *)initWithCSEvent:(CalEvent *)aCSEvent calCalendar:(id <WLCalCalendar>)aCalendar
+- (WLCalSystemEvent *)initWithCSEvent:(CalEvent *)aCSEvent calCalendar:(NSObject <WLCalCalendar> *)aCalCalendar currentCalendar:(NSCalendar *)aCurrentCalendar
 {
     NSParameterAssert(aCSEvent != nil);
-    NSParameterAssert(aCalendar != nil);
+    NSParameterAssert(aCalCalendar != nil);
+    NSParameterAssert(aCurrentCalendar != nil);
 
     if (![aCSEvent.uid length])
         return nil;
@@ -29,22 +31,56 @@
     if (self)
     {
         // WLCalCalendarItem
-        self->_calendar = aCalendar;
+        self->_calendar = aCalCalendar;
         self->_notes = [aCSEvent.notes copy];
         self->_title = [aCSEvent.title copy];
         self->_lastModifiedDate = [aCSEvent.dateStamp copy];
         self->_location = [aCSEvent.location copy];
         self->_itemIdentifier = [aCSEvent.uid copy];
+        self->_hasRecurrenceRules = aCSEvent.recurrenceRule != nil;
 
         // WLCalEvent
         self->_allDay = aCSEvent.isAllDay;
-        self->_startDate = [aCSEvent.startDate copy];
-        self->_endDate = [aCSEvent.endDate copy];
+
+        if (self->_allDay)
+        {
+            // It's known issue that CalendarStore fails to properly compute date range
+            // of the floating event when timeZone changes (e.g. switching from summer to winder time).
+            WLDateRange *r = [WLDateRange dateRangeWithStartDate:aCSEvent.startDate endDate:aCSEvent.endDate];
+            r = [r dateRangeByAligningCalendarUnit:NSDayCalendarUnit calendar:aCurrentCalendar options:WLAlignInward];
+            self->_startDate = r.startDate;
+            self->_endDate = r.endDate;
+        }
+        else
+        {
+            self->_startDate = [aCSEvent.startDate copy];
+            self->_endDate = [aCSEvent.endDate copy];
+        }
+
         self->_isDetached = aCSEvent.isDetached;
-        self->_occurrenceDate = [aCSEvent.occurrence copy];
+
+        if (!aCSEvent.occurrence)
+            self->_occurrenceDate = self.startDate;
+        else
+            self->_occurrenceDate = [aCSEvent.occurrence copy];
     }
 
     return self;
+}
+
+
+#pragma mark WLCalEvent
+
+- (BOOL)isLikeEvent:(NSObject <WLCalEvent> *)anEvent
+{
+    if (![anEvent isKindOfClass:[WLCalSystemEvent  class]])
+        return NO;
+    else if (![self.itemIdentifier isEqualToString:anEvent.itemIdentifier])
+        return NO;
+    else if (![self.calendar.calendarIdentifier isEqualToString:anEvent.calendar.calendarIdentifier])
+        return NO;
+    else
+        return [self.occurrenceDate isEqualToDate:anEvent.occurrenceDate];
 }
 
 
@@ -58,16 +94,14 @@
         return NO;
     else if (self.isDetached != anObject.isDetached)
         return NO;
-    else if (![self.startDate isEqual:anObject.startDate])
+    else if (![self.startDate isEqualToDate:anObject.startDate])
         return NO;
-    else if (![self.endDate isEqual:anObject.endDate])
+    else if (![self.endDate isEqualToDate:anObject.endDate])
         return NO;
-    else if (![self.startDate isEqual:anObject.startDate])
-        return NO;
-    else if (![self.occurrenceDate isEqual:anObject.occurrenceDate])
+    else if (![self.startDate isEqualToDate:anObject.startDate])
         return NO;
     else
-        return YES;
+        return [self.occurrenceDate isEqualToDate:anObject.occurrenceDate];
 }
 
 - (NSString *)description

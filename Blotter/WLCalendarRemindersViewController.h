@@ -15,13 +15,17 @@
     @brief      Controller of the WLCalendarRemindersView. Manages displaying and transition (animation) of reminders.
 
     @discussion Represented object is an instance of WLCalendarRemindersController.
-                If represented object is not set, you are responsible for setting reminders directly.
-                If it's set, the controller will observe incomplete reminders, time zone and locale changes.
+
+                If represented object is not set, you are responsible for setting reminders.
+
+                If it's set, the controller will observe incomplete reminders as well as changes of time zone and locale.
+                It will automatically update reminders. Therefore you MUST not attempt to modify reminders manually.
  */
 @interface WLCalendarRemindersViewController : WLViewController <WLCalendarTasksViewDataSource>
 
 /*!
     @brief  Sets reminders represented by receiver's view.
+
  */
 - (void)setReminders:(NSArray *)newReminders sortedUsingComparator:(NSComparator)aComparator animated:(BOOL)isAnimated;
 
@@ -30,6 +34,8 @@
 
     @discussion Sorts reminders by due date, priority, calendar title, title and UID in that order.
                 It depends on current time zone and locale settings, because some reminders may represent floating date.
+
+                Returned comparator cannot be called concurrently.
  */
 - (NSComparator)makeRemindersComparator;
 

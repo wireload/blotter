@@ -12,6 +12,7 @@
 #import <WLFoundation/NSArray+WLDelta.h>
 #import <WLFoundation/NSAttributedString+WLStringDrawing.h>
 #import <WLFoundation/NSColor+CGColor.h>
+#import <WLFoundation/NSDateComponents+WLCalendarUnit.h>
 #import <WLFoundation/NSMutableArray+WLRemoveDuplicates.h>
 #import <WLFoundation/IKPowerSources.h>
 #import <WLFoundation/WLASLLog.h>
@@ -20,3 +21,4 @@
 #import <WLFoundation/WLEvents.h>
 #import <WLFoundation/WLLayerHostedView.h>
 #import <WLFoundation/WLViewController.h>
+#import <WLFoundation/WLSmartClock.h>

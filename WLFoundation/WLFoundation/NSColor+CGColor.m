@@ -21,7 +21,7 @@
 
 + (NSColor *)WL_slowColorWithCGColor:(CGColorRef)aCGColor
 {
-    NSColorSpace *colorSpace = [[NSColorSpace alloc] initWithCGColorSpace:CGColorGetColorSpace(aCGColor)] ;
+    NSColorSpace *colorSpace = [[[NSColorSpace alloc] initWithCGColorSpace:CGColorGetColorSpace(aCGColor)] autorelease];
     size_t numberOfComponents = CGColorGetNumberOfComponents(aCGColor);
     const CGFloat *components = CGColorGetComponents(aCGColor);
     NSParameterAssert(numberOfComponents < NSIntegerMax);
@@ -46,7 +46,7 @@
         return nil;
 }
 
-- (CGColorRef)WL_slowCGColor __attribute__((cf_returns_retained))
+- (CGColorRef)WL_slowCGColor
 {
     CGColorSpaceRef colorSpace = [[self colorSpace] CGColorSpace];
     CGColorSpaceRetain(colorSpace);
@@ -62,12 +62,12 @@
     free((void*)components);
     CGColorSpaceRelease(colorSpace);
 
-    return color;
+    return (CGColorRef)[(id)color autorelease];
 }
 
 - (CGColorRef)WL_CGColor
 {
-    CGColorRef CGColor = CGColorRetain([self WL_fastCGColor]);
+    CGColorRef CGColor = [self WL_fastCGColor];
 
     if (!CGColor)
         CGColor = [self WL_slowCGColor];

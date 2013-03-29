@@ -18,7 +18,8 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
     NSMapTable *_observedCalendarIdentifiers;
     NSOperationQueue *_fetchOperationsQueue;
     BOOL _isObserving;
-    dispatch_queue_t _accessQueue;
+    dispatch_semaphore_t _fetchPredicateSemaphore;
+    dispatch_queue_t _notificationsDeliveryQueue;
 }
 
 - (instancetype)initWithCalStores:(NSArray *)aStores
@@ -38,7 +39,8 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
         _fetchOperationsQueue = [[NSOperationQueue alloc] init];
         [_fetchOperationsQueue setName:@"Fetch Operations Queue (Reminders)"];
         [_fetchOperationsQueue setMaxConcurrentOperationCount:1];
-        _accessQueue = dispatch_queue_create("Access Queue (Reminders)", 0);
+        _fetchPredicateSemaphore = dispatch_semaphore_create(1);
+        _notificationsDeliveryQueue = dispatch_queue_create("Notifications Queue (Reminders)", 0);
     }
 
     return self;
@@ -48,7 +50,8 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_fetchOperationsQueue cancelAllOperations];
-    dispatch_release(_accessQueue);
+    dispatch_release(_fetchPredicateSemaphore);
+    dispatch_release(_notificationsDeliveryQueue);
 }
 
 
@@ -74,14 +77,13 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
     if (aCompletionMask == WLCalReminderCompletionMaskNothing)
         return;
 
+    dispatch_semaphore_wait(_fetchPredicateSemaphore, DISPATCH_TIME_FOREVER);
     [self willChangeValueForKey:@"observedCompletionMask"];
-    dispatch_sync(_accessQueue, ^
-    {
-        [_observedCompletionMasks addObject:@(aCompletionMask)];
-        [self fetchPredicateDidChange];
-        [self fetchCalRemindersForCompletionMask:aCompletionMask priority:NSOperationQueuePriorityNormal];
-    });
+    [_observedCompletionMasks addObject:@(aCompletionMask)];
+    [self fetchPredicateDidChange];
+    [self fetchCalRemindersForCompletionMask:aCompletionMask priority:NSOperationQueuePriorityNormal];
     [self didChangeValueForKey:@"observedCompletionMask"];
+    dispatch_semaphore_signal(_fetchPredicateSemaphore);
 }
 
 - (void)removeObservedCompletionMask:(WLCalReminderCompletionMask)aCompletionMask
@@ -89,24 +91,22 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
     if (aCompletionMask == WLCalReminderCompletionMaskNothing)
         return;
 
+    dispatch_semaphore_wait(_fetchPredicateSemaphore, DISPATCH_TIME_FOREVER);
     [self willChangeValueForKey:@"observedCompletionMask"];
-    dispatch_sync(_accessQueue, ^
-    {
-        [_observedCompletionMasks removeObject:@(aCompletionMask)];
-        [self fetchPredicateDidChange];
-    });
+    [_observedCompletionMasks removeObject:@(aCompletionMask)];
+    [self fetchPredicateDidChange];
     [self didChangeValueForKey:@"observedCompletionMask"];
+    dispatch_semaphore_signal(_fetchPredicateSemaphore);
 }
 
 - (void)removeAllObservedCompletionMasks
 {
+    dispatch_semaphore_wait(_fetchPredicateSemaphore, DISPATCH_TIME_FOREVER);
     [self willChangeValueForKey:@"observedCompletionMask"];
-    dispatch_sync(_accessQueue, ^
-    {
-        [_observedCompletionMasks removeAllObjects];
-        [self fetchPredicateDidChange];
-    });
+    [_observedCompletionMasks removeAllObjects];
+    [self fetchPredicateDidChange];
     [self didChangeValueForKey:@"observedCompletionMask"];
+    dispatch_semaphore_signal(_fetchPredicateSemaphore);
 }
 
 - (NSArray *)observedCalendarIdentifiersForStore:(NSObject <WLCalStore> *)aStore
@@ -114,7 +114,12 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
     if (![self.calStores containsObject:aStore])
         return @[];
     else
-        return [NSArray arrayWithArray:[_observedCalendarIdentifiers objectForKey:aStore]];
+    {
+        dispatch_semaphore_wait(_fetchPredicateSemaphore, DISPATCH_TIME_FOREVER);
+        NSArray *a = [NSArray arrayWithArray:[_observedCalendarIdentifiers objectForKey:aStore]];
+        dispatch_semaphore_signal(_fetchPredicateSemaphore);
+        return a;
+    }
 }
 
 - (void)setObservedCalendarIdentifiers:(NSSet *)aCalendarIdentifiers forStore:(NSObject <WLCalStore> *)aStore
@@ -122,26 +127,32 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
     if (![self.calStores containsObject:aStore])
         return;
 
-    dispatch_sync(_accessQueue, ^
-    {
-        [_observedCalendarIdentifiers setObject:[aCalendarIdentifiers copy] forKey:aStore];
-        [self fetchPredicateDidChange];
-        [self fetchCalRemindersWithPriority:NSOperationQueuePriorityNormal];
-    });
+    dispatch_semaphore_wait(_fetchPredicateSemaphore, DISPATCH_TIME_FOREVER);
+    [_observedCalendarIdentifiers setObject:[aCalendarIdentifiers copy] forKey:aStore];
+    [self fetchPredicateDidChange];
+    [self fetchCalRemindersWithPriority:NSOperationQueuePriorityNormal];
+    dispatch_semaphore_signal(_fetchPredicateSemaphore);
 }
 
 - (void)fetchCalRemindersWithPriority:(NSOperationQueuePriority)aPriority
 {
+    // We will fetch all reminders for all observed completion masks.
+    // Therefore we can safely cancel all other operations.
+    [_fetchOperationsQueue cancelAllOperations];
     [self fetchCalRemindersForCompletionMask:self.observedCompletionMask priority:aPriority];
 }
 
 - (void)fetchCalRemindersForCompletionMask:(WLCalReminderCompletionMask)aCompletionMask priority:(NSOperationQueuePriority)aPriority
 {
+    if (aCompletionMask == WLCalReminderCompletionMaskNothing)
+        return;
+
+    // Capture parameters of the predicate because this method can be called concurrently.
+    NSMapTable *localCalendarIdentifiers = [_observedCalendarIdentifiers copy];
+
     NSBlockOperation *operation = [[NSBlockOperation alloc] init];
-    __unsafe_unretained NSBlockOperation *unretainedOperation = operation;
+    __unsafe_unretained NSBlockOperation *localOperation = operation;
     [operation setQueuePriority:aPriority];
-    WLCalReminderCompletionMask mask = self.observedCompletionMask;
-    NSMapTable *calendarIdentifiers = [_observedCalendarIdentifiers copy];
     NSMapTable *userInfoPerStore = nil;
     dispatch_semaphore_t userInfoPerStoreSemaphore = dispatch_semaphore_create(1);
 
@@ -156,15 +167,16 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
         {
             // Fetch reminders
             NSMutableArray *reminders = [NSMutableArray array];
-            WLCalRemindersPredicate *p = [WLCalRemindersPredicate predicateWithCompletionMask:mask calendarIdentifiers:[calendarIdentifiers objectForKey:store]];
+            WLCalRemindersPredicate *p = [WLCalRemindersPredicate predicateWithCompletionMask:aCompletionMask
+                                                                          calendarIdentifiers:[localCalendarIdentifiers objectForKey:store]];
             [reminders addObjectsFromArray:[store remindersMatchingPredicate:p]];
 
-            if (![unretainedOperation isCancelled])
+            if (![localOperation isCancelled])
             {
                 // Parse reminders into per-store userInfo
                 NSMutableDictionary *storeUserInfo = [NSMutableDictionary dictionaryWithCapacity:3];
 
-                switch (mask)
+                switch (aCompletionMask)
                 {
                     case WLCalReminderCompletionMaskComplete:
                         storeUserInfo[@(WLCalReminderCompletionMaskComplete)] = reminders;
@@ -183,7 +195,7 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
                         break;
                 }
 
-                if (![unretainedOperation isCancelled])
+                if (![localOperation isCancelled])
                 {
                     dispatch_semaphore_wait(userInfoPerStoreSemaphore, DISPATCH_TIME_FOREVER);
                     [userInfoPerStore setObject:storeUserInfo forKey:store];
@@ -197,14 +209,19 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
     {
         dispatch_release(userInfoPerStoreSemaphore);
 
-        if ([unretainedOperation isCancelled])
+        if ([localOperation isCancelled])
             return;
 
         NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithCapacity:3];
 
-        userInfo[@(WLCalReminderCompletionMaskComplete)] = [NSMutableArray array];
-        userInfo[@(WLCalReminderCompletionMaskIncomplete)] = [NSMutableArray array];
-        userInfo[@(WLCalReminderCompletionMaskAny)] = [NSMutableArray array];
+        if (aCompletionMask & WLCalReminderCompletionMaskComplete)
+            userInfo[@(WLCalReminderCompletionMaskComplete)] = [NSMutableArray array];
+
+        if (aCompletionMask & WLCalReminderCompletionMaskIncomplete)
+            userInfo[@(WLCalReminderCompletionMaskIncomplete)] = [NSMutableArray array];
+
+        if (aCompletionMask & WLCalReminderCompletionMaskAny)
+            userInfo[@(WLCalReminderCompletionMaskAny)] = [NSMutableArray array];
 
         for (NSDictionary *storeUserInfo in NSAllMapTableValues(userInfoPerStore))
         {
@@ -213,20 +230,22 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
             [userInfo[@(WLCalReminderCompletionMaskAny)] addObjectsFromArray:storeUserInfo[@(WLCalReminderCompletionMaskAny)]];
         }
 
-        if ([unretainedOperation isCancelled])
+        if ([localOperation isCancelled])
             return;
 
-        [[NSNotificationCenter defaultCenter] postNotificationName:WLCalendarRemindersDidChangeNotification object:self userInfo:userInfo];
+        dispatch_async(_notificationsDeliveryQueue, ^
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:WLCalendarRemindersDidChangeNotification object:self userInfo:userInfo];
+        });
     }];
     [_fetchOperationsQueue addOperation:operation];
 }
 
 - (void)calStoreDidChange:(NSNotification *)aNotification
 {
-    dispatch_sync(_accessQueue, ^
-    {
-        [self fetchCalRemindersWithPriority:NSOperationQueuePriorityLow];
-    });
+    dispatch_semaphore_wait(_fetchPredicateSemaphore, DISPATCH_TIME_FOREVER);
+    [self fetchCalRemindersWithPriority:NSOperationQueuePriorityLow];
+    dispatch_semaphore_signal(_fetchPredicateSemaphore);
 }
 
 - (void)fetchPredicateDidChange

@@ -72,14 +72,14 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
     NSMutableArray *unusedSublayers = [_sortedByStartDateEventLayers mutableCopy];
     [_sortedByStartDateEventLayers removeAllObjects];
     WLHourRange newHourRangeOfEvents = WLHourRangeInvalid;
-    for (id event in newEvents)
+    for (NSObject<WLCalEvent> * event in newEvents)
     {
         NSUInteger indexOfUsedLayer = [unusedSublayers indexOfObjectPassingTest:^BOOL(WLCalendarEventLayer *l, NSUInteger idx, BOOL *stop)
         {
-            id layerEvent = l.dayEvent;
+            NSObject<WLCalEvent> *layerEvent = l.dayEvent;
             return [layerEvent isEqual:event] || (
-                                                  [[layerEvent uid] isEqual:[event uid]] &&
-                                                  [[[(CalEvent *)layerEvent calendar] uid] isEqual:[[(CalEvent *)event calendar] uid]]
+                                                  [[layerEvent itemIdentifier] isEqual:[event itemIdentifier]] &&
+                                                  [[[layerEvent calendar] calendarIdentifier] isEqual:[[event calendar] calendarIdentifier]]
                                                   );
         }];
         WLCalendarEventLayer *layer = nil;
@@ -259,15 +259,15 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
     NSUInteger i = [events indexOfObject:anEvent
                            inSortedRange:NSMakeRange(0, [_sortedByStartDateEventLayers count])
                                  options:NSBinarySearchingFirstEqual | NSBinarySearchingInsertionIndex
-                         usingComparator:^(CalEvent *aEvent, CalEvent *bEvent)
+                         usingComparator:^(NSObject<WLCalEvent> *aEvent, NSObject<WLCalEvent> *bEvent)
     {
         // Storage can represent multiple instances of the same event because it may come from different servers/services.
         // To make layout consistent we compare different parameters of the event.
         NSComparisonResult result = [[aEvent startDate] compare:[bEvent startDate]];
         if (result == NSOrderedSame)
-            result = [[aEvent uid] compare:[bEvent uid]];
+            result = [[aEvent itemIdentifier] compare:[bEvent itemIdentifier]];
         if (result == NSOrderedSame)
-            result = [[[aEvent calendar] uid] compare:[[bEvent calendar] uid]];
+            result = [[[aEvent calendar] calendarIdentifier] compare:[[bEvent calendar] calendarIdentifier]];
         return result;
     }];
     return i;
@@ -698,7 +698,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
     WLCalendarEventLayer *l = [WLCalendarEventLayer layer];
     l.needsDisplayOnBoundsChange = YES;
     l.masksToBounds = YES;
-    l.contentsGravity = kCAGravityBottom;
+    l.contentsGravity = kCAGravityBottomLeft;
     l.anchorPoint = CGPointMake(0.0, 0.0);
 
 #ifndef DEBUG_LAYERS
@@ -714,13 +714,13 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
 @dynamic numberOfColumnsToSkip;
 @dynamic hourRange;
 
-- (void)setDayEvent:(id)newEvent
+- (void)setDayEvent:(NSObject<WLCalEvent> *)newEvent
 {
     [self setValue:newEvent forKey:_WLEventKey];
 
-    self.name = [newEvent uid];
+    self.name = [newEvent itemIdentifier];
     self.title = [NSAttributedString WL_eventTitleWithString:[newEvent title]];
-    self.location = [NSAttributedString WL_eventLocationWithString:[(CalEvent *)newEvent location]];
+    self.location = [NSAttributedString WL_eventLocationWithString:[newEvent location]];
     self.numberOfColumnsToSkip = 0;
 
     NSObject<WLCalendarTimeRuler> *timeRuler = [(WLCalendarDayEventsLayer *)[self superlayer] timeRuler];
@@ -738,7 +738,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
     }
     self.hourRange = h;
 
-    NSColor *calendarColor = [[(CalEvent *)newEvent calendar] color];
+    NSColor *calendarColor = [[newEvent calendar] color];
     if (calendarColor == NULL || (id)calendarColor == [NSNull null])
         calendarColor = [NSColor WL_defaultCalendarColorIfFrameworkFails];
 #ifdef DEBUG_LAYERS

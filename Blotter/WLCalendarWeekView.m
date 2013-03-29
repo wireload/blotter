@@ -846,7 +846,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
             memset_pattern8(_lengthOfHours, &DoubleValue, 8 * sizeof(_lengthOfHours) / sizeof(CGFloat));
             memset_pattern8(_locationOfHours, &DoubleValue, 8 * sizeof(_locationOfHours) / sizeof(CGFloat));
 
-            if (fabs(availableHeight) < CGFLOAT_EPSILON)
+            if (fabs(availableHeight) < DBL_EPSILON)
                 return;
 
             WLHourRange fixedVisibleHourRange = [self visibleHourRange];
@@ -896,17 +896,17 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
             _lengthOfHours[0] = baseHeightOfHour; // Guaranteed to be baseHeightOfHour
             _locationOfHours[0] = 0.0;
             size_t indexOfHour = 1;
-            for (size_t end = fdim(extendedHourRange.startHour, timeRulerHourRange.startHour); indexOfHour < end; ++indexOfHour)
+            for (size_t end = (size_t)fdim(extendedHourRange.startHour, timeRulerHourRange.startHour); indexOfHour < end; ++indexOfHour)
             {
                 _lengthOfHours[indexOfHour] = baseHeightOfHour;
                 _locationOfHours[indexOfHour] = _locationOfHours[indexOfHour - 1] + baseHeightOfHour;
             }
-            for (size_t end = fdim(extendedHourRange.endHour, timeRulerHourRange.startHour); indexOfHour <= end; ++indexOfHour)
+            for (size_t end = (size_t)fdim(extendedHourRange.endHour, timeRulerHourRange.startHour); indexOfHour <= end; ++indexOfHour)
             {
                 _lengthOfHours[indexOfHour] = extendedHeightOfHour;
                 _locationOfHours[indexOfHour] = _locationOfHours[indexOfHour - 1] + extendedHeightOfHour;
             }
-            for (size_t end = fdim(timeRulerHourRange.endHour, timeRulerHourRange.startHour); indexOfHour <= end; ++indexOfHour)
+            for (size_t end = (size_t)fdim(timeRulerHourRange.endHour, timeRulerHourRange.startHour); indexOfHour <= end; ++indexOfHour)
             {
                 _lengthOfHours[indexOfHour] = baseHeightOfHour;
                 _locationOfHours[indexOfHour] = _locationOfHours[indexOfHour - 1] + baseHeightOfHour;
@@ -1033,21 +1033,16 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 {
     [self setNeedsUpdateHoursLengthAndLocation];
 
-    NSMutableArray *columnEvents = [[[self.dataSource weekView:self eventsForColumnAtIndex:anIndex] mutableCopy] autorelease];
-    NSIndexSet *allDayEventIndexes = [columnEvents indexesOfObjectsPassingTest:^BOOL(CalEvent *e, NSUInteger idx, BOOL *stop) {
-        return e.isAllDay;
-    }];
-    NSArray *allDayEvents = [[[columnEvents objectsAtIndexes:allDayEventIndexes] retain] autorelease];
-    [columnEvents removeObjectsAtIndexes:allDayEventIndexes];
-    NSSet *dayEvents = [NSSet setWithArray:columnEvents];
-
     WLCalendarDayEventsLayer *dayLayer = [[self dayLayers] objectAtIndex:anIndex];
     NSParameterAssert(dayLayer != nil);
-    [dayLayer setEvents:dayEvents];
+    [dayLayer setEvents:[NSSet setWithArray:[self.dataSource weekView:self eventsForColumnAtIndex:anIndex]]];
 
-    WLCalendarAllDayEventsLayer *allDayLayer = [[self allDayLayers] objectAtIndex:anIndex];
-    NSParameterAssert(allDayLayer != nil);
-    [allDayLayer setEvents:allDayEvents];
+    if (self.showsAllDayEvents)
+    {
+        WLCalendarAllDayEventsLayer *allDayLayer = [[self allDayLayers] objectAtIndex:anIndex];
+        NSParameterAssert(allDayLayer != nil);
+        [allDayLayer setEvents:[self.dataSource weekView:self allDayEventsForColumnAtIndex:anIndex]];
+    }
 }
 
 - (void)_updateTitleOfColumnAtIndex:(NSUInteger)anIndex
