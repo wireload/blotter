@@ -94,6 +94,11 @@
     return self.originalEvent.occurrenceDate;
 }
 
+- (BOOL)isLikeEvent:(NSObject <WLCalEvent> *)anEvent
+{
+    return [self.originalEvent isLikeEvent:anEvent];
+}
+
 
 #pragma mark WLCalCalendarItem
 
@@ -130,6 +135,11 @@
 - (NSString *)itemIdentifier
 {
     return self.originalEvent.itemIdentifier;
+}
+
+- (BOOL)hasRecurrenceRules
+{
+    return self.originalEvent.hasRecurrenceRules;
 }
 
 
