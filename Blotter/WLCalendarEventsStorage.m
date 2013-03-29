@@ -13,6 +13,8 @@
 
 @implementation WLCalendarEventsStorage
 {
+    NSCalendar *_calendar;
+
     NSDictionary *_allDayEventsPerDateRange;
     NSDictionary *_dayEventsPerDateRange;
 }
@@ -36,7 +38,7 @@
         }
 
         NSIndexSet *indexesOfAllDayEvents = [eventParts indexesOfObjectsWithOptions:NSEnumerationConcurrent
-                                                                        passingTest:^BOOL(NSObject<WLCalEvent> *anEvent, NSUInteger idx, BOOL *stop)
+                                                                        passingTest:^BOOL(NSObject <WLCalEvent> *anEvent, NSUInteger idx, BOOL *stop)
         {
             return anEvent.isAllDay;
         }];
@@ -52,22 +54,22 @@
             // All day events will be sorted so that events with short duration will appear first.
             // Events with the same duration are grouped by calendar identifier.
             allDayEvents = [allDayEvents sortedArrayWithOptions:NSSortConcurrent | NSSortStable
-                                                usingComparator:^NSComparisonResult(NSObject<WLCalEvent> *anEvent1, NSObject<WLCalEvent> *anEvent2)
+                                                usingComparator:^NSComparisonResult(WLCalEventPart *anEvent1, WLCalEventPart *anEvent2)
             {
-                NSTimeInterval event1Duration = [anEvent1.endDate timeIntervalSinceDate:anEvent1.startDate];
-                NSTimeInterval event2Duration = [anEvent2.endDate timeIntervalSinceDate:anEvent2.startDate];
+                NSTimeInterval event1Duration = [anEvent1.originalEvent.endDate timeIntervalSinceDate:anEvent1.originalEvent.startDate];
+                NSTimeInterval event2Duration = [anEvent2.originalEvent.endDate timeIntervalSinceDate:anEvent2.originalEvent.startDate];
 
                 if (event1Duration < event2Duration)
-                    return NSOrderedAscending;
-                else if (event1Duration > event2Duration)
                     return NSOrderedDescending;
+                else if (event1Duration > event2Duration)
+                    return NSOrderedAscending;
                 else
                     return [anEvent1.calendar.calendarIdentifier compare:anEvent2.calendar.calendarIdentifier];
             }];
 
             NSMutableDictionary *allDayEventsPerDateRange = [NSMutableDictionary dictionary];
 
-            for (NSObject<WLCalEvent> *e in allDayEvents)
+            for (WLCalEventPart *e in allDayEvents)
             {
                 WLDateRange *r = [WLDateRange dateRangeWithStartDate:e.startDate endDate:e.endDate];
                 r = [r dateRangeByAligningCalendarUnit:aUnit calendar:allDayEventsCalendarCopy options:WLAlignOutward];
@@ -91,14 +93,14 @@
         {
             NSArray *dayEvents = [eventParts objectsAtIndexes:indexesOfDayEvents];
             dayEvents = [dayEvents sortedArrayWithOptions:NSSortConcurrent | NSSortStable
-                                          usingComparator:^NSComparisonResult(NSObject<WLCalEvent> *anEvent1, NSObject<WLCalEvent> *anEvent2)
+                                          usingComparator:^NSComparisonResult(WLCalEventPart *anEvent1, WLCalEventPart *anEvent2)
             {
                 return [anEvent1.startDate compare:anEvent2.startDate];
             }];
 
             NSMutableDictionary *dayEventsPerDateRange = [NSMutableDictionary dictionary];
 
-            for (NSObject<WLCalEvent> *e in dayEvents)
+            for (WLCalEventPart *e in dayEvents)
             {
                 WLDateRange *r = [WLDateRange dateRangeWithStartDate:e.startDate endDate:e.endDate];
                 r = [r dateRangeByAligningCalendarUnit:aUnit calendar:dayEventsCalendarCopy options:WLAlignOutward];
@@ -125,7 +127,6 @@
 
 
 #pragma mark Properties
-@synthesize calendar = _calendar;
 
 - (NSCalendar *)calendar
 {
