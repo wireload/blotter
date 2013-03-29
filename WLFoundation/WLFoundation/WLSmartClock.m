@@ -78,7 +78,7 @@
 
 #pragma mark Methods
 
-+ (instancetype)defaultSmartClock
++ (instancetype)defaultClock
 {
     static WLSmartClock *Clock = nil;
     static dispatch_once_t Once;

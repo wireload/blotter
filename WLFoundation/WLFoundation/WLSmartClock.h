@@ -25,7 +25,7 @@
 /*!
     @brief  Returns shared instance.
 */
-+ (instancetype)defaultSmartClock;
++ (instancetype)defaultClock;
 
 - (void)localeDidChange:(NSNotification *)aNotification;
 
