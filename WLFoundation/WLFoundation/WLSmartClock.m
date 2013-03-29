@@ -13,6 +13,8 @@
 
 @implementation WLSmartClock
 {
+    NSCalendar *_calendar;
+
     NSTimer *_nextMinuteTimer;
     NSTimer *_nextDayTimer;
 
@@ -59,15 +61,14 @@
 {
     [_nextMinuteTimer invalidate];
     [_nextDayTimer invalidate];
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(calendarDidChange) object:nil];
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(dateDidChange) object:nil];
+    [[NSRunLoop mainRunLoop] cancelPerformSelector:@selector(calendarDidChange) target:self argument:nil];
+    [[NSRunLoop mainRunLoop] cancelPerformSelector:@selector(dateDidChange) target:self argument:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
 }
 
 
 #pragma mark Properties
-@synthesize calendar = _calendar;
 
 - (NSCalendar *)calendar
 {
@@ -93,7 +94,11 @@
     // NSCurrentLocaleDidChangeNotification may be posted multiple times for 1 change (meaning user's change in the sys prefs).
     // Don't annoy the user with multiple updates.
     static const NSTimeInterval AnyDelay = 1.0;
-    [self performSelector:@selector(calendarDidChange) withObject:nil afterDelay:AnyDelay];
+    dispatch_async(dispatch_get_main_queue(), ^
+    {
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(calendarDidChange) object:nil];
+        [self performSelector:@selector(calendarDidChange) withObject:nil afterDelay:AnyDelay];
+    });
 }
 
 - (void)systemClockDidChange:(NSNotification *)aNotification
@@ -102,15 +107,27 @@
     if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
     {
         static const NSTimeInterval AnyDelay = 0.5;
-        [self performSelector:@selector(dateDidChange) withObject:nil afterDelay:AnyDelay];
+        dispatch_async(dispatch_get_main_queue(), ^
+        {
+            [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(dateDidChange) object:nil];
+            [self performSelector:@selector(dateDidChange) withObject:nil afterDelay:AnyDelay];
+        });
     }
     else
-        [self dateDidChange];
+    {
+        dispatch_async(dispatch_get_main_queue(), ^
+        {
+            [self dateDidChange];
+        });
+    }
 }
 
 - (void)timeZoneDidChange:(NSNotification *)aNotification
 {
-    [self calendarDidChange];
+    dispatch_async(dispatch_get_main_queue(), ^
+    {
+        [self calendarDidChange];
+    });
 }
 
 - (void)scheduleNextMinuteTimer
@@ -172,11 +189,13 @@
 
 - (void)calendarDidChange
 {
+    NSAssert([NSThread currentThread] == [NSThread mainThread], @"%@ MUST be called on the Main Thread", NSStringFromSelector(_cmd));
+
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(calendarDidChange) object:nil];
     NSCalendar *newCalendar = [[NSCalendar currentCalendar] copy];
 #ifdef DEBUG
     [_log logDebug:@"Calendar did change: %@ -> %@", _calendar, newCalendar];
 #endif
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(calendarDidChange) object:nil];
     [self willChangeValueForKey:@"calendar"];
     _calendar = newCalendar;
     [self didChangeValueForKey:@"calendar"];
@@ -186,11 +205,13 @@
 
 - (void)dateDidChange
 {
+    NSAssert([NSThread currentThread] == [NSThread mainThread], @"%@ MUST be called on the Main Thread", NSStringFromSelector(_cmd));
+
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(dateDidChange) object:nil];
     NSDate *newDate = [NSDate date];
 #ifdef DEBUG
     [_log logDebug:@"Date did change: %@ -> %@", _date, newDate];
 #endif
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(dateDidChange) object:nil];
     [self willChangeValueForKey:@"date"];
     _date = newDate;
     [self didChangeValueForKey:@"date"];
