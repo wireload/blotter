@@ -15,8 +15,8 @@
 /*!
     @brief  A calendar store used to create the object.
  */
-@property (readonly) id<WLCalStore> store;
+@property (readonly) NSObject <WLCalStore> *store;
 
-- (instancetype)initWithStore:(id<WLCalStore>)aStore;
+- (instancetype)initWithStore:(NSObject <WLCalStore> *)aStore;
 
 @end
