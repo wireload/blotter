@@ -77,7 +77,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     }];
 
     if (_applicationRunTimer != nil)
-        [[WLCalendarController sharedController] removeObserver:self forKeyPath:@"date"];
+        [[WLSmartClock defaultClock] removeObserver:self forKeyPath:@"date"];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
@@ -292,7 +292,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 {
     [[NSUserDefaults standardUserDefaults] WL_setShowRateThisAppInMenu:YES];
     _applicationRunTimer = nil;
-    [[WLCalendarController sharedController] removeObserver:self forKeyPath:@"date"];
+    [[WLSmartClock defaultClock] removeObserver:self forKeyPath:@"date"];
 }
 
 - (void)hideRateThisAppMenuItem
@@ -376,15 +376,15 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         _applicationRunTimer = [[WLApplicationRunTimer alloc] initWithDelayDefaultsKey:WLApplicationRunTimerDelayKey
                                                                     isFiredDefaultsKey:WLApplicationRunTimerIsFiredKey
                                                              elapsedSecondsDefaultsKey:WLApplicationRunTimerElapsedSecondsKey];
-        // Bind tick to changes of WLCalendarController's date. So we can avoid using additional timer.
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(showRateThisAppMenuItem)
                                                      name:WLApplicationRunTimerDidFireNotification
                                                    object:_applicationRunTimer];
-        [[WLCalendarController sharedController] addObserver:self
-                                                  forKeyPath:@"date"
-                                                     options:NSKeyValueObservingOptionNew
-                                                     context:NULL];
+        // Bind tick to changes of date. So we can avoid using additional timer.
+        [[WLSmartClock defaultClock] addObserver:self
+                                      forKeyPath:@"date"
+                                         options:NSKeyValueObservingOptionNew
+                                         context:NULL];
     }
 
     [defaults addObserver:self
