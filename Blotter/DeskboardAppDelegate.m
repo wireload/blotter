@@ -40,7 +40,8 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 @implementation DeskboardAppDelegate
 {
-    IKApplicationPreferences *  _preferencesController;
+    WLApplicationPreferences *_preferencesController;
+
     NSStatusItem *_statusItem;
     NSTimer *_showCurrentWeekTimer;
     NSTimer *_autoFadeTimer;
@@ -90,7 +91,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 #pragma mark Properties
 
-- (IKApplicationPreferences *)preferencesController
+- (WLApplicationPreferences *)preferencesController
 {
     if (_preferencesController == nil)
     {
