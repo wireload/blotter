@@ -122,7 +122,7 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
     }
 }
 
-- (void)setObservedCalendarIdentifiers:(NSSet *)aCalendarIdentifiers forStore:(NSObject <WLCalStore> *)aStore
+- (void)setObservedCalendarIdentifiers:(NSArray *)aCalendarIdentifiers forStore:(NSObject <WLCalStore> *)aStore
 {
     if (![self.calStores containsObject:aStore])
         return;

@@ -78,16 +78,18 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
         {
             for (NSObject<WLCalStore> *s in aStores)
             {
-                NSSet *reminderCalendars = [NSSet setWithArray:[[self.calendarsController calReminderCalendarsToDisplayForStore:s] valueForKey:@"calendarIdentifier"]];
-#ifdef DEBUG
-                [_log logDebug:@"Observed Reminder Calendars: %@", reminderCalendars];
-#endif
+                NSArray *reminderCalendars = [[self.calendarsController calReminderCalendarsToDisplayForStore:s] valueForKey:@"calendarIdentifier"];
+                [_log logDebugWithMessenger:^NSString *
+                {
+                    return [NSString stringWithFormat:@"Observed Reminder Calendars: %@", reminderCalendars];
+                }];
                 [_remindersController setObservedCalendarIdentifiers:reminderCalendars forStore:s];
 
-                NSSet *eventCalendars = [NSSet setWithArray:[[self.calendarsController calEventCalendarsToDisplayForStore:s] valueForKey:@"calendarIdentifier"]];
-#ifdef DEBUG
-                [_log logDebug:@"Observed Event Calendars: %@", eventCalendars];
-#endif
+                NSArray *eventCalendars = [[self.calendarsController calEventCalendarsToDisplayForStore:s] valueForKey:@"calendarIdentifier"];
+                [_log logDebugWithMessenger:^NSString *
+                {
+                    return [NSString stringWithFormat:@"Observed Event Calendars: %@", eventCalendars];
+                }];
                 [_eventsController setObservedCalendarIdentifiers:eventCalendars forStore:s];
             }
         };

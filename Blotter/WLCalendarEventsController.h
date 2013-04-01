@@ -67,7 +67,7 @@ extern NSString *WLCalendarEventsDidChangeNotification;
 /*!
     @brief  Sets calendar identifiers for a given store.
  */
-- (void)setObservedCalendarIdentifiers:(NSSet *)aCalendarIdentifiers forStore:(NSObject<WLCalStore> *)aStore;
+- (void)setObservedCalendarIdentifiers:(NSArray *)aCalendarIdentifiers forStore:(NSObject<WLCalStore> *)aStore;
 
 /*!
     @brief  Returns calendar identifiers for a given store.
