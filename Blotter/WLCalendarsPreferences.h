@@ -11,6 +11,7 @@
 #import "IKPreferencesRepresentation.h"
 
 
+// FIXME: Rewrite using bindings and array controllers.
 @interface WLCalendarsPreferences : WLViewController <IKPreferencesRepresentation, NSTableViewDelegate, NSTableViewDataSource>
 {
     IBOutlet NSTableView *_eventsTableView;

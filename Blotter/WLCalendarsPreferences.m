@@ -31,8 +31,8 @@
     dispatch_async(dispatch_get_main_queue(), ^
     {
         WLCalendarsController *c = [[[NSApp delegate] calendarWindowController] calendarsController];
-        _calEventCalendars = [[c calEventCalendarsForStore:[WLCalendarStore systemStore]] copy];
-        _calReminderCalendars = [[c calReminderCalendarsForStore:[WLCalendarStore systemStore]] copy];
+        _calEventCalendars = [c.calEventCalendars copy];
+        _calReminderCalendars = [c.calReminderCalendars copy];
         [_eventsTableView reloadData];
         [_remindersTableView reloadData];
     });
@@ -126,10 +126,7 @@
                                              selector:@selector(calCalendarsDidChange:)
                                                  name:WLCalCalendarsDidChangeNotification
                                                object:c];
-    _calEventCalendars = [[c calEventCalendarsForStore:[WLCalendarStore systemStore]] copy];
-    _calReminderCalendars = [[c calReminderCalendarsForStore:[WLCalendarStore systemStore]] copy];
-    [_eventsTableView reloadData];
-    [_remindersTableView reloadData];
+    [self calCalendarsDidChange:nil];
 }
 
 @end
