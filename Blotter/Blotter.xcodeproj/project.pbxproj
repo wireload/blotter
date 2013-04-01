@@ -348,7 +348,7 @@
 		E2948D941401484B007122BC /* NSCalendar+WLWeekend.m in Sources */ = {isa = PBXBuildFile; fileRef = E2948D931401484B007122BC /* NSCalendar+WLWeekend.m */; };
 		E2957E5A152B117E00AE05E8 /* WLApplicationRunTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2957E59152B117E00AE05E8 /* WLApplicationRunTimer.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		E2957E5E152B13E500AE05E8 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2957E5D152B13E500AE05E8 /* CoreServices.framework */; };
-		E29F38EE1319694C00A865D9 /* WLNewReminderWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E29F38ED1319694C00A865D9 /* WLNewReminderWindowController.m */; };
+		E29F38EE1319694C00A865D9 /* WLNewReminderWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E29F38ED1319694C00A865D9 /* WLNewReminderWindowController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		E2A61A80140745FC0059F201 /* WLCalendarBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A61A7F140745FC0059F201 /* WLCalendarBoxView.m */; };
 		E2A701ED13EFE4C500A4BF3A /* WLCalendarDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A701EC13EFE4C500A4BF3A /* WLCalendarDateView.m */; };
 		E2A7085E13F0427800A4BF3A /* WLCalendarDateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A7085D13F0427800A4BF3A /* WLCalendarDateViewController.m */; };

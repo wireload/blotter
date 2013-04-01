@@ -19,7 +19,7 @@
     self = [self initWithWindowNibName:@"NewTaskWindow"];
     if (self != nil)
     {
-        _calendarController = [aCalendarController retain];
+        _calendarController = aCalendarController;
     }
     return self;
 }
@@ -29,10 +29,6 @@
 {
     if (_titleViewObserver != nil)
         [[NSNotificationCenter defaultCenter] removeObserver:_titleViewObserver];
-    [_calendarController release];
-    [dueDate release];
-    [title release];
-    [super dealloc];
 }
 
 
