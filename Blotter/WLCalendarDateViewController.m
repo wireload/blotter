@@ -106,9 +106,9 @@ static NSString* const _WLWeekdayDateFormatterCacheKey = @"weekdayDateFormatter"
     return (WLCalendarDateView *)[super view];
 }
 
-- (WLCalendarController *)representedObject
+- (WLSmartClock *)representedObject
 {
-    return (WLCalendarController *)[super representedObject];
+    return (WLSmartClock *)[super representedObject];
 }
 
 

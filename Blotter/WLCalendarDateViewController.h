@@ -7,17 +7,20 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "WLCalendarController.h"
+#import <WLFoundation/WLFoundation.h>
 #import "WLCalendarDateView.h"
 
 
+/*!
+    @brief  Represents date in format relative to current locale.
+ */
 @interface WLCalendarDateViewController : NSViewController {
     NSCache *_cache;
 }
 
 - (WLCalendarDateView *)view;
 
-- (WLCalendarController *)representedObject;
+- (WLSmartClock *)representedObject;
 
 - (void)reloadViewData;
 
