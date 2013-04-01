@@ -10,7 +10,7 @@
 #import <PTHotKey/PTHotKeyCenter.h>
 #import <PTHotKey/PTHotKey+ShortcutRecorder.h>
 #import "DeskboardAppDelegate.h"
-#import "WLNewTaskWindowController.h"
+#import "WLNewReminderWindowController.h"
 #import "WLCalendarWindow.h"
 #import "WLCalendarWindowController.h"
 #import "WLApplicationRunTimer.h"
@@ -193,7 +193,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (IBAction)showNewTask:(id)aSender
 {
-    WLNewTaskWindowController *controller = [WLNewTaskWindowController sharedWindowController];
+    WLNewReminderWindowController *controller = [WLNewReminderWindowController sharedWindowController];
     if ([controller canCreateTask])
     {
         [controller setDefaults:aSender];
@@ -503,7 +503,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     if (aMenuItem == _newEventMenuItem)
         return [self.newEventWindowController canCreateEvent];
     else if (aMenuItem == _newTaskMenuItem)
-        return [[WLNewTaskWindowController sharedWindowController] canCreateTask];
+        return [[WLNewReminderWindowController sharedWindowController] canCreateTask];
     else if (aMenuItem == _showNextWeekMenuItem)
         return [self.calendarWindowController canShowNextWeek];
     else if (aMenuItem == _showCurrentWeekMenuItem)

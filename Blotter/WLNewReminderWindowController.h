@@ -1,5 +1,5 @@
 //
-//  WLNewTaskWindowController.h
+//  WLNewReminderWindowController.h
 //  Blotter
 //
 //  Created by Ilya Kulakov on 26.02.11.
@@ -13,7 +13,7 @@
 @class WLGlassHudTextView;
 
 
-@interface WLNewTaskWindowController : NSWindowController {
+@interface WLNewReminderWindowController : NSWindowController {
     BOOL isDueDate;
     NSDate *dueDate;
     NSString *title;

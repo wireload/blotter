@@ -1,5 +1,5 @@
 //
-//  WLNewTaskWindowController.m
+//  WLNewReminderWindowController.m
 //  Blotter
 //
 //  Created by Ilya Kulakov on 26.02.11.
@@ -9,10 +9,10 @@
 #import <CalendarStore/CalendarStore.h>
 #import "NSDate+WLDayBoundaries.h"
 #import "WLGlassHudTextView.h"
-#import "WLNewTaskWindowController.h"
+#import "WLNewReminderWindowController.h"
 
 
-@implementation WLNewTaskWindowController
+@implementation WLNewReminderWindowController
 
 - (id)initWithCalendarController:(WLCalendarController *)aCalendarController
 {
@@ -84,7 +84,7 @@
 + (id)sharedWindowController
 {
     static dispatch_once_t onceToken;
-    static WLNewTaskWindowController *controller = nil;
+    static WLNewReminderWindowController *controller = nil;
     dispatch_once(&onceToken, ^{
         controller = [[self alloc] initWithCalendarController:[WLCalendarController sharedController]];
     });
