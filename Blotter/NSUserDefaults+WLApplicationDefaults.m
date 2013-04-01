@@ -78,6 +78,8 @@ NSString* const WLShowsNext7DaysKey = @"RollingCalendar";
 
 NSString* const WLLastSelectedCalEventCalendarUID = @"uidOfLastSelectedCalendarInEvents";
 
+NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalendarInTasks";
+
 
 @implementation NSUserDefaults (WLApplicationDefaults)
 

@@ -10,7 +10,6 @@
 #import <PTHotKey/PTHotKeyCenter.h>
 #import <PTHotKey/PTHotKey+ShortcutRecorder.h>
 #import "DeskboardAppDelegate.h"
-#import "WLNewReminderWindowController.h"
 #import "WLCalendarWindow.h"
 #import "WLCalendarWindowController.h"
 #import "WLApplicationRunTimer.h"
@@ -41,6 +40,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 {
     WLApplicationPreferences *_preferencesController;
     WLNewEventWindowController *_newEventWindowController;
+    WLNewReminderWindowController *_newReminderWindowController;
 
     NSStatusItem *_statusItem;
     NSTimer *_showCurrentWeekTimer;
@@ -130,6 +130,20 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     return _newEventWindowController;
 }
 
+- (WLNewReminderWindowController *)newReminderWindowController
+{
+    if (_newReminderWindowController == nil)
+    {
+        _newReminderWindowController = [[WLNewReminderWindowController alloc] initWithWindowNibName:@"NewTaskWindow"];
+        [_newReminderWindowController bind:@"calCalendars"
+                                  toObject:self.calendarWindowController.calendarsController
+                               withKeyPath:@"calReminderCalendarsToDisplay"
+                                   options:nil];
+    }
+
+    return _newReminderWindowController;
+}
+
 
 #pragma mark Methods
 
@@ -191,17 +205,16 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         NSBeep();
 }
 
-- (IBAction)showNewTask:(id)aSender
+- (IBAction)showNewReminder:(id)aSender
 {
-    WLNewReminderWindowController *controller = [WLNewReminderWindowController sharedWindowController];
-    if ([controller canCreateTask])
+    if ([self.newReminderWindowController canCreateReminder])
     {
-        [controller setDefaults:aSender];
+        [self.newReminderWindowController resetDefaults:aSender];
 
         if ([[NSUserDefaults standardUserDefaults] objectForKey:_WLNewTaskWindowAutosaveName] == nil)
-            [[controller window] center];
+            [[self.newReminderWindowController window] center];
 
-        [controller showWindow:aSender];
+        [self.newReminderWindowController showWindow:aSender];
         [self _removeAutoFadeTimerIfNeeded];
         self.calendarWindowController.isFadedOut = NO;
         [NSApp activateIgnoringOtherApps:YES];
@@ -357,7 +370,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     [NSValueTransformer setValueTransformer:[[SRKeyEquivalentModifierMaskTransformer alloc] init] forName:@"SRKeyEquivalentModifierMaskTransformer"];
     _shortcuts = @[
                    @[@"shortcutNewEvent", @"showNewEvent:", _newEventMenuItem],
-                   @[@"shortcutNewTask", @"showNewTask:", _newTaskMenuItem],
+                   @[@"shortcutNewTask", @"showNewReminder:", _newTaskMenuItem],
                    @[@"shortcutShowNextWeek", @"showNextWeek:", _showNextWeekMenuItem],
                    @[@"shortcutShowPreviousWeek", @"showPreviousWeek:", _showPreviousWeekMenuItem],
                    @[@"shortcutShowCurrentWeek", @"showCurrentWeek:", _showCurrentWeekMenuItem],
@@ -503,7 +516,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     if (aMenuItem == _newEventMenuItem)
         return [self.newEventWindowController canCreateEvent];
     else if (aMenuItem == _newTaskMenuItem)
-        return [[WLNewReminderWindowController sharedWindowController] canCreateTask];
+        return [self.newReminderWindowController canCreateReminder];
     else if (aMenuItem == _showNextWeekMenuItem)
         return [self.calendarWindowController canShowNextWeek];
     else if (aMenuItem == _showCurrentWeekMenuItem)

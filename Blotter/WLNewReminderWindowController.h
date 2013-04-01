@@ -7,21 +7,15 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "WLCalendarController.h"
+#import <WLCalendarStore/WLCalendarStore.h>
 
 
 @class WLGlassHudTextView;
 
 
-@interface WLNewReminderWindowController : NSWindowController {
-    BOOL isDueDate;
-    NSDate *dueDate;
-    NSString *title;
-    NSInteger priority;
-
-    WLCalendarController *_calendarController;
+@interface WLNewReminderWindowController : NSWindowController
+{
     IBOutlet WLGlassHudTextView *_titleView;
-    id _titleViewObserver;
     IBOutlet NSButton *_createButton;
 }
 
@@ -33,17 +27,13 @@
 
 @property NSInteger priority;
 
-@property (nonatomic, readonly) NSArray *taskCalCalendars;
+@property (nonatomic, copy) NSArray *calCalendars;
 
-@property (nonatomic) NSUInteger selectedTaskCalCalendarIndex;
+@property (nonatomic) NSUInteger selectedCalCalendarIndex;
 
-@property (nonatomic, readonly) BOOL canCreateTask;
+@property (nonatomic, readonly) BOOL canCreateReminder;
 
-+ (id)sharedWindowController;
-
-- (id)initWithCalendarController:(WLCalendarController *)aCalendarController;
-
-- (IBAction)setDefaults:(id)aSender;
+- (IBAction)resetDefaults:(id)aSender;
 
 - (IBAction)create:(id)aSender;
 

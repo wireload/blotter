@@ -10,6 +10,7 @@
 #import "WLCalendarWindowController.h"
 #import "WLApplicationPreferences.h"
 #import "WLNewEventWindowController.h"
+#import "WLNewReminderWindowController.h"
 
 
 @interface DeskboardAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate /*, NSMenuValidation*/>
@@ -30,13 +31,15 @@
 
 @property (nonatomic, readonly) WLNewEventWindowController *newEventWindowController;
 
+@property (nonatomic, readonly) WLNewReminderWindowController *newReminderWindowController;
+
 - (IBAction)bringToFrontOrSendToBack:(id)sender;
 
 - (IBAction)showPreferences:(id)aSender;
 
 - (IBAction)showNewEvent:(id)aSender;
 
-- (IBAction)showNewTask:(id)aSender;
+- (IBAction)showNewReminder:(id)aSender;
 
 - (IBAction)showAbout:(id)aSender;
 

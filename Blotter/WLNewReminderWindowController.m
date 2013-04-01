@@ -10,20 +10,13 @@
 #import "NSDate+WLDayBoundaries.h"
 #import "WLGlassHudTextView.h"
 #import "WLNewReminderWindowController.h"
+#import "NSUserDefaults+WLApplicationDefaults.h"
 
 
 @implementation WLNewReminderWindowController
-
-- (id)initWithCalendarController:(WLCalendarController *)aCalendarController
 {
-    self = [self initWithWindowNibName:@"NewTaskWindow"];
-    if (self != nil)
-    {
-        _calendarController = aCalendarController;
-    }
-    return self;
+    id _titleViewObserver;
 }
-
 
 - (void)dealloc
 {
@@ -33,67 +26,57 @@
 
 
 #pragma mark Properties
-@synthesize isDueDate;
-@synthesize dueDate;
-@synthesize title;
-@synthesize priority;
-@dynamic taskCalCalendars;
-@dynamic selectedTaskCalCalendarIndex;
-@dynamic canCreateTask;
 
-- (NSArray *)taskCalCalendars
++ (NSSet *)keyPathsForValuesAffectingCanCreateReminder
 {
-    return [_calendarController.calReminderCalendarsToDisplay filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isEditable == YES"]];
+    return [NSSet setWithObject:@"self.calCalendars"];
 }
 
-- (void)setSelectedTaskCalCalendarIndex:(NSUInteger)newSelectedTaskCalCalendarIndex
+- (void)setSelectedCalCalendarIndex:(NSUInteger)newSelectedCalCalendarIndex
 {
-    CalCalendar *c = [self.taskCalCalendars objectAtIndex:newSelectedTaskCalCalendarIndex];
-    [[NSUserDefaults standardUserDefaults] setObject:[c uid] forKey:@"uidOfLastSelectedCalendarInTasks"];
+    NSObject <WLCalCalendar> *c = [self.calCalendars objectAtIndex:newSelectedCalCalendarIndex];
+    [[NSUserDefaults standardUserDefaults] setObject:c.calendarIdentifier forKey:WLLastSelectedCalReminderCalendarUID];
 }
 
-- (NSUInteger)selectedTaskCalCalendarIndex
+- (NSUInteger)selectedCalCalendarIndex
 {
     NSUInteger index = NSNotFound;
-    NSString *lastSelectedCalendarUID = [[NSUserDefaults standardUserDefaults] objectForKey:@"uidOfLastSelectedCalendarInTasks"];
+    NSString *lastSelectedCalendarUID = [[NSUserDefaults standardUserDefaults] objectForKey:WLLastSelectedCalReminderCalendarUID];
+
     if (lastSelectedCalendarUID != nil)
     {
-        index = [self.taskCalCalendars indexOfObjectPassingTest:^BOOL(CalCalendar *calCalendar, NSUInteger idx, BOOL *stop) {
-            return [calCalendar.uid isEqualToString:lastSelectedCalendarUID];
+        index = [self.calCalendars indexOfObjectPassingTest:^BOOL(NSObject <WLCalCalendar> *aCalCalendar, NSUInteger idx, BOOL *stop)
+        {
+            return [aCalCalendar.calendarIdentifier isEqualToString:lastSelectedCalendarUID];
         }];
+
         if (index == NSNotFound)
             index = 0;
     }
     else
         index = 0;
+
     return index;
 }
 
-- (BOOL)canCreateTask
+- (BOOL)canCreateReminder
 {
-    return [self.taskCalCalendars count] > 0;
+    return [self.calCalendars count] > 0;
 }
 
 
 #pragma mark Methods
 
-+ (id)sharedWindowController
-{
-    static dispatch_once_t onceToken;
-    static WLNewReminderWindowController *controller = nil;
-    dispatch_once(&onceToken, ^{
-        controller = [[self alloc] initWithCalendarController:[WLCalendarController sharedController]];
-    });
-    return controller;
-}
-
-- (IBAction)setDefaults:(id)aSender
+- (IBAction)resetDefaults:(id)aSender
 {
     self.title = NSLocalizedString(@"New Reminder", @"Default text for title field of the New Reminder panel");
     self.isDueDate = NO;
-    // The due date is an 'all day' date, but we still base it on the next hour so that if you create an
-    // event at 23:XX, the suggested due date is tomorrow instead of the same day which is more helpful.
-    self.dueDate = [[NSDate date] WL_nextHourDate:[[WLCalendarController sharedController] calendar]];
+    // The due date is an 'all day' date.
+    // Due date is set to next hour to mini iCal behavior when due date of a reminder created at 23:XX is set to next day.
+    NSDate *newDueDate = nil;
+    NSTimeInterval timeInterval = 0.0;
+    [[NSCalendar currentCalendar] rangeOfUnit:NSHourCalendarUnit startDate:&newDueDate interval:&timeInterval forDate:[NSDate date]];
+    self.dueDate = [newDueDate dateByAddingTimeInterval:timeInterval];;
     self.priority = CalPriorityNone;
 
     [(NSTextView *)_titleView selectAll:self];
@@ -106,9 +89,11 @@
     if (self.isDueDate)
         task.dueDate = self.dueDate;
     task.priority = self.priority;
-    task.calendar = [self.taskCalCalendars objectAtIndex:self.selectedTaskCalCalendarIndex];
+    NSObject <WLCalCalendar> *selectedCalendar = [self.calCalendars objectAtIndex:self.selectedCalCalendarIndex];
+    task.calendar = [[CalCalendarStore defaultCalendarStore] calendarWithUID:selectedCalendar.calendarIdentifier];
 
     NSError *error = nil;
+
     if ([[CalCalendarStore defaultCalendarStore] saveTask:task error:&error])
         [[self window] orderOut:self];
     else
@@ -150,20 +135,7 @@
                                     withKeyPath:@"title"
                                         options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:NSContinuouslyUpdatesValueBindingOption]];
 
-    [self setDefaults:nil];
-}
-
-
-#pragma mark NSObject
-
-+ (NSSet *)keyPathsForValuesAffectingCanCreateTask
-{
-    return [NSSet setWithObject:@"taskCalCalendars"];
-}
-
-+ (NSSet *)keyPathsForValuesAffectingTaskCalCalendars
-{
-    return [NSSet setWithObject:@"_calendarController.calReminderCalendarsToDisplay"];
+    [self resetDefaults:nil];
 }
 
 @end

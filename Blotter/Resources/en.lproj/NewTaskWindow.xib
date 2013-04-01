@@ -567,9 +567,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						<object class="NSNibBindingConnector" key="connector" id="653321917">
 							<reference key="NSSource" ref="93078503"/>
 							<reference key="NSDestination" ref="1021"/>
-							<string key="NSLabel">content: self.taskCalCalendars</string>
+							<string key="NSLabel">content: self.calCalendars</string>
 							<string key="NSBinding">content</string>
-							<string key="NSKeyPath">self.taskCalCalendars</string>
+							<string key="NSKeyPath">self.calCalendars</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
@@ -583,9 +583,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						<object class="NSNibBindingConnector" key="connector" id="747077162">
 							<reference key="NSSource" ref="93078503"/>
 							<reference key="NSDestination" ref="1021"/>
-							<string key="NSLabel">contentValues: self.taskCalCalendars.title</string>
+							<string key="NSLabel">contentValues: self.calCalendars.title</string>
 							<string key="NSBinding">contentValues</string>
-							<string key="NSKeyPath">self.taskCalCalendars.title</string>
+							<string key="NSKeyPath">self.calCalendars.title</string>
 							<reference key="NSPreviousConnector" ref="653321917"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
@@ -600,9 +600,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="93078503"/>
 							<reference key="NSDestination" ref="1021"/>
-							<string key="NSLabel">selectedIndex: self.selectedTaskCalCalendarIndex</string>
+							<string key="NSLabel">selectedIndex: self.selectedCalCalendarIndex</string>
 							<string key="NSBinding">selectedIndex</string>
-							<string key="NSKeyPath">self.selectedTaskCalCalendarIndex</string>
+							<string key="NSKeyPath">self.selectedCalCalendarIndex</string>
 							<reference key="NSPreviousConnector" ref="747077162"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
@@ -617,9 +617,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="93078503"/>
 							<reference key="NSDestination" ref="1021"/>
-							<string key="NSLabel">enabled: self.taskCalCalendars</string>
+							<string key="NSLabel">enabled: self.calCalendars</string>
 							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">self.taskCalCalendars</string>
+							<string key="NSKeyPath">self.calCalendars</string>
 							<dictionary key="NSOptions">
 								<integer value="1" key="NSMultipleValuesPlaceholder"/>
 								<integer value="0" key="NSNullPlaceholder"/>
@@ -702,9 +702,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="143960448"/>
 							<reference key="NSDestination" ref="1021"/>
-							<string key="NSLabel">enabled: canCreateTask</string>
+							<string key="NSLabel">enabled: canCreateReminder</string>
 							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">canCreateTask</string>
+							<string key="NSKeyPath">canCreateReminder</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>

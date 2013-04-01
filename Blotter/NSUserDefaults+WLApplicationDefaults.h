@@ -78,6 +78,8 @@ extern NSString* const WLShowsNext7DaysKey;
 
 extern NSString* const WLLastSelectedCalEventCalendarUID;
 
+extern NSString* const WLLastSelectedCalReminderCalendarUID;
+
 
 @interface NSUserDefaults (WLApplicationDefaults)
 
