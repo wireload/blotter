@@ -76,7 +76,7 @@ extern NSString* const WLTitleFormatKey;
 
 extern NSString* const WLShowsNext7DaysKey;
 
-extern NSString* const WLLastSelectedCalEventCalendarsUID;
+extern NSString* const WLLastSelectedCalEventCalendarUID;
 
 
 @interface NSUserDefaults (WLApplicationDefaults)

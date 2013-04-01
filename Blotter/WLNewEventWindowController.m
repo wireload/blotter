@@ -40,13 +40,13 @@
 - (void)setSelectedCalCalendarIndex:(NSUInteger)newSelectedCalCalendarIndex
 {
     NSObject <WLCalCalendar> *c = [self.calCalendars objectAtIndex:newSelectedCalCalendarIndex];
-    [[NSUserDefaults standardUserDefaults] setObject:c.calendarIdentifier forKey:WLLastSelectedCalEventCalendarsUID];
+    [[NSUserDefaults standardUserDefaults] setObject:c.calendarIdentifier forKey:WLLastSelectedCalEventCalendarUID];
 }
 
 - (NSUInteger)selectedCalCalendarIndex
 {
     NSUInteger index = NSNotFound;
-    NSString *lastSelectedCalendarUID = [[NSUserDefaults standardUserDefaults] objectForKey:WLLastSelectedCalEventCalendarsUID];
+    NSString *lastSelectedCalendarUID = [[NSUserDefaults standardUserDefaults] objectForKey:WLLastSelectedCalEventCalendarUID];
 
     if (lastSelectedCalendarUID != nil)
     {
