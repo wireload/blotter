@@ -84,7 +84,6 @@
 		BA81A834164548070058EB16 /* IKApplicationPreferences.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA81A832164548070058EB16 /* IKApplicationPreferences.strings */; };
 		BABB682E16E9D8C200FFDCC5 /* Blotter-B10.iconset in Resources */ = {isa = PBXBuildFile; fileRef = BABB682D16E9D8C200FFDCC5 /* Blotter-B10.iconset */; };
 		BAF67C8C16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C8B16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.m */; };
-		BAF67CBA16D607280047FE2A /* WLCalendarController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67CB316D607270047FE2A /* WLCalendarController.m */; };
 		BAF67CBB16D607280047FE2A /* WLClosableWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67CB516D607270047FE2A /* WLClosableWindow.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BAF67CBC16D607280047FE2A /* WLCountGreaterThanOneTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67CB716D607270047FE2A /* WLCountGreaterThanOneTransformer.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BAF67CBD16D607280047FE2A /* WLGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67CB916D607280047FE2A /* WLGraphics.m */; };
@@ -595,8 +594,6 @@
 		BABB682D16E9D8C200FFDCC5 /* Blotter-B10.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = "Blotter-B10.iconset"; sourceTree = "<group>"; };
 		BAF67C8A16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+WLApplicationDefaults.h"; sourceTree = "<group>"; };
 		BAF67C8B16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+WLApplicationDefaults.m"; sourceTree = "<group>"; };
-		BAF67CB216D607270047FE2A /* WLCalendarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarController.h; sourceTree = "<group>"; };
-		BAF67CB316D607270047FE2A /* WLCalendarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarController.m; sourceTree = "<group>"; };
 		BAF67CB416D607270047FE2A /* WLClosableWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLClosableWindow.h; sourceTree = "<group>"; };
 		BAF67CB516D607270047FE2A /* WLClosableWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLClosableWindow.m; sourceTree = "<group>"; };
 		BAF67CB616D607270047FE2A /* WLCountGreaterThanOneTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCountGreaterThanOneTransformer.h; sourceTree = "<group>"; };
@@ -1475,8 +1472,6 @@
 				E253574F13DC884D0010A2ED /* NSDate+WLDayBoundaries.m */,
 				E2957E58152B117E00AE05E8 /* WLApplicationRunTimer.h */,
 				E2957E59152B117E00AE05E8 /* WLApplicationRunTimer.m */,
-				BAF67CB216D607270047FE2A /* WLCalendarController.h */,
-				BAF67CB316D607270047FE2A /* WLCalendarController.m */,
 				E2A7085C13F0427800A4BF3A /* WLCalendarDateViewController.h */,
 				E2A7085D13F0427800A4BF3A /* WLCalendarDateViewController.m */,
 				E2F1133B13E70B4F001C2B7B /* WLCalendarWindowController.h */,
@@ -2140,7 +2135,6 @@
 				BA08AA53167743A50085F40C /* WLPreferencesButtonCell.m in Sources */,
 				BA105998168DAD8F00A3DDF5 /* WLCalendarEventsController.m in Sources */,
 				BAF67C8C16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.m in Sources */,
-				BAF67CBA16D607280047FE2A /* WLCalendarController.m in Sources */,
 				BAF67CBB16D607280047FE2A /* WLClosableWindow.m in Sources */,
 				BAF67CBC16D607280047FE2A /* WLCountGreaterThanOneTransformer.m in Sources */,
 				BAF67CBD16D607280047FE2A /* WLGraphics.m in Sources */,
