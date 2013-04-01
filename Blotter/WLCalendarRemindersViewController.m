@@ -7,7 +7,6 @@
 //
 
 #import "WLCalendarRemindersViewController.h"
-#import "WLCalendarController.h"
 
 
 @implementation WLCalendarRemindersViewController
