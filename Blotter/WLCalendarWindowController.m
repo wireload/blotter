@@ -118,7 +118,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
         _remindersViewController.representedObject = _remindersController;
 
         _dateViewController = [[WLCalendarDateViewController alloc] init];
-        [_dateViewController setRepresentedObject:[WLCalendarController sharedController]];
+        [_dateViewController setRepresentedObject:_smartClock];
 
         [defaults addObserver:self forKeyPath:@"CalendarSize" options:NSKeyValueObservingOptionNew context:NULL];
         [defaults addObserver:self forKeyPath:@"CalendarPosition" options:NSKeyValueObservingOptionNew context:NULL];

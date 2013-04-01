@@ -10,96 +10,69 @@
 #import "NSDate+WLDayBoundaries.h"
 #import "WLGlassHudTextView.h"
 #import "WLNewEventWindowController.h"
-
-
-static const NSTimeInterval _WLDefaultTimeDiff = 3600; // seconds
+#import "NSUserDefaults+WLApplicationDefaults.h"
 
 
 @implementation WLNewEventWindowController
-
-- (id)initWithCalendarController:(WLCalendarController *)aCalendarController
 {
-    self = [self initWithWindowNibName:@"NewEventWindow"];
-    if (self != nil)
-    {
-        _calendarController = [aCalendarController retain];
-    }
-    return self;
+    NSDate *_datePickerValueBackup;
+    id _titleViewObserver;
+    id _locationViewObserver;
 }
 
 - (void)dealloc
 {
     if (_titleViewObserver != nil)
         [[NSNotificationCenter defaultCenter] removeObserver:_titleViewObserver];
+
     if (_locationViewObserver != nil)
         [[NSNotificationCenter defaultCenter] removeObserver:_locationViewObserver];
-    [_datePickerValueBackup release];
-    [_calendarController release];
-    [title release];
-    [location release];
-    [startDate release];
-    [endDate release];
-    [super dealloc];
 }
 
 
 #pragma mark Properties
-@synthesize title;
-@synthesize location;
-@synthesize isAllDay;
-@synthesize startDate;
-@synthesize endDate;
-@dynamic eventCalCalendars;
-@dynamic selectedEventCalCalendarIndex;
-@dynamic canCreateEvent;
 
-- (NSArray *)eventCalCalendars
++ (NSSet *)keyPathsForValuesAffectingCanCreateEvent
 {
-    return [_calendarController.calEventCalendarsToDisplay filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isEditable == YES"]];
+    return [NSSet setWithObject:@"self.calCalendars"];
 }
 
-- (void)setSelectedEventCalCalendarIndex:(NSUInteger)newSelectedEventCalCalendarIndex
+- (void)setSelectedCalCalendarIndex:(NSUInteger)newSelectedCalCalendarIndex
 {
-    CalCalendar *c = [self.eventCalCalendars objectAtIndex:newSelectedEventCalCalendarIndex];
-    [[NSUserDefaults standardUserDefaults] setObject:[c uid] forKey:@"uidOfLastSelectedCalendarInEvents"];
+    NSObject <WLCalCalendar> *c = [self.calCalendars objectAtIndex:newSelectedCalCalendarIndex];
+    [[NSUserDefaults standardUserDefaults] setObject:c.calendarIdentifier forKey:WLLastSelectedCalEventCalendarsUID];
 }
 
-- (NSUInteger)selectedEventCalCalendarIndex
+- (NSUInteger)selectedCalCalendarIndex
 {
     NSUInteger index = NSNotFound;
-    NSString *lastSelectedCalendarUID = [[NSUserDefaults standardUserDefaults] objectForKey:@"uidOfLastSelectedCalendarInEvents"];
+    NSString *lastSelectedCalendarUID = [[NSUserDefaults standardUserDefaults] objectForKey:WLLastSelectedCalEventCalendarsUID];
+
     if (lastSelectedCalendarUID != nil)
     {
-        index = [self.eventCalCalendars indexOfObjectPassingTest:^BOOL(CalCalendar *calCalendar, NSUInteger idx, BOOL *stop) {
-            return [calCalendar.uid isEqualToString:lastSelectedCalendarUID];
+        index = [self.calCalendars indexOfObjectPassingTest:^BOOL(NSObject <WLCalCalendar> *aCalCalendar, NSUInteger idx, BOOL *stop)
+        {
+            return [aCalCalendar.calendarIdentifier isEqualToString:lastSelectedCalendarUID];
         }];
+
         if (index == NSNotFound)
             index = 0;
     }
     else
         index = 0;
+
     return index;
 }
 
 - (BOOL)canCreateEvent
 {
-    return [self.eventCalCalendars count] > 0;
+    return [self.calCalendars count] > 0;
 }
 
 
 #pragma mark Methods
 
-+ (id)sharedWindowController
-{
-    static dispatch_once_t onceToken;
-    static WLNewEventWindowController *controller = nil;
-    dispatch_once(&onceToken, ^{
-        controller = [[self alloc] initWithCalendarController:[WLCalendarController sharedController]];
-    });
-    return controller;
-}
-
-- (IBAction)setDefaults:(id)aSender
+- (IBAction)resetDefaults:(id)aSender
 {
     // It is important to change string of _locationView before _titleView, because resizing of _locationView is followed by resizing of _titleView and that
     // will result in wrong frame of _titleView.
@@ -107,11 +80,28 @@ static const NSTimeInterval _WLDefaultTimeDiff = 3600; // seconds
     self.location = @"";
     self.title = NSLocalizedString(@"New Event", @"Default text for title field on the New Event panel");
     self.isAllDay = NO;
-    self.startDate = [[NSDate date] WL_nextHourDate:[[WLCalendarController sharedController] calendar]];
-    self.endDate = [self.startDate dateByAddingTimeInterval:_WLDefaultTimeDiff];
-    
+
+    NSCalendar *currentCalendar = [NSCalendar currentCalendar];
+    NSDate *currentDate = [NSDate date];
+    NSDate *newStartDate = nil;
+    NSTimeInterval timeInterval = 0.0;
+    [currentCalendar rangeOfUnit:NSHourCalendarUnit startDate:&newStartDate interval:&timeInterval forDate:currentDate];
+    newStartDate = [newStartDate dateByAddingTimeInterval:timeInterval];
+    NSDate *newEndDate = nil;
+    [currentCalendar rangeOfUnit:NSHourCalendarUnit startDate:&newEndDate interval:&timeInterval forDate:newStartDate];
+    newEndDate = [newEndDate dateByAddingTimeInterval:timeInterval];
+
+    if (!newStartDate || !newEndDate || [newStartDate compare:newEndDate] != NSOrderedAscending)
+    {
+        newStartDate = currentDate;
+        newEndDate = [newStartDate dateByAddingTimeInterval:3600];
+    }
+
+    self.startDate = newStartDate;
+    self.endDate = newEndDate;
+
     [(NSTextView *)_titleView selectAll:self];
-    [_datePickerValueBackup release], _datePickerValueBackup = nil;
+    _datePickerValueBackup = nil;
 }
 
 - (IBAction)create:(id)aSender;
@@ -122,9 +112,11 @@ static const NSTimeInterval _WLDefaultTimeDiff = 3600; // seconds
     event.isAllDay = self.isAllDay;
     event.startDate = self.startDate;
     event.endDate = self.endDate;
-    event.calendar = [self.eventCalCalendars objectAtIndex:self.selectedEventCalCalendarIndex];
+    NSObject <WLCalCalendar> *selectedCalendar = [self.calCalendars objectAtIndex:self.selectedCalCalendarIndex];
+    event.calendar = [[CalCalendarStore defaultCalendarStore] calendarWithUID:selectedCalendar.calendarIdentifier];
 
     NSError *error = nil;
+
     if ([[CalCalendarStore defaultCalendarStore] saveEvent:event span:CalSpanThisEvent error:&error])
         [[self window] orderOut:self];
     else
@@ -142,10 +134,15 @@ static const NSTimeInterval _WLDefaultTimeDiff = 3600; // seconds
     if (aDatePickerCell == [_startDatePicker cell])
     {
         NSTimeInterval diffBetweenDates = [self.startDate timeIntervalSinceDate:_datePickerValueBackup];
+
         if (diffBetweenDates >= 0)
             self.endDate = [self.endDate dateByAddingTimeInterval:diffBetweenDates];
         else
-            self.endDate = [self.startDate dateByAddingTimeInterval:_WLDefaultTimeDiff];
+        {
+            NSDateComponents *c = [[NSDateComponents alloc] init];
+            c.hour = 1;
+            self.endDate = [[NSCalendar currentCalendar] dateByAddingComponents:c toDate:self.startDate options:0];
+        }
     }
     else if (aDatePickerCell == [_endDatePicker cell])
     {
@@ -155,24 +152,13 @@ static const NSTimeInterval _WLDefaultTimeDiff = 3600; // seconds
             self.endDate = _datePickerValueBackup;
         }
     }
-    [_datePickerValueBackup release], _datePickerValueBackup = nil;
+
+    _datePickerValueBackup = nil;
 }
 
 - (void)datePickerCellDidBecomeFirstResponder:(NSDatePickerCell *)aDatePickerCell
 {
     _datePickerValueBackup = [[aDatePickerCell dateValue] copy];
-}
-
-
-#pragma mark Private
-@dynamic _datePickerElements;
-
-- (NSInteger)_datePickerElements
-{
-    if (self.isAllDay)
-        return NSYearMonthDayDatePickerElementFlag;
-    else
-        return NSYearMonthDayDatePickerElementFlag | NSHourMinuteDatePickerElementFlag;
 }
 
 
@@ -220,7 +206,7 @@ static const NSTimeInterval _WLDefaultTimeDiff = 3600; // seconds
                                  [_locationViewContainer setAutoresizingMask:([_locationViewContainer autoresizingMask] ^ NSViewHeightSizable) | NSViewMaxYMargin];
                              }];
     _locationView.postsSizeChangedNotifications = YES;
-    
+
     [[_titleView valueForKey:@"_textView"] bind:NSValueBinding
                                        toObject:self
                                     withKeyPath:@"title"
@@ -229,28 +215,28 @@ static const NSTimeInterval _WLDefaultTimeDiff = 3600; // seconds
                                           toObject:self
                                        withKeyPath:@"location"
                                            options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:NSContinuouslyUpdatesValueBindingOption]];
-    [_startDatePicker bind:@"datePickerElements" toObject:self withKeyPath:@"_datePickerElements" options:nil];
-    [_endDatePicker bind:@"datePickerElements" toObject:self withKeyPath:@"_datePickerElements" options:nil];
+    [_startDatePicker bind:@"datePickerElements" toObject:self withKeyPath:@"datePickerElements" options:nil];
+    [_endDatePicker bind:@"datePickerElements" toObject:self withKeyPath:@"datePickerElements" options:nil];
 
-    [self setDefaults:nil];
+    [self resetDefaults:nil];
 }
 
+@end
 
-#pragma mark NSObject
 
-+ (NSSet *)keyPathsForValuesAffectingCanCreateEvent
-{
-    return [NSSet setWithObject:@"self.eventCalCalendars"];
-}
+@implementation WLNewEventWindowController (Appearance)
 
-+ (NSSet *)keyPathsForValuesAffectingEventCalCalendars
-{
-    return [NSSet setWithObject:@"_calendarController.calEventCalendarsToDisplay"];
-}
-
-+ (NSSet *)keyPathsForValuesAffecting_datePickerElements
++ (NSSet *)keyPathsForValuesAffectingDatePickerElements
 {
     return [NSSet setWithObject:@"self.isAllDay"];
+}
+
+- (NSDatePickerElementFlags)datePickerElements
+{
+    if (self.isAllDay)
+        return NSYearMonthDayDatePickerElementFlag;
+    else
+        return NSYearMonthDayDatePickerElementFlag | NSHourMinuteDatePickerElementFlag;
 }
 
 @end

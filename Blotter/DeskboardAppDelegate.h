@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "WLCalendarWindowController.h"
 #import "WLApplicationPreferences.h"
+#import "WLNewEventWindowController.h"
 
 
 @interface DeskboardAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate /*, NSMenuValidation*/>
@@ -26,6 +27,8 @@
 @property (readonly) WLCalendarWindowController *calendarWindowController;
 
 @property (nonatomic, readonly) WLApplicationPreferences *preferencesController;
+
+@property (nonatomic, readonly) WLNewEventWindowController *newEventWindowController;
 
 - (IBAction)bringToFrontOrSendToBack:(id)sender;
 

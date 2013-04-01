@@ -10,7 +10,6 @@
 #import <PTHotKey/PTHotKeyCenter.h>
 #import <PTHotKey/PTHotKey+ShortcutRecorder.h>
 #import "DeskboardAppDelegate.h"
-#import "WLNewEventWindowController.h"
 #import "WLNewTaskWindowController.h"
 #import "WLCalendarWindow.h"
 #import "WLCalendarWindowController.h"
@@ -41,6 +40,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 @implementation DeskboardAppDelegate
 {
     WLApplicationPreferences *_preferencesController;
+    WLNewEventWindowController *_newEventWindowController;
 
     NSStatusItem *_statusItem;
     NSTimer *_showCurrentWeekTimer;
@@ -116,6 +116,20 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     return _preferencesController;
 }
 
+- (WLNewEventWindowController *)newEventWindowController
+{
+    if (_newEventWindowController == nil)
+    {
+        _newEventWindowController = [[WLNewEventWindowController alloc] initWithWindowNibName:@"NewEventWindow"];
+        [_newEventWindowController bind:@"calCalendars"
+                               toObject:self.calendarWindowController.calendarsController
+                            withKeyPath:@"calEventCalendarsToDisplay"
+                                options:nil];
+    }
+
+    return _newEventWindowController;
+}
+
 
 #pragma mark Methods
 
@@ -161,15 +175,14 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (IBAction)showNewEvent:(id)aSender
 {
-    WLNewEventWindowController *controller = [WLNewEventWindowController sharedWindowController];
-    if ([controller canCreateEvent])
+    if ([self.newEventWindowController canCreateEvent])
     {
-        [controller setDefaults:aSender];
+        [self.newEventWindowController resetDefaults:aSender];
 
         if ([[NSUserDefaults standardUserDefaults] objectForKey:_WLNewEventWindowAutosaveName] == nil)
-            [[controller window] center];
+            [[self.newEventWindowController window] center];
 
-        [controller showWindow:aSender];
+        [self.newEventWindowController showWindow:aSender];
         [self _removeAutoFadeTimerIfNeeded];
         self.calendarWindowController.isFadedOut = NO;
         [NSApp activateIgnoringOtherApps:YES];
@@ -488,7 +501,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 - (BOOL)validateMenuItem:(NSMenuItem *)aMenuItem
 {
     if (aMenuItem == _newEventMenuItem)
-        return [[WLNewEventWindowController sharedWindowController] canCreateEvent];
+        return [self.newEventWindowController canCreateEvent];
     else if (aMenuItem == _newTaskMenuItem)
         return [[WLNewTaskWindowController sharedWindowController] canCreateTask];
     else if (aMenuItem == _showNextWeekMenuItem)

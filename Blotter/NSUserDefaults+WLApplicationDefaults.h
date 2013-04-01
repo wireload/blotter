@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <CalendarStore/CalendarStore.h>
-#import "WLCalendarController.h"
 
 
 extern NSInteger const WLBlotterBundleVersion2_1;
@@ -76,6 +75,8 @@ extern NSString* const WLShortcutBringToFront;
 extern NSString* const WLTitleFormatKey;
 
 extern NSString* const WLShowsNext7DaysKey;
+
+extern NSString* const WLLastSelectedCalEventCalendarsUID;
 
 
 @interface NSUserDefaults (WLApplicationDefaults)

@@ -76,6 +76,8 @@ NSString* const WLTitleFormatKey = @"PerDayDate";
 
 NSString* const WLShowsNext7DaysKey = @"RollingCalendar";
 
+NSString* const WLLastSelectedCalEventCalendarsUID = @"uidOfLastSelectedCalendarInEvents";
+
 
 @implementation NSUserDefaults (WLApplicationDefaults)
 
