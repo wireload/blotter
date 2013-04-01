@@ -159,12 +159,12 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
 
 - (NSArray *)calReminderCalendarsToDisplayForStore:(NSObject <WLCalStore> *)aStore
 {
-    return [self calCalendarsToDisplayFromCalCalendars:[self calReminderCalendarsForStore:aStore]];
+    return [self calReminderCalendarsToDisplayFromCalCalendars:[self calReminderCalendarsForStore:aStore]];
 }
 
 - (NSArray *)calEventCalendarsToDisplayForStore:(NSObject <WLCalStore> *)aStore
 {
-    return [self calCalendarsToDisplayFromCalCalendars:[self calEventCalendarsForStore:aStore]];
+    return [self calEventCalendarsToDisplayFromCalCalendars:[self calEventCalendarsForStore:aStore]];
 }
 
 - (NSArray *)calReminderCalendarsFromCalCalendars:(NSArray *)aCalCalendars
@@ -194,6 +194,48 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
 }
 
 - (NSArray *)calCalendarsToDisplayFromCalCalendars:(NSArray *)aCalCalendars
+{
+    if (![aCalCalendars count])
+        return @[];
+
+    if ([[NSUserDefaults standardUserDefaults] WL_displaysAllCalendars])
+        return aCalCalendars;
+    else
+    {
+        NSDictionary *defaultsCalendars = [[NSUserDefaults standardUserDefaults] dictionaryForKey:self.autosaveKeyPath];
+        NSIndexSet *indexesOfCalCalendarsToDisplay = [aCalCalendars indexesOfObjectsWithOptions:NSEnumerationConcurrent
+                                                                                    passingTest:^BOOL(NSObject<WLCalCalendar> *aCalCalendar, NSUInteger idx, BOOL *stop)
+        {
+            NSDictionary *value = defaultsCalendars[aCalCalendar.store.storeIdentifier][aCalCalendar.calendarIdentifier];
+            // value may be nil in case that calendar is already added, but not written to the user defaults yet.
+            return [value[WLCalendarIsUsedForEventsKey] boolValue] || [value[WLCalendarIsUsedForRemindersKey] boolValue];
+        }];
+        return [aCalCalendars objectsAtIndexes:indexesOfCalCalendarsToDisplay];
+    }
+}
+
+- (NSArray *)calReminderCalendarsToDisplayFromCalCalendars:(NSArray *)aCalCalendars
+{
+    if (![aCalCalendars count])
+        return @[];
+
+    if ([[NSUserDefaults standardUserDefaults] WL_displaysAllCalendars])
+        return aCalCalendars;
+    else
+    {
+        NSDictionary *defaultsCalendars = [[NSUserDefaults standardUserDefaults] dictionaryForKey:self.autosaveKeyPath];
+        NSIndexSet *indexesOfCalReminderCalendarsToDisplay = [aCalCalendars indexesOfObjectsWithOptions:NSEnumerationConcurrent
+                                                                                            passingTest:^BOOL(NSObject<WLCalCalendar> *aCalCalendar, NSUInteger idx, BOOL *stop)
+                                                                                            {
+                                                                                                NSDictionary *value = defaultsCalendars[aCalCalendar.store.storeIdentifier][aCalCalendar.calendarIdentifier];
+                                                                                                // value may be nil in case that calendar is already added, but not written to the user defaults yet.
+                                                                                                return [value[WLCalendarIsUsedForRemindersKey] boolValue];
+                                                                                            }];
+        return [aCalCalendars objectsAtIndexes:indexesOfCalReminderCalendarsToDisplay];
+    }
+}
+
+- (NSArray *)calEventCalendarsToDisplayFromCalCalendars:(NSArray *)aCalCalendars
 {
     if (![aCalCalendars count])
         return @[];
@@ -514,12 +556,12 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
 
 - (NSArray *)calReminderCalendarsToDisplay
 {
-    return [self calCalendarsToDisplayFromCalCalendars:self.calReminderCalendars];
+    return [self calReminderCalendarsToDisplayFromCalCalendars:self.calReminderCalendars];
 }
 
 - (NSArray *)calEventCalendarsToDisplay
 {
-    return [self calCalendarsToDisplayFromCalCalendars:self.calEventCalendars];
+    return [self calEventCalendarsToDisplayFromCalCalendars:self.calEventCalendars];
 }
 
 @end

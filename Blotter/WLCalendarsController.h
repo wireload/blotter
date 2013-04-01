@@ -108,11 +108,25 @@ extern NSString *WLChangedCalStoresKey;
 - (NSArray *)calEventCalendarsFromCalCalendars:(NSArray *)aCalCalendars;
 
 /*!
-    @brief      Extracts calendars to display from aCalCalendars.
+    @brief      Extracts calendars to display events, reminders or both from aCalCalendars.
 
     @result     An array of calendars to display or empty array.
  */
 - (NSArray *)calCalendarsToDisplayFromCalCalendars:(NSArray *)aCalCalendars;
+
+/*!
+    @brief      Extracts reminder calendars to display from aCalCalendars.
+
+    @result     An array of calendars to display or empty array.
+ */
+- (NSArray *)calReminderCalendarsToDisplayFromCalCalendars:(NSArray *)aCalCalendars;
+
+/*!
+    @brief      Extracts event calendars to display from aCalCalendars.
+
+    @result     An array of calendars to display or empty array.
+ */
+- (NSArray *)calEventCalendarsToDisplayFromCalCalendars:(NSArray *)aCalCalendars;
 
 /*!
     @brief  Asynchronously fetches calendars from aStore and updates the receiver.
