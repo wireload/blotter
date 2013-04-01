@@ -37,10 +37,17 @@ extern NSString *WLCalCalendarsToDisplayDidChangeNotification;
 extern NSString *WLChangedCalStoresKey;
 
 
+/*!
+    @brief      Observes given calendar stores and provides facilities to manage displaying of the calendars.
+
+    @discussion Thread Safe.
+ */
 @interface WLCalendarsController : NSObject
 
 /*!
-    @brief  Instances of objects that adapt WLCalStore protocol which the receiver observes.
+    @brief      Observed calendar stores.
+
+    @discussion Each instances MUST conform to the WLCalStore protocol.
  */
 @property (readonly) NSArray *calStores;
 
@@ -49,8 +56,6 @@ extern NSString *WLChangedCalStoresKey;
  */
 @property (readonly) NSString *autosaveKeyPath;
 
-@property NSOperationQueuePriority defaultFetchPriority;
-
 /*!
     @brief      Initializes the receiver with aStores and autosave key path.
 
@@ -58,25 +63,82 @@ extern NSString *WLChangedCalStoresKey;
  */
 - (instancetype)initWithCalStores:(NSArray *)aStores autosaveKeyPath:(NSString *)anAutosaveKeyPath;
 
-- (NSArray *)calCalendarsForStore:(NSObject<WLCalStore> *)aStore;
+/*!
+    @brief  Returns calendars for aStore.
+ */
+- (NSArray *)calCalendarsForStore:(NSObject <WLCalStore> *)aStore;
 
-- (NSArray *)calReminderCalendarsForStore:(NSObject<WLCalStore> *)aStore;
+/*!
+    @brief  Returns reminder calendars for aStore.
+ */
+- (NSArray *)calReminderCalendarsForStore:(NSObject <WLCalStore> *)aStore;
 
-- (NSArray *)calEventCalendarsForStore:(NSObject<WLCalStore> *)aStore;
+/*!
+    @brief  Returns event calendars for aStore.
+ */
+- (NSArray *)calEventCalendarsForStore:(NSObject <WLCalStore> *)aStore;
 
-- (NSArray *)calCalendarsToDisplayForStore:(NSObject<WLCalStore> *)aStore;
+/*!
+    @brief  Returns calendars to display for aStore.
+ */
+- (NSArray *)calCalendarsToDisplayForStore:(NSObject <WLCalStore> *)aStore;
 
-- (NSArray *)calReminderCalendarsToDisplayForStore:(NSObject<WLCalStore> *)aStore;
+/*!
+    @brief  Returns reminder calendars to display for aStore.
+ */
+- (NSArray *)calReminderCalendarsToDisplayForStore:(NSObject <WLCalStore> *)aStore;
 
-- (NSArray *)calEventCalendarsToDisplayForStore:(NSObject<WLCalStore> *)aStore;
+/*!
+    @brief  Returns event calendars to display for aStore.
+ */
+- (NSArray *)calEventCalendarsToDisplayForStore:(NSObject <WLCalStore> *)aStore;
 
-- (BOOL)isCalCalendarUsedToDisplayReminders:(NSObject<WLCalCalendar> *)aCalendar;
+/*!
+    @brief  Extracts reminder calendars from aCalCalendars.
 
-- (void)setCalCalendar:(NSObject<WLCalCalendar> *)aCalendar usedToDisplayReminders:(BOOL)isUsed;
+    @result An array of reminder calendars or empty array.
+ */
+- (NSArray *)calReminderCalendarsFromCalCalendars:(NSArray *)aCalCalendars;
 
-- (BOOL)isCalCalendarUsedToDisplayEvents:(NSObject<WLCalCalendar> *)aCalendar;
+/*!
+    @brief  Extracts event calendars from aCalCalendars.
 
-- (void)setCalCalendar:(NSObject<WLCalCalendar> *)aCalendar usedToDisplayEvents:(BOOL)isUsed;
+    @result An array of event calendars or empty array.
+ */
+- (NSArray *)calEventCalendarsFromCalCalendars:(NSArray *)aCalCalendars;
+
+/*!
+    @brief      Extracts calendars to display from aCalCalendars.
+
+    @result     An array of calendars to display or empty array.
+ */
+- (NSArray *)calCalendarsToDisplayFromCalCalendars:(NSArray *)aCalCalendars;
+
+/*!
+    @brief  Asynchronously fetches calendars from aStore and updates the receiver.
+ */
+- (void)fetchCalCalendarsForStore:(NSObject <WLCalStore> *)aStore withPriority:(NSOperationQueuePriority)aPriority;
+
+/*!
+    @brief  Called when any of observed calendars stores changes.
+ */
+- (void)calStoreDidChange:(NSNotification *)aNotification;
+
+@end
+
+
+/*!
+    @brief  Methods to configure displaying preferences of calendars.
+ */
+@interface WLCalendarsController (DisplayingPreferences)
+
+- (BOOL)isCalCalendarUsedToDisplayReminders:(NSObject <WLCalCalendar> *)aCalendar;
+
+- (void)setCalCalendar:(NSObject <WLCalCalendar> *)aCalendar usedToDisplayReminders:(BOOL)isUsed;
+
+- (BOOL)isCalCalendarUsedToDisplayEvents:(NSObject <WLCalCalendar> *)aCalendar;
+
+- (void)setCalCalendar:(NSObject <WLCalCalendar> *)aCalendar usedToDisplayEvents:(BOOL)isUsed;
 
 - (BOOL)isCalCalendarWithIdentifierUsedToDisplayReminders:(NSString *)anIdentifier ofStore:(NSObject <WLCalStore> *)aStore;
 
@@ -86,8 +148,29 @@ extern NSString *WLChangedCalStoresKey;
 
 - (void)setCalCalendarWithIdentifier:(NSString *)anIdentifier ofStore:(NSObject <WLCalStore> *)aStore usedToDisplayEvents:(BOOL)isUsed;
 
-- (void)fetchCalCalendarsForStore:(NSObject <WLCalStore> *)aStore withPriority:(NSOperationQueuePriority)aPriority;
+@end
 
-- (void)calStoreDidChange:(NSNotification *)aNotification;
+
+/*!
+    @brief      Properties to get calendars from all stores at once.
+
+    @discussion Returned calendars are sorted by 1. title and 2. calendarIdentifier
+
+                All properties are KVO-compliant. Notifications are delivered in the main thread if change is originated by calStore.
+                If change is originated by methods of the DisplayingPreferences category, notifications are delivered in the same thread.
+ */
+@interface WLCalendarsController (CalendarsAccessors)
+
+@property (nonatomic, readonly) NSArray *calCalendars;
+
+@property (nonatomic, readonly) NSArray *calReminderCalendars;
+
+@property (nonatomic, readonly) NSArray *calEventCalendars;
+
+@property (nonatomic, readonly) NSArray *calCalendarsToDisplay;
+
+@property (nonatomic, readonly) NSArray *calReminderCalendarsToDisplay;
+
+@property (nonatomic, readonly) NSArray *calEventCalendarsToDisplay;
 
 @end
