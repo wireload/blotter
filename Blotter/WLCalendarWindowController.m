@@ -110,7 +110,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
         [_rightNowViewController setAlignmentUnit:NSDayCalendarUnit number:1 animated:NO];
         _rightNowViewController.representedObject = _eventsController;
 
-        _smartClock = [WLSmartClock defaultSmartClock];
+        _smartClock = [WLSmartClock defaultClock];
         [_smartClock addObserver:self forKeyPath:@"calendar" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:NULL];
         [_smartClock addObserver:self forKeyPath:@"date" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:NULL];
 
