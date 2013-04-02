@@ -644,6 +644,9 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
 
 - (BOOL)layer:(CALayer *)aLayer shouldInheritContentsScale:(CGFloat)aScale fromWindow:(NSWindow *)aWindow
 {
+    if (aLayer != _imageLayer)
+        [aLayer setNeedsDisplay];
+
     return YES;
 }
 

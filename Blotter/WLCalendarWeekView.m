@@ -975,6 +975,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 
 - (BOOL)layer:(CALayer *)aLayer shouldInheritContentsScale:(CGFloat)aScale fromWindow:(NSWindow *)aWindow
 {
+    [aLayer setNeedsDisplay];
     return YES;
 }
 
