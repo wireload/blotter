@@ -57,17 +57,26 @@
 {
     NSAssert(_contents != NULL, @"_contents must be initialized at this point");
 
-    NSInteger i = [_sublayers indexOfObjectIdenticalTo:aLayer];
+    NSUInteger i = [_sublayers indexOfObjectIdenticalTo:aLayer];
+
     if (i == NSNotFound)
     {
         NSLog(@"Unknown sublayer: %@", aLayer);
         return;
     }
+
     CALayer *sublayer = [_sublayers objectAtIndex:i];
     CGRect sliceFrame = [sublayer frame];
+
     if (!self.geometryFlipped)
         sliceFrame.origin.y = self.bounds.size.height - sliceFrame.size.height - sliceFrame.origin.y;
+
+    sliceFrame.origin.x *= self.contentsScale;
+    sliceFrame.origin.y *= self.contentsScale;
+    sliceFrame.size.width *= self.contentsScale;
+    sliceFrame.size.height *= self.contentsScale;
     CGImageRef sliceImage = CGImageCreateWithImageInRect(_contents, sliceFrame);
+
     if (sliceImage != NULL)
     {
         sublayer.contents = (id)sliceImage;
@@ -135,25 +144,30 @@
 {
     if (_contents != NULL)
         CGImageRelease(_contents);
+
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+
     if (colorSpace != NULL)
     {
-        CGRect bounds = CGRectIntegral(self.bounds);
         CGContextRef imageContext = CGBitmapContextCreate(NULL,
-                                                          bounds.size.width,
-                                                          bounds.size.height,
+                                                          (size_t)ceil(self.bounds.size.width * self.contentsScale),
+                                                          (size_t)ceil(self.bounds.size.height * self.contentsScale),
                                                           8,
-                                                          4 * bounds.size.width,
+                                                          4 * (size_t)ceil(self.bounds.size.width * self.contentsScale),
                                                           colorSpace,
                                                           kCGImageAlphaPremultipliedFirst);
+        CGContextScaleCTM(imageContext, self.contentsScale, self.contentsScale);
+
         if (imageContext != NULL)
         {
             self.drawer(imageContext, self, self.bounds);
             _contents = CGBitmapContextCreateImage(imageContext);
             CGContextRelease(imageContext);
         }
+
         CGColorSpaceRelease(colorSpace);
     }
+
     [_sublayers makeObjectsPerformSelector:@selector(setNeedsDisplay)];
     self.contents = nil;
 }
