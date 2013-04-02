@@ -864,13 +864,13 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
     NSCursor *aCursor = nil;
     if (!canMoveDiagonal) {
         if (canMoveLeft && canMoveRight)
-            aCursor = [NSCursor resizeLeftRightCursor];
+            aCursor = [NSCursor WL_resizeLeftRightCursor];
         else if (canMoveLeft)
             aCursor = [NSCursor resizeLeftCursor];
         else if (canMoveRight)
             aCursor = [NSCursor resizeRightCursor];
         else if (canMoveUp && canMoveDown)
-            aCursor = [NSCursor resizeUpDownCursor];
+            aCursor = [NSCursor WL_resizeUpDownCursor];
         else if (canMoveUp)
             aCursor = [NSCursor resizeUpCursor];
         else if (canMoveDown)
