@@ -41,7 +41,6 @@ static const CGFloat RoundRadius = 2.0;
 
 - (void)drawRect:(NSRect)aDirtyRect
 {
-
     [NSGraphicsContext saveGraphicsState];
     [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
     WLDrawScaledNinePartImage([self bounds],

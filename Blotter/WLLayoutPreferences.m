@@ -301,7 +301,7 @@
     bounds.origin.y += 1.0;
     // Add margin around calendar window view like on the position pref pane.
     bounds = NSInsetRect(bounds, 3.0, 3.0);
-    NSSize viewFrameSize = NSMakeSize(NSHeight(bounds) * windowFrame.size.width / windowFrame.size.height,
+    NSSize viewFrameSize = NSMakeSize(2 * ceil(NSHeight(bounds) * windowFrame.size.width / windowFrame.size.height / 2),
                                       NSHeight(bounds));
     // Scale view Frame
     CGFloat scaleFactor = fmin(NSWidth(bounds) / viewFrameSize.width, NSHeight(bounds) / viewFrameSize.height);
