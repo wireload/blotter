@@ -6,6 +6,8 @@
 //  Copyright 2011 Wireload. All rights reserved.
 //
 
+#import <WLFoundation/WLFoundation.h>
+#import <WLFoundation/NSImage+WLHiDPIDrawing.h>
 #import "WLColorCheckboxCell.h"
 
 
@@ -13,94 +15,108 @@
 
 + (NSImage *)checkboxCellImageWithColor:(NSColor *)aColor state:(NSInteger)aState
 {
-    static dispatch_once_t OnceToken;
+    static dispatch_once_t onceToken;
     static NSCache *ImagesCache = nil;
-    dispatch_once(&OnceToken, ^{
-        ImagesCache = [NSCache new];
+    dispatch_once(&onceToken, ^{
+        ImagesCache = [[NSCache alloc] init];
         [ImagesCache setName:@"WLColorCheckboxCell cache"];
     });
 
     NSDictionary *imagesPair = [ImagesCache objectForKey:aColor];
-    NSImage *checkboxImage = [imagesPair objectForKey:[NSNumber numberWithInteger:aState]];
+    NSImage *checkboxImage = imagesPair[@(aState)];
 
-    if (!checkboxImage)
+    if (checkboxImage == nil)
     {
         if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
         {
-            NSRect checkboxRect = NSMakeRect(0.0, 0.0, 14.0, 16.0);
+            static const NSSize CheckboxSize = {.width = 14.0, .height = 16.0};
 
-            NSImage *overlayImage = [[NSImage alloc] initWithSize:checkboxRect.size];
-            [overlayImage lockFocus];
-            [aColor setFill];
-            NSRectFillUsingOperation(checkboxRect, NSCompositeSourceOver);
-            [NSBezierPath fillRect:checkboxRect];
-            [overlayImage unlockFocus];
-
-            NSImage *colormaskImage = [[NSImage imageNamed:@"checkbox-colormask-10_6"] copy];
-            [colormaskImage lockFocus];
-            [overlayImage drawInRect:checkboxRect fromRect:checkboxRect operation:NSCompositeSourceIn fraction:1.0];
-            [colormaskImage unlockFocus];
-
-            NSImage *backgroundImage = [NSImage imageNamed:@"checkbox-background-10_6"];
-            checkboxImage = [[NSImage alloc] initWithSize:checkboxRect.size];
-            [checkboxImage lockFocus];
-            [colormaskImage drawInRect:checkboxRect fromRect:checkboxRect operation:NSCompositeSourceOver fraction:1.0];
-            [backgroundImage drawInRect:checkboxRect fromRect:checkboxRect operation:NSCompositeSourceOver fraction:1.0];
-
-            if (aState == NSOnState)
+            WLImageDrawingHandler h = ^(NSRect aDestinationRect)
             {
-                NSImage *checkImage = [NSImage imageNamed:@"checkbox-check-10_6"];
-                [checkImage drawInRect:checkboxRect fromRect:checkboxRect operation:NSCompositeSourceOver fraction:1.0];
-            }
+                [[NSImage imageNamed:@"checkbox-colormask-10_6"] drawInRect:aDestinationRect
+                                                                   fromRect:aDestinationRect
+                                                                  operation:NSCompositeSourceOver
+                                                                   fraction:1.0];
 
-            [checkboxImage unlockFocus];
+                [aColor setFill];
+                NSRectFillUsingOperation(aDestinationRect, NSCompositeSourceIn);
+                [NSBezierPath fillRect:aDestinationRect];
+
+                [[NSImage imageNamed:@"checkbox-background-10_6"] drawInRect:aDestinationRect
+                                                                    fromRect:aDestinationRect
+                                                                   operation:NSCompositeSourceOver
+                                                                    fraction:1.0];
+
+                if (aState == NSOnState)
+                {
+                    [[NSImage imageNamed:@"checkbox-check-10_6"] drawInRect:aDestinationRect
+                                                                   fromRect:aDestinationRect
+                                                                  operation:NSCompositeSourceOver
+                                                                   fraction:1.0];
+                }
+
+                return YES;
+            };
+
+            checkboxImage = [NSImage WL_imageWithSize:CheckboxSize flipped:NO drawingHandler:h];
         }
         else
         {
-            NSRect checkboxRect = NSMakeRect(0.0, 0.0, 16.0, 16.0);
+            static const NSSize CheckboxSize = {.width = 16.0, .height = 16.0};
 
-            NSImage *overlayImage = [[NSImage alloc] initWithSize:checkboxRect.size];
-            [overlayImage lockFocus];
-            [[aColor colorWithAlphaComponent:0.4] set];
-            [NSBezierPath fillRect:checkboxRect];
-            [overlayImage unlockFocus];
-
-            NSImage *colormaskImage = [[NSImage imageNamed:@"checkbox-colormask-10_7"] copy];
-            [colormaskImage lockFocus];
-            [overlayImage drawInRect:checkboxRect fromRect:checkboxRect operation:NSCompositeSourceIn fraction:1.0];
-            [colormaskImage unlockFocus];
-
-            checkboxImage = [[NSImage alloc] initWithSize:checkboxRect.size];
-            [checkboxImage lockFocus];
-            [colormaskImage drawInRect:checkboxRect fromRect:checkboxRect operation:NSCompositeSourceOver fraction:1.0];
-            switch (aState)
+            WLImageDrawingHandler h = ^(NSRect aDestinationRect)
             {
-                case NSOnState:
+
+                [[NSImage imageNamed:@"checkbox-colormask-10_7"] drawInRect:aDestinationRect
+                                                                   fromRect:aDestinationRect
+                                                                  operation:NSCompositeSourceOver
+                                                                   fraction:1.0];
+
+                [NSGraphicsContext saveGraphicsState];
+                [[aColor colorWithAlphaComponent:0.4] set];
+                [[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeSourceIn];
+                [NSBezierPath fillRect:aDestinationRect];
+                [NSGraphicsContext restoreGraphicsState];
+
+                switch (aState)
                 {
-                    NSImage *checkImage = [NSImage imageNamed:@"checkbox-check-10_7"];
-                    [checkImage drawInRect:checkboxRect fromRect:checkboxRect operation:NSCompositeSourceOver fraction:1.0];
-                    break;
+                    case NSOnState:
+                    {
+                        [[NSImage imageNamed:@"checkbox-check-10_7"] drawInRect:aDestinationRect
+                                                                       fromRect:aDestinationRect
+                                                                      operation:NSCompositeSourceOver
+                                                                       fraction:1.0];
+                        break;
+                    }
+                    case NSOffState:
+                    {
+                        [[NSImage imageNamed:@"checkbox-background-10_7"] drawInRect:aDestinationRect
+                                                                            fromRect:aDestinationRect
+                                                                           operation:NSCompositeSourceOver
+                                                                            fraction:1.0];
+                        break;
+                    }
+                    default:
+                        break;
                 }
-                case NSOffState:
-                {
-                    NSImage *backgroundImage = [NSImage imageNamed:@"checkbox-background-10_7"];
-                    [backgroundImage drawInRect:checkboxRect fromRect:checkboxRect operation:NSCompositeSourceOver fraction:1.0];
-                    break;
-                }
-                default:
-                    break;
-            }
-            [checkboxImage unlockFocus];
+
+                return YES;
+            };
+
+            checkboxImage = [NSImage WL_imageWithSize:CheckboxSize flipped:NO drawingHandler:h];
         }
 
         NSMutableDictionary *newImagesPair = [ImagesCache objectForKey:aColor];
+
         if (newImagesPair == nil)
         {
             newImagesPair = [NSMutableDictionary dictionary];
             [ImagesCache setObject:newImagesPair forKey:aColor];
         }
-        [newImagesPair setObject:checkboxImage forKey:[NSNumber numberWithInteger:aState]];
+
+        newImagesPair[@(aState)] = checkboxImage;
     }
+
     return checkboxImage;
 }
 

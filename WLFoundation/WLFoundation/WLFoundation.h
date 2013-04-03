@@ -14,6 +14,7 @@
 #import <WLFoundation/NSColor+CGColor.h>
 #import <WLFoundation/NSDateComponents+WLCalendarUnit.h>
 #import <WLFoundation/NSMutableArray+WLRemoveDuplicates.h>
+#import <WLFoundation/NSImage+WLHiDPIDrawing.h>
 #import <WLFoundation/IKPowerSources.h>
 #import <WLFoundation/WLASLLog.h>
 #import <WLFoundation/WLBlockLayer.h>

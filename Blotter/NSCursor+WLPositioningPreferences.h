@@ -11,12 +11,11 @@
 
 @interface NSCursor (WLPositioningPreferences)
 
-+ (NSCursor *)WL_resizeUpLeftCursor;
-
-+ (NSCursor *)WL_resizeUpRightCursor;
-
 + (NSCursor *)WL_resizeDownLeftCursor;
-
 + (NSCursor *)WL_resizeDownRightCursor;
++ (NSCursor *)WL_resizeLeftRightCursor;
++ (NSCursor *)WL_resizeUpDownCursor;
++ (NSCursor *)WL_resizeUpLeftCursor;
++ (NSCursor *)WL_resizeUpRightCursor;
 
 @end

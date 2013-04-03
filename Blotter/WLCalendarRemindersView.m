@@ -180,6 +180,7 @@ static NSString* const _WLRootLayerName = @"WLCalendarRemindersViewLayer";
 
 - (BOOL)layer:(CALayer *)aLayer shouldInheritContentsScale:(CGFloat)aScale fromWindow:(NSWindow *)aWindow
 {
+    [aLayer setNeedsDisplay];
     return YES;
 }
 

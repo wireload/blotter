@@ -631,6 +631,26 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
 }
 
 
+#pragma mark CALayerDelegate
+
+- (id<CAAction>)actionForLayer:(CALayer *)layer forKey:(NSString *)event
+{
+#ifdef DEBUG_LAYERS
+    NSLog(@"    %@: %@", layer.name, event);
+#endif
+
+    return nil;
+}
+
+- (BOOL)layer:(CALayer *)aLayer shouldInheritContentsScale:(CGFloat)aScale fromWindow:(NSWindow *)aWindow
+{
+    if (aLayer != _imageLayer)
+        [aLayer setNeedsDisplay];
+
+    return YES;
+}
+
+
 #pragma mark CALayoutManager
 
 - (void)layoutSublayersOfLayer:(CALayer *)aLayer
@@ -847,13 +867,13 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
     NSCursor *aCursor = nil;
     if (!canMoveDiagonal) {
         if (canMoveLeft && canMoveRight)
-            aCursor = [NSCursor resizeLeftRightCursor];
+            aCursor = [NSCursor WL_resizeLeftRightCursor];
         else if (canMoveLeft)
             aCursor = [NSCursor resizeLeftCursor];
         else if (canMoveRight)
             aCursor = [NSCursor resizeRightCursor];
         else if (canMoveUp && canMoveDown)
-            aCursor = [NSCursor resizeUpDownCursor];
+            aCursor = [NSCursor WL_resizeUpDownCursor];
         else if (canMoveUp)
             aCursor = [NSCursor resizeUpCursor];
         else if (canMoveDown)
@@ -942,6 +962,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
         rootLayer.layoutManager = self;
         rootLayer.masksToBounds = YES;
         rootLayer.cornerRadius = 1.5;
+        rootLayer.delegate = self;
 
         recessedLayer = [CALayer layer];
         recessedLayer.layoutManager = self;
@@ -949,6 +970,14 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
         recessedLayer.masksToBounds = YES;
         recessedLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
         recessedLayer.opaque = YES;
+        recessedLayer.delegate = self;
+
+        NSWindow *window = [self window];
+        if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+        {
+            rootLayer.contentsScale = [window backingScaleFactor];
+            recessedLayer.contentsScale = [window backingScaleFactor];
+        }
 
         _imageLayer = [self setupImageLayer];
         _imageLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
@@ -993,6 +1022,12 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
     l.masksToBounds = YES;
     // This is hardly visible but makes the positioner slightly less sharp edged.
     l.cornerRadius = 1.25;
+    l.delegate = self;
+
+    NSWindow *window = [self window];
+    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+        l.contentsScale = [window backingScaleFactor];
+
     return l;
 }
 
@@ -1009,6 +1044,12 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
 
     };
     l.opaque = NO;
+    l.delegate = self;
+
+    NSWindow *window = [self window];
+    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+        l.contentsScale = [window backingScaleFactor];
+
     return l;
 }
 
@@ -1016,6 +1057,12 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
 {
     WLBlockLayer *l = [WLBlockLayer layer];
     l.needsDisplayOnBoundsChange = YES;
+    l.delegate = self;
+
+    NSWindow *window = [self window];
+    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+        l.contentsScale = [window backingScaleFactor];
+
     __block WLCalendarWindowArrangementView *selfBlock = self;
     l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect)
     {
@@ -1108,6 +1155,12 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
     l.cornerRadius = 5.0;
     l.masksToBounds = YES;
     l.borderWidth = 2.0;
+    l.delegate = self;
+
+    NSWindow *window = [self window];
+    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+        l.contentsScale = [window backingScaleFactor];
+
     l.borderColor = [[NSColor whiteColor] WL_CGColor];
     [l setValue:[NSValue valueWithSize:_WLDefaultEdgeSize] forKeyPath:_WLEdgeSizeKey];
     [l addObserver:self forKeyPath:@"bounds" options:NSKeyValueObservingOptionNew context:NULL];
@@ -1121,6 +1174,11 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
     static const CGSize Margin = {.width = 9.0, .height = 9.0};
 
     CALayer *l = [CALayer layer];
+    l.delegate = self;
+
+    NSWindow *window = [self window];
+    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+        l.contentsScale = [window backingScaleFactor];
 
     l.layoutManager = [[[WLBlockLayoutManager alloc] initWithLayoutManager:^(CALayer *aLayer) {
         CGSize size = [aLayer bounds].size;
@@ -1159,6 +1217,10 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
         if (i == WLCalendarWindowCenterCenterEdge)
             continue;
         WLBlockLayer *sublayer = [WLBlockLayer layer];
+        sublayer.delegate = l.delegate;
+
+        if (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+            sublayer.contentsScale = l.contentsScale;
 
         sublayer.autoresizingMask = 0;
 
@@ -1235,6 +1297,12 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
 {
     CALayer *l = [CALayer layer];
     l.backgroundColor = [[[NSColor blackColor] colorWithAlphaComponent:0.25] WL_CGColor];
+    l.delegate = self;
+
+    NSWindow *window = [self window];
+    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+        l.contentsScale = [window backingScaleFactor];
+
     return l;
 }
 
@@ -1250,19 +1318,19 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
         case WLCalendarWindowTopLeftEdge:
             return [NSCursor WL_resizeUpLeftCursor];
         case WLCalendarWindowTopCenterEdge:
-            return [NSCursor resizeUpDownCursor];
+            return [NSCursor WL_resizeUpDownCursor];
         case WLCalendarWindowTopRightEdge:
             return [NSCursor WL_resizeUpRightCursor];
         case WLCalendarWindowCenterLeftEdge:
-            return [NSCursor resizeLeftRightCursor];
+            return [NSCursor WL_resizeLeftRightCursor];
         case WLCalendarWindowCenterCenterEdge:
             return [NSCursor openHandCursor];
         case WLCalendarWindowCenterRightEdge:
-            return [NSCursor resizeLeftRightCursor];
+            return [NSCursor WL_resizeLeftRightCursor];
         case WLCalendarWindowBottomLeftEdge:
             return [NSCursor WL_resizeDownLeftCursor];
         case WLCalendarWindowBottomCenterEdge:
-            return [NSCursor resizeUpDownCursor];
+            return [NSCursor WL_resizeUpDownCursor];
         case WLCalendarWindowBottomRightEdge:
             return [NSCursor WL_resizeDownRightCursor];
         default:
