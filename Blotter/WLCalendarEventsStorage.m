@@ -13,8 +13,6 @@
 
 @implementation WLCalendarEventsStorage
 {
-    NSCalendar *_calendar;
-
     NSDictionary *_allDayEventsPerDateRange;
     NSDictionary *_dayEventsPerDateRange;
 }
@@ -126,21 +124,12 @@
 }
 
 
-#pragma mark Properties
-
-- (NSCalendar *)calendar
-{
-    return [_calendar copy];
-}
-
-
 #pragma mark Methods
 
 - (NSArray *)allDayEventsWithinDateRange:(WLDateRange *)aDateRange
 {
-    NSCalendar *localCalendar = [_calendar copy];
-    aDateRange = [aDateRange dateRangeByAligningCalendarUnit:self.calendarUnit calendar:localCalendar options:WLAlignOutward];
-    NSArray *keys = [aDateRange splitIntoCalendarUnits:self.calendarUnit calendar:localCalendar];
+    aDateRange = [aDateRange dateRangeByAligningCalendarUnit:self.calendarUnit calendar:_calendar options:WLAlignOutward];
+    NSArray *keys = [aDateRange splitIntoCalendarUnits:self.calendarUnit calendar:_calendar];
 
     NSMutableArray *events = [NSMutableArray array];
 
@@ -154,17 +143,15 @@
 
 - (NSArray *)allDayEventsForDate:(NSDate *)aDate
 {
-    NSCalendar *localCalendar = [_calendar copy];
     WLDateRange *k = [WLDateRange dateRangeWithStartDate:aDate endDate:aDate];
-    k = [k dateRangeByAligningCalendarUnit:self.calendarUnit calendar:localCalendar options:WLAlignOutward];
+    k = [k dateRangeByAligningCalendarUnit:self.calendarUnit calendar:_calendar options:WLAlignOutward];
     return [_allDayEventsPerDateRange[k] copy];
 }
 
 - (NSArray *)dayEventsWithinDateRange:(WLDateRange *)aDateRange
 {
-    NSCalendar *localCalendar = [_calendar copy];
-    aDateRange = [aDateRange dateRangeByAligningCalendarUnit:self.calendarUnit calendar:localCalendar options:WLAlignOutward];
-    NSArray *keys = [aDateRange splitIntoCalendarUnits:self.calendarUnit calendar:localCalendar];
+    aDateRange = [aDateRange dateRangeByAligningCalendarUnit:self.calendarUnit calendar:_calendar options:WLAlignOutward];
+    NSArray *keys = [aDateRange splitIntoCalendarUnits:self.calendarUnit calendar:_calendar];
 
     NSMutableArray *events = [NSMutableArray array];
 
@@ -178,9 +165,8 @@
 
 - (NSArray *)dayEventsForDate:(NSDate *)aDate
 {
-    NSCalendar *localCalendar = [_calendar copy];
     WLDateRange *k = [WLDateRange dateRangeWithStartDate:aDate endDate:aDate];
-    k = [k dateRangeByAligningCalendarUnit:self.calendarUnit calendar:localCalendar options:WLAlignOutward];
+    k = [k dateRangeByAligningCalendarUnit:self.calendarUnit calendar:_calendar options:WLAlignOutward];
     return [_dayEventsPerDateRange[k] copy];
 }
 
