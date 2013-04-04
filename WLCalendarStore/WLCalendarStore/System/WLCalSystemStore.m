@@ -126,7 +126,11 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 {
     if (_iCalApp)
     {
-        dispatch_semaphore_wait(_iCalAppSemaphore, DISPATCH_TIME_FOREVER);
+        if (dispatch_semaphore_wait(_iCalAppSemaphore, dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_SEC)) != 0)
+        {
+            [_log logError:@"Cannot fetch calendar UIDs from iCal since it's locked for too long"];
+            return @[];
+        }
 
         NSArray *UIDs = nil;
         if ([_iCalApp isRunning])
