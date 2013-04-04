@@ -109,20 +109,20 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
     dispatch_semaphore_signal(_fetchPredicateSemaphore);
 }
 
-- (NSArray *)observedCalendarIdentifiersForStore:(NSObject <WLCalStore> *)aStore
+- (NSSet *)observedCalendarIdentifiersForStore:(NSObject <WLCalStore> *)aStore
 {
     if (![self.calStores containsObject:aStore])
-        return @[];
+        return [NSSet set];
     else
     {
         dispatch_semaphore_wait(_fetchPredicateSemaphore, DISPATCH_TIME_FOREVER);
-        NSArray *a = [NSArray arrayWithArray:[_observedCalendarIdentifiers objectForKey:aStore]];
+        NSSet *a = [NSSet setWithSet:[_observedCalendarIdentifiers objectForKey:aStore]];
         dispatch_semaphore_signal(_fetchPredicateSemaphore);
         return a;
     }
 }
 
-- (void)setObservedCalendarIdentifiers:(NSArray *)aCalendarIdentifiers forStore:(NSObject <WLCalStore> *)aStore
+- (void)setObservedCalendarIdentifiers:(NSSet *)aCalendarIdentifiers forStore:(NSObject <WLCalStore> *)aStore
 {
     if (![self.calStores containsObject:aStore])
         return;

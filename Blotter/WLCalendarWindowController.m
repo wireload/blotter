@@ -83,14 +83,14 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
                 {
                     return [NSString stringWithFormat:@"Observed Reminder Calendars: %@", reminderCalendars];
                 }];
-                [_remindersController setObservedCalendarIdentifiers:reminderCalendars forStore:s];
+                [_remindersController setObservedCalendarIdentifiers:[NSSet setWithArray:reminderCalendars] forStore:s];
 
                 NSArray *eventCalendars = [[self.calendarsController calEventCalendarsToDisplayForStore:s] valueForKey:@"calendarIdentifier"];
                 [_log logDebugWithMessenger:^NSString *
                 {
                     return [NSString stringWithFormat:@"Observed Event Calendars: %@", eventCalendars];
                 }];
-                [_eventsController setObservedCalendarIdentifiers:eventCalendars forStore:s];
+                [_eventsController setObservedCalendarIdentifiers:[NSSet setWithArray:eventCalendars] forStore:s];
             }
         };
 

@@ -102,15 +102,15 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
     [self didChangeValueForKey:@"observedDateRanges"];
 }
 
-- (NSArray *)observedCalendarIdentifiersForStore:(NSObject <WLCalStore> *)aStore
+- (NSSet *)observedCalendarIdentifiersForStore:(NSObject <WLCalStore> *)aStore
 {
     if (![self.calStores containsObject:aStore])
-        return @[];
+        return [NSSet set];
     else
-        return [NSArray arrayWithArray:[_observedCalendarIdentifiers objectForKey:aStore]];
+        return [NSSet setWithSet:[_observedCalendarIdentifiers objectForKey:aStore]];
 }
 
-- (void)setObservedCalendarIdentifiers:(NSArray *)aCalendarIdentifiers forStore:(NSObject <WLCalStore> *)aStore
+- (void)setObservedCalendarIdentifiers:(NSSet *)aCalendarIdentifiers forStore:(NSObject <WLCalStore> *)aStore
 {
     if (![self.calStores containsObject:aStore])
         return;

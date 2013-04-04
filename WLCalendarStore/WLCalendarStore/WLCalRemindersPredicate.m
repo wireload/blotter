@@ -11,13 +11,13 @@
 
 @implementation WLCalRemindersPredicate
 
-- (instancetype)initWithCompletionMask:(WLCalReminderCompletionMask)aCompletionMask calendarIdentifiers:(NSArray *)aCalendarIdentifiers
+- (instancetype)initWithCompletionMask:(WLCalReminderCompletionMask)aCompletionMask calendarIdentifiers:(NSSet *)aCalendarIdentifiers
 {
     self = [super init];
 
     if (self)
     {
-        _calendarIdentifiers = [aCalendarIdentifiers copy];
+        _calendarIdentifiers = [NSSet setWithSet:aCalendarIdentifiers];
         _completionMask = aCompletionMask;
     }
 
@@ -32,7 +32,7 @@
 
 #pragma mark Methods
 
-+ (instancetype)predicateWithCompletionMask:(WLCalReminderCompletionMask)aCompletionMask calendarIdentifiers:(NSArray *)aCalendarIdentifiers
++ (instancetype)predicateWithCompletionMask:(WLCalReminderCompletionMask)aCompletionMask calendarIdentifiers:(NSSet *)aCalendarIdentifiers
 {
     return [[self alloc] initWithCompletionMask:aCompletionMask calendarIdentifiers:aCalendarIdentifiers];
 }
@@ -50,9 +50,10 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@:\ncompletionMask: %ld\ncalendars: %@", [super description],
-            self.completionMask,
-            self.calendarIdentifiers];
+    return [NSString stringWithFormat:@"%@:\ncompletionMask: %ld\ncalendars: %@",
+                     [super description],
+                     self.completionMask,
+                     self.calendarIdentifiers];
 }
 
 @end

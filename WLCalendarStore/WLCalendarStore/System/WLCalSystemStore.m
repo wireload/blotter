@@ -122,14 +122,14 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
 #pragma mark - Methods
 
-- (NSArray *)iCalCalendarUIDs
+- (NSSet *)iCalCalendarUIDs
 {
     if (_iCalApp)
     {
         if (dispatch_semaphore_wait(_iCalAppSemaphore, dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_SEC)) != 0)
         {
             [_log logError:@"Cannot fetch calendar UIDs from iCal since it's locked for too long"];
-            return @[];
+            return [NSSet set];
         }
 
         NSArray *UIDs = nil;
@@ -143,38 +143,51 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
         dispatch_semaphore_signal(_iCalAppSemaphore);
 
-        return UIDs;
+        return [NSSet setWithArray:UIDs];
     }
     else
-        return @[];
+        return [NSSet set];
 }
 
-- (NSArray *)fetchCSCalendarsForUIDs:(NSArray *)anUIDs
-                         invalidUIDs:(out __autoreleasing NSArray **)outInvalidUIDs
+- (NSArray *)fetchCSCalendarsForUIDs:(NSSet *)anUIDs
+                         invalidUIDs:(__autoreleasing NSSet **)outInvalidUIDs
 {
     if ([anUIDs count] == 0)
         return @[];
 
+    // Accessing store is potentially long operation.
+    // To improve the response time we access it concurrently.
+    //
+    // 2 Semaphores are used to protect mutable containers from being smashed.
     NSMutableArray *csCalendars = [NSMutableArray arrayWithCapacity:[anUIDs count]];
-    NSMutableIndexSet *indexesOfInvalidUIDs = [NSMutableIndexSet indexSet];
+    NSMutableSet *invalidUIDs = [NSMutableSet set];
+    dispatch_semaphore_t csCalendarsSemaphore = dispatch_semaphore_create(1);
+    dispatch_semaphore_t invalidUIDsSemaphore = dispatch_semaphore_create(1);
 
-    [anUIDs enumerateObjectsUsingBlock:^(NSString *anUID, NSUInteger idx, BOOL *stop)
+    [anUIDs enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(NSString *anUID, BOOL *stop)
     {
         CalCalendar *c = [_store calendarWithUID:anUID];
 
         if (c)
+        {
+            dispatch_semaphore_wait(csCalendarsSemaphore, DISPATCH_TIME_FOREVER);
             [csCalendars addObject:c];
+            dispatch_semaphore_signal(csCalendarsSemaphore);
+        }
         else
-            [indexesOfInvalidUIDs addIndex:idx];
+        {
+            dispatch_semaphore_wait(invalidUIDsSemaphore, DISPATCH_TIME_FOREVER);
+            [invalidUIDs addObject:anUID];
+            dispatch_semaphore_signal(invalidUIDsSemaphore);
+        }
     }];
 
-    if ([indexesOfInvalidUIDs count])
+    if ([invalidUIDs count])
     {
-        NSArray *invalidUIDs = [anUIDs objectsAtIndexes:indexesOfInvalidUIDs];
         if (outInvalidUIDs)
             *outInvalidUIDs = invalidUIDs;
 
-        [_log logNotice:@"Cannot fetch CalCalendars with UIDs: %@", invalidUIDs];
+        [_log logWarning:@"Cannot fetch CalCalendars with UIDs: %@", invalidUIDs];
     }
 
     return csCalendars;
@@ -482,7 +495,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
 - (void)_systemStoreDidChange:(NSNotification *)aNotification
 {
-    [_log logNotice:@"System Calendar Store did change: %@", aNotification];
+    [_log logNotice:@"System CalCalendar Store did change: %@", aNotification];
 
     if ([[aNotification name] isEqual:NSWorkspaceDidLaunchApplicationNotification])
     {
@@ -515,7 +528,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
     if ([[NSUserDefaults standardUserDefaults] boolForKey:WLCalSystemStoreChecksCalendarsAgainstICalKey])
     {
-        NSArray *u = [self iCalCalendarUIDs];
+        NSSet *u = [self iCalCalendarUIDs];
         NSArray *csCalendars = [self fetchCSCalendarsForUIDs:u invalidUIDs:NULL];
         [calendars addObjectsFromArray:[self makeCalendarsFromCSCalendars:csCalendars]];
     }
