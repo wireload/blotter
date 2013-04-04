@@ -11,14 +11,13 @@
 #import "WLASLLog.h"
 
 
+NSString* const WLSmartClockLogKey = @"net.wireload.mac.WLFoundation";
+
+
 @implementation WLSmartClock
 {
-    NSCalendar *_calendar;
-
     NSTimer *_nextMinuteTimer;
     NSTimer *_nextDayTimer;
-
-    WLASLLog *_log;
 }
 
 - (instancetype)init
@@ -27,10 +26,6 @@
 
     if (self)
     {
-        _calendar = [[NSCalendar currentCalendar] copy];
-        _date = [NSDate date];
-        _log = [[WLASLLog alloc] initWithName:@"WLSmartClock"];
-
         NSNotificationCenter *n = [NSNotificationCenter defaultCenter];
         [n addObserver:self
               selector:@selector(localeDidChange:)
@@ -50,6 +45,9 @@
                                                                    name:NSWorkspaceDidWakeNotification
                                                                  object:nil];
 
+        _calendar = [[NSCalendar currentCalendar] copy];
+        _date = [NSDate date];
+
         [self scheduleNextMinuteTimer];
         [self scheduleNextDayTimer];
     }
@@ -65,14 +63,6 @@
     [[NSRunLoop mainRunLoop] cancelPerformSelector:@selector(dateDidChange) target:self argument:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
-}
-
-
-#pragma mark Properties
-
-- (NSCalendar *)calendar
-{
-    return [_calendar copy];
 }
 
 
@@ -192,13 +182,12 @@
     NSAssert([NSThread currentThread] == [NSThread mainThread], @"%@ MUST be called on the Main Thread", NSStringFromSelector(_cmd));
 
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(calendarDidChange) object:nil];
-    NSCalendar *newCalendar = [[NSCalendar currentCalendar] copy];
-#ifdef DEBUG
-    [_log logDebug:@"Calendar did change: %@ -> %@", _calendar, newCalendar];
-#endif
+    [[WLASLLog logForKey:WLSmartClockLogKey] logDebug:@"Calendar did change"];
+
     [self willChangeValueForKey:@"calendar"];
-    _calendar = newCalendar;
+    _calendar = [[NSCalendar currentCalendar] copy];
     [self didChangeValueForKey:@"calendar"];
+
     [self scheduleNextDayTimer];
     [self scheduleNextMinuteTimer];
 }
@@ -208,15 +197,22 @@
     NSAssert([NSThread currentThread] == [NSThread mainThread], @"%@ MUST be called on the Main Thread", NSStringFromSelector(_cmd));
 
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(dateDidChange) object:nil];
-    NSDate *newDate = [NSDate date];
-#ifdef DEBUG
-    [_log logDebug:@"Date did change: %@ -> %@", _date, newDate];
-#endif
+    [[WLASLLog logForKey:WLSmartClockLogKey] logDebug:@"Date did change"];
+
     [self willChangeValueForKey:@"date"];
-    _date = newDate;
+    _date = [NSDate date];
     [self didChangeValueForKey:@"date"];
+
     [self scheduleNextMinuteTimer];
     [self scheduleNextDayTimer];
+}
+
+
+#pragma mark NSObject
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%@: %@, %@", [super description], self.date, self.calendar];
 }
 
 @end
