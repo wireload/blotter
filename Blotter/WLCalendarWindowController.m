@@ -16,6 +16,7 @@
 #import "WLCalendarEventsController.h"
 #import "WLCalendarFloatingWeekEventsViewController.h"
 #import "WLCalendarRightNowEventsViewController.h"
+#import "DeskboardAppDelegate.h"
 
 
 // Sizes are chosen so that when switching between these 2 modes only week view is disappeard. that is the date, todo and right now vies are visually unchanged.
@@ -514,6 +515,8 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
                 break;
             case WLFloatingLevelState:
                 self.window.isFloatingWindow = YES;
+                if ([(DeskboardAppDelegate *)[NSApp delegate] isOnlyCalendarWindowVisible:[NSApp windows]])
+                    [self.window makeKeyWindow];
                 break;
         }
 
