@@ -40,7 +40,6 @@
 
                 [aColor setFill];
                 NSRectFillUsingOperation(aDestinationRect, NSCompositeSourceIn);
-                [NSBezierPath fillRect:aDestinationRect];
 
                 [[NSImage imageNamed:@"checkbox-background-10_6"] drawInRect:aDestinationRect
                                                                     fromRect:aDestinationRect
