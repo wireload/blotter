@@ -586,7 +586,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
                 CGFloat b = WLSegmentGetMaxLocation(s);
                 // If bottom of the event is equal or greater than Y of last hour, it's visually better when it matches bottom of the column.
                 if (IS_LESS_OR_EQ_CGFLOAT(floor(lastHourY), ceil(b)))
-                b = CGRectGetMaxY(self.bounds);
+                    b = CGRectGetMaxY(self.bounds);
 
                 CGFloat y = t;
                 CGFloat width = columnWidth;
@@ -595,25 +595,29 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
                 {
                     NSUInteger numberOfBaseColumnsToSkip = 0;
                     NSUInteger numberOfExtendedColumnsToSkip = 0;
+
                     if ((columnIdx + numberOfColumnsToSkip) < numberOfExtendedColumns)
-                    numberOfExtendedColumnsToSkip = numberOfColumnsToSkip;
+                        numberOfExtendedColumnsToSkip = numberOfColumnsToSkip;
                     else if (columnIdx > numberOfExtendedColumns)
-                    numberOfBaseColumnsToSkip = numberOfExtendedColumns;
+                        numberOfBaseColumnsToSkip = numberOfExtendedColumns;
                     else
                     {
                         numberOfBaseColumnsToSkip = columnIdx + numberOfColumnsToSkip - numberOfExtendedColumns;
                         numberOfExtendedColumnsToSkip = numberOfColumnsToSkip - numberOfBaseColumnsToSkip;
                     }
+
                     width += (_XSpaceBetweenEvents + baseColumnWidth) * numberOfBaseColumnsToSkip;
                     width += (_XSpaceBetweenEvents + extendedColumnWidth) * numberOfExtendedColumnsToSkip;
                 }
+
+                width = fmin(width, fdim(CGRectGetWidth(self.bounds), x));
                 CGFloat height = fmin(fdim(CGRectGetHeight(self.bounds), y), fdim(b, y));
                 l.frame = CGRectIntegral(CGRectMake(x, y, width, height));
 
                 if (shouldRoundCorners)
-                l.cornerRadius = CornerRadius;
+                    l.cornerRadius = CornerRadius;
                 else
-                l.cornerRadius = 0.0;
+                    l.cornerRadius = 0.0;
 
                 if (self.keepsTextOfEventsVisible)
                 [l setNeedsDisplay];
