@@ -182,6 +182,9 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
         }
     }];
 
+    dispatch_release(csCalendarsSemaphore);
+    dispatch_release(invalidUIDsSemaphore);
+
     if ([invalidUIDs count])
     {
         if (outInvalidUIDs)
