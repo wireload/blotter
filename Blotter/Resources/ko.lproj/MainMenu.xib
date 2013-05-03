@@ -176,6 +176,52 @@
 				</array>
 				<string key="NSName">_NSAppleMenu</string>
 			</object>
+			<object class="NSMenu" id="405917357">
+				<string key="NSTitle">Main Menu</string>
+				<array class="NSMutableArray" key="NSMenuItems">
+					<object class="NSMenuItem" id="958024243">
+						<reference key="NSMenu" ref="405917357"/>
+						<string key="NSTitle">Blotter</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="195124515"/>
+						<reference key="NSMixedImage" ref="331059440"/>
+						<string key="NSAction">submenuAction:</string>
+						<object class="NSMenu" key="NSSubmenu" id="661462962">
+							<string key="NSTitle">Blotter</string>
+							<array class="NSMutableArray" key="NSMenuItems">
+								<object class="NSMenuItem" id="1064898384">
+									<reference key="NSMenu" ref="661462962"/>
+									<string key="NSTitle">Quit Blotter</string>
+									<string key="NSKeyEquiv">q</string>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="195124515"/>
+									<reference key="NSMixedImage" ref="331059440"/>
+								</object>
+							</array>
+							<string key="NSName">_NSAppleMenu</string>
+						</object>
+					</object>
+					<object class="NSMenuItem" id="380388571">
+						<reference key="NSMenu" ref="405917357"/>
+						<string key="NSTitle">File</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="195124515"/>
+						<reference key="NSMixedImage" ref="331059440"/>
+					</object>
+					<object class="NSMenuItem" id="164494667">
+						<reference key="NSMenu" ref="405917357"/>
+						<string key="NSTitle">Edit</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="195124515"/>
+						<reference key="NSMixedImage" ref="331059440"/>
+					</object>
+				</array>
+				<string key="NSName">_NSMainMenu</string>
+			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<array class="NSMutableArray" key="connectionRecords">
@@ -194,6 +240,14 @@
 						<reference key="destination" ref="976324537"/>
 					</object>
 					<int key="connectionID">495</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">terminate:</string>
+						<reference key="source" ref="1021"/>
+						<reference key="destination" ref="1064898384"/>
+					</object>
+					<int key="connectionID">591</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -495,6 +549,48 @@
 						<reference key="object" ref="632727374"/>
 						<reference key="parent" ref="110575045"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">585</int>
+						<reference key="object" ref="405917357"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="958024243"/>
+							<reference ref="380388571"/>
+							<reference ref="164494667"/>
+						</array>
+						<reference key="parent" ref="0"/>
+						<string key="objectName">Main Menu</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">586</int>
+						<reference key="object" ref="958024243"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="661462962"/>
+						</array>
+						<reference key="parent" ref="405917357"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">587</int>
+						<reference key="object" ref="380388571"/>
+						<reference key="parent" ref="405917357"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">588</int>
+						<reference key="object" ref="164494667"/>
+						<reference key="parent" ref="405917357"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">589</int>
+						<reference key="object" ref="661462962"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="1064898384"/>
+						</array>
+						<reference key="parent" ref="958024243"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">590</int>
+						<reference key="object" ref="1064898384"/>
+						<reference key="parent" ref="661462962"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -518,12 +614,18 @@
 				<string key="57.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="575.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="577.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="585.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="586.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="587.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="588.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="589.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="590.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">584</int>
+			<int key="maxID">591</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -535,7 +637,7 @@
 						<string key="showAbout:">id</string>
 						<string key="showCurrentWeek:">id</string>
 						<string key="showNewEvent:">id</string>
-						<string key="showNewTask:">id</string>
+						<string key="showNewReminder:">id</string>
 						<string key="showNextWeek:">id</string>
 						<string key="showPreferences:">id</string>
 						<string key="showPreviousWeek:">id</string>
@@ -558,8 +660,8 @@
 							<string key="name">showNewEvent:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="showNewTask:">
-							<string key="name">showNewTask:</string>
+						<object class="IBActionInfo" key="showNewReminder:">
+							<string key="name">showNewReminder:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="showNextWeek:">
