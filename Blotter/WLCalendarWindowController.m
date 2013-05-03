@@ -583,12 +583,21 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
     }
     else if ([aKeyPath isEqualToString:WLShowsNext7DaysKey])
     {
-        if ([aChange[NSKeyValueChangeNewKey] boolValue])
-            [_weekViewController setAlignmentUnit:NSDayCalendarUnit number:7 animated:YES];
+        // On 10.6 synchronous setting of alignment unit may cause deadlock.
+        // see https://devforums.apple.com/message/808372#808372
+        if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([aChange[NSKeyValueChangeNewKey] boolValue])
+                    [_weekViewController setAlignmentUnit:NSDayCalendarUnit number:7 animated:YES];
+                else
+                    [_weekViewController setAlignmentUnit:NSWeekCalendarUnit number:1 animated:YES];
+            });
+        }
         else
         {
-            if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-                [_weekViewController setAlignmentUnit:NSWeekCalendarUnit number:1 animated:YES];
+            if ([aChange[NSKeyValueChangeNewKey] boolValue])
+                [_weekViewController setAlignmentUnit:NSDayCalendarUnit number:7 animated:YES];
             else
                 [_weekViewController setAlignmentUnit:NSWeekOfMonthCalendarUnit number:1 animated:YES];
         }
