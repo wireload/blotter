@@ -102,6 +102,7 @@
 									<string key="NSFrame">{{141, 27}, {126, 18}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
 									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="705130045">
 										<int key="NSCellFlags">67108864</int>
@@ -560,65 +561,15 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">content: self.taskCalCalendars</string>
-						<reference key="source" ref="93078503"/>
-						<reference key="destination" ref="1021"/>
-						<object class="NSNibBindingConnector" key="connector" id="653321917">
-							<reference key="NSSource" ref="93078503"/>
-							<reference key="NSDestination" ref="1021"/>
-							<string key="NSLabel">content: self.calCalendars</string>
-							<string key="NSBinding">content</string>
-							<string key="NSKeyPath">self.calCalendars</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">959</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">contentValues: self.taskCalCalendars.title</string>
-						<reference key="source" ref="93078503"/>
-						<reference key="destination" ref="1021"/>
-						<object class="NSNibBindingConnector" key="connector" id="747077162">
-							<reference key="NSSource" ref="93078503"/>
-							<reference key="NSDestination" ref="1021"/>
-							<string key="NSLabel">contentValues: self.calCalendars.title</string>
-							<string key="NSBinding">contentValues</string>
-							<string key="NSKeyPath">self.calCalendars.title</string>
-							<reference key="NSPreviousConnector" ref="653321917"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">964</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedIndex: self.selectedTaskCalCalendarIndex</string>
+						<string key="label">enabled: self.editableCalCalendars</string>
 						<reference key="source" ref="93078503"/>
 						<reference key="destination" ref="1021"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="93078503"/>
 							<reference key="NSDestination" ref="1021"/>
-							<string key="NSLabel">selectedIndex: self.selectedCalCalendarIndex</string>
-							<string key="NSBinding">selectedIndex</string>
-							<string key="NSKeyPath">self.selectedCalCalendarIndex</string>
-							<reference key="NSPreviousConnector" ref="747077162"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">967</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: self.taskCalCalendars</string>
-						<reference key="source" ref="93078503"/>
-						<reference key="destination" ref="1021"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="93078503"/>
-							<reference key="NSDestination" ref="1021"/>
-							<string key="NSLabel">enabled: self.calCalendars</string>
+							<string key="NSLabel">enabled: self.editableCalCalendars</string>
 							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">self.calCalendars</string>
+							<string key="NSKeyPath">self.editableCalCalendars</string>
 							<dictionary key="NSOptions">
 								<integer value="1" key="NSMultipleValuesPlaceholder"/>
 								<integer value="0" key="NSNullPlaceholder"/>
@@ -627,7 +578,57 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">975</int>
+					<int key="connectionID">976</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">content: self.editableCalCalendars</string>
+						<reference key="source" ref="93078503"/>
+						<reference key="destination" ref="1021"/>
+						<object class="NSNibBindingConnector" key="connector" id="892420958">
+							<reference key="NSSource" ref="93078503"/>
+							<reference key="NSDestination" ref="1021"/>
+							<string key="NSLabel">content: self.editableCalCalendars</string>
+							<string key="NSBinding">content</string>
+							<string key="NSKeyPath">self.editableCalCalendars</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">981</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">contentValues: self.editableCalCalendars.title</string>
+						<reference key="source" ref="93078503"/>
+						<reference key="destination" ref="1021"/>
+						<object class="NSNibBindingConnector" key="connector" id="553106682">
+							<reference key="NSSource" ref="93078503"/>
+							<reference key="NSDestination" ref="1021"/>
+							<string key="NSLabel">contentValues: self.editableCalCalendars.title</string>
+							<string key="NSBinding">contentValues</string>
+							<string key="NSKeyPath">self.editableCalCalendars.title</string>
+							<reference key="NSPreviousConnector" ref="892420958"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">982</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedIndex: self.selectedCalCalendarIndex</string>
+						<reference key="source" ref="93078503"/>
+						<reference key="destination" ref="1021"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="93078503"/>
+							<reference key="NSDestination" ref="1021"/>
+							<string key="NSLabel">selectedIndex: self.selectedCalCalendarIndex</string>
+							<string key="NSBinding">selectedIndex</string>
+							<string key="NSKeyPath">self.selectedCalCalendarIndex</string>
+							<reference key="NSPreviousConnector" ref="553106682"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">983</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -981,7 +982,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">975</int>
+			<int key="maxID">983</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1041,15 +1042,15 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 					<string key="superclassName">NSWindowController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="create:">id</string>
-						<string key="setDefaults:">id</string>
+						<string key="resetDefaults:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="create:">
 							<string key="name">create:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="setDefaults:">
-							<string key="name">setDefaults:</string>
+						<object class="IBActionInfo" key="resetDefaults:">
+							<string key="name">resetDefaults:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>
