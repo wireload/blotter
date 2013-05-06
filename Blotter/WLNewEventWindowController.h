@@ -14,6 +14,9 @@
 @class WLGlassHudTextView;
 
 
+/*!
+    @brief  Represents dialog to add new events.
+*/
 @interface WLNewEventWindowController : NSWindowController <NSWindowDelegate, WLGlassHudDatePickerCellDelegate>
 {
     IBOutlet WLGlassHudTextView *_titleView;
@@ -54,8 +57,16 @@
 */
 @property (copy) NSArray *calCalendars;
 
+/*!
+    @brief  Resents title, location, isAllDay, startDate and endDate to default values.
+*/
 - (IBAction)resetDefaults:(id)aSender;
 
+/*!
+    @brief      Creates new event with set properties.
+
+    @discussion If event cannot be created, beeps and optionally shows error via -[NSApp presentError:].
+*/
 - (IBAction)create:(id)aSender;
 
 @end

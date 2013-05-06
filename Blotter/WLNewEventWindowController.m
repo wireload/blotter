@@ -79,6 +79,12 @@
 
 - (IBAction)create:(id)aSender;
 {
+    if (![self canCreateEvent])
+    {
+        NSBeep();
+        return;
+    }
+       
     CalEvent *event = [CalEvent event];
     event.title = self.title;
     event.location = self.location;
