@@ -34,39 +34,12 @@
 
 + (NSSet *)keyPathsForValuesAffectingCanCreateEvent
 {
-    return [NSSet setWithObject:@"self.calCalendars"];
-}
-
-- (void)setSelectedCalCalendarIndex:(NSUInteger)newSelectedCalCalendarIndex
-{
-    NSObject <WLCalCalendar> *c = [self.calCalendars objectAtIndex:newSelectedCalCalendarIndex];
-    [[NSUserDefaults standardUserDefaults] setObject:c.calendarIdentifier forKey:WLLastSelectedCalEventCalendarUID];
-}
-
-- (NSUInteger)selectedCalCalendarIndex
-{
-    NSUInteger index = NSNotFound;
-    NSString *lastSelectedCalendarUID = [[NSUserDefaults standardUserDefaults] objectForKey:WLLastSelectedCalEventCalendarUID];
-
-    if (lastSelectedCalendarUID != nil)
-    {
-        index = [self.calCalendars indexOfObjectPassingTest:^BOOL(NSObject <WLCalCalendar> *aCalCalendar, NSUInteger idx, BOOL *stop)
-        {
-            return [aCalCalendar.calendarIdentifier isEqualToString:lastSelectedCalendarUID];
-        }];
-
-        if (index == NSNotFound)
-            index = 0;
-    }
-    else
-        index = 0;
-
-    return index;
+    return [NSSet setWithObject:@"editableCalCalendars"];
 }
 
 - (BOOL)canCreateEvent
 {
-    return [self.calCalendars count] > 0;
+    return [self.editableCalCalendars count] > 0;
 }
 
 
@@ -112,7 +85,7 @@
     event.isAllDay = self.isAllDay;
     event.startDate = self.startDate;
     event.endDate = self.endDate;
-    NSObject <WLCalCalendar> *selectedCalendar = [self.calCalendars objectAtIndex:self.selectedCalCalendarIndex];
+    NSObject <WLCalCalendar> *selectedCalendar = [self.editableCalCalendars objectAtIndex:self.selectedCalCalendarIndex];
     event.calendar = [[CalCalendarStore defaultCalendarStore] calendarWithUID:selectedCalendar.calendarIdentifier];
 
     NSError *error = nil;
@@ -229,6 +202,53 @@
 + (NSSet *)keyPathsForValuesAffectingDatePickerElements
 {
     return [NSSet setWithObject:@"self.isAllDay"];
+}
+
++ (NSSet *)keyPathsForValuesAffectingEditableCalCalendars
+{
+    return [NSSet setWithObject:@"self.calCalendars"];
+}
+
++ (NSSet *)keyPathsForValuesAffectingSelectedCalCalendarIndex
+{
+    return [NSSet setWithObject:@"self.editableCalCalendars"];
+}
+
+- (NSArray *)editableCalCalendars
+{
+    NSIndexSet *i = [self.calCalendars indexesOfObjectsWithOptions:NSEnumerationConcurrent
+                                                       passingTest:^BOOL(NSObject <WLCalCalendar> *aCalednar, NSUInteger anIndex, BOOL *aStop)
+    {
+        return !aCalednar.isImmutable;
+    }];
+    return [self.calCalendars objectsAtIndexes:i];
+}
+
+- (void)setSelectedCalCalendarIndex:(NSUInteger)newSelectedCalCalendarIndex
+{
+    NSObject <WLCalCalendar> *c = [self.editableCalCalendars objectAtIndex:newSelectedCalCalendarIndex];
+    [[NSUserDefaults standardUserDefaults] setObject:c.calendarIdentifier forKey:WLLastSelectedCalEventCalendarUID];
+}
+
+- (NSUInteger)selectedCalCalendarIndex
+{
+    NSUInteger index = NSNotFound;
+    NSString *lastSelectedCalendarUID = [[NSUserDefaults standardUserDefaults] objectForKey:WLLastSelectedCalEventCalendarUID];
+    
+    if (lastSelectedCalendarUID != nil)
+    {
+        index = [self.editableCalCalendars indexOfObjectPassingTest:^BOOL(NSObject <WLCalCalendar> *aCalCalendar, NSUInteger idx, BOOL *stop)
+                 {
+                     return [aCalCalendar.calendarIdentifier isEqualToString:lastSelectedCalendarUID];
+                 }];
+        
+        if (index == NSNotFound)
+            index = 0;
+    }
+    else
+        index = 0;
+    
+    return index;
 }
 
 - (NSDatePickerElementFlags)datePickerElements

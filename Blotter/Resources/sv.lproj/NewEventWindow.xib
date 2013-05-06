@@ -61,6 +61,7 @@
 							<string key="NSFrame">{{22, 189}, {225, 28}}</string>
 							<reference key="NSSuperview" ref="675070131"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSClassName">WLGlassHudTextView</string>
 						</object>
 						<object class="NSCustomView" id="690297653">
@@ -584,61 +585,40 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">content: self.eventCalCalendars</string>
+						<string key="label">content: self.editableCalCalendars</string>
 						<reference key="source" ref="408232026"/>
 						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector" id="743464121">
+						<object class="NSNibBindingConnector" key="connector" id="891065678">
 							<reference key="NSSource" ref="408232026"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">content: self.calCalendars</string>
+							<string key="NSLabel">content: self.editableCalCalendars</string>
 							<string key="NSBinding">content</string>
-							<string key="NSKeyPath">self.calCalendars</string>
+							<string key="NSKeyPath">self.editableCalCalendars</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">360</int>
+					<int key="connectionID">371</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">contentValues: self.eventCalCalendars.title</string>
+						<string key="label">contentValues: self.editableCalCalendars.title</string>
 						<reference key="source" ref="408232026"/>
 						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector" id="1006681223">
+						<object class="NSNibBindingConnector" key="connector" id="396184494">
 							<reference key="NSSource" ref="408232026"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">contentValues: self.calCalendars.title</string>
+							<string key="NSLabel">contentValues: self.editableCalCalendars.title</string>
 							<string key="NSBinding">contentValues</string>
-							<string key="NSKeyPath">self.calCalendars.title</string>
-							<reference key="NSPreviousConnector" ref="743464121"/>
+							<string key="NSKeyPath">self.editableCalCalendars.title</string>
+							<reference key="NSPreviousConnector" ref="891065678"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">363</int>
+					<int key="connectionID">376</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: self.eventCalCalendars</string>
-						<reference key="source" ref="408232026"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="408232026"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">enabled: self.calCalendars</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">self.calCalendars</string>
-							<dictionary key="NSOptions">
-								<integer value="1" key="NSMultipleValuesPlaceholder"/>
-								<integer value="0" key="NSNullPlaceholder"/>
-								<string key="NSValueTransformerName">WLCountGreaterThanOneTransformer</string>
-							</dictionary>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">370</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedIndex: self.selectedEventCalCalendarIndex</string>
+						<string key="label">selectedIndex: self.selectedCalCalendarIndex</string>
 						<reference key="source" ref="408232026"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
@@ -647,11 +627,32 @@
 							<string key="NSLabel">selectedIndex: self.selectedCalCalendarIndex</string>
 							<string key="NSBinding">selectedIndex</string>
 							<string key="NSKeyPath">self.selectedCalCalendarIndex</string>
-							<reference key="NSPreviousConnector" ref="1006681223"/>
+							<reference key="NSPreviousConnector" ref="396184494"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">365</int>
+					<int key="connectionID">377</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: self.editableCalCalendars</string>
+						<reference key="source" ref="408232026"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="408232026"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">enabled: self.editableCalCalendars</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">self.editableCalCalendars</string>
+							<dictionary key="NSOptions">
+								<integer value="1" key="NSMultipleValuesPlaceholder"/>
+								<integer value="0" key="NSNullPlaceholder"/>
+								<string key="NSValueTransformerName">WLCountGreaterThanOneTransformer</string>
+							</dictionary>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">378</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -981,7 +982,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">370</int>
+			<int key="maxID">378</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1041,15 +1042,15 @@
 					<string key="superclassName">NSWindowController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="create:">id</string>
-						<string key="setDefaults:">id</string>
+						<string key="resetDefaults:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="create:">
 							<string key="name">create:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="setDefaults:">
-							<string key="name">setDefaults:</string>
+						<object class="IBActionInfo" key="resetDefaults:">
+							<string key="name">resetDefaults:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>
