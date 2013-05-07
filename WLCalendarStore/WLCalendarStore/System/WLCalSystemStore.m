@@ -498,17 +498,23 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
 - (void)_systemStoreDidChange:(NSNotification *)aNotification
 {
-    [_log logNotice:@"System CalCalendar Store did change: %@", aNotification];
-
-    if ([[aNotification name] isEqual:NSWorkspaceDidLaunchApplicationNotification])
+    if ([aNotification.name isEqual:NSWorkspaceDidLaunchApplicationNotification])
     {
         static NSString* const iCalBundleIdentifier = @"com.apple.iCal";
-        static NSString* const remindersBundleIdentifier = @"com.apple.reminders";
+        static NSString* const RemindersBundleIdentifier = @"com.apple.reminders";
 
-        NSString *senderApplicationIdentifier = [[aNotification userInfo] objectForKey:@"NSApplicationBundleIdentifier"];
-        if (![senderApplicationIdentifier isEqual:iCalBundleIdentifier] && ![senderApplicationIdentifier isEqual:remindersBundleIdentifier])
+        NSString *senderApplicationIdentifier = aNotification.userInfo[@"NSApplicationBundleIdentifier"];
+
+        if (![senderApplicationIdentifier isEqual:iCalBundleIdentifier] &&
+            ![senderApplicationIdentifier isEqual:RemindersBundleIdentifier])
+        {
             return;
+        }
+
+        [_log logNoticeWithMessenger:^NSString *{ return @"iCal/Calendars/Reminders was launched."; }];
     }
+    else
+        [_log logNoticeWithMessenger:^NSString *{ return @"CalCalendar Store was changed."; }];
 
     dispatch_async(dispatch_get_main_queue(), ^
     {
