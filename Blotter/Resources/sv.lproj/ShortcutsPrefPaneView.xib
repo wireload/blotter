@@ -34,7 +34,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="1005">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSCustomView" id="679026233">
@@ -42,7 +42,6 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{138, 20}, {206, 25}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSClassName">WLRecorderControl</string>
 					</object>
@@ -51,7 +50,6 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{138, 53}, {206, 25}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="936125333"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSClassName">WLRecorderControl</string>
@@ -61,7 +59,6 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{138, 86}, {206, 25}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="586591065"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSClassName">WLRecorderControl</string>
@@ -71,7 +68,6 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{138, 119}, {206, 25}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="693703876"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSClassName">WLRecorderControl</string>
@@ -81,7 +77,6 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{138, 152}, {206, 25}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="893918348"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSClassName">WLRecorderControl</string>
@@ -91,7 +86,6 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{138, 185}, {206, 25}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="208704751"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSClassName">WLRecorderControl</string>
@@ -101,7 +95,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 25}, {116, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="679026233"/>
 						<string key="NSReuseIdentifierKey">_NS:1505</string>
 						<bool key="NSEnabled">YES</bool>
@@ -142,7 +135,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 58}, {116, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="34011471"/>
 						<string key="NSReuseIdentifierKey">_NS:1505</string>
 						<bool key="NSEnabled">YES</bool>
@@ -163,7 +155,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 91}, {116, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1042687099"/>
 						<string key="NSReuseIdentifierKey">_NS:1505</string>
 						<bool key="NSEnabled">YES</bool>
@@ -184,7 +175,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 124}, {116, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="559454778"/>
 						<string key="NSReuseIdentifierKey">_NS:1505</string>
 						<bool key="NSEnabled">YES</bool>
@@ -205,7 +195,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 157}, {116, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="692390506"/>
 						<string key="NSReuseIdentifierKey">_NS:1505</string>
 						<bool key="NSEnabled">YES</bool>
@@ -226,7 +215,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 190}, {116, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1019188103"/>
 						<string key="NSReuseIdentifierKey">_NS:1505</string>
 						<bool key="NSEnabled">YES</bool>
@@ -244,8 +232,6 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{364, 230}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="951232649"/>
 				<string key="NSClassName">NSView</string>
 			</object>
@@ -338,7 +324,7 @@
 						<reference key="source" ref="1019188103"/>
 						<reference key="destination" ref="951232649"/>
 					</object>
-					<int key="connectionID">64</int>
+					<int key="connectionID">59</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -362,7 +348,7 @@
 						<reference key="source" ref="692390506"/>
 						<reference key="destination" ref="208704751"/>
 					</object>
-					<int key="connectionID">63</int>
+					<int key="connectionID">60</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -386,7 +372,7 @@
 						<reference key="source" ref="559454778"/>
 						<reference key="destination" ref="893918348"/>
 					</object>
-					<int key="connectionID">62</int>
+					<int key="connectionID">61</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -410,7 +396,7 @@
 						<reference key="source" ref="1042687099"/>
 						<reference key="destination" ref="693703876"/>
 					</object>
-					<int key="connectionID">61</int>
+					<int key="connectionID">62</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -434,7 +420,7 @@
 						<reference key="source" ref="34011471"/>
 						<reference key="destination" ref="586591065"/>
 					</object>
-					<int key="connectionID">60</int>
+					<int key="connectionID">63</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -458,7 +444,7 @@
 						<reference key="source" ref="679026233"/>
 						<reference key="destination" ref="936125333"/>
 					</object>
-					<int key="connectionID">59</int>
+					<int key="connectionID">64</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">

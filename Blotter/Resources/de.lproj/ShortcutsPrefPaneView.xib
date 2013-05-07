@@ -34,7 +34,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="1005">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSCustomView" id="679026233">
@@ -42,7 +42,6 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{159, 20}, {287, 25}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSClassName">WLRecorderControl</string>
 					</object>
@@ -51,7 +50,6 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{159, 53}, {287, 25}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="936125333"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSClassName">WLRecorderControl</string>
@@ -61,7 +59,6 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{159, 86}, {287, 25}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="586591065"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSClassName">WLRecorderControl</string>
@@ -71,7 +68,6 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{159, 119}, {287, 25}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="693703876"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSClassName">WLRecorderControl</string>
@@ -81,7 +77,6 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{159, 152}, {287, 25}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="893918348"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSClassName">WLRecorderControl</string>
@@ -91,7 +86,6 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{159, 185}, {287, 25}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="208704751"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSClassName">WLRecorderControl</string>
@@ -101,7 +95,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 25}, {137, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="679026233"/>
 						<string key="NSReuseIdentifierKey">_NS:1505</string>
 						<bool key="NSEnabled">YES</bool>
@@ -142,7 +135,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 58}, {137, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="34011471"/>
 						<string key="NSReuseIdentifierKey">_NS:1505</string>
 						<bool key="NSEnabled">YES</bool>
@@ -163,7 +155,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 92}, {137, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1042687099"/>
 						<string key="NSReuseIdentifierKey">_NS:1505</string>
 						<bool key="NSEnabled">YES</bool>
@@ -184,7 +175,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 124}, {137, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="559454778"/>
 						<string key="NSReuseIdentifierKey">_NS:1505</string>
 						<bool key="NSEnabled">YES</bool>
@@ -205,7 +195,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 157}, {137, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="692390506"/>
 						<string key="NSReuseIdentifierKey">_NS:1505</string>
 						<bool key="NSEnabled">YES</bool>
@@ -226,7 +215,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 191}, {137, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1019188103"/>
 						<string key="NSReuseIdentifierKey">_NS:1505</string>
 						<bool key="NSEnabled">YES</bool>
@@ -244,8 +232,6 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{466, 230}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="951232649"/>
 				<string key="NSClassName">NSView</string>
 			</object>
@@ -493,16 +479,16 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="893918348"/>
 							<reference ref="208704751"/>
+							<reference ref="951232649"/>
+							<reference ref="693703876"/>
 							<reference ref="586591065"/>
 							<reference ref="936125333"/>
 							<reference ref="692390506"/>
 							<reference ref="559454778"/>
 							<reference ref="1042687099"/>
-							<reference ref="679026233"/>
-							<reference ref="951232649"/>
-							<reference ref="693703876"/>
-							<reference ref="1019188103"/>
 							<reference ref="34011471"/>
+							<reference ref="679026233"/>
+							<reference ref="1019188103"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>

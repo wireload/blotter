@@ -53,7 +53,7 @@
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="414427165">
-					<reference key="NSNextResponder"/>
+					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSCustomView" id="903219286">
@@ -61,8 +61,6 @@
 							<int key="NSvFlags">4370</int>
 							<string key="NSFrame">{{22, 143}, {265, 28}}</string>
 							<reference key="NSSuperview" ref="414427165"/>
-							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="577727828"/>
 							<string key="NSClassName">WLGlassHudTextView</string>
 						</object>
 						<object class="NSCustomView" id="577727828">
@@ -74,7 +72,6 @@
 									<int key="NSvFlags">289</int>
 									<string key="NSFrame">{{52, 27}, {78, 18}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="143960448"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="334525836">
@@ -101,8 +98,7 @@
 									<int key="NSvFlags">289</int>
 									<string key="NSFrame">{{140, 27}, {147, 18}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
-									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
+									<reference key="NSNextKeyView" ref="903219286"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="705130045">
 										<int key="NSCellFlags">67108864</int>
@@ -124,7 +120,6 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{94, 112}, {22, 18}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="758771597"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="931242854">
@@ -158,7 +153,6 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{19, 113}, {74, 14}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="113646877"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="468935220">
@@ -192,7 +186,6 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{19, 65}, {74, 14}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="93078503"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="434397590">
@@ -214,7 +207,6 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{19, 89}, {74, 14}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="649689110"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="909975257">
@@ -236,7 +228,6 @@
 									<int key="NSvFlags">266</int>
 									<string key="NSFrame">{{88, 60}, {199, 26}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="447760508"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSPopUpButtonCell" key="NSCell" id="359745811">
@@ -274,7 +265,6 @@
 									<int key="NSvFlags">266</int>
 									<string key="NSFrame">{{88, 84}, {199, 26}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="350755557"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSPopUpButtonCell" key="NSCell" id="282599707">
@@ -362,7 +352,6 @@
 									<int key="NSvFlags">-2147483382</int>
 									<string key="NSFrame">{{115, 110}, {172, 27}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="880146158"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSDatePickerCell" key="NSCell" id="373919904">
@@ -417,15 +406,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							</array>
 							<string key="NSFrame">{{0, -2}, {312, 145}}</string>
 							<reference key="NSSuperview" ref="414427165"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="184759867"/>
 							<string key="NSClassName">NSView</string>
 						</object>
 					</array>
 					<string key="NSFrameSize">{312, 193}</string>
-					<reference key="NSSuperview"/>
-					<reference key="NSWindow"/>
-					<reference key="NSNextKeyView" ref="903219286"/>
+					<reference key="NSNextKeyView" ref="577727828"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
@@ -561,10 +547,30 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: self.editableCalCalendars</string>
+						<reference key="source" ref="93078503"/>
+						<reference key="destination" ref="1021"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="93078503"/>
+							<reference key="NSDestination" ref="1021"/>
+							<string key="NSLabel">enabled: self.editableCalCalendars</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">self.editableCalCalendars</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">WLCountGreaterThanOneTransformer</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">976</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
 						<string key="label">content: self.editableCalCalendars</string>
 						<reference key="source" ref="93078503"/>
 						<reference key="destination" ref="1021"/>
-						<object class="NSNibBindingConnector" key="connector" id="803749238">
+						<object class="NSNibBindingConnector" key="connector" id="382792393">
 							<reference key="NSSource" ref="93078503"/>
 							<reference key="NSDestination" ref="1021"/>
 							<string key="NSLabel">content: self.editableCalCalendars</string>
@@ -573,24 +579,24 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">976</int>
+					<int key="connectionID">981</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">contentValues: self.editableCalCalendars.title</string>
 						<reference key="source" ref="93078503"/>
 						<reference key="destination" ref="1021"/>
-						<object class="NSNibBindingConnector" key="connector" id="67470198">
+						<object class="NSNibBindingConnector" key="connector" id="197209679">
 							<reference key="NSSource" ref="93078503"/>
 							<reference key="NSDestination" ref="1021"/>
 							<string key="NSLabel">contentValues: self.editableCalCalendars.title</string>
 							<string key="NSBinding">contentValues</string>
 							<string key="NSKeyPath">self.editableCalCalendars.title</string>
-							<reference key="NSPreviousConnector" ref="803749238"/>
+							<reference key="NSPreviousConnector" ref="382792393"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">981</int>
+					<int key="connectionID">982</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -603,28 +609,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<string key="NSLabel">selectedIndex: self.selectedCalCalendarIndex</string>
 							<string key="NSBinding">selectedIndex</string>
 							<string key="NSKeyPath">self.selectedCalCalendarIndex</string>
-							<reference key="NSPreviousConnector" ref="67470198"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">982</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: self.editableCalCalendars</string>
-						<reference key="source" ref="93078503"/>
-						<reference key="destination" ref="1021"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="93078503"/>
-							<reference key="NSDestination" ref="1021"/>
-							<string key="NSLabel">enabled: self.editableCalCalendars</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">self.editableCalCalendars</string>
-							<dictionary key="NSOptions">
-								<integer value="1" key="NSMultipleValuesPlaceholder"/>
-								<integer value="0" key="NSNullPlaceholder"/>
-								<string key="NSValueTransformerName">WLCountGreaterThanOneTransformer</string>
-							</dictionary>
+							<reference key="NSPreviousConnector" ref="197209679"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
