@@ -128,32 +128,31 @@ static NSString* const _WLRootLayerName = @"WLCalendarRemindersViewLayer";
     for (WLCalendarReminderLayer *l in _orderedReminderLayers)
     {
         CGFloat preferredHeight = [l preferredHeightWithWidth:CGRectGetWidth(aLayer.bounds)];
-        if (yOffsetFromTop < CGRectGetHeight(aLayer.bounds))
+
+        if (yOffsetFromTop < CGRectGetMaxY(aLayer.bounds))
         {
-            if (yOffsetFromTop + preferredHeight <= CGRectGetHeight(aLayer.bounds))
+            if (yOffsetFromTop + preferredHeight <= CGRectGetMaxY(aLayer.bounds))
             {
                 l.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(aLayer.bounds),
                                                     yOffsetFromTop,
                                                     CGRectGetWidth(aLayer.bounds),
                                                     preferredHeight));
-                yOffsetFromTop += preferredHeight + TopMargin;
             }
             else
             {
                 CGFloat minimumHeight = [l minimumHumanVisibleHeight];
-                if (yOffsetFromTop + minimumHeight <= CGRectGetHeight(aLayer.bounds))
+
+                if (yOffsetFromTop + minimumHeight <= CGRectGetMaxY(aLayer.bounds))
                 {
                     l.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(aLayer.bounds),
                                                         yOffsetFromTop,
                                                         CGRectGetWidth(aLayer.bounds),
-                                                        fdim(CGRectGetHeight(aLayer.bounds), yOffsetFromTop)));
-                    yOffsetFromTop = CGRectGetHeight(aLayer.bounds) + TopMargin;
+                                                        fdim(CGRectGetMaxY(aLayer.bounds), yOffsetFromTop)));
                 }
                 else
                 {
-                    yOffsetFromTop = CGRectGetHeight(aLayer.bounds) + TopMargin;
                     l.frame = CGRectIntegral(CGRectMake(CGRectGetMinX(aLayer.bounds),
-                                                        yOffsetFromTop,
+                                                        CGRectGetMaxY(aLayer.bounds),
                                                         CGRectGetWidth(aLayer.bounds),
                                                         preferredHeight));
                 }
@@ -165,8 +164,9 @@ static NSString* const _WLRootLayerName = @"WLCalendarRemindersViewLayer";
                                                 yOffsetFromTop,
                                                 CGRectGetWidth(aLayer.bounds),
                                                 preferredHeight));
-            yOffsetFromTop += preferredHeight + TopMargin;
         }
+
+        yOffsetFromTop = CGRectGetMaxY(l.frame) + TopMargin;
     }
 }
 
