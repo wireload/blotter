@@ -150,12 +150,12 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
             NSParameterAssert(timeRulerLayer != nil);
             if (fitsDayEvents)
             {
-                [dayLayers makeObjectsPerformSelector:@selector(setKeepsTextOfEventsVisible:) withObject:[NSNumber numberWithBool:NO]];
+                [dayLayers makeObjectsPerformSelector:@selector(setKeepsTextOfEventsVisible:) withObject:@(NO)];
                 timeRulerLayer.onlyCompletelyVisibleMarkersShown = YES;
             }
             else
             {
-                [dayLayers makeObjectsPerformSelector:@selector(setKeepsTextOfEventsVisible:) withObject:[NSNumber numberWithBool:YES]];
+                [dayLayers makeObjectsPerformSelector:@selector(setKeepsTextOfEventsVisible:) withObject:@(YES)];
                 timeRulerLayer.onlyCompletelyVisibleMarkersShown = NO;
             }
 
@@ -766,8 +766,8 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                                                                                          CGRectGetWidth(toFrame),
                                                                                          CGRectGetHeight(toFrame)))];
             CABasicAnimation *positionXAnimation = [CABasicAnimation animationWithKeyPath:@"position.x"];
-            positionXAnimation.fromValue = [NSNumber numberWithDouble:CGRectGetMinX([(CALayer *)[l presentationLayer] frame])];
-            positionXAnimation.toValue = [NSNumber numberWithDouble:CGRectGetMinX(toFrame)];
+            positionXAnimation.fromValue = @(CGRectGetMinX([(CALayer *)[l presentationLayer] frame]));
+            positionXAnimation.toValue = @(CGRectGetMinX(toFrame));
             if (idx >= rangeOfInsertedColumns.location && idx < NSMaxRange(rangeOfInsertedColumns))
             {
                 CGRect fromFrame = [l frame];
@@ -775,7 +775,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                                                                                                0.0,
                                                                                                CGRectGetWidth(fromFrame),
                                                                                                CGRectGetHeight(fromFrame)))];
-                positionXAnimation.fromValue = [NSNumber numberWithDouble:CGRectGetMinX(fromFrame)];
+                positionXAnimation.fromValue = @(CGRectGetMinX(fromFrame));
             }
             CAAnimationGroup *g = [CAAnimationGroup animation];
             g.animations = [NSArray arrayWithObjects:boundsAnimation, positionXAnimation, nil];
@@ -987,7 +987,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     WLHourRange r = [dataSource hourRangeOfColumnsInWeekView:self];
     NSAssert(r.startHour <= r.endHour, @"start hour MUST NOT be greater than endhour");
     NSAssert(r.startHour >= 0.0, @"start hour MUST NOT be less than 0");
-    NSAssert(r.endHour < (sizeof(_locationOfHours) / sizeof(CGFloat)), @"end hour MUST be less than %d", (sizeof(_locationOfHours) / sizeof(CGFloat)));
+    NSAssert(r.endHour < (sizeof(_locationOfHours) / sizeof(CGFloat)), @"end hour MUST be less than %ld", (sizeof(_locationOfHours) / sizeof(CGFloat)));
     return r;
 }
 

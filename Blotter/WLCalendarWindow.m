@@ -65,7 +65,7 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
 
         CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
         [filter setDefaults];
-        [filter setValue:[NSNumber numberWithFloat:_WLCalendarBackgroundActiveBlur] forKey:@"inputRadius"];
+        [filter setValue:@(_WLCalendarBackgroundActiveBlur) forKey:@"inputRadius"];
 
         _blurInputFilter = [transform retain];
         _blurOutputFilter = [filter retain];

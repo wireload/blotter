@@ -189,11 +189,11 @@
     [[_titleView valueForKey:@"_textView"] bind:NSValueBinding
                                        toObject:self
                                     withKeyPath:@"title"
-                                        options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:NSContinuouslyUpdatesValueBindingOption]];
+                                        options:[NSDictionary dictionaryWithObject:@(YES) forKey:NSContinuouslyUpdatesValueBindingOption]];
     [[_locationView valueForKey:@"_textView"] bind:NSValueBinding
                                           toObject:self
                                        withKeyPath:@"location"
-                                           options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:NSContinuouslyUpdatesValueBindingOption]];
+                                           options:[NSDictionary dictionaryWithObject:@(YES) forKey:NSContinuouslyUpdatesValueBindingOption]];
     [_startDatePicker bind:@"datePickerElements" toObject:self withKeyPath:@"datePickerElements" options:nil];
     [_endDatePicker bind:@"datePickerElements" toObject:self withKeyPath:@"datePickerElements" options:nil];
 

@@ -135,7 +135,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
 {
     keepsTextOfEventsVisible = newKeepTextOfEventsVisible;
     [_sortedByStartDateEventLayers makeObjectsPerformSelector:@selector(setKeepsTextVisible:)
-                                                   withObject:[NSNumber numberWithBool:keepsTextOfEventsVisible]];
+                                                   withObject:@(keepsTextOfEventsVisible)];
 }
 
 + (BOOL)automaticallyNotifiesObserversOfHourRangeOfEvents
@@ -543,9 +543,9 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
 + (id)defaultValueForKey:(NSString *)aKey
 {
     if ([aKey isEqualToString:@"masksToBounds"])
-    return [NSNumber numberWithBool:YES];
+        return @(YES);
     else
-    return [super defaultValueForKey:aKey];
+        return [super defaultValueForKey:aKey];
 }
 
 - (void)layoutSublayers
@@ -759,7 +759,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
 
 - (void)setNumberOfColumnsToSkip:(NSUInteger)newNumberOfColumnsToSkip
 {
-    [self setValue:[NSNumber numberWithUnsignedInteger:newNumberOfColumnsToSkip] forKey:_WLNumberOfColumnsToSkipKey];
+    [self setValue:@(newNumberOfColumnsToSkip) forKey:_WLNumberOfColumnsToSkipKey];
 }
 
 - (NSUInteger)numberOfColumnsToSkip

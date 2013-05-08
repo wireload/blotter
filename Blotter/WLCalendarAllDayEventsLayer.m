@@ -143,7 +143,7 @@ static const CGFloat _WLXPadding = 2.0;
 
         CGFloat minimumHeight = [l minimumHumanVisibleHeightWithWidth:availableWidth];
         totalMinimumHeight += _WLTopMargin + minimumHeight;
-        [minimumHeightOfLayers addObject:[NSNumber numberWithDouble:minimumHeight]];
+        [minimumHeightOfLayers addObject:@(minimumHeight)];
     }
 
     CGFloat frameX = floor(CGRectGetMinX(self.bounds) + _WLXPadding / 2.0);
