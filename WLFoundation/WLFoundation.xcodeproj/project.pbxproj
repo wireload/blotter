@@ -328,7 +328,7 @@
 		BA81DA5D160DA09D00C83DC3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = Wireload;
 			};
 			buildConfigurationList = BA81DA60160DA09D00C83DC3 /* Build configuration list for PBXProject "WLFoundation" */;
