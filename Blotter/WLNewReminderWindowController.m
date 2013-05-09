@@ -112,7 +112,7 @@
     [[_titleView valueForKey:@"_textView"] bind:NSValueBinding
                                        toObject:self
                                     withKeyPath:@"title"
-                                        options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:NSContinuouslyUpdatesValueBindingOption]];
+                                        options:[NSDictionary dictionaryWithObject:@(YES) forKey:NSContinuouslyUpdatesValueBindingOption]];
 
     [self resetDefaults:nil];
 }

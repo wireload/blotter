@@ -17,7 +17,7 @@
 
 - (id)transformedValue:(id)value
 {
-    return [NSNumber numberWithBool:([value count] > 1)];
+    return @([value count] > 1);
 }
 
 @end

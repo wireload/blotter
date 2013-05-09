@@ -101,7 +101,7 @@
             infoViewsSize = [self._rootSplitViewToBlotterWindowTransform transformSize:infoViewsSize];
             width = infoViewsSize.width;
         }
-        [defaults setFloat:floor(width) forKey:@"InfoViewsWidth"];
+        [defaults setDouble:floor(width) forKey:@"InfoViewsWidth"];
     }
     else
     {
@@ -118,7 +118,7 @@
                         dateViewSize = [self._infoSplitViewToBlotterWindowTransform transformSize:dateViewSize];
                         height = dateViewSize.height;
                     }
-                    [defaults setFloat:floor(height) forKey:@"DateViewHeight"];
+                    [defaults setDouble:floor(height) forKey:@"DateViewHeight"];
                     break;
                 }
                 case WLLayoutTasksViewTag:
@@ -130,7 +130,7 @@
                         tasksViewSize = [self._infoSplitViewToBlotterWindowTransform transformSize:tasksViewSize];
                         height = tasksViewSize.height;
                     }
-                    [defaults setFloat:floor(height) forKey:@"TasksViewHeight"];
+                    [defaults setDouble:floor(height) forKey:@"TasksViewHeight"];
                     break;
                 }
                 case WLLayoutAllDayViewTag:
@@ -142,7 +142,7 @@
                         allDayViewSize = [self._weekSplitViewToBlotterWindowTransform transformSize:allDayViewSize];
                         height = allDayViewSize.height;
                     }
-                    [defaults setFloat:floor(height) forKey:@"AllDayViewHeight"];
+                    [defaults setDouble:floor(height) forKey:@"AllDayViewHeight"];
                     break;
                 }
                 default:
@@ -400,7 +400,7 @@
         default:
             taskViewHeight = [delegate.calendarWindowController defaultTasksViewHeight];
     }
-    [defaults setObject:[NSNumber numberWithFloat:taskViewHeight] forKey:@"TasksViewHeight"];
+    [defaults setObject:@(taskViewHeight) forKey:@"TasksViewHeight"];
 
     return defaults;
 }

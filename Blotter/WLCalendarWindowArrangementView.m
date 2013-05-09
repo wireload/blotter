@@ -127,7 +127,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
             _navigationHelperAreas[i] = [[NSTrackingArea alloc] initWithRect:f
                                                                      options:NSTrackingMouseEnteredAndExited | NSTrackingActiveWhenFirstResponder | NSTrackingEnabledDuringMouseDrag
                                                                        owner:self
-                                                                    userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:i] forKey:_WLPositionKey]];
+                                                                    userInfo:[NSDictionary dictionaryWithObject:@(i) forKey:_WLPositionKey]];
             [self addTrackingArea:_navigationHelperAreas[i]];
             [_navigationHelperAreas[i] release];
             [CATransaction WL_performWithDisabledActions:^{
