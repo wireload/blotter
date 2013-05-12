@@ -47,7 +47,7 @@ NSString* const WLScreenLocalizedName = @"ScreenName";
     if (selectedScreenID != nil &&
         ![[screens valueForKey:WLScreenIdentifierKey] containsObject:selectedScreenID])
     {
-        NSString *screenName = NSLocalizedStringFromTableInBundle(@"Unplugged", nil, [NSBundle bundleForClass:[self class]], @"Name of unplugged monitor");
+        NSString *screenName = NSLocalizedString(@"Unplugged", @"Name of unplugged monitor");
         NSDictionary *unpluggedScreen = [NSDictionary dictionaryWithObjectsAndKeys:
                                                           selectedScreenID,   WLScreenIdentifierKey,
                                                           screenName,         WLScreenLocalizedName,

@@ -71,8 +71,8 @@
 - (void)configureToolbarItem:(NSToolbarItem *)anItem
 {
     anItem.image = [[NSWorkspace sharedWorkspace] iconForFileType: NSFileTypeForHFSTypeCode(kToolbarDesktopFolderIcon)];
-    anItem.label = NSLocalizedStringFromTableInBundle(@"Positioning", nil, [NSBundle bundleForClass:[self class]], @"Positioing pref pane title");
-    anItem.toolTip = NSLocalizedStringFromTableInBundle(@"Position and Size Preferences", nil, [NSBundle bundleForClass:[self class]], @"Positioning pref pane tooltip");
+    anItem.label = NSLocalizedString(@"Positioning", @"Positioing pref pane title");
+    anItem.toolTip = NSLocalizedString(@"Position and Size Preferences", @"Positioning pref pane tooltip");
 }
 
 

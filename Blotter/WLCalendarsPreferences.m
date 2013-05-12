@@ -44,8 +44,8 @@
 - (void)configureToolbarItem:(NSToolbarItem *)anItem
 {
     anItem.image = [[NSWorkspace sharedWorkspace] iconForFileType: NSFileTypeForHFSTypeCode(kToolbarLabelsIcon)];
-    anItem.label = NSLocalizedStringFromTableInBundle(@"Calendars", nil, [NSBundle bundleForClass:[self class]], @"Calendars pref pane title");
-    anItem.toolTip = NSLocalizedStringFromTableInBundle(@"Calendars to display", nil, [NSBundle bundleForClass:[self class]], @"Calendars pref pane tooltip");
+    anItem.label = NSLocalizedString(@"Calendars", @"Calendars pref pane title");
+    anItem.toolTip = NSLocalizedString(@"Calendars to display", @"Calendars pref pane tooltip");
 }
 
 

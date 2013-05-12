@@ -35,11 +35,11 @@
         [app activate];
     else
     {
-        NSAlert *a = [NSAlert alertWithMessageText:NSLocalizedStringFromTableInBundle(@"Failed to open System Preferences.", nil, [NSBundle bundleForClass:[self class]], @"Cannot open System Preferences alert message")
-                                     defaultButton:NSLocalizedStringFromTableInBundle(@"Close", nil, [NSBundle bundleForClass:[self class]], @"Cannot open System Preferences alert default title")
+        NSAlert *a = [NSAlert alertWithMessageText:NSLocalizedString(@"Failed to open System Preferences.",  @"Cannot open System Preferences alert message")
+                                     defaultButton:NSLocalizedString(@"Close", @"Cannot open System Preferences alert default title")
                                    alternateButton:nil
                                        otherButton:nil
-                         informativeTextWithFormat:NSLocalizedStringFromTableInBundle(@"You can open it manually by following:\n→System Preferences…→Language & Text→Formats", nil, [NSBundle bundleForClass:[self class]], @"Cannot open System Preferences alert informative text")];
+                         informativeTextWithFormat:NSLocalizedString(@"You can open it manually by following:\n→System Preferences…→Language & Text→Formats", @"Cannot open System Preferences alert informative text")];
         [a setAlertStyle:NSCriticalAlertStyle];
         [a setShowsHelp:YES];
         [a setDelegate:self];
@@ -53,8 +53,8 @@
 - (void)configureToolbarItem:(NSToolbarItem *)anItem
 {
     anItem.image = [NSImage imageNamed:NSImageNamePreferencesGeneral];
-    anItem.label = NSLocalizedStringFromTableInBundle(@"General", nil, [NSBundle bundleForClass:[self class]], @"General pref pane title");
-    anItem.toolTip = NSLocalizedStringFromTableInBundle(@"General Preferences", nil, [NSBundle bundleForClass:[self class]], @"General pref pane tooltip");
+    anItem.label = NSLocalizedString(@"General", @"General pref pane title");
+    anItem.toolTip = NSLocalizedString(@"General Preferences", @"General pref pane tooltip");
 }
 
 

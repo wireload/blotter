@@ -53,8 +53,8 @@ static NSString* const _WLCursorKey = @"cursor";
 - (void)configureToolbarItem:(NSToolbarItem *)anItem
 {
     anItem.image = [NSImage imageNamed:@"preferences-about-blotter-icon"];
-    anItem.label = NSLocalizedStringFromTableInBundle(@"About", nil, [NSBundle bundleForClass:[self class]], @"About pref pane title");
-    anItem.toolTip = NSLocalizedStringFromTableInBundle(@"Contacts, support and ratings", nil, [NSBundle bundleForClass:[self class]], @"About pref pane tooltip");
+    anItem.label = NSLocalizedString(@"About", @"About pref pane title");
+    anItem.toolTip = NSLocalizedString(@"Contacts, support and ratings", @"About pref pane tooltip");
 }
 
 
