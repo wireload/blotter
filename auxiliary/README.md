@@ -18,14 +18,12 @@
 
 6. Create the new global `.strings` file:
 
-        python auxiliary/litany.py create_global new.strings sv
-        iconv -f utf-16 -t utf-8 new.strings >new-utf8.strings
+        python auxiliary/litany.py create_global new.strings sv && iconv -f utf-16 -t utf-8 new.strings >new-utf8.strings
 
 7. Grab a copy of the old strings:
 
         git checkout <last release version tag>
-        python auxiliary/litany.py create_global old.strings sv
-        iconv -f utf-16 -t utf-8 old.strings >old-utf8.strings
+        python auxiliary/litany.py create_global old.strings sv && iconv -f utf-16 -t utf-8 old.strings >old-utf8.strings
         git checkout master
 
 8. Compare the new strings to the old strings:
