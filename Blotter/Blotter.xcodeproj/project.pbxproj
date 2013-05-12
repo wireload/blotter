@@ -1005,6 +1005,7 @@
 		E2A7085C13F0427800A4BF3A /* WLCalendarDateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarDateViewController.h; sourceTree = "<group>"; };
 		E2A7085D13F0427800A4BF3A /* WLCalendarDateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarDateViewController.m; sourceTree = "<group>"; };
 		E2BA531913C5A873005F0045 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E2BF0ED9173F8E2800371D2A /* preinstall-requirements.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "preinstall-requirements.plist"; sourceTree = "<group>"; };
 		E2D6488F1441062300A03FAD /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		E2D6D8F7153335C8005F070D /* WLCalendarWindowBringToFrontAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowBringToFrontAnimation.h; sourceTree = "<group>"; };
 		E2D6D8F8153335C8005F070D /* WLCalendarWindowBringToFrontAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindowBringToFrontAnimation.m; sourceTree = "<group>"; };
@@ -1378,6 +1379,7 @@
 				E2E826CD145023A6007035E5 /* NewTaskWindow.xib */,
 				BAF67DC616D622820047FE2A /* PositionPrefPaneView.xib */,
 				BAF67DC816D622820047FE2A /* ShortcutsPrefPaneView.xib */,
+				E2BF0ED9173F8E2800371D2A /* preinstall-requirements.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -2644,6 +2646,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
+				PRODUCT_DEFINITION_PLIST = "Resources/preinstall-requirements.plist";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 				VALID_ARCHS = x86_64;
@@ -2728,6 +2731,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
+				PRODUCT_DEFINITION_PLIST = "Resources/preinstall-requirements.plist";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 				VALID_ARCHS = x86_64;
@@ -2761,6 +2765,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
+				PRODUCT_DEFINITION_PLIST = "Resources/preinstall-requirements.plist";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 				VALID_ARCHS = x86_64;
