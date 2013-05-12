@@ -50,7 +50,7 @@ strings:
   -
     id:       'main menu'
     path:     "Blotter/Resources/%(lang)s.lproj/MainMenu.strings"
-    skip:     ['29.title']
+    skip:     ['609.title', '610.title', '613.title', '615.title', '622.title', '630.title', '29.title']
   -
     id:       'other'
     path:     "Blotter/Resources/%(lang)s.lproj/Localizable.strings"
