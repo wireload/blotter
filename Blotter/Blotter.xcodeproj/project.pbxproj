@@ -366,7 +366,7 @@
 		E21A5F451403D2A4000B6634 /* WLCalendarReminderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E21A5F441403D2A4000B6634 /* WLCalendarReminderLayer.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		E22C78AB13FFCD9F00EE44C0 /* NSColor+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */; };
 		E23F746F14434DE40055D6CE /* WLHourRange.m in Sources */ = {isa = PBXBuildFile; fileRef = E23F746E14434DE40055D6CE /* WLHourRange.m */; };
-		E252E9C515545AD300B64F5F /* WLGlassHudPopUpButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E252E9C415545AD300B64F5F /* WLGlassHudPopUpButtonCell.m */; };
+		E252E9C515545AD300B64F5F /* WLGlassHudPopUpButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E252E9C415545AD300B64F5F /* WLGlassHudPopUpButtonCell.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		E253575013DC884D0010A2ED /* NSDate+WLDayBoundaries.m in Sources */ = {isa = PBXBuildFile; fileRef = E253574F13DC884D0010A2ED /* NSDate+WLDayBoundaries.m */; };
 		E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		E2670391132CA887003FBFC2 /* WLGlassHudButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2670390132CA887003FBFC2 /* WLGlassHudButtonCell.m */; };

@@ -13,28 +13,10 @@
 
 - (NSAttributedString *)attributedTitle
 {
-//    return [super attributedTitle];
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [NSColor whiteColor], NSForegroundColorAttributeName,
-                                nil];
-    NSAttributedString *title = [[NSAttributedString alloc] initWithString:[self title] attributes:attributes];
-    [self setAttributedTitle:title];
-    return [title autorelease];
-}
-
-- (NSString *)title
-{
-    return [super title];
-}
-
-- (NSAttributedString *)attributedStringValue
-{
-    return [super attributedStringValue];
-}
-
-- (NSString *)stringValue
-{
-    return [super stringValue];
+    NSMutableAttributedString *attributedTitle = [[super attributedTitle] mutableCopy];
+    [attributedTitle addAttributes:@{ NSForegroundColorAttributeName: [NSColor whiteColor] }
+                             range:NSMakeRange(0, [attributedTitle length])];
+    return attributedTitle;
 }
 
 - (void)drawBorderAndBackgroundWithFrame:(NSRect)aCellFrame inView:(NSView *)aControlView
@@ -60,7 +42,6 @@
                                          yRadius:1] fill];
         [NSGraphicsContext restoreGraphicsState];
     }
-//    [super drawBorderAndBackgroundWithFrame:aCellFrame inView:aControlView];
 }
 
 @end
