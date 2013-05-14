@@ -33,6 +33,8 @@
 9. Update mygengo using the diff.
 10. Enter standard system translations when known. Search for standard translations using commands such as:
 
+        # First mount OS X glossary "russian.dmg" from https://developer.apple.com/downloads/index.action.
+        grep -i -4 "Data &amp; Time" /Volumes/RS-Russian-ru/*.lg
         plutil -convert json -r -o - /Applications/*.app/Contents/Resources/ru.lproj/*.strings | grep -i -2 "Date & Time"
         plutil -convert json -r -o - /Applications/Utilities/*.app/Contents/Resources/ru.lproj/*.strings | grep -i -2 "Date & Time"
 
