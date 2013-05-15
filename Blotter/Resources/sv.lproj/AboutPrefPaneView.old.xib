@@ -89,7 +89,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="9731935">
 							<int key="NSCellFlags">68157504</int>
 							<int key="NSCellFlags2">104858624</int>
-							<string key="NSContents">2.1</string>
+							<string key="NSContents">2.2</string>
 							<object class="NSFont" key="NSSupport">
 								<string key="NSName">HelveticaNeue-Bold</string>
 								<double key="NSSize">20</double>
