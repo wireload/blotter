@@ -52,7 +52,7 @@
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="675070131">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSCustomView" id="1015655719">
@@ -204,7 +204,7 @@
 								<object class="NSButton" id="456489716">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">290</int>
-									<string key="NSFrame">{{91, 135}, {155, 18}}</string>
+									<string key="NSFrame">{{91, 135}, {158, 18}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<reference key="NSNextKeyView" ref="939906521"/>
 									<bool key="NSEnabled">YES</bool>
@@ -301,7 +301,7 @@
 								<object class="NSPopUpButton" id="408232026">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">290</int>
-									<string key="NSFrame">{{87, 63}, {160, 17}}</string>
+									<string key="NSFrame">{{87, 62}, {162, 18}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<reference key="NSNextKeyView" ref="187184368"/>
 									<bool key="NSEnabled">YES</bool>
@@ -337,7 +337,7 @@
 								</object>
 								<object class="NSTextField" id="619627054">
 									<reference key="NSNextResponder" ref="690297653"/>
-									<int key="NSvFlags">292</int>
+									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{19, 160}, {69, 14}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<reference key="NSNextKeyView" ref="553055910"/>
@@ -358,7 +358,7 @@
 								</object>
 								<object class="NSCustomView" id="553055910">
 									<reference key="NSNextResponder" ref="690297653"/>
-									<int key="NSvFlags">4386</int>
+									<int key="NSvFlags">4370</int>
 									<string key="NSFrame">{{94, 154}, {153, 23}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<reference key="NSNextKeyView" ref="722791319"/>
@@ -372,6 +372,7 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{269, 239}</string>
+					<reference key="NSSuperview"/>
 					<reference key="NSNextKeyView" ref="690297653"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
@@ -495,6 +496,14 @@
 					<int key="connectionID">358</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBAccessibilityConnection" key="connection">
+						<string key="label">title</string>
+						<reference key="source" ref="211563046"/>
+						<reference key="destination" ref="939906521"/>
+					</object>
+					<int key="connectionID">384</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: self.endDate</string>
 						<reference key="source" ref="689527520"/>
@@ -519,6 +528,14 @@
 					<int key="connectionID">313</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBAccessibilityConnection" key="connection">
+						<string key="label">title</string>
+						<reference key="source" ref="689527520"/>
+						<reference key="destination" ref="354528427"/>
+					</object>
+					<int key="connectionID">385</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: self.isAllDay</string>
 						<reference key="source" ref="456489716"/>
@@ -541,6 +558,14 @@
 						<reference key="destination" ref="211563046"/>
 					</object>
 					<int key="connectionID">306</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBAccessibilityConnection" key="connection">
+						<string key="label">title</string>
+						<reference key="source" ref="456489716"/>
+						<reference key="destination" ref="722791319"/>
+					</object>
+					<int key="connectionID">383</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -638,6 +663,14 @@
 					<int key="connectionID">381</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBAccessibilityConnection" key="connection">
+						<string key="label">title</string>
+						<reference key="source" ref="408232026"/>
+						<reference key="destination" ref="12582526"/>
+					</object>
+					<int key="connectionID">386</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">nextKeyView</string>
 						<reference key="source" ref="1026362590"/>
@@ -684,6 +717,14 @@
 						<reference key="destination" ref="456489716"/>
 					</object>
 					<int key="connectionID">305</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBAccessibilityConnection" key="connection">
+						<string key="label">title</string>
+						<reference key="source" ref="553055910"/>
+						<reference key="destination" ref="619627054"/>
+					</object>
+					<int key="connectionID">382</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -898,6 +939,7 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">103</int>
 						<reference key="object" ref="904611310"/>
+						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="288218953"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -965,119 +1007,9 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">381</int>
+			<int key="maxID">387</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes">
-			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<object class="IBPartialClassDescription">
-					<string key="className">WLGlassHudButtonCell</string>
-					<string key="superclassName">NSButtonCell</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/WLGlassHudButtonCell.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">WLGlassHudDatePicker</string>
-					<string key="superclassName">NSDatePicker</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/WLGlassHudDatePicker.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">WLGlassHudPopUpButtonCell</string>
-					<string key="superclassName">NSPopUpButtonCell</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/WLGlassHudPopUpButtonCell.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">WLGlassHudTextView</string>
-					<string key="superclassName">NSView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/WLGlassHudTextView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">WLGlassHudWindow</string>
-					<string key="superclassName">NSWindow</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">close:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">close:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">close:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/WLGlassHudWindow.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">WLNewEventWindowController</string>
-					<string key="superclassName">NSWindowController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="create:">id</string>
-						<string key="resetDefaults:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="create:">
-							<string key="name">create:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="resetDefaults:">
-							<string key="name">resetDefaults:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="_createButton">NSButton</string>
-						<string key="_endDatePicker">WLGlassHudDatePicker</string>
-						<string key="_locationView">WLGlassHudTextView</string>
-						<string key="_locationViewContainer">NSView</string>
-						<string key="_startDatePicker">WLGlassHudDatePicker</string>
-						<string key="_titleView">WLGlassHudTextView</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="_createButton">
-							<string key="name">_createButton</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="_endDatePicker">
-							<string key="name">_endDatePicker</string>
-							<string key="candidateClassName">WLGlassHudDatePicker</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="_locationView">
-							<string key="name">_locationView</string>
-							<string key="candidateClassName">WLGlassHudTextView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="_locationViewContainer">
-							<string key="name">_locationViewContainer</string>
-							<string key="candidateClassName">NSView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="_startDatePicker">
-							<string key="name">_startDatePicker</string>
-							<string key="candidateClassName">WLGlassHudDatePicker</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="_titleView">
-							<string key="name">_titleView</string>
-							<string key="candidateClassName">WLGlassHudTextView</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/WLNewEventWindowController.h</string>
-					</object>
-				</object>
-			</array>
-		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
@@ -1089,7 +1021,7 @@
 			<real value="4600" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
-		<int key="IBDocument.defaultPropertyAccessControl">1</int>
+		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="NS.key.0">NSSwitch</string>
 			<string key="NS.object.0">{15, 15}</string>

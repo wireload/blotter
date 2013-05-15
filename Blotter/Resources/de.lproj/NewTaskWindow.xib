@@ -53,7 +53,7 @@
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="414427165">
-					<reference key="NSNextResponder"/>
+					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSCustomView" id="903219286">
@@ -61,7 +61,6 @@
 							<int key="NSvFlags">4370</int>
 							<string key="NSFrame">{{22, 143}, {265, 28}}</string>
 							<reference key="NSSuperview" ref="414427165"/>
-							<reference key="NSNextKeyView" ref="577727828"/>
 							<string key="NSClassName">WLGlassHudTextView</string>
 						</object>
 						<object class="NSCustomView" id="577727828">
@@ -99,7 +98,7 @@
 									<int key="NSvFlags">289</int>
 									<string key="NSFrame">{{154, 27}, {133, 18}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
-									<reference key="NSNextKeyView"/>
+									<reference key="NSNextKeyView" ref="903219286"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="705130045">
 										<int key="NSCellFlags">67108864</int>
@@ -227,12 +226,12 @@
 								<object class="NSPopUpButton" id="93078503">
 									<reference key="NSNextResponder" ref="577727828"/>
 									<int key="NSvFlags">266</int>
-									<string key="NSFrame">{{88, 63}, {199, 18}}</string>
+									<string key="NSFrame">{{88, 63}, {159, 18}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
 									<reference key="NSNextKeyView" ref="447760508"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSPopUpButtonCell" key="NSCell" id="359745811">
-										<int key="NSCellFlags">71303232</int>
+										<int key="NSCellFlags">67108928</int>
 										<int key="NSCellFlags2">133120</int>
 										<reference key="NSSupport" ref="26"/>
 										<reference key="NSControlView" ref="93078503"/>
@@ -264,12 +263,12 @@
 								<object class="NSPopUpButton" id="649689110">
 									<reference key="NSNextResponder" ref="577727828"/>
 									<int key="NSvFlags">266</int>
-									<string key="NSFrame">{{88, 87}, {199, 18}}</string>
+									<string key="NSFrame">{{88, 87}, {159, 18}}</string>
 									<reference key="NSSuperview" ref="577727828"/>
 									<reference key="NSNextKeyView" ref="350755557"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSPopUpButtonCell" key="NSCell" id="282599707">
-										<int key="NSCellFlags">-2076180416</int>
+										<int key="NSCellFlags">-2080374720</int>
 										<int key="NSCellFlags2">133120</int>
 										<reference key="NSSupport" ref="26"/>
 										<reference key="NSControlView" ref="649689110"/>
@@ -412,8 +411,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						</object>
 					</array>
 					<string key="NSFrameSize">{312, 193}</string>
-					<reference key="NSSuperview"/>
-					<reference key="NSNextKeyView" ref="903219286"/>
+					<reference key="NSNextKeyView" ref="577727828"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
@@ -501,7 +499,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						<reference key="source" ref="649689110"/>
 						<reference key="destination" ref="880146158"/>
 					</object>
-					<int key="connectionID">985</int>
+					<int key="connectionID">986</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -553,7 +551,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						<reference key="source" ref="758771597"/>
 						<reference key="destination" ref="184759867"/>
 					</object>
-					<int key="connectionID">986</int>
+					<int key="connectionID">984</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -639,7 +637,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						<reference key="source" ref="93078503"/>
 						<reference key="destination" ref="350755557"/>
 					</object>
-					<int key="connectionID">984</int>
+					<int key="connectionID">987</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -711,7 +709,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						<reference key="source" ref="113646877"/>
 						<reference key="destination" ref="184759867"/>
 					</object>
-					<int key="connectionID">987</int>
+					<int key="connectionID">985</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -786,11 +784,11 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<reference ref="184759867"/>
 							<reference ref="758771597"/>
 							<reference ref="880146158"/>
-							<reference ref="649689110"/>
 							<reference ref="350755557"/>
 							<reference ref="143960448"/>
 							<reference ref="447760508"/>
 							<reference ref="93078503"/>
+							<reference ref="649689110"/>
 						</array>
 						<reference key="parent" ref="414427165"/>
 					</object>
@@ -1002,9 +1000,99 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">988</int>
+			<int key="maxID">994</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">WLGlassHudButtonCell</string>
+					<string key="superclassName">NSButtonCell</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/WLGlassHudButtonCell.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">WLGlassHudDatePicker</string>
+					<string key="superclassName">NSDatePicker</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/WLGlassHudDatePicker.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">WLGlassHudPopUpButtonCell</string>
+					<string key="superclassName">NSPopUpButtonCell</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/WLGlassHudPopUpButtonCell.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">WLGlassHudTextView</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/WLGlassHudTextView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">WLGlassHudWindow</string>
+					<string key="superclassName">NSWindow</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">close:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">close:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">close:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/WLGlassHudWindow.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">WLNewReminderWindowController</string>
+					<string key="superclassName">NSWindowController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="create:">id</string>
+						<string key="resetDefaults:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="create:">
+							<string key="name">create:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="resetDefaults:">
+							<string key="name">resetDefaults:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="_createButton">NSButton</string>
+						<string key="_titleView">WLGlassHudTextView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="_createButton">
+							<string key="name">_createButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_titleView">
+							<string key="name">_titleView</string>
+							<string key="candidateClassName">WLGlassHudTextView</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/WLNewReminderWindowController.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
