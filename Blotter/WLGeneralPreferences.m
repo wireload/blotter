@@ -35,11 +35,18 @@
         [app activate];
     else
     {
+        NSString *informativeTextWithFormat = @"";
+
+        if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_7)
+            informativeTextWithFormat = NSLocalizedString(@"You can open it manually by following:\n→System Preferences…→Language & Text→Formats", @"Cannot open System Preferences alert informative text for 10.6 and 10.7");
+        else
+            informativeTextWithFormat = NSLocalizedString(@"You can open it manually by following:\n→System Preferences…→Language & Text→Region", @"Cannot open System Preferences alert informative text for 10.8 and higher");
+
         NSAlert *a = [NSAlert alertWithMessageText:NSLocalizedString(@"Failed to open System Preferences.",  @"Cannot open System Preferences alert message")
                                      defaultButton:NSLocalizedString(@"Close", @"Cannot open System Preferences alert default title")
                                    alternateButton:nil
                                        otherButton:nil
-                         informativeTextWithFormat:NSLocalizedString(@"You can open it manually by following:\n→System Preferences…→Language & Text→Formats", @"Cannot open System Preferences alert informative text")];
+                         informativeTextWithFormat:informativeTextWithFormat];
         [a setAlertStyle:NSCriticalAlertStyle];
         [a setShowsHelp:YES];
         [a setDelegate:self];
