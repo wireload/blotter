@@ -44,6 +44,7 @@
 12. Export all languages from MyGengo with the "Download files > All languages" option.
 13. Run `litany.py` in reverse:
 
+        unzip lang_files.zip
         sh auxiliary/litany_reverse_all.sh
 
 14. Commit the new `.strings`.
