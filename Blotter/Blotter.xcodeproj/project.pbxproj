@@ -1739,6 +1739,7 @@
 				8D11072E0486CEB800E47090 /* Frameworks */,
 				2840647F12833643000816FF /* Copy Frameworks */,
 				BA23664F16F739F200779487 /* Copy Login Item */,
+				28EE238017445EA00086E1C4 /* Remove Login Item Provisioning Profile */,
 			);
 			buildRules = (
 			);
@@ -2201,6 +2202,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [ \"${CONFIGURATION}\" = \"Archiving\" ]; then\n    cp -a \"$BUILT_PRODUCTS_DIR\"/../Release/PTHotKey.framework \"$BUILT_PRODUCTS_DIR\"/PTHotKey.framework\n    cp -a \"$BUILT_PRODUCTS_DIR\"/../Release/ShortcutRecorder.framework \"$BUILT_PRODUCTS_DIR\"/ShortcutRecorder.framework\nfi\n";
+		};
+		28EE238017445EA00086E1C4 /* Remove Login Item Provisioning Profile */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Remove Login Item Provisioning Profile";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Library/LoginItems/LoginItem.app/Contents/embedded.provisionprofile\"";
 		};
 		BA23661916F7225900779487 /* Code Sign Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
