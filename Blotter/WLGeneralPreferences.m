@@ -48,22 +48,25 @@
     }
     @finally
     {
-        NSString *informativeTextWithFormat = @"";
+        if (!is_successful)
+        {
+            NSString *informativeTextWithFormat = @"";
 
-        if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_7)
-            informativeTextWithFormat = NSLocalizedString(@"You can open it manually by following:\n→System Preferences…→Language & Text→Formats", @"Cannot open System Preferences alert informative text for 10.6 and 10.7");
-        else
-            informativeTextWithFormat = NSLocalizedString(@"You can open it manually by following:\n→System Preferences…→Language & Text→Region", @"Cannot open System Preferences alert informative text for 10.8 and higher");
+            if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_7)
+                informativeTextWithFormat = NSLocalizedString(@"You can open it manually by following:\n→System Preferences…→Language & Text→Formats", @"Cannot open System Preferences alert informative text for 10.6 and 10.7");
+            else
+                informativeTextWithFormat = NSLocalizedString(@"You can open it manually by following:\n→System Preferences…→Language & Text→Region", @"Cannot open System Preferences alert informative text for 10.8 and higher");
 
-        NSAlert *a = [NSAlert alertWithMessageText:NSLocalizedString(@"Failed to open System Preferences.",  @"Cannot open System Preferences alert message")
-                                     defaultButton:NSLocalizedString(@"Close", @"Cannot open System Preferences alert default title")
-                                   alternateButton:nil
-                                       otherButton:nil
-                         informativeTextWithFormat:informativeTextWithFormat];
-        a.alertStyle = NSCriticalAlertStyle;
-        a.showsHelp = YES;
-        a.delegate = self;
-        [a beginSheetModalForWindow:self.view.window modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+            NSAlert *a = [NSAlert alertWithMessageText:NSLocalizedString(@"Failed to open System Preferences.",  @"Cannot open System Preferences alert message")
+                                         defaultButton:NSLocalizedString(@"Close", @"Cannot open System Preferences alert default title")
+                                       alternateButton:nil
+                                           otherButton:nil
+                             informativeTextWithFormat:informativeTextWithFormat];
+            a.alertStyle = NSCriticalAlertStyle;
+            a.showsHelp = YES;
+            a.delegate = self;
+            [a beginSheetModalForWindow:self.view.window modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+        }
     }
 }
 
