@@ -22,18 +22,31 @@
 
 - (IBAction)showMacOSXCalendarSettings:(id)aSender
 {
-    SystemPreferencesApplication *app = (SystemPreferencesApplication *)[SBApplication applicationWithBundleIdentifier:@"com.apple.systempreferences"];
-    SystemPreferencesPane *pane = [[app panes] objectWithID:@"com.apple.Localization"];
-    SystemPreferencesAnchor *anchor = nil;
+    // TODO: Would be wise to replace it with proper NSError
+    BOOL is_successful = YES;
     
-    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_7)
-        anchor = [[pane anchors] objectWithName:@"Formats"];
-    else
-        anchor = [[pane anchors] objectWithName:@"Region"];
-    
-    if ([anchor reveal] != nil)
-        [app activate];
-    else
+    // @try-@catch is used here because when Scripting Bridge fails due to sandboxing, exception is thrown rather than error.
+    @try
+    {
+        SystemPreferencesApplication *app = (SystemPreferencesApplication *)[SBApplication applicationWithBundleIdentifier:@"com.apple.systempreferences"];
+        SystemPreferencesPane *pane = [[app panes] objectWithID:@"com.apple.Localization"];
+        SystemPreferencesAnchor *anchor = nil;
+
+        if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_7)
+            anchor = [[pane anchors] objectWithName:@"Formats"];
+        else
+            anchor = [[pane anchors] objectWithName:@"Region"];
+
+        if ([anchor reveal] != nil)
+            [app activate];
+        else
+            is_successful = NO;
+    }
+    @catch (...)
+    {
+        is_successful = NO;
+    }
+    @finally
     {
         NSString *informativeTextWithFormat = @"";
 
@@ -47,10 +60,10 @@
                                    alternateButton:nil
                                        otherButton:nil
                          informativeTextWithFormat:informativeTextWithFormat];
-        [a setAlertStyle:NSCriticalAlertStyle];
-        [a setShowsHelp:YES];
-        [a setDelegate:self];
-        [a beginSheetModalForWindow:[self.view window] modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+        a.alertStyle = NSCriticalAlertStyle;
+        a.showsHelp = YES;
+        a.delegate = self;
+        [a beginSheetModalForWindow:self.view.window modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
     }
 }
 
