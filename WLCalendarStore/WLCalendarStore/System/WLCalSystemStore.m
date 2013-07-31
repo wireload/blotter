@@ -312,10 +312,15 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
         mask = [self _fastAllowedEntityTypesForCSCalendar:aCalendar];
 
     if (mask == WLCalEntityMaskUnknown)
+    {
+        [_log logInfo:@"Fallback to slow check of calendar type for calendar %@.", aCalendar];
         mask = [self _slowAllowedEntityTypesForCSCalendar:aCalendar];
+    }
 
     if (mask != WLCalEntityMaskUnknown)
         [_calendarTypeCache setObject:@(mask) forKey:aCalendar.uid];
+    else
+        [_log logWarning:@"Unable to determine type of calendar %@.", aCalendar];
 
     return mask;
 }
@@ -511,10 +516,10 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
             return;
         }
 
-        [_log logNoticeWithMessenger:^NSString *{ return @"iCal/Calendars/Reminders was launched."; }];
+        [_log logNotice:@"iCal/Calendars/Reminders was (re)launched."];
     }
     else
-        [_log logNoticeWithMessenger:^NSString *{ return @"CalCalendar Store was changed."; }];
+        [_log logNotice:@"CalCalendar Store was changed."];
 
     dispatch_async(dispatch_get_main_queue(), ^
     {
