@@ -24,8 +24,8 @@ extern NSString *WLCalendarRemindersDidChangeNotification;
 
 
 /*!
-    @brief      The instance of WLCalendarEventsController listens to updates of calendar stores, fetches reminders for observed completion masks and
-                for given calendar identifiers and posts WLCalendarEventsDidChangeNotification.
+    @brief      The instance of WLCalendarRemindersController listens to updates of calendar stores, fetches reminders for observed completion masks and
+                for given calendar identifiers and posts WLCalendarRemindersDidChangeNotification.
 
     @discussion Users should not make any expectations about target thread of this notification. It's guaranteed that notifications are posted one after another
                 and there won't be more than 1 notification posted concurrently.
