@@ -12,12 +12,12 @@
 
 @interface WLCalEventsPredicate : NSObject <NSCopying>
 
-@property (readonly) NSArray *calendarIdentifiers;
+@property (readonly) NSSet *calendarIdentifiers;
 
 @property (readonly) WLDateRange *dateRange;
 
-- (instancetype)initWithDateRange:(WLDateRange *)aDateRange calendarIdentifiers:(NSArray *)aCalendarIdentifiers;
+- (instancetype)initWithDateRange:(WLDateRange *)aDateRange calendarIdentifiers:(NSSet *)aCalendarIdentifiers;
 
-+ (instancetype)predicateWithDateRange:(WLDateRange *)aDateRange calendarIdentifiers:(NSArray *)aCalendarIdentifiers;
++ (instancetype)predicateWithDateRange:(WLDateRange *)aDateRange calendarIdentifiers:(NSSet *)aCalendarIdentifiers;
 
 @end

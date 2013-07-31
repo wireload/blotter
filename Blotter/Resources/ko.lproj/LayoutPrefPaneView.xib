@@ -40,7 +40,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="1005">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSTextField" id="322597722">
@@ -48,7 +48,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{17, 289}, {110, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="655890231"/>
 						<string key="NSReuseIdentifierKey">_NS:3944</string>
 						<bool key="NSEnabled">YES</bool>
@@ -89,7 +88,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{129, 283}, {141, 26}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="729899837"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="183428051">
@@ -196,7 +194,6 @@
 																<int key="NSvFlags">268</int>
 																<string key="NSFrameSize">{108, 99}</string>
 																<reference key="NSSuperview" ref="732422139"/>
-																<reference key="NSWindow"/>
 																<reference key="NSNextKeyView" ref="822486296"/>
 																<string key="NSReuseIdentifierKey">_NS:547</string>
 																<string key="NSClassName">WLLayoutDateView</string>
@@ -206,7 +203,6 @@
 																<int key="NSvFlags">256</int>
 																<string key="NSFrame">{{0, 108}, {108, 45}}</string>
 																<reference key="NSSuperview" ref="732422139"/>
-																<reference key="NSWindow"/>
 																<reference key="NSNextKeyView" ref="83856410"/>
 																<string key="NSReuseIdentifierKey">_NS:1192</string>
 																<string key="NSClassName">WLLayoutTasksView</string>
@@ -216,7 +212,6 @@
 																<int key="NSvFlags">256</int>
 																<string key="NSFrame">{{0, 162}, {108, 69}}</string>
 																<reference key="NSSuperview" ref="732422139"/>
-																<reference key="NSWindow"/>
 																<reference key="NSNextKeyView" ref="209585813"/>
 																<string key="NSReuseIdentifierKey">_NS:1192</string>
 																<string key="NSClassName">WLLayoutRightNowView</string>
@@ -224,7 +219,6 @@
 														</array>
 														<string key="NSFrameSize">{108, 231}</string>
 														<reference key="NSSuperview" ref="413383031"/>
-														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="1052202239"/>
 														<string key="NSReuseIdentifierKey">_NS:545</string>
 													</object>
@@ -237,7 +231,6 @@
 																<int key="NSvFlags">268</int>
 																<string key="NSFrameSize">{263, 108}</string>
 																<reference key="NSSuperview" ref="209585813"/>
-																<reference key="NSWindow"/>
 																<reference key="NSNextKeyView" ref="286032300"/>
 																<string key="NSReuseIdentifierKey">_NS:547</string>
 																<string key="NSClassName">WLLayoutAllDayView</string>
@@ -247,21 +240,18 @@
 																<int key="NSvFlags">268</int>
 																<string key="NSFrame">{{0, 117}, {263, 114}}</string>
 																<reference key="NSSuperview" ref="209585813"/>
-																<reference key="NSWindow"/>
 																<string key="NSReuseIdentifierKey">_NS:549</string>
 																<string key="NSClassName">WLLayoutDayView</string>
 															</object>
 														</array>
 														<string key="NSFrame">{{117, 0}, {263, 231}}</string>
 														<reference key="NSSuperview" ref="413383031"/>
-														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="557101213"/>
 														<string key="NSReuseIdentifierKey">_NS:545</string>
 													</object>
 												</array>
 												<string key="NSFrame">{{10, 10}, {380, 231}}</string>
 												<reference key="NSSuperview" ref="307974184"/>
-												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="732422139"/>
 												<string key="NSReuseIdentifierKey">_NS:597</string>
 												<bool key="NSIsVertical">YES</bool>
@@ -269,7 +259,6 @@
 										</array>
 										<string key="NSFrame">{{0, 3}, {400, 251}}</string>
 										<reference key="NSSuperview" ref="393265673"/>
-										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="413383031"/>
 										<bool key="NSViewIsLayerTreeHost">YES</bool>
 										<string key="NSReuseIdentifierKey">_NS:499</string>
@@ -278,7 +267,6 @@
 								</array>
 								<string key="NSFrameSize">{400, 254}</string>
 								<reference key="NSSuperview" ref="729899837"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="307974184"/>
 								<bool key="NSViewIsLayerTreeHost">YES</bool>
 								<string key="NSReuseIdentifierKey">_NS:1192</string>
@@ -287,7 +275,6 @@
 						</array>
 						<string key="NSFrame">{{20, 17}, {400, 254}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="393265673"/>
 						<bool key="NSViewIsLayerTreeHost">YES</bool>
 						<string key="NSReuseIdentifierKey">_NS:1192</string>
@@ -295,8 +282,6 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{440, 326}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="322597722"/>
 				<string key="NSClassName">NSView</string>
 			</object>
@@ -306,6 +291,14 @@
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<array class="NSMutableArray" key="connectionRecords">
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_mainView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="1005"/>
+					</object>
+					<int key="connectionID">49</int>
+				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">_layoutControl</string>

@@ -23,21 +23,12 @@ typedef NS_ENUM(NSUInteger, WLCalReminderCompletionMask)
  */
 @interface WLCalRemindersPredicate : NSObject <NSCopying>
 
-/*!
-    @brief      Calendars used to get reminders.
-    @discussion nil means any calendar.
-    Defaults to nil.
- */
-@property (readonly) NSArray *calendarIdentifiers;
+@property (readonly) NSSet *calendarIdentifiers;
 
-/*!
-    @brief      Completion mask used to get reminders.
-    @discussion Defaults to WLCalReminderCompletionMaskIncomplete.
- */
 @property (readonly) WLCalReminderCompletionMask completionMask;
 
-- (instancetype)initWithCompletionMask:(WLCalReminderCompletionMask)aCompletionMask calendarIdentifiers:(NSArray *)aCalendarIdentifiers;
+- (instancetype)initWithCompletionMask:(WLCalReminderCompletionMask)aCompletionMask calendarIdentifiers:(NSSet *)aCalendarIdentifiers;
 
-+ (instancetype)predicateWithCompletionMask:(WLCalReminderCompletionMask)aCompletionMask calendarIdentifiers:(NSArray *)aCalendarIdentifiers;
++ (instancetype)predicateWithCompletionMask:(WLCalReminderCompletionMask)aCompletionMask calendarIdentifiers:(NSSet *)aCalendarIdentifiers;
 
 @end

@@ -138,7 +138,7 @@
 {
     NSAssert(self.layoutManager == nil, @"You cannot use custom layout managers with this class");
 
-    if (self.bounds.size.height == 0.0)
+    if (CGRectGetHeight(self.bounds) == 0.0)
         return;
 
     WLHourRange r = [self.timeRuler hourRange];
@@ -154,6 +154,7 @@
                                                      hourPosition - size.height / 2.0,
                                                      self.bounds.size.width,
                                                      size.height));
+
             if (self.onlyCompletelyVisibleMarkersShown &&
                 !CGRectContainsRect(self.visibleRect, frame) &&
                 CGRectIntersectsRect(self.visibleRect, frame))
@@ -161,13 +162,13 @@
                 CGRect intersection = CGRectIntersection(self.visibleRect, frame);
                 if (CGRectGetMinY(self.visibleRect) > CGRectGetMinY(frame))
                 {
-                    frame = CGRectOffset(hourMarker.frame,
+                    frame = CGRectOffset(frame,
                                          0.0,
                                          -CGRectGetHeight(intersection));
                 }
                 else
                 {
-                    frame = CGRectOffset(hourMarker.frame,
+                    frame = CGRectOffset(frame,
                                          0.0,
                                          CGRectGetHeight(intersection));
                 }

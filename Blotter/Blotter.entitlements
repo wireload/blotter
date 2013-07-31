@@ -6,7 +6,6 @@
 	<true/>
 	<key>com.apple.security.temporary-exception.apple-events</key>
 	<array>
-		<string>com.apple.systempreferences</string>
 		<string>com.apple.ical</string>
 	</array>
 	<key>com.apple.security.personal-information.calendars</key>

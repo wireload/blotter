@@ -112,7 +112,7 @@ static const NSStringDrawingOptions _WLTitleDrawingOptions = NSStringDrawingUses
 + (id)defaultValueForKey:(NSString *)aKey
 {
     if ([aKey isEqualToString:@"needsDisplayOnBoundsChange"])
-        return [NSNumber numberWithBool:YES];
+        return @(YES);
     else
         return [super defaultValueForKey:aKey];
 }

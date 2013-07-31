@@ -40,7 +40,6 @@
 
                 [aColor setFill];
                 NSRectFillUsingOperation(aDestinationRect, NSCompositeSourceIn);
-                [NSBezierPath fillRect:aDestinationRect];
 
                 [[NSImage imageNamed:@"checkbox-background-10_6"] drawInRect:aDestinationRect
                                                                     fromRect:aDestinationRect
@@ -72,11 +71,8 @@
                                                                   operation:NSCompositeSourceOver
                                                                    fraction:1.0];
 
-                [NSGraphicsContext saveGraphicsState];
-                [[aColor colorWithAlphaComponent:0.4] set];
-                [[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeSourceIn];
-                [NSBezierPath fillRect:aDestinationRect];
-                [NSGraphicsContext restoreGraphicsState];
+                [[aColor colorWithAlphaComponent:0.4] setFill];
+                NSRectFillUsingOperation(aDestinationRect, NSCompositeSourceIn);
 
                 switch (aState)
                 {

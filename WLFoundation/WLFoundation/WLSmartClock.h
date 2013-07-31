@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 
 
+extern NSString* const WLSmartClockLogKey;
+
+
 /*!
     @brief      Represents Calendar and Date in KVO observable manner.
 
@@ -18,7 +21,7 @@
  */
 @interface WLSmartClock : NSObject
 
-@property (nonatomic, readonly) NSCalendar *calendar;
+@property (readonly) NSCalendar *calendar;
 
 @property (readonly) NSDate *date;
 
@@ -41,8 +44,14 @@
 
 - (void)nextDayTimerDidFire;
 
+/*!
+    @discussion Main Thread Only.
+ */
 - (void)dateDidChange;
 
+/*!
+    @discussion Main Thread Only.
+*/
 - (void)calendarDidChange;
 
 @end

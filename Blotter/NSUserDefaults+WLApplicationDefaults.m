@@ -130,8 +130,8 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
             }
             else
             {
-                [calendarDict setValue:[NSNumber numberWithBool:YES] forKey:WLCalendarIsUsedForEventsKey];
-                [calendarDict setValue:[NSNumber numberWithBool:YES] forKey:WLCalendarIsUsedForRemindersKey];
+                [calendarDict setValue:@(YES) forKey:WLCalendarIsUsedForEventsKey];
+                [calendarDict setValue:@(YES) forKey:WLCalendarIsUsedForRemindersKey];
             }
             [aCalendars replaceObjectAtIndex:i withObject:calendarDict];
             [calendarDict release];
@@ -437,8 +437,8 @@ NSComparator const WLCalendarsComparator = ^(id left, id right) {
 
     NSDictionary *calendar = [NSDictionary dictionaryWithObjectsAndKeys:
                                                aCalCalendar.uid,                                                                     WLCalendarUIDKey,
-                                               [NSNumber numberWithBool:YES],                                                        WLCalendarIsUsedForEventsKey,
-                                               [NSNumber numberWithBool:YES],                                                        WLCalendarIsUsedForRemindersKey,
+                                               @(YES),                                                        WLCalendarIsUsedForEventsKey,
+                                               @(YES),                                                        WLCalendarIsUsedForRemindersKey,
                                                nil];
     return calendar;
 }

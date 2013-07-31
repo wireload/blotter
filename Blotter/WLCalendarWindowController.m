@@ -16,6 +16,7 @@
 #import "WLCalendarEventsController.h"
 #import "WLCalendarFloatingWeekEventsViewController.h"
 #import "WLCalendarRightNowEventsViewController.h"
+#import "DeskboardAppDelegate.h"
 
 
 // Sizes are chosen so that when switching between these 2 modes only week view is disappeard. that is the date, todo and right now vies are visually unchanged.
@@ -83,14 +84,14 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
                 {
                     return [NSString stringWithFormat:@"Observed Reminder Calendars: %@", reminderCalendars];
                 }];
-                [_remindersController setObservedCalendarIdentifiers:reminderCalendars forStore:s];
+                [_remindersController setObservedCalendarIdentifiers:[NSSet setWithArray:reminderCalendars] forStore:s];
 
                 NSArray *eventCalendars = [[self.calendarsController calEventCalendarsToDisplayForStore:s] valueForKey:@"calendarIdentifier"];
                 [_log logDebugWithMessenger:^NSString *
                 {
                     return [NSString stringWithFormat:@"Observed Event Calendars: %@", eventCalendars];
                 }];
-                [_eventsController setObservedCalendarIdentifiers:eventCalendars forStore:s];
+                [_eventsController setObservedCalendarIdentifiers:[NSSet setWithArray:eventCalendars] forStore:s];
             }
         };
 
@@ -514,6 +515,8 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
                 break;
             case WLFloatingLevelState:
                 self.window.isFloatingWindow = YES;
+                if ([(DeskboardAppDelegate *)[NSApp delegate] isOnlyCalendarWindowVisible:[NSApp windows]])
+                    [self.window makeKeyWindow];
                 break;
         }
 
@@ -580,12 +583,21 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
     }
     else if ([aKeyPath isEqualToString:WLShowsNext7DaysKey])
     {
-        if ([aChange[NSKeyValueChangeNewKey] boolValue])
-            [_weekViewController setAlignmentUnit:NSDayCalendarUnit number:7 animated:YES];
+        // On 10.6 synchronous setting of alignment unit may cause deadlock.
+        // see https://devforums.apple.com/message/808372#808372
+        if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([aChange[NSKeyValueChangeNewKey] boolValue])
+                    [_weekViewController setAlignmentUnit:NSDayCalendarUnit number:7 animated:YES];
+                else
+                    [_weekViewController setAlignmentUnit:NSWeekCalendarUnit number:1 animated:YES];
+            });
+        }
         else
         {
-            if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-                [_weekViewController setAlignmentUnit:NSWeekCalendarUnit number:1 animated:YES];
+            if ([aChange[NSKeyValueChangeNewKey] boolValue])
+                [_weekViewController setAlignmentUnit:NSDayCalendarUnit number:7 animated:YES];
             else
                 [_weekViewController setAlignmentUnit:NSWeekOfMonthCalendarUnit number:1 animated:YES];
         }

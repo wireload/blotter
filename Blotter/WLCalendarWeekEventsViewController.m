@@ -56,11 +56,6 @@
 
 #pragma mark Properties
 
-- (NSCalendar *)calendar
-{
-    return [_calendar copy];
-}
-
 - (void)setCalendar:(NSCalendar *)newCalendar
 {
     [self setCalendar:newCalendar animated:NO];

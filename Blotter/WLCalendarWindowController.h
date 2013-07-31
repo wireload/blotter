@@ -92,16 +92,16 @@ typedef enum
 @end
 
 
-typedef enum
+typedef NS_ENUM(NSInteger, BLSize)
 {
     BLNarrowSize    = 0,
     BLNormalSize    = 1,
     BLFullSize      = 2,
     BLCustomSize    = 3
-} BLSize;
+};
 
 
-typedef enum BLPosition
+typedef NS_ENUM(NSInteger, BLPosition)
 {
     BLPositionTopLeft =         0,
     BLPositionTopCenter =       1,
@@ -112,16 +112,16 @@ typedef enum BLPosition
     BLPositionBottomLeft =      6,
     BLPositionBottomCenter =    7,
     BLPositionBottomRight =     8
-} BLPosition;
+};
 
 
-typedef enum
+typedef NS_ENUM(NSUInteger, WLCalendarLayout)
 {
     WLCalendarCustomLayout = 1,
     WLCalendarNormalLayout = 0,
     WLCalendarToDoLayout = 2,
     WLCalendarRightNowLayout = 3
-} WLCalendarLayout;
+};
 
 
 extern NSSize const BLNarrowMinimumSize;

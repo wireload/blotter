@@ -19,7 +19,7 @@
     if ([aKey isEqualToString:@"color"])
         return (id)[[NSColor WL_timelineLineColor] WL_CGColor];
     else if ([aKey isEqualToString:@"needsDisplayOnBoundsChange"])
-        return [NSNumber numberWithBool:YES];
+        return @(YES);
     else
         return [super defaultValueForKey:aKey];
 }

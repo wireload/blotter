@@ -11,13 +11,13 @@
 
 @implementation WLCalEventsPredicate
 
-- (instancetype)initWithDateRange:(WLDateRange *)aDateRange calendarIdentifiers:(NSArray *)aCalendarIdentifiers
+- (instancetype)initWithDateRange:(WLDateRange *)aDateRange calendarIdentifiers:(NSSet *)aCalendarIdentifiers
 {
     self = [super init];
 
     if (self)
     {
-        _calendarIdentifiers = [aCalendarIdentifiers copy];
+        _calendarIdentifiers = [NSSet setWithSet:aCalendarIdentifiers];
         _dateRange = [aDateRange copy];
     }
 
@@ -32,7 +32,7 @@
 
 #pragma mark Methods
 
-+ (instancetype)predicateWithDateRange:(WLDateRange *)aDateRange calendarIdentifiers:(NSArray *)aCalendarIdentifiers
++ (instancetype)predicateWithDateRange:(WLDateRange *)aDateRange calendarIdentifiers:(NSSet *)aCalendarIdentifiers
 {
     return [[self alloc] initWithDateRange:aDateRange calendarIdentifiers:aCalendarIdentifiers];
 }
@@ -50,7 +50,10 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@:\ndateRange: %@\ncalendars: %@", [super description], self.dateRange, self.calendarIdentifiers];
+    return [NSString stringWithFormat:@"%@:\ndateRange: %@\ncalendars: %@",
+                     [super description],
+                     self.dateRange,
+                     self.calendarIdentifiers];
 }
 
 @end

@@ -279,9 +279,9 @@ const CGFloat _WLMinimumStringHeight = 5.0;
 
 + (id)defaultValueForKey:(NSString *)aKey {
     if ([aKey isEqualToString:@"keepsTextVisible"])
-        return [NSNumber numberWithBool:NO];
+        return @(NO);
     else if ([aKey isEqualToString:@"contentsBackgroundOpacity"])
-        return [NSNumber numberWithFloat:1.0];
+        return @(1.0);
     else if ([aKey isEqualToString:@"contentsBackgroundColor"])
         return (id)[[NSColor clearColor] WL_CGColor];
     else

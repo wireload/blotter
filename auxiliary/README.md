@@ -18,14 +18,12 @@
 
 6. Create the new global `.strings` file:
 
-        python auxiliary/litany.py create_global new.strings sv
-        iconv -f utf-16 -t utf-8 new.strings >new-utf8.strings
+        python auxiliary/litany.py create_global new.strings sv && iconv -f utf-16 -t utf-8 new.strings >new-utf8.strings
 
 7. Grab a copy of the old strings:
 
         git checkout <last release version tag>
-        python auxiliary/litany.py create_global old.strings sv
-        iconv -f utf-16 -t utf-8 old.strings >old-utf8.strings
+        python auxiliary/litany.py create_global old.strings sv && iconv -f utf-16 -t utf-8 old.strings >old-utf8.strings
         git checkout master
 
 8. Compare the new strings to the old strings:
@@ -35,6 +33,8 @@
 9. Update mygengo using the diff.
 10. Enter standard system translations when known. Search for standard translations using commands such as:
 
+        # First mount OS X glossary "russian.dmg" from https://developer.apple.com/downloads/index.action.
+        grep -i -4 "Data &amp; Time" /Volumes/RS-Russian-ru/*.lg
         plutil -convert json -r -o - /Applications/*.app/Contents/Resources/ru.lproj/*.strings | grep -i -2 "Date & Time"
         plutil -convert json -r -o - /Applications/Utilities/*.app/Contents/Resources/ru.lproj/*.strings | grep -i -2 "Date & Time"
 
@@ -44,6 +44,7 @@
 12. Export all languages from MyGengo with the "Download files > All languages" option.
 13. Run `litany.py` in reverse:
 
+        unzip ~/Downloads/lang_files.zip -d ./lang_files
         sh auxiliary/litany_reverse_all.sh
 
 14. Commit the new `.strings`.

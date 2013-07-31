@@ -71,10 +71,14 @@
     if (!self.geometryFlipped)
         sliceFrame.origin.y = self.bounds.size.height - sliceFrame.size.height - sliceFrame.origin.y;
 
-    sliceFrame.origin.x *= self.contentsScale;
-    sliceFrame.origin.y *= self.contentsScale;
-    sliceFrame.size.width *= self.contentsScale;
-    sliceFrame.size.height *= self.contentsScale;
+    if (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+    {
+        sliceFrame.origin.x *= self.contentsScale;
+        sliceFrame.origin.y *= self.contentsScale;
+        sliceFrame.size.width *= self.contentsScale;
+        sliceFrame.size.height *= self.contentsScale;
+    }
+
     CGImageRef sliceImage = CGImageCreateWithImageInRect(_contents, sliceFrame);
 
     if (sliceImage != NULL)
@@ -149,14 +153,19 @@
 
     if (colorSpace != NULL)
     {
+        CGFloat contentsScale = 1.0;
+
+        if (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+            contentsScale = self.contentsScale;
+
         CGContextRef imageContext = CGBitmapContextCreate(NULL,
-                                                          (size_t)ceil(self.bounds.size.width * self.contentsScale),
-                                                          (size_t)ceil(self.bounds.size.height * self.contentsScale),
+                                                          (size_t)ceil(self.bounds.size.width * contentsScale),
+                                                          (size_t)ceil(self.bounds.size.height * contentsScale),
                                                           8,
-                                                          4 * (size_t)ceil(self.bounds.size.width * self.contentsScale),
+                                                          4 * (size_t)ceil(self.bounds.size.width * contentsScale),
                                                           colorSpace,
                                                           kCGImageAlphaPremultipliedFirst);
-        CGContextScaleCTM(imageContext, self.contentsScale, self.contentsScale);
+        CGContextScaleCTM(imageContext, contentsScale, contentsScale);
 
         if (imageContext != NULL)
         {

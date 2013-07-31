@@ -71,12 +71,12 @@ extern NSString *WLCalendarRemindersDidChangeNotification;
 /*!
     @brief  Sets calendar identifiers for a given store.
  */
-- (void)setObservedCalendarIdentifiers:(NSArray *)aCalendarIdentifiers forStore:(NSObject<WLCalStore> *)aStore;
+- (void)setObservedCalendarIdentifiers:(NSSet *)aCalendarIdentifiers forStore:(NSObject<WLCalStore> *)aStore;
 
 /*!
     @brief  Returns calendar identifiers for a given store.
  */
-- (NSArray *)observedCalendarIdentifiersForStore:(NSObject<WLCalStore> *)aStore;
+- (NSSet *)observedCalendarIdentifiersForStore:(NSObject<WLCalStore> *)aStore;
 
 /*!
     @brief      Fetches all reminders on background thread with given priority.

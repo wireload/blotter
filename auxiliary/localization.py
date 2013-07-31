@@ -10,7 +10,6 @@ import argparse
 from codecs import open
 
 BLOTTER_DIR = join(dirname(abspath(__file__)), "..", "Blotter")
-BLOTTER_PREFS_DIR = join(BLOTTER_DIR, "../", "Blotter Preferences")
 
 
 def Strings(name, output_path):
@@ -36,34 +35,33 @@ def Xibs():
     old is the path to the previous version of the xib.
     """
 
-    prefsResources = join(BLOTTER_PREFS_DIR, "Resources")
     xibs = [{'output': join(BLOTTER_DIR, "Resources"),
-             'file': join(BLOTTER_DIR, "Resources", "English.lproj", "MainMenu.xib"),
-             'old': join(BLOTTER_DIR, "Resources", "English.lproj", "MainMenu.old.xib")},
+             'file': join(BLOTTER_DIR, "Resources", "en.lproj", "MainMenu.xib"),
+             'old': join(BLOTTER_DIR, "Resources", "en.lproj", "MainMenu.old.xib")},
             {'output': join(BLOTTER_DIR, "Resources"),
-             'file': join(BLOTTER_DIR, "Resources", "English.lproj", "NewEventWindow.xib"),
-             'old': join(BLOTTER_DIR, "Resources", "English.lproj", "NewEventWindow.old.xib")},
+             'file': join(BLOTTER_DIR, "Resources", "en.lproj", "NewEventWindow.xib"),
+             'old': join(BLOTTER_DIR, "Resources", "en.lproj", "NewEventWindow.old.xib")},
             {'output': join(BLOTTER_DIR, "Resources"),
-             'file': join(BLOTTER_DIR, "Resources", "English.lproj", "NewTaskWindow.xib"),
-             'old': join(BLOTTER_DIR, "Resources", "English.lproj", "NewTaskWindow.old.xib")},
-            {'output': prefsResources,
-             'file': join(prefsResources, "English.lproj", "CalendarsPrefPaneView.xib"),
-             'old': join(prefsResources, "English.lproj", "CalendarsPrefPaneView.old.xib")},
-            {'output': prefsResources,
-             'file': join(prefsResources, "English.lproj", "GeneralPrefPaneView.xib"),
-             'old': join(prefsResources, "English.lproj", "GeneralPrefPaneView.old.xib")},
-            {'output': prefsResources,
-             'file': join(prefsResources, "English.lproj", "ShortcutsPrefPaneView.xib"),
-             'old': join(prefsResources, "English.lproj", "ShortcutsPrefPaneView.old.xib")},
-            {'output': prefsResources,
-             'file': join(prefsResources, "English.lproj", "PositionPrefPaneView.xib"),
-             'old': join(prefsResources, "English.lproj", "PositionPrefPaneView.old.xib")},
-            {'output': prefsResources,
-             'file': join(prefsResources, "English.lproj", "LayoutPrefPaneView.xib"),
-             'old': join(prefsResources, "English.lproj", "LayoutPrefPaneView.old.xib")},
-            {'output': prefsResources,
-             'file': join(prefsResources, "English.lproj", "AboutPrefPaneView.xib"),
-             'old': join(prefsResources, "English.lproj", "AboutPrefPaneView.old.xib")},
+             'file': join(BLOTTER_DIR, "Resources", "en.lproj", "NewTaskWindow.xib"),
+             'old': join(BLOTTER_DIR, "Resources", "en.lproj", "NewTaskWindow.old.xib")},
+            {'output': join(BLOTTER_DIR, "Resources"),
+             'file': join(BLOTTER_DIR, "Resources", "en.lproj", "CalendarsPrefPaneView.xib"),
+             'old': join(BLOTTER_DIR, "Resources", "en.lproj", "CalendarsPrefPaneView.old.xib")},
+            {'output': join(BLOTTER_DIR, "Resources"),
+             'file': join(BLOTTER_DIR, "Resources", "en.lproj", "GeneralPrefPaneView.xib"),
+             'old': join(BLOTTER_DIR, "Resources", "en.lproj", "GeneralPrefPaneView.old.xib")},
+            {'output': join(BLOTTER_DIR, "Resources"),
+             'file': join(BLOTTER_DIR, "Resources", "en.lproj", "ShortcutsPrefPaneView.xib"),
+             'old': join(BLOTTER_DIR, "Resources", "en.lproj", "ShortcutsPrefPaneView.old.xib")},
+            {'output': join(BLOTTER_DIR, "Resources"),
+             'file': join(BLOTTER_DIR, "Resources", "en.lproj", "PositionPrefPaneView.xib"),
+             'old': join(BLOTTER_DIR, "Resources", "en.lproj", "PositionPrefPaneView.old.xib")},
+            {'output': join(BLOTTER_DIR, "Resources"),
+             'file': join(BLOTTER_DIR, "Resources", "en.lproj", "LayoutPrefPaneView.xib"),
+             'old': join(BLOTTER_DIR, "Resources", "en.lproj", "LayoutPrefPaneView.old.xib")},
+            {'output': join(BLOTTER_DIR, "Resources"),
+             'file': join(BLOTTER_DIR, "Resources", "en.lproj", "AboutPrefPaneView.xib"),
+             'old': join(BLOTTER_DIR, "Resources", "en.lproj", "AboutPrefPaneView.old.xib")},
             ]
     return xibs
 
@@ -76,20 +74,20 @@ def Sources():
     files is a list of paths to sources
     """
     sources = [{'output': join(BLOTTER_DIR, "Resources"),
-                'files': [join(BLOTTER_DIR, "WLCalendarWindowController.m"),
-                          join(BLOTTER_DIR, "WLNewEventWindowController.m"),
-                          join(BLOTTER_DIR, "WLNewTaskWindowController.m"),
-                          join(BLOTTER_DIR, "DeskboardAppDelegate.m"),
-                          join(BLOTTER_DIR, "WLCalendarTasksView.m")]},
-               {'output': join(BLOTTER_PREFS_DIR, "Resources"),
-                'files': [join(BLOTTER_PREFS_DIR, "GeneralPrefController.m"),
-                          join(BLOTTER_PREFS_DIR, "ShortcutsPrefController.m"),
-                          join(BLOTTER_PREFS_DIR, "PositionPrefController.m"),
-                          join(BLOTTER_PREFS_DIR, "LayoutPrefController.m"),
-                          join(BLOTTER_PREFS_DIR, "CalendarsPrefController.m"),
-                          join(BLOTTER_PREFS_DIR, "AboutPrefController.m"),
-                          join(BLOTTER_PREFS_DIR, "NSScreen+WLScreenName.m"),
-                          join(BLOTTER_PREFS_DIR, "WLScreensController.m")]}]
+                'files': [
+                    join(BLOTTER_DIR, "DeskboardAppDelegate.m"),
+                    join(BLOTTER_DIR, "WLAboutPreferences.m"),
+                    join(BLOTTER_DIR, "WLCalendarReminderLayer.m"),
+                    join(BLOTTER_DIR, "WLCalendarsPreferences.m"),
+                    join(BLOTTER_DIR, "WLCalendarWindowController.m"),
+                    join(BLOTTER_DIR, "WLGeneralPreferences.m"),
+                    join(BLOTTER_DIR, "WLLayoutPreferences.m"),
+                    join(BLOTTER_DIR, "WLNewEventWindowController.m"),
+                    join(BLOTTER_DIR, "WLNewReminderWindowController.m"),
+                    join(BLOTTER_DIR, "WLPositioningPreferences.m"),
+                    join(BLOTTER_DIR, "WLScreensController.m"),
+                    join(BLOTTER_DIR, "WLShortcutsPreferences.m")
+               ]}]
     return sources
 
 
@@ -104,7 +102,7 @@ def DevLang():
     """
     Returns development language.
     """
-    return "English"
+    return "en"
 
 
 def MergeStrings(src_path, dst_path):
@@ -122,7 +120,25 @@ def MergeStrings(src_path, dst_path):
             comment = l[i].strip()
             key, value = findall("\"(?:[^\"\\\\]|\\\\.)*\"", l[i + 1])
             parsed.append({'key': key, 'value': value, 'comment': comment})
-        return sorted(parsed, key=lambda x: x['key'])
+
+        parsed = sorted(parsed, key=lambda x: x['key'])
+
+        # Sometimes .strings file may contain unlocalized (when key == value) duplicates of keys.
+        # The following loop removes such elements in favor of pairs where key != value.
+        i = 0
+        while i < len(parsed) - 1:
+            if parsed[i]['key'] != parsed[i + 1]['key']:
+                i += 1
+            else:
+                if parsed[i]['key'] == parsed[i]['value']:
+                    del parsed[i]
+                elif parsed[i + 1]['key'] == parsed[i + 1]['value']:
+                    del parsed[i + 1]
+                    i += 1
+                else:
+                    i += 1
+
+        return parsed
 
     def Write(src_list, dst_file):
         for item in src_list:
@@ -238,8 +254,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create localized xibs, or create .strings for sources.')
 
     parser.add_argument('mode', nargs=1, choices=('xibs', 'strings'), help="Type of localization file to generate.")
-    parser.add_argument('--sources', action='store_true', help="When in strings mode, generate strings for sources. If neither --sources nor --xibs is specified, both are generated.")
-    parser.add_argument('--xibs', action='store_true', help="When in strings mode, generate strings for xibs. If neither --sources nor --xibs is specified, both are generated.")
+    parser.add_argument('--sources', action='store_true', help="When in strings mode, generate strings for sources. If neither --sources nor --xibs is specified, both are generated.", default=True)
+    parser.add_argument('--xibs', action='store_true', help="When in strings mode, generate strings for xibs. If neither --sources nor --xibs is specified, both are generated.", default=True)
 
     args = parser.parse_args()
 
@@ -248,11 +264,11 @@ if __name__ == '__main__':
             LocalizeXib(xib['file'], xib['old'], xib['output'], Langs())
             print ""
     elif 'strings' in args.mode:
-        if args.sources or not args.xibs:
+        if args.sources:
             for sources in Sources():
                 GenerateSourcesStrings(sources['files'], sources['output'], Langs() + [DevLang()])
                 print ""
-        if args.xibs or not args.sources:
+        if args.xibs:
             for xib in Xibs():
                 GenerateXibStrings(xib['file'], xib['output'], Langs())
                 print ""

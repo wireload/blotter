@@ -10,9 +10,11 @@
 
 
 /*!
-    @brief  WLCalendarEventsStorage represents events split into chunks.
-            Each chunk is represented by a date range which in turn represents calendar unit.
-            If an event intersects more than one calendar unit, it's split into as many parts as calendar units it intersects.
+    @brief      WLCalendarEventsStorage represents events split into chunks.
+                Each chunk is represented by a date range which in turn represents calendar unit.
+                If an event intersects more than one calendar unit, it's split into as many parts as calendar units it intersects.
+ 
+    @discussion Not Thread Safe.
  */
 @interface WLCalendarEventsStorage : NSObject
 

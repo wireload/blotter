@@ -328,7 +328,7 @@
 		BA81DA5D160DA09D00C83DC3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = Wireload;
 			};
 			buildConfigurationList = BA81DA60160DA09D00C83DC3 /* Build configuration list for PBXProject "WLFoundation" */;
@@ -483,7 +483,6 @@
 				GCC_WARN_SIGN_COMPARE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				LLVM_LTO = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
@@ -520,7 +519,6 @@
 				GCC_WARN_SIGN_COMPARE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = "";
 				SDKROOT = macosx;
@@ -615,7 +613,6 @@
 				GCC_WARN_SIGN_COMPARE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = "";
 				SDKROOT = macosx;

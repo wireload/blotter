@@ -29,39 +29,12 @@
 
 + (NSSet *)keyPathsForValuesAffectingCanCreateReminder
 {
-    return [NSSet setWithObject:@"self.calCalendars"];
-}
-
-- (void)setSelectedCalCalendarIndex:(NSUInteger)newSelectedCalCalendarIndex
-{
-    NSObject <WLCalCalendar> *c = [self.calCalendars objectAtIndex:newSelectedCalCalendarIndex];
-    [[NSUserDefaults standardUserDefaults] setObject:c.calendarIdentifier forKey:WLLastSelectedCalReminderCalendarUID];
-}
-
-- (NSUInteger)selectedCalCalendarIndex
-{
-    NSUInteger index = NSNotFound;
-    NSString *lastSelectedCalendarUID = [[NSUserDefaults standardUserDefaults] objectForKey:WLLastSelectedCalReminderCalendarUID];
-
-    if (lastSelectedCalendarUID != nil)
-    {
-        index = [self.calCalendars indexOfObjectPassingTest:^BOOL(NSObject <WLCalCalendar> *aCalCalendar, NSUInteger idx, BOOL *stop)
-        {
-            return [aCalCalendar.calendarIdentifier isEqualToString:lastSelectedCalendarUID];
-        }];
-
-        if (index == NSNotFound)
-            index = 0;
-    }
-    else
-        index = 0;
-
-    return index;
+    return [NSSet setWithObject:@"self.editableCalCalendars"];
 }
 
 - (BOOL)canCreateReminder
 {
-    return [self.calCalendars count] > 0;
+    return [self.editableCalCalendars count] > 0;
 }
 
 
@@ -84,12 +57,18 @@
 
 - (IBAction)create:(id)aSender
 {
+    if (!self.canCreateReminder)
+    {
+        NSBeep();
+        return;
+    }
+    
     CalTask *task = [CalTask task];
     task.title = self.title;
     if (self.isDueDate)
         task.dueDate = self.dueDate;
     task.priority = self.priority;
-    NSObject <WLCalCalendar> *selectedCalendar = [self.calCalendars objectAtIndex:self.selectedCalCalendarIndex];
+    NSObject <WLCalCalendar> *selectedCalendar = [self.editableCalCalendars objectAtIndex:self.selectedCalCalendarIndex];
     task.calendar = [[CalCalendarStore defaultCalendarStore] calendarWithUID:selectedCalendar.calendarIdentifier];
 
     NSError *error = nil;
@@ -133,9 +112,62 @@
     [[_titleView valueForKey:@"_textView"] bind:NSValueBinding
                                        toObject:self
                                     withKeyPath:@"title"
-                                        options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:NSContinuouslyUpdatesValueBindingOption]];
+                                        options:[NSDictionary dictionaryWithObject:@(YES) forKey:NSContinuouslyUpdatesValueBindingOption]];
 
     [self resetDefaults:nil];
+}
+
+@end
+
+
+@implementation WLNewReminderWindowController (Appearance)
+
++ (NSSet *)keyPathsForValuesAffectingEditableCalCalendars
+{
+    return [NSSet setWithObject:@"self.calCalendars"];
+}
+
++ (NSSet *)keyPathsForValuesAffectingSelectedCalCalendarIndex
+{
+    return [NSSet setWithObject:@"self.editableCalCalendars"];
+}
+
+- (NSArray *)editableCalCalendars
+{
+    NSIndexSet *i = [self.calCalendars indexesOfObjectsWithOptions:NSEnumerationConcurrent
+                                                       passingTest:^BOOL(NSObject <WLCalCalendar> *aCalednar, NSUInteger anIndex, BOOL *aStop)
+    {
+        return !aCalednar.isImmutable;
+    }];
+    return [self.calCalendars objectsAtIndexes:i];
+}
+
+
+- (void)setSelectedCalCalendarIndex:(NSUInteger)newSelectedCalCalendarIndex
+{
+    NSObject <WLCalCalendar> *c = [self.self.editableCalCalendars objectAtIndex:newSelectedCalCalendarIndex];
+    [[NSUserDefaults standardUserDefaults] setObject:c.calendarIdentifier forKey:WLLastSelectedCalReminderCalendarUID];
+}
+
+- (NSUInteger)selectedCalCalendarIndex
+{
+    NSUInteger index = NSNotFound;
+    NSString *lastSelectedCalendarUID = [[NSUserDefaults standardUserDefaults] objectForKey:WLLastSelectedCalReminderCalendarUID];
+    
+    if (lastSelectedCalendarUID != nil)
+    {
+        index = [self.self.editableCalCalendars indexOfObjectPassingTest:^BOOL(NSObject <WLCalCalendar> *aCalCalendar, NSUInteger idx, BOOL *stop)
+        {
+            return [aCalCalendar.calendarIdentifier isEqualToString:lastSelectedCalendarUID];
+        }];
+        
+        if (index == NSNotFound)
+            index = 0;
+    }
+    else
+        index = 0;
+    
+    return index;
 }
 
 @end

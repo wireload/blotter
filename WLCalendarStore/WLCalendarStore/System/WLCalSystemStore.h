@@ -12,32 +12,36 @@
 
 
 /*!
-    @discussion In method and variable naming Cal stands for WLCal, and CS stands for Apple's CalendarStore objects.
+    @brief      Adopts WLCalStore to fetch system calendar data using CalendarStore and EventKit when appropriate.
+
+    @discussion In method and variable naming Cal stands for WLCal, and CS stands for Apple's CalendarStore.
+
+                Thread safe.
  */
 @interface WLCalSystemStore : NSObject <WLCalStore>
 
 /*!
-    @brief  Asks iCal for calendar identifiers using AE.
+    @brief      Asks iCal for calendar identifiers using AE.
 
-    @result Returns UIDs of calendars in iCal or nil if it's not running.
+    @result     Returns UIDs of calendars in iCal or nil if it's not running.
+
+    @discussion Thread safe.
  */
-- (NSArray *)iCalCalendarUIDs;
+- (NSSet *)iCalCalendarUIDs;
 
 /*!
     @brief      Fetches CalCalendar instances from CalendarStore.
 
     @param      anUIDs UIDs of CalCalendar instances you want to fetch.
 
-    @param      outInvalidUIDs Points to an array that will contain UIDs of CalCalendar instances that cannot be fetched.
+    @param      outInvalidUIDs Points to an array of UIDs of CalCalendar instances that cannot be fetched.
 
     @discussion Size of the result array may be less than [anUIDs count].
 
-                Calendars have the same order as anUIDs.
-                That is, if you remove objects from UIDs at outInvalidUIDs, order of calendars and the result UIDs will match.
                 Thread safe.
  */
-- (NSArray *)fetchCSCalendarsForUIDs:(NSArray *)anUIDs
-                         invalidUIDs:(out __autoreleasing NSArray **)outInvalidUIDs;
+- (NSArray *)fetchCSCalendarsForUIDs:(NSSet *)anUIDs
+                         invalidUIDs:(__autoreleasing NSSet **)outInvalidUIDs;
 
 /*!
     @brief      Fetches CalEvent instances from CalendarStore.
