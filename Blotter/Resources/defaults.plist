@@ -54,10 +54,10 @@
 	<integer>12</integer>
 	<key>SlowAnimation</key>
 	<false/>
-	<key>ApplicationRunTimerDelay</key>
-	<integer>604800</integer>
 	<key>ShowRateThisAppInMenu</key>
 	<false/>
+	<key>ApplicationRunTimerDelay</key>
+	<integer>604800</integer>
 	<key>ApplicationRunTimerElapsedSeconds</key>
 	<integer>0</integer>
 	<key>ApplicationRunTimerIsFired</key>

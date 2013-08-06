@@ -315,14 +315,21 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (void)showRateThisAppMenuItem
 {
-    [[NSUserDefaults standardUserDefaults] WL_setShowRateThisAppInMenu:YES];
+    NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
+    [d WL_setApplicationRunTimerIsFired:YES];
+    [d WL_setApplicationRunTimerElapsedSeconds:[d WL_applicationRunTimerDelay] + 1.0];
+    [d WL_setShowRateThisAppInMenu:YES];
+
     _applicationRunTimer = nil;
     [[WLSmartClock defaultClock] removeObserver:self forKeyPath:@"date"];
 }
 
 - (void)hideRateThisAppMenuItem
 {
-    [[NSUserDefaults standardUserDefaults] WL_setShowRateThisAppInMenu:NO];
+    NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
+    [d WL_setApplicationRunTimerIsFired:YES];
+    [d WL_setApplicationRunTimerElapsedSeconds:[d WL_applicationRunTimerDelay] + 1.0];
+    [d WL_setShowRateThisAppInMenu:NO];
 }
 
 - (BOOL)isOnlyCalendarWindowVisible:(NSArray *)aVisibleWindows

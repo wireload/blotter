@@ -95,6 +95,7 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
     if (lastMigratedBundleVersion < currentBundleVersion)
     {
         // Actions to be perofmed each time app is updated.
+        [self WL_resetTimer];
     }
 
     if (lastMigratedBundleVersion < WLBlotterBundleVersion2_1)
@@ -241,14 +242,16 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
 
 @implementation NSUserDefaults (WLRateThisAppMenuItem)
 
+- (void)WL_resetTimer
+{
+    [self WL_setApplicationRunTimerElapsedSeconds:0.0];
+    [self WL_setApplicationRunTimerIsFired:NO];
+    [self WL_setShowRateThisAppInMenu:NO];
+}
+
 - (NSTimeInterval)WL_applicationRunTimerDelay
 {
     return [self doubleForKey:WLApplicationRunTimerDelayKey];
-}
-
-- (void)WL_setApplicationRunTimerDelay:(NSTimeInterval)newDelay
-{
-    [self setDouble:newDelay forKey:WLApplicationRunTimerDelayKey];
 }
 
 - (NSTimeInterval)WL_applicationRunTimerElapsedSeconds

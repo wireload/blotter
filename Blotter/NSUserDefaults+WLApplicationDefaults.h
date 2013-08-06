@@ -118,9 +118,9 @@ extern NSString* const WLLastSelectedCalReminderCalendarUID;
 
 @interface NSUserDefaults (WLRateThisAppMenuItem)
 
-- (NSTimeInterval)WL_applicationRunTimerDelay;
+- (void)WL_resetTimer;
 
-- (void)WL_setApplicationRunTimerDelay:(NSTimeInterval)newDelay;
+- (NSTimeInterval)WL_applicationRunTimerDelay;
 
 - (NSTimeInterval)WL_applicationRunTimerElapsedSeconds;
 
