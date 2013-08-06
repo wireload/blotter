@@ -27,7 +27,8 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
     id _iCalApp;
     dispatch_semaphore_t _iCalAppSemaphore;
 
-    NSCache *_calendarTypeCache;
+    NSMutableDictionary *_calendarTypeCache;
+    dispatch_semaphore_t _calendarTypeCacheSemaphore;
 
     WLASLLog *_log;
 }
@@ -56,8 +57,8 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
         if (NSClassFromString(@"EKEventStore"))
             _calendarTypeStore = [[EKEventStore alloc] initWithAccessToEntityTypes:EKEntityMaskEvent | EKEntityMaskReminder];
 
-        _calendarTypeCache = [[NSCache alloc] init];
-        [_calendarTypeCache setName:@"net.wireload.WLCalendarStore.CalendarTypeCache"];
+        _calendarTypeCache = [[NSMutableDictionary alloc] init];
+        _calendarTypeCacheSemaphore = dispatch_semaphore_create(1);
 
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(_systemStoreDidChange:)
@@ -117,6 +118,11 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
                                                                 object:nil];
 
     [[NSRunLoop mainRunLoop] cancelPerformSelector:@selector(_notifyObservers) target:self argument:nil];
+
+    if (_iCalApp)
+        dispatch_release(_iCalAppSemaphore);
+
+    dispatch_release(_calendarTypeCacheSemaphore);
 }
 
 
@@ -306,23 +312,29 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 {
     NSParameterAssert(aCalendar.uid);
 
-    WLCalEntityMask mask = (WLCalEntityMask)[[_calendarTypeCache objectForKey:aCalendar.uid] unsignedIntegerValue];
-
-    if (mask == WLCalEntityMaskUnknown)
-        mask = [self _fastAllowedEntityTypesForCSCalendar:aCalendar];
-
-    if (mask == WLCalEntityMaskUnknown)
+    dispatch_semaphore_wait(_calendarTypeCacheSemaphore, DISPATCH_TIME_FOREVER);
+    NSNumber *mask = [_calendarTypeCache objectForKey:aCalendar.uid];
+    if (mask == nil)
     {
-        [_log logInfo:@"Fallback to slow check of calendar type for calendar %@.", aCalendar];
-        mask = [self _slowAllowedEntityTypesForCSCalendar:aCalendar];
+        WLCalEntityMask maskValue = [self _fastAllowedEntityTypesForCSCalendar:aCalendar];;
+
+        if (maskValue == WLCalEntityMaskUnknown)
+        {
+            [_log logInfo:@"Fallback to slow check of calendar type for calendar %@.", aCalendar];
+            [_log logInfo:@"If you experience crashes, try `defaults write net.wireload.blotter.mac WLCalSystemStoreAllowsAdvancedCalendarTypeCheck -bool NO`."];
+            maskValue = [self _slowAllowedEntityTypesForCSCalendar:aCalendar];
+        }
+
+        if (maskValue == WLCalEntityMaskUnknown)
+            [_log logWarning:@"Unable to determine type of calendar %@.", aCalendar];
+
+        mask = @(maskValue);
+
+        [_calendarTypeCache setObject:mask forKey:aCalendar.uid];
     }
+    dispatch_semaphore_signal(_calendarTypeCacheSemaphore);
 
-    if (mask != WLCalEntityMaskUnknown)
-        [_calendarTypeCache setObject:@(mask) forKey:aCalendar.uid];
-    else
-        [_log logWarning:@"Unable to determine type of calendar %@.", aCalendar];
-
-    return mask;
+    return (WLCalEntityMask)[mask unsignedIntegerValue];
 }
 
 
