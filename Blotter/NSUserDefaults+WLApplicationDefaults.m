@@ -12,7 +12,9 @@
 
 NSInteger const WLBlotterBundleVersion2_1 = 9;
 
-NSInteger const WLBlotterBundleVersion2_2 = 10;
+NSInteger const WLBlotterBundleVersion2_2 = 11;
+
+NSInteger const WLBlotterBundleVersion2_3 = 12;
 
 NSString* const WLLastMigratedBundleVersionKey = @"LastMigratedBundleVersion";
 
@@ -87,6 +89,13 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
 {
     [[NSProcessInfo processInfo] disableSuddenTermination];
     NSInteger lastMigratedBundleVersion = [self integerForKey:WLLastMigratedBundleVersionKey];
+    NSBundle *blotterBundle = [NSBundle bundleWithIdentifier:@"net.wireload.blotter.mac"];
+    NSInteger currentBundleVersion = [[blotterBundle objectForInfoDictionaryKey:@"CFBundleVersion"] integerValue];
+
+    if (lastMigratedBundleVersion < currentBundleVersion)
+    {
+        // Actions to be perofmed each time app is updated.
+    }
 
     if (lastMigratedBundleVersion < WLBlotterBundleVersion2_1)
     {
@@ -100,8 +109,13 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
         lastMigratedBundleVersion = WLBlotterBundleVersion2_2;
     }
 
-    NSBundle *blotterBundle = [NSBundle bundleWithIdentifier:@"net.wireload.blotter.mac"];
-    lastMigratedBundleVersion = [[blotterBundle objectForInfoDictionaryKey:@"CFBundleVersion"] integerValue];
+    if (lastMigratedBundleVersion < WLBlotterBundleVersion2_3);
+    {
+        [self WL_migrateTo2_3];
+        lastMigratedBundleVersion = WLBlotterBundleVersion2_3;
+    }
+
+    lastMigratedBundleVersion = currentBundleVersion;
     [self setInteger:lastMigratedBundleVersion forKey:WLLastMigratedBundleVersionKey];
     [[NSProcessInfo processInfo] enableSuddenTermination];
 }
@@ -161,11 +175,15 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
     [self setObject:defaultsCalendars forKey:WLCalendarsKey];
 }
 
+- (void)WL_migrateTo2_3
+{
+    NSLog(@"Migrate Preferences to %d", (int)WLBlotterBundleVersion2_3);
+}
+
 @end
 
 
 #pragma mark -
-
 
 @implementation NSUserDefaults (WLScreensController)
 
