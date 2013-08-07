@@ -37,8 +37,8 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
         Semaphore is used to protect mutable data to be modified from the multiple threads simultaneously.
 
     - serial queue for user defaults
-        Accesses to user defaults are serialized to avoid race conditions when new calendars are added or removed.
-        Remember that NSUserDefaults is the "flat" dictionary and only allows to set objects top-level keys.
+        Accesses to user defaults are serialized to avoid race conditions when new calendars are added or removed in multiple stores.
+        NSUserDefaults is the "flat" dictionary and only allows to set top-level keys.
 
     Notifications are delivered via global queue because user info does not contain any data except calendar store which only points
     to the store that is changed.
@@ -226,11 +226,11 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
         NSDictionary *defaultsCalendars = [[NSUserDefaults standardUserDefaults] dictionaryForKey:self.autosaveKeyPath];
         NSIndexSet *indexesOfCalReminderCalendarsToDisplay = [aCalCalendars indexesOfObjectsWithOptions:NSEnumerationConcurrent
                                                                                             passingTest:^BOOL(NSObject<WLCalCalendar> *aCalCalendar, NSUInteger idx, BOOL *stop)
-                                                                                            {
-                                                                                                NSDictionary *value = defaultsCalendars[aCalCalendar.store.storeIdentifier][aCalCalendar.calendarIdentifier];
-                                                                                                // value may be nil in case that calendar is already added, but not written to the user defaults yet.
-                                                                                                return [value[WLCalendarIsUsedForRemindersKey] boolValue];
-                                                                                            }];
+        {
+            NSDictionary *value = defaultsCalendars[aCalCalendar.store.storeIdentifier][aCalCalendar.calendarIdentifier];
+            // value may be nil in case that calendar is already added, but not written to the user defaults yet.
+            return [value[WLCalendarIsEnabledKey] boolValue] && [value[WLCalendarIsUsedForRemindersKey] boolValue];
+        }];
         return [aCalCalendars objectsAtIndexes:indexesOfCalReminderCalendarsToDisplay];
     }
 }
@@ -389,7 +389,6 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
 
 
 @implementation WLCalendarsController (DisplayingPreferences)
-
 
 - (BOOL)isCalCalendarUsedToDisplayReminders:(NSObject <WLCalCalendar> *)aCalendar
 {
