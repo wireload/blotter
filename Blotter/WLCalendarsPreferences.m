@@ -59,9 +59,9 @@
         NSColor *calColor = nil;
 
         if (aTableView == _eventsTableView)
-            calColor = [_calEventCalendars[rowIndex] color];
+            calColor = [_calEventCalendars[(NSUInteger)rowIndex] color];
         else
-            calColor = [_calReminderCalendars[rowIndex] color];
+            calColor = [_calReminderCalendars[(NSUInteger)rowIndex] color];
 
         [cell setButtonColor:calColor];
     }
@@ -73,9 +73,9 @@
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
     if (aTableView == _eventsTableView)
-        return [_calEventCalendars count];
+        return (NSInteger)[_calEventCalendars count];
     else
-        return [_calReminderCalendars count];
+        return (NSInteger)[_calReminderCalendars count];
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
@@ -84,16 +84,16 @@
     if ([[aTableColumn identifier] isEqualToString:@"check"])
     {
         if (aTableView == _eventsTableView)
-            return @([c isCalCalendarUsedToDisplayEvents:_calEventCalendars[rowIndex]]);
+            return @([c isCalCalendarUsedToDisplayEvents:_calEventCalendars[(NSUInteger)rowIndex]]);
         else
-            return @([c isCalCalendarUsedToDisplayReminders:_calReminderCalendars[rowIndex]]);
+            return @([c isCalCalendarUsedToDisplayReminders:_calReminderCalendars[(NSUInteger)rowIndex]]);
     }
     else
     {
         if (aTableView == _eventsTableView)
-            return [_calEventCalendars[rowIndex] title];
+            return [_calEventCalendars[(NSUInteger)rowIndex] title];
         else
-            return [_calReminderCalendars[rowIndex] title];
+            return [_calReminderCalendars[(NSUInteger)rowIndex] title];
     }
 }
 
@@ -103,9 +103,9 @@
     {
         WLCalendarsController *c = [[[NSApp delegate] calendarWindowController] calendarsController];
         if (aTableView == _eventsTableView)
-            [c setCalCalendar:_calEventCalendars[rowIndex] usedToDisplayEvents:[anObject boolValue]];
+            [c setCalCalendar:_calEventCalendars[(NSUInteger)rowIndex] usedToDisplayEvents:[anObject boolValue]];
         else
-            [c setCalCalendar:_calReminderCalendars[rowIndex] usedToDisplayReminders:[anObject boolValue]];
+            [c setCalCalendar:_calReminderCalendars[(NSUInteger)rowIndex] usedToDisplayReminders:[anObject boolValue]];
     }
 }
 
