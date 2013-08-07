@@ -28,6 +28,8 @@ NSString* const WLCalendarIsUsedForEventsKey = @"isUsedForEvents";
 
 NSString* const WLCalendarIsUsedForRemindersKey = @"isUsedForReminders";
 
+NSString* const WLCalendarIsEnabledKey = @"IsEnabled";
+
 NSString* const WLDisplayAllCalendarsKey = @"DisplayAllCalendars";
 
 NSString* const WLAllowsAdvancedCalendarTypeCheck = @"AllowsAdvancedCalendarTypeCheck";
@@ -179,6 +181,25 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
 - (void)WL_migrateTo2_3
 {
     NSLog(@"Migrate Preferences to %d", (int)WLBlotterBundleVersion2_3);
+    NSDictionary *calendarStores = [self objectForKey:WLCalendarsKey];
+    NSMutableDictionary *newCalendarStores = [[NSMutableDictionary alloc] initWithCapacity:[calendarStores count]];
+
+    for (NSString *storeIdentifier in calendarStores)
+    {
+        NSDictionary *store = calendarStores[storeIdentifier];
+        NSMutableDictionary *newStore = [[NSMutableDictionary alloc] initWithCapacity:[store count]];
+
+        for (NSString *calendarIdentifier in store)
+        {
+            NSMutableDictionary *calendar = [store[calendarIdentifier] mutableCopy];
+            calendar[WLCalendarIsEnabledKey] = @(YES);
+            newStore[calendarIdentifier] = calendar;
+        }
+
+        newCalendarStores[storeIdentifier] = newStore;
+    }
+
+    [self setObject:newCalendarStores forKey:WLCalendarsKey];
 }
 
 @end

@@ -30,6 +30,8 @@ extern NSString* const WLCalendarIsUsedForEventsKey;
 
 extern NSString* const WLCalendarIsUsedForRemindersKey;
 
+extern NSString* const WLCalendarIsEnabledKey;
+
 extern NSString* const WLAllowsAdvancedCalendarTypeCheck;
 
 extern NSString* const WLSlowAnimationKey;
@@ -88,6 +90,10 @@ extern NSString* const WLLastSelectedCalReminderCalendarUID;
 - (void)WL_migrateIfNeeded;
 
 - (void)WL_migrateTo2_1;
+
+- (void)WL_migrateTo2_2;
+
+- (void)WL_migrateTo2_3;
 
 @end
 

@@ -208,7 +208,7 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
         {
             NSDictionary *value = defaultsCalendars[aCalCalendar.store.storeIdentifier][aCalCalendar.calendarIdentifier];
             // value may be nil in case that calendar is already added, but not written to the user defaults yet.
-            return [value[WLCalendarIsUsedForEventsKey] boolValue] || [value[WLCalendarIsUsedForRemindersKey] boolValue];
+            return [value[WLCalendarIsEnabledKey] boolValue] && ([value[WLCalendarIsUsedForEventsKey] boolValue] || [value[WLCalendarIsUsedForRemindersKey] boolValue]);
         }];
         return [aCalCalendars objectsAtIndexes:indexesOfCalCalendarsToDisplay];
     }
@@ -250,7 +250,7 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
         {
             NSDictionary *value = defaultsCalendars[aCalCalendar.store.storeIdentifier][aCalCalendar.calendarIdentifier];
             // value may be nil in case that calendar is already added, but not written to the user defaults yet.
-            return [value[WLCalendarIsUsedForEventsKey] boolValue];
+            return [value[WLCalendarIsEnabledKey] boolValue] && [value[WLCalendarIsUsedForEventsKey] boolValue];
         }];
         return [aCalCalendars objectsAtIndexes:indexesOfCalEventCalendarsToDisplay];
     }
@@ -305,13 +305,23 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
             NSDictionary *oldDefaultsStore = defaultsCalendars[aStore.storeIdentifier];
             NSMutableDictionary *newDefaultsStore = [NSMutableDictionary dictionaryWithCapacity:[calendars count]];
 
+            // Preserve old calendars but disable them. They may reappear shortly after due to syncing problems.
+            for (NSString *calendarIdentifier in oldDefaultsStore)
+            {
+                NSMutableDictionary *defaultsCalCalendar = [oldDefaultsStore[calendarIdentifier] mutableCopy];
+                defaultsCalCalendar[WLCalendarIsEnabledKey] = @(NO);
+                newDefaultsStore[calendarIdentifier] = defaultsCalCalendar;
+            }
+
+            // Preserve settings when adding new calendars. Re-enable them if needed.
             for (NSObject<WLCalCalendar> *c in calendars)
             {
-                NSDictionary *defaultsCalCalendar = oldDefaultsStore[c.calendarIdentifier];
+                NSMutableDictionary *defaultsCalCalendar = [oldDefaultsStore[c.calendarIdentifier] mutableCopy];
 
                 if (!defaultsCalCalendar)
-                    defaultsCalCalendar = @{WLCalendarIsUsedForRemindersKey:@(YES), WLCalendarIsUsedForEventsKey:@(YES)};
+                    defaultsCalCalendar = [@{WLCalendarIsUsedForRemindersKey:@(YES), WLCalendarIsUsedForEventsKey:@(YES)} mutableCopy];
 
+                defaultsCalCalendar[WLCalendarIsEnabledKey] = @(YES);
                 newDefaultsStore[c.calendarIdentifier] = defaultsCalCalendar;
             }
 
