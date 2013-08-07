@@ -73,7 +73,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
         _remindersController = [[WLCalendarRemindersController alloc] initWithCalStores:calStores];
         _eventsController = [[WLCalendarEventsController alloc] initWithCalStores:calStores];
         _calendarsController = [[WLCalendarsController alloc] initWithCalStores:calStores
-                                                                autosaveKeyPath:@"Calendars"];
+                                                                autosaveKeyPath:WLCalendarsKey];
 
         void (^updateCalendars)(NSArray *aStores) = ^(NSArray *aStores)
         {
