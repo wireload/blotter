@@ -14,7 +14,7 @@
 /*!
     @brief      WLCalendarWeekEventsViewController manages appearance of the WLCalendarWeekView.
 
-    @discussion Main-Thread only.
+    @discussion Main-Thread only if otherwise is not specified.
  */
 @interface WLCalendarWeekEventsViewController : WLViewController <WLCalendarWeekViewDataSource>
 {
@@ -103,6 +103,13 @@
 - (void)updateDerivativePropertiesAndMoveIfNeeded:(BOOL)isAnimated;
 
 
+/*!
+    @brief      Called when events of a represented object are changed.
+
+    @param      aNotification WLCalendarEventsDidChangeNotification notification
+
+    @discussion This is the only thread safe method.
+ */
 - (void)eventsDidChange:(NSNotification *)aNotification;
 
 
