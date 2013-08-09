@@ -12,6 +12,19 @@
 #import "NSDate+WLDayBoundaries.h"
 
 
+@interface WLCalendarWeekEventsViewController (/* Private */)
+
+@property (copy) NSDate *dateOfFirstColumn;
+
+@property (readwrite) NSUInteger numberOfColumns;
+
+@property (copy) WLDateRange *dateRangeOfColumns;
+
+@property (readwrite) CGFloat hour;
+
+@end
+
+
 @implementation WLCalendarWeekEventsViewController
 {
     WLCalendarEventsStorage *_storage;
@@ -55,6 +68,11 @@
 
 
 #pragma mark Properties
+
++ (BOOL)automaticallyNotifiesObserversOfDateRangeOfColumns
+{
+    return NO;
+}
 
 - (void)setCalendar:(NSCalendar *)newCalendar
 {
@@ -205,30 +223,23 @@
 {
     NSAssert([NSThread currentThread] == [NSThread mainThread], @"%@ MUST be called on the Main Thread", NSStringFromSelector(_cmd));
 
-    // dateOfFirstColumn
-    [self willChangeValueForKey:@"dateOfFirstColumn"];
-    _dateOfFirstColumn = [self makeDateOfFirstColumnForCalendar:_calendar
-                                                           date:self.date
-                                                     offsetUnit:self.offsetUnit
-                                            numberOfOffsetUnits:self.numberOfOffsetUnits
-                                                  alignmentUnit:self.alignmentUnit];
-    [self didChangeValueForKey:@"dateOfFirstColumn"];
+    self.dateOfFirstColumn = [self makeDateOfFirstColumnForCalendar:_calendar
+                                                               date:self.date
+                                                         offsetUnit:self.offsetUnit
+                                                numberOfOffsetUnits:self.numberOfOffsetUnits
+                                                      alignmentUnit:self.alignmentUnit];
 
-    // numberOfColumns and dateRangeOfColumns
     [self willChangeValueForKey:@"dateRangeOfColumns"];
-    [self.representedObject removeObservedDateRange:_dateRangeOfColumns];
-    _dateRangeOfColumns = [self makeDateRangeOfColumnsForCalendar:_calendar
-                                                dateOfFirstColumn:_dateOfFirstColumn
-                                                    alignmentUnit:self.alignmentUnit
-                                           numberOfAlignmentUnits:self.numberOfAlignmentUnits];
-    _numberOfColumns = [self numberOfColumnsForCalendar:_calendar dateRangeOfColumns:_dateRangeOfColumns];
-    [self.representedObject addObservedDateRange:_dateRangeOfColumns];
+    [self.representedObject removeObservedDateRange:self.dateRangeOfColumns];
+    self.dateRangeOfColumns = [self makeDateRangeOfColumnsForCalendar:_calendar
+                                                    dateOfFirstColumn:_dateOfFirstColumn
+                                                        alignmentUnit:self.alignmentUnit
+                                               numberOfAlignmentUnits:self.numberOfAlignmentUnits];
+    self.numberOfColumns = [self numberOfColumnsForCalendar:self.calendar dateRangeOfColumns:self.dateRangeOfColumns];
+    [self.representedObject addObservedDateRange:self.dateRangeOfColumns];
     [self didChangeValueForKey:@"dateRangeOfColumns"];
 
-    // hour
-    [self willChangeValueForKey:@"hour"];
-    _hour = [self hourForCalendar:_calendar date:self.date];
-    [self didChangeValueForKey:@"hour"];
+    self.hour = [self hourForCalendar:_calendar date:self.date];
 
     // _hourRange
     NSRange r = [_calendar maximumRangeOfUnit:NSHourCalendarUnit];

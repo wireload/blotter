@@ -64,13 +64,13 @@
 - (void)setAlignmentUnit:(NSCalendarUnit)newAlignmentUnit number:(NSUInteger)newNumberOfUnits animated:(BOOL)isAnimated;
 
 
-@property (nonatomic, readonly) NSDate *dateOfFirstColumn;
+@property (copy, readonly) NSDate *dateOfFirstColumn;
 
-@property (nonatomic, readonly) NSUInteger numberOfColumns;
+@property (readonly) NSUInteger numberOfColumns;
 
-@property (nonatomic, readonly) WLDateRange *dateRangeOfColumns;
+@property (copy, readonly) WLDateRange *dateRangeOfColumns;
 
-@property (nonatomic, readonly) CGFloat hour;
+@property (readonly) CGFloat hour;
 
 - (NSDate *)makeDateOfFirstColumnForCalendar:(NSCalendar *)aCalendar
                                         date:(NSDate *)aDate
