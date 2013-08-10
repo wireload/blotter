@@ -34,10 +34,6 @@ strings:
     path:     "Blotter/Resources/%(lang)s.lproj/CalendarsPrefPaneView.strings"
     skip:     ['14.title', '76.title', '95.title']
   -
-    id:       'Other Preferences'
-    path:     "Blotter/Resources/%(lang)s.lproj/Localizable.strings"
-    skip:     ["%.0f x %.0f", "%@, %@"]
-  -
     id:       'New Event'
     comment:  'A window for creating a new calendar event.'
     path:     "Blotter/Resources/%(lang)s.lproj/NewEventWindow.strings"
@@ -50,11 +46,11 @@ strings:
   -
     id:       'main menu'
     path:     "Blotter/Resources/%(lang)s.lproj/MainMenu.strings"
-    skip:     ['29.title']
+    skip:     ['609.title', '610.title', '613.title', '615.title', '622.title', '630.title', '29.title']
   -
     id:       'other'
     path:     "Blotter/Resources/%(lang)s.lproj/Localizable.strings"
-    skip:     ['About', 'Calendars', 'General', 'Layout', 'Positioning']
+    skip:     ['About', 'Calendars', 'General', 'Layout', 'Positioning', "%.0f x %.0f", "%@, %@"]
   -
     id:       'store description'
     path:     "Blotter/Resources/%(lang)s.lproj/Meta.strings"

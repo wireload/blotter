@@ -301,7 +301,7 @@
 								<object class="NSPopUpButton" id="408232026">
 									<reference key="NSNextResponder" ref="690297653"/>
 									<int key="NSvFlags">290</int>
-									<string key="NSFrame">{{87, 63}, {160, 17}}</string>
+									<string key="NSFrame">{{87, 62}, {160, 18}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<reference key="NSNextKeyView" ref="187184368"/>
 									<bool key="NSEnabled">YES</bool>
@@ -337,7 +337,7 @@
 								</object>
 								<object class="NSTextField" id="619627054">
 									<reference key="NSNextResponder" ref="690297653"/>
-									<int key="NSvFlags">292</int>
+									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{19, 160}, {69, 14}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<reference key="NSNextKeyView" ref="553055910"/>
@@ -358,7 +358,7 @@
 								</object>
 								<object class="NSCustomView" id="553055910">
 									<reference key="NSNextResponder" ref="690297653"/>
-									<int key="NSvFlags">4386</int>
+									<int key="NSvFlags">4370</int>
 									<string key="NSFrame">{{94, 154}, {153, 23}}</string>
 									<reference key="NSSuperview" ref="690297653"/>
 									<reference key="NSNextKeyView" ref="722791319"/>
@@ -374,7 +374,7 @@
 					<string key="NSFrameSize">{269, 239}</string>
 					<reference key="NSNextKeyView" ref="690297653"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1680, 1028}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<string key="NSFrameAutosaveName">NewEventWindow</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
@@ -495,6 +495,14 @@
 					<int key="connectionID">358</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBAccessibilityConnection" key="connection">
+						<string key="label">title</string>
+						<reference key="source" ref="211563046"/>
+						<reference key="destination" ref="939906521"/>
+					</object>
+					<int key="connectionID">385</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: self.endDate</string>
 						<reference key="source" ref="689527520"/>
@@ -519,6 +527,14 @@
 					<int key="connectionID">313</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBAccessibilityConnection" key="connection">
+						<string key="label">title</string>
+						<reference key="source" ref="689527520"/>
+						<reference key="destination" ref="354528427"/>
+					</object>
+					<int key="connectionID">386</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: self.isAllDay</string>
 						<reference key="source" ref="456489716"/>
@@ -541,6 +557,14 @@
 						<reference key="destination" ref="211563046"/>
 					</object>
 					<int key="connectionID">306</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBAccessibilityConnection" key="connection">
+						<string key="label">title</string>
+						<reference key="source" ref="456489716"/>
+						<reference key="destination" ref="722791319"/>
+					</object>
+					<int key="connectionID">384</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -638,6 +662,14 @@
 					<int key="connectionID">381</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBAccessibilityConnection" key="connection">
+						<string key="label">title</string>
+						<reference key="source" ref="408232026"/>
+						<reference key="destination" ref="12582526"/>
+					</object>
+					<int key="connectionID">387</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">nextKeyView</string>
 						<reference key="source" ref="1026362590"/>
@@ -684,6 +716,14 @@
 						<reference key="destination" ref="456489716"/>
 					</object>
 					<int key="connectionID">305</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBAccessibilityConnection" key="connection">
+						<string key="label">title</string>
+						<reference key="source" ref="553055910"/>
+						<reference key="destination" ref="619627054"/>
+					</object>
+					<int key="connectionID">383</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -898,6 +938,7 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">103</int>
 						<reference key="object" ref="904611310"/>
+						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="288218953"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -965,7 +1006,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">381</int>
+			<int key="maxID">388</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1089,7 +1130,7 @@
 			<real value="4600" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
-		<int key="IBDocument.defaultPropertyAccessControl">1</int>
+		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="NS.key.0">NSSwitch</string>
 			<string key="NS.object.0">{15, 15}</string>

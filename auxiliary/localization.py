@@ -254,8 +254,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create localized xibs, or create .strings for sources.')
 
     parser.add_argument('mode', nargs=1, choices=('xibs', 'strings'), help="Type of localization file to generate.")
-    parser.add_argument('--sources', action='store_true', help="When in strings mode, generate strings for sources. If neither --sources nor --xibs is specified, both are generated.")
-    parser.add_argument('--xibs', action='store_true', help="When in strings mode, generate strings for xibs. If neither --sources nor --xibs is specified, both are generated.")
+    parser.add_argument('--sources', action='store_true', help="When in strings mode, generate strings for sources. If neither --sources nor --xibs is specified, both are generated.", default=True)
+    parser.add_argument('--xibs', action='store_true', help="When in strings mode, generate strings for xibs. If neither --sources nor --xibs is specified, both are generated.", default=True)
 
     args = parser.parse_args()
 
@@ -264,11 +264,11 @@ if __name__ == '__main__':
             LocalizeXib(xib['file'], xib['old'], xib['output'], Langs())
             print ""
     elif 'strings' in args.mode:
-        if args.sources or not args.xibs:
+        if args.sources:
             for sources in Sources():
                 GenerateSourcesStrings(sources['files'], sources['output'], Langs() + [DevLang()])
                 print ""
-        if args.xibs or not args.sources:
+        if args.xibs:
             for xib in Xibs():
                 GenerateXibStrings(xib['file'], xib['output'], Langs())
                 print ""

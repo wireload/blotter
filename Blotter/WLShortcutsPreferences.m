@@ -16,8 +16,8 @@
 - (void)configureToolbarItem:(NSToolbarItem *)anItem
 {
     anItem.image = [NSImage imageNamed:@"preferences-shortcuts-icon"];
-    anItem.label = NSLocalizedStringFromTableInBundle(@"Shortcuts", nil, [NSBundle bundleForClass:[self class]], @"Shortcuts pref pane title");
-    anItem.toolTip = NSLocalizedStringFromTableInBundle(@"Keyboard shortcuts preferences", nil, [NSBundle bundleForClass:[self class]], @"Shortcuts pref pane tooltip");
+    anItem.label = NSLocalizedString(@"Shortcuts", @"Shortcuts pref pane title");
+    anItem.toolTip = NSLocalizedString(@"Keyboard shortcuts preferences", @"Shortcuts pref pane tooltip");
 }
 
 
@@ -93,10 +93,7 @@
         IS_TAKEN(_showCurrentWeekControl) ||
         IS_TAKEN(_showPrevWeekControl))
     {
-        *outReason = NSLocalizedStringFromTableInBundle(@"it's already used as a different Blotter shortcut. To use this shortcut, first remove or change the other shortcut",
-                                                        nil,
-                                                        [NSBundle bundleForClass:[self class]],
-                                                        @"A reason to use other shortcut");
+        *outReason = NSLocalizedString(@"it's already used as a different Blotter shortcut. To use this shortcut, first remove or change the other shortcut", @"A reason to use other shortcut");
         return YES;
     }
     else

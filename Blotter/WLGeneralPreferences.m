@@ -22,28 +22,51 @@
 
 - (IBAction)showMacOSXCalendarSettings:(id)aSender
 {
-    SystemPreferencesApplication *app = (SystemPreferencesApplication *)[SBApplication applicationWithBundleIdentifier:@"com.apple.systempreferences"];
-    SystemPreferencesPane *pane = [[app panes] objectWithID:@"com.apple.Localization"];
-    SystemPreferencesAnchor *anchor = nil;
+    // TODO: Would be wise to replace it with proper NSError
+    BOOL is_successful = YES;
     
-    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_7)
-        anchor = [[pane anchors] objectWithName:@"Formats"];
-    else
-        anchor = [[pane anchors] objectWithName:@"Region"];
-    
-    if ([anchor reveal] != nil)
-        [app activate];
-    else
+    // @try-@catch is used here because when Scripting Bridge fails due to sandboxing, exception is thrown rather than error.
+    @try
     {
-        NSAlert *a = [NSAlert alertWithMessageText:NSLocalizedStringFromTableInBundle(@"Failed to open System Preferences.", nil, [NSBundle bundleForClass:[self class]], @"Cannot open System Preferences alert message")
-                                     defaultButton:NSLocalizedStringFromTableInBundle(@"Close", nil, [NSBundle bundleForClass:[self class]], @"Cannot open System Preferences alert default title")
-                                   alternateButton:nil
-                                       otherButton:nil
-                         informativeTextWithFormat:NSLocalizedStringFromTableInBundle(@"You can open it manually by following:\n→System Preferences…→Language & Text→Formats", nil, [NSBundle bundleForClass:[self class]], @"Cannot open System Preferences alert informative text")];
-        [a setAlertStyle:NSCriticalAlertStyle];
-        [a setShowsHelp:YES];
-        [a setDelegate:self];
-        [a beginSheetModalForWindow:[self.view window] modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+        SystemPreferencesApplication *app = (SystemPreferencesApplication *)[SBApplication applicationWithBundleIdentifier:@"com.apple.systempreferences"];
+        SystemPreferencesPane *pane = [[app panes] objectWithID:@"com.apple.Localization"];
+        SystemPreferencesAnchor *anchor = nil;
+
+        if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_7)
+            anchor = [[pane anchors] objectWithName:@"Formats"];
+        else
+            anchor = [[pane anchors] objectWithName:@"Region"];
+
+        if ([anchor reveal] != nil)
+            [app activate];
+        else
+            is_successful = NO;
+    }
+    @catch (...)
+    {
+        is_successful = NO;
+    }
+    @finally
+    {
+        if (!is_successful)
+        {
+            NSString *informativeTextWithFormat = @"";
+
+            if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_7)
+                informativeTextWithFormat = NSLocalizedString(@"You can open it manually by following:\n→System Preferences…→Language & Text→Formats", @"Cannot open System Preferences alert informative text for 10.6 and 10.7");
+            else
+                informativeTextWithFormat = NSLocalizedString(@"You can open it manually by following:\n→System Preferences…→Language & Text→Region", @"Cannot open System Preferences alert informative text for 10.8 and higher");
+
+            NSAlert *a = [NSAlert alertWithMessageText:NSLocalizedString(@"Failed to open System Preferences.",  @"Cannot open System Preferences alert message")
+                                         defaultButton:NSLocalizedString(@"Close", @"Cannot open System Preferences alert default title")
+                                       alternateButton:nil
+                                           otherButton:nil
+                             informativeTextWithFormat:informativeTextWithFormat];
+            a.alertStyle = NSCriticalAlertStyle;
+            a.showsHelp = YES;
+            a.delegate = self;
+            [a beginSheetModalForWindow:self.view.window modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+        }
     }
 }
 
@@ -53,8 +76,8 @@
 - (void)configureToolbarItem:(NSToolbarItem *)anItem
 {
     anItem.image = [NSImage imageNamed:NSImageNamePreferencesGeneral];
-    anItem.label = NSLocalizedStringFromTableInBundle(@"General", nil, [NSBundle bundleForClass:[self class]], @"General pref pane title");
-    anItem.toolTip = NSLocalizedStringFromTableInBundle(@"General Preferences", nil, [NSBundle bundleForClass:[self class]], @"General pref pane tooltip");
+    anItem.label = NSLocalizedString(@"General", @"General pref pane title");
+    anItem.toolTip = NSLocalizedString(@"General Preferences", @"General pref pane tooltip");
 }
 
 

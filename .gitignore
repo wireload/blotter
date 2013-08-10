@@ -1,7 +1,7 @@
 # xcode noise
 *.mode1v3
 *.pbxuser
-*.pbxproj -crlf -diff -merge
+*.pbxproj -crlf -merge
 *.perspective
 *.perspectivev3
 *.pyc

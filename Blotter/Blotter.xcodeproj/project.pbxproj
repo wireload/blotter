@@ -366,7 +366,7 @@
 		E21A5F451403D2A4000B6634 /* WLCalendarReminderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E21A5F441403D2A4000B6634 /* WLCalendarReminderLayer.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		E22C78AB13FFCD9F00EE44C0 /* NSColor+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */; };
 		E23F746F14434DE40055D6CE /* WLHourRange.m in Sources */ = {isa = PBXBuildFile; fileRef = E23F746E14434DE40055D6CE /* WLHourRange.m */; };
-		E252E9C515545AD300B64F5F /* WLGlassHudPopUpButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E252E9C415545AD300B64F5F /* WLGlassHudPopUpButtonCell.m */; };
+		E252E9C515545AD300B64F5F /* WLGlassHudPopUpButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E252E9C415545AD300B64F5F /* WLGlassHudPopUpButtonCell.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		E253575013DC884D0010A2ED /* NSDate+WLDayBoundaries.m in Sources */ = {isa = PBXBuildFile; fileRef = E253574F13DC884D0010A2ED /* NSDate+WLDayBoundaries.m */; };
 		E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2596D721316C8C100A8B15E /* WLNewEventWindowController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		E2670391132CA887003FBFC2 /* WLGlassHudButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2670390132CA887003FBFC2 /* WLGlassHudButtonCell.m */; };
@@ -1005,6 +1005,7 @@
 		E2A7085C13F0427800A4BF3A /* WLCalendarDateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarDateViewController.h; sourceTree = "<group>"; };
 		E2A7085D13F0427800A4BF3A /* WLCalendarDateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarDateViewController.m; sourceTree = "<group>"; };
 		E2BA531913C5A873005F0045 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E2BF0ED9173F8E2800371D2A /* preinstall-requirements.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "preinstall-requirements.plist"; sourceTree = "<group>"; };
 		E2D6488F1441062300A03FAD /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		E2D6D8F7153335C8005F070D /* WLCalendarWindowBringToFrontAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowBringToFrontAnimation.h; sourceTree = "<group>"; };
 		E2D6D8F8153335C8005F070D /* WLCalendarWindowBringToFrontAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindowBringToFrontAnimation.m; sourceTree = "<group>"; };
@@ -1378,6 +1379,7 @@
 				E2E826CD145023A6007035E5 /* NewTaskWindow.xib */,
 				BAF67DC616D622820047FE2A /* PositionPrefPaneView.xib */,
 				BAF67DC816D622820047FE2A /* ShortcutsPrefPaneView.xib */,
+				E2BF0ED9173F8E2800371D2A /* preinstall-requirements.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1730,12 +1732,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Blotter" */;
 			buildPhases = (
+				28EE237917442DF80086E1C4 /* Copy Release ShortcutRecorder to Archiving */,
 				BA23661916F7225900779487 /* Code Sign Frameworks */,
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
 				2840647F12833643000816FF /* Copy Frameworks */,
 				BA23664F16F739F200779487 /* Copy Login Item */,
+				28EE238017445EA00086E1C4 /* Remove Login Item Provisioning Profile */,
 			);
 			buildRules = (
 			);
@@ -2185,6 +2189,34 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		28EE237917442DF80086E1C4 /* Copy Release ShortcutRecorder to Archiving */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Release ShortcutRecorder to Archiving";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Archiving\" ]; then\n    cp -a \"$BUILT_PRODUCTS_DIR\"/../Release/PTHotKey.framework \"$BUILT_PRODUCTS_DIR\"/PTHotKey.framework\n    cp -a \"$BUILT_PRODUCTS_DIR\"/../Release/ShortcutRecorder.framework \"$BUILT_PRODUCTS_DIR\"/ShortcutRecorder.framework\nfi\n";
+		};
+		28EE238017445EA00086E1C4 /* Remove Login Item Provisioning Profile */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Remove Login Item Provisioning Profile";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -f \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Library/LoginItems/LoginItem.app/Contents/embedded.provisionprofile\"";
+		};
 		BA23661916F7225900779487 /* Code Sign Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2644,6 +2676,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
+				PRODUCT_DEFINITION_PLIST = "Resources/preinstall-requirements.plist";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 				VALID_ARCHS = x86_64;
@@ -2654,6 +2687,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Blotter.entitlements;
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2663,6 +2697,7 @@
 				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
 				INFOPLIST_FILE = "Blotter-Info.plist";
 				PRODUCT_NAME = Blotter;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Archiving;
 		};
@@ -2728,6 +2763,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
+				PRODUCT_DEFINITION_PLIST = "Resources/preinstall-requirements.plist";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 				VALID_ARCHS = x86_64;
@@ -2761,6 +2797,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
+				PRODUCT_DEFINITION_PLIST = "Resources/preinstall-requirements.plist";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 				VALID_ARCHS = x86_64;
