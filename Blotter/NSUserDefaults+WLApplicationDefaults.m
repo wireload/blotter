@@ -14,7 +14,7 @@ NSInteger const WLBlotterBundleVersion2_1 = 9;
 
 NSInteger const WLBlotterBundleVersion2_2 = 11;
 
-NSInteger const WLBlotterBundleVersion2_3 = 12;
+NSInteger const WLBlotterBundleVersion2_2_1 = 12;
 
 NSString* const WLLastMigratedBundleVersionKey = @"LastMigratedBundleVersion";
 
@@ -112,10 +112,10 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
         lastMigratedBundleVersion = WLBlotterBundleVersion2_2;
     }
 
-    if (lastMigratedBundleVersion < WLBlotterBundleVersion2_3);
+    if (lastMigratedBundleVersion < WLBlotterBundleVersion2_2_1);
     {
         [self WL_migrateTo2_3];
-        lastMigratedBundleVersion = WLBlotterBundleVersion2_3;
+        lastMigratedBundleVersion = WLBlotterBundleVersion2_2_1;
     }
 
     lastMigratedBundleVersion = currentBundleVersion;
@@ -180,7 +180,7 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
 
 - (void)WL_migrateTo2_3
 {
-    NSLog(@"Migrate Preferences to %d", (int)WLBlotterBundleVersion2_3);
+    NSLog(@"Migrate Preferences to %d", (int)WLBlotterBundleVersion2_2_1);
     NSDictionary *calendarStores = [self objectForKey:WLCalendarsKey];
     NSMutableDictionary *newCalendarStores = [[NSMutableDictionary alloc] initWithCapacity:[calendarStores count]];
 

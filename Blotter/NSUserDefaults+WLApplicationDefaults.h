@@ -14,7 +14,7 @@ extern NSInteger const WLBlotterBundleVersion2_1;
 
 extern NSInteger const WLBlotterBundleVersion2_2;
 
-extern NSInteger const WLBlotterBundleVersion2_3;
+extern NSInteger const WLBlotterBundleVersion2_2_1;
 
 extern NSString* const WLLastMigratedBundleVersionKey;
 
