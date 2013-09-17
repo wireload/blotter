@@ -75,6 +75,10 @@
 
 - (BOOL)shortcutRecorder:(SRRecorderControl *)aRecorder shouldUnconditionallyAllowModifierFlags:(NSUInteger)aModifierFlags forKeyCode:(unsigned short)aKeyCode
 {
+    // Don't allow disallowed flags.
+    if ((aModifierFlags & aRecorder.allowedModifierFlags) != aModifierFlags)
+        return NO;
+    
     switch (aKeyCode)
     {
         case kVK_F1:
@@ -97,9 +101,9 @@
         case kVK_F18:
         case kVK_F19:
         case kVK_F20:
-            return TRUE;
+            return YES;
         default:
-            return FALSE;
+            return NO;
     }
 }
 
