@@ -112,7 +112,7 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
         lastMigratedBundleVersion = WLBlotterBundleVersion2_2;
     }
 
-    if (lastMigratedBundleVersion < WLBlotterBundleVersion2_2_1);
+    if (lastMigratedBundleVersion < WLBlotterBundleVersion2_2_1)
     {
         [self WL_migrateTo2_2_1];
         lastMigratedBundleVersion = WLBlotterBundleVersion2_2_1;
