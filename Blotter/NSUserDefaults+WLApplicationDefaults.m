@@ -114,7 +114,7 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
 
     if (lastMigratedBundleVersion < WLBlotterBundleVersion2_2_1);
     {
-        [self WL_migrateTo2_3];
+        [self WL_migrateTo2_2_1];
         lastMigratedBundleVersion = WLBlotterBundleVersion2_2_1;
     }
 
@@ -178,7 +178,7 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
     [self setObject:defaultsCalendars forKey:WLCalendarsKey];
 }
 
-- (void)WL_migrateTo2_3
+- (void)WL_migrateTo2_2_1
 {
     NSLog(@"Migrate Preferences to %d", (int)WLBlotterBundleVersion2_2_1);
     NSDictionary *calendarStores = [self objectForKey:WLCalendarsKey];
