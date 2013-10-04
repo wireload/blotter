@@ -26,6 +26,8 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
     EKEventStore *_calendarTypeStore;
     id _iCalApp;
     dispatch_semaphore_t _iCalAppSemaphore;
+    
+    BOOL _checkCalendarsAgainstICal;
 
     NSMutableDictionary *_calendarTypeCache;
     dispatch_semaphore_t _calendarTypeCacheSemaphore;
@@ -50,7 +52,13 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
         _iCalApp = [SBApplication applicationWithBundleIdentifier:@"com.apple.iCal"];
         if (_iCalApp)
-            _iCalAppSemaphore = dispatch_semaphore_create(1); // ensure we don't use it from multiple threads
+        {
+            _iCalAppSemaphore = dispatch_semaphore_create(1); // ensure we don't use app from multiple threads
+            _checkCalendarsAgainstICal = [[NSUserDefaults standardUserDefaults] boolForKey:WLCalSystemStoreChecksCalendarsAgainstICalKey];
+            
+            if (!_checkCalendarsAgainstICal)
+                [_log logWarning:@"Checking calendars against iCal is disabled"];
+        }
         else
             [_log logWarning:@"iCal either does not exist or does not support scripting anymore. Please contact our support."];
 
@@ -552,7 +560,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 {
     NSMutableArray *calendars = [NSMutableArray arrayWithArray:[self makeCalendarsFromCSCalendars:[_store calendars]]];
 
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:WLCalSystemStoreChecksCalendarsAgainstICalKey])
+    if (_checkCalendarsAgainstICal)
     {
         NSSet *u = [self iCalCalendarUIDs];
         NSArray *csCalendars = [self fetchCSCalendarsForUIDs:u invalidUIDs:NULL];

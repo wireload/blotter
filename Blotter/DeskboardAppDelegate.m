@@ -53,14 +53,15 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 {
     if (self == [DeskboardAppDelegate class])
     {
-        // Migrate preferences and set defaults.
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        [userDefaults WL_migrateIfNeeded];
-        [userDefaults WL_setDefaultScreenIdentifierIfNeeded];
         NSURL *defaultsURL = [[NSBundle mainBundle] URLForResource:@"defaults" withExtension:@"plist"];
         NSDictionary *defaults = [NSDictionary dictionaryWithContentsOfURL:defaultsURL];
         [userDefaults registerDefaults:defaults];
         // @see -[WLCalendarWindowController tasksViewFrame] for default value of TasksViewHeight.
+
+        // Migrate preferences and set defaults.
+        [userDefaults WL_migrateIfNeeded];
+        [userDefaults WL_setDefaultScreenIdentifierIfNeeded];
     }
 }
 
