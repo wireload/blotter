@@ -12,7 +12,7 @@
 
 NSInteger const WLBlotterBundleVersion2_1 = 9;
 
-NSInteger const WLBlotterBundleVersion2_2 = 11;
+NSInteger const WLBlotterBundleVersion2_2 = 10;
 
 NSInteger const WLBlotterBundleVersion2_2_1 = 12;
 
