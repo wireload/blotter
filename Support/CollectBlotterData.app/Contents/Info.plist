@@ -61,8 +61,8 @@
 	<string>0440</string>
 	<key>DTXcodeBuild</key>
 	<string>4F250</string>
-	<key>LSMinimumSystemVersion</key>
-	<string>10.5</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSMinimumSystemVersionByArchitecture</key>
 	<dict>
 		<key>x86_64</key>
