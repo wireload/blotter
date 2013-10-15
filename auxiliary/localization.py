@@ -95,7 +95,7 @@ def Langs():
     """
     Returns list of supported languages excluding development language.
     """
-    return ["de", "es", "fr", "ko", "sv", "ru"]
+    return ["de", "es", "fr", "ko", "sv", "ru", "ja"]
 
 
 def DevLang():

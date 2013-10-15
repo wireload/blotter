@@ -34,11 +34,9 @@
 10. Enter standard system translations when known. Search for standard translations using commands such as:
 
         # First mount OS X glossary "russian.dmg" from https://developer.apple.com/downloads/index.action.
-        grep -i -4 "Data &amp; Time" /Volumes/RS-Russian-ru/*.lg
-        plutil -convert json -r -o - /Applications/*.app/Contents/Resources/ru.lproj/*.strings | grep -i -2 "Date & Time"
-        plutil -convert json -r -o - /Applications/Utilities/*.app/Contents/Resources/ru.lproj/*.strings | grep -i -2 "Date & Time"
+        python auxiliary/greptrans.py ru "keyboard shortcuts"
 
-    This example is for Russian. Just substitute `ru.lproj` for `sv.lproj` etc. for other languages. Current language codes we use are `de`, `es`, `fr`, `ko`, `ru`, `sv`.
+    This example is for Russian. Just substitute `sv`, `es`, etc. for other languages. Current language codes we use are `de`, `es`, `fr`, `ko`, `ru`, `sv`, `ja`.
 
 11. Order translations.
 12. Export all languages from MyGengo with the "Download files > All languages" option.
