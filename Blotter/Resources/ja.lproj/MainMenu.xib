@@ -28,52 +28,52 @@
         <userDefaultsController representsSharedInstance="YES" id="569"/>
         <menu title="Blotter" systemMenu="apple" id="57">
             <items>
-                <menuItem title="Nach vorne bringen" id="575">
+                <menuItem title="最前面へ" id="575">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="bringToFrontOrSendToBack:" target="494" id="581"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="538"/>
-                <menuItem title="Neues Ereignis" tag="1" id="537">
+                <menuItem title="新規イベント" tag="1" id="537">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showNewEvent:" target="494" id="582"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Neue Erinnerung" tag="2" id="536">
+                <menuItem title="新規リマインダー" tag="2" id="536">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showNewReminder:" target="494" id="583"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="557"/>
-                <menuItem title="Nächste Woche" id="558">
+                <menuItem title="来週" id="558">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showNextWeek:" target="494" id="561"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Laufende Woche" id="559">
+                <menuItem title="現在の週" id="559">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showCurrentWeek:" target="494" id="562"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Vorherige Woche" id="560">
+                <menuItem title="前の週" id="560">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showPreviousWeek:" target="494" id="563"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="577"/>
-                <menuItem title="Einstellung …" tag="3" id="129">
+                <menuItem title="環境設定..." tag="3" id="129">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showPreferences:" target="494" id="554"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Bewerten Sie diese App..." id="567">
+                <menuItem title="このアプリを評価する・・・" id="567">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showRateThisApp:" target="494" id="574"/>
@@ -85,7 +85,7 @@
                         </binding>
                     </connections>
                 </menuItem>
-                <menuItem title="Über Blotter" id="548">
+                <menuItem title="Blotterについて" id="548">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showAbout:" target="494" id="556"/>
@@ -94,7 +94,7 @@
                 <menuItem isSeparatorItem="YES" id="143">
                     <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                 </menuItem>
-                <menuItem title="Blotter beenden" tag="4" id="136">
+                <menuItem title="Blotterをやめる" tag="4" id="136">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="terminate:" target="-3" id="449"/>

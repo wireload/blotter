@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="MacOSX.Cocoa" propertyAccessControl="all">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1060" defaultVersion="1060" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4510"/>
@@ -43,21 +43,21 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <subviews>
                                                         <customView id="33" userLabel="Date View" customClass="WLLayoutDateView">
-                                                            <rect key="frame" x="0.0" y="0.0" width="108" height="99"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="99"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <connections>
                                                                 <outlet property="nextKeyView" destination="76" id="92"/>
                                                             </connections>
                                                         </customView>
                                                         <customView id="76" userLabel="Tasks View" customClass="WLLayoutTasksView">
-                                                            <rect key="frame" x="0.0" y="108" width="108" height="45"/>
+                                                            <rect key="frame" x="0.0" y="108" width="0.0" height="45"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <connections>
                                                                 <outlet property="nextKeyView" destination="78" id="93"/>
                                                             </connections>
                                                         </customView>
                                                         <customView id="78" userLabel="Right Now View" customClass="WLLayoutRightNowView">
-                                                            <rect key="frame" x="0.0" y="162" width="108" height="69"/>
+                                                            <rect key="frame" x="0.0" y="162" width="0.0" height="69"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <connections>
                                                                 <outlet property="nextKeyView" destination="26" id="94"/>
@@ -79,14 +79,14 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <subviews>
                                                         <customView id="27" userLabel="All Day View" customClass="WLLayoutAllDayView">
-                                                            <rect key="frame" x="0.0" y="0.0" width="263" height="108"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="108"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <connections>
                                                                 <outlet property="nextKeyView" destination="28" id="96"/>
                                                             </connections>
                                                         </customView>
                                                         <customView id="28" userLabel="Day View" customClass="WLLayoutDayView">
-                                                            <rect key="frame" x="0.0" y="117" width="263" height="114"/>
+                                                            <rect key="frame" x="0.0" y="117" width="0.0" height="114"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <connections>
                                                                 <outlet property="nextKeyView" destination="1" id="102"/>
@@ -128,17 +128,17 @@
                     </connections>
                 </customView>
                 <popUpButton verticalHuggingPriority="750" id="61">
-                    <rect key="frame" x="129" y="283" width="141" height="26"/>
+                    <rect key="frame" x="180" y="283" width="141" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="Normal" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="66" id="62">
+                    <popUpButtonCell key="cell" type="push" title="ノーマル" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="66" id="62">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="63">
                             <items>
-                                <menuItem title="Normal" state="on" id="66"/>
-                                <menuItem title="To Do" tag="2" id="81"/>
-                                <menuItem title="Right Now" tag="3" id="82"/>
-                                <menuItem title="Custom" tag="1" id="64">
+                                <menuItem title="ノーマル" state="on" id="66"/>
+                                <menuItem title="リマインダー" tag="2" id="81"/>
+                                <menuItem title="今すぐ" tag="3" id="82"/>
+                                <menuItem title="カスタム" tag="1" id="64">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                 </menuItem>
                             </items>
@@ -150,9 +150,9 @@
                     </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" id="71">
-                    <rect key="frame" x="17" y="289" width="110" height="17"/>
+                    <rect key="frame" x="17" y="289" width="160" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Calendar Layout:" id="72">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="カレンダーのレイアウト：" id="72">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
