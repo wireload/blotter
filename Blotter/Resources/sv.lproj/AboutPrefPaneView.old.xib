@@ -114,7 +114,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" id="57">
                         <font key="font" size="10" name="LucidaGrande"/>
-                        <string key="title">© 2010-13 Wireload Inc.
+                        <string key="title">© 2010-13 WireLoad Inc.
 Alla rättigheter förbehålls.</string>
                         <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

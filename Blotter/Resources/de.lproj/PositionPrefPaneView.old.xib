@@ -23,7 +23,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="schmal" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="11" id="9">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="10">
                             <items>
                                 <menuItem title="schmal" state="on" id="11"/>
@@ -69,13 +69,11 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="65">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="66"/>
                     </popUpButtonCell>
                     <connections>
                         <binding destination="46" name="content" keyPath="arrangedObjects" id="98"/>
-                        <binding destination="46" name="contentObjects" keyPath="arrangedObjects.ScreenIdentifier" previousBinding="98" id="122"/>
-                        <binding destination="46" name="contentValues" keyPath="arrangedObjects.ScreenName" previousBinding="122" id="125"/>
                         <binding destination="46" name="enabled" keyPath="arrangedObjects" id="121">
                             <dictionary key="options">
                                 <integer key="NSNullPlaceholder" value="0"/>
@@ -83,6 +81,8 @@
                                 <string key="NSValueTransformerName">WLCountGreaterThanOneTransformer</string>
                             </dictionary>
                         </binding>
+                        <binding destination="46" name="contentObjects" keyPath="arrangedObjects.ScreenIdentifier" previousBinding="98" id="122"/>
+                        <binding destination="46" name="contentValues" keyPath="arrangedObjects.ScreenName" previousBinding="122" id="125"/>
                         <binding destination="25" name="selectedObject" keyPath="values.ScreenIdentifier" previousBinding="125" id="132"/>
                         <outlet property="nextKeyView" destination="139" id="148"/>
                     </connections>

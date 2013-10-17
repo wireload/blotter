@@ -42,7 +42,7 @@
                                     <calendarDate key="date" timeIntervalSinceReferenceDate="-595929600" calendarFormat="%Y-%m-%d %H:%M:%S %z">
                                         <!--1982-02-12 08:00:00 -0800-->
                                         <timeZone key="timeZone" name="US/Pacific">
-                                            <mutableData key="data">
+                                            <data key="data">
 VFppZgAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAC5AAAABAAAABCepkign7sVkKCGKqChmveQ
 y4kaoNIj9HDSYSYQ1v50INiArZDa/tGg28CQENzes6DdqayQ3r6VoN+JjpDgnneg4WlwkOJ+WaDjSVKQ
 5F47oOUpNJDmR1gg5xJREOgnOiDo8jMQ6gccIOrSFRDr5v4g7LH3EO3G4CDukdkQ76/8oPBxuxDxj96g
@@ -60,7 +60,7 @@ f5gqkAABAAECAwEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
 AQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
 AQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
 AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
-</mutableData>
+</data>
                                         </timeZone>
                                     </calendarDate>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -68,24 +68,24 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 </datePickerCell>
                                 <connections>
                                     <accessibilityConnection property="title" destination="850" id="984"/>
+                                    <binding destination="-2" name="value" keyPath="self.dueDate" id="955"/>
                                     <binding destination="-2" name="hidden" keyPath="self.isDueDate" id="957">
                                         <dictionary key="options">
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                         </dictionary>
                                     </binding>
-                                    <binding destination="-2" name="value" keyPath="self.dueDate" id="955"/>
                                     <outlet property="nextKeyView" destination="846" id="866"/>
                                 </connections>
                             </datePicker>
                             <popUpButton id="813" userLabel="Priorities Pop Up Button">
                                 <rect key="frame" x="88" y="87" width="159" height="18"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <popUpButtonCell key="cell" type="roundRect" title="None" bezelStyle="roundedRect" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="814" customClass="WLGlassHudPopUpButtonCell">
+                                <popUpButtonCell key="cell" type="roundRect" bezelStyle="roundedRect" alignment="left" controlSize="small" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" id="814" customClass="WLGlassHudPopUpButtonCell">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="smallSystem"/>
                                     <menu key="menu" title="OtherViews" id="815">
                                         <items>
-                                            <menuItem title="None" state="on" id="816"/>
+                                            <menuItem title="None" id="816"/>
                                             <menuItem title="Low" tag="9" id="817"/>
                                             <menuItem title="Medium" tag="5" id="818"/>
                                             <menuItem title="High" tag="1" id="835"/>
@@ -108,8 +108,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 </popUpButtonCell>
                                 <connections>
                                     <accessibilityConnection property="title" destination="848" id="987"/>
-                                    <binding destination="-2" name="content" keyPath="self.editableCalCalendars" id="981"/>
-                                    <binding destination="-2" name="contentValues" keyPath="self.editableCalCalendars.title" previousBinding="981" id="982"/>
                                     <binding destination="-2" name="enabled" keyPath="self.editableCalCalendars" id="976">
                                         <dictionary key="options">
                                             <integer key="NSNullPlaceholder" value="0"/>
@@ -117,6 +115,8 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             <string key="NSValueTransformerName">WLCountGreaterThanOneTransformer</string>
                                         </dictionary>
                                     </binding>
+                                    <binding destination="-2" name="content" keyPath="self.editableCalCalendars" id="981"/>
+                                    <binding destination="-2" name="contentValues" keyPath="self.editableCalCalendars.title" previousBinding="981" id="982"/>
                                     <binding destination="-2" name="selectedIndex" keyPath="self.selectedCalCalendarIndex" previousBinding="982" id="983"/>
                                     <outlet property="nextKeyView" destination="845" id="870"/>
                                 </connections>
@@ -126,7 +126,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="priority" id="847">
                                     <font key="font" metaFont="smallSystem"/>
-                                    <color key="textColor" white="0.40000000000000002" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="textColor" red="0.49803921580314636" green="0.49803921580314636" blue="0.49803921580314636" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                                 <connections>
@@ -138,7 +138,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="calendar" id="849">
                                     <font key="font" metaFont="smallSystem"/>
-                                    <color key="textColor" white="0.40000000000000002" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="textColor" red="0.49803921580314636" green="0.49803921580314636" blue="0.49803921580314636" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                                 <connections>
@@ -150,7 +150,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="due date" id="851">
                                     <font key="font" metaFont="smallSystem"/>
-                                    <color key="textColor" white="0.40000000000000002" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="textColor" red="0.49803921580314636" green="0.49803921580314636" blue="0.49803921580314636" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                                 <connections>
