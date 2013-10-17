@@ -31,9 +31,9 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="bottom" image="preferences-about-blotter-banner-overlay" id="13"/>
                 </imageView>
                 <button id="23" userLabel="Follow us Button">
-                    <rect key="frame" x="401" y="208" width="221" height="22"/>
+                    <rect key="frame" x="401" y="208" width="228" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="bevel" title="私たちをフォローしてください" bezelStyle="regularSquare" image="preferences-about-blotter-twitter-icon" imagePosition="left" alignment="center" borderStyle="border" inset="2" id="24" customClass="WLPreferencesButtonCell">
+                    <buttonCell key="cell" type="bevel" title="Twitterでフォローしてください" bezelStyle="regularSquare" image="preferences-about-blotter-twitter-icon" imagePosition="left" alignment="center" borderStyle="border" inset="2" id="24" customClass="WLPreferencesButtonCell">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
