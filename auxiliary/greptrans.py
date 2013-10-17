@@ -7,7 +7,7 @@ from path import path
 LANGUAGES = {
     "de": {'lproj': "German.lproj", 'glossary': "DE-German-de"},
     "en": {'lproj': "English.lproj", 'glossary': "DE-German-de"},
-    "es": {'lproj': "Spanish.lproj", 'glossary': "DE-German-de"},
+    "es": {'lproj': "Spanish.lproj", 'glossary': "E-Spanish-es"},
     "fr": {'lproj': "French.lproj", 'glossary': "DE-German-de"},
     "ko": {'lproj': "ko.lproj", 'glossary': "DE-German-de"},
     "ru": {'lproj': "ru.lproj", 'glossary': "DE-German-de"},
