@@ -527,6 +527,7 @@
 		256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeskboardAppDelegate.m; sourceTree = "<group>"; };
 		256AC3F00F4B6AF500CF3369 /* Deskboard_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deskboard_Prefix.pch; sourceTree = "<group>"; };
 		284064FB12834B98000816FF /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = System/Library/Frameworks/CalendarStore.framework; sourceTree = SDKROOT; };
+		289D40EE18117C3D009EAD73 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = Resources/ja.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
 		28B3CDD1180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/AboutPrefPaneView.xib; sourceTree = "<group>"; };
 		28B3CDD2180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
 		28B3CDD5180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
@@ -2431,6 +2432,7 @@
 				BA81A838164548110058EB16 /* ko */,
 				BA81A839164548120058EB16 /* ru */,
 				BA81A83A164548140058EB16 /* sv */,
+				289D40EE18117C3D009EAD73 /* ja */,
 			);
 			name = IKApplicationPreferences.strings;
 			sourceTree = "<group>";
