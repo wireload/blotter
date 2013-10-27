@@ -14,6 +14,8 @@ extern NSInteger const WLBlotterBundleVersion2_1;
 
 extern NSInteger const WLBlotterBundleVersion2_2;
 
+extern NSInteger const WLBlotterBundleVersion2_2_1;
+
 extern NSString* const WLLastMigratedBundleVersionKey;
 
 extern NSString* const WLCalendarSizeKey;
@@ -27,6 +29,8 @@ extern NSString* const WLCalendarsKey;
 extern NSString* const WLCalendarIsUsedForEventsKey;
 
 extern NSString* const WLCalendarIsUsedForRemindersKey;
+
+extern NSString* const WLCalendarIsEnabledKey;
 
 extern NSString* const WLAllowsAdvancedCalendarTypeCheck;
 
@@ -87,6 +91,10 @@ extern NSString* const WLLastSelectedCalReminderCalendarUID;
 
 - (void)WL_migrateTo2_1;
 
+- (void)WL_migrateTo2_2;
+
+- (void)WL_migrateTo2_2_1;
+
 @end
 
 
@@ -116,9 +124,9 @@ extern NSString* const WLLastSelectedCalReminderCalendarUID;
 
 @interface NSUserDefaults (WLRateThisAppMenuItem)
 
-- (NSTimeInterval)WL_applicationRunTimerDelay;
+- (void)WL_resetTimer;
 
-- (void)WL_setApplicationRunTimerDelay:(NSTimeInterval)newDelay;
+- (NSTimeInterval)WL_applicationRunTimerDelay;
 
 - (NSTimeInterval)WL_applicationRunTimerElapsedSeconds;
 

@@ -8,6 +8,7 @@
 
 #import "NSUserDefaults+WLApplicationDefaults.h"
 #import "WLAboutPreferences.h"
+#import "DeskboardAppDelegate.h"
 
 
 static NSString* const _WLCursorKey = @"cursor";
@@ -29,7 +30,7 @@ static NSString* const _WLCursorKey = @"cursor";
 
 - (IBAction)showRateThisApp:(id)aSender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[[NSUserDefaults standardUserDefaults] WL_rateThisAppURL]];
+    [(DeskboardAppDelegate *)[NSApp delegate] showRateThisApp:aSender];
 }
 
 - (IBAction)showFollowUsOnTwitter:(id)aSender

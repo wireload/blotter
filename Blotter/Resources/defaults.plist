@@ -51,13 +51,13 @@
 	<key>AutoShowCurrentWeekDelay</key>
 	<integer>45</integer>
 	<key>LastMigratedBundleVersion</key>
-	<string>0</string>
+	<integer>12</integer>
 	<key>SlowAnimation</key>
+	<false/>
+	<key>ShowRateThisAppInMenu</key>
 	<false/>
 	<key>ApplicationRunTimerDelay</key>
 	<integer>604800</integer>
-	<key>ShowRateThisAppInMenu</key>
-	<false/>
 	<key>ApplicationRunTimerElapsedSeconds</key>
 	<integer>0</integer>
 	<key>ApplicationRunTimerIsFired</key>

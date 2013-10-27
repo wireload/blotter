@@ -14,6 +14,8 @@ NSInteger const WLBlotterBundleVersion2_1 = 9;
 
 NSInteger const WLBlotterBundleVersion2_2 = 10;
 
+NSInteger const WLBlotterBundleVersion2_2_1 = 12;
+
 NSString* const WLLastMigratedBundleVersionKey = @"LastMigratedBundleVersion";
 
 NSString* const WLCalendarSizeKey = @"CalendarSize";
@@ -25,6 +27,8 @@ NSString* const WLCalendarsKey = @"Calendars";
 NSString* const WLCalendarIsUsedForEventsKey = @"isUsedForEvents";
 
 NSString* const WLCalendarIsUsedForRemindersKey = @"isUsedForReminders";
+
+NSString* const WLCalendarIsEnabledKey = @"IsEnabled";
 
 NSString* const WLDisplayAllCalendarsKey = @"DisplayAllCalendars";
 
@@ -87,6 +91,14 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
 {
     [[NSProcessInfo processInfo] disableSuddenTermination];
     NSInteger lastMigratedBundleVersion = [self integerForKey:WLLastMigratedBundleVersionKey];
+    NSBundle *blotterBundle = [NSBundle bundleWithIdentifier:@"net.wireload.blotter.mac"];
+    NSInteger currentBundleVersion = [[blotterBundle objectForInfoDictionaryKey:@"CFBundleVersion"] integerValue];
+
+    if (lastMigratedBundleVersion < currentBundleVersion)
+    {
+        // Actions to be perofmed each time app is updated.
+        [self WL_resetTimer];
+    }
 
     if (lastMigratedBundleVersion < WLBlotterBundleVersion2_1)
     {
@@ -100,8 +112,13 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
         lastMigratedBundleVersion = WLBlotterBundleVersion2_2;
     }
 
-    NSBundle *blotterBundle = [NSBundle bundleWithIdentifier:@"net.wireload.blotter.mac"];
-    lastMigratedBundleVersion = [[blotterBundle objectForInfoDictionaryKey:@"CFBundleVersion"] integerValue];
+    if (lastMigratedBundleVersion < WLBlotterBundleVersion2_2_1)
+    {
+        [self WL_migrateTo2_2_1];
+        lastMigratedBundleVersion = WLBlotterBundleVersion2_2_1;
+    }
+
+    lastMigratedBundleVersion = currentBundleVersion;
     [self setInteger:lastMigratedBundleVersion forKey:WLLastMigratedBundleVersionKey];
     [[NSProcessInfo processInfo] enableSuddenTermination];
 }
@@ -161,11 +178,34 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
     [self setObject:defaultsCalendars forKey:WLCalendarsKey];
 }
 
+- (void)WL_migrateTo2_2_1
+{
+    NSLog(@"Migrate Preferences to %d", (int)WLBlotterBundleVersion2_2_1);
+    NSDictionary *calendarStores = [self objectForKey:WLCalendarsKey];
+    NSMutableDictionary *newCalendarStores = [[NSMutableDictionary alloc] initWithCapacity:[calendarStores count]];
+
+    for (NSString *storeIdentifier in calendarStores)
+    {
+        NSDictionary *store = calendarStores[storeIdentifier];
+        NSMutableDictionary *newStore = [[NSMutableDictionary alloc] initWithCapacity:[store count]];
+
+        for (NSString *calendarIdentifier in store)
+        {
+            NSMutableDictionary *calendar = [store[calendarIdentifier] mutableCopy];
+            calendar[WLCalendarIsEnabledKey] = @(YES);
+            newStore[calendarIdentifier] = calendar;
+        }
+
+        newCalendarStores[storeIdentifier] = newStore;
+    }
+
+    [self setObject:newCalendarStores forKey:WLCalendarsKey];
+}
+
 @end
 
 
 #pragma mark -
-
 
 @implementation NSUserDefaults (WLScreensController)
 
@@ -223,14 +263,16 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
 
 @implementation NSUserDefaults (WLRateThisAppMenuItem)
 
+- (void)WL_resetTimer
+{
+    [self WL_setApplicationRunTimerElapsedSeconds:0.0];
+    [self WL_setApplicationRunTimerIsFired:NO];
+    [self WL_setShowRateThisAppInMenu:NO];
+}
+
 - (NSTimeInterval)WL_applicationRunTimerDelay
 {
     return [self doubleForKey:WLApplicationRunTimerDelayKey];
-}
-
-- (void)WL_setApplicationRunTimerDelay:(NSTimeInterval)newDelay
-{
-    [self setDouble:newDelay forKey:WLApplicationRunTimerDelayKey];
 }
 
 - (NSTimeInterval)WL_applicationRunTimerElapsedSeconds

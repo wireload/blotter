@@ -9,7 +9,16 @@
 #import "WLViewController.h"
 
 
+@interface WLViewController (/* Private */)
+
+@property (readwrite) BOOL isViewLoaded;
+
+@end
+
+
 @implementation WLViewController
+
+# pragma mark NSViewController
 
 - (void)setView:(NSView *)newView
 {
@@ -18,11 +27,18 @@
     if (changeIsViewLoaded)
         [self willChangeValueForKey:@"isViewLoaded"];
 
-    _isViewLoaded = newView != nil;
+    self.isViewLoaded = newView != nil;
     [super setView:newView];
 
     if (changeIsViewLoaded)
         [self didChangeValueForKey:@"isViewLoaded"];
+}
+
+# pragma mark NSObject
+
++ (BOOL)automaticallyNotifiesObserversOfIsViewLoaded
+{
+    return NO;
 }
 
 @end

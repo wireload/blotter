@@ -50,7 +50,7 @@ strings:
   -
     id:       'other'
     path:     "Blotter/Resources/%(lang)s.lproj/Localizable.strings"
-    skip:     ['About', 'Calendars', 'General', 'Layout', 'Positioning', "%.0f x %.0f", "%@, %@"]
+    skip:     ["%.0f x %.0f", "%@, %@"]
   -
     id:       'store description'
     path:     "Blotter/Resources/%(lang)s.lproj/Meta.strings"

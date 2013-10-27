@@ -26,8 +26,11 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
     EKEventStore *_calendarTypeStore;
     id _iCalApp;
     dispatch_semaphore_t _iCalAppSemaphore;
+    
+    BOOL _checkCalendarsAgainstICal;
 
-    NSCache *_calendarTypeCache;
+    NSMutableDictionary *_calendarTypeCache;
+    dispatch_semaphore_t _calendarTypeCacheSemaphore;
 
     WLASLLog *_log;
 }
@@ -49,15 +52,21 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
         _iCalApp = [SBApplication applicationWithBundleIdentifier:@"com.apple.iCal"];
         if (_iCalApp)
-            _iCalAppSemaphore = dispatch_semaphore_create(1); // ensure we don't use it from multiple threads
+        {
+            _iCalAppSemaphore = dispatch_semaphore_create(1); // ensure we don't use app from multiple threads
+            _checkCalendarsAgainstICal = [[NSUserDefaults standardUserDefaults] boolForKey:WLCalSystemStoreChecksCalendarsAgainstICalKey];
+            
+            if (!_checkCalendarsAgainstICal)
+                [_log logWarning:@"Checking calendars against iCal is disabled"];
+        }
         else
             [_log logWarning:@"iCal either does not exist or does not support scripting anymore. Please contact our support."];
 
         if (NSClassFromString(@"EKEventStore"))
             _calendarTypeStore = [[EKEventStore alloc] initWithAccessToEntityTypes:EKEntityMaskEvent | EKEntityMaskReminder];
 
-        _calendarTypeCache = [[NSCache alloc] init];
-        [_calendarTypeCache setName:@"net.wireload.WLCalendarStore.CalendarTypeCache"];
+        _calendarTypeCache = [[NSMutableDictionary alloc] init];
+        _calendarTypeCacheSemaphore = dispatch_semaphore_create(1);
 
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(_systemStoreDidChange:)
@@ -117,6 +126,11 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
                                                                 object:nil];
 
     [[NSRunLoop mainRunLoop] cancelPerformSelector:@selector(_notifyObservers) target:self argument:nil];
+
+    if (_iCalApp)
+        dispatch_release(_iCalAppSemaphore);
+
+    dispatch_release(_calendarTypeCacheSemaphore);
 }
 
 
@@ -306,18 +320,29 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 {
     NSParameterAssert(aCalendar.uid);
 
-    WLCalEntityMask mask = (WLCalEntityMask)[[_calendarTypeCache objectForKey:aCalendar.uid] unsignedIntegerValue];
+    dispatch_semaphore_wait(_calendarTypeCacheSemaphore, DISPATCH_TIME_FOREVER);
+    NSNumber *mask = [_calendarTypeCache objectForKey:aCalendar.uid];
+    if (mask == nil)
+    {
+        WLCalEntityMask maskValue = [self _fastAllowedEntityTypesForCSCalendar:aCalendar];;
 
-    if (mask == WLCalEntityMaskUnknown)
-        mask = [self _fastAllowedEntityTypesForCSCalendar:aCalendar];
+        if (maskValue == WLCalEntityMaskUnknown)
+        {
+            [_log logInfo:@"Fallback to slow check of calendar type for calendar %@.", aCalendar];
+            [_log logInfo:@"If you experience crashes, try `defaults write net.wireload.blotter.mac WLCalSystemStoreAllowsAdvancedCalendarTypeCheck -bool NO`."];
+            maskValue = [self _slowAllowedEntityTypesForCSCalendar:aCalendar];
+        }
 
-    if (mask == WLCalEntityMaskUnknown)
-        mask = [self _slowAllowedEntityTypesForCSCalendar:aCalendar];
+        if (maskValue == WLCalEntityMaskUnknown)
+            [_log logWarning:@"Unable to determine type of calendar %@.", aCalendar];
 
-    if (mask != WLCalEntityMaskUnknown)
-        [_calendarTypeCache setObject:@(mask) forKey:aCalendar.uid];
+        mask = @(maskValue);
 
-    return mask;
+        [_calendarTypeCache setObject:mask forKey:aCalendar.uid];
+    }
+    dispatch_semaphore_signal(_calendarTypeCacheSemaphore);
+
+    return (WLCalEntityMask)[mask unsignedIntegerValue];
 }
 
 
@@ -511,10 +536,10 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
             return;
         }
 
-        [_log logNoticeWithMessenger:^NSString *{ return @"iCal/Calendars/Reminders was launched."; }];
+        [_log logNotice:@"iCal/Calendars/Reminders was (re)launched."];
     }
     else
-        [_log logNoticeWithMessenger:^NSString *{ return @"CalCalendar Store was changed."; }];
+        [_log logNotice:@"CalCalendar Store was changed."];
 
     dispatch_async(dispatch_get_main_queue(), ^
     {
@@ -535,7 +560,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 {
     NSMutableArray *calendars = [NSMutableArray arrayWithArray:[self makeCalendarsFromCSCalendars:[_store calendars]]];
 
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:WLCalSystemStoreChecksCalendarsAgainstICalKey])
+    if (_checkCalendarsAgainstICal)
     {
         NSSet *u = [self iCalCalendarUIDs];
         NSArray *csCalendars = [self fetchCSCalendarsForUIDs:u invalidUIDs:NULL];

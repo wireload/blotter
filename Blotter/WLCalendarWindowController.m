@@ -30,7 +30,7 @@ const NSSize BLNormalMinimumSize = {950, 718};
 const NSSize BLMinimumSize = {280, 215};
 
 
-static const CGFloat _WLFadeOutAlphaValue = 0.5;
+static const float _WLFadeOutAlphaValue = 0.5f;
 
 
 @implementation WLCalendarWindowController
@@ -73,7 +73,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
         _remindersController = [[WLCalendarRemindersController alloc] initWithCalStores:calStores];
         _eventsController = [[WLCalendarEventsController alloc] initWithCalStores:calStores];
         _calendarsController = [[WLCalendarsController alloc] initWithCalStores:calStores
-                                                                autosaveKeyPath:@"Calendars"];
+                                                                autosaveKeyPath:WLCalendarsKey];
 
         void (^updateCalendars)(NSArray *aStores) = ^(NSArray *aStores)
         {
@@ -295,7 +295,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
             [_fadeOutAnimation setDelegate:self];
             [_fadeOutAnimation setAnimationBlockingMode:NSAnimationNonblocking];
             [_fadeOutAnimation setDuration:aDuration / 2.0];
-            [_fadeOutAnimation setCurrentProgress:1.0 - [[self window] alphaValue]];
+            [_fadeOutAnimation setCurrentProgress:(float)(1.0 - [[self window] alphaValue])];
             [_fadeOutAnimation startAnimation];
         }
         else if (_fadeOutAnimation != nil)
@@ -310,7 +310,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
             [_fadeOutAnimation stopAnimation];
             NSTimeInterval duration = aDuration / 2.0;
             // Invert progress, because value will be inverted again in -animation:valueForProgress:
-            NSAnimationProgress progress = 1.0 - [_fadeOutAnimation currentProgress];
+            NSAnimationProgress progress = 1.0f - [_fadeOutAnimation currentProgress];
             [_fadeOutAnimation release];
             _fadeOutAnimation = nil;
 
@@ -333,7 +333,7 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
             [_fadeInAnimation stopAnimation];
             NSTimeInterval duration = aDuration / 2.0;
             // Invert progress, because value will be inverted again in -animation:valueForProgress:
-            NSAnimationProgress progress = 1.0 - [_fadeInAnimation currentProgress];
+            NSAnimationProgress progress = 1.0f - [_fadeInAnimation currentProgress];
             [_fadeInAnimation release];
             _fadeInAnimation = nil;
 
@@ -476,12 +476,12 @@ static const CGFloat _WLFadeOutAlphaValue = 0.5;
             {
                 // If the window is faded out, we have to restore to fade out value.
                 if (self.isFadedOut)
-                    return (1.0 - aProgress) * _WLFadeOutAlphaValue;
+                    return (1.0f - aProgress) * _WLFadeOutAlphaValue;
                 else
-                    return 1.0 - aProgress;
+                    return 1.0f - aProgress;
             }
             case WLFloatingLevelState:
-                return 1.0 - aProgress;
+                return 1.0f - aProgress;
         }
     }
     else
@@ -787,8 +787,8 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
     NSRect dateViewFrame = [self dateViewFrame];
-    NSSize minimumDateViewSize = NSMakeSize([defaults floatForKey:@"MinimumDateViewWidth"],
-                                            [defaults floatForKey:@"MinimumDateViewHeight"]);
+    NSSize minimumDateViewSize = NSMakeSize([defaults doubleForKey:@"MinimumDateViewWidth"],
+                                            [defaults doubleForKey:@"MinimumDateViewHeight"]);
     BOOL showDateView = (dateViewFrame.size.width >= minimumDateViewSize.width &&
                          dateViewFrame.size.height >= minimumDateViewSize.height);
     [[_dateViewController view] setHidden:!showDateView];
@@ -796,8 +796,8 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0;
     [[_dateViewController view] setNeedsDisplay:YES];
 
     NSRect tasksViewFrame = [self tasksViewFrame];
-    NSSize minimumTasksViewSize = NSMakeSize([defaults floatForKey:@"MinimumTasksViewWidth"],
-                                             [defaults floatForKey:@"MinimumTasksViewHeight"]);
+    NSSize minimumTasksViewSize = NSMakeSize([defaults doubleForKey:@"MinimumTasksViewWidth"],
+                                             [defaults doubleForKey:@"MinimumTasksViewHeight"]);
     BOOL showTasksView = (tasksViewFrame.size.width >= minimumTasksViewSize.width &&
                           tasksViewFrame.size.height >= minimumTasksViewSize.height);
     [_tasksViewBox setHidden:!showTasksView];
@@ -805,8 +805,8 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0;
     [_tasksViewBox setNeedsDisplay:YES];
 
     NSRect rightNowViewFrame = [self rightNowViewFrame];
-    NSSize minimumRightNowViewSize = NSMakeSize([defaults floatForKey:@"MinimumRightNowViewWidth"],
-                                                [defaults floatForKey:@"MinimumRightNowViewHeight"]);
+    NSSize minimumRightNowViewSize = NSMakeSize([defaults doubleForKey:@"MinimumRightNowViewWidth"],
+                                                [defaults doubleForKey:@"MinimumRightNowViewHeight"]);
     BOOL showRightNowView = (rightNowViewFrame.size.width >= minimumRightNowViewSize.width &&
                              rightNowViewFrame.size.height >= minimumRightNowViewSize.height);
     [_rightNowViewBox setHidden:!showRightNowView];
@@ -814,12 +814,12 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0;
     [_rightNowViewBox setNeedsDisplay:YES];
 
     NSRect weekViewFrame = [self weekViewFrame];
-    [_weekViewController view].heightOfAllDayPartOfColumn = [defaults floatForKey:@"AllDayViewHeight"];
+    [_weekViewController view].heightOfAllDayPartOfColumn = [defaults doubleForKey:@"AllDayViewHeight"];
     [[_weekViewController view] setFrame:weekViewFrame];
 
     // Sizes in defaults know nothing about margins. Take care of them here.
-    NSSize minimumWeekViewSize = NSMakeSize([defaults floatForKey:@"MinimumWeekViewWidth"] - _WLXMarginBetweenInfoAndWeek,
-                                            [defaults floatForKey:@"MinimumWeekViewHeight"]);
+    NSSize minimumWeekViewSize = NSMakeSize([defaults doubleForKey:@"MinimumWeekViewWidth"] - _WLXMarginBetweenInfoAndWeek,
+                                            [defaults doubleForKey:@"MinimumWeekViewHeight"]);
     BOOL isTooSmall = (weekViewFrame.size.width < minimumWeekViewSize.width ||
                        weekViewFrame.size.height < minimumWeekViewSize.height);
     [[_weekViewController view] setHidden:isTooSmall];
@@ -889,8 +889,8 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0;
 - (CGFloat)fixedInfoViewsWidth
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    CGFloat infoViewWidth = [defaults floatForKey:@"InfoViewsWidth"];
-    CGFloat minWeekWidth = [defaults floatForKey:@"MinimumWeekViewWidth"];
+    CGFloat infoViewWidth = [defaults doubleForKey:@"InfoViewsWidth"];
+    CGFloat minWeekWidth = [defaults doubleForKey:@"MinimumWeekViewWidth"];
     NSRect bounds = [[[self window] contentView] bounds];
     CGFloat weekWidth = NSWidth(bounds) - infoViewWidth;
     if (weekWidth > minWeekWidth)
@@ -907,7 +907,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0;
     NSRect r = [[[self window] contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
                                                                NSMinY(bounds) + _WLYMarginBetweenBoundsAndDate,
                                                                [self fixedInfoViewsWidth],
-                                                               [[NSUserDefaults standardUserDefaults] floatForKey:@"DateViewHeight"] - _WLYMarginBetweenBoundsAndDate)];
+                                                               [[NSUserDefaults standardUserDefaults] doubleForKey:@"DateViewHeight"] - _WLYMarginBetweenBoundsAndDate)];
     r.origin.x = fmax(NSMinX(bounds), fmin(NSMaxX(bounds), r.origin.x));
     r.origin.y = fmax(NSMinY(bounds) + _WLYMarginBetweenBoundsAndDate, fmin(NSMaxY(bounds), r.origin.y));
     r.size.width = fmin(NSMaxX(bounds) - r.origin.x, r.size.width);
@@ -924,19 +924,19 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0;
     if ([defaults objectForKey:@"TasksViewHeight"] == nil || [defaults integerForKey:@"CalendarLayout"] == WLCalendarNormalLayout)
     {
         [defaults removeObserver:self forKeyPath:@"TasksViewHeight"];
-        [defaults setFloat:[self defaultTasksViewHeight] forKey:@"TasksViewHeight"];
+        [defaults setDouble:[self defaultTasksViewHeight] forKey:@"TasksViewHeight"];
         [defaults addObserver:self forKeyPath:@"TasksViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
     }
     else if ([defaults integerForKey:@"CalendarLayout"] == WLCalendarToDoLayout)
     {
         [defaults removeObserver:self forKeyPath:@"TasksViewHeight"];
-        [defaults setFloat:[self fullTasksViewHeight] forKey:@"TasksViewHeight"];
+        [defaults setDouble:[self fullTasksViewHeight] forKey:@"TasksViewHeight"];
         [defaults addObserver:self forKeyPath:@"TasksViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
     }
     NSRect r = [[[self window] contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
-                                                               NSMaxY([self dateViewFrame]),
-                                                               [self fixedInfoViewsWidth],
-                                                               [defaults floatForKey:@"TasksViewHeight"])];
+                                                                      NSMaxY([self dateViewFrame]),
+                                                                      [self fixedInfoViewsWidth],
+                                                                      [defaults doubleForKey:@"TasksViewHeight"])];
     r.origin.x = fmax(NSMinX(bounds), fmin(NSMaxX(bounds), r.origin.x));
     r.origin.y = fmax(NSMinY(bounds), fmin(NSMaxY(bounds), r.origin.y));
     r.size.width = fmin(NSMaxX(bounds) - r.origin.x, r.size.width);

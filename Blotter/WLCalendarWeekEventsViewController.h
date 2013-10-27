@@ -14,7 +14,7 @@
 /*!
     @brief      WLCalendarWeekEventsViewController manages appearance of the WLCalendarWeekView.
 
-    @discussion Main-Thread only.
+    @discussion Main-Thread only if otherwise is not specified.
  */
 @interface WLCalendarWeekEventsViewController : WLViewController <WLCalendarWeekViewDataSource>
 {
@@ -64,13 +64,13 @@
 - (void)setAlignmentUnit:(NSCalendarUnit)newAlignmentUnit number:(NSUInteger)newNumberOfUnits animated:(BOOL)isAnimated;
 
 
-@property (nonatomic, readonly) NSDate *dateOfFirstColumn;
+@property (copy, readonly) NSDate *dateOfFirstColumn;
 
-@property (nonatomic, readonly) NSUInteger numberOfColumns;
+@property (readonly) NSUInteger numberOfColumns;
 
-@property (nonatomic, readonly) WLDateRange *dateRangeOfColumns;
+@property (copy, readonly) WLDateRange *dateRangeOfColumns;
 
-@property (nonatomic, readonly) CGFloat hour;
+@property (readonly) CGFloat hour;
 
 - (NSDate *)makeDateOfFirstColumnForCalendar:(NSCalendar *)aCalendar
                                         date:(NSDate *)aDate
@@ -103,6 +103,13 @@
 - (void)updateDerivativePropertiesAndMoveIfNeeded:(BOOL)isAnimated;
 
 
+/*!
+    @brief      Called when events of a represented object are changed.
+
+    @param      aNotification WLCalendarEventsDidChangeNotification notification
+
+    @discussion This is the only thread safe method.
+ */
 - (void)eventsDidChange:(NSNotification *)aNotification;
 
 

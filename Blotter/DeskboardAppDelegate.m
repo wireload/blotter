@@ -53,14 +53,15 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 {
     if (self == [DeskboardAppDelegate class])
     {
-        // Migrate preferences and set defaults.
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        [userDefaults WL_migrateIfNeeded];
-        [userDefaults WL_setDefaultScreenIdentifierIfNeeded];
         NSURL *defaultsURL = [[NSBundle mainBundle] URLForResource:@"defaults" withExtension:@"plist"];
         NSDictionary *defaults = [NSDictionary dictionaryWithContentsOfURL:defaultsURL];
         [userDefaults registerDefaults:defaults];
         // @see -[WLCalendarWindowController tasksViewFrame] for default value of TasksViewHeight.
+
+        // Migrate preferences and set defaults.
+        [userDefaults WL_migrateIfNeeded];
+        [userDefaults WL_setDefaultScreenIdentifierIfNeeded];
     }
 }
 
@@ -315,14 +316,21 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (void)showRateThisAppMenuItem
 {
-    [[NSUserDefaults standardUserDefaults] WL_setShowRateThisAppInMenu:YES];
+    NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
+    [d WL_setApplicationRunTimerIsFired:YES];
+    [d WL_setApplicationRunTimerElapsedSeconds:[d WL_applicationRunTimerDelay] + 1.0];
+    [d WL_setShowRateThisAppInMenu:YES];
+
     _applicationRunTimer = nil;
     [[WLSmartClock defaultClock] removeObserver:self forKeyPath:@"date"];
 }
 
 - (void)hideRateThisAppMenuItem
 {
-    [[NSUserDefaults standardUserDefaults] WL_setShowRateThisAppInMenu:NO];
+    NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
+    [d WL_setApplicationRunTimerIsFired:YES];
+    [d WL_setApplicationRunTimerElapsedSeconds:[d WL_applicationRunTimerDelay] + 1.0];
+    [d WL_setShowRateThisAppInMenu:NO];
 }
 
 - (BOOL)isOnlyCalendarWindowVisible:(NSArray *)aVisibleWindows
