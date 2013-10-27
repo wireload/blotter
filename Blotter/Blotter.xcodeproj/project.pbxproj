@@ -527,6 +527,17 @@
 		256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeskboardAppDelegate.m; sourceTree = "<group>"; };
 		256AC3F00F4B6AF500CF3369 /* Deskboard_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deskboard_Prefix.pch; sourceTree = "<group>"; };
 		284064FB12834B98000816FF /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = System/Library/Frameworks/CalendarStore.framework; sourceTree = SDKROOT; };
+		289D40EE18117C3D009EAD73 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = Resources/ja.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
+		28B3CDD1180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/AboutPrefPaneView.xib; sourceTree = "<group>"; };
+		28B3CDD2180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
+		28B3CDD5180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
+		28B3CDD6180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/LayoutPrefPaneView.xib; sourceTree = "<group>"; };
+		28B3CDD7180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		28B3CDD8180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		28B3CDD9180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
+		28B3CDDA180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
+		28B3CDDB180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/PositionPrefPaneView.xib; sourceTree = "<group>"; };
+		28B3CDDC180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
 		28F69A1A129C1CAA00D4BB97 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		28F69CF4129CC12100D4BB97 /* Licenses.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Licenses.rtf; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -534,7 +545,7 @@
 		8D1107320486CEB800E47090 /* Blotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA08A6041675D9D60085F40C /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		BA08A68C1675DB9E0085F40C /* ShortcutRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShortcutRecorder.xcodeproj; path = ../ShortcutRecorder/ShortcutRecorder.xcodeproj; sourceTree = "<group>"; };
-		BA08A6E61675DC900085F40C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		BA08A6E61675DC900085F40C /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BA08A6E71675DCA00085F40C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		BA08A6E81675DCA80085F40C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
 		BA08A6E91675DCB00085F40C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
@@ -616,13 +627,13 @@
 		BA807F0B1645460C0033B85B /* IKApplicationPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKApplicationPreferences.h; sourceTree = "<group>"; };
 		BA807F0C1645460C0033B85B /* IKApplicationPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKApplicationPreferences.m; sourceTree = "<group>"; };
 		BA807F0E1645460C0033B85B /* IKPreferencesRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKPreferencesRepresentation.h; sourceTree = "<group>"; };
-		BA81A833164548070058EB16 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
-		BA81A8351645480B0058EB16 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
-		BA81A8361645480D0058EB16 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
-		BA81A8371645480F0058EB16 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = Resources/fr.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
-		BA81A838164548110058EB16 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = Resources/ko.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
-		BA81A839164548120058EB16 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Resources/ru.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
-		BA81A83A164548140058EB16 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = Resources/sv.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
+		BA81A833164548070058EB16 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
+		BA81A8351645480B0058EB16 /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
+		BA81A8361645480D0058EB16 /* es */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
+		BA81A8371645480F0058EB16 /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = Resources/fr.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
+		BA81A838164548110058EB16 /* ko */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ko; path = Resources/ko.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
+		BA81A839164548120058EB16 /* ru */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ru; path = Resources/ru.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
+		BA81A83A164548140058EB16 /* sv */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = sv; path = Resources/sv.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
 		BA9FD669170C3439007CE5B1 /* about-blotter-twitter-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-blotter-twitter-icon.png"; sourceTree = "<group>"; };
 		BA9FD66A170C3439007CE5B1 /* about-blotter-twitter-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-blotter-twitter-icon@2x.png"; sourceTree = "<group>"; };
 		BA9FD66B170C3439007CE5B1 /* checkbox-background-10_7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-background-10_7@2x.png"; sourceTree = "<group>"; };
@@ -2421,6 +2432,7 @@
 				BA81A838164548110058EB16 /* ko */,
 				BA81A839164548120058EB16 /* ru */,
 				BA81A83A164548140058EB16 /* sv */,
+				289D40EE18117C3D009EAD73 /* ja */,
 			);
 			name = IKApplicationPreferences.strings;
 			sourceTree = "<group>";
@@ -2435,6 +2447,7 @@
 				BAF67DD316D622A20047FE2A /* ko */,
 				BAF67DD416D622A40047FE2A /* ru */,
 				BAF67DD516D622A60047FE2A /* sv */,
+				28B3CDD1180D7C7C004CF0DE /* ja */,
 			);
 			name = AboutPrefPaneView.xib;
 			sourceTree = "<group>";
@@ -2449,6 +2462,7 @@
 				BAF67DD916D622B60047FE2A /* ko */,
 				BAF67DDA16D622B80047FE2A /* ru */,
 				BAF67DDB16D622BA0047FE2A /* sv */,
+				28B3CDD2180D7C7C004CF0DE /* ja */,
 			);
 			name = CalendarsPrefPaneView.xib;
 			sourceTree = "<group>";
@@ -2463,6 +2477,7 @@
 				BAF67DDF16D622C80047FE2A /* ko */,
 				BAF67DE016D622CA0047FE2A /* ru */,
 				BAF67DE116D622CC0047FE2A /* sv */,
+				28B3CDD5180D7C7C004CF0DE /* ja */,
 			);
 			name = GeneralPrefPaneView.xib;
 			sourceTree = "<group>";
@@ -2477,6 +2492,7 @@
 				BAF67DE516D622D60047FE2A /* ko */,
 				BAF67DE616D622D90047FE2A /* ru */,
 				BAF67DE716D622DB0047FE2A /* sv */,
+				28B3CDD6180D7C7C004CF0DE /* ja */,
 			);
 			name = LayoutPrefPaneView.xib;
 			sourceTree = "<group>";
@@ -2491,6 +2507,7 @@
 				BAF67DEB16D622E50047FE2A /* ko */,
 				BAF67DEC16D622E70047FE2A /* ru */,
 				BAF67DED16D622EA0047FE2A /* sv */,
+				28B3CDDB180D7C7C004CF0DE /* ja */,
 			);
 			name = PositionPrefPaneView.xib;
 			sourceTree = "<group>";
@@ -2505,6 +2522,7 @@
 				BAF67DF116D622F20047FE2A /* ko */,
 				BAF67DF216D622F50047FE2A /* sv */,
 				BAF67DF316D622F70047FE2A /* ru */,
+				28B3CDDC180D7C7C004CF0DE /* ja */,
 			);
 			name = ShortcutsPrefPaneView.xib;
 			sourceTree = "<group>";
@@ -2519,6 +2537,7 @@
 				E2E826F3145023E5007035E5 /* ru */,
 				E2E826FB145023EF007035E5 /* sv */,
 				BA08A6E61675DC900085F40C /* en */,
+				28B3CDD7180D7C7C004CF0DE /* ja */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -2533,6 +2552,7 @@
 				E2E826F4145023E5007035E5 /* ru */,
 				E2E826FC145023EF007035E5 /* sv */,
 				BA08A6E71675DCA00085F40C /* en */,
+				28B3CDD8180D7C7C004CF0DE /* ja */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -2547,6 +2567,7 @@
 				E2E826F5145023E5007035E5 /* ru */,
 				E2E826FD145023EF007035E5 /* sv */,
 				BA08A6E81675DCA80085F40C /* en */,
+				28B3CDD9180D7C7C004CF0DE /* ja */,
 			);
 			name = NewEventWindow.xib;
 			sourceTree = "<group>";
@@ -2561,6 +2582,7 @@
 				E2E826F6145023E5007035E5 /* ru */,
 				E2E826FE145023EF007035E5 /* sv */,
 				BA08A6E91675DCB00085F40C /* en */,
+				28B3CDDA180D7C7C004CF0DE /* ja */,
 			);
 			name = NewTaskWindow.xib;
 			sourceTree = "<group>";
@@ -2689,10 +2711,6 @@
 				CODE_SIGN_ENTITLEMENTS = Blotter.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/Blotter-dbysecrboudvpphaqyfhpprxxpua/Build/Products/Debug\"",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
 				INFOPLIST_FILE = "Blotter-Info.plist";
@@ -2706,10 +2724,6 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Blotter.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/Blotter-dbysecrboudvpphaqyfhpprxxpua/Build/Products/Debug\"",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -2724,10 +2738,6 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Blotter.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/Blotter-dbysecrboudvpphaqyfhpprxxpua/Build/Products/Debug\"",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
 				INFOPLIST_FILE = "Blotter-Info.plist";

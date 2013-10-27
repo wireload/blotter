@@ -439,7 +439,7 @@
 {
     if ([aKeyPath isEqualToString:@"CalendarLayout"])
     {
-        int calendarLayout = [[aChange objectForKey:NSKeyValueChangeNewKey] integerValue];
+        NSInteger calendarLayout = [[aChange objectForKey:NSKeyValueChangeNewKey] integerValue];
         if (calendarLayout != WLCalendarCustomLayout)
         {
             NSDictionary *defaultParameters = [self _defaultParameters];

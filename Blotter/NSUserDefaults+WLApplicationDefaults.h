@@ -93,7 +93,7 @@ extern NSString* const WLLastSelectedCalReminderCalendarUID;
 
 - (void)WL_migrateTo2_2;
 
-- (void)WL_migrateTo2_3;
+- (void)WL_migrateTo2_2_1;
 
 @end
 
