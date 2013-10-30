@@ -45,10 +45,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
         _store = [CalCalendarStore defaultCalendarStore];
 
         if (!_store)
-        {
             [_log logError:@"Unable to initialize CalCalendarStore. Probably CalendarStore.framework does not exist in the system or it's damaged. Please contact our support."];
-            return nil;
-        }
 
         _iCalApp = [SBApplication applicationWithBundleIdentifier:@"com.apple.iCal"];
         if (_iCalApp)
@@ -103,27 +100,31 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:CalCalendarsChangedNotification
-                                                  object:_store];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:CalCalendarsChangedExternallyNotification
-                                                  object:_store];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:CalEventsChangedNotification
-                                                  object:_store];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:CalEventsChangedExternallyNotification
-                                                  object:_store];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:CalTasksChangedNotification
-                                                  object:_store];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:CalTasksChangedExternallyNotification
-                                                  object:_store];
-    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self
-                                                                  name:NSWorkspaceDidLaunchApplicationNotification
-                                                                object:nil];
+    // The object was not initialized and nil was returned from -init.
+    if (_store)
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:CalCalendarsChangedNotification
+                                                      object:_store];
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:CalCalendarsChangedExternallyNotification
+                                                      object:_store];
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:CalEventsChangedNotification
+                                                      object:_store];
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:CalEventsChangedExternallyNotification
+                                                      object:_store];
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:CalTasksChangedNotification
+                                                      object:_store];
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:CalTasksChangedExternallyNotification
+                                                      object:_store];
+        [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self
+                                                                      name:NSWorkspaceDidLaunchApplicationNotification
+                                                                    object:nil];
+    }
 
     [[NSRunLoop mainRunLoop] cancelPerformSelector:@selector(_notifyObservers) target:self argument:nil];
 
@@ -240,9 +241,9 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
     if (p)
         csEvents = [_store eventsWithPredicate:p];
     else
-        [_log logError:@"Cannot make event predicate with parameters: {startDate: %@, endDate: %@, calendars: %@",anEventsPredicate.dateRange.startDate, anEventsPredicate.dateRange.endDate, csCalendars];
+        [_log logError:@"Cannot make event predicate with parameters: {startDate: %@, endDate: %@, calendars: %@", anEventsPredicate.dateRange.startDate, anEventsPredicate.dateRange.endDate, csCalendars];
 
-    return csEvents;
+    return (csEvents != nil) ? csEvents : @[];
 }
 
 - (NSArray *)fetchCSRemindersMatchingPredicate:(WLCalRemindersPredicate *)aReminderPredicate csCalednars:(__autoreleasing NSArray **)outCSCalendars
@@ -292,7 +293,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
     else
         [_log logError:@"Cannot make reminder predicate with parameters: {completionMask: %d, calendars: %@", aReminderPredicate.completionMask, csCalendars];
 
-    return csReminders;
+    return (csReminders != nil) ? csReminders : @[];
 }
 
 - (NSArray *)makeCalendarsFromCSCalendars:(NSArray *)aCSCalendars
@@ -555,6 +556,14 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
 
 #pragma mark WLCalStore
+
+- (WLCalAuthorizationStatus)authorizationStatusForEntityType:(WLCalEntityType)aType
+{
+    if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_8)
+        return (WLCalAuthorizationStatus)[EKEventStore authorizationStatusForEntityType:(EKEntityType)aType];
+    else
+        return (_store == nil) ? WLCalAuthorizationStatusDenied : WLCalAuthorizationStatusAuthorized;
+}
 
 - (NSArray *)calendars
 {

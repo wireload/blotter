@@ -6,6 +6,9 @@
 //  Copyright 2012 WireLoad. All rights reserved.
 //
 
+#import <EventKit/EventKit.h>
+
+
 typedef NS_ENUM(NSUInteger, WLCalCalendarType)
 {
     WLCalendarTypeLocal,
@@ -19,8 +22,8 @@ typedef NS_ENUM(NSUInteger, WLCalCalendarType)
 
 typedef NS_ENUM(NSUInteger, WLCalEntityType)
 {
-    WLCalEntityTypeEvent = 1,
-    WLCalEntityTypeReminder
+    WLCalEntityTypeEvent = EKEntityTypeEvent,
+    WLCalEntityTypeReminder = EKEntityTypeReminder
 };
 
 
@@ -32,33 +35,32 @@ typedef NS_ENUM(NSUInteger, WLCalEntityMask)
 };
 
 
-typedef NS_ENUM(NSUInteger, WLCalEventAvailability)
+typedef NS_ENUM(NSInteger, WLCalEventAvailability)
 {
-    WLCalEventAvailabilityNotSupported  = -1,
-    WLCalEventAvailabilityBusy          = 0,
-    WLCalEventAvailabilityFree,
-    WLCalEventAvailabilityTentative,
-    WLCalEventAvailabilityUnavailable
+    WLCalEventAvailabilityNotSupported = EKEventAvailabilityNotSupported,
+    WLCalEventAvailabilityBusy = EKEventAvailabilityBusy,
+    WLCalEventAvailabilityFree = EKEventAvailabilityFree,
+    WLCalEventAvailabilityTentative = EKEventAvailabilityTentative,
+    WLCalEventAvailabilityUnavailable = EKEventAvailabilityUnavailable
 };
 
 
 typedef NS_ENUM(NSUInteger, WLCalEventStatus)
 {
-    WLCalEventStatusNone = 0,
-    WLCalEventStatusConfirmed,
-    WLCalEventStatusTentative,
-    WLCalEventStatusCanceled,
+    WLCalEventStatusNone = EKEventStatusNone,
+    WLCalEventStatusConfirmed = EKEventStatusConfirmed,
+    WLCalEventStatusTentative = EKEventStatusTentative,
+    WLCalEventStatusCanceled = EKEventStatusCanceled,
 };
 
 
 typedef NS_ENUM(NSUInteger, WLCalCalendarEventAvailabilityMask)
 {
-    WLCalCalendarEventAvailabilityNone          = 0,    // calendar doesn't support event availability
-
-    WLCalCalendarEventAvailabilityBusy          = (1 << 0),
-    WLCalCalendarEventAvailabilityFree          = (1 << 1),
-    WLCalCalendarEventAvailabilityTentative     = (1 << 2),
-    WLCalCalendarEventAvailabilityUnavailable   = (1 << 3),
+    WLCalCalendarEventAvailabilityNone = EKCalendarEventAvailabilityNone,
+    WLCalCalendarEventAvailabilityBusy = EKCalendarEventAvailabilityBusy,
+    WLCalCalendarEventAvailabilityFree = EKCalendarEventAvailabilityFree,
+    WLCalCalendarEventAvailabilityTentative = EKCalendarEventAvailabilityTentative,
+    WLCalCalendarEventAvailabilityUnavailable = EKCalendarEventAvailabilityUnavailable,
 };
 
 
@@ -69,6 +71,27 @@ typedef NS_ENUM(NSUInteger, WLCalPriority)
     WLCalPriorityHigh   = 1,
     WLCalPriorityMedium = 5,
     WLCalPriorityLow    = 9
+};
+
+
+/*!
+    @brief      Indicates the current authorization status for a specific entity type.
+
+    @constant   WLCalAuthorizationStatusNotDetermined The user has not yet made a choice regarding whether the app may access the service.
+
+    @constant   WLCalAuthorizationStatusRestricted The app is not authorized to access the service.
+                The user cannot change this app’s authorization status, possibly due to active restrictions such as parental controls being in place.
+
+    @constant   WLCalAuthorizationStatusDenied The user explicitly denied access to the service for the app.
+
+    @constant   WLCalAuthorizationStatusAuthorized The app is authorized to access the service.
+*/
+typedef NS_ENUM(NSUInteger, WLCalAuthorizationStatus)
+{
+    WLCalAuthorizationStatusNotDetermined = EKAuthorizationStatusNotDetermined,
+    WLCalAuthorizationStatusRestricted = EKAuthorizationStatusRestricted,
+    WLCalAuthorizationStatusDenied = EKAuthorizationStatusDenied,
+    WLCalAuthorizationStatusAuthorized = EKAuthorizationStatusAuthorized
 };
 
 
