@@ -24,7 +24,6 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 {
     CalCalendarStore *_store;
     EKEventStore *_calendarTypeStore;
-    id _iCalApp;
     dispatch_semaphore_t _iCalAppSemaphore;
     
     BOOL _checkCalendarsAgainstICal;
@@ -44,20 +43,41 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
         _log = [[WLASLLog alloc] initWithName:@"net.wireload.WLCalendarStore.System"];
         _store = [CalCalendarStore defaultCalendarStore];
 
-        if (!_store)
-            [_log logError:@"Unable to initialize CalCalendarStore. Probably CalendarStore.framework does not exist in the system or it's damaged. Please contact our support."];
-
-        _iCalApp = [SBApplication applicationWithBundleIdentifier:@"com.apple.iCal"];
-        if (_iCalApp)
+        if (_store)
         {
-            _iCalAppSemaphore = dispatch_semaphore_create(1); // ensure we don't use app from multiple threads
-            _checkCalendarsAgainstICal = [[NSUserDefaults standardUserDefaults] boolForKey:WLCalSystemStoreChecksCalendarsAgainstICalKey];
-            
-            if (!_checkCalendarsAgainstICal)
-                [_log logWarning:@"Checking calendars against iCal is disabled"];
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(_systemStoreDidChange:)
+                                                         name:CalCalendarsChangedNotification
+                                                       object:_store];
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(_systemStoreDidChange:)
+                                                         name:CalCalendarsChangedExternallyNotification
+                                                       object:_store];
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(_systemStoreDidChange:)
+                                                         name:CalEventsChangedNotification
+                                                       object:_store];
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(_systemStoreDidChange:)
+                                                         name:CalEventsChangedExternallyNotification
+                                                       object:_store];
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(_systemStoreDidChange:)
+                                                         name:CalTasksChangedNotification
+                                                       object:_store];
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(_systemStoreDidChange:)
+                                                         name:CalTasksChangedExternallyNotification
+                                                       object:_store];
         }
         else
-            [_log logWarning:@"iCal either does not exist or does not support scripting anymore. Please contact our support."];
+            [_log logError:@"Unable to initialize CalCalendarStore.\nPossbile reasons:\n\t- You've restricted access to Calendars or Reminders data\n\t- CalendarStore.framework does not exist in the system or it's damaged\nPlease contact our support."];
+
+        _iCalAppSemaphore = dispatch_semaphore_create(1); // ensure we don't use app from multiple threads
+        _checkCalendarsAgainstICal = [[NSUserDefaults standardUserDefaults] boolForKey:WLCalSystemStoreChecksCalendarsAgainstICalKey];
+
+        if (!_checkCalendarsAgainstICal)
+            [_log logWarning:@"Checking calendars against iCal is disabled"];
 
         if (NSClassFromString(@"EKEventStore"))
             _calendarTypeStore = [[EKEventStore alloc] initWithAccessToEntityTypes:EKEntityMaskEvent | EKEntityMaskReminder];
@@ -65,30 +85,6 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
         _calendarTypeCache = [[NSMutableDictionary alloc] init];
         _calendarTypeCacheSemaphore = dispatch_semaphore_create(1);
 
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(_systemStoreDidChange:)
-                                                     name:CalCalendarsChangedNotification
-                                                   object:_store];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(_systemStoreDidChange:)
-                                                     name:CalCalendarsChangedExternallyNotification
-                                                   object:_store];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(_systemStoreDidChange:)
-                                                     name:CalEventsChangedNotification
-                                                   object:_store];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(_systemStoreDidChange:)
-                                                     name:CalEventsChangedExternallyNotification
-                                                   object:_store];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(_systemStoreDidChange:)
-                                                     name:CalTasksChangedNotification
-                                                   object:_store];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(_systemStoreDidChange:)
-                                                     name:CalTasksChangedExternallyNotification
-                                                   object:_store];
         [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self
                                                                selector:@selector(_systemStoreDidChange:)
                                                                    name:NSWorkspaceDidLaunchApplicationNotification
@@ -127,10 +123,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
     }
 
     [[NSRunLoop mainRunLoop] cancelPerformSelector:@selector(_notifyObservers) target:self argument:nil];
-
-    if (_iCalApp)
-        dispatch_release(_iCalAppSemaphore);
-
+    dispatch_release(_iCalAppSemaphore);
     dispatch_release(_calendarTypeCacheSemaphore);
 }
 
@@ -139,29 +132,50 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
 - (NSSet *)iCalCalendarUIDs
 {
-    if (_iCalApp)
+    SBApplication *iCalApp = [SBApplication applicationWithBundleIdentifier:@"com.apple.iCal"];
+
+    if (iCalApp)
     {
         if (dispatch_semaphore_wait(_iCalAppSemaphore, dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_SEC)) != 0)
         {
-            [_log logError:@"Cannot fetch calendar UIDs from iCal since it's locked for too long"];
+            [_log logError:@"Cannot fetch calendar UIDs from iCal since it's locked for too long."];
             return [NSSet set];
         }
 
-        NSArray *UIDs = nil;
-        if ([_iCalApp isRunning])
+        NSArray *UIDs = @[];
+
+        // Scripting Bridge known to be very unreliable.
+        @try
         {
-            UIDs = [[_iCalApp calendars] valueForKey:@"uid"];
-            [_log logDebug:@"Successfuly fetched calendar UIDs from iCal: %@", UIDs];
+            [iCalApp setDelegate:self];
+
+            if ([iCalApp isRunning])
+            {
+                UIDs = [[(id)iCalApp calendars] valueForKey:@"uid"];
+                [_log logDebug:@"Successfuly fetched calendar UIDs from iCal: %@", UIDs];
+            }
+            else
+                [_log logWarning:@"Cannot fetch calendar UIDs from iCal since it's not running."];
         }
-        else
-            [_log logWarning:@"Cannot fetch calendar UIDs from iCal since it's not running."];
-
-        dispatch_semaphore_signal(_iCalAppSemaphore);
-
-        return [NSSet setWithArray:UIDs];
+        @catch (NSException *anException)
+        {
+            [_log logError:@"Exception occured while fetching calendar UIDs from iCal (%@): %@ (%@).", iCalApp, [anException reason], [anException userInfo]];
+        }
+        @catch (...)
+        {
+            [_log logError:@"Unknown exception occured while fetching calendar UIDs from iCal (%@).", iCalApp];
+        }
+        @finally
+        {
+            dispatch_semaphore_signal(_iCalAppSemaphore);
+            return [NSSet setWithArray:UIDs];
+        }
     }
     else
+    {
+        [_log logError:@"Unable to create Scripting Bridge to iCal."];
         return [NSSet set];
+    }
 }
 
 - (NSArray *)fetchCSCalendarsForUIDs:(NSSet *)anUIDs
@@ -552,6 +566,15 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 - (void)_notifyObservers
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:WLCalStoreDidChangeNotification object:self];
+}
+
+
+#pragma mark SBApplicationDelegate
+
+- (id)eventDidFail:(const AppleEvent *)anEvent withError:(NSError *)anError
+{
+    [_log logError:@"Scripting Bridge failed to deliver event: %@ (%@).", [anError localizedDescription], [anError userInfo]];
+    return nil;
 }
 
 

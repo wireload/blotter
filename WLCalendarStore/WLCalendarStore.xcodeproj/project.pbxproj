@@ -29,6 +29,7 @@
 		BA9AFBC0163E57D100FAAAD3 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9AFBBF163E57D100FAAAD3 /* AppKit.framework */; };
 		BAA049EB1622FF3A0078DF12 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA049EA1622FF3A0078DF12 /* ScriptingBridge.framework */; };
 		BAD927801604859900081E9A /* WLCalTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = BC599737C6048530E0046B47 /* WLCalTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BAE621A21827973800BD4A83 /* iCal_10_9.h in Headers */ = {isa = PBXBuildFile; fileRef = BAE621A11827973800BD4A83 /* iCal_10_9.h */; };
 		BC599305EAE0EE90DF9816C0 /* WLCalReminder.h in Headers */ = {isa = PBXBuildFile; fileRef = BC59915C9F7D047991AE891C /* WLCalReminder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC59932F3B9E619709229A3A /* WLCalCalendarItem.h in Headers */ = {isa = PBXBuildFile; fileRef = BC599B72BDB73789F5427156 /* WLCalCalendarItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC599663F3320B6A913763DF /* WLCalObject.h in Headers */ = {isa = PBXBuildFile; fileRef = BC599DE749D57B02CB6E3A79 /* WLCalObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -85,6 +86,7 @@
 		BA9AFBB1163C127B00FAAAD3 /* WLFoundation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WLFoundation.xcodeproj; path = ../WLFoundation/WLFoundation.xcodeproj; sourceTree = "<group>"; };
 		BA9AFBBF163E57D100FAAAD3 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		BAA049EA1622FF3A0078DF12 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
+		BAE621A11827973800BD4A83 /* iCal_10_9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCal_10_9.h; sourceTree = "<group>"; };
 		BC599035D1785C53BC1F0A6A /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = System/Library/Frameworks/CalendarStore.framework; sourceTree = SDKROOT; };
 		BC59914693A31B866FD145DC /* WLCalendarStore-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = "WLCalendarStore-Info.plist"; sourceTree = "<group>"; };
 		BC599146B00DFB13543FFCEF /* WLCalendarStore-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WLCalendarStore-Prefix.pch"; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				BC599B15D5289FAE3DD25278 /* WLCalSystemCalendar.m */,
 				BA81DBFA1615C2D600C83DC3 /* iCal_10_7.h */,
 				BA81DBFB1615C2D600C83DC3 /* iCal_10_8.h */,
+				BAE621A11827973800BD4A83 /* iCal_10_9.h */,
 				BC5993F0F98EE4C5D171A1AC /* WLCalSystemStore.m */,
 				BC599A4B957C339582495DE2 /* WLCalSystemStore.h */,
 			);
@@ -268,6 +271,7 @@
 				BC59932F3B9E619709229A3A /* WLCalCalendarItem.h in Headers */,
 				BC599BE08CEB80943034B6F5 /* WLCalEvent.h in Headers */,
 				BC599663F3320B6A913763DF /* WLCalObject.h in Headers */,
+				BAE621A21827973800BD4A83 /* iCal_10_9.h in Headers */,
 				BA81DBF0161451E500C83DC3 /* WLCalendarStore.h in Headers */,
 				BA036999161ED4F90023A566 /* WLCalRemindersPredicate.h in Headers */,
 				BA03699C161ED5010023A566 /* WLCalEventsPredicate.h in Headers */,
