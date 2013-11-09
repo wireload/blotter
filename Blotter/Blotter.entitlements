@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>
-	<key>com.apple.security.temporary-exception.apple-events</key>
+	<key>com.apple.security.temporary-exception.apple-events:before:10.9</key>
 	<array>
 		<string>com.apple.ical</string>
 	</array>
