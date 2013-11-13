@@ -22,7 +22,8 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
 @implementation WLCalSystemStore
 {
-    CalCalendarStore *_store;
+    CalCalendarStore *_calendarStore;
+    dispatch_semaphore_t _calendarStoreSemaphore;
     EKEventStore *_calendarTypeStore;
     dispatch_semaphore_t _iCalAppSemaphore;
     
@@ -41,37 +42,8 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
     if (self)
     {
         _log = [[WLASLLog alloc] initWithName:@"net.wireload.WLCalendarStore.System"];
-        _store = [CalCalendarStore defaultCalendarStore];
 
-        if (_store)
-        {
-            [[NSNotificationCenter defaultCenter] addObserver:self
-                                                     selector:@selector(_systemStoreDidChange:)
-                                                         name:CalCalendarsChangedNotification
-                                                       object:_store];
-            [[NSNotificationCenter defaultCenter] addObserver:self
-                                                     selector:@selector(_systemStoreDidChange:)
-                                                         name:CalCalendarsChangedExternallyNotification
-                                                       object:_store];
-            [[NSNotificationCenter defaultCenter] addObserver:self
-                                                     selector:@selector(_systemStoreDidChange:)
-                                                         name:CalEventsChangedNotification
-                                                       object:_store];
-            [[NSNotificationCenter defaultCenter] addObserver:self
-                                                     selector:@selector(_systemStoreDidChange:)
-                                                         name:CalEventsChangedExternallyNotification
-                                                       object:_store];
-            [[NSNotificationCenter defaultCenter] addObserver:self
-                                                     selector:@selector(_systemStoreDidChange:)
-                                                         name:CalTasksChangedNotification
-                                                       object:_store];
-            [[NSNotificationCenter defaultCenter] addObserver:self
-                                                     selector:@selector(_systemStoreDidChange:)
-                                                         name:CalTasksChangedExternallyNotification
-                                                       object:_store];
-        }
-        else
-            [_log logError:@"Unable to initialize CalCalendarStore.\nPossbile reasons:\n\t- You've restricted access to Calendars or Reminders data\n\t- CalendarStore.framework does not exist in the system or it's damaged\nPlease contact our support."];
+        _calendarStoreSemaphore = dispatch_semaphore_create(1);
 
         _iCalAppSemaphore = dispatch_semaphore_create(1); // ensure we don't use app from multiple threads
         _checkCalendarsAgainstICal = [[NSUserDefaults standardUserDefaults] boolForKey:WLCalSystemStoreChecksCalendarsAgainstICalKey];
@@ -97,38 +69,90 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 - (void)dealloc
 {
     // The object was not initialized and nil was returned from -init.
-    if (_store)
+    if (self.calendarStore)
     {
         [[NSNotificationCenter defaultCenter] removeObserver:self
                                                         name:CalCalendarsChangedNotification
-                                                      object:_store];
+                                                      object:self.calendarStore];
         [[NSNotificationCenter defaultCenter] removeObserver:self
                                                         name:CalCalendarsChangedExternallyNotification
-                                                      object:_store];
+                                                      object:self.calendarStore];
         [[NSNotificationCenter defaultCenter] removeObserver:self
                                                         name:CalEventsChangedNotification
-                                                      object:_store];
+                                                      object:self.calendarStore];
         [[NSNotificationCenter defaultCenter] removeObserver:self
                                                         name:CalEventsChangedExternallyNotification
-                                                      object:_store];
+                                                      object:self.calendarStore];
         [[NSNotificationCenter defaultCenter] removeObserver:self
                                                         name:CalTasksChangedNotification
-                                                      object:_store];
+                                                      object:self.calendarStore];
         [[NSNotificationCenter defaultCenter] removeObserver:self
                                                         name:CalTasksChangedExternallyNotification
-                                                      object:_store];
+                                                      object:self.calendarStore];
         [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self
                                                                       name:NSWorkspaceDidLaunchApplicationNotification
                                                                     object:nil];
     }
 
     [[NSRunLoop mainRunLoop] cancelPerformSelector:@selector(_notifyObservers) target:self argument:nil];
+    dispatch_release(_calendarStoreSemaphore);
     dispatch_release(_iCalAppSemaphore);
     dispatch_release(_calendarTypeCacheSemaphore);
 }
 
 
-#pragma mark - Methods
+#pragma mark Properties
+
+- (CalCalendarStore *)calendarStore
+{
+    if (dispatch_semaphore_wait(_calendarStoreSemaphore, dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_SEC)) != 0)
+    {
+        [_log logError:@"Cannot access CalCalendarStore since it's locked for too long."];
+        return nil;
+    }
+
+    if (!_calendarStore)
+    {
+        _calendarStore = [CalCalendarStore defaultCalendarStore];
+
+        if (_calendarStore)
+        {
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(_systemStoreDidChange:)
+                                                         name:CalCalendarsChangedNotification
+                                                       object:_calendarStore];
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(_systemStoreDidChange:)
+                                                         name:CalCalendarsChangedExternallyNotification
+                                                       object:_calendarStore];
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(_systemStoreDidChange:)
+                                                         name:CalEventsChangedNotification
+                                                       object:_calendarStore];
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(_systemStoreDidChange:)
+                                                         name:CalEventsChangedExternallyNotification
+                                                       object:_calendarStore];
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(_systemStoreDidChange:)
+                                                         name:CalTasksChangedNotification
+                                                       object:_calendarStore];
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(_systemStoreDidChange:)
+                                                         name:CalTasksChangedExternallyNotification
+                                                       object:_calendarStore];
+        }
+        else
+            [_log logWarning:@"Unable to initialize CalCalendarStore.\nPossbile reasons:\n\t- You've restricted access to Calendars or Reminders data\n\t- CalendarStore.framework does not exist in the system or it's damaged\nPlease contact our support."];
+    }
+
+    dispatch_semaphore_signal(_calendarStoreSemaphore);
+
+    return _calendarStore;
+}
+
+
+#pragma mark Methods
 
 - (NSSet *)iCalCalendarUIDs
 {
@@ -195,7 +219,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
     [anUIDs enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(NSString *anUID, BOOL *stop)
     {
-        CalCalendar *c = [_store calendarWithUID:anUID];
+        CalCalendar *c = [self.calendarStore calendarWithUID:anUID];
 
         if (c)
         {
@@ -249,11 +273,11 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
     }
 
     NSArray *csEvents = @[];
-    NSPredicate *p = [[_store class] eventPredicateWithStartDate:anEventsPredicate.dateRange.startDate
-                                                         endDate:anEventsPredicate.dateRange.endDate
-                                                       calendars:csCalendars];
+    NSPredicate *p = [[self.calendarStore class] eventPredicateWithStartDate:anEventsPredicate.dateRange.startDate
+                                                                     endDate:anEventsPredicate.dateRange.endDate
+                                                                   calendars:csCalendars];
     if (p)
-        csEvents = [_store eventsWithPredicate:p];
+        csEvents = [self.calendarStore eventsWithPredicate:p];
     else
         [_log logError:@"Cannot make event predicate with parameters: {startDate: %@, endDate: %@, calendars: %@", anEventsPredicate.dateRange.startDate, anEventsPredicate.dateRange.endDate, csCalendars];
 
@@ -289,13 +313,13 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
     switch (aReminderPredicate.completionMask)
     {
         case WLCalReminderCompletionMaskComplete:
-            p = [[_store class] taskPredicateWithTasksCompletedSince:nil calendars:csCalendars];
+            p = [[self.calendarStore class] taskPredicateWithTasksCompletedSince:nil calendars:csCalendars];
             break;
         case WLCalReminderCompletionMaskIncomplete:
-            p = [[_store class] taskPredicateWithUncompletedTasks:csCalendars];
+            p = [[self.calendarStore class] taskPredicateWithUncompletedTasks:csCalendars];
             break;
         case WLCalReminderCompletionMaskAny:
-            p = [[_store class] taskPredicateWithCalendars:csCalendars];
+            p = [[self.calendarStore class] taskPredicateWithCalendars:csCalendars];
             break;
         case WLCalReminderCompletionMaskNothing:
             __builtin_unreachable();
@@ -303,7 +327,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
     }
 
     if (p)
-        csReminders = [_store tasksWithPredicate:p];
+        csReminders = [self.calendarStore tasksWithPredicate:p];
     else
         [_log logError:@"Cannot make reminder predicate with parameters: {completionMask: %d, calendars: %@", aReminderPredicate.completionMask, csCalendars];
 
@@ -426,11 +450,11 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
     BOOL allowsAdvancedCalendarTypeCheck = [[NSUserDefaults standardUserDefaults] boolForKey:WLCalSystemStoreAllowsAdvancedCalendarTypeCheckKey];
 
     NSArray *events = @[];
-    NSPredicate *p = [[_store class] eventPredicateWithStartDate:StartOf4YearsPeriod
-                                                         endDate:EndOf4YearsPeriod
-                                                       calendars:@[aCalendar]];
+    NSPredicate *p = [[self.calendarStore class] eventPredicateWithStartDate:StartOf4YearsPeriod
+                                                                     endDate:EndOf4YearsPeriod
+                                                                   calendars:@[aCalendar]];
     if (p)
-        events = [_store eventsWithPredicate:p];
+        events = [self.calendarStore eventsWithPredicate:p];
 
     if ([events count] > 0)
         allowedEntityTypes |= WLCalEntityMaskEvent;
@@ -454,7 +478,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
             if (currentAttempt > 0)
                 [NSThread sleepForTimeInterval:AttemptDelay];
 
-            canSaveEvent = [_store saveEvent:tmpEvent span:CalSpanThisEvent error:&error];
+            canSaveEvent = [self.calendarStore saveEvent:tmpEvent span:CalSpanThisEvent error:&error];
             ++currentAttempt;
         }
 
@@ -481,9 +505,9 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
     }
 
     NSArray *reminders = @[];
-    p = [[_store class] taskPredicateWithCalendars:@[aCalendar]];
+    p = [[self.calendarStore class] taskPredicateWithCalendars:@[aCalendar]];
     if (p)
-        reminders = [_store tasksWithPredicate:p];
+        reminders = [self.calendarStore tasksWithPredicate:p];
 
     if ([reminders count] > 0)
         allowedEntityTypes |= WLCalEntityMaskReminder;
@@ -507,7 +531,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
             if (currentAttempt > 0)
                 [NSThread sleepForTimeInterval:AttemptDelay];
 
-            canSaveTask = [_store saveTask:tmpReminder error:&error];
+            canSaveTask = [self.calendarStore saveTask:tmpReminder error:&error];
             ++currentAttempt;
         }
 
@@ -585,12 +609,12 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
     if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_8)
         return (WLCalAuthorizationStatus)[EKEventStore authorizationStatusForEntityType:(EKEntityType)aType];
     else
-        return (_store == nil) ? WLCalAuthorizationStatusDenied : WLCalAuthorizationStatusAuthorized;
+        return (self.calendarStore == nil) ? WLCalAuthorizationStatusDenied : WLCalAuthorizationStatusAuthorized;
 }
 
 - (NSArray *)calendars
 {
-    NSMutableArray *calendars = [NSMutableArray arrayWithArray:[self makeCalendarsFromCSCalendars:[_store calendars]]];
+    NSMutableArray *calendars = [NSMutableArray arrayWithArray:[self makeCalendarsFromCSCalendars:[self.calendarStore calendars]]];
 
     if (_checkCalendarsAgainstICal)
     {
@@ -607,7 +631,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
 - (id <WLCalCalendar>)calendarWithIdentifier:(NSString *)anIdentifier
 {
-    return [[self makeCalendarsFromCSCalendars:@[[_store calendarWithUID:anIdentifier]]] lastObject];
+    return [[self makeCalendarsFromCSCalendars:@[[self.calendarStore calendarWithUID:anIdentifier]]] lastObject];
 }
 
 - (NSArray *)eventsMatchingPredicate:(WLCalEventsPredicate *)aPredicate
@@ -635,7 +659,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
             calendar = cachedCalendars[cachedCalendarIndex];
         else
         {
-            WLCalSystemCalendar *newCalendar = [[self makeCalendarsFromCSCalendars:@[[_store calendarWithUID:csEvent.calendar.uid]]] lastObject];
+            WLCalSystemCalendar *newCalendar = [[self makeCalendarsFromCSCalendars:@[[self.calendarStore calendarWithUID:csEvent.calendar.uid]]] lastObject];
 
             if (newCalendar)
             {
@@ -687,7 +711,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
             calendar = cachedCalendars[cachedCalendarIndex];
         else
         {
-            WLCalSystemCalendar *newCalendar = [[self makeCalendarsFromCSCalendars:@[[_store calendarWithUID:csReminder.calendar.uid]]] lastObject];
+            WLCalSystemCalendar *newCalendar = [[self makeCalendarsFromCSCalendars:@[[self.calendarStore calendarWithUID:csReminder.calendar.uid]]] lastObject];
 
             if (newCalendar)
             {
