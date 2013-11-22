@@ -8,13 +8,6 @@
 	<array>
 		<string>com.apple.ical</string>
 	</array>
-	<key>com.apple.security.scripting-targets</key>
-	<dict>
-		<key>com.apple.iCal</key>
-		<array>
-			<string>com.apple.iCal.read</string>
-		</array>
-	</dict>
 	<key>com.apple.security.personal-information.calendars</key>
 	<true/>
 </dict>
