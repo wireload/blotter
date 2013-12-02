@@ -262,9 +262,7 @@ static const float _WLFadeOutAlphaValue = 0.5f;
 
 - (BOOL)isCurrentWeekShowed
 {
-    NSParameterAssert(_isWindowShowed);
-
-    return _weekViewController.weekOffset == 0;
+    return _isWindowShowed && _weekViewController.weekOffset == 0;
 }
 
 - (void)setWindowState:(WLCalendarWindowState)newWindowState animated:(BOOL)isAnimated duration:(NSTimeInterval)aDuration;
