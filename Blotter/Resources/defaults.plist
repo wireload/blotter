@@ -51,7 +51,7 @@
 	<key>AutoShowCurrentWeekDelay</key>
 	<integer>45</integer>
 	<key>LastMigratedBundleVersion</key>
-	<integer>12</integer>
+	<integer>13</integer>
 	<key>SlowAnimation</key>
 	<false/>
 	<key>ShowRateThisAppInMenu</key>
