@@ -105,15 +105,18 @@ static const float _WLFadeOutAlphaValue = 0.5f;
 
         updateCalendars([_calendarsController calStores]);
 
+        _smartClock = [WLSmartClock defaultClock];
+
         _weekViewController = [[WLCalendarFloatingWeekEventsViewController alloc] initWithNibName:nil bundle:nil];
+        _weekViewController.date = _smartClock.date;
         _weekViewController.representedObject = _eventsController;
         [_weekViewController bind:@"titleFormat" toObject:defaults withKeyPath:WLTitleFormatKey options:nil];
 
         _rightNowViewController = [[WLCalendarRightNowEventsViewController alloc] init];
+        _rightNowViewController.date = _smartClock.date;
         [_rightNowViewController setAlignmentUnit:NSDayCalendarUnit number:1 animated:NO];
         _rightNowViewController.representedObject = _eventsController;
 
-        _smartClock = [WLSmartClock defaultClock];
         [_smartClock addObserver:self forKeyPath:@"calendar" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:NULL];
         [_smartClock addObserver:self forKeyPath:@"date" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:NULL];
 
@@ -259,9 +262,7 @@ static const float _WLFadeOutAlphaValue = 0.5f;
 
 - (BOOL)isCurrentWeekShowed
 {
-    NSParameterAssert(_isWindowShowed);
-
-    return _weekViewController.weekOffset == 0;
+    return _isWindowShowed && _weekViewController.weekOffset == 0;
 }
 
 - (void)setWindowState:(WLCalendarWindowState)newWindowState animated:(BOOL)isAnimated duration:(NSTimeInterval)aDuration;

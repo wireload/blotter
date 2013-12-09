@@ -18,7 +18,9 @@
 
                 Thread safe.
  */
-@interface WLCalSystemStore : NSObject <WLCalStore>
+@interface WLCalSystemStore : NSObject <SBApplicationDelegate, WLCalStore>
+
+@property (nonatomic, readonly) CalCalendarStore *calendarStore;
 
 /*!
     @brief      Asks iCal for calendar identifiers using AE.

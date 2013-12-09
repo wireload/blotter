@@ -46,6 +46,16 @@ extern NSComparator WLCalRemindersComparator;
  */
 @protocol WLCalStore <NSObject>
 
+
+/*!
+    @brief      Determines if app has sufficient permissions to access data of aType.
+ 
+    @param      aType Determines type of data (event, reminder etc).
+ 
+    @return     Status that determines access to aType.
+*/
+- (WLCalAuthorizationStatus)authorizationStatusForEntityType:(WLCalEntityType)aType;
+
 /*!
     @brief      Returns store's calendars.
 
@@ -68,7 +78,7 @@ extern NSComparator WLCalRemindersComparator;
 
     @param      aPredicate Predicate that specifies events to be fetched.
 
-    @return     An array of objects that adopt the the WLCalEvent protocol sorted with WLCalEventsComparator or an empty array if there are no calendars.
+    @return     An array of objects that adopt the the WLCalEvent protocol sorted with WLCalEventsComparator or an empty array if there are no events.
 
     @discussion Events in the returned array are guaranteed to be unique in terms of WLCalEventsComparator.
                 That is, there are no 2 objects that would return NSOrderedSame with this comparator.
@@ -80,7 +90,7 @@ extern NSComparator WLCalRemindersComparator;
 
     @param      aPredicate Predicate that specifies reminders to be fetched.
 
-    @return     An array of objects that adopt the the WLCalReminder protocol sorted with WLCalRemindersComparator or an empty array if there are no calendars.
+    @return     An array of objects that adopt the the WLCalReminder protocol sorted with WLCalRemindersComparator or an empty array if there are no reminders.
 
     @discussion Reminders in the returned array ar guaranteed to be unique in terms of WLCalRemindersComparator.
                 That is, there are no 2 objects that would return NSOrderedSame with this comparator.

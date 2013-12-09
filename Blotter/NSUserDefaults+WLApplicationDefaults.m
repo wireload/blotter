@@ -16,6 +16,8 @@ NSInteger const WLBlotterBundleVersion2_2 = 10;
 
 NSInteger const WLBlotterBundleVersion2_2_1 = 12;
 
+NSInteger const WLBlotterBundleVersion2_2_2 = 13;
+
 NSString* const WLLastMigratedBundleVersionKey = @"LastMigratedBundleVersion";
 
 NSString* const WLCalendarSizeKey = @"CalendarSize";
@@ -118,6 +120,12 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
         lastMigratedBundleVersion = WLBlotterBundleVersion2_2_1;
     }
 
+    if (lastMigratedBundleVersion < WLBlotterBundleVersion2_2_2)
+    {
+        [self WL_migrateTo2_2_2];
+        lastMigratedBundleVersion = WLBlotterBundleVersion2_2_2;
+    }
+
     lastMigratedBundleVersion = currentBundleVersion;
     [self setInteger:lastMigratedBundleVersion forKey:WLLastMigratedBundleVersionKey];
     [[NSProcessInfo processInfo] enableSuddenTermination];
@@ -200,6 +208,11 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
     }
 
     [self setObject:newCalendarStores forKey:WLCalendarsKey];
+}
+
+- (void)WL_migrateTo2_2_2
+{
+    NSLog(@"Migrate Preferences to %d", (int)WLBlotterBundleVersion2_2_2);
 }
 
 @end
