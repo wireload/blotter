@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1060" defaultVersion="1060" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="WLAboutPreferences">
@@ -114,7 +114,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" id="57">
                         <font key="font" size="10" name="LucidaGrande"/>
-                        <string key="title">© 2010-13 WireLoad Inc.
+                        <string key="title">© 2010-14 WireLoad Inc.
 All rights reserved.</string>
                         <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
