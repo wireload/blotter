@@ -18,6 +18,8 @@ extern NSInteger const WLBlotterBundleVersion2_2_1;
 
 extern NSInteger const WLBlotterBundleVersion2_2_2;
 
+extern NSInteger const WLBlotterBundleVersion2_2_3;
+
 extern NSString* const WLLastMigratedBundleVersionKey;
 
 extern NSString* const WLCalendarSizeKey;
@@ -98,6 +100,8 @@ extern NSString* const WLLastSelectedCalReminderCalendarUID;
 - (void)WL_migrateTo2_2_1;
 
 - (void)WL_migrateTo2_2_2;
+
+- (void)WL_migrateTo2_2_3;
 
 @end
 
