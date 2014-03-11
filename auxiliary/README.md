@@ -30,7 +30,7 @@
 
         diff -w old-utf8.strings new-utf8.strings
 
-9. Update mygengo using the diff.
+9. Update oneskyapp using the diff.
 10. Enter standard system translations when known. Search for standard translations using commands such as:
 
         # First mount OS X glossary "russian.dmg" from https://developer.apple.com/downloads/index.action.
@@ -39,10 +39,10 @@
     This example is for Russian. Just substitute `sv`, `es`, etc. for other languages. Current language codes we use are `de`, `es`, `fr`, `ko`, `ru`, `sv`, `ja`.
 
 11. Order translations.
-12. Export all languages from MyGengo with the "Download files > All languages" option.
+12. Export all languages from oneskyapp with the "Download translation" option, using Mac/iOS Strings and All Languages.
 13. Run `litany.py` in reverse:
 
-        unzip ~/Downloads/lang_files.zip -d ./lang_files
+        unzip ~/Downloads/Blotter.zip -d ./lang_files
         sh auxiliary/litany_reverse_all.sh
 
 14. Commit the new `.strings`.
