@@ -7,8 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <ShortcutRecorder/ShortcutRecorder.h>
-
+#import <ShortcutRecorder/SRRecorderControl.h>
 
 /*!
     @brief  Simple subclass of SRRecorderControl that pauses PTHotKeyCenter when control is become key.

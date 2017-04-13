@@ -265,7 +265,7 @@
 
     NSRect layoutViewFrame = [_rootSplitView frame];
     DeskboardAppDelegate *delegate = (DeskboardAppDelegate *)[[NSApplication sharedApplication] delegate];
-    NSRect blotterViewFrame = [[delegate.calendarWindowController.window contentView] frame];
+    NSRect blotterViewFrame = [[[delegate.calendarWindowController window] contentView] frame];
     CGFloat rootSplitViewXDividersThickness = [_rootSplitView dividerThickness];
     CGFloat rootSplitViewYDividersThickness = 0.0;
     CGFloat weekSplitViewXDividerThickness = 0.0;
@@ -418,7 +418,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(_calendarWindowSizeDidChange)
                                                  name:NSWindowDidResizeNotification
-                                               object:delegate.calendarWindowController.window];
+                                               object:[delegate.calendarWindowController window]];
     [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:@"CalendarLayout" options:NSKeyValueObservingOptionNew context:NULL];
     [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:WLScreenIdentifierKey options:NSKeyValueObservingOptionNew context:NULL];
     [[NSNotificationCenter defaultCenter] addObserver:self

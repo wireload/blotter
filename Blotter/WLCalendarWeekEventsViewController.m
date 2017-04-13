@@ -102,8 +102,8 @@
             [CATransaction setAnimationDuration:0.25];
         }
 
-        [self.view reloadDataAnimated:isAnimated];
-        [self.view scrollHour:self.hour animated:isAnimated];
+        [[self view] reloadDataAnimated:isAnimated];
+        [[self view] scrollHour:self.hour animated:isAnimated];
 
         if (isAnimated)
             [CATransaction commit];
@@ -286,15 +286,15 @@
             else if (oldNumberOfColumns <= self.numberOfColumns)
                 show = (self.numberOfColumns - oldNumberOfColumns) + numberOfColumns;
 
-            [self.view showDays:show
+            [[self view] showDays:show
                        hideDays:hide
                       direction:[oldDateOfFirstColumn compare:self.dateOfFirstColumn] == NSOrderedAscending ? WLRightToLeftDirection : WLLeftToRightDirection
                        animated:isAnimated];
         }
 
-        [self.view scrollHour:self.hour animated:isAnimated];
-        [self.view updateHighlightsTitleOfColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.numberOfColumns)] animated:isAnimated];
-        self.view.showsTimeIndicator = self.numberOfOffsetUnits == 0;
+        [[self view] scrollHour:self.hour animated:isAnimated];
+        [[self view] updateHighlightsTitleOfColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.numberOfColumns)] animated:isAnimated];
+        [self view].showsTimeIndicator = self.numberOfOffsetUnits == 0;
 
         if (isAnimated)
             [CATransaction commit];
@@ -335,7 +335,7 @@
                     if (self.isViewLoaded)
                     {
                         NSIndexSet *allColumnIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.numberOfColumns)];
-                        [self.view updateEventsOfColumnsAtIndexes:allColumnIndexes animated:YES];
+                        [[self view] updateEventsOfColumnsAtIndexes:allColumnIndexes animated:YES];
                     }
                 }
             }
@@ -391,9 +391,9 @@
 - (void)loadView
 {
     self.view = [[WLCalendarWeekView alloc] init];
-    [self.view makeLayers];
-    [self.view reloadDataAnimated:NO];
-    [self.view scrollHour:self.hour animated:NO];
+    [[self view] makeLayers];
+    [[self view] reloadDataAnimated:NO];
+    [[self view] scrollHour:self.hour animated:NO];
 }
 
 - (WLCalendarWeekView *)view
@@ -407,7 +407,7 @@
 
     super.view = newView;
 
-    self.view.dataSource = self;
+    [self view].dataSource = self;
 }
 
 - (WLCalendarEventsController *)representedObject
@@ -439,7 +439,7 @@
     }
 
     if (self.isViewLoaded)
-        [self.view reloadDataAnimated:NO];
+        [[self view] reloadDataAnimated:NO];
 }
 
 @end

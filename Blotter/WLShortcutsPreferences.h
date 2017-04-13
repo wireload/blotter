@@ -10,7 +10,8 @@
 #import <ShortcutRecorder/ShortcutRecorder.h>
 #import <WLFoundation/WLFoundation.h>
 #import "IKPreferencesRepresentation.h"
-#import "WLRecorderControl.h"
+
+@class WLRecorderControl;
 
 
 @interface WLShortcutsPreferences : WLViewController <IKPreferencesRepresentation, SRRecorderControlDelegate, SRValidatorDelegate>

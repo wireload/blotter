@@ -7,7 +7,7 @@
 //
 
 #import "WLShortcutsPreferences.h"
-
+#import "WLRecorderControl.h"
 
 @implementation WLShortcutsPreferences
 

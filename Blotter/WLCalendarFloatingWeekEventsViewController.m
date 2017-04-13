@@ -84,7 +84,7 @@
     [self updateDerivativeProperties];
 
     if (self.isViewLoaded)
-        [self.view updateTitleOfColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.numberOfColumns)] animated:isAnimated];
+        [[self view] updateTitleOfColumnsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.numberOfColumns)] animated:isAnimated];
 }
 
 - (void)setWeekOffset:(NSInteger)newWeekOffset animated:(BOOL)isAnimated
@@ -154,7 +154,7 @@
 - (void)setView:(WLCalendarWeekView *)newView
 {
     super.view = newView;
-    self.view.fitsDayEvents = YES;
+    [self view].fitsDayEvents = YES;
 }
 
 @end

@@ -359,7 +359,7 @@ static const float _WLFadeOutAlphaValue = 0.5f;
             switch (windowState)
             {
                 case WLFinderLevelState:
-                    self.window.isFloatingWindow = NO;
+                    [self window].isFloatingWindow = NO;
                     if (self.isFadedOut)
                         [[self window] setAlphaValue:_WLFadeOutAlphaValue];
                     else
@@ -367,7 +367,7 @@ static const float _WLFadeOutAlphaValue = 0.5f;
                     break;
                 case WLFloatingLevelState:
                     [[self window] setAlphaValue:1.0];
-                    self.window.isFloatingWindow = YES;
+                    [self window].isFloatingWindow = YES;
                     break;
             }
             [self didChangeValueForKey:@"windowState"];
@@ -406,7 +406,7 @@ static const float _WLFadeOutAlphaValue = 0.5f;
                 switch (windowState)
                 {
                     case WLFinderLevelState:
-                        self.window.isFloatingWindow = NO;
+                        [self window].isFloatingWindow = NO;
                         if (self.isFadedOut)
                             [[self window] setAlphaValue:_WLFadeOutAlphaValue];
                         else
@@ -414,7 +414,7 @@ static const float _WLFadeOutAlphaValue = 0.5f;
                         break;
                     case WLFloatingLevelState:
                         [[self window] setAlphaValue:1.0];
-                        self.window.isFloatingWindow = YES;
+                        [self window].isFloatingWindow = YES;
                         break;
                 }
                 [self didChangeValueForKey:@"windowState"];
@@ -436,7 +436,7 @@ static const float _WLFadeOutAlphaValue = 0.5f;
         switch (self.windowState)
         {
             case WLFinderLevelState:
-                self.window.isFloatingWindow = NO;
+                [self window].isFloatingWindow = NO;
                 if (self.isFadedOut)
                     [[self window] setAlphaValue:_WLFadeOutAlphaValue];
                 else
@@ -444,7 +444,7 @@ static const float _WLFadeOutAlphaValue = 0.5f;
                 break;
             case WLFloatingLevelState:
                 [[self window] setAlphaValue:1.0];
-                self.window.isFloatingWindow = YES;
+                [self window].isFloatingWindow = YES;
                 break;
         }
     }
@@ -512,12 +512,12 @@ static const float _WLFadeOutAlphaValue = 0.5f;
         switch (self.windowState)
         {
             case WLFinderLevelState:
-                self.window.isFloatingWindow = NO;
+                [self window].isFloatingWindow = NO;
                 break;
             case WLFloatingLevelState:
-                self.window.isFloatingWindow = YES;
+                [self window].isFloatingWindow = YES;
                 if ([(DeskboardAppDelegate *)[NSApp delegate] isOnlyCalendarWindowVisible:[NSApp windows]])
-                    [self.window makeKeyWindow];
+                    [[self window] makeKeyWindow];
                 break;
         }
 
@@ -551,7 +551,7 @@ static const float _WLFadeOutAlphaValue = 0.5f;
     {
         [self _makeViews];
         [self _updateFrame];
-        self.window.isFloatingWindow = (self.windowState == WLFloatingLevelState);
+        [self window].isFloatingWindow = (self.windowState == WLFloatingLevelState);
         _isWindowShowed = YES;
     }
 }
@@ -761,7 +761,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0;
 - (void)_applyNarrowSizeToViews
 {
     // Ignore width for info section, but don't overwrite it in user defaults.
-    CGFloat width = [[self.window contentView] bounds].size.width;
+    CGFloat width = [[[self window] contentView] bounds].size.width;
 
     [self _applyCustomSizeToViews];
 
@@ -846,12 +846,12 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0;
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
     [CATransaction setCompletionBlock:^(void) {
-        [self.window displayIfNeeded];
+        [[self window] displayIfNeeded];
         if (shouldDisableUpdates)
             NSEnableScreenUpdates();
     }];
     [self flushWindowState];
-    [self.window setFrame:windowFrame display:NO];
+    [[self window] setFrame:windowFrame display:NO];
     [self _applyWindowSizeToViews];
     [CATransaction commit];
 }
@@ -859,7 +859,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0;
 - (void)_makeViews
 {
     NSParameterAssert(!_isWindowShowed);
-    NSView *contentView = [self.window contentView];
+    NSView *contentView = [[self window] contentView];
     [contentView setWantsLayer:YES];
     [contentView setAutoresizesSubviews:NO];
     if ([[NSUserDefaults standardUserDefaults] WL_slowsAnimation])
@@ -951,7 +951,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0;
     CGFloat margin = 0.0;
     if (fabs(tasksViewFrame.size.height - 0.0) > FLT_EPSILON)
         margin = _WLYMarginBetweenTasksAndRightNow;
-    NSRect bounds = [[self.window contentView] bounds];
+    NSRect bounds = [[[self window] contentView] bounds];
     NSRect r = [[[self window] contentView] centerScanRect:NSMakeRect(NSMinX(bounds),
                                                                NSMaxY(tasksViewFrame) + margin,
                                                                [self fixedInfoViewsWidth],
@@ -982,7 +982,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0;
 
 - (CGFloat)defaultTasksViewHeight
 {
-    NSRect bounds = [[self.window contentView] bounds];
+    NSRect bounds = [[[self window] contentView] bounds];
     NSURL *defaultsURL = [[NSBundle mainBundle] URLForResource:@"defaults" withExtension:@"plist"];
     NSDictionary *defaults = [NSDictionary dictionaryWithContentsOfURL:defaultsURL];
     return round((NSHeight(bounds) - ([[defaults objectForKey:@"DateViewHeight"] floatValue]) - _WLYMarginBetweenTasksAndRightNow) / 2);
@@ -990,7 +990,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0;
 
 - (CGFloat)fullTasksViewHeight
 {
-    NSRect bounds = [[self.window contentView] bounds];
+    NSRect bounds = [[[self window] contentView] bounds];
     NSURL *defaultsURL = [[NSBundle mainBundle] URLForResource:@"defaults" withExtension:@"plist"];
     NSDictionary *defaults = [NSDictionary dictionaryWithContentsOfURL:defaultsURL];
     return round(NSHeight(bounds) - ([[defaults objectForKey:@"DateViewHeight"] floatValue]));

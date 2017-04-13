@@ -97,4 +97,6 @@
 
 - (void)_autoFadeTimerDidFire;
 
+- (void)cancelOperation:(id)aSender;
+
 @end

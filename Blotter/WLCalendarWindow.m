@@ -8,7 +8,7 @@
 
 #import "WLCalendarWindow.h"
 #import "NSColor+WLCalendar.h"
-
+#import "DeskboardAppDelegate.h"
 
 static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
 
@@ -237,7 +237,7 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
 - (void)cancelOperation:(id)aSender
 {
     if ([[NSApp delegate] respondsToSelector:@selector(cancelOperation:)])
-        [[NSApp delegate] cancelOperation:aSender];
+        [(DeskboardAppDelegate *)[NSApp delegate] cancelOperation:aSender];
     else
         [super cancelOperation:aSender];
 }

@@ -17,7 +17,7 @@
 {
     super.view = newView;
 
-    self.view.showsAllDayEvents = NO;
+    [self view].showsAllDayEvents = NO;
 }
 
 @end

@@ -116,7 +116,7 @@ static const CGFloat _WLXPadding = 2.0;
 
 - (BOOL)layer:(CALayer *)aLayer shouldInheritContentsScale:(CGFloat)aNewScale fromWindow:(NSWindow *)aWindow
 {
-    return [self.delegate layer:self shouldInheritContentsScale:aNewScale fromWindow:aWindow];
+    return [(WLLayerHostedView *)self.delegate layer:self shouldInheritContentsScale:aNewScale fromWindow:aWindow];
 }
 
 

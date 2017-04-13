@@ -11,9 +11,6 @@
 #import "DeskboardAppDelegate.h"
 
 
-static NSString* const _WLCursorKey = @"cursor";
-
-
 @implementation WLAboutPreferences
 
 #pragma mark Methods
