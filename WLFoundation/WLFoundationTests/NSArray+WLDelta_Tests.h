@@ -6,8 +6,9 @@
 //  Copyright (c) 2012 Wireload. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface NSArray_WLDelta_Tests : SenTestCase
+
+@interface NSArray_WLDelta_Tests : XCTestCase
 
 @end

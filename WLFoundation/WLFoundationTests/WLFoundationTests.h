@@ -6,8 +6,9 @@
 //  Copyright (c) 2012 Wireload. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface WLFoundationTests : SenTestCase
+
+@interface WLFoundationTests : XCTestCase
 
 @end

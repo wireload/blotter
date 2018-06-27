@@ -2,30 +2,38 @@
 //  WLFoundationTests.m
 //  WLFoundationTests
 //
-//  Created by Ilya Kulakov on 07.10.12.
-//  Copyright (c) 2012 Wireload. All rights reserved.
+//  Created by Ilya Kulakov on 6/18/18.
+//  Copyright © 2018 Wireload. All rights reserved.
 //
 
-#import "WLFoundationTests.h"
+#import <XCTest/XCTest.h>
+
+@interface WLFoundationTests : XCTestCase
+
+@end
 
 @implementation WLFoundationTests
 
-- (void)setUp
-{
+- (void)setUp {
     [super setUp];
-    
-    // Set-up code here.
+    // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
-- (void)tearDown
-{
-    // Tear-down code here.
-    
+- (void)tearDown {
+    // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
 }
 
-- (void)testExample
-{
+- (void)testExample {
+    // This is an example of a functional test case.
+    // Use XCTAssert and related functions to verify your tests produce the correct results.
+}
+
+- (void)testPerformanceExample {
+    // This is an example of a performance test case.
+    [self measureBlock:^{
+        // Put the code you want to measure the time of here.
+    }];
 }
 
 @end

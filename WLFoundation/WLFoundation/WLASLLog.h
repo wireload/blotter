@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-typedef NSString * (^WLASLLogMessenger)();
+typedef NSString * (^WLASLLogMessenger)(void);
 
 
 /*!

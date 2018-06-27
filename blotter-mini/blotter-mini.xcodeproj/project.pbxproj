@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BA81DBCE1614514200C83DC3 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA81DBCD1614514200C83DC3 /* Cocoa.framework */; };
+		BA6C874E20DC6E5700D0C30C /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6C874520DC6E2400D0C30C /* ScriptingBridge.framework */; };
+		BA6C874F20DC6E5C00D0C30C /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6C874620DC6E2400D0C30C /* CalendarStore.framework */; };
+		BA6C875020DC6E6100D0C30C /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6C874820DC6E2400D0C30C /* EventKit.framework */; };
+		BA6C875120DC6E6600D0C30C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6C874420DC6E2400D0C30C /* Cocoa.framework */; };
+		BA6C875220DC6E6A00D0C30C /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6C874920DC6E2400D0C30C /* AppKit.framework */; };
+		BA6C875320DC6E7000D0C30C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6C874720DC6E2400D0C30C /* CoreData.framework */; };
 		BA81DBD81614514200C83DC3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA81DBD61614514200C83DC3 /* InfoPlist.strings */; };
 		BA81DBDA1614514200C83DC3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BA81DBD91614514200C83DC3 /* main.m */; };
 		BA81DBDE1614514200C83DC3 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = BA81DBDC1614514200C83DC3 /* Credits.rtf */; };
@@ -15,26 +20,32 @@
 		BA81DBE41614514200C83DC3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA81DBE21614514200C83DC3 /* MainMenu.xib */; };
 		BA9AFBBB163C128E00FAAAD3 /* WLCalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9AFBA5163C126A00FAAAD3 /* WLCalendarStore.framework */; };
 		BA9AFBBC163C129100FAAAD3 /* WLFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9AFBAE163C126F00FAAAD3 /* WLFoundation.framework */; };
-		BA9AFBBD163C129500FAAAD3 /* WLFoundation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA9AFBAE163C126F00FAAAD3 /* WLFoundation.framework */; };
-		BA9AFBBE163C129E00FAAAD3 /* WLCalendarStore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA9AFBA5163C126A00FAAAD3 /* WLCalendarStore.framework */; };
-		BA9FD6181703169E007CE5B1 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA81DBF21614558600C83DC3 /* EventKit.framework */; };
+		BA9AFBBD163C129500FAAAD3 /* WLFoundation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA9AFBAE163C126F00FAAAD3 /* WLFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		BA9AFBBE163C129E00FAAAD3 /* WLCalendarStore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA9AFBA5163C126A00FAAAD3 /* WLCalendarStore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		E25B9FD016972ECB0058AEEE /* WLCalendarEventsController.m in Sources */ = {isa = PBXBuildFile; fileRef = E25B9FCF16972ECB0058AEEE /* WLCalendarEventsController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		BA6C874A20DC6E4300D0C30C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA9AFBA8163C126F00FAAAD3 /* WLFoundation.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BA81DA66160DA09D00C83DC3;
+			remoteInfo = WLFoundation;
+		};
+		BA6C874C20DC6E4F00D0C30C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA9AFB9F163C126900FAAAD3 /* WLCalendarStore.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BC5994818693DDB7C473D9C8;
+			remoteInfo = WLCalendarStore;
+		};
 		BA9AFBA4163C126A00FAAAD3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BA9AFB9F163C126900FAAAD3 /* WLCalendarStore.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = BC599BE30F193B3CEA5830EB;
 			remoteInfo = WLCalendarStore;
-		};
-		BA9AFBA6163C126A00FAAAD3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BA9AFB9F163C126900FAAAD3 /* WLCalendarStore.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BC599C634A6CD01B2871FAAC;
-			remoteInfo = WLCalendarStoreTests;
 		};
 		BA9AFBAD163C126F00FAAAD3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -67,11 +78,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BA6C874420DC6E2400D0C30C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		BA6C874520DC6E2400D0C30C /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
+		BA6C874620DC6E2400D0C30C /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = System/Library/Frameworks/CalendarStore.framework; sourceTree = SDKROOT; };
+		BA6C874720DC6E2400D0C30C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		BA6C874820DC6E2400D0C30C /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		BA6C874920DC6E2400D0C30C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		BA81DBC91614514200C83DC3 /* Blotter-mini.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Blotter-mini.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA81DBCD1614514200C83DC3 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		BA81DBD01614514200C83DC3 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		BA81DBD11614514200C83DC3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		BA81DBD21614514200C83DC3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BA81DBD51614514200C83DC3 /* Blotter-mini-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Blotter-mini-Info.plist"; sourceTree = "<group>"; };
 		BA81DBD71614514200C83DC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BA81DBD91614514200C83DC3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -80,10 +93,7 @@
 		BA81DBDF1614514200C83DC3 /* WLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLAppDelegate.h; sourceTree = "<group>"; };
 		BA81DBE01614514200C83DC3 /* WLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLAppDelegate.m; sourceTree = "<group>"; };
 		BA81DBE31614514200C83DC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		BA81DBF21614558600C83DC3 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		BA81DBF61615A72300C83DC3 /* Blotter-mini.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Blotter-mini.entitlements"; sourceTree = "<group>"; };
-		BA81DC091616E30C00C83DC3 /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = System/Library/Frameworks/CalendarStore.framework; sourceTree = SDKROOT; };
-		BA81DC0B1616E35500C83DC3 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		BA9AFB9F163C126900FAAAD3 /* WLCalendarStore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WLCalendarStore.xcodeproj; path = ../WLCalendarStore/WLCalendarStore.xcodeproj; sourceTree = "<group>"; };
 		BA9AFBA8163C126F00FAAAD3 /* WLFoundation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WLFoundation.xcodeproj; path = ../WLFoundation/WLFoundation.xcodeproj; sourceTree = "<group>"; };
 		E25B9FCE16972ECB0058AEEE /* WLCalendarEventsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WLCalendarEventsController.h; path = ../../Blotter/WLCalendarEventsController.h; sourceTree = "<group>"; };
@@ -95,30 +105,41 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA9FD6181703169E007CE5B1 /* EventKit.framework in Frameworks */,
+				BA6C875320DC6E7000D0C30C /* CoreData.framework in Frameworks */,
+				BA6C875220DC6E6A00D0C30C /* AppKit.framework in Frameworks */,
+				BA6C875120DC6E6600D0C30C /* Cocoa.framework in Frameworks */,
+				BA6C875020DC6E6100D0C30C /* EventKit.framework in Frameworks */,
+				BA6C874F20DC6E5C00D0C30C /* CalendarStore.framework in Frameworks */,
+				BA6C874E20DC6E5700D0C30C /* ScriptingBridge.framework in Frameworks */,
 				BA9AFBBC163C129100FAAAD3 /* WLFoundation.framework in Frameworks */,
 				BA9AFBBB163C128E00FAAAD3 /* WLCalendarStore.framework in Frameworks */,
-				BA81DBCE1614514200C83DC3 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BA6C874320DC6E1B00D0C30C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BA6C874920DC6E2400D0C30C /* AppKit.framework */,
+				BA6C874620DC6E2400D0C30C /* CalendarStore.framework */,
+				BA6C874420DC6E2400D0C30C /* Cocoa.framework */,
+				BA6C874720DC6E2400D0C30C /* CoreData.framework */,
+				BA6C874820DC6E2400D0C30C /* EventKit.framework */,
+				BA6C874520DC6E2400D0C30C /* ScriptingBridge.framework */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
 		BA81DBBE1614514200C83DC3 = {
 			isa = PBXGroup;
 			children = (
 				BA9AFBA8163C126F00FAAAD3 /* WLFoundation.xcodeproj */,
 				BA9AFB9F163C126900FAAAD3 /* WLCalendarStore.xcodeproj */,
-				BA81DC0B1616E35500C83DC3 /* ScriptingBridge.framework */,
-				BA81DC091616E30C00C83DC3 /* CalendarStore.framework */,
-				BA81DBF21614558600C83DC3 /* EventKit.framework */,
-				BA81DBCD1614514200C83DC3 /* Cocoa.framework */,
-				BA81DBD01614514200C83DC3 /* AppKit.framework */,
-				BA81DBD11614514200C83DC3 /* CoreData.framework */,
-				BA81DBD21614514200C83DC3 /* Foundation.framework */,
 				BA81DBD31614514200C83DC3 /* Blotter-mini */,
 				BA81DBCA1614514200C83DC3 /* Products */,
+				BA6C874320DC6E1B00D0C30C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -160,7 +181,6 @@
 			isa = PBXGroup;
 			children = (
 				BA9AFBA5163C126A00FAAAD3 /* WLCalendarStore.framework */,
-				BA9AFBA7163C126A00FAAAD3 /* WLCalendarStoreTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -169,7 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				BA9AFBAE163C126F00FAAAD3 /* WLFoundation.framework */,
-				BA9AFBB0163C126F00FAAAD3 /* WLFoundationTests.octest */,
+				BA9AFBB0163C126F00FAAAD3 /* WLFoundationTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -189,6 +209,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				BA6C874D20DC6E4F00D0C30C /* PBXTargetDependency */,
+				BA6C874B20DC6E4300D0C30C /* PBXTargetDependency */,
 			);
 			name = "Blotter-mini";
 			productName = "Blotter-mini";
@@ -202,8 +224,13 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = WL;
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = Wireload;
+				TargetAttributes = {
+					BA81DBC81614514200C83DC3 = {
+						DevelopmentTeam = 438Z2G77U3;
+					};
+				};
 			};
 			buildConfigurationList = BA81DBC31614514200C83DC3 /* Build configuration list for PBXProject "Blotter-mini" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -240,13 +267,6 @@
 			remoteRef = BA9AFBA4163C126A00FAAAD3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		BA9AFBA7163C126A00FAAAD3 /* WLCalendarStoreTests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = WLCalendarStoreTests.octest;
-			remoteRef = BA9AFBA6163C126A00FAAAD3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		BA9AFBAE163C126F00FAAAD3 /* WLFoundation.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -254,10 +274,10 @@
 			remoteRef = BA9AFBAD163C126F00FAAAD3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		BA9AFBB0163C126F00FAAAD3 /* WLFoundationTests.octest */ = {
+		BA9AFBB0163C126F00FAAAD3 /* WLFoundationTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = WLFoundationTests.octest;
+			path = WLFoundationTests.xctest;
 			remoteRef = BA9AFBAF163C126F00FAAAD3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -288,6 +308,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BA6C874B20DC6E4300D0C30C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = WLFoundation;
+			targetProxy = BA6C874A20DC6E4300D0C30C /* PBXContainerItemProxy */;
+		};
+		BA6C874D20DC6E4F00D0C30C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = WLCalendarStore;
+			targetProxy = BA6C874C20DC6E4F00D0C30C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		BA81DBD61614514200C83DC3 /* InfoPlist.strings */ = {
@@ -321,16 +354,29 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
+				DEVELOPMENT_TEAM = 438Z2G77U3;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -339,7 +385,9 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
@@ -351,19 +399,34 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				DEVELOPMENT_TEAM = 438Z2G77U3;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				SDKROOT = macosx;
@@ -379,6 +442,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Blotter-mini/Blotter-mini-Prefix.pch";
 				INFOPLIST_FILE = "Blotter-mini/Blotter-mini-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.wireload.blotter-mini";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -393,6 +457,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Blotter-mini/Blotter-mini-Prefix.pch";
 				INFOPLIST_FILE = "Blotter-mini/Blotter-mini-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.wireload.blotter-mini";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

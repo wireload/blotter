@@ -11,6 +11,9 @@
 #import "WLDateRange.h"
 
 
+NSString* const WLDateRangeLogKey = @"net.wireload.mac.WLFoundation.WLDateRange";
+
+
 @implementation WLDateRange
 
 - (instancetype)initWithStartDate:(NSDate *)aStartDate endDate:(NSDate *)anEndDate
@@ -24,6 +27,9 @@
 
         if (!anEndDate)
             anEndDate = [NSDate date];
+
+        if ([aStartDate isGreaterThan:anEndDate])
+            [[WLASLLog logForKey:WLDateRangeLogKey] logWarning:@"{%@, %@} is a reversed range", aStartDate, anEndDate];
 
         _startDate = [[aStartDate earlierDate:anEndDate] copy];
         _endDate = [[aStartDate laterDate:anEndDate] copy];
@@ -242,6 +248,9 @@
         else
             [NSException raise:NSInvalidArgumentException format:@"anOptions (%lu) does not specify alignment option for end date.", anOptions];
     }
+
+    if ([startDate isGreaterThan:endDate])
+        [[WLASLLog logForKey:WLDateRangeLogKey] logWarning:[NSString stringWithFormat:@"Alignment of %@ with %lu (%lu) resulted in reversed range", self, aCalendarUnit, anOptions]];
 
     return [WLDateRange dateRangeWithStartDate:startDate endDate:endDate];
 }

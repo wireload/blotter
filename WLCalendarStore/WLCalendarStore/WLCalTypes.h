@@ -97,4 +97,4 @@ typedef NS_ENUM(NSUInteger, WLCalAuthorizationStatus)
 
 typedef void (^WLCalErrorHandler)(NSError *anError);
 
-typedef void (^WLCalUpdateHandler)();
+typedef void (^WLCalUpdateHandler)(void);

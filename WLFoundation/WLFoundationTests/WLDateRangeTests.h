@@ -6,10 +6,9 @@
 //  Copyright (c) 2012 Wireload. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
-#import "WLDateRange.h"
+#import <XCTest/XCTest.h>
 
 
-@interface WLDateRangeTests : SenTestCase
+@interface WLDateRangeTests : XCTestCase
 
 @end

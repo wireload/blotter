@@ -7,7 +7,7 @@
 	<key>CFBundleIconFile</key>
 	<string>Blotter-B10.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>net.wireload.blotter.mac</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

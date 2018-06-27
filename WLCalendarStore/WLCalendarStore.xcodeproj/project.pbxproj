@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		BA036999161ED4F90023A566 /* WLCalRemindersPredicate.h in Headers */ = {isa = PBXBuildFile; fileRef = BC599C4DD88F8B9D26A394AD /* WLCalRemindersPredicate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA03699C161ED5010023A566 /* WLCalEventsPredicate.h in Headers */ = {isa = PBXBuildFile; fileRef = BC599799CD6AE0EAE68F161B /* WLCalEventsPredicate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA6C873B20DC6B7A00D0C30C /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6C873620DC6B6400D0C30C /* AppKit.framework */; };
+		BA6C873C20DC6B8500D0C30C /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6C873A20DC6B6400D0C30C /* ScriptingBridge.framework */; };
+		BA6C873D20DC6B8A00D0C30C /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6C873820DC6B6400D0C30C /* CalendarStore.framework */; };
+		BA6C873E20DC6B9000D0C30C /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6C873920DC6B6400D0C30C /* EventKit.framework */; };
+		BA6C873F20DC6B9600D0C30C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6C873720DC6B6400D0C30C /* Foundation.framework */; };
 		BA81DBF0161451E500C83DC3 /* WLCalendarStore.h in Headers */ = {isa = PBXBuildFile; fileRef = BA81DBEE161451E500C83DC3 /* WLCalendarStore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA81DBF1161451E500C83DC3 /* WLCalendarStore.m in Sources */ = {isa = PBXBuildFile; fileRef = BA81DBEF161451E500C83DC3 /* WLCalendarStore.m */; };
 		BA81DBFC1615C2D600C83DC3 /* iCal_10_7.h in Headers */ = {isa = PBXBuildFile; fileRef = BA81DBFA1615C2D600C83DC3 /* iCal_10_7.h */; settings = {ATTRIBUTES = (); }; };
@@ -24,10 +29,7 @@
 		BA9AFB8C163AB37600FAAAD3 /* WLCalSystemCalendarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = BC599F41FF0097B8661731BB /* WLCalSystemCalendarItem.m */; };
 		BA9AFB8D163AB37800FAAAD3 /* WLCalSystemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5993C483A01041FFC0490B /* WLCalSystemObject.m */; };
 		BA9AFB8E163AB37B00FAAAD3 /* WLCalSystemCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = BC599B15D5289FAE3DD25278 /* WLCalSystemCalendar.m */; };
-		BA9AFB93163AB44500FAAAD3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC59936A34B37B3E7AEF352D /* Foundation.framework */; };
 		BA9AFBBA163C128700FAAAD3 /* WLFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9AFBB7163C127C00FAAAD3 /* WLFoundation.framework */; };
-		BA9AFBC0163E57D100FAAAD3 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9AFBBF163E57D100FAAAD3 /* AppKit.framework */; };
-		BAA049EB1622FF3A0078DF12 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA049EA1622FF3A0078DF12 /* ScriptingBridge.framework */; };
 		BAD927801604859900081E9A /* WLCalTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = BC599737C6048530E0046B47 /* WLCalTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BAE621A21827973800BD4A83 /* iCal_10_9.h in Headers */ = {isa = PBXBuildFile; fileRef = BAE621A11827973800BD4A83 /* iCal_10_9.h */; };
 		BC599305EAE0EE90DF9816C0 /* WLCalReminder.h in Headers */ = {isa = PBXBuildFile; fileRef = BC59915C9F7D047991AE891C /* WLCalReminder.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -36,15 +38,10 @@
 		BC5996D83F9FEB6B2110843A /* WLCalSystemStore.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5993F0F98EE4C5D171A1AC /* WLCalSystemStore.m */; };
 		BC59970D1882877577C357E6 /* WLCalCalendar.h in Headers */ = {isa = PBXBuildFile; fileRef = BC599D7E1F8B7189A568539F /* WLCalCalendar.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC59976A63F896653E41C2EA /* WLCalStore.h in Headers */ = {isa = PBXBuildFile; fileRef = BC59995FE53FCBB9B37C5AC3 /* WLCalStore.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BC5997AB5F3B68C689B9ACF3 /* WLCalendarStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BC59986F97FA7AC57F3C58B7 /* WLCalendarStoreTests.m */; };
 		BC599897D39FE8FD9DB7F70C /* WLCalEventsPredicate.m in Sources */ = {isa = PBXBuildFile; fileRef = BC599C95EC14290452962F84 /* WLCalEventsPredicate.m */; };
-		BC599BCA90298445BACC948E /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC59932EAF5AAA38C142A6DA /* SenTestingKit.framework */; };
 		BC599BE08CEB80943034B6F5 /* WLCalEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = BC599D4E452533C5A1E577CD /* WLCalEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BC599C6D427667559C8E7A56 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC59927A9F62AFFBDFEB239D /* EventKit.framework */; };
-		BC599C8D9242909987FBA4A9 /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC599035D1785C53BC1F0A6A /* CalendarStore.framework */; };
 		BC599CB9C33CBDCC27444B87 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BC59951FE1E27993922500A7 /* InfoPlist.strings */; };
 		BC599CF33A419C0427D1ADFA /* WLCalRemindersPredicate.m in Sources */ = {isa = PBXBuildFile; fileRef = BC599BA8E122A06917651C96 /* WLCalRemindersPredicate.m */; };
-		BC599D480D667C5B3FEE5ADD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BC599F1CC3E5D260672D9D26 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,51 +66,39 @@
 			remoteGlobalIDString = BAA049CF1621A1040078DF12;
 			remoteInfo = WLFoundationTests;
 		};
-		BC5997447098A407197119F9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BC5999A246B208126CE58903 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = BC5994818693DDB7C473D9C8;
-			remoteInfo = WLCalendarStore;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BA6C873620DC6B6400D0C30C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		BA6C873720DC6B6400D0C30C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		BA6C873820DC6B6400D0C30C /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = System/Library/Frameworks/CalendarStore.framework; sourceTree = SDKROOT; };
+		BA6C873920DC6B6400D0C30C /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		BA6C873A20DC6B6400D0C30C /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		BA81DBEE161451E500C83DC3 /* WLCalendarStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarStore.h; sourceTree = "<group>"; };
 		BA81DBEF161451E500C83DC3 /* WLCalendarStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarStore.m; sourceTree = "<group>"; };
 		BA81DBFA1615C2D600C83DC3 /* iCal_10_7.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCal_10_7.h; sourceTree = "<group>"; };
 		BA81DBFB1615C2D600C83DC3 /* iCal_10_8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCal_10_8.h; sourceTree = "<group>"; };
 		BA9AFBB1163C127B00FAAAD3 /* WLFoundation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WLFoundation.xcodeproj; path = ../WLFoundation/WLFoundation.xcodeproj; sourceTree = "<group>"; };
-		BA9AFBBF163E57D100FAAAD3 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		BAA049EA1622FF3A0078DF12 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		BAE621A11827973800BD4A83 /* iCal_10_9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCal_10_9.h; sourceTree = "<group>"; };
-		BC599035D1785C53BC1F0A6A /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = System/Library/Frameworks/CalendarStore.framework; sourceTree = SDKROOT; };
 		BC59914693A31B866FD145DC /* WLCalendarStore-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = "WLCalendarStore-Info.plist"; sourceTree = "<group>"; };
 		BC599146B00DFB13543FFCEF /* WLCalendarStore-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WLCalendarStore-Prefix.pch"; sourceTree = "<group>"; };
 		BC59915C9F7D047991AE891C /* WLCalReminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalReminder.h; sourceTree = "<group>"; };
 		BC59919D84C9B937D6D9CD2B /* WLCalSystemCalendarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalSystemCalendarItem.h; sourceTree = "<group>"; };
-		BC59927A9F62AFFBDFEB239D /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
-		BC59932EAF5AAA38C142A6DA /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		BC59936A34B37B3E7AEF352D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BC5993C483A01041FFC0490B /* WLCalSystemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalSystemObject.m; sourceTree = "<group>"; };
 		BC5993F0F98EE4C5D171A1AC /* WLCalSystemStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalSystemStore.m; sourceTree = "<group>"; };
 		BC5993F8B2E37CD07D2189F0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BC5994ADDAFFF37C64270272 /* WLCalSystemReminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalSystemReminder.m; sourceTree = "<group>"; };
 		BC5995EF7E9886B1FD053FED /* WLCalSystemCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalSystemCalendar.h; sourceTree = "<group>"; };
-		BC5997250DFAAA2570F1B9CF /* WLCalendarStoreTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = "WLCalendarStoreTests-Info.plist"; sourceTree = "<group>"; };
 		BC599737C6048530E0046B47 /* WLCalTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalTypes.h; sourceTree = "<group>"; };
 		BC599799CD6AE0EAE68F161B /* WLCalEventsPredicate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalEventsPredicate.h; sourceTree = "<group>"; };
-		BC59986F97FA7AC57F3C58B7 /* WLCalendarStoreTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLCalendarStoreTests.m; sourceTree = "<group>"; };
 		BC59995FE53FCBB9B37C5AC3 /* WLCalStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalStore.h; sourceTree = "<group>"; };
 		BC599A20AB85298CDDD6DC87 /* WLCalSystemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalSystemObject.h; sourceTree = "<group>"; };
 		BC599A4B957C339582495DE2 /* WLCalSystemStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalSystemStore.h; sourceTree = "<group>"; };
 		BC599B15D5289FAE3DD25278 /* WLCalSystemCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalSystemCalendar.m; sourceTree = "<group>"; };
 		BC599B72BDB73789F5427156 /* WLCalCalendarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalCalendarItem.h; sourceTree = "<group>"; };
 		BC599BA8E122A06917651C96 /* WLCalRemindersPredicate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalRemindersPredicate.m; sourceTree = "<group>"; };
-		BC599BC78F0C739F8BC4FD1B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BC599BE30F193B3CEA5830EB /* WLCalendarStore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WLCalendarStore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC599C4DD88F8B9D26A394AD /* WLCalRemindersPredicate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalRemindersPredicate.h; sourceTree = "<group>"; };
-		BC599C634A6CD01B2871FAAC /* WLCalendarStoreTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WLCalendarStoreTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC599C95EC14290452962F84 /* WLCalEventsPredicate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalEventsPredicate.m; sourceTree = "<group>"; };
 		BC599D2BA4C41AB13BC07558 /* WLCalSystemReminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalSystemReminder.h; sourceTree = "<group>"; };
 		BC599D4E452533C5A1E577CD /* WLCalEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalEvent.h; sourceTree = "<group>"; };
@@ -122,7 +107,6 @@
 		BC599DE749D57B02CB6E3A79 /* WLCalObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalObject.h; sourceTree = "<group>"; };
 		BC599E2E135263472919FE7D /* WLCalSystemEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalSystemEvent.m; sourceTree = "<group>"; };
 		BC599F41FF0097B8661731BB /* WLCalSystemCalendarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalSystemCalendarItem.m; sourceTree = "<group>"; };
-		BC599FF0C63704167C819D21 /* WLCalendarStoreTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLCalendarStoreTests.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,26 +114,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA9AFBC0163E57D100FAAAD3 /* AppKit.framework in Frameworks */,
+				BA6C873F20DC6B9600D0C30C /* Foundation.framework in Frameworks */,
+				BA6C873E20DC6B9000D0C30C /* EventKit.framework in Frameworks */,
+				BA6C873D20DC6B8A00D0C30C /* CalendarStore.framework in Frameworks */,
+				BA6C873C20DC6B8500D0C30C /* ScriptingBridge.framework in Frameworks */,
+				BA6C873B20DC6B7A00D0C30C /* AppKit.framework in Frameworks */,
 				BA9AFBBA163C128700FAAAD3 /* WLFoundation.framework in Frameworks */,
-				BA9AFB93163AB44500FAAAD3 /* Foundation.framework in Frameworks */,
-				BAA049EB1622FF3A0078DF12 /* ScriptingBridge.framework in Frameworks */,
-				BC599C6D427667559C8E7A56 /* EventKit.framework in Frameworks */,
-				BC599C8D9242909987FBA4A9 /* CalendarStore.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BC5999BEBF1755476C2908B6 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BC599BCA90298445BACC948E /* SenTestingKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BA6C873520DC6B5D00D0C30C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BA6C873620DC6B6400D0C30C /* AppKit.framework */,
+				BA6C873820DC6B6400D0C30C /* CalendarStore.framework */,
+				BA6C873920DC6B6400D0C30C /* EventKit.framework */,
+				BA6C873720DC6B6400D0C30C /* Foundation.framework */,
+				BA6C873A20DC6B6400D0C30C /* ScriptingBridge.framework */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
 		BA81DBF91615C2CC00C83DC3 /* System */ = {
 			isa = PBXGroup;
 			children = (
@@ -191,38 +179,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		BC5995BF4B6D4CD75888B8D4 /* WLCalendarStoreTests */ = {
-			isa = PBXGroup;
-			children = (
-				BC59986F97FA7AC57F3C58B7 /* WLCalendarStoreTests.m */,
-				BC599FF0C63704167C819D21 /* WLCalendarStoreTests.h */,
-				BC5996EFB5EACE3703327B1B /* Supporting Files */,
-			);
-			path = WLCalendarStoreTests;
-			sourceTree = "<group>";
-		};
-		BC5996EFB5EACE3703327B1B /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				BC599F1CC3E5D260672D9D26 /* InfoPlist.strings */,
-				BC5997250DFAAA2570F1B9CF /* WLCalendarStoreTests-Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		BC59980A80E0C6ADD67BE874 = {
 			isa = PBXGroup;
 			children = (
 				BA9AFBB1163C127B00FAAAD3 /* WLFoundation.xcodeproj */,
-				BA9AFBBF163E57D100FAAAD3 /* AppKit.framework */,
-				BAA049EA1622FF3A0078DF12 /* ScriptingBridge.framework */,
-				BC599035D1785C53BC1F0A6A /* CalendarStore.framework */,
-				BC59927A9F62AFFBDFEB239D /* EventKit.framework */,
-				BC59932EAF5AAA38C142A6DA /* SenTestingKit.framework */,
-				BC59936A34B37B3E7AEF352D /* Foundation.framework */,
 				BC599E9E8A733E27199A9F8F /* WLCalendarStore */,
-				BC5995BF4B6D4CD75888B8D4 /* WLCalendarStoreTests */,
 				BC599CB3C645C2E78B8BFA57 /* Products */,
+				BA6C873520DC6B5D00D0C30C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -230,7 +193,6 @@
 			isa = PBXGroup;
 			children = (
 				BC599BE30F193B3CEA5830EB /* WLCalendarStore.framework */,
-				BC599C634A6CD01B2871FAAC /* WLCalendarStoreTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -308,32 +270,13 @@
 			productReference = BC599BE30F193B3CEA5830EB /* WLCalendarStore.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		BC5999D1A3C7C09D4D70B7DF /* WLCalendarStoreTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BC599BE73BED9FB09FD9270F /* Build configuration list for PBXNativeTarget "WLCalendarStoreTests" */;
-			buildPhases = (
-				BC5997AE625759AFBC765C12 /* Sources */,
-				BC5999BEBF1755476C2908B6 /* Frameworks */,
-				BC59921D12918FE03E1EE001 /* Resources */,
-				BC599E93F95C0C7762BD6416 /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				BC599F7E17BB3BE545C72351 /* PBXTargetDependency */,
-			);
-			name = WLCalendarStoreTests;
-			productName = WLCalendarStoreTests;
-			productReference = BC599C634A6CD01B2871FAAC /* WLCalendarStoreTests.octest */;
-			productType = "com.apple.product-type.bundle";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		BC5999A246B208126CE58903 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0940;
 			};
 			buildConfigurationList = BC5996288A390A1EC02FFDEA /* Build configuration list for PBXProject "WLCalendarStore" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -354,7 +297,6 @@
 			projectRoot = "";
 			targets = (
 				BC5994818693DDB7C473D9C8 /* WLCalendarStore */,
-				BC5999D1A3C7C09D4D70B7DF /* WLCalendarStoreTests */,
 			);
 		};
 /* End PBXProject section */
@@ -377,14 +319,6 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
-		BC59921D12918FE03E1EE001 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BC599D480D667C5B3FEE5ADD /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		BC599AD3296428BD04B0FBA3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -395,31 +329,7 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		BC599E93F95C0C7762BD6416 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		BC5997AE625759AFBC765C12 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BC5997AB5F3B68C689B9ACF3 /* WLCalendarStoreTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		BC59988C3A73C17C1901B707 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -444,11 +354,6 @@
 			name = WLFoundation;
 			targetProxy = BA1059221689C86A00A3DDF5 /* PBXContainerItemProxy */;
 		};
-		BC599F7E17BB3BE545C72351 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = BC5994818693DDB7C473D9C8 /* WLCalendarStore */;
-			targetProxy = BC5997447098A407197119F9 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -456,14 +361,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				BC5993F8B2E37CD07D2189F0 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		BC599F1CC3E5D260672D9D26 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BC599BC78F0C739F8BC4FD1B /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -476,15 +373,24 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CLANG_X86_VECTOR_INSTRUCTIONS = ssse3;
-				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
@@ -492,7 +398,9 @@
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				SDKROOT = macosx;
@@ -503,7 +411,6 @@
 		BAF67FEE16D62AF40047FE2A /* Archiving */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -511,28 +418,15 @@
 				GCC_PREFIX_HEADER = "WLCalendarStore/WLCalendarStore-Prefix.pch";
 				INFOPLIST_FILE = "WLCalendarStore/WLCalendarStore-Info.plist";
 				INSTALL_PATH = "@rpath";
+				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.WLCalendarStore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
-			};
-			name = Archiving;
-		};
-		BAF67FEF16D62AF40047FE2A /* Archiving */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "WLCalendarStore/WLCalendarStore-Prefix.pch";
-				INFOPLIST_FILE = "WLCalendarStoreTests/WLCalendarStoreTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Archiving;
 		};
 		BC5990974C260B0966F1B273 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -540,6 +434,7 @@
 				GCC_PREFIX_HEADER = "WLCalendarStore/WLCalendarStore-Prefix.pch";
 				INFOPLIST_FILE = "WLCalendarStore/WLCalendarStore-Info.plist";
 				INSTALL_PATH = "@rpath";
+				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.WLCalendarStore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -550,15 +445,25 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CLANG_X86_VECTOR_INSTRUCTIONS = ssse3;
-				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -572,12 +477,12 @@
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
 				SDKROOT = macosx;
 				VALID_ARCHS = x86_64;
 			};
@@ -586,7 +491,6 @@
 		BC59996E3836E4BCD90CAF0E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -594,51 +498,35 @@
 				GCC_PREFIX_HEADER = "WLCalendarStore/WLCalendarStore-Prefix.pch";
 				INFOPLIST_FILE = "WLCalendarStore/WLCalendarStore-Info.plist";
 				INSTALL_PATH = "@rpath";
+				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.WLCalendarStore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
-		};
-		BC599C56572AC4DBC1F5D6BF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "WLCalendarStore/WLCalendarStore-Prefix.pch";
-				INFOPLIST_FILE = "WLCalendarStoreTests/WLCalendarStoreTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Debug;
-		};
-		BC599EC8FF3F33FA832DC232 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "WLCalendarStore/WLCalendarStore-Prefix.pch";
-				INFOPLIST_FILE = "WLCalendarStoreTests/WLCalendarStoreTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Release;
 		};
 		BC599F2EE38E5091E3B4E463 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CLANG_X86_VECTOR_INSTRUCTIONS = ssse3;
-				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
@@ -646,7 +534,9 @@
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				SDKROOT = macosx;
@@ -673,16 +563,6 @@
 				BC599F2EE38E5091E3B4E463 /* Release */,
 				BAF67FED16D62AF40047FE2A /* Archiving */,
 				BC5997AB18564A397406A470 /* Debug */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		BC599BE73BED9FB09FD9270F /* Build configuration list for PBXNativeTarget "WLCalendarStoreTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BC599EC8FF3F33FA832DC232 /* Release */,
-				BAF67FEF16D62AF40047FE2A /* Archiving */,
-				BC599C56572AC4DBC1F5D6BF /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

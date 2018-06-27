@@ -30,7 +30,7 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^
     {
-        WLCalendarsController *c = [[[NSApp delegate] calendarWindowController] calendarsController];
+        WLCalendarsController *c = [[(DeskboardAppDelegate *)[NSApp delegate] calendarWindowController] calendarsController];
         _calEventCalendars = [c.calEventCalendars copy];
         _calReminderCalendars = [c.calReminderCalendars copy];
         [_eventsTableView reloadData];
@@ -80,7 +80,7 @@
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-    WLCalendarsController *c = [[[NSApp delegate] calendarWindowController] calendarsController];
+    WLCalendarsController *c = [[(DeskboardAppDelegate *)[NSApp delegate] calendarWindowController] calendarsController];
     if ([[aTableColumn identifier] isEqualToString:@"check"])
     {
         if (aTableView == _eventsTableView)
@@ -101,7 +101,7 @@
 {
     if ([[aTableColumn identifier] isEqualToString:@"check"])
     {
-        WLCalendarsController *c = [[[NSApp delegate] calendarWindowController] calendarsController];
+        WLCalendarsController *c = [[(DeskboardAppDelegate *)[NSApp delegate] calendarWindowController] calendarsController];
         if (aTableView == _eventsTableView)
             [c setCalCalendar:_calEventCalendars[(NSUInteger)rowIndex] usedToDisplayEvents:[anObject boolValue]];
         else
@@ -121,7 +121,7 @@
     [_remindersTableView setIntercellSpacing:NSMakeSize(3.0, 0.0)];
     [_remindersTableView setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
 
-    WLCalendarsController *c = [[[NSApp delegate] calendarWindowController] calendarsController];
+    WLCalendarsController *c = [[(DeskboardAppDelegate *)[NSApp delegate] calendarWindowController] calendarsController];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(calCalendarsDidChange:)
                                                  name:WLCalCalendarsDidChangeNotification

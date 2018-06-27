@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 
 
+extern NSString* const WLDateRangeLogKey;
+
+
 /*!
     @brief  Indicates relative position of one date range (or date) to another.
  */
@@ -122,6 +125,27 @@ typedef NS_ENUM(NSUInteger, WLPositionRelativeToRange)
 @end
 
 
+/*!
+    @brief      Alignment options
+
+    @constant   WLAlignStartDateInward Align startDate towards the endDate.
+
+    @constant   WLAlignEndDateInward Align endDate towards the startDate.
+
+    @constant   WLAlignStartDateOutward Align startDate away from endDate.
+
+    @constant   WLAlignEndDateOutward Align endDate away from startDate.
+
+    @constant   WLAlignStartDateNearest Align startDate towards nearest calendar unit.
+
+    @constant   WLAlignEndDateNearest Align endDate towards nearest calendar unit.
+
+    @constant   WLAlignInward Align both startDate and endDate towards each other.
+
+    @constant   WLAlignOutward Align both startDate and endDate away from each other.
+
+    @constant   WLAlignNearest Align both startDate and endDate.
+ */
 typedef NS_ENUM(NSUInteger, WLDateRangeAlignmentOptions)
 {
     WLAlignStartDateInward = 1 << 0,
@@ -163,7 +187,7 @@ typedef NS_ENUM(NSUInteger, WLDateRangeAlignmentOptions)
 /*!
     @brief      Splits the receiver into an array using aCalendarUnit.
 
-    @param      aCalendarUnit
+    @param      aCalendarUnit Calendar unit for splitting.
 
     @param      aCalendar Instance of NSCalendar used for splitting. May be nil (means current calendar).
 

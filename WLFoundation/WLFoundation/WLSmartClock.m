@@ -11,7 +11,7 @@
 #import "WLASLLog.h"
 
 
-NSString* const WLSmartClockLogKey = @"net.wireload.mac.WLFoundation";
+NSString* const WLSmartClockLogKey = @"net.wireload.mac.WLFoundation.WLSmartClock";
 
 
 @implementation WLSmartClock

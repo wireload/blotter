@@ -7,24 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BA1059A3168DE52E00A3DDF5 /* WLDateRangeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1059A2168DE52E00A3DDF5 /* WLDateRangeTests.m */; };
-		BA1059A5168DF37D00A3DDF5 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA1059A4168DF37D00A3DDF5 /* AppKit.framework */; };
+		BA6C871C20D8C50D00D0C30C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6C871920D8C26C00D0C30C /* IOKit.framework */; };
+		BA6C871D20D8C51200D0C30C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6C871A20D8C26C00D0C30C /* QuartzCore.framework */; };
+		BA6C871E20D8C51600D0C30C /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6C871820D8C26C00D0C30C /* AppKit.framework */; };
+		BA6C871F20D8C51B00D0C30C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6C871B20D8C26C00D0C30C /* Foundation.framework */; };
+		BA6C872720D8C77900D0C30C /* WLFoundationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6C872620D8C77900D0C30C /* WLFoundationTests.m */; };
+		BA6C872920D8C77900D0C30C /* WLFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA81DA67160DA09D00C83DC3 /* WLFoundation.framework */; };
+		BA6C873020D8C7AD00D0C30C /* NSArray+WLDelta_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */; };
+		BA6C873120D8C7B100D0C30C /* WLDateRangeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1059A2168DE52E00A3DDF5 /* WLDateRangeTests.m */; };
 		BA81DA75160DA09D00C83DC3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA81DA73160DA09D00C83DC3 /* InfoPlist.strings */; };
 		BA81DA83160DA0C800C83DC3 /* NSArray+WLDelta.h in Headers */ = {isa = PBXBuildFile; fileRef = BA81DA7F160DA0C800C83DC3 /* NSArray+WLDelta.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA81DA84160DA0C800C83DC3 /* NSArray+WLDelta.m in Sources */ = {isa = PBXBuildFile; fileRef = BA81DA80160DA0C800C83DC3 /* NSArray+WLDelta.m */; };
 		BA81DA85160DA0C800C83DC3 /* WLDateRange.h in Headers */ = {isa = PBXBuildFile; fileRef = BA81DA81160DA0C800C83DC3 /* WLDateRange.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA81DA86160DA0C800C83DC3 /* WLDateRange.m in Sources */ = {isa = PBXBuildFile; fileRef = BA81DA82160DA0C800C83DC3 /* WLDateRange.m */; };
 		BA81DAC1160DA7FB00C83DC3 /* WLFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = BA81DAC0160DA7FB00C83DC3 /* WLFoundation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BA9AFB90163AB3D400FAAAD3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA81DA6F160DA09D00C83DC3 /* Foundation.framework */; };
 		BA9AFB9B163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h in Headers */ = {isa = PBXBuildFile; fileRef = BA9AFB99163AB71D00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA9AFB9C163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9AFB9A163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m */; };
 		BA9FD6DB170C348F007CE5B1 /* NSImage+WLHiDPIDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = BA9FD6D9170C348F007CE5B1 /* NSImage+WLHiDPIDrawing.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA9FD6DC170C348F007CE5B1 /* NSImage+WLHiDPIDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9FD6DA170C348F007CE5B1 /* NSImage+WLHiDPIDrawing.m */; };
-		BAA049D11621A1040078DF12 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA049D01621A1040078DF12 /* SenTestingKit.framework */; };
-		BAA049D81621A1040078DF12 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BAA049D61621A1040078DF12 /* InfoPlist.strings */; };
-		BAA049DB1621A1040078DF12 /* WLFoundationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA049DA1621A1040078DF12 /* WLFoundationTests.m */; };
-		BAA049E31621A1810078DF12 /* NSArray+WLDelta_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */; };
-		BAA049E71621A3F20078DF12 /* WLFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA81DA67160DA09D00C83DC3 /* WLFoundation.framework */; };
 		BABB670316DCB2A600FFDCC5 /* WLViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = BABB670116DCB2A600FFDCC5 /* WLViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BABB670416DCB2A600FFDCC5 /* WLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BABB670216DCB2A600FFDCC5 /* WLViewController.m */; };
 		BAF67C9016D604200047FE2A /* IKPowerSources.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C8E16D604200047FE2A /* IKPowerSources.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -45,8 +45,6 @@
 		BAF67CAF16D606090047FE2A /* WLEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9F16D606090047FE2A /* WLEvents.m */; };
 		BAF67CB016D606090047FE2A /* WLLayerHostedView.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67CA016D606090047FE2A /* WLLayerHostedView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BAF67CB116D606090047FE2A /* WLLayerHostedView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67CA116D606090047FE2A /* WLLayerHostedView.m */; };
-		BAF67CD216D60D470047FE2A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF67CD116D60D470047FE2A /* QuartzCore.framework */; };
-		BAF67CD416D60D520047FE2A /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF67CD316D60D520047FE2A /* IOKit.framework */; };
 		BC59903C1814714E1923496C /* NSDateComponents+WLCalendarUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5994D0FCFBADB881B2BF32 /* NSDateComponents+WLCalendarUnit.m */; };
 		BC599131671997B089C3D4C8 /* WLASLLog.m in Sources */ = {isa = PBXBuildFile; fileRef = BC599C7F0C238E9F874213D0 /* WLASLLog.m */; };
 		BC5997CEDCD382068CDD26E3 /* WLASLLog.h in Headers */ = {isa = PBXBuildFile; fileRef = BC599C9AE6ABE5619B104BB3 /* WLASLLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -56,7 +54,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		BAA049E51621A3EA0078DF12 /* PBXContainerItemProxy */ = {
+		BA6C872A20D8C77900D0C30C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BA81DA5D160DA09D00C83DC3 /* Project object */;
 			proxyType = 1;
@@ -68,9 +66,15 @@
 /* Begin PBXFileReference section */
 		BA1059A1168DE52E00A3DDF5 /* WLDateRangeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDateRangeTests.h; sourceTree = "<group>"; };
 		BA1059A2168DE52E00A3DDF5 /* WLDateRangeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDateRangeTests.m; sourceTree = "<group>"; };
-		BA1059A4168DF37D00A3DDF5 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		BA6C871620D8C26100D0C30C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/MacOSX.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		BA6C871820D8C26C00D0C30C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		BA6C871920D8C26C00D0C30C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		BA6C871A20D8C26C00D0C30C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		BA6C871B20D8C26C00D0C30C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		BA6C872420D8C77900D0C30C /* WLFoundationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WLFoundationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA6C872620D8C77900D0C30C /* WLFoundationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLFoundationTests.m; sourceTree = "<group>"; };
+		BA6C873420DC5F5D00D0C30C /* WLFoundationTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WLFoundationTests-Prefix.pch"; sourceTree = "<group>"; };
 		BA81DA67160DA09D00C83DC3 /* WLFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WLFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA81DA6F160DA09D00C83DC3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BA81DA72160DA09D00C83DC3 /* WLFoundation-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WLFoundation-Info.plist"; sourceTree = "<group>"; };
 		BA81DA74160DA09D00C83DC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BA81DA76160DA09D00C83DC3 /* WLFoundation-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WLFoundation-Prefix.pch"; sourceTree = "<group>"; };
@@ -83,13 +87,9 @@
 		BA9AFB9A163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+WLRemoveDuplicates.m"; sourceTree = "<group>"; };
 		BA9FD6D9170C348F007CE5B1 /* NSImage+WLHiDPIDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+WLHiDPIDrawing.h"; sourceTree = "<group>"; };
 		BA9FD6DA170C348F007CE5B1 /* NSImage+WLHiDPIDrawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+WLHiDPIDrawing.m"; sourceTree = "<group>"; };
-		BAA049CF1621A1040078DF12 /* WLFoundationTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WLFoundationTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		BAA049D01621A1040078DF12 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		BAA049D51621A1040078DF12 /* WLFoundationTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WLFoundationTests-Info.plist"; sourceTree = "<group>"; };
-		BAA049D71621A1040078DF12 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BAA049D91621A1040078DF12 /* WLFoundationTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLFoundationTests.h; sourceTree = "<group>"; };
 		BAA049DA1621A1040078DF12 /* WLFoundationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLFoundationTests.m; sourceTree = "<group>"; };
-		BAA049DC1621A1040078DF12 /* WLFoundationTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WLFoundationTests-Prefix.pch"; sourceTree = "<group>"; };
 		BAA049E11621A1810078DF12 /* NSArray+WLDelta_Tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+WLDelta_Tests.h"; sourceTree = "<group>"; };
 		BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+WLDelta_Tests.m"; sourceTree = "<group>"; };
 		BABB670116DCB2A600FFDCC5 /* WLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLViewController.h; sourceTree = "<group>"; };
@@ -112,8 +112,6 @@
 		BAF67C9F16D606090047FE2A /* WLEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLEvents.m; sourceTree = "<group>"; };
 		BAF67CA016D606090047FE2A /* WLLayerHostedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayerHostedView.h; sourceTree = "<group>"; };
 		BAF67CA116D606090047FE2A /* WLLayerHostedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayerHostedView.m; sourceTree = "<group>"; };
-		BAF67CD116D60D470047FE2A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		BAF67CD316D60D520047FE2A /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		BC5994D0FCFBADB881B2BF32 /* NSDateComponents+WLCalendarUnit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateComponents+WLCalendarUnit.m"; sourceTree = "<group>"; };
 		BC5995CD6AFDCECCAD38C456 /* WLSmartClock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLSmartClock.h; sourceTree = "<group>"; };
 		BC599A9B15C63A85CA872284 /* WLSmartClock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLSmartClock.m; sourceTree = "<group>"; };
@@ -123,40 +121,71 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		BA6C872120D8C77900D0C30C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA6C872920D8C77900D0C30C /* WLFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BA81DA63160DA09D00C83DC3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BAF67CD416D60D520047FE2A /* IOKit.framework in Frameworks */,
-				BAF67CD216D60D470047FE2A /* QuartzCore.framework in Frameworks */,
-				BA1059A5168DF37D00A3DDF5 /* AppKit.framework in Frameworks */,
-				BA9AFB90163AB3D400FAAAD3 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BAA049CB1621A1040078DF12 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BAA049E71621A3F20078DF12 /* WLFoundation.framework in Frameworks */,
-				BAA049D11621A1040078DF12 /* SenTestingKit.framework in Frameworks */,
+				BA6C871F20D8C51B00D0C30C /* Foundation.framework in Frameworks */,
+				BA6C871E20D8C51600D0C30C /* AppKit.framework in Frameworks */,
+				BA6C871D20D8C51200D0C30C /* QuartzCore.framework in Frameworks */,
+				BA6C871C20D8C50D00D0C30C /* IOKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BA6C871520D8C26100D0C30C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BA6C871820D8C26C00D0C30C /* AppKit.framework */,
+				BA6C871B20D8C26C00D0C30C /* Foundation.framework */,
+				BA6C871920D8C26C00D0C30C /* IOKit.framework */,
+				BA6C871A20D8C26C00D0C30C /* QuartzCore.framework */,
+				BA6C871620D8C26100D0C30C /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BA6C872520D8C77900D0C30C /* WLFoundationTests */ = {
+			isa = PBXGroup;
+			children = (
+				BA6C873320D8C7E700D0C30C /* Supporting Files */,
+				BAA049D91621A1040078DF12 /* WLFoundationTests.h */,
+				BA6C872620D8C77900D0C30C /* WLFoundationTests.m */,
+				BAA049DA1621A1040078DF12 /* WLFoundationTests.m */,
+				BAA049E11621A1810078DF12 /* NSArray+WLDelta_Tests.h */,
+				BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */,
+				BA1059A1168DE52E00A3DDF5 /* WLDateRangeTests.h */,
+				BA1059A2168DE52E00A3DDF5 /* WLDateRangeTests.m */,
+			);
+			path = WLFoundationTests;
+			sourceTree = "<group>";
+		};
+		BA6C873320D8C7E700D0C30C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BA6C873420DC5F5D00D0C30C /* WLFoundationTests-Prefix.pch */,
+				BAA049D51621A1040078DF12 /* WLFoundationTests-Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		BA81DA5B160DA09D00C83DC3 = {
 			isa = PBXGroup;
 			children = (
-				BAF67CD316D60D520047FE2A /* IOKit.framework */,
-				BAF67CD116D60D470047FE2A /* QuartzCore.framework */,
-				BA1059A4168DF37D00A3DDF5 /* AppKit.framework */,
-				BA81DA6F160DA09D00C83DC3 /* Foundation.framework */,
-				BAA049D01621A1040078DF12 /* SenTestingKit.framework */,
 				BA81DA70160DA09D00C83DC3 /* WLFoundation */,
-				BAA049D31621A1040078DF12 /* WLFoundationTests */,
+				BA6C872520D8C77900D0C30C /* WLFoundationTests */,
 				BA81DA68160DA09D00C83DC3 /* Products */,
+				BA6C871520D8C26100D0C30C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -164,7 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				BA81DA67160DA09D00C83DC3 /* WLFoundation.framework */,
-				BAA049CF1621A1040078DF12 /* WLFoundationTests.octest */,
+				BA6C872420D8C77900D0C30C /* WLFoundationTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -221,30 +250,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		BAA049D31621A1040078DF12 /* WLFoundationTests */ = {
-			isa = PBXGroup;
-			children = (
-				BAA049D41621A1040078DF12 /* Supporting Files */,
-				BAA049D91621A1040078DF12 /* WLFoundationTests.h */,
-				BAA049DA1621A1040078DF12 /* WLFoundationTests.m */,
-				BAA049E11621A1810078DF12 /* NSArray+WLDelta_Tests.h */,
-				BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */,
-				BA1059A1168DE52E00A3DDF5 /* WLDateRangeTests.h */,
-				BA1059A2168DE52E00A3DDF5 /* WLDateRangeTests.m */,
-			);
-			path = WLFoundationTests;
-			sourceTree = "<group>";
-		};
-		BAA049D41621A1040078DF12 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				BAA049D51621A1040078DF12 /* WLFoundationTests-Info.plist */,
-				BAA049D61621A1040078DF12 /* InfoPlist.strings */,
-				BAA049DC1621A1040078DF12 /* WLFoundationTests-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		BAF67C8D16D604200047FE2A /* IKPowerSources */ = {
 			isa = PBXGroup;
 			children = (
@@ -285,6 +290,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		BA6C872320D8C77900D0C30C /* WLFoundationTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BA6C872C20D8C77900D0C30C /* Build configuration list for PBXNativeTarget "WLFoundationTests" */;
+			buildPhases = (
+				BA6C872020D8C77900D0C30C /* Sources */,
+				BA6C872120D8C77900D0C30C /* Frameworks */,
+				BA6C872220D8C77900D0C30C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BA6C872B20D8C77900D0C30C /* PBXTargetDependency */,
+			);
+			name = WLFoundationTests;
+			productName = WLFoundationTests;
+			productReference = BA6C872420D8C77900D0C30C /* WLFoundationTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		BA81DA66160DA09D00C83DC3 /* WLFoundation */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BA81DA7C160DA09D00C83DC3 /* Build configuration list for PBXNativeTarget "WLFoundation" */;
@@ -303,33 +326,19 @@
 			productReference = BA81DA67160DA09D00C83DC3 /* WLFoundation.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		BAA049CE1621A1040078DF12 /* WLFoundationTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BAA049DF1621A1040078DF12 /* Build configuration list for PBXNativeTarget "WLFoundationTests" */;
-			buildPhases = (
-				BAA049CA1621A1040078DF12 /* Sources */,
-				BAA049CB1621A1040078DF12 /* Frameworks */,
-				BAA049CC1621A1040078DF12 /* Resources */,
-				BAA049CD1621A1040078DF12 /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				BAA049E61621A3EA0078DF12 /* PBXTargetDependency */,
-			);
-			name = WLFoundationTests;
-			productName = WLFoundationTests;
-			productReference = BAA049CF1621A1040078DF12 /* WLFoundationTests.octest */;
-			productType = "com.apple.product-type.bundle";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		BA81DA5D160DA09D00C83DC3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = Wireload;
+				TargetAttributes = {
+					BA6C872320D8C77900D0C30C = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+				};
 			};
 			buildConfigurationList = BA81DA60160DA09D00C83DC3 /* Build configuration list for PBXProject "WLFoundation" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -344,12 +353,19 @@
 			projectRoot = "";
 			targets = (
 				BA81DA66160DA09D00C83DC3 /* WLFoundation */,
-				BAA049CE1621A1040078DF12 /* WLFoundationTests */,
+				BA6C872320D8C77900D0C30C /* WLFoundationTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		BA6C872220D8C77900D0C30C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BA81DA65160DA09D00C83DC3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -358,33 +374,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BAA049CC1621A1040078DF12 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BAA049D81621A1040078DF12 /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		BAA049CD1621A1040078DF12 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
+/* Begin PBXSourcesBuildPhase section */
+		BA6C872020D8C77900D0C30C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
+				BA6C873020D8C7AD00D0C30C /* NSArray+WLDelta_Tests.m in Sources */,
+				BA6C873120D8C7B100D0C30C /* WLDateRangeTests.m in Sources */,
+				BA6C872720D8C77900D0C30C /* WLFoundationTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
-/* End PBXShellScriptBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
 		BA81DA62160DA09D00C83DC3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -409,23 +411,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BAA049CA1621A1040078DF12 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BAA049DB1621A1040078DF12 /* WLFoundationTests.m in Sources */,
-				BAA049E31621A1810078DF12 /* NSArray+WLDelta_Tests.m in Sources */,
-				BA1059A3168DE52E00A3DDF5 /* WLDateRangeTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		BAA049E61621A3EA0078DF12 /* PBXTargetDependency */ = {
+		BA6C872B20D8C77900D0C30C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BA81DA66160DA09D00C83DC3 /* WLFoundation */;
-			targetProxy = BAA049E51621A3EA0078DF12 /* PBXContainerItemProxy */;
+			targetProxy = BA6C872A20D8C77900D0C30C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -438,35 +430,138 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		BAA049D61621A1040078DF12 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BAA049D71621A1040078DF12 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		BA6C872D20D8C77900D0C30C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "WLFoundationTests/WLFoundationTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.WLFoundationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		BA6C872E20D8C77900D0C30C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "WLFoundationTests/WLFoundationTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.WLFoundationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		BA6C872F20D8C77900D0C30C /* Archiving */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "WLFoundationTests/WLFoundationTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.WLFoundationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Archiving;
+		};
 		BA81DA7A160DA09D00C83DC3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_ASSIGN_ENUM = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_OBJC_EXPLICIT_OWNERSHIP_TYPE = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CLANG_X86_VECTOR_INSTRUCTIONS = ssse3;
-				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -480,12 +575,12 @@
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
 				SDKROOT = macosx;
 				VALID_ARCHS = x86_64;
 			};
@@ -495,19 +590,30 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_ASSIGN_ENUM = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_OBJC_EXPLICIT_OWNERSHIP_TYPE = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CLANG_X86_VECTOR_INSTRUCTIONS = ssse3;
-				CODE_SIGN_IDENTITY = "";
-				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
@@ -515,10 +621,11 @@
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_LDFLAGS = "";
 				SDKROOT = macosx;
 				VALID_ARCHS = x86_64;
 			};
@@ -527,6 +634,7 @@
 		BA81DA7D160DA09D00C83DC3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -535,6 +643,7 @@
 				GCC_PREFIX_HEADER = "WLFoundation/WLFoundation-Prefix.pch";
 				INFOPLIST_FILE = "WLFoundation/WLFoundation-Info.plist";
 				INSTALL_PATH = "@rpath";
+				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.WLFoundation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -543,6 +652,7 @@
 		BA81DA7E160DA09D00C83DC3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -551,36 +661,9 @@
 				GCC_PREFIX_HEADER = "WLFoundation/WLFoundation-Prefix.pch";
 				INFOPLIST_FILE = "WLFoundation/WLFoundation-Info.plist";
 				INSTALL_PATH = "@rpath";
+				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.WLFoundation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
-			};
-			name = Release;
-		};
-		BAA049DD1621A1040078DF12 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "WLFoundationTests/WLFoundationTests-Prefix.pch";
-				INFOPLIST_FILE = "WLFoundationTests/WLFoundationTests-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Debug;
-		};
-		BAA049DE1621A1040078DF12 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "WLFoundationTests/WLFoundationTests-Prefix.pch";
-				INFOPLIST_FILE = "WLFoundationTests/WLFoundationTests-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};
@@ -588,19 +671,30 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_ASSIGN_ENUM = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_OBJC_EXPLICIT_OWNERSHIP_TYPE = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CLANG_X86_VECTOR_INSTRUCTIONS = ssse3;
-				CODE_SIGN_IDENTITY = "";
-				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
@@ -608,10 +702,11 @@
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_LDFLAGS = "";
 				SDKROOT = macosx;
 				VALID_ARCHS = x86_64;
 			};
@@ -620,6 +715,7 @@
 		BAF67FEB16D62AD20047FE2A /* Archiving */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -628,28 +724,25 @@
 				GCC_PREFIX_HEADER = "WLFoundation/WLFoundation-Prefix.pch";
 				INFOPLIST_FILE = "WLFoundation/WLFoundation-Info.plist";
 				INSTALL_PATH = "@rpath";
+				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.WLFoundation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
-			};
-			name = Archiving;
-		};
-		BAF67FEC16D62AD20047FE2A /* Archiving */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "WLFoundationTests/WLFoundationTests-Prefix.pch";
-				INFOPLIST_FILE = "WLFoundationTests/WLFoundationTests-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Archiving;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		BA6C872C20D8C77900D0C30C /* Build configuration list for PBXNativeTarget "WLFoundationTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA6C872D20D8C77900D0C30C /* Debug */,
+				BA6C872E20D8C77900D0C30C /* Release */,
+				BA6C872F20D8C77900D0C30C /* Archiving */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		BA81DA60160DA09D00C83DC3 /* Build configuration list for PBXProject "WLFoundation" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -666,16 +759,6 @@
 				BA81DA7D160DA09D00C83DC3 /* Debug */,
 				BA81DA7E160DA09D00C83DC3 /* Release */,
 				BAF67FEB16D62AD20047FE2A /* Archiving */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		BAA049DF1621A1040078DF12 /* Build configuration list for PBXNativeTarget "WLFoundationTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BAA049DD1621A1040078DF12 /* Debug */,
-				BAA049DE1621A1040078DF12 /* Release */,
-				BAF67FEC16D62AD20047FE2A /* Archiving */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -18,9 +18,9 @@ static const NSComparator comparator = ^(id left, id right) { return [left compa
 - (void)testIndexesOfInsertedObjects_throwsException
 {
     NSArray *a = @[@1, @2];
-    STAssertThrows([a WL_indexesOfInsertedObjects:NULL relativeToArray:nil sortedUsingComparator:nil], @"No exception for nil array and nil comparator");
-    STAssertThrows([a WL_indexesOfInsertedObjects:NULL relativeToArray:nil sortedUsingComparator:comparator], @"No exception for nil array");
-    STAssertThrows([a WL_indexesOfInsertedObjects:NULL relativeToArray:@[@1] sortedUsingComparator:nil], @"No exception for nil comparator");
+    XCTAssertThrows([a WL_indexesOfInsertedObjects:NULL relativeToArray:nil sortedUsingComparator:nil], @"No exception for nil array and nil comparator");
+    XCTAssertThrows([a WL_indexesOfInsertedObjects:NULL relativeToArray:nil sortedUsingComparator:comparator], @"No exception for nil array");
+    XCTAssertThrows([a WL_indexesOfInsertedObjects:NULL relativeToArray:@[@1] sortedUsingComparator:nil], @"No exception for nil comparator");
 }
 
 - (void)testIndexesOfInsertedObjects_above_exclusive
@@ -33,8 +33,8 @@ static const NSComparator comparator = ^(id left, id right) { return [left compa
     NSIndexSet *rightArrayExpectedIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)];
     NSIndexSet *leftArrayExpectedIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)];
     leftArrayIndexes = [leftArray WL_indexesOfInsertedObjects:&rightArrayIndexes relativeToArray:rightArray sortedUsingComparator:comparator];
-    STAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
-    STAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
+    XCTAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
+    XCTAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
 }
 
 - (void)testIndexesOfInsertedObjects_above_inclusive
@@ -47,8 +47,8 @@ static const NSComparator comparator = ^(id left, id right) { return [left compa
     NSIndexSet *rightArrayExpectedIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)];
     NSIndexSet *leftArrayExpectedIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)];
     leftArrayIndexes = [leftArray WL_indexesOfInsertedObjects:&rightArrayIndexes relativeToArray:rightArray sortedUsingComparator:comparator];
-    STAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
-    STAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
+    XCTAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
+    XCTAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
 }
 
 - (void)testIndexesOfInsertedObjects_above_inclusive_overflow
@@ -70,8 +70,8 @@ static const NSComparator comparator = ^(id left, id right) { return [left compa
     [leftArrayExpectedIndexes addIndex:3]; // @4
 
     leftArrayIndexes = [leftArray WL_indexesOfInsertedObjects:&rightArrayIndexes relativeToArray:rightArray sortedUsingComparator:comparator];
-    STAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
-    STAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
+    XCTAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
+    XCTAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
 }
 
 - (void)testIndexesOfInsertedObjects_below_exclusive
@@ -84,8 +84,8 @@ static const NSComparator comparator = ^(id left, id right) { return [left compa
     NSIndexSet *rightArrayExpectedIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)];
     NSIndexSet *leftArrayExpectedIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(3, 2)];
     leftArrayIndexes = [leftArray WL_indexesOfInsertedObjects:&rightArrayIndexes relativeToArray:rightArray sortedUsingComparator:comparator];
-    STAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
-    STAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
+    XCTAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
+    XCTAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
 }
 
 - (void)testIndexesOfInsertedObjects_below_inclusive
@@ -98,8 +98,8 @@ static const NSComparator comparator = ^(id left, id right) { return [left compa
     NSIndexSet *rightArrayExpectedIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, 2)];
     NSIndexSet *leftArrayExpectedIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(3, 2)];
     leftArrayIndexes = [leftArray WL_indexesOfInsertedObjects:&rightArrayIndexes relativeToArray:rightArray sortedUsingComparator:comparator];
-    STAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
-    STAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
+    XCTAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
+    XCTAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
 }
 
 - (void)testIndexesOfInsertedObjects_below_inclusive_overflow
@@ -121,8 +121,8 @@ static const NSComparator comparator = ^(id left, id right) { return [left compa
     [leftArrayExpectedIndexes addIndex:5]; // @11
 
     leftArrayIndexes = [leftArray WL_indexesOfInsertedObjects:&rightArrayIndexes relativeToArray:rightArray sortedUsingComparator:comparator];
-    STAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
-    STAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
+    XCTAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
+    XCTAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
 }
 
 - (void)testIndexesOfInsertedObjects_inside_exclusive
@@ -142,8 +142,8 @@ static const NSComparator comparator = ^(id left, id right) { return [left compa
     [leftArrayExpectedIndexes addIndex:3]; // @7
 
     leftArrayIndexes = [leftArray WL_indexesOfInsertedObjects:&rightArrayIndexes relativeToArray:rightArray sortedUsingComparator:comparator];
-    STAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
-    STAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
+    XCTAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
+    XCTAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
 }
 
 - (void)testIndexesOfInsertedObjects_inside_inclusive
@@ -163,8 +163,8 @@ static const NSComparator comparator = ^(id left, id right) { return [left compa
     [leftArrayExpectedIndexes addIndex:3]; // @7
 
     leftArrayIndexes = [leftArray WL_indexesOfInsertedObjects:&rightArrayIndexes relativeToArray:rightArray sortedUsingComparator:comparator];
-    STAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
-    STAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
+    XCTAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
+    XCTAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
 }
 
 - (void)testIndexesOfInsertedObjects_mixed_above_exclusive_inside_exclusive_below_exclusive
@@ -189,8 +189,8 @@ static const NSComparator comparator = ^(id left, id right) { return [left compa
     [leftArrayExpectedIndexes addIndex:6]; // @10
 
     leftArrayIndexes = [leftArray WL_indexesOfInsertedObjects:&rightArrayIndexes relativeToArray:rightArray sortedUsingComparator:comparator];
-    STAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
-    STAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
+    XCTAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
+    XCTAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
 }
 
 - (void)testIndexesOfInsertedObjects_mixed_above_exclusive_inside_exclusive_below_inclusive
@@ -215,8 +215,8 @@ static const NSComparator comparator = ^(id left, id right) { return [left compa
     [leftArrayExpectedIndexes addIndex:6]; // @10
 
     leftArrayIndexes = [leftArray WL_indexesOfInsertedObjects:&rightArrayIndexes relativeToArray:rightArray sortedUsingComparator:comparator];
-    STAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
-    STAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
+    XCTAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
+    XCTAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
 }
 
 - (void)testIndexesOfInsertedObjects_mixed_above_exclusive_inside_inclusive_below_exclusive
@@ -241,8 +241,8 @@ static const NSComparator comparator = ^(id left, id right) { return [left compa
     [leftArrayExpectedIndexes addIndex:6]; // @10
 
     leftArrayIndexes = [leftArray WL_indexesOfInsertedObjects:&rightArrayIndexes relativeToArray:rightArray sortedUsingComparator:comparator];
-    STAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
-    STAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
+    XCTAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
+    XCTAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
 }
 
 - (void)testIndexesOfInsertedObjects_mixed_above_exclusive_inside_inclusive_below_inclusive
@@ -267,8 +267,8 @@ static const NSComparator comparator = ^(id left, id right) { return [left compa
     [leftArrayExpectedIndexes addIndex:6]; // @10
 
     leftArrayIndexes = [leftArray WL_indexesOfInsertedObjects:&rightArrayIndexes relativeToArray:rightArray sortedUsingComparator:comparator];
-    STAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
-    STAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
+    XCTAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
+    XCTAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
 }
 
 - (void)testIndexesOfInsertedObjects_mixed_above_inclusive_inside_exclusive_below_exclusive
@@ -293,8 +293,8 @@ static const NSComparator comparator = ^(id left, id right) { return [left compa
     [leftArrayExpectedIndexes addIndex:6]; // @10
 
     leftArrayIndexes = [leftArray WL_indexesOfInsertedObjects:&rightArrayIndexes relativeToArray:rightArray sortedUsingComparator:comparator];
-    STAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
-    STAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
+    XCTAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
+    XCTAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
 }
 
 - (void)testIndexesOfInsertedObjects_mixed_above_inclusive_inside_exclusive_below_inclusive
@@ -319,8 +319,8 @@ static const NSComparator comparator = ^(id left, id right) { return [left compa
     [leftArrayExpectedIndexes addIndex:6]; // @10
 
     leftArrayIndexes = [leftArray WL_indexesOfInsertedObjects:&rightArrayIndexes relativeToArray:rightArray sortedUsingComparator:comparator];
-    STAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
-    STAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
+    XCTAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
+    XCTAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
 }
 
 - (void)testIndexesOfInsertedObjects_mixed_above_inclusive_inside_inclusive_below_exclusive
@@ -345,8 +345,8 @@ static const NSComparator comparator = ^(id left, id right) { return [left compa
     [leftArrayExpectedIndexes addIndex:6]; // @10
 
     leftArrayIndexes = [leftArray WL_indexesOfInsertedObjects:&rightArrayIndexes relativeToArray:rightArray sortedUsingComparator:comparator];
-    STAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
-    STAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
+    XCTAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
+    XCTAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
 }
 
 - (void)testIndexesOfInsertedObjects_mixed_above_inclusive_inside_inclusive_below_inclusive
@@ -371,8 +371,8 @@ static const NSComparator comparator = ^(id left, id right) { return [left compa
     [leftArrayExpectedIndexes addIndex:6]; // @10
 
     leftArrayIndexes = [leftArray WL_indexesOfInsertedObjects:&rightArrayIndexes relativeToArray:rightArray sortedUsingComparator:comparator];
-    STAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
-    STAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
+    XCTAssertEqualObjects(leftArrayIndexes, leftArrayExpectedIndexes, @"Wrong Result indexes");
+    XCTAssertEqualObjects(rightArrayIndexes, rightArrayExpectedIndexes, @"Wrong Output indexes");
 }
 
 @end
