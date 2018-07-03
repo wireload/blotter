@@ -7,28 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BA0A561516F7428D00E4D6BD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA0A561416F7428D00E4D6BD /* Cocoa.framework */; };
 		BA0A561F16F7428D00E4D6BD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA0A561D16F7428D00E4D6BD /* InfoPlist.strings */; };
 		BA0A562116F7428D00E4D6BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0A562016F7428D00E4D6BD /* main.m */; };
-		BA0A562516F7428D00E4D6BD /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = BA0A562316F7428D00E4D6BD /* Credits.rtf */; };
 		BA0A562816F7428D00E4D6BD /* WLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0A562716F7428D00E4D6BD /* WLAppDelegate.m */; };
 		BA0A562B16F7428D00E4D6BD /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA0A562916F7428D00E4D6BD /* MainMenu.xib */; };
+		BA72ED8B20EC1B8D00CF6F83 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA72ED8A20EC1B8D00CF6F83 /* Cocoa.framework */; };
+		BA72ED8D20EC1B9200CF6F83 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA72ED8C20EC1B9200CF6F83 /* AppKit.framework */; };
+		BA72ED8F20EC1B9600CF6F83 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA72ED8E20EC1B9600CF6F83 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		BA0A561116F7428D00E4D6BD /* LoginItem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoginItem.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA0A561416F7428D00E4D6BD /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		BA0A561716F7428D00E4D6BD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		BA0A561916F7428D00E4D6BD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BA0A561C16F7428D00E4D6BD /* LoginItem-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LoginItem-Info.plist"; sourceTree = "<group>"; };
 		BA0A561E16F7428D00E4D6BD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BA0A562016F7428D00E4D6BD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BA0A562216F7428D00E4D6BD /* LoginItem-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LoginItem-Prefix.pch"; sourceTree = "<group>"; };
-		BA0A562416F7428D00E4D6BD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		BA0A562616F7428D00E4D6BD /* WLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLAppDelegate.h; sourceTree = "<group>"; };
 		BA0A562716F7428D00E4D6BD /* WLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLAppDelegate.m; sourceTree = "<group>"; };
 		BA0A562A16F7428D00E4D6BD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		BA0A563A16F7477F00E4D6BD /* LoginItem.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = LoginItem.entitlements; sourceTree = "<group>"; };
+		BA72ED8A20EC1B8D00CF6F83 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		BA72ED8C20EC1B9200CF6F83 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		BA72ED8E20EC1B9600CF6F83 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,7 +35,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA0A561516F7428D00E4D6BD /* Cocoa.framework in Frameworks */,
+				BA72ED8F20EC1B9600CF6F83 /* Foundation.framework in Frameworks */,
+				BA72ED8D20EC1B9200CF6F83 /* AppKit.framework in Frameworks */,
+				BA72ED8B20EC1B8D00CF6F83 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,11 +47,9 @@
 		BA0A560816F7428D00E4D6BD = {
 			isa = PBXGroup;
 			children = (
-				BA0A561416F7428D00E4D6BD /* Cocoa.framework */,
-				BA0A561716F7428D00E4D6BD /* AppKit.framework */,
-				BA0A561916F7428D00E4D6BD /* Foundation.framework */,
 				BA0A561A16F7428D00E4D6BD /* LoginItem */,
 				BA0A561216F7428D00E4D6BD /* Products */,
+				BA72ED8920EC1B8C00CF6F83 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -65,7 +64,6 @@
 		BA0A561A16F7428D00E4D6BD /* LoginItem */ = {
 			isa = PBXGroup;
 			children = (
-				BA0A563A16F7477F00E4D6BD /* LoginItem.entitlements */,
 				BA0A562616F7428D00E4D6BD /* WLAppDelegate.h */,
 				BA0A562716F7428D00E4D6BD /* WLAppDelegate.m */,
 				BA0A562916F7428D00E4D6BD /* MainMenu.xib */,
@@ -81,9 +79,18 @@
 				BA0A561D16F7428D00E4D6BD /* InfoPlist.strings */,
 				BA0A562016F7428D00E4D6BD /* main.m */,
 				BA0A562216F7428D00E4D6BD /* LoginItem-Prefix.pch */,
-				BA0A562316F7428D00E4D6BD /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BA72ED8920EC1B8C00CF6F83 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BA72ED8E20EC1B9600CF6F83 /* Foundation.framework */,
+				BA72ED8C20EC1B9200CF6F83 /* AppKit.framework */,
+				BA72ED8A20EC1B8D00CF6F83 /* Cocoa.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -113,8 +120,14 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = WL;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = Wireload;
+				TargetAttributes = {
+					BA0A561016F7428D00E4D6BD = {
+						DevelopmentTeam = 438Z2G77U3;
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = BA0A560C16F7428D00E4D6BD /* Build configuration list for PBXProject "LoginItem" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -139,7 +152,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA0A561F16F7428D00E4D6BD /* InfoPlist.strings in Resources */,
-				BA0A562516F7428D00E4D6BD /* Credits.rtf in Resources */,
 				BA0A562B16F7428D00E4D6BD /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -167,14 +179,6 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		BA0A562316F7428D00E4D6BD /* Credits.rtf */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BA0A562416F7428D00E4D6BD /* en */,
-			);
-			name = Credits.rtf;
-			sourceTree = "<group>";
-		};
 		BA0A562916F7428D00E4D6BD /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -190,19 +194,31 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -211,9 +227,11 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -224,23 +242,37 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = YES;
+				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
@@ -249,11 +281,16 @@
 		BA0A562F16F7428D00E4D6BD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 438Z2G77U3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LoginItem/LoginItem-Prefix.pch";
 				INFOPLIST_FILE = "LoginItem/LoginItem-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.blotter.mac.LoginItem;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -261,13 +298,16 @@
 		BA0A563016F7428D00E4D6BD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = LoginItem/LoginItem.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 438Z2G77U3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LoginItem/LoginItem-Prefix.pch";
 				INFOPLIST_FILE = "LoginItem/LoginItem-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.blotter.mac.LoginItem;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -276,23 +316,36 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
@@ -301,14 +354,17 @@
 		BA0A563C16F7485A00E4D6BD /* Archiving */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = LoginItem/LoginItem.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 438Z2G77U3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LoginItem/LoginItem-Prefix.pch";
 				INFOPLIST_FILE = "LoginItem/LoginItem-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.blotter.mac.LoginItem;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Archiving;

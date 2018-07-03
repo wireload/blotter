@@ -48,7 +48,7 @@ NS_INLINE NSUInteger WLGetNumberOfCalendarUnitsInHourRange(WLHourRange anHourRan
 {
     switch (aUnit)
     {
-        case NSHourCalendarUnit:
+        case NSCalendarUnitHour:
             return (NSUInteger)fdim(floor(anHourRange.endHour), floor(anHourRange.startHour));
         default:
             return NSNotFound;

@@ -17,7 +17,7 @@
 + (id)defaultValueForKey:(NSString *)aKey
 {
     if ([aKey isEqualToString:@"color"])
-        return (id)[[NSColor WL_timelineLineColor] WL_CGColor];
+        return (id)[[NSColor WL_timelineLineColor] CGColor];
     else if ([aKey isEqualToString:@"needsDisplayOnBoundsChange"])
         return @(YES);
     else
@@ -36,7 +36,7 @@
 {
     CGContextSaveGState(aContext);
 
-    CGContextSetShadowWithColor(aContext, CGSizeMake(0.0,  -1.0), 0, [[NSColor WL_timelineLineShadowColor] WL_CGColor]);
+    CGContextSetShadowWithColor(aContext, CGSizeMake(0.0,  -1.0), 0, [[NSColor WL_timelineLineShadowColor] CGColor]);
 
     static const CGFloat lengths[] = { 3.0, 3.0 };
     CGContextSetLineDash(aContext, 0, lengths, sizeof(lengths) / sizeof(CGFloat));

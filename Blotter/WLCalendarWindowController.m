@@ -114,7 +114,7 @@ static const float _WLFadeOutAlphaValue = 0.5f;
 
         _rightNowViewController = [[WLCalendarRightNowEventsViewController alloc] init];
         _rightNowViewController.date = _smartClock.date;
-        [_rightNowViewController setAlignmentUnit:NSDayCalendarUnit number:1 animated:NO];
+        [_rightNowViewController setAlignmentUnit:NSCalendarUnitDay number:1 animated:NO];
         _rightNowViewController.representedObject = _eventsController;
 
         [_smartClock addObserver:self forKeyPath:@"calendar" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:NULL];
@@ -584,24 +584,10 @@ static const float _WLFadeOutAlphaValue = 0.5f;
     }
     else if ([aKeyPath isEqualToString:WLShowsNext7DaysKey])
     {
-        // On 10.6 synchronous setting of alignment unit may cause deadlock.
-        // see https://devforums.apple.com/message/808372#808372
-        if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-        {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if ([aChange[NSKeyValueChangeNewKey] boolValue])
-                    [_weekViewController setAlignmentUnit:NSDayCalendarUnit number:7 animated:YES];
-                else
-                    [_weekViewController setAlignmentUnit:NSWeekCalendarUnit number:1 animated:YES];
-            });
-        }
+        if ([aChange[NSKeyValueChangeNewKey] boolValue])
+            [_weekViewController setAlignmentUnit:NSCalendarUnitDay number:7 animated:YES];
         else
-        {
-            if ([aChange[NSKeyValueChangeNewKey] boolValue])
-                [_weekViewController setAlignmentUnit:NSDayCalendarUnit number:7 animated:YES];
-            else
-                [_weekViewController setAlignmentUnit:NSWeekOfMonthCalendarUnit number:1 animated:YES];
-        }
+            [_weekViewController setAlignmentUnit:NSCalendarUnitWeekOfMonth number:1 animated:YES];
     }
     else if ([aKeyPath isEqualToString:@"calendar"])
     {
@@ -696,10 +682,7 @@ static const float _WLFadeOutAlphaValue = 0.5f;
                                  customFrameFactos.size.height * screenFrame.size.height);
     }
 
-    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-        return NSIntegralRect(windowFrame);
-    else
-        return [aScreen backingAlignedRect:windowFrame options:NSAlignAllEdgesInward];
+    return [aScreen backingAlignedRect:windowFrame options:NSAlignAllEdgesInward];
 }
 
 - (NSScreen *)windowScreen

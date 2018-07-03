@@ -48,7 +48,7 @@
     // Due date is set to next hour to mini iCal behavior when due date of a reminder created at 23:XX is set to next day.
     NSDate *newDueDate = nil;
     NSTimeInterval timeInterval = 0.0;
-    [[NSCalendar currentCalendar] rangeOfUnit:NSHourCalendarUnit startDate:&newDueDate interval:&timeInterval forDate:[NSDate date]];
+    [[NSCalendar currentCalendar] rangeOfUnit:NSCalendarUnitHour startDate:&newDueDate interval:&timeInterval forDate:[NSDate date]];
     self.dueDate = [newDueDate dateByAddingTimeInterval:timeInterval];;
     self.priority = CalPriorityNone;
 

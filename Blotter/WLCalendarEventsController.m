@@ -30,10 +30,7 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
         _calStores = [aStores copy];
         _observedDateRanges = [NSCountedSet set];
 
-        if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_7)
-            _observedCalendarIdentifiers = [NSMapTable mapTableWithStrongToStrongObjects];
-        else
-            _observedCalendarIdentifiers = [NSMapTable strongToStrongObjectsMapTable];
+        _observedCalendarIdentifiers = [NSMapTable strongToStrongObjectsMapTable];
 
         _fetchOperationsQueue = [[NSOperationQueue alloc] init];
         [_fetchOperationsQueue setName:@"Fetch Operations Queue (Events)"];
@@ -48,7 +45,6 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_fetchOperationsQueue cancelAllOperations];
-    dispatch_release(_accessQueue);
 }
 
 
@@ -174,10 +170,7 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
     NSMapTable *userInfoPerStore = nil;
     dispatch_semaphore_t userInfoPerStoreSemaphore = dispatch_semaphore_create(1);
 
-    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_7)
-        userInfoPerStore = [NSMapTable mapTableWithStrongToStrongObjects];
-    else
-        userInfoPerStore = [NSMapTable strongToStrongObjectsMapTable];
+    userInfoPerStore = [NSMapTable strongToStrongObjectsMapTable];
 
     for (NSObject<WLCalStore> *store in self.calStores)
     {
@@ -216,7 +209,6 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
                     if ([unretainedOperation isCancelled])
                         *stop = YES;
                 }];
-                dispatch_release(storeUserInfoSemaphore);
 
                 if (![unretainedOperation isCancelled])
                 {
@@ -230,8 +222,6 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
 
     [operation setCompletionBlock:^
     {
-        dispatch_release(userInfoPerStoreSemaphore);
-
         if ([unretainedOperation isCancelled])
             return;
 

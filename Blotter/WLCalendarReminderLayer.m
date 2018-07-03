@@ -103,22 +103,22 @@ static const CGFloat _WLMarkTailIndent = 6.0;
     }
 
 #ifdef DEBUG_LAYERS
-    CGContextSetFillColorWithColor(aContext, [[NSColor greenColor] WL_CGColor]);
+    CGContextSetFillColorWithColor(aContext, [[NSColor greenColor] CGColor]);
     CGContextFillRect(aContext, [self _markFrame]);
     CGContextFillRect(aContext, [self _titleFrame]);
 #endif
 
-    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6 || ![self contentsAreFlipped])
-        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0), 0.0, [[[NSColor whiteColor] colorWithAlphaComponent:0.25] WL_CGColor]);
+    if (![self contentsAreFlipped])
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0), 0.0, [[[NSColor whiteColor] colorWithAlphaComponent:0.25] CGColor]);
     else
-        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, -1.0), 0.0, [[[NSColor whiteColor] colorWithAlphaComponent:0.25] WL_CGColor]);
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, -1.0), 0.0, [[[NSColor whiteColor] colorWithAlphaComponent:0.25] CGColor]);
 
     [self.mark WL_drawWithRect:[self _markFrame] context:aContext];
 
-    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6 || ![self contentsAreFlipped])
-        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, -1.0), 0.0, [[NSColor WL_taskTextShadowColor] WL_CGColor]);
+    if (![self contentsAreFlipped])
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, -1.0), 0.0, [[NSColor WL_taskTextShadowColor] CGColor]);
     else
-        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0), 0.0, [[NSColor WL_taskTextShadowColor] WL_CGColor]);
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0), 0.0, [[NSColor WL_taskTextShadowColor] CGColor]);
 
     [self.mark WL_drawWithRect:[self _markFrame] context:aContext];
     [self.title WL_drawWithRect:[self _titleFrame] context:aContext];
@@ -149,7 +149,7 @@ static const CGFloat _WLMarkTailIndent = 6.0;
     dispatch_once(&onceToken, ^{
         TitleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
                            (id)[NSFont WL_taskFont],                      (id)kCTFontAttributeName,
-                           (id)[[NSColor WL_taskTitleColor] WL_CGColor],  (id)kCTForegroundColorAttributeName,
+                           (id)[[NSColor WL_taskTitleColor] CGColor],     (id)kCTForegroundColorAttributeName,
                            nil];
     });
     return [[NSAttributedString alloc] initWithString:[aString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]

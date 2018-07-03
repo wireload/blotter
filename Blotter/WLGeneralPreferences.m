@@ -61,7 +61,7 @@
                                          defaultButton:NSLocalizedString(@"Close", @"Cannot open System Preferences alert default title")
                                        alternateButton:nil
                                            otherButton:nil
-                             informativeTextWithFormat:informativeTextWithFormat];
+                             informativeTextWithFormat:@"%@", informativeTextWithFormat];
             a.alertStyle = NSCriticalAlertStyle;
             a.showsHelp = YES;
             a.delegate = self;

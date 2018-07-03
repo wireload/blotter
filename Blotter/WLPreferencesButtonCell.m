@@ -102,18 +102,6 @@
         [self drawTitle:[self attributedTitle] withFrame:titleFrame inView:controlView];
         [self drawImage:[self image] withFrame:imageFrame inView:controlView];
     }
-
-    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6 && [self showsFirstResponder])
-    {
-        [NSGraphicsContext saveGraphicsState];
-        NSSetFocusRingStyle(NSFocusRingOnly);
-        NSRect outlineFrame = cellFrame;
-        // Ignore bottom 1px of shadow.
-        outlineFrame.size.height -= 1;
-        outlineFrame = NSInsetRect(outlineFrame, 1.0, 1.0);
-        [[NSBezierPath bezierPathWithRoundedRect:outlineFrame xRadius:4 yRadius:4] fill];
-        [NSGraphicsContext restoreGraphicsState];
-    }
 }
 
 - (NSRect)imageRectForBounds:(NSRect)theRect

@@ -14,7 +14,7 @@
 - (NSDate *)WL_startOfDay:(NSCalendar *)aCalendar
 {
     NSDate *startDate = nil;
-    [aCalendar rangeOfUnit:NSDayCalendarUnit startDate:&startDate interval:NULL forDate:self];
+    [aCalendar rangeOfUnit:NSCalendarUnitDay startDate:&startDate interval:NULL forDate:self];
     return startDate;
 }
 
@@ -22,7 +22,7 @@
 {
     NSDate *startDate = nil;
     NSTimeInterval interval = 0.0;
-    [aCalendar rangeOfUnit:NSDayCalendarUnit startDate:&startDate interval:&interval forDate:self];
+    [aCalendar rangeOfUnit:NSCalendarUnitDay startDate:&startDate interval:&interval forDate:self];
     return [startDate dateByAddingTimeInterval:interval];
 }
 
@@ -36,14 +36,14 @@
     });
     NSDate *nextHour = [aCalendar dateByAddingComponents:oneHourComponents toDate:self options:0];
     NSDate *roundedNextHour = nil;
-    [aCalendar rangeOfUnit:NSHourCalendarUnit startDate:&roundedNextHour interval:NULL forDate:nextHour];
+    [aCalendar rangeOfUnit:NSCalendarUnitHour startDate:&roundedNextHour interval:NULL forDate:nextHour];
     return roundedNextHour;
 }
 
 - (NSDate *)WL_noon:(NSCalendar *)aCalendar
 {
-    NSDateComponents *dateNoonComponents = [aCalendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self];
-    NSRange hoursRange = [aCalendar rangeOfUnit:NSHourCalendarUnit inUnit:NSDayCalendarUnit forDate:self];
+    NSDateComponents *dateNoonComponents = [aCalendar components:NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:self];
+    NSRange hoursRange = [aCalendar rangeOfUnit:NSCalendarUnitHour inUnit:NSCalendarUnitDay forDate:self];
     [dateNoonComponents setHour:(NSInteger)(hoursRange.location + hoursRange.length / 2)];
     [dateNoonComponents setMinute:0];
     [dateNoonComponents setSecond:0];

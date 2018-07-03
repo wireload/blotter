@@ -93,23 +93,10 @@ NSString* const WLSmartClockLogKey = @"net.wireload.mac.WLFoundation.WLSmartCloc
 
 - (void)systemClockDidChange:(NSNotification *)aNotification
 {
-    // http://groups.google.com/group/cocoa-unbound/browse_thread/thread/46fe3433cfef6a97#
-    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
+    dispatch_async(dispatch_get_main_queue(), ^
     {
-        static const NSTimeInterval AnyDelay = 0.5;
-        dispatch_async(dispatch_get_main_queue(), ^
-        {
-            [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(dateDidChange) object:nil];
-            [self performSelector:@selector(dateDidChange) withObject:nil afterDelay:AnyDelay];
-        });
-    }
-    else
-    {
-        dispatch_async(dispatch_get_main_queue(), ^
-        {
-            [self dateDidChange];
-        });
-    }
+        [self dateDidChange];
+    });
 }
 
 - (void)timeZoneDidChange:(NSNotification *)aNotification
@@ -125,7 +112,7 @@ NSString* const WLSmartClockLogKey = @"net.wireload.mac.WLFoundation.WLSmartCloc
     [_nextMinuteTimer invalidate];
     NSDate *nextFireDate = nil;
     NSTimeInterval interval = 0.0;
-    [_calendar rangeOfUnit:NSMinuteCalendarUnit startDate:&nextFireDate interval:&interval forDate:self.date];
+    [_calendar rangeOfUnit:NSCalendarUnitMinute startDate:&nextFireDate interval:&interval forDate:self.date];
 
     if (IKGetProvidingPowerSourceType() != IKACPowerType)
     {
@@ -155,7 +142,7 @@ NSString* const WLSmartClockLogKey = @"net.wireload.mac.WLFoundation.WLSmartCloc
     [_nextDayTimer invalidate];
     NSDate *startDate = nil;
     NSTimeInterval interval = 0.0;
-    [_calendar rangeOfUnit:NSDayCalendarUnit startDate:&startDate interval:&interval forDate:self.date];
+    [_calendar rangeOfUnit:NSCalendarUnitDay startDate:&startDate interval:&interval forDate:self.date];
     _nextDayTimer = [[NSTimer alloc] initWithFireDate:[startDate dateByAddingTimeInterval:interval]
                                              interval:0.0
                                                target:self

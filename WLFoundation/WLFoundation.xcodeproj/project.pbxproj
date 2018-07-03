@@ -23,8 +23,6 @@
 		BA81DAC1160DA7FB00C83DC3 /* WLFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = BA81DAC0160DA7FB00C83DC3 /* WLFoundation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA9AFB9B163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h in Headers */ = {isa = PBXBuildFile; fileRef = BA9AFB99163AB71D00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA9AFB9C163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9AFB9A163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m */; };
-		BA9FD6DB170C348F007CE5B1 /* NSImage+WLHiDPIDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = BA9FD6D9170C348F007CE5B1 /* NSImage+WLHiDPIDrawing.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BA9FD6DC170C348F007CE5B1 /* NSImage+WLHiDPIDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9FD6DA170C348F007CE5B1 /* NSImage+WLHiDPIDrawing.m */; };
 		BABB670316DCB2A600FFDCC5 /* WLViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = BABB670116DCB2A600FFDCC5 /* WLViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BABB670416DCB2A600FFDCC5 /* WLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BABB670216DCB2A600FFDCC5 /* WLViewController.m */; };
 		BAF67C9016D604200047FE2A /* IKPowerSources.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C8E16D604200047FE2A /* IKPowerSources.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -37,18 +35,14 @@
 		BAF67CA716D606090047FE2A /* CoreText+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9716D606080047FE2A /* CoreText+Additions.m */; };
 		BAF67CA816D606090047FE2A /* NSAttributedString+WLStringDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9816D606080047FE2A /* NSAttributedString+WLStringDrawing.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BAF67CA916D606090047FE2A /* NSAttributedString+WLStringDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9916D606080047FE2A /* NSAttributedString+WLStringDrawing.m */; };
-		BAF67CAA16D606090047FE2A /* NSColor+CGColor.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9A16D606080047FE2A /* NSColor+CGColor.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BAF67CAB16D606090047FE2A /* NSColor+CGColor.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9B16D606080047FE2A /* NSColor+CGColor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAF67CAC16D606090047FE2A /* WLBlockLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9C16D606090047FE2A /* WLBlockLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BAF67CAD16D606090047FE2A /* WLBlockLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9D16D606090047FE2A /* WLBlockLayer.m */; };
 		BAF67CAE16D606090047FE2A /* WLEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9E16D606090047FE2A /* WLEvents.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BAF67CAF16D606090047FE2A /* WLEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9F16D606090047FE2A /* WLEvents.m */; };
 		BAF67CB016D606090047FE2A /* WLLayerHostedView.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67CA016D606090047FE2A /* WLLayerHostedView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BAF67CB116D606090047FE2A /* WLLayerHostedView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67CA116D606090047FE2A /* WLLayerHostedView.m */; };
-		BC59903C1814714E1923496C /* NSDateComponents+WLCalendarUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5994D0FCFBADB881B2BF32 /* NSDateComponents+WLCalendarUnit.m */; };
 		BC599131671997B089C3D4C8 /* WLASLLog.m in Sources */ = {isa = PBXBuildFile; fileRef = BC599C7F0C238E9F874213D0 /* WLASLLog.m */; };
 		BC5997CEDCD382068CDD26E3 /* WLASLLog.h in Headers */ = {isa = PBXBuildFile; fileRef = BC599C9AE6ABE5619B104BB3 /* WLASLLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BC59995288D5277796C817DC /* NSDateComponents+WLCalendarUnit.h in Headers */ = {isa = PBXBuildFile; fileRef = BC599DBB8AF5EF567A984112 /* NSDateComponents+WLCalendarUnit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC599E2DFEB2244DCB9952E8 /* WLSmartClock.h in Headers */ = {isa = PBXBuildFile; fileRef = BC5995CD6AFDCECCAD38C456 /* WLSmartClock.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC599F8A6F0C3B7C3E67165E /* WLSmartClock.m in Sources */ = {isa = PBXBuildFile; fileRef = BC599A9B15C63A85CA872284 /* WLSmartClock.m */; };
 /* End PBXBuildFile section */
@@ -85,8 +79,6 @@
 		BA81DAC0160DA7FB00C83DC3 /* WLFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLFoundation.h; sourceTree = "<group>"; };
 		BA9AFB99163AB71D00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+WLRemoveDuplicates.h"; sourceTree = "<group>"; };
 		BA9AFB9A163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+WLRemoveDuplicates.m"; sourceTree = "<group>"; };
-		BA9FD6D9170C348F007CE5B1 /* NSImage+WLHiDPIDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+WLHiDPIDrawing.h"; sourceTree = "<group>"; };
-		BA9FD6DA170C348F007CE5B1 /* NSImage+WLHiDPIDrawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+WLHiDPIDrawing.m"; sourceTree = "<group>"; };
 		BAA049D51621A1040078DF12 /* WLFoundationTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WLFoundationTests-Info.plist"; sourceTree = "<group>"; };
 		BAA049D91621A1040078DF12 /* WLFoundationTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLFoundationTests.h; sourceTree = "<group>"; };
 		BAA049DA1621A1040078DF12 /* WLFoundationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLFoundationTests.m; sourceTree = "<group>"; };
@@ -104,20 +96,16 @@
 		BAF67C9716D606080047FE2A /* CoreText+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CoreText+Additions.m"; sourceTree = "<group>"; };
 		BAF67C9816D606080047FE2A /* NSAttributedString+WLStringDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+WLStringDrawing.h"; sourceTree = "<group>"; };
 		BAF67C9916D606080047FE2A /* NSAttributedString+WLStringDrawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+WLStringDrawing.m"; sourceTree = "<group>"; };
-		BAF67C9A16D606080047FE2A /* NSColor+CGColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+CGColor.h"; sourceTree = "<group>"; };
-		BAF67C9B16D606080047FE2A /* NSColor+CGColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+CGColor.m"; sourceTree = "<group>"; };
 		BAF67C9C16D606090047FE2A /* WLBlockLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLBlockLayer.h; sourceTree = "<group>"; };
 		BAF67C9D16D606090047FE2A /* WLBlockLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLBlockLayer.m; sourceTree = "<group>"; };
 		BAF67C9E16D606090047FE2A /* WLEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLEvents.h; sourceTree = "<group>"; };
 		BAF67C9F16D606090047FE2A /* WLEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLEvents.m; sourceTree = "<group>"; };
 		BAF67CA016D606090047FE2A /* WLLayerHostedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayerHostedView.h; sourceTree = "<group>"; };
 		BAF67CA116D606090047FE2A /* WLLayerHostedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayerHostedView.m; sourceTree = "<group>"; };
-		BC5994D0FCFBADB881B2BF32 /* NSDateComponents+WLCalendarUnit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateComponents+WLCalendarUnit.m"; sourceTree = "<group>"; };
 		BC5995CD6AFDCECCAD38C456 /* WLSmartClock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLSmartClock.h; sourceTree = "<group>"; };
 		BC599A9B15C63A85CA872284 /* WLSmartClock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLSmartClock.m; sourceTree = "<group>"; };
 		BC599C7F0C238E9F874213D0 /* WLASLLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLASLLog.m; sourceTree = "<group>"; };
 		BC599C9AE6ABE5619B104BB3 /* WLASLLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLASLLog.h; sourceTree = "<group>"; };
-		BC599DBB8AF5EF567A984112 /* NSDateComponents+WLCalendarUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDateComponents+WLCalendarUnit.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,12 +201,6 @@
 				BA81DA80160DA0C800C83DC3 /* NSArray+WLDelta.m */,
 				BAF67C9816D606080047FE2A /* NSAttributedString+WLStringDrawing.h */,
 				BAF67C9916D606080047FE2A /* NSAttributedString+WLStringDrawing.m */,
-				BAF67C9A16D606080047FE2A /* NSColor+CGColor.h */,
-				BAF67C9B16D606080047FE2A /* NSColor+CGColor.m */,
-				BC599DBB8AF5EF567A984112 /* NSDateComponents+WLCalendarUnit.h */,
-				BC5994D0FCFBADB881B2BF32 /* NSDateComponents+WLCalendarUnit.m */,
-				BA9FD6D9170C348F007CE5B1 /* NSImage+WLHiDPIDrawing.h */,
-				BA9FD6DA170C348F007CE5B1 /* NSImage+WLHiDPIDrawing.m */,
 				BA9AFB99163AB71D00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h */,
 				BA9AFB9A163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m */,
 				BC599C9AE6ABE5619B104BB3 /* WLASLLog.h */,
@@ -276,14 +258,11 @@
 				BAF67CA416D606090047FE2A /* CATransaction+WLBlocks.h in Headers */,
 				BAF67CA616D606090047FE2A /* CoreText+Additions.h in Headers */,
 				BAF67CA816D606090047FE2A /* NSAttributedString+WLStringDrawing.h in Headers */,
-				BAF67CAA16D606090047FE2A /* NSColor+CGColor.h in Headers */,
 				BAF67CAC16D606090047FE2A /* WLBlockLayer.h in Headers */,
 				BAF67CAE16D606090047FE2A /* WLEvents.h in Headers */,
 				BABB670316DCB2A600FFDCC5 /* WLViewController.h in Headers */,
 				BC599E2DFEB2244DCB9952E8 /* WLSmartClock.h in Headers */,
-				BC59995288D5277796C817DC /* NSDateComponents+WLCalendarUnit.h in Headers */,
 				BAF67CB016D606090047FE2A /* WLLayerHostedView.h in Headers */,
-				BA9FD6DB170C348F007CE5B1 /* NSImage+WLHiDPIDrawing.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,14 +379,11 @@
 				BAF67CA516D606090047FE2A /* CATransaction+WLBlocks.m in Sources */,
 				BAF67CA716D606090047FE2A /* CoreText+Additions.m in Sources */,
 				BAF67CA916D606090047FE2A /* NSAttributedString+WLStringDrawing.m in Sources */,
-				BAF67CAB16D606090047FE2A /* NSColor+CGColor.m in Sources */,
 				BAF67CAD16D606090047FE2A /* WLBlockLayer.m in Sources */,
 				BAF67CAF16D606090047FE2A /* WLEvents.m in Sources */,
 				BAF67CB116D606090047FE2A /* WLLayerHostedView.m in Sources */,
 				BABB670416DCB2A600FFDCC5 /* WLViewController.m in Sources */,
 				BC599F8A6F0C3B7C3E67165E /* WLSmartClock.m in Sources */,
-				BC59903C1814714E1923496C /* NSDateComponents+WLCalendarUnit.m in Sources */,
-				BA9FD6DC170C348F007CE5B1 /* NSImage+WLHiDPIDrawing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,10 +512,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ADDRESS_SANITIZER_CONTAINER_OVERFLOW = YES;
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_INTEGER = YES;
+				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_NULLABILITY = YES;
 				CLANG_WARN_ASSIGN_ENUM = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_COMMA = YES;
@@ -567,7 +546,6 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
@@ -578,9 +556,12 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				LLVM_LTO = YES_THIN;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = macosx;
 				VALID_ARCHS = x86_64;
 			};
@@ -590,10 +571,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ADDRESS_SANITIZER_CONTAINER_OVERFLOW = YES;
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_INTEGER = YES;
+				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_NULLABILITY = YES;
 				CLANG_WARN_ASSIGN_ENUM = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_COMMA = YES;
@@ -611,8 +595,10 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CLANG_X86_VECTOR_INSTRUCTIONS = ssse3;
+				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -624,8 +610,11 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				LLVM_LTO = YES_THIN;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = macosx;
 				VALID_ARCHS = x86_64;
 			};
@@ -634,7 +623,6 @@
 		BA81DA7D160DA09D00C83DC3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -652,7 +640,6 @@
 		BA81DA7E160DA09D00C83DC3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -671,10 +658,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ADDRESS_SANITIZER_CONTAINER_OVERFLOW = YES;
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_INTEGER = YES;
+				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_NULLABILITY = YES;
 				CLANG_WARN_ASSIGN_ENUM = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_COMMA = YES;
@@ -705,8 +695,10 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				LLVM_LTO = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				SDKROOT = macosx;
 				VALID_ARCHS = x86_64;
 			};
@@ -715,7 +707,6 @@
 		BAF67FEB16D62AD20047FE2A /* Archiving */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;

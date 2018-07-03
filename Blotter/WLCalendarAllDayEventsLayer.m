@@ -101,12 +101,10 @@ static const CGFloat _WLXPadding = 2.0;
     WLCalendarEventLayer *l = [WLCalendarEventLayer layer];
     l.needsDisplayOnBoundsChange = YES;
     l.delegate = self;
+    l.contentsScale = self.contentsScale;
 #ifndef DEBUG_LAYERS
     l.contentsBackgroundOpacity = 0.45;
 #endif
-
-    if (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
-        l.contentsScale = self.contentsScale;
 
     return l;
 }
@@ -241,9 +239,9 @@ static const CGFloat _WLXPadding = 2.0;
     self.title = [NSAttributedString WL_eventTitleWithString:newEvent.title];
     self.location = [NSAttributedString WL_eventLocationWithString:newEvent.location];
 #ifdef DEBUG_LAYERS
-    self.backgroundColor = [calendarColor WL_CGColor];
+    self.backgroundColor = [calendarColor CGColor];
 #else
-    self.contentsBackgroundColor = [newEvent.calendar.color WL_CGColor];
+    self.contentsBackgroundColor = [newEvent.calendar.color CGColor];
 #endif
 }
 

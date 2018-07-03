@@ -96,10 +96,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
             layer = [WLCalendarEventLayer dayEventLayer];
             layer.delegate = self.delegate;
             layer.keepsTextVisible = self.keepsTextOfEventsVisible;
-
-            if (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
-                layer.contentsScale = self.contentsScale;
-
+            layer.contentsScale = self.contentsScale;
             [self addSublayer:layer];
             layer.dayEvent = event;
         }
@@ -638,7 +635,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
 {
     // Draw line for each hour.
     CGContextSaveGState(aContext);
-    CGContextSetFillColorWithColor(aContext, [[NSColor clearColor] WL_CGColor]);
+    CGContextSetFillColorWithColor(aContext, [[NSColor clearColor] CGColor]);
     CGContextFillRect(aContext, CGContextGetClipBoundingBox(aContext));
     CGContextSetAllowsAntialiasing(aContext, NO);
 
@@ -651,7 +648,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
         CGContextMoveToPoint(aContext, self.bounds.origin.x, y);
         CGContextAddLineToPoint(aContext, CGRectGetMaxX(self.bounds), y);
     }
-    CGColorRef lineColor = [[NSColor blackColor] WL_CGColor];
+    CGColorRef lineColor = [[NSColor blackColor] CGColor];
     CGContextSetStrokeColorWithColor(aContext, lineColor);
     CGContextStrokePath(aContext);
 
@@ -746,9 +743,9 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
     if (calendarColor == NULL || (id)calendarColor == [NSNull null])
         calendarColor = [NSColor WL_defaultCalendarColorIfFrameworkFails];
 #ifdef DEBUG_LAYERS
-    self.backgroundColor = [calendarColor WL_CGColor];
+    self.backgroundColor = [calendarColor CGColor];
 #else
-    self.contentsBackgroundColor = [calendarColor WL_CGColor];
+    self.contentsBackgroundColor = [calendarColor CGColor];
 #endif
 }
 

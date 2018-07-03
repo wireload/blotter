@@ -24,17 +24,17 @@ static NSString* const _WLBottomEdgeLayerKey = @"bottom";
     self = [super init];
     if (self != nil) {
         CAGradientLayer *topEdge = [CAGradientLayer layer];
-        topEdge.colors = [NSArray arrayWithObjects:(id)[[NSColor clearColor] WL_CGColor], (id)[[NSColor blackColor] WL_CGColor], nil];
+        topEdge.colors = [NSArray arrayWithObjects:(id)[[NSColor clearColor] CGColor], (id)[[NSColor blackColor] CGColor], nil];
         [self addSublayer:topEdge];
         [self setValue:topEdge forKey:_WLTopEdgeLayerKey];
 
         CALayer *middle = [CALayer layer];
-        middle.backgroundColor = [[NSColor blackColor] WL_CGColor];
+        middle.backgroundColor = [[NSColor blackColor] CGColor];
         [self addSublayer:middle];
         [self setValue:middle forKey:_WLMiddleLayerKey];
 
         CAGradientLayer *bottomEdge = [CAGradientLayer layer];
-        bottomEdge.colors = [NSArray arrayWithObjects:(id)[[NSColor blackColor] WL_CGColor], (id)[[NSColor clearColor] WL_CGColor], nil];
+        bottomEdge.colors = [NSArray arrayWithObjects:(id)[[NSColor blackColor] CGColor], (id)[[NSColor clearColor] CGColor], nil];
         [self addSublayer:bottomEdge];
         [self setValue:bottomEdge forKey:_WLBottomEdgeLayerKey];
     }

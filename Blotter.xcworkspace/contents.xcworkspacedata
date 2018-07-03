@@ -16,4 +16,7 @@
    <FileRef
       location = "group:Blotter/Blotter.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:Blotter/../LoginItem/LoginItem.xcodeproj">
+   </FileRef>
 </Workspace>

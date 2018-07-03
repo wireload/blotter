@@ -89,10 +89,7 @@
 
 - (void)setWeekOffset:(NSInteger)newWeekOffset animated:(BOOL)isAnimated
 {
-    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-        [self setOffsetUnit:NSWeekCalendarUnit number:newWeekOffset animated:isAnimated];
-    else
-        [self setOffsetUnit:NSWeekOfMonthCalendarUnit number:newWeekOffset animated:isAnimated];
+    [self setOffsetUnit:NSCalendarUnitWeekOfMonth number:newWeekOffset animated:isAnimated];
 }
 
 - (IBAction)showNextWeek:(id)aSender animated:(BOOL)isAnimated

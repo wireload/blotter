@@ -17,7 +17,7 @@ const WLHourRange WLHourRangeInvalid = {CGFLOAT_MAX, 0.0};
 void WLEnumerateHourRange(WLHourRange anHourRange, NSCalendarUnit aUnit, WLHourRangeEnumerationBlock anEnumerateBlock)
 {
     switch (aUnit) {
-        case NSHourCalendarUnit:
+        case NSCalendarUnitHour:
         {
             BOOL shouldStop = NO;
             for (NSUInteger i = 0, size = WLGetNumberOfCalendarUnitsInHourRange(anHourRange, aUnit); i < size && !shouldStop; ++i)

@@ -21,10 +21,7 @@
         for (NSUInteger i = 0; i < 9; ++i)
         {
             CALayer *subLayer = [CALayer layer];
-
-            if (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
-                subLayer.contentsScale = self.contentsScale;
-
+            subLayer.contentsScale = self.contentsScale;
             subLayer.magnificationFilter = kCAFilterLinear;
             subLayer.minificationFilter = kCAFilterLinear;
             subLayer.autoresizingMask = 0;
@@ -71,13 +68,10 @@
     if (!self.geometryFlipped)
         sliceFrame.origin.y = self.bounds.size.height - sliceFrame.size.height - sliceFrame.origin.y;
 
-    if (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
-    {
-        sliceFrame.origin.x *= self.contentsScale;
-        sliceFrame.origin.y *= self.contentsScale;
-        sliceFrame.size.width *= self.contentsScale;
-        sliceFrame.size.height *= self.contentsScale;
-    }
+    sliceFrame.origin.x *= self.contentsScale;
+    sliceFrame.origin.y *= self.contentsScale;
+    sliceFrame.size.width *= self.contentsScale;
+    sliceFrame.size.height *= self.contentsScale;
 
     CGImageRef sliceImage = CGImageCreateWithImageInRect(_contents, sliceFrame);
 
@@ -153,10 +147,7 @@
 
     if (colorSpace != NULL)
     {
-        CGFloat contentsScale = 1.0;
-
-        if (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
-            contentsScale = self.contentsScale;
+        CGFloat contentsScale = self.contentsScale;
 
         CGContextRef imageContext = CGBitmapContextCreate(NULL,
                                                           (size_t)ceil(self.bounds.size.width * contentsScale),

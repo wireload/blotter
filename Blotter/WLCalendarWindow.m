@@ -54,10 +54,8 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
         [self setIgnoresMouseEvents:YES];
         [self setCanHide:NO];
         [self setDisplaysWhenScreenProfileChanges:YES];
-        [self useOptimizedDrawing:YES];
         [self setContentView:[[[_WLFlippedView alloc] init] autorelease]];
-        if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_6)
-            [self setAnimationBehavior:NSWindowAnimationBehaviorNone];
+        [self setAnimationBehavior:NSWindowAnimationBehaviorNone];
 
         // This filter will be responsible for flipping the input image upside down. It can't be
         // fully prepared in advance because we need to know the height of the image.

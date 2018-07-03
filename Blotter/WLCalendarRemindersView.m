@@ -87,7 +87,7 @@ static NSString* const _WLRootLayerName = @"WLCalendarRemindersViewLayer";
     l.title = [NSAttributedString WL_reminderTitleWithString:reminder.title];
     NSColor *calendarColor = reminder.calendar.color;
 
-    l.mark = [NSAttributedString WL_reminderMarkWithColor:[calendarColor WL_CGColor]];
+    l.mark = [NSAttributedString WL_reminderMarkWithColor:[calendarColor CGColor]];
     [self.layer setNeedsLayout];
 }
 
@@ -193,7 +193,7 @@ static NSString* const _WLRootLayerName = @"WLCalendarRemindersViewLayer";
 
     NSWindow *window = [self window];
 
-    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+    if (window)
         l.contentsScale = [window backingScaleFactor];
 
     l.layoutManager = self;
@@ -212,7 +212,7 @@ static NSString* const _WLRootLayerName = @"WLCalendarRemindersViewLayer";
     l.actions = actions;
 
 #ifdef DEBUG_LAYERS
-    l.backgroundColor = [[NSColor blackColor] WL_CGColor];
+    l.backgroundColor = [[NSColor blackColor] CGColor];
 #endif
 
     return l;
@@ -237,14 +237,14 @@ static NSString* const _WLRootLayerName = @"WLCalendarRemindersViewLayer";
 
     NSWindow *window = [self window];
 
-    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+    if (window)
         l.contentsScale = [window backingScaleFactor];
 
     l.needsDisplayOnBoundsChange = YES;
     l.delegate = self;
 
 #ifdef DEBUG_LAYERS
-    l.backgroundColor = [[NSColor orangeColor] WL_CGColor];
+    l.backgroundColor = [[NSColor orangeColor] CGColor];
 #endif
 
     return l;

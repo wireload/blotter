@@ -1,13 +1,9 @@
 [submodule "ShortcutRecorder"]
 	path = ShortcutRecorder
 	url = git://github.com/Kentzo/ShortcutRecorder.git
-
 [submodule "IKPowerSources"]
 	path = WLFoundation/WLFoundation/IKPowerSources
 	url = git://github.com/Kentzo/IKPowerSources.git
 [submodule "Blotter/IKApplicationPreferences"]
 	path = Blotter/IKApplicationPreferences
 	url = git://github.com/Kentzo/IKApplicationPreferences.git
-[submodule "StartAtLoginController"]
-	path = StartAtLoginController
-	url = git://github.com/alexzielenski/StartAtLoginController.git

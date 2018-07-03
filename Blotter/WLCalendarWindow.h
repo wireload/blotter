@@ -12,13 +12,8 @@
 
 NS_INLINE int WLGetFinderLevel()
 {
-    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-        return kCGDesktopWindowLevel;
-    else
-    {
-        // In Lion window level of desktop elements is kCGDesktopWindowLevel + 21.
-        return kCGDesktopWindowLevel + 15;
-    }
+    // In 10.7+ window level of desktop elements is kCGDesktopWindowLevel + 21.
+    return kCGDesktopWindowLevel + 15;
 }
 
 

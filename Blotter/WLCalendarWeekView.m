@@ -1113,7 +1113,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     l.delegate = self;
 
 #ifdef DEBUG_LAYERS
-    l.backgroundColor = [[NSColor blackColor] WL_CGColor];
+    l.backgroundColor = [[NSColor blackColor] CGColor];
 #endif
 
     CALayer *timeRulerRootLayer = [self setupTimeRulerRootLayer];
@@ -1145,7 +1145,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     CALayer *l = [CALayer layer];
 
     NSWindow *window = [self window];
-    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+    if (window)
         l.contentsScale = [window backingScaleFactor];
 
     l.name = _WLTimeRulerRootLayerName;
@@ -1162,7 +1162,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     l.delegate = self;
 
 #ifdef DEBUG_LAYERS
-    l.backgroundColor = [[NSColor darkGrayColor] WL_CGColor];
+    l.backgroundColor = [[NSColor darkGrayColor] CGColor];
 #endif
 
     WLBlockLayer *timeRulerBackgroundLayer = [self setupTimeRulerBackgroundLayer];
@@ -1177,7 +1177,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     __block WLBlockLayer *l = [WLBlockLayer layer];
 
     NSWindow *window = [self window];
-    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+    if (window)
         l.contentsScale = [window backingScaleFactor];
 
     l.name = _WLTimeRulerBackgroundLayerName;
@@ -1257,7 +1257,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
         [NSGraphicsContext restoreGraphicsState];
     };
 #else
-    l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
+    l.backgroundColor = [[NSColor yellowColor] CGColor];
 #endif
 
     CAScrollLayer *timeRulerScrollLayer = [self setupTimeRulerScrollLayer];
@@ -1289,7 +1289,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     l.delegate = self;
 
 #ifdef DEBUG_LAYERS
-    l.backgroundColor = [[NSColor orangeColor] WL_CGColor];
+    l.backgroundColor = [[NSColor orangeColor] CGColor];
 #endif
 
     WLCalendarTimeRulerLayer *timeRulerLayer = [self setupTimeRulerLayer];
@@ -1304,7 +1304,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     WLCalendarTimeRulerLayer *l = [WLCalendarTimeRulerLayer layer];
 
     NSWindow *window = [self window];
-    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+    if (window)
         l.contentsScale = [window backingScaleFactor];
 
     l.name = _WLTimeRulerLayerName;
@@ -1321,7 +1321,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     l.markers = [self _timeRulerMarkers];
 
 #ifdef DEBUG_LAYERS
-    l.backgroundColor = [[NSColor blueColor] WL_CGColor];
+    l.backgroundColor = [[NSColor blueColor] CGColor];
 #endif
 
     return l;
@@ -1335,7 +1335,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     CALayer *l = [CALayer layer];
 
     NSWindow *window = [self window];
-    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+    if (window)
         l.contentsScale = [window backingScaleFactor];
 
     l.masksToBounds = YES;
@@ -1352,7 +1352,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     l.delegate = self;
 
 #ifdef DEBUG_LAYERS
-    l.backgroundColor = [[[NSColor darkGrayColor] colorWithAlphaComponent:0.5] WL_CGColor];
+    l.backgroundColor = [[[NSColor darkGrayColor] colorWithAlphaComponent:0.5] CGColor];
 #endif
 
     NSUInteger numberOfColumns = [dataSource numberOfColumnsInWeekView:self];
@@ -1375,7 +1375,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     CALayer *l = [CALayer layer];
 
     NSWindow *window = [self window];
-    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+    if (window)
         l.contentsScale = [window backingScaleFactor];
 
     l.geometryFlipped = YES;
@@ -1392,7 +1392,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     l.delegate = self;
 
 #ifdef DEBUG_LAYERS
-    l.backgroundColor = [[NSColor redColor] WL_CGColor];
+    l.backgroundColor = [[NSColor redColor] CGColor];
 #endif
 
     WLBlockLayer *allDayBackground = [self setupAllDayBackgroundLayer];
@@ -1411,7 +1411,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     __block WLBlockLayer *l = [WLBlockLayer layer];
 
     NSWindow *window = [self window];
-    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+    if (window)
         l.contentsScale = [window backingScaleFactor];
 
     l.name = _WLAllDayBackgroundLayerName;
@@ -1454,7 +1454,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
         [NSGraphicsContext restoreGraphicsState];
     };
 #else
-    l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
+    l.backgroundColor = [[NSColor yellowColor] CGColor];
 #endif
 
     WLCalendarAllDayEventsLayer *allDay = [self setupAllDayLayer];
@@ -1469,7 +1469,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     WLCalendarDayEventsBackgroundLayer *l = [WLCalendarDayEventsBackgroundLayer layer];
 
     NSWindow *window = [self window];
-    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+    if (window)
         l.contentsScale = [window backingScaleFactor];
 
     l.name = _WLDayBackgroundLayerName;
@@ -1484,7 +1484,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     l.delegate = self;
 
 #ifdef DEBUG_LAYERS
-    l.backgroundColor = [[NSColor yellowColor] WL_CGColor];
+    l.backgroundColor = [[NSColor yellowColor] CGColor];
 #endif
 
     CAScrollLayer *scroll = [self setupDayScrollLayer];
@@ -1499,7 +1499,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     WLCalendarAllDayEventsLayer *l = [WLCalendarAllDayEventsLayer layer];
 
     NSWindow *window = [self window];
-    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+    if (window)
         l.contentsScale = [window backingScaleFactor];
 
     l.name = _WLAllDayLayerName;
@@ -1513,7 +1513,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     l.delegate = self;
 
 #ifdef DEBUG_LAYERS
-    l.backgroundColor = [[NSColor blueColor] WL_CGColor];
+    l.backgroundColor = [[NSColor blueColor] CGColor];
 #endif
 
     return l;
@@ -1524,7 +1524,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     CAScrollLayer *l = [CAScrollLayer layer];
 
     NSWindow *window = [self window];
-    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+    if (window)
         l.contentsScale = [window backingScaleFactor];
 
     l.name = _WLDayScrollLayerName;
@@ -1539,7 +1539,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     l.delegate = self;
 
 #ifdef DEBUG_LAYERS
-    l.backgroundColor = [[NSColor orangeColor] WL_CGColor];
+    l.backgroundColor = [[NSColor orangeColor] CGColor];
 #endif
 
     WLCalendarDayEventsLayer *dayLayer = [self setupDayLayer];
@@ -1554,7 +1554,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     WLCalendarDayEventsLayer *l = [WLCalendarDayEventsLayer layer];
 
     NSWindow *window = [self window];
-    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+    if (window)
         l.contentsScale = [window backingScaleFactor];
 
     l.name = _WLDayLayerName;
@@ -1571,7 +1571,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 
 #ifdef DEBUG_LAYERS
     l.needsDisplayOnBoundsChange = YES;
-    l.backgroundColor = [[NSColor blueColor] WL_CGColor];
+    l.backgroundColor = [[NSColor blueColor] CGColor];
 #endif
 
     return l;
@@ -1585,7 +1585,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     CALayer *l = [CALayer layer];
 
     NSWindow *window = [self window];
-    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+    if (window)
         l.contentsScale = [window backingScaleFactor];
 
     l.name = _WLTimeIndicatorRootLayerName;
@@ -1602,7 +1602,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     l.delegate = self;
 
 #ifdef DEBUG_LAYERS
-    l.backgroundColor = [[[NSColor darkGrayColor] colorWithAlphaComponent:0.7] WL_CGColor];
+    l.backgroundColor = [[[NSColor darkGrayColor] colorWithAlphaComponent:0.7] CGColor];
 #endif
 
     WLCalendarTimeIndicatorLayer *timeIndicatorLayer = [self setupTimeIndicatorLayer];
@@ -1617,7 +1617,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     WLCalendarTimeIndicatorLayer *l = [WLCalendarTimeIndicatorLayer layer];
 
     NSWindow *window = [self window];
-    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+    if (window)
         l.contentsScale = [window backingScaleFactor];
 
     l.name = _WLTimeIndicatorLayerName;
@@ -1633,7 +1633,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     l.delegate = self;
 
 #ifdef DEBUG_LAYERS
-    l.backgroundColor = [[NSColor whiteColor] WL_CGColor];
+    l.backgroundColor = [[NSColor whiteColor] CGColor];
 #endif
 
     return l;

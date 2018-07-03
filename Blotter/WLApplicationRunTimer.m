@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 WireLoad. All rights reserved.
 //
 
-#import <CoreServices/CoreServices.h>
 #include <mach/mach.h>
 #include <mach/mach_time.h>
 #include <unistd.h>
@@ -45,11 +44,6 @@ NSString* const WLApplicationRunTimerDidFireNotification = @"WLApplicationRunTim
     return [self initWithDelayDefaultsKey:@"" isFiredDefaultsKey:@"" elapsedSecondsDefaultsKey:@""];
 }
 
-- (void)dealloc
-{
-    dispatch_release(_defaultsAccessQueue);
-}
-
 
 #pragma makr Methods
 
@@ -65,6 +59,12 @@ NSString* const WLApplicationRunTimerDidFireNotification = @"WLApplicationRunTim
 
 - (void)tick
 {
+    static mach_timebase_info_data_t TimebaseInfo;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        mach_timebase_info(&TimebaseInfo);
+    });
+
     dispatch_async(_defaultsAccessQueue, ^{
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
@@ -73,13 +73,14 @@ NSString* const WLApplicationRunTimerDidFireNotification = @"WLApplicationRunTim
 
         uint64_t end = mach_absolute_time();
         uint64_t elapsed = end - _start;
-        Nanoseconds elapsedNano = AbsoluteToNanoseconds(UInt64ToUnsignedWide(elapsed));
+        uint64_t elapsedNano = elapsed * TimebaseInfo.numer / TimebaseInfo.denom;
+
         NSTimeInterval elapsedSeconds = [defaults doubleForKey:self.elapsedSecondsDefaultsKey];
 
         if (elapsedSeconds < 0.0)
             elapsedSeconds = 0.0;
 
-        elapsedSeconds += (double)(UnsignedWideToUInt64(elapsedNano)) * 1e-9;
+        elapsedSeconds += (NSTimeInterval)elapsedNano * 1e-9;
         NSTimeInterval delay = [defaults doubleForKey:self.delayDefaultsKey];
 
         if (delay < 0.0)

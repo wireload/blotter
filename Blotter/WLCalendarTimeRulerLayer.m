@@ -76,7 +76,7 @@
                 CTParagraphStyleRef p = CTParagraphStyleCreate(&alignmentSetting, 1);
                 attributes = [[NSDictionary alloc] initWithObjectsAndKeys:
                               (id)[NSFont WL_timeRulerMarkerFont],                (id)kCTFontAttributeName,
-                              (id)[[NSColor WL_timeRulerMarkerColor] WL_CGColor], (id)kCTForegroundColorAttributeName,
+                              (id)[[NSColor WL_timeRulerMarkerColor] CGColor],    (id)kCTForegroundColorAttributeName,
                               (id)p,                                              (id)kCTParagraphStyleAttributeName,
                               nil];
                 CFRelease(p);
@@ -143,7 +143,7 @@
 
     WLHourRange r = [self.timeRuler hourRange];
     NSUInteger numberOfMarkers = [_sortedMarkerLayers count];
-    WLEnumerateHourRange(r, NSHourCalendarUnit, ^(NSCalendarUnit aUnit, NSUInteger anIndex, CGFloat aMatchedValue, BOOL *aShouldStop)
+    WLEnumerateHourRange(r, NSCalendarUnitHour, ^(NSCalendarUnit aUnit, NSUInteger anIndex, CGFloat aMatchedValue, BOOL *aShouldStop)
     {
         if (anIndex < numberOfMarkers)
         {
@@ -193,12 +193,10 @@
     WLCalendarTimeRulerMarkerLayer *l = [WLCalendarTimeRulerMarkerLayer layer];
     l.needsDisplayOnBoundsChange = YES;
     l.delegate = self.delegate;
-
-    if (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
-        l.contentsScale = self.contentsScale;
+    l.contentsScale = self.contentsScale;
 
 #ifdef DEBUG_LAYERS
-    l.backgroundColor = [[NSColor greenColor] WL_CGColor];
+    l.backgroundColor = [[NSColor greenColor] CGColor];
 #endif
 
     return l;

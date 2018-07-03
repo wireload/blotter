@@ -15,6 +15,10 @@
 @synthesize dueDateComponents = _dueDateComponents;
 @synthesize priority = _priority;
 
+// This method exists only for compatibility with deprecated CalTask.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
 - (WLCalSystemReminder *)initWithCSReminder:(CalTask *)aCSReminder calCalendar:(id <WLCalCalendar>)aCalendar
 {
     NSParameterAssert(aCSReminder != nil);
@@ -52,6 +56,8 @@
 
     return self;
 }
+
+#pragma clang diagnostic pop
 
 
 #pragma mark NSObject

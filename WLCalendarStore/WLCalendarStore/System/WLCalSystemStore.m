@@ -52,7 +52,21 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
             [_log logWarning:@"Checking calendars against iCal is disabled"];
 
         if (NSClassFromString(@"EKEventStore"))
-            _calendarTypeStore = [[EKEventStore alloc] initWithAccessToEntityTypes:EKEntityMaskEvent | EKEntityMaskReminder];
+        {
+            _calendarTypeStore = [[EKEventStore alloc] init];
+            __weak __auto_type weakSelf = self;
+            [_calendarTypeStore requestAccessToEntityType:EKEntityMaskEvent | EKEntityMaskReminder completion:^(BOOL granted, NSError *error) {
+                __strong __auto_type strongSelf = weakSelf;
+                if (granted && strongSelf)
+                {
+                    [strongSelf _systemStoreDidChange:[NSNotification notificationWithName:EKEventStoreChangedNotification object:strongSelf->_calendarTypeStore]];
+                }
+            }];
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(_systemStoreDidChange:)
+                                                         name:EKEventStoreChangedNotification
+                                                       object:_calendarTypeStore];
+        }
 
         _calendarTypeCache = [[NSMutableDictionary alloc] init];
         _calendarTypeCacheSemaphore = dispatch_semaphore_create(1);
@@ -94,10 +108,11 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
                                                                     object:nil];
     }
 
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:EKEventStoreChangedNotification
+                                                  object:_calendarTypeStore];
+
     [[NSRunLoop mainRunLoop] cancelPerformSelector:@selector(_notifyObservers) target:self argument:nil];
-    dispatch_release(_calendarStoreSemaphore);
-    dispatch_release(_iCalAppSemaphore);
-    dispatch_release(_calendarTypeCacheSemaphore);
 }
 
 
@@ -234,9 +249,6 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
             dispatch_semaphore_signal(invalidUIDsSemaphore);
         }
     }];
-
-    dispatch_release(csCalendarsSemaphore);
-    dispatch_release(invalidUIDsSemaphore);
 
     if ([invalidUIDs count])
     {
@@ -425,7 +437,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
     dispatch_once(&OncePredicate, ^{
         EndOf4YearsPeriod = [NSDate date];
-        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
         NSDateComponents *minus4Years = [[NSDateComponents alloc] init];
         [minus4Years setYear:-4];
         StartOf4YearsPeriod = [calendar dateByAddingComponents:minus4Years toDate:EndOf4YearsPeriod options:0];
@@ -577,8 +589,14 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
         [_log logNotice:@"iCal/Calendars/Reminders was (re)launched."];
     }
+    else if ([aNotification.name isEqual:EKEventStoreChangedNotification])
+    {
+        [_log logNotice:@"EKEventStore was changed."];
+    }
     else
-        [_log logNotice:@"CalCalendar Store was changed."];
+    {
+        [_log logNotice:@"CalCalendarStore was changed."];
+    }
 
     dispatch_async(dispatch_get_main_queue(), ^
     {
@@ -606,10 +624,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
 - (WLCalAuthorizationStatus)authorizationStatusForEntityType:(WLCalEntityType)aType
 {
-    if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_8)
-        return (WLCalAuthorizationStatus)[EKEventStore authorizationStatusForEntityType:(EKEntityType)aType];
-    else
-        return (self.calendarStore == nil) ? WLCalAuthorizationStatusDenied : WLCalAuthorizationStatusAuthorized;
+    return (WLCalAuthorizationStatus)[EKEventStore authorizationStatusForEntityType:(EKEntityType)aType];
 }
 
 - (NSArray *)calendars

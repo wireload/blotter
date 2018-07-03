@@ -51,13 +51,6 @@
         return;
 
     CALayer *rootLayer = [self makeRootLayer];
-
-    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_7)
-    {
-        rootLayer.geometryFlipped = [self isFlipped];
-        rootLayer.anchorPoint = CGPointZero;
-    }
-
     self.layer = rootLayer;
     self.wantsLayer = YES;
 }

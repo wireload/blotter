@@ -6,7 +6,6 @@
 //  Copyright 2013 WireLoad. All rights reserved.
 //
 
-#import <WLFoundation/NSDateComponents+WLCalendarUnit.h>
 #import "WLCalendarWeekEventsViewController.h"
 #import "WLCalendarEventsStorage.h"
 #import "NSDate+WLDayBoundaries.h"
@@ -41,16 +40,8 @@
 
     if (self)
     {
-        if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-        {
-            _alignmentUnit = NSWeekCalendarUnit;
-            _offsetUnit = NSWeekCalendarUnit;
-        }
-        else
-        {
-            _alignmentUnit = NSWeekOfMonthCalendarUnit;
-            _offsetUnit = NSWeekOfMonthCalendarUnit;
-        }
+        _alignmentUnit = NSCalendarUnitWeekOfMonth;
+        _offsetUnit = NSCalendarUnitWeekOfMonth;
 
         _numberOfAlignmentUnits = 1;
         _timeFormatter = [[NSDateFormatter alloc] init];
@@ -91,7 +82,7 @@
 {
     _calendar = newCalendar;
     [self updateDerivativeProperties];
-    _storage = [[WLCalendarEventsStorage alloc] initWithEvents:_storage.events calendar:_calendar unit:NSDayCalendarUnit];
+    _storage = [[WLCalendarEventsStorage alloc] initWithEvents:_storage.events calendar:_calendar unit:NSCalendarUnitDay];
 
     if (self.isViewLoaded)
     {
@@ -146,7 +137,7 @@
         return NSNotFound;
 
     WLDateRange *r = [WLDateRange dateRangeWithStartDate:self.dateOfFirstColumn endDate:aDate];
-    r = [r dateRangeByAligningCalendarUnit:NSDayCalendarUnit calendar:_calendar options:WLAlignStartDateOutward | WLAlignEndDateInward];
+    r = [r dateRangeByAligningCalendarUnit:NSCalendarUnitDay calendar:_calendar options:WLAlignStartDateOutward | WLAlignEndDateInward];
     return [self numberOfColumnsForCalendar:_calendar dateRangeOfColumns:r];
 }
 
@@ -163,7 +154,7 @@
         NSDateComponents *c = [[NSDateComponents alloc] init];
 
         if (self.numberOfOffsetUnits)
-            [c WL_setValue:aNumberOfOffsetUnits forCalendarUnit:anOffsetUnit];
+            [c setValue:aNumberOfOffsetUnits forComponent:anOffsetUnit];
 
         NSDate *effectiveDate = [aCalendar dateByAddingComponents:c toDate:aDate options:0];
         [aCalendar rangeOfUnit:anAlignmentUnit startDate:&newDateOfFirstColumn interval:NULL forDate:effectiveDate];
@@ -183,10 +174,10 @@
     if (aCalendar && aDateOfFirstColumn)
     {
         NSDateComponents *c = [[NSDateComponents alloc] init];
-        [c WL_setValue:(NSInteger)aNumberOfAlignmentUnits forCalendarUnit:anAlignmentUnit];
+        [c setValue:(NSInteger)aNumberOfAlignmentUnits forComponent:anAlignmentUnit];
         NSDate *dateOfLastColumn = [aCalendar dateByAddingComponents:c toDate:aDateOfFirstColumn options:0];
         newDateRangeOfColumns = [WLDateRange dateRangeWithStartDate:aDateOfFirstColumn endDate:dateOfLastColumn];
-        newDateRangeOfColumns = [newDateRangeOfColumns dateRangeByAligningCalendarUnit:NSDayCalendarUnit
+        newDateRangeOfColumns = [newDateRangeOfColumns dateRangeByAligningCalendarUnit:NSCalendarUnitDay
                                                                               calendar:aCalendar
                                                                                options:WLAlignStartDateOutward | WLAlignEndDateInward];
     }
@@ -200,7 +191,7 @@
 
     if (aCalendar && aDateRangeOfColumns)
     {
-        newNumberOfColumns = (NSUInteger)[aCalendar components:NSDayCalendarUnit
+        newNumberOfColumns = (NSUInteger)[aCalendar components:NSCalendarUnitDay
                                                       fromDate:aDateRangeOfColumns.startDate
                                                         toDate:aDateRangeOfColumns.endDate
                                                        options:0].day;
@@ -211,10 +202,10 @@
 
 - (CGFloat)hourForCalendar:(NSCalendar *)aCalendar date:(NSDate *)aDate
 {
-    NSDateComponents *components = [aCalendar components:NSHourCalendarUnit | NSMinuteCalendarUnit
+    NSDateComponents *components = [aCalendar components:NSCalendarUnitHour | NSCalendarUnitMinute
                                                 fromDate:aDate];
     CGFloat newHour = [components hour];
-    NSRange minutesRange = [aCalendar rangeOfUnit:NSMinuteCalendarUnit inUnit:NSHourCalendarUnit forDate:aDate];
+    NSRange minutesRange = [aCalendar rangeOfUnit:NSCalendarUnitMinute inUnit:NSCalendarUnitHour forDate:aDate];
     newHour += (CGFloat)[components minute] / minutesRange.length;
     return newHour;
 }
@@ -242,7 +233,7 @@
     self.hour = [self hourForCalendar:_calendar date:self.date];
 
     // _hourRange
-    NSRange r = [_calendar maximumRangeOfUnit:NSHourCalendarUnit];
+    NSRange r = [_calendar maximumRangeOfUnit:NSCalendarUnitHour];
     _hourRange = WLHourRangeMake(r.location, NSMaxRange(r));
 
     // _timeFormatter
@@ -260,7 +251,7 @@
     {
         // Update storage for smooth animations.
         // If we had relied on background fetching, events would jump during animation.
-        _storage = [[WLCalendarEventsStorage alloc] initWithEvents:[self.representedObject calEventsForDateRange:self.dateRangeOfColumns] calendar:_calendar unit:NSDayCalendarUnit];
+        _storage = [[WLCalendarEventsStorage alloc] initWithEvents:[self.representedObject calEventsForDateRange:self.dateRangeOfColumns] calendar:_calendar unit:NSCalendarUnitDay];
 
         if (isAnimated)
         {
@@ -270,7 +261,7 @@
         }
 
         WLDateRange *r = [WLDateRange dateRangeWithStartDate:oldDateOfFirstColumn endDate:self.dateOfFirstColumn];
-        r = [r dateRangeByAligningCalendarUnit:NSDayCalendarUnit calendar:_calendar options:WLAlignStartDateOutward | WLAlignEndDateInward];
+        r = [r dateRangeByAligningCalendarUnit:NSCalendarUnitDay calendar:_calendar options:WLAlignStartDateOutward | WLAlignEndDateInward];
         NSUInteger numberOfColumns = [self numberOfColumnsForCalendar:_calendar dateRangeOfColumns:r];
 
         if (numberOfColumns > 0)
@@ -312,7 +303,7 @@
         NSCalendar *localRepresentedCalendar = [_calendar copy];
         __block WLCalendarEventsStorage *s = [[WLCalendarEventsStorage alloc] initWithEvents:events
                                                                                     calendar:localRepresentedCalendar
-                                                                                        unit:NSDayCalendarUnit];
+                                                                                        unit:NSCalendarUnitDay];
         dispatch_async(dispatch_get_main_queue(), ^
         {
             // Events become invalid when Represented Object is changed.
@@ -320,7 +311,7 @@
             {
                 // Events may become unaligned when Represented Calendar is changed.
                 if (_calendar != localRepresentedCalendar)
-                    s = [[WLCalendarEventsStorage alloc] initWithEvents:s.events calendar:_calendar unit:NSDayCalendarUnit];
+                    s = [[WLCalendarEventsStorage alloc] initWithEvents:s.events calendar:_calendar unit:NSCalendarUnitDay];
 
                 // Events become invalid when Represented Date Range is changed.
                 if ([localRepresentedDateRange isEqual:self.dateRangeOfColumns])
@@ -355,8 +346,8 @@
 {
     NSParameterAssert(_calendar != nil);
 
-    NSDateComponents *c = [_calendar components:NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:aDate];
-    NSRange minutesRange = [_calendar rangeOfUnit:NSMinuteCalendarUnit inUnit:NSHourCalendarUnit forDate:aDate];
+    NSDateComponents *c = [_calendar components:NSCalendarUnitHour | NSCalendarUnitMinute fromDate:aDate];
+    NSRange minutesRange = [_calendar rangeOfUnit:NSCalendarUnitMinute inUnit:NSCalendarUnitHour forDate:aDate];
     return ((CGFloat)[c hour] + (CGFloat)((NSUInteger)[c minute] - minutesRange.location) / minutesRange.length);
 }
 
@@ -364,7 +355,7 @@
 {
     NSParameterAssert(_calendar != nil);
 
-    NSDateComponents *hourComponents = [_calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
+    NSDateComponents *hourComponents = [_calendar components:NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay
                                                     fromDate:[NSDate dateWithTimeIntervalSinceReferenceDate:0.0]];
     [hourComponents setHour:(NSInteger)aHour];
     return [_timeFormatter stringFromDate:[_calendar dateFromComponents:hourComponents]];

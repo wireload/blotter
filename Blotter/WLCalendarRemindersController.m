@@ -31,10 +31,7 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
         _calStores = [aStores copy];
         _observedCompletionMasks = [NSCountedSet set];
 
-        if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_7)
-            _observedCalendarIdentifiers = [NSMapTable mapTableWithStrongToStrongObjects];
-        else
-            _observedCalendarIdentifiers = [NSMapTable strongToStrongObjectsMapTable];
+        _observedCalendarIdentifiers = [NSMapTable strongToStrongObjectsMapTable];
 
         _fetchOperationsQueue = [[NSOperationQueue alloc] init];
         [_fetchOperationsQueue setName:@"Fetch Operations Queue (Reminders)"];
@@ -50,8 +47,6 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_fetchOperationsQueue cancelAllOperations];
-    dispatch_release(_fetchPredicateSemaphore);
-    dispatch_release(_notificationsDeliveryQueue);
 }
 
 
@@ -156,10 +151,7 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
     NSMapTable *userInfoPerStore = nil;
     dispatch_semaphore_t userInfoPerStoreSemaphore = dispatch_semaphore_create(1);
 
-    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_7)
-        userInfoPerStore = [NSMapTable mapTableWithStrongToStrongObjects];
-    else
-        userInfoPerStore = [NSMapTable strongToStrongObjectsMapTable];
+    userInfoPerStore = [NSMapTable strongToStrongObjectsMapTable];
 
     for (NSObject<WLCalStore> *store in self.calStores)
     {
@@ -207,8 +199,6 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
 
     [operation setCompletionBlock:^
     {
-        dispatch_release(userInfoPerStoreSemaphore);
-
         if ([localOperation isCancelled])
             return;
 

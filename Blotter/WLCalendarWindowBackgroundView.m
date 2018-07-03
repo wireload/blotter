@@ -34,7 +34,7 @@ static const CGFloat _WLCalendarBackgroundActiveDarkness = 0.20;
     static dispatch_once_t Once;
     dispatch_once(&Once, ^
     {
-        NSImage *transparentNoiseImage = [NSImage WL_imageWithSize:[[NSImage imageNamed:@"calendar-background-noise"] size]
+        NSImage *transparentNoiseImage = [NSImage imageWithSize:[[NSImage imageNamed:@"calendar-background-noise"] size]
                                                            flipped:NO
                                                     drawingHandler:^BOOL(NSRect aDestinationRect)
             {

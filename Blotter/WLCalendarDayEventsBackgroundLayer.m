@@ -194,10 +194,7 @@ static const NSStringDrawingOptions _WLTitleDrawingOptions = NSStringDrawingUses
         NSShadow *s = [[NSShadow alloc] init];
         [s setShadowBlurRadius:0.0];
         [s setShadowColor:[NSColor WL_columnTitleShadowColor]];
-        if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-            [s setShadowOffset:NSMakeSize(0.0, -1.0)];
-        else
-            [s setShadowOffset:NSMakeSize(0.0, 1.0)];
+        [s setShadowOffset:NSMakeSize(0.0, 1.0)];
         titleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
                            (id)[NSFont WL_columnTitleFont],  NSFontAttributeName,
                            p,                                NSParagraphStyleAttributeName,

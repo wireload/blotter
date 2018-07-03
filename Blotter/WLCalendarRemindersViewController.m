@@ -33,7 +33,6 @@
 {
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(remindersComparatorDidChange) object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    dispatch_release(_comparatorSemaphore);
 }
 
 
@@ -67,7 +66,6 @@
                 dispatch_semaphore_signal(s);
             }
         }];
-        dispatch_release(s);
 
         NSParameterAssert([indexesOfOldReminders count] == [indexesOfNewObjects count]);
 
@@ -127,18 +125,9 @@
 {
     NSCalendar *floatingCalendar = nil;
 
-    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-    {
-        floatingCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        floatingCalendar.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-        floatingCalendar.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-    }
-    else
-    {
-        floatingCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        floatingCalendar.locale = [NSLocale currentLocale];
-        floatingCalendar.timeZone = [NSTimeZone systemTimeZone];
-    }
+    floatingCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    floatingCalendar.locale = [NSLocale currentLocale];
+    floatingCalendar.timeZone = [NSTimeZone systemTimeZone];
 
     return ^NSComparisonResult(NSObject<WLCalReminder> *r1, NSObject<WLCalReminder> *r2)
     {
@@ -149,34 +138,23 @@
         NSDate *dueDate1 = nil;
         NSDate *dueDate2 = nil;
 
-        if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-        {
-            if (r1.dueDateComponents)
-                dueDate1 = [floatingCalendar dateFromComponents:r1.dueDateComponents];
+        NSDateComponents *components1 = [r1.dueDateComponents copy];
+        NSDateComponents *components2 = [r2.dueDateComponents copy];
 
-            if (r2.dueDateComponents)
-                dueDate2 = [floatingCalendar dateFromComponents:r2.dueDateComponents];
-        }
-        else
-        {
-            NSDateComponents *components1 = [r1.dueDateComponents copy];
-            NSDateComponents *components2 = [r2.dueDateComponents copy];
+        if (!components1.calendar)
+            components1.calendar = floatingCalendar;
 
-            if (!components1.calendar)
-                components1.calendar = floatingCalendar;
+        if (!components1.timeZone)
+            components1.timeZone = floatingCalendar.timeZone;
 
-            if (!components1.timeZone)
-                components1.timeZone = floatingCalendar.timeZone;
+        if (!components2.calendar)
+            components2.calendar = floatingCalendar;
 
-            if (!components2.calendar)
-                components2.calendar = floatingCalendar;
+        if (!components2.timeZone)
+            components2.timeZone = floatingCalendar.timeZone;
 
-            if (!components2.timeZone)
-                components2.timeZone = floatingCalendar.timeZone;
-
-            dueDate1 = components1.date;
-            dueDate2 = components2.date;
-        }
+        dueDate1 = components1.date;
+        dueDate2 = components2.date;
 
         if (!dueDate1)
             dueDate1 = [NSDate distantFuture];

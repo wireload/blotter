@@ -117,7 +117,6 @@
         });
 
         dispatch_group_wait(g, DISPATCH_TIME_FOREVER);
-        dispatch_release(g);
     }
 
     return self;

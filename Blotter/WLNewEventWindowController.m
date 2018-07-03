@@ -58,10 +58,10 @@
     NSDate *currentDate = [NSDate date];
     NSDate *newStartDate = nil;
     NSTimeInterval timeInterval = 0.0;
-    [currentCalendar rangeOfUnit:NSHourCalendarUnit startDate:&newStartDate interval:&timeInterval forDate:currentDate];
+    [currentCalendar rangeOfUnit:NSCalendarUnitHour startDate:&newStartDate interval:&timeInterval forDate:currentDate];
     newStartDate = [newStartDate dateByAddingTimeInterval:timeInterval];
     NSDate *newEndDate = nil;
-    [currentCalendar rangeOfUnit:NSHourCalendarUnit startDate:&newEndDate interval:&timeInterval forDate:newStartDate];
+    [currentCalendar rangeOfUnit:NSCalendarUnitHour startDate:&newEndDate interval:&timeInterval forDate:newStartDate];
     newEndDate = [newEndDate dateByAddingTimeInterval:timeInterval];
 
     if (!newStartDate || !newEndDate || [newStartDate compare:newEndDate] != NSOrderedAscending)

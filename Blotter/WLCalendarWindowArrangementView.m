@@ -80,11 +80,11 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
     arrangementMode = newArrangementMode;
     if (arrangementMode & WLCalendarWindowResizingArrangement) {
         _resizeHandlesLayer.opacity = 1.0;
-        _calendarWindowLayer.borderColor = [[NSColor whiteColor] WL_CGColor];
+        _calendarWindowLayer.borderColor = [[NSColor whiteColor] CGColor];
     }
     else {
         _resizeHandlesLayer.opacity = 0.0;
-        _calendarWindowLayer.borderColor = [[NSColor clearColor] WL_CGColor];
+        _calendarWindowLayer.borderColor = [[NSColor clearColor] CGColor];
     }
     [_navigationLayer setNeedsDisplay];
     [[self layer] setNeedsLayout];
@@ -973,7 +973,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
         recessedLayer.delegate = self;
 
         NSWindow *window = [self window];
-        if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+        if (window)
         {
             rootLayer.contentsScale = [window backingScaleFactor];
             recessedLayer.contentsScale = [window backingScaleFactor];
@@ -1025,7 +1025,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
     l.delegate = self;
 
     NSWindow *window = [self window];
-    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+    if (window)
         l.contentsScale = [window backingScaleFactor];
 
     return l;
@@ -1047,7 +1047,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
     l.delegate = self;
 
     NSWindow *window = [self window];
-    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+    if (window)
         l.contentsScale = [window backingScaleFactor];
 
     return l;
@@ -1060,7 +1060,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
     l.delegate = self;
 
     NSWindow *window = [self window];
-    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+    if (window)
         l.contentsScale = [window backingScaleFactor];
 
     __block WLCalendarWindowArrangementView *selfBlock = self;
@@ -1069,7 +1069,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
         CGContextSetAllowsAntialiasing(aContext, NO);
         if (selfBlock.arrangementMode == WLCalendarWindowPositioningArrangement)
         {
-            CGContextSetStrokeColorWithColor(aContext, [[[NSColor whiteColor] colorWithAlphaComponent:0.9] WL_CGColor]);
+            CGContextSetStrokeColorWithColor(aContext, [[[NSColor whiteColor] colorWithAlphaComponent:0.9] CGColor]);
             CGContextSetLineDash(aContext, 0.0, (CGFloat[]){2.0, 3.0}, 2);
 
             CGContextAddRect(aContext,
@@ -1094,7 +1094,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
         }
         else
         {
-            CGContextSetStrokeColorWithColor(aContext, [[[NSColor whiteColor] colorWithAlphaComponent:0.5] WL_CGColor]);
+            CGContextSetStrokeColorWithColor(aContext, [[[NSColor whiteColor] colorWithAlphaComponent:0.5] CGColor]);
             for (CGFloat i=aLayer.bounds.origin.x; i<CGRectGetMaxX(aLayer.bounds); i += 20.0)
             {
                 CGContextMoveToPoint(aContext, i, aLayer.bounds.origin.y);
@@ -1107,7 +1107,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
             }
             CGContextStrokePath(aContext);
 
-            CGContextSetStrokeColorWithColor(aContext, [[[NSColor whiteColor] colorWithAlphaComponent:0.25] WL_CGColor]);
+            CGContextSetStrokeColorWithColor(aContext, [[[NSColor whiteColor] colorWithAlphaComponent:0.25] CGColor]);
             for (CGFloat i=aLayer.bounds.origin.x + 10.0; i<CGRectGetMaxX(aLayer.bounds); i += 20.0)
             {
                 CGContextMoveToPoint(aContext, i, aLayer.bounds.origin.y);
@@ -1158,10 +1158,10 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
     l.delegate = self;
 
     NSWindow *window = [self window];
-    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+    if (window)
         l.contentsScale = [window backingScaleFactor];
 
-    l.borderColor = [[NSColor whiteColor] WL_CGColor];
+    l.borderColor = [[NSColor whiteColor] CGColor];
     [l setValue:[NSValue valueWithSize:_WLDefaultEdgeSize] forKeyPath:_WLEdgeSizeKey];
     [l addObserver:self forKeyPath:@"bounds" options:NSKeyValueObservingOptionNew context:NULL];
     return l;
@@ -1177,7 +1177,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
     l.delegate = self;
 
     NSWindow *window = [self window];
-    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+    if (window)
         l.contentsScale = [window backingScaleFactor];
 
     l.layoutManager = [[[WLBlockLayoutManager alloc] initWithLayoutManager:^(CALayer *aLayer) {
@@ -1218,10 +1218,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
             continue;
         WLBlockLayer *sublayer = [WLBlockLayer layer];
         sublayer.delegate = l.delegate;
-
-        if (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
-            sublayer.contentsScale = l.contentsScale;
-
+        sublayer.contentsScale = l.contentsScale;
         sublayer.autoresizingMask = 0;
 
         // Don't animate content changes - when you click a resize handle it should immediately look
@@ -1246,8 +1243,8 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
                                    (i == WLCalendarWindowBottomCenterEdge && selfBlock->_resizedEdge == WLCalendarWindowTopCenterEdge) ||
                                    (i == WLCalendarWindowBottomRightEdge && selfBlock->_resizedEdge == WLCalendarWindowTopRightEdge)
                                    );
-            CGContextSetFillColorWithColor(aContext, [(isResizeHandle ? [NSColor WL_activeDotColor] : [NSColor WL_dotColor]) WL_CGColor]);
-            CGContextSetShadowWithColor(aContext, CGSizeMake(0, -1.0), 0.0, [[isResizeHandle ? [NSColor whiteColor] : [NSColor blackColor] colorWithAlphaComponent:0.20] WL_CGColor]);
+            CGContextSetFillColorWithColor(aContext, [(isResizeHandle ? [NSColor WL_activeDotColor] : [NSColor WL_dotColor]) CGColor]);
+            CGContextSetShadowWithColor(aContext, CGSizeMake(0, -1.0), 0.0, [[isResizeHandle ? [NSColor whiteColor] : [NSColor blackColor] colorWithAlphaComponent:0.20] CGColor]);
 
             switch(i)
             {
@@ -1296,11 +1293,11 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
 - (CALayer *)setupNavigationHelperLayer
 {
     CALayer *l = [CALayer layer];
-    l.backgroundColor = [[[NSColor blackColor] colorWithAlphaComponent:0.25] WL_CGColor];
+    l.backgroundColor = [[[NSColor blackColor] colorWithAlphaComponent:0.25] CGColor];
     l.delegate = self;
 
     NSWindow *window = [self window];
-    if (window && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7)
+    if (window)
         l.contentsScale = [window backingScaleFactor];
 
     return l;

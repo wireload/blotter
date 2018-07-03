@@ -62,11 +62,6 @@ static void _WLFreeASLClient(aslclient aClient)
     return [self initWithFileDescriptor:[aFileHandle fileDescriptor] name:aName];
 }
 
-- (void)dealloc
-{
-    dispatch_release(loggerQueue);
-}
-
 
 #pragma mark Methods
 

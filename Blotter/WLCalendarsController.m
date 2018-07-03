@@ -70,16 +70,8 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
         _calStores = [aStores copy];
         _autosaveKeyPath = [anAutosaveKeyPath copy];
 
-        if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_7)
-        {
-            _calCalendarsPerStore = [NSMapTable mapTableWithStrongToStrongObjects];
-            _fetchQueuesPerStore = [NSMapTable mapTableWithStrongToStrongObjects];
-        }
-        else
-        {
-            _calCalendarsPerStore = [NSMapTable strongToStrongObjectsMapTable];
-            _fetchQueuesPerStore = [NSMapTable strongToStrongObjectsMapTable];
-        }
+        _calCalendarsPerStore = [NSMapTable strongToStrongObjectsMapTable];
+        _fetchQueuesPerStore = [NSMapTable strongToStrongObjectsMapTable];
 
         for (NSObject<WLCalStore> *s in aStores)
         {
@@ -124,10 +116,6 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
         [q cancelAllOperations];
         [q waitUntilAllOperationsAreFinished];
     }
-
-    dispatch_release(_calCalendarsPerStoreSemaphore);
-    dispatch_release(_fetchQueuesPerStoreSemaphore);
-    dispatch_release(_accessUserDefaultsQueue);
 }
 
 
@@ -262,7 +250,6 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
     __unsafe_unretained NSBlockOperation *unretainedOperation = operation;
     __unsafe_unretained WLCalendarsController *unretainedSelf = self;
     [operation setQueuePriority:aPriority];
-    dispatch_retain(_calCalendarsPerStoreSemaphore);
 
     [operation addExecutionBlock:^
     {
@@ -350,11 +337,6 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
                                                                   userInfo:@{WLChangedCalStoresKey : @[aStore]}];
             });
         });
-    }];
-
-    [operation setCompletionBlock:^
-    {
-        dispatch_release(unretainedSelf->_calCalendarsPerStoreSemaphore);
     }];
 
     // Ensure there is no race between cancelling operations and adding new.

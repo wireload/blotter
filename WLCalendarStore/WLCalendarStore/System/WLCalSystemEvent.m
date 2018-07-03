@@ -17,6 +17,10 @@
 @synthesize isDetached = _isDetached;
 @synthesize occurrenceDate = _occurrenceDate;
 
+// This method exists only for compatibility with deprecated CalEvent.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
 - (WLCalSystemEvent *)initWithCSEvent:(CalEvent *)aCSEvent calCalendar:(NSObject <WLCalCalendar> *)aCalCalendar currentCalendar:(NSCalendar *)aCurrentCalendar
 {
     NSParameterAssert(aCSEvent != nil);
@@ -47,7 +51,7 @@
             // It's known issue that CalendarStore fails to properly compute date range
             // of the floating event when timeZone changes (e.g. switching from summer to winder time).
             WLDateRange *r = [WLDateRange dateRangeWithStartDate:aCSEvent.startDate endDate:aCSEvent.endDate];
-            r = [r dateRangeByAligningCalendarUnit:NSDayCalendarUnit calendar:aCurrentCalendar options:WLAlignInward];
+            r = [r dateRangeByAligningCalendarUnit:NSCalendarUnitDay calendar:aCurrentCalendar options:WLAlignInward];
             self->_startDate = r.startDate;
             self->_endDate = r.endDate;
         }
@@ -67,6 +71,8 @@
 
     return self;
 }
+
+#pragma clang diagnostic pop
 
 
 #pragma mark WLCalEvent

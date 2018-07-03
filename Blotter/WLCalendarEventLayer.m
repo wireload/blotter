@@ -109,12 +109,12 @@ const CGFloat _WLMinimumStringHeight = 5.0;
 {
     CGContextSaveGState(aContext);
     CGColorRef backgroundColor = CGColorCreateCopyWithAlpha(self.contentsBackgroundColor, self.contentsBackgroundOpacity);
-    NSColor *nsBackgroundColor = [[NSColor WL_colorWithCGColor:backgroundColor] colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+    NSColor *nsBackgroundColor = [[NSColor colorWithCGColor:backgroundColor] colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
     nsBackgroundColor = [NSColor colorWithCalibratedHue:[nsBackgroundColor hueComponent]
                                              saturation:fmin(1.0, [nsBackgroundColor saturationComponent] * 1.05)
                                              brightness:fmin(1.0, [nsBackgroundColor brightnessComponent] * 1.05)
                                                   alpha:self.contentsBackgroundOpacity];
-    CGContextSetFillColorWithColor(aContext, [nsBackgroundColor WL_CGColor]);
+    CGContextSetFillColorWithColor(aContext, [nsBackgroundColor CGColor]);
     CGContextFillRect(aContext, self.bounds);
     CGColorRelease(backgroundColor);
 
@@ -175,10 +175,7 @@ const CGFloat _WLMinimumStringHeight = 5.0;
         CGContextSetAllowsFontSmoothing(aContext, YES);
         CGContextSetShouldAntialias(aContext, YES);
         CGContextSetAllowsAntialiasing(aContext, YES);
-        if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6)
-            CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, -1.0), 0.0, [[NSColor WL_eventTextShadowColor] WL_CGColor]);
-        else
-            CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0), 0.0, [[NSColor WL_eventTextShadowColor] WL_CGColor]);
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0), 0.0, [[NSColor WL_eventTextShadowColor] CGColor]);
 
         CGFloat preferredTitleHeight = [self.title WL_preferredHeightWithWidth:fdim(CGRectGetWidth(self.bounds), _WLXPadding)];
         if (preferredTitleHeight < titleAndLocationFrame.size.height)
@@ -223,7 +220,7 @@ const CGFloat _WLMinimumStringHeight = 5.0;
                                                           titleAndLocationFrame.size.width,
                                                           titleHeight));
 #ifdef DEBUG_LAYERS
-            CGContextSetFillColorWithColor(aContext, [[NSColor greenColor] WL_CGColor]);
+            CGContextSetFillColorWithColor(aContext, [[NSColor greenColor] CGColor]);
             CGContextFillRect(aContext, titleFrame);
 #endif
             [self.title WL_drawWithRect:titleFrame context:aContext];
@@ -232,7 +229,7 @@ const CGFloat _WLMinimumStringHeight = 5.0;
                                                              titleAndLocationFrame.size.width,
                                                              locationHeight));
 #ifdef DEBUG_LAYERS
-            CGContextSetFillColorWithColor(aContext, [[[NSColor greenColor] colorWithAlphaComponent:0.8] WL_CGColor]);
+            CGContextSetFillColorWithColor(aContext, [[[NSColor greenColor] colorWithAlphaComponent:0.8] CGColor]);
             CGContextFillRect(aContext, locationFrame);
 #endif
             [self.location WL_drawWithRect:locationFrame context:aContext];
@@ -240,7 +237,7 @@ const CGFloat _WLMinimumStringHeight = 5.0;
         else
         {
 #ifdef DEBUG_LAYERS
-            CGContextSetFillColorWithColor(aContext, [[[NSColor greenColor] colorWithAlphaComponent:0.3] WL_CGColor]);
+            CGContextSetFillColorWithColor(aContext, [[[NSColor greenColor] colorWithAlphaComponent:0.3] CGColor]);
             CGContextFillRect(aContext, titleAndLocationFrame);
 #endif
             // Layer cannot fit title, so there is no need to draw location.
@@ -252,7 +249,7 @@ const CGFloat _WLMinimumStringHeight = 5.0;
 
 - (CGColorRef)_lineColor
 {
-    CGColorRef lineColor = CGColorCreateCopyWithAlpha([[NSColor whiteColor] WL_CGColor], 0.25);
+    CGColorRef lineColor = CGColorCreateCopyWithAlpha([[NSColor whiteColor] CGColor], 0.25);
     return (CGColorRef)[(id)lineColor autorelease];
 }
 
@@ -283,7 +280,7 @@ const CGFloat _WLMinimumStringHeight = 5.0;
     else if ([aKey isEqualToString:@"contentsBackgroundOpacity"])
         return @(1.0);
     else if ([aKey isEqualToString:@"contentsBackgroundColor"])
-        return (id)[[NSColor clearColor] WL_CGColor];
+        return (id)[[NSColor clearColor] CGColor];
     else
         return [super defaultValueForKey:aKey];
 }
@@ -355,7 +352,7 @@ const CGFloat _WLMinimumStringHeight = 5.0;
     static NSDictionary *TitleAttributes = nil;
     dispatch_once(&onceToken, ^{
         TitleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
-                           (id)[[NSColor whiteColor] WL_CGColor], (id)kCTForegroundColorAttributeName,
+                           (id)[[NSColor whiteColor] CGColor], (id)kCTForegroundColorAttributeName,
                            (id)[NSFont WL_eventTitleFont],        (id)kCTFontAttributeName,
                            nil];
     });
@@ -372,7 +369,7 @@ const CGFloat _WLMinimumStringHeight = 5.0;
     static NSDictionary *LocationAttributes = nil;
     dispatch_once(&onceToken, ^{
         LocationAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
-                              (id)[[NSColor WL_eventLocationColor] WL_CGColor], (id)kCTForegroundColorAttributeName,
+                              (id)[[NSColor WL_eventLocationColor] CGColor], (id)kCTForegroundColorAttributeName,
                               (id)[NSFont WL_eventLocationFont],                (id)kCTFontAttributeName,
                               nil];
     });

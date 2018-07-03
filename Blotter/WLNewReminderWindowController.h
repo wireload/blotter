@@ -42,7 +42,7 @@
     
     @see    WLCalPriority.
 */
-@property NSInteger priority;
+@property WLCalPriority priority;
 
 /*!
     @brief  List of possible cal calendars.

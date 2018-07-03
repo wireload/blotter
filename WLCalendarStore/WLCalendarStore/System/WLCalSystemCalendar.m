@@ -18,6 +18,10 @@
 @synthesize allowedEntityTypes = _allowedEntityTypes;
 @synthesize calendarIdentifier = _calendarIdentifier;
 
+// This class exists only for compatibility with deprecated CalCalendar* objects.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
 - (instancetype)initWithStore:(id <WLCalStore>)aStore
                    csCalendar:(CalCalendar *)aCSCalendar
            allowedEntityTypes:(WLCalEntityMask)anAllowedEntityTypes
@@ -65,6 +69,8 @@
     return self;
 }
 
+#pragma clang diagnostic pop
+
 
 #pragma mark NSObject
 
@@ -102,3 +108,5 @@
 }
 
 @end
+
+#pragma clang diagnostic pop

@@ -42,7 +42,7 @@ static NSString* const _WLWeekdayDateFormatterCacheKey = @"weekdayDateFormatter"
 {
     WLCalendarDateView *view = [self view];
     NSDate *date = [[self representedObject] date];
-    NSInteger day = [[[[self representedObject] calendar] components:NSDayCalendarUnit fromDate:date] day];
+    NSInteger day = [[[[self representedObject] calendar] components:NSCalendarUnitDay fromDate:date] day];
     view.monthDay = [NSString stringWithFormat:@"%ld", day];
     view.monthAndYear = [self._monthAndYearDateFormatter stringFromDate:date];
     view.weekday = [self._weekdayDateFormatter stringFromDate:date];
@@ -128,9 +128,9 @@ static NSString* const _WLWeekdayDateFormatterCacheKey = @"weekdayDateFormatter"
     else if ([aKeyPath isEqualToString:@"representedObject.date"])
     {
         NSCalendar *calendar = [self representedObject].calendar;
-        NSDateComponents *oldDateComponents = [calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
+        NSDateComponents *oldDateComponents = [calendar components:NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay
                                                           fromDate:[aChange objectForKey:NSKeyValueChangeOldKey]];
-        NSDateComponents *newDateComponents = [calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
+        NSDateComponents *newDateComponents = [calendar components:NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay
                                                           fromDate:[aChange objectForKey:NSKeyValueChangeNewKey]];
         if (![oldDateComponents isEqual:newDateComponents])
         {

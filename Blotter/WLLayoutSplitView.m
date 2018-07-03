@@ -32,8 +32,8 @@
     static const CGFloat DotSpace = 6.0;
 
     CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
-    CGContextSetFillColorWithColor(context, [[NSColor WL_dotColor] WL_CGColor]);
-    CGContextSetShadowWithColor(context, CGSizeMake(0, -1.0), 0.0, [[NSColor WL_dotShadowColor] WL_CGColor]);
+    CGContextSetFillColorWithColor(context, [[NSColor WL_dotColor] CGColor]);
+    CGContextSetShadowWithColor(context, CGSizeMake(0, -1.0), 0.0, [[NSColor WL_dotShadowColor] CGColor]);
 
     if ([self isVertical])
     {
