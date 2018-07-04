@@ -2,12 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "checkbox-check-10_7.png",
+      "filename" : "checkbox-normal-10_10.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "checkbox-check-10_7@2x.png",
+      "filename" : "checkbox-normal-10_10@2x.png",
       "scale" : "2x"
     },
     {

@@ -2,12 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "checkbox-colormask-10_7.png",
+      "filename" : "checkbox-empty-10_12.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "checkbox-colormask-10_7@2x.png",
+      "filename" : "checkbox-empty-10_12@2x.png",
       "scale" : "2x"
     },
     {

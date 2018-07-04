@@ -14,8 +14,8 @@
 
 + (NSImage *)checkboxCellImageWithColor:(NSColor *)aColor state:(NSInteger)aState
 {
-    static dispatch_once_t onceToken;
     static NSCache *ImagesCache = nil;
+    static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         ImagesCache = [[NSCache alloc] init];
         [ImagesCache setName:@"WLColorCheckboxCell cache"];
@@ -26,35 +26,38 @@
 
     if (checkboxImage == nil)
     {
-        static const NSSize CheckboxSize = {.width = 16.0, .height = 16.0};
+        static const NSSize CheckboxSize = {.width = 14.0, .height = 14.0};
 
-        BOOL (^h)(NSRect) = ^(NSRect aDestinationRect)
+        __auto_type h = ^(NSRect aDestinationRect)
         {
+            NSString *maskImageName = floor(NSAppKitVersionNumber) < NSAppKitVersionNumber10_12 ? @"checkbox-mask-10_10" : @"checkbox-mask-10_12";
+            NSString *normalImageName = floor(NSAppKitVersionNumber) < NSAppKitVersionNumber10_12 ? @"checkbox-normal-10_10" : @"checkbox-normal-10_12";
+            NSString *emptyImageName = floor(NSAppKitVersionNumber) < NSAppKitVersionNumber10_12 ? @"checkbox-empty-10_10" : @"checkbox-empty-10_12";
 
-            [[NSImage imageNamed:@"checkbox-colormask-10_7"] drawInRect:aDestinationRect
-                                                               fromRect:aDestinationRect
-                                                              operation:NSCompositeSourceOver
-                                                               fraction:1.0];
+            [[NSImage imageNamed:maskImageName] drawInRect:aDestinationRect
+                                                  fromRect:aDestinationRect
+                                                 operation:NSCompositingOperationSourceOver
+                                                  fraction:1.0];
 
-            [[aColor colorWithAlphaComponent:0.4] setFill];
-            NSRectFillUsingOperation(aDestinationRect, NSCompositeSourceIn);
+            [aColor setFill];
+            NSRectFillUsingOperation(aDestinationRect, NSCompositingOperationSourceIn);
 
             switch (aState)
             {
                 case NSOnState:
                 {
-                    [[NSImage imageNamed:@"checkbox-check-10_7"] drawInRect:aDestinationRect
-                                                                   fromRect:aDestinationRect
-                                                                  operation:NSCompositeSourceOver
-                                                                   fraction:1.0];
+                    [[NSImage imageNamed:normalImageName] drawInRect:aDestinationRect
+                                                            fromRect:aDestinationRect
+                                                           operation:NSCompositingOperationSourceOver
+                                                            fraction:1.0];
                     break;
                 }
                 case NSOffState:
                 {
-                    [[NSImage imageNamed:@"checkbox-background-10_7"] drawInRect:aDestinationRect
-                                                                        fromRect:aDestinationRect
-                                                                       operation:NSCompositeSourceOver
-                                                                        fraction:1.0];
+                    [[NSImage imageNamed:emptyImageName] drawInRect:aDestinationRect
+                                                           fromRect:aDestinationRect
+                                                          operation:NSCompositingOperationSourceOver
+                                                           fraction:1.0];
                     break;
                 }
                 default:
