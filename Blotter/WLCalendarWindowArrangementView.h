@@ -36,7 +36,7 @@ typedef NS_ENUM(NSUInteger, WLCalendarWindowEdge) {
 @protocol WLCalendarWindowArrangementDelegate;
 
 
-@interface WLCalendarWindowArrangementView : NSView /*<CALayerDelegate, CALayoutManager>*/ {
+@interface WLCalendarWindowArrangementView : NSView <CALayerDelegate, CALayoutManager> {
     NSInteger arrangementMode;
     IBOutlet NSObject<WLCalendarWindowArrangementDelegate> *delegate;
 
