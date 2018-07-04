@@ -33,7 +33,7 @@
  
                 If either parameter is nil or aDateRange lies (partially or completly) outside of anEvent's range.
 */
-- (instancetype)initWithCalEvent:(NSObject <WLCalEvent> *)anEvent dateRange:(WLDateRange *)aDateRange;
+- (instancetype)initWithCalEvent:(NSObject <WLCalEvent> *)anEvent dateRange:(WLDateRange *)aDateRange NS_DESIGNATED_INITIALIZER;
 
 /*!
     @brief  Splits anEvent into parts aligned by aUnit for aCalendar.

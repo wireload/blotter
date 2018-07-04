@@ -42,10 +42,10 @@
     NSSize preferredSize = calendarSize == BLCustomSize ? DoubledPositionControlSize : _defaultFrameSize;
 
     // The new screen might have a different aspect ratio than the default 16:10.
-    WLCalendarWindowController *w = [(DeskboardAppDelegate *)[NSApp delegate] calendarWindowController];
+    WLCalendarWindowController *w = ((DeskboardAppDelegate *)NSApp.delegate).calendarWindowController;
     NSScreen *windowScreen = [w windowScreen];
 
-    NSRect screenFrame = [windowScreen visibleFrame];
+    NSRect screenFrame = windowScreen.visibleFrame;
     CGFloat aspectRatio = screenFrame.size.height ? screenFrame.size.width / screenFrame.size.height : 16.0 / 10.0;
 
     // Remove the margins on the left and the right so we can calculate the desired height of the positioner alone.
@@ -80,9 +80,9 @@
 
 - (NSRect)calendarWindowViewFrameOfCalendarWindowArrangement:(WLCalendarWindowArrangementView *)anArrangement
 {
-    WLCalendarWindowController *w = [(DeskboardAppDelegate *)[NSApp delegate] calendarWindowController];
+    WLCalendarWindowController *w = ((DeskboardAppDelegate *)NSApp.delegate).calendarWindowController;
     NSRect windowFrame = [w windowFrame];
-    NSRect screenFrame = [[w windowScreen] visibleFrame];
+    NSRect screenFrame = [w windowScreen].visibleFrame;
     if (!NSEqualRects(windowFrame, NSZeroRect) && !NSEqualRects(screenFrame, NSZeroRect))
     {
         // We have to map global screen coordinates to a local one.
@@ -100,8 +100,8 @@
 
 - (NSSize)minimumSizeForCalendarWindowArrangement:(WLCalendarWindowArrangementView *)anArrangement
 {
-    WLCalendarWindowController *w = [(DeskboardAppDelegate *)[NSApp delegate] calendarWindowController];
-    NSRect screenFrame = [[w windowScreen] visibleFrame];
+    WLCalendarWindowController *w = ((DeskboardAppDelegate *)NSApp.delegate).calendarWindowController;
+    NSRect screenFrame = [w windowScreen].visibleFrame;
     if (!NSEqualRects(screenFrame, NSZeroRect))
     {
         NSRect bounds = [anArrangement positionerBounds];
@@ -151,12 +151,12 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setInteger:aPosition forKey:@"CalendarPosition"];
-    WLCalendarWindowController *w = [(DeskboardAppDelegate *)[NSApp delegate] calendarWindowController];
+    WLCalendarWindowController *w = ((DeskboardAppDelegate *)NSApp.delegate).calendarWindowController;
     NSScreen *windowScreen = [w windowScreen];
     NSRect windowFrame = [w windowFrameOnScreen:windowScreen
                                    withPosition:aPosition
                                            size:[defaults integerForKey:@"CalendarSize"]];
-    NSRect screenFrame = [windowScreen visibleFrame];
+    NSRect screenFrame = windowScreen.visibleFrame;
     if (!NSEqualRects(windowFrame, NSZeroRect) && !NSEqualRects(screenFrame, NSZeroRect))
     {
         // We have to map global screen coordinates to a local one.
@@ -212,15 +212,15 @@
 {
     if ([aKeyPath isEqualToString:@"CalendarSize"])
     {
-        BLSize oldSize = [[aChange objectForKey:NSKeyValueChangeOldKey] integerValue];
-        BOOL isPrior = [[aChange objectForKey:NSKeyValueChangeNotificationIsPriorKey] boolValue];
+        BLSize oldSize = [aChange[NSKeyValueChangeOldKey] integerValue];
+        BOOL isPrior = [aChange[NSKeyValueChangeNotificationIsPriorKey] boolValue];
         if (isPrior && oldSize != BLCustomSize)
         {
             BLPosition position = [[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarPosition"];
-            DeskboardAppDelegate *appDelegate = [NSApp delegate];
+            DeskboardAppDelegate *appDelegate = NSApp.delegate;
             NSScreen *screen = [appDelegate.calendarWindowController windowScreen];
             NSRect windowFrame = [appDelegate.calendarWindowController windowFrameOnScreen:screen withPosition:position size:oldSize];
-            NSRect screenFrame = [screen visibleFrame];
+            NSRect screenFrame = screen.visibleFrame;
             NSRect customFrameFractos = NSMakeRect(fabs(windowFrame.origin.x - screenFrame.origin.x) / screenFrame.size.width,
                                                    fabs(windowFrame.origin.y - screenFrame.origin.y) / screenFrame.size.height,
                                                    windowFrame.size.width / screenFrame.size.width,
@@ -229,7 +229,7 @@
         }
         else if (!isPrior)
         {
-            switch ([[aChange objectForKey:NSKeyValueChangeNewKey] integerValue]) {
+            switch ([aChange[NSKeyValueChangeNewKey] integerValue]) {
                 case BLCustomSize:
                     _arrangement.arrangementMode = WLCalendarWindowPositioningArrangement | WLCalendarWindowResizingArrangement;
                     break;
@@ -237,14 +237,14 @@
                     _arrangement.arrangementMode = WLCalendarWindowPositioningArrangement;
                     break;
             }
-            [[_arrangement layer] setNeedsLayout];
+            [_arrangement.layer setNeedsLayout];
             [self updatePreferredFrameSizeOfPaneView];
         }
     }
     else if ([aKeyPath isEqualToString:WLScreenIdentifierKey])
     {
         [self updatePreferredFrameSizeOfPaneView];
-        [[_arrangement layer] setNeedsLayout];
+        [_arrangement.layer setNeedsLayout];
     }
     else
         [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];

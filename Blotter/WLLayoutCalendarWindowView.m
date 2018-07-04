@@ -20,7 +20,7 @@
 
     [NSGraphicsContext saveGraphicsState];
     NSBezierPath *path = [NSBezierPath bezierPath];
-    NSRect pathFrame = NSInsetRect([self bounds],
+    NSRect pathFrame = NSInsetRect(self.bounds,
                                    CalendarWindowFrameLineWidth / 2,
                                    CalendarWindowFrameLineWidth / 2);
     [path appendBezierPathWithRoundedRect:pathFrame xRadius:5.0 yRadius:5.0];
@@ -29,7 +29,7 @@
     [path fill];
 
     [[[NSColor blackColor] colorWithAlphaComponent:0.75] setStroke];
-    [path setLineWidth:CalendarWindowFrameLineWidth];
+    path.lineWidth = CalendarWindowFrameLineWidth;
     [path stroke];
     [NSGraphicsContext restoreGraphicsState];
 }

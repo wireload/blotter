@@ -44,7 +44,7 @@
 
     @discussion Designated initializer.
  */
-- (instancetype)initWithEvents:(NSArray *)anEvents calendar:(NSCalendar *)aCalendar unit:(NSCalendarUnit)aUnit;
+- (instancetype)initWithEvents:(NSArray *)anEvents calendar:(NSCalendar *)aCalendar unit:(NSCalendarUnit)aUnit NS_DESIGNATED_INITIALIZER;
 
 /*!
     @brief      Returns all day events that lie within aDateRange.

@@ -21,7 +21,7 @@ NSString* const WLSizeDiff = @"WLSizeDiff";
 
 - (void)setDrawsBackground:(BOOL)flag
 {
-    [super setDrawsBackground:flag];
+    super.drawsBackground = flag;
     [containerView setNeedsDisplay:YES];
 }
 
@@ -31,9 +31,9 @@ NSString* const WLSizeDiff = @"WLSizeDiff";
     BOOL isBecome = [super becomeFirstResponder];
     if (isBecome)
     {
-        if ([[[self selectedRanges] objectAtIndex:0] rangeValue].length == 0)
-            [self setSelectedRange:NSMakeRange([[self string] length], 0)];
-        [self setTextColor:[NSColor blackColor]];
+        if (self.selectedRanges[0].rangeValue.length == 0)
+            [self setSelectedRange:NSMakeRange(self.string.length, 0)];
+        self.textColor = [NSColor blackColor];
     }
     return isBecome;
 }
@@ -41,7 +41,7 @@ NSString* const WLSizeDiff = @"WLSizeDiff";
 - (BOOL)resignFirstResponder
 {
     [self setSelectedRange:NSMakeRange(0, 0)];
-    [self setTextColor:[NSColor whiteColor]];
+    self.textColor = [NSColor whiteColor];
     return [super resignFirstResponder];
 }
 
@@ -51,22 +51,22 @@ NSString* const WLSizeDiff = @"WLSizeDiff";
 @implementation WLGlassHudTextView
 @synthesize postsSizeChangedNotifications;
 
-- (id)initWithFrame:(NSRect)frameRect
+- (instancetype)initWithFrame:(NSRect)frameRect
 {
     self = [super initWithFrame:frameRect];
     if (self != nil)
     {
-        NSRect textViewFrame = [self convertRect:frameRect fromView:[self superview]];
+        NSRect textViewFrame = [self convertRect:frameRect fromView:self.superview];
         textViewFrame.origin.y += _WLTextViewTopOffset;
         textViewFrame.size.height -= _WLTextViewTopOffset + _WLTextViewBottomOffset;
         _textView = [[_WLGlassHudTextViewInternal alloc] initWithFrame:textViewFrame];
-        [_textView setDelegate:self];
-        [_textView setBackgroundColor:[NSColor clearColor]];
+        _textView.delegate = self;
+        _textView.backgroundColor = [NSColor clearColor];
         [_textView setAllowsUndo:YES];
         [_textView setRichText:NO];
         [_textView setImportsGraphics:NO];
         [_textView setAllowsImageEditing:NO];
-        [_textView setTextColor:[NSColor whiteColor]];
+        _textView.textColor = [NSColor whiteColor];
         _textView.containerView = self;
         [self addSubview:_textView];
         [_textView release];
@@ -76,8 +76,8 @@ NSString* const WLSizeDiff = @"WLSizeDiff";
 
 - (void)awakeFromNib
 {
-    [_textView setNextKeyView:[self nextKeyView]];
-    [self setNextKeyView:_textView];
+    _textView.nextKeyView = self.nextKeyView;
+    self.nextKeyView = _textView;
 }
 
 - (BOOL)acceptsFirstResponder
@@ -107,10 +107,9 @@ NSString* const WLSizeDiff = @"WLSizeDiff";
                                                                                     queue:nil
                                                                                usingBlock:^(NSNotification *arg1)
         {
-            _WLGlassHudTextViewInternal *view = [arg1 object];
-            CGFloat heightDiff = [view frame].size.height - [self frame].size.height + _WLTextViewTopOffset + _WLTextViewBottomOffset;
-            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSValue valueWithSize:NSMakeSize(0.0, heightDiff)]
-                                                                 forKey:WLSizeDiff];
+            _WLGlassHudTextViewInternal *view = arg1.object;
+            CGFloat heightDiff = view.frame.size.height - self.frame.size.height + _WLTextViewTopOffset + _WLTextViewBottomOffset;
+            NSDictionary *userInfo = @{WLSizeDiff: [NSValue valueWithSize:NSMakeSize(0.0, heightDiff)]};
             [[NSNotificationCenter defaultCenter] postNotificationName:WLViewSizeDidChangeNotification
                                                                 object:self
                                                               userInfo:userInfo];
@@ -126,9 +125,9 @@ NSString* const WLSizeDiff = @"WLSizeDiff";
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    if ([_textView drawsBackground])
+    if (_textView.drawsBackground)
     {
-        NSDrawNinePartImage([self bounds],
+        NSDrawNinePartImage(self.bounds,
                             [NSImage imageNamed:@"glass-hud-textview-top-left"],
                             [NSImage imageNamed:@"glass-hud-textview-top"],
                             [NSImage imageNamed:@"glass-hud-textview-top-right"],
@@ -146,13 +145,13 @@ NSString* const WLSizeDiff = @"WLSizeDiff";
 
 - (NSSize)textViewSize
 {
-    return [_textView frame].size;
+    return _textView.frame.size;
 }
 
 - (void)selectAll:(id)sender
 {
     [_textView selectAll:sender];
-    [[self window] makeFirstResponder:_textView];
+    [self.window makeFirstResponder:_textView];
 }
 
 
@@ -175,12 +174,12 @@ NSString* const WLSizeDiff = @"WLSizeDiff";
 {
     if (aSelector == @selector(insertTab:))
     {
-        [[self window] selectNextKeyView:self];
+        [self.window selectNextKeyView:self];
         return YES;
     }
     else if (aSelector == @selector(insertBacktab:))
     {
-        [[self window] selectPreviousKeyView:self];
+        [self.window selectPreviousKeyView:self];
         return YES;
     }
     else {

@@ -32,6 +32,6 @@
 @property (assign, nonatomic, readwrite)   BOOL enabled;
 @property (copy, nonatomic, readwrite)     NSString *identifier;
 
--(id)initWithIdentifier:(NSString*)identifier;
+-(instancetype)initWithIdentifier:(NSString*)identifier;
 
 @end

@@ -122,12 +122,12 @@ static const CGFloat _WLXPadding = 2.0;
 
 - (void)layoutSublayers
 {
-    if ([_eventLayers count] == 0 || self.bounds.size.width == 0.0 || self.bounds.size.height == 0.0)
+    if (_eventLayers.count == 0 || self.bounds.size.width == 0.0 || self.bounds.size.height == 0.0)
         return;
 
     // Origin is top left
-    NSMutableArray *preferredHeightOfLayers = [NSMutableArray arrayWithCapacity:[_eventLayers count]];
-    NSMutableArray *minimumHeightOfLayers = [NSMutableArray arrayWithCapacity:[_eventLayers count]];
+    NSMutableArray *preferredHeightOfLayers = [NSMutableArray arrayWithCapacity:_eventLayers.count];
+    NSMutableArray *minimumHeightOfLayers = [NSMutableArray arrayWithCapacity:_eventLayers.count];
     CGFloat totalPreferredHeight = CGRectGetMinY(self.bounds);
     CGFloat totalMinimumHeight = CGRectGetMinY(self.bounds);
     CGFloat totalVisibleHeight = CGRectGetHeight(self.bounds);
@@ -241,7 +241,7 @@ static const CGFloat _WLXPadding = 2.0;
 #ifdef DEBUG_LAYERS
     self.backgroundColor = [calendarColor CGColor];
 #else
-    self.contentsBackgroundColor = [newEvent.calendar.color CGColor];
+    self.contentsBackgroundColor = (newEvent.calendar.color).CGColor;
 #endif
 }
 

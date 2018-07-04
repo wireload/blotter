@@ -22,11 +22,10 @@
 @class WLCalendarRightNowEventsViewController;
 
 
-typedef enum
-{
+typedef NS_ENUM(NSUInteger, WLCalendarWindowState) {
     WLFinderLevelState,
     WLFloatingLevelState,
-} WLCalendarWindowState;
+};
 
 
 /*!
@@ -57,7 +56,7 @@ typedef enum
 
 @property (readonly) WLCalendarsController *calendarsController;
 
-- (id)initWithWindow:(WLCalendarWindow *)aWindow;
+- (instancetype)initWithWindow:(WLCalendarWindow *)aWindow;
 
 - (IBAction)showWindow:(id)aSender;
 

@@ -66,7 +66,6 @@
 /*!
     @abstract   Overridden to ignore newAngle.
  */
-- (void)setBoundsRotation:(CGFloat)newAngle;
 
 /*!
     @abstract   Overridden to stop any performing animation on subtree.

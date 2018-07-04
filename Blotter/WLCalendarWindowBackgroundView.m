@@ -34,7 +34,7 @@ static const CGFloat _WLCalendarBackgroundActiveDarkness = 0.20;
     static dispatch_once_t Once;
     dispatch_once(&Once, ^
     {
-        NSImage *transparentNoiseImage = [NSImage imageWithSize:[[NSImage imageNamed:@"calendar-background-noise"] size]
+        NSImage *transparentNoiseImage = [NSImage imageWithSize:[NSImage imageNamed:@"calendar-background-noise"].size
                                                            flipped:NO
                                                     drawingHandler:^BOOL(NSRect aDestinationRect)
             {
@@ -111,18 +111,18 @@ static const CGFloat _WLCalendarBackgroundActiveDarkness = 0.20;
     BEGIN_TIMING();
 
     [NSGraphicsContext saveGraphicsState];
-    [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
+    [NSGraphicsContext currentContext].imageInterpolation = NSImageInterpolationHigh;
 #ifndef DEBUG_LAYERS
-    NSRect bounds = [self bounds];
+    NSRect bounds = self.bounds;
     NSRect innerArea = [[self class] glassRectForBounds:bounds];
     NSBezierPath *innerPath = [NSBezierPath bezierPathWithRoundedRect:innerArea xRadius:5 yRadius:5];
 
-    if ([(WLCalendarWindow *)[self window] isFloatingWindow])
+    if (((WLCalendarWindow *)self.window).isFloatingWindow)
     {
         [NSGraphicsContext saveGraphicsState];
         [innerPath addClip];
-        CIImage *blurredBackgroundImage = [(WLCalendarWindow *)[self window] cachedBlurredBackgroundImage:NO];
-        CGRect blurredRect = [blurredBackgroundImage extent];
+        CIImage *blurredBackgroundImage = [(WLCalendarWindow *)self.window cachedBlurredBackgroundImage:NO];
+        CGRect blurredRect = blurredBackgroundImage.extent;
 
         [blurredBackgroundImage drawAtPoint:NSMakePoint(blurredRect.origin.x, blurredRect.origin.y)
                                    fromRect:NSRectFromCGRect(blurredRect)
@@ -146,7 +146,7 @@ static const CGFloat _WLCalendarBackgroundActiveDarkness = 0.20;
                                   [NSImage imageNamed:@"calendar-background-active-bottom-right"],
                                   NSCompositeSourceOver,
                                   1.0,
-                                  [self isFlipped]);
+                                  self.flipped);
     }
     else
     {
@@ -162,7 +162,7 @@ static const CGFloat _WLCalendarBackgroundActiveDarkness = 0.20;
                                   [NSImage imageNamed:@"calendar-background-bottom-right"],
                                   NSCompositeCopy,
                                   1.0,
-                                  [self isFlipped]);
+                                  self.flipped);
     }
 
     [[WLCalendarWindowBackgroundView backgroundNoisePatternColor] setFill];
@@ -190,9 +190,9 @@ static const CGFloat _WLCalendarBackgroundActiveDarkness = 0.20;
 - (void)setFrameSize:(NSSize)newSize
 {
     [super setFrameSize:newSize];
-    NSWindow *w = [self window];
-    NSView *realContentView = [[self subviews] lastObject];
-    [realContentView setFrame:[w contentRectForFrameRect:[w frame]]];
+    NSWindow *w = self.window;
+    NSView *realContentView = self.subviews.lastObject;
+    realContentView.frame = [w contentRectForFrameRect:w.frame];
 }
 
 @end

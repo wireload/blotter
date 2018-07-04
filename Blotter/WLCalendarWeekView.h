@@ -22,11 +22,10 @@
 @protocol WLCalendarWeekViewDataSource;
 
 
-typedef enum
-{
+typedef NS_ENUM(NSUInteger, WLDayAppearanceDirection) {
     WLRightToLeftDirection,
     WLLeftToRightDirection
-} WLDayAppearanceDirection;
+};
 
 
 @interface WLCalendarWeekView : WLLayerHostedView <WLCalendarTimeRuler/*, CALayerManager, CALayerDelegate*/> {

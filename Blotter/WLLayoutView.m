@@ -42,8 +42,8 @@ static const CGFloat RoundRadius = 2.0;
 - (void)drawRect:(NSRect)aDirtyRect
 {
     [NSGraphicsContext saveGraphicsState];
-    [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
-    WLDrawScaledNinePartImage([self bounds],
+    [NSGraphicsContext currentContext].imageInterpolation = NSImageInterpolationHigh;
+    WLDrawScaledNinePartImage(self.bounds,
                         Images[0],
                         Images[1],
                         Images[2],
@@ -59,7 +59,7 @@ static const CGFloat RoundRadius = 2.0;
     [NSGraphicsContext restoreGraphicsState];
 
     [NSGraphicsContext saveGraphicsState];
-    NSRect tileFrame = NSInsetRect([self bounds], 2.0, 1.0);
+    NSRect tileFrame = NSInsetRect(self.bounds, 2.0, 1.0);
     if (NSWidth(tileFrame) >= RoundRadius && NSHeight(tileFrame) >= RoundRadius)
     {
         [[NSBezierPath bezierPathWithRoundedRect:tileFrame

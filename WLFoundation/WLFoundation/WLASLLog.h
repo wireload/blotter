@@ -27,7 +27,7 @@ typedef NSString * (^WLASLLogMessenger)(void);
 
 - (instancetype)initWithName:(NSString *)aName;
 
-- (instancetype)initWithFileDescriptor:(int)aFileDescriptor name:(NSString *)aName;
+- (instancetype)initWithFileDescriptor:(int)aFileDescriptor name:(NSString *)aName NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)initWithFile:(NSFileHandle *)aFileHandle name:(NSString *)aName;
 

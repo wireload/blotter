@@ -19,7 +19,7 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
 
 @implementation _WLFlippedView
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self != nil)
@@ -39,7 +39,7 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
 
 @implementation WLCalendarWindow
 
-- (id)init
+- (instancetype)init
 {
     self = [self initWithContentRect:NSZeroRect
                            styleMask:NSBorderlessWindowMask
@@ -50,12 +50,12 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
         [self setOpaque:NO];
         [self setAutorecalculatesKeyViewLoop:NO];
         [self setHasShadow:NO];
-        [self setBackgroundColor:[NSColor clearColor]];
+        self.backgroundColor = [NSColor clearColor];
         [self setIgnoresMouseEvents:YES];
         [self setCanHide:NO];
         [self setDisplaysWhenScreenProfileChanges:YES];
-        [self setContentView:[[[_WLFlippedView alloc] init] autorelease]];
-        [self setAnimationBehavior:NSWindowAnimationBehaviorNone];
+        self.contentView = [[[_WLFlippedView alloc] init] autorelease];
+        self.animationBehavior = NSWindowAnimationBehaviorNone;
 
         // This filter will be responsible for flipping the input image upside down. It can't be
         // fully prepared in advance because we need to know the height of the image.
@@ -91,16 +91,16 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
 
     if (isFloatingWindow)
     {
-        [self setLevel:NSFloatingWindowLevel];
-        [self setCollectionBehavior:NSWindowCollectionBehaviorDefault | NSWindowCollectionBehaviorTransient | NSWindowCollectionBehaviorIgnoresCycle];
+        self.level = NSFloatingWindowLevel;
+        self.collectionBehavior = NSWindowCollectionBehaviorDefault | NSWindowCollectionBehaviorTransient | NSWindowCollectionBehaviorIgnoresCycle;
         [self orderBack:nil];
         [[self realContentView] setNeedsDisplay:YES];
         [self displayIfNeeded];
     }
     else
     {
-        [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces | NSWindowCollectionBehaviorIgnoresCycle | NSWindowCollectionBehaviorTransient];
-        [self setLevel:WLGetFinderLevel()];
+        self.collectionBehavior = NSWindowCollectionBehaviorCanJoinAllSpaces | NSWindowCollectionBehaviorIgnoresCycle | NSWindowCollectionBehaviorTransient;
+        self.level = WLGetFinderLevel();
         [self orderBack:nil];
         [[self realContentView] setNeedsDisplay:YES];
         [self displayIfNeeded];
@@ -112,7 +112,7 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
 
 - (WLCalendarWindowBackgroundView *)realContentView
 {
-    return [super contentView];
+    return super.contentView;
 }
 
 - (CGImageRef)newCGImageOfScreenBelowWindow
@@ -120,10 +120,10 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
     BEGIN_TIMING();
 
     NSArray *screens = [NSScreen screens];
-    if ([screens count] > 0)
+    if (screens.count > 0)
     {
-        NSScreen *screenWithMenubar = [screens objectAtIndex:0];
-        NSRect windowFrame = [self frame];
+        NSScreen *screenWithMenubar = screens[0];
+        NSRect windowFrame = self.frame;
 
         // Map window frame
         // FROM coordinates where both window and screen origins are bottom left and y-axis values increase upward
@@ -133,7 +133,7 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
         [windowOriginTransform translateXBy:0.0 yBy:NSHeight(windowFrame)];
 
         NSAffineTransform *screenOriginAndDirectionTransform = [NSAffineTransform transform];
-        [screenOriginAndDirectionTransform translateXBy:0.0 yBy:NSHeight([screenWithMenubar frame])];
+        [screenOriginAndDirectionTransform translateXBy:0.0 yBy:NSHeight(screenWithMenubar.frame)];
         [screenOriginAndDirectionTransform scaleXBy:1.0 yBy:-1.0];
 
         NSAffineTransform *resultTransform = [NSAffineTransform transform];
@@ -141,7 +141,7 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
         [resultTransform appendTransform:screenOriginAndDirectionTransform];
         windowFrame.origin = [resultTransform transformPoint:windowFrame.origin];
 
-        CGWindowID windowId = (CGWindowID)[self windowNumber];
+        CGWindowID windowId = (CGWindowID)self.windowNumber;
         CGImageRef desktopImage = CGWindowListCreateImage(NSRectToCGRect(windowFrame),
                                                           kCGWindowListOptionOnScreenBelowWindow,
                                                           windowId,
@@ -166,7 +166,7 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
 
         // Flip image upside down.
         NSAffineTransform *affineTransform = [NSAffineTransform transform];
-        [affineTransform translateXBy:0 yBy:[ciImage extent].size.height];
+        [affineTransform translateXBy:0 yBy:ciImage.extent.size.height];
         [affineTransform scaleXBy:1.0 yBy:-1.0];
 
         [_blurInputFilter setValue:ciImage forKey:@"inputImage"];
@@ -213,20 +213,20 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
 {
     if (![_fakeContentView isEqualTo:aView])
     {
-        NSRect bounds = [self frame];
+        NSRect bounds = self.frame;
         bounds.origin = NSZeroPoint;
 
-        WLCalendarWindowBackgroundView *frameView = [super contentView];
+        WLCalendarWindowBackgroundView *frameView = super.contentView;
         if (frameView == nil)
         {
             frameView = [[[WLCalendarWindowBackgroundView alloc] initWithFrame:bounds] autorelease];
             [frameView setWantsLayer:YES];
-            [super setContentView:frameView];
+            super.contentView = frameView;
         }
 
         [_fakeContentView removeFromSuperview];
         _fakeContentView = aView;
-        [_fakeContentView setFrame:[self contentRectForFrameRect:bounds]];
+        _fakeContentView.frame = [self contentRectForFrameRect:bounds];
         [_fakeContentView setNeedsDisplay:YES];
         [frameView addSubview:_fakeContentView];
     }
@@ -234,8 +234,8 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
 
 - (void)cancelOperation:(id)aSender
 {
-    if ([[NSApp delegate] respondsToSelector:@selector(cancelOperation:)])
-        [[NSApp delegate] cancelOperation:aSender];
+    if ([NSApp.delegate respondsToSelector:@selector(cancelOperation:)])
+        [NSApp.delegate cancelOperation:aSender];
     else
         [super cancelOperation:aSender];
 }

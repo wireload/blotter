@@ -15,9 +15,8 @@
 
 @interface WLLayoutSplitView : NSSplitView
 
-- (NSObject<WLLayoutSplitViewDelegate> *)delegate;
+@property (assign) NSObject<WLLayoutSplitViewDelegate> *delegate;
 
-- (void)setDelegate:(NSObject<WLLayoutSplitViewDelegate> *)delegate;
 
 @end
 

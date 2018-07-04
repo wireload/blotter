@@ -16,7 +16,7 @@
     dispatch_semaphore_t _comparatorSemaphore;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 
@@ -71,10 +71,9 @@
 
         [indexesOfOldReminders enumerateObjectsUsingBlock:^(NSNumber *obj, NSUInteger i, BOOL *stop)
         {
-            NSUInteger oldReminderIndexValue = [obj unsignedIntegerValue];
+            NSUInteger oldReminderIndexValue = obj.unsignedIntegerValue;
             NSUInteger newReminderIndexValue = [indexesOfNewObjects[i] unsignedIntegerValue];
-            [_reminders replaceObjectAtIndex:oldReminderIndexValue
-                                  withObject:newReminders[newReminderIndexValue]];
+            _reminders[oldReminderIndexValue] = newReminders[newReminderIndexValue];
             [(WLCalendarRemindersView *)self.view updateReminderAtIndex:oldReminderIndexValue];
         }];
 
@@ -216,7 +215,7 @@
     if (!c)
         c = [self makeRemindersComparator];
 
-    NSArray *r = [[aNotification userInfo][@(WLCalReminderCompletionMaskIncomplete)] sortedArrayWithOptions:NSSortStable
+    NSArray *r = [aNotification.userInfo[@(WLCalReminderCompletionMaskIncomplete)] sortedArrayWithOptions:NSSortStable
                                                                                             usingComparator:c];
     dispatch_sync(dispatch_get_main_queue(), ^{
         [self setReminders:r sortedUsingComparator:c animated:YES];
@@ -255,12 +254,12 @@
 
 - (NSUInteger)numberOfRemindersInRemindersView:(WLCalendarRemindersView *)aTasksView
 {
-    return [_reminders count];
+    return _reminders.count;
 }
 
 - (NSObject <WLCalReminder> *)remindersView:(WLCalendarRemindersView *)aTasksView reminderAtIndex:(NSUInteger)anIndex
 {
-    return [_reminders objectAtIndex:anIndex];
+    return _reminders[anIndex];
 }
 
 

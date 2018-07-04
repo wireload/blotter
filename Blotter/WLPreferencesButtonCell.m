@@ -34,9 +34,9 @@
 {
     if (![self isTall:cellFrame])
     {
-        float alpha = [self isEnabled] ? 1.0 : 0.75;
+        float alpha = self.enabled ? 1.0 : 0.75;
 
-        if (![self isHighlighted])
+        if (!self.highlighted)
         {
             NSDrawThreePartImage(cellFrame,
                                  [NSImage imageNamed:@"preferences-about-blotter-button-bezel-left"],
@@ -62,15 +62,15 @@
         NSRect titleFrame = [self titleRectForBounds:cellFrame];
         NSRect imageFrame = [self imageRectForBounds:cellFrame];
 
-        [self drawTitle:[self attributedTitle] withFrame:titleFrame inView:controlView];
+        [self drawTitle:self.attributedTitle withFrame:titleFrame inView:controlView];
 
-        [self drawImage:[self image] withFrame:imageFrame inView:controlView];
+        [self drawImage:self.image withFrame:imageFrame inView:controlView];
     }
     else
     {
-        float alpha = [self isEnabled] ? 1.0 : 0.75;
+        float alpha = self.enabled ? 1.0 : 0.75;
 
-        if (![self isHighlighted])
+        if (!self.highlighted)
         {
             NSDrawThreePartImage(cellFrame,
                                  [NSImage imageNamed:@"preferences-about-blotter-tall-button-bezel-left"],
@@ -99,17 +99,17 @@
         titleFrame.origin.y += 2;
         imageFrame.origin.y -= 2;
 
-        [self drawTitle:[self attributedTitle] withFrame:titleFrame inView:controlView];
-        [self drawImage:[self image] withFrame:imageFrame inView:controlView];
+        [self drawTitle:self.attributedTitle withFrame:titleFrame inView:controlView];
+        [self drawImage:self.image withFrame:imageFrame inView:controlView];
     }
 }
 
 - (NSRect)imageRectForBounds:(NSRect)theRect
 {
-    if ([self image] != nil && [self imagePosition] == NSImageLeft)
+    if (self.image != nil && self.imagePosition == NSImageLeft)
     {
         // Prevent image from being cut off on the top or bottom and position it better than the default.
-        NSSize size = [[self image] size];
+        NSSize size = self.image.size;
         return NSMakeRect(14.0, floor((theRect.size.height - size.height) / 2.0), size.width, size.height);
     }
 

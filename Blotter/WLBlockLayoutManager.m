@@ -10,7 +10,7 @@
 
 @implementation WLBlockLayoutManager
 
-- (id)initWithLayoutManager:(WLLayoutManager)aLayoutManager
+- (instancetype)initWithLayoutManager:(WLLayoutManager)aLayoutManager
 {
     if (self = [super init]) {
         layoutManager = [aLayoutManager copy];

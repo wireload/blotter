@@ -40,7 +40,7 @@ NSString* const WLSmartClockLogKey = @"net.wireload.mac.WLFoundation.WLSmartCloc
                   name:NSSystemTimeZoneDidChangeNotification
                 object:nil];
 
-        [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self
+        [[NSWorkspace sharedWorkspace].notificationCenter addObserver:self
                                                                selector:@selector(dateDidChange)
                                                                    name:NSWorkspaceDidWakeNotification
                                                                  object:nil];
@@ -62,7 +62,7 @@ NSString* const WLSmartClockLogKey = @"net.wireload.mac.WLFoundation.WLSmartCloc
     [[NSRunLoop mainRunLoop] cancelPerformSelector:@selector(calendarDidChange) target:self argument:nil];
     [[NSRunLoop mainRunLoop] cancelPerformSelector:@selector(dateDidChange) target:self argument:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
+    [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self];
 }
 
 
@@ -199,7 +199,7 @@ NSString* const WLSmartClockLogKey = @"net.wireload.mac.WLFoundation.WLSmartCloc
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@: %@, %@", [super description], self.date, self.calendar];
+    return [NSString stringWithFormat:@"%@: %@, %@", super.description, self.date, self.calendar];
 }
 
 @end

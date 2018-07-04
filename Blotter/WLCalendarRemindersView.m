@@ -19,7 +19,7 @@ static NSString* const _WLRootLayerName = @"WLCalendarRemindersViewLayer";
     NSMutableArray *_orderedReminderLayers;
 }
 
-- (id)initWithFrame:(NSRect)frameRect
+- (instancetype)initWithFrame:(NSRect)frameRect
 {
     self = [super initWithFrame:frameRect];
 
@@ -87,7 +87,7 @@ static NSString* const _WLRootLayerName = @"WLCalendarRemindersViewLayer";
     l.title = [NSAttributedString WL_reminderTitleWithString:reminder.title];
     NSColor *calendarColor = reminder.calendar.color;
 
-    l.mark = [NSAttributedString WL_reminderMarkWithColor:[calendarColor CGColor]];
+    l.mark = [NSAttributedString WL_reminderMarkWithColor:calendarColor.CGColor];
     [self.layer setNeedsLayout];
 }
 
@@ -110,7 +110,7 @@ static NSString* const _WLRootLayerName = @"WLCalendarRemindersViewLayer";
 
 - (NSUInteger)numberOfReminders
 {
-    return [_orderedReminderLayers count];
+    return _orderedReminderLayers.count;
 }
 
 
@@ -191,24 +191,22 @@ static NSString* const _WLRootLayerName = @"WLCalendarRemindersViewLayer";
 {
     CALayer *l = [CALayer layer];
 
-    NSWindow *window = [self window];
+    NSWindow *window = self.window;
 
     if (window)
-        l.contentsScale = [window backingScaleFactor];
+        l.contentsScale = window.backingScaleFactor;
 
     l.layoutManager = self;
     l.masksToBounds = YES;
     l.name = _WLRootLayerName;
     l.delegate = self;
-    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNull null], kCAOnOrderIn,
-                             [NSNull null], kCAOnOrderOut,
-                             [NSNull null], kCATransition,
-                             [NSNull null], @"contents",
-                             [NSNull null], @"frame",
-                             [NSNull null], @"bounds",
-                             [NSNull null], @"position",
-                             nil];
+    NSDictionary *actions = @{kCAOnOrderIn: [NSNull null],
+                             kCAOnOrderOut: [NSNull null],
+                             kCATransition: [NSNull null],
+                             @"contents": [NSNull null],
+                             @"frame": [NSNull null],
+                             @"bounds": [NSNull null],
+                             @"position": [NSNull null]};
     l.actions = actions;
 
 #ifdef DEBUG_LAYERS
@@ -235,10 +233,10 @@ static NSString* const _WLRootLayerName = @"WLCalendarRemindersViewLayer";
 {
     WLCalendarReminderLayer *l = [WLCalendarReminderLayer layer];
 
-    NSWindow *window = [self window];
+    NSWindow *window = self.window;
 
     if (window)
-        l.contentsScale = [window backingScaleFactor];
+        l.contentsScale = window.backingScaleFactor;
 
     l.needsDisplayOnBoundsChange = YES;
     l.delegate = self;

@@ -23,14 +23,14 @@
         if (frame != NULL)
         {
             __block NSArray *lines = (__bridge NSArray *)CTFrameGetLines(frame);
-            NSUInteger numberOfLines = [lines count];
+            NSUInteger numberOfLines = lines.count;
             if (numberOfLines > 0)
             {
                 __block CGPoint *lineOrigins = calloc(numberOfLines, sizeof(CGPoint));
                 CTFrameGetLineOrigins(frame, CFRangeMake(0, (CFIndex)numberOfLines), lineOrigins);
 
                 CFRange frameRange = CTFrameGetVisibleStringRange(frame);
-                NSUInteger stringLength = [self length];
+                NSUInteger stringLength = self.length;
                 NSParameterAssert(stringLength == [self length]);
                 BOOL shouldTruncateLastLine = (NSUInteger)(frameRange.location + frameRange.length) < stringLength;
 
@@ -51,10 +51,10 @@
                         NSRange range = NSMakeRange((NSUInteger)lineRange.location, (NSUInteger)lineRange.length);
                         NSMutableAttributedString *truncatedString = [[NSMutableAttributedString alloc] initWithAttributedString:
                                                                       [self attributedSubstringFromRange:range]];
-                        NSString *trimmedString = [[truncatedString string] stringByTrimmingCharactersInSet:
+                        NSString *trimmedString = [truncatedString.string stringByTrimmingCharactersInSet:
                                                    [NSCharacterSet whitespaceAndNewlineCharacterSet]];
                         static const CFStringRef Token = CFSTR("\u2026");
-                        [[truncatedString mutableString] setString:[trimmedString stringByAppendingString:(__bridge NSString *)Token]];
+                        [truncatedString.mutableString setString:[trimmedString stringByAppendingString:(__bridge NSString *)Token]];
                         CTLineRef truncatedLine = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)truncatedString);
                         if (truncatedLine != NULL)
                         {
@@ -159,7 +159,7 @@
         if (frame != NULL)
         {
             NSArray *lines = (__bridge NSArray *)CTFrameGetLines(frame);
-            if ([lines count] == 1)
+            if (lines.count == 1)
                 height = AB_CTFrameGetSize(frame).height;
             else
             {

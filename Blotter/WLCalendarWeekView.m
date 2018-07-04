@@ -59,7 +59,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 
 @implementation WLCalendarWeekView
 
-- (id)initWithFrame:(NSRect)aFrameRect
+- (instancetype)initWithFrame:(NSRect)aFrameRect
 {
     self = [super initWithFrame:aFrameRect];
     if (self != nil)
@@ -95,9 +95,9 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
         showsAllDayEvents = newShowsAllDayEvents;
         [self didChangeValueForKey:@"showsAllDayEvents"];
 
-        if ([self wantsLayer])
+        if (self.wantsLayer)
         {
-            CALayer *rootLayer = [self layer];
+            CALayer *rootLayer = self.layer;
             NSParameterAssert(rootLayer != nil);
             [rootLayer setNeedsLayout];
         }
@@ -112,9 +112,9 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
         heightOfAllDayPartOfColumn = newHeightOfAllDayPartOfColumn;
         [self didChangeValueForKey:@"heightOfAllDayPartOfColumn"];
 
-        if ([self wantsLayer] && self.showsAllDayEvents)
+        if (self.wantsLayer && self.showsAllDayEvents)
         {
-            CALayer *rootLayer = [self layer];
+            CALayer *rootLayer = self.layer;
             NSParameterAssert(rootLayer != nil);
             [rootLayer setNeedsLayout];
         }
@@ -142,7 +142,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
         [self didChangeValueForKey:@"fitsDayEvents"];
 
         [self needsUpdateHoursLengthAndLocation];
-        if ([self wantsLayer])
+        if (self.wantsLayer)
         {
             NSArray *dayLayers = [self dayLayers];
             NSParameterAssert(dayLayers != nil);
@@ -183,7 +183,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
         [self didChangeValueForKey:@"alwaysVisibleHourRange"];
 
         [self needsUpdateHoursLengthAndLocation];
-        if ([self wantsLayer] && self.fitsDayEvents)
+        if (self.wantsLayer && self.fitsDayEvents)
         {
             CAScrollLayer *timeRulerScrollLayer = [self timeRulerScrollLayer];
             NSParameterAssert(timeRulerScrollLayer != nil);
@@ -255,7 +255,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     {
         for (NSUInteger i = 0, size = currentNumberOfColumns - newNumberOfColumns; i < size; ++i)
         {
-            CALayer *column = [columnRootLayers lastObject];
+            CALayer *column = columnRootLayers.lastObject;
             [column removeFromSuperlayer];
             [columnRootLayers removeLastObject];
         }
@@ -266,7 +266,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     NSParameterAssert(timeRulerLayer != nil);
     timeRulerLayer.markers = [self _timeRulerMarkers];
 
-    CALayer *rootLayer = [self layer];
+    CALayer *rootLayer = self.layer;
     NSParameterAssert(rootLayer != nil);
     [rootLayer setNeedsLayout];
     [CATransaction commit];
@@ -278,7 +278,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     [CATransaction setDisableActions:!isAnimated];
     _hour = aHour;
 
-    if ([self wantsLayer])
+    if (self.wantsLayer)
     {
         CALayer *timeIndicatorRootLayer = [self timeIndicatorRootLayer];
         NSParameterAssert(timeIndicatorRootLayer != nil);
@@ -465,7 +465,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     if ([self.dataSource respondsToSelector:@selector(weekViewDidAskForData:)])
         [self.dataSource weekViewDidAskForData:self];
 
-    CALayer *rootLayer = [self layer];
+    CALayer *rootLayer = self.layer;
     NSParameterAssert(rootLayer != nil);
     [rootLayer setNeedsLayout];
     [CATransaction commit];
@@ -596,13 +596,13 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
             NSParameterAssert(blockColumnRootLayers != nil);
             CALayer *blockEventsRootLayer = [selfBlock eventsRootLayer];
             NSParameterAssert(blockEventsRootLayer != nil);
-            if ([blockColumnRootLayers count] > 0)
+            if (blockColumnRootLayers.count > 0)
             {
-                NSUInteger indexOfFirstColumnRootLayer = [blockEventsRootLayer.sublayers indexOfObjectIdenticalTo:[blockColumnRootLayers objectAtIndex:0]];
+                NSUInteger indexOfFirstColumnRootLayer = [blockEventsRootLayer.sublayers indexOfObjectIdenticalTo:blockColumnRootLayers[0]];
                 NSParameterAssert(indexOfFirstColumnRootLayer != NSNotFound);
-                NSRange rangeOfColumnRootLayers = NSMakeRange(indexOfFirstColumnRootLayer, [blockColumnRootLayers count]);
+                NSRange rangeOfColumnRootLayers = NSMakeRange(indexOfFirstColumnRootLayer, blockColumnRootLayers.count);
                 NSRange rangeOfLeftHidingColumns = NSMakeRange(0, rangeOfColumnRootLayers.location);
-                NSRange rangeOfRightHidingColumns = NSMakeRange(NSMaxRange(rangeOfColumnRootLayers), [blockEventsRootLayer.sublayers count] - NSMaxRange(rangeOfColumnRootLayers));
+                NSRange rangeOfRightHidingColumns = NSMakeRange(NSMaxRange(rangeOfColumnRootLayers), (blockEventsRootLayer.sublayers).count - NSMaxRange(rangeOfColumnRootLayers));
                 NSArray *hidingColumns = [blockEventsRootLayer.sublayers subarrayWithRange:rangeOfLeftHidingColumns];
                 hidingColumns = [hidingColumns arrayByAddingObjectsFromArray:[blockEventsRootLayer.sublayers subarrayWithRange:rangeOfRightHidingColumns]];
                 [hidingColumns makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
@@ -612,7 +612,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
         }
     }];
 
-    NSUInteger indexOfFirstColumnRootLayer = [eventsRootLayer.sublayers indexOfObjectIdenticalTo:[columnRootLayers objectAtIndex:0]];
+    NSUInteger indexOfFirstColumnRootLayer = [eventsRootLayer.sublayers indexOfObjectIdenticalTo:columnRootLayers[0]];
     NSParameterAssert(indexOfFirstColumnRootLayer != NSNotFound);
     __block NSRange rangeOfColumnRootLayers = NSMakeRange(indexOfFirstColumnRootLayer, oldNumberOfColumns);
 
@@ -628,10 +628,10 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                 if (rangeOfColumnRootLayers.location < aNumberOfDaysToShow)
                 {
                     CGFloat maxXOfLayer = CGFLOAT_MAX;
-                    if ([eventsRootLayer.sublayers count] > 0)
+                    if ((eventsRootLayer.sublayers).count > 0)
                     {
-                        CALayer *leftmostLayer = [eventsRootLayer.sublayers objectAtIndex:0];
-                        maxXOfLayer = CGRectGetMinX([(CALayer *)[leftmostLayer presentationLayer] frame]) - _WLXMarginBetweenColumns;
+                        CALayer *leftmostLayer = (eventsRootLayer.sublayers)[0];
+                        maxXOfLayer = CGRectGetMinX(((CALayer *)[leftmostLayer presentationLayer]).frame) - _WLXMarginBetweenColumns;
                     }
                     else
                         maxXOfLayer = CGRectGetMinX(eventsRootLayer.bounds) + _WLXMarginBetweenTimeRulerAndColumns - _WLXMarginBetweenColumns;
@@ -639,7 +639,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                     for (NSUInteger i = numberOfColumnsToInsert; i > 0; --i)
                     {
                         CALayer *c = [self setupColumnRootLayer];
-                        CGRect toFrame = NSRectToCGRect([[toFrames objectAtIndex:i - 1] rectValue]);
+                        CGRect toFrame = NSRectToCGRect([toFrames[i - 1] rectValue]);
                         c.frame = CGRectMake(maxXOfLayer - CGRectGetWidth(toFrame),
                                              CGRectGetMinY(toFrame),
                                              CGRectGetWidth(toFrame),
@@ -657,21 +657,21 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
             }
             case WLRightToLeftDirection:
             {
-                if ([eventsRootLayer.sublayers count] - NSMaxRange(rangeOfColumnRootLayers) < aNumberOfDaysToShow)
+                if ((eventsRootLayer.sublayers).count - NSMaxRange(rangeOfColumnRootLayers) < aNumberOfDaysToShow)
                 {
                     CGFloat minXOfLayer = CGFLOAT_MAX;
-                    if ([eventsRootLayer.sublayers count] > 0)
+                    if ((eventsRootLayer.sublayers).count > 0)
                     {
-                        CALayer *rightmostLayer = [eventsRootLayer.sublayers lastObject];
-                        minXOfLayer = CGRectGetMaxX([(CALayer *)[rightmostLayer presentationLayer] frame]) + _WLXMarginBetweenColumns;
+                        CALayer *rightmostLayer = (eventsRootLayer.sublayers).lastObject;
+                        minXOfLayer = CGRectGetMaxX(((CALayer *)[rightmostLayer presentationLayer]).frame) + _WLXMarginBetweenColumns;
                     }
                     else
                         minXOfLayer = CGRectGetMaxX(eventsRootLayer.bounds) + _WLXMarginBetweenColumns;
-                    NSUInteger numberOfColumnsToInsert = aNumberOfDaysToShow - ([eventsRootLayer.sublayers count] - NSMaxRange(rangeOfColumnRootLayers));
+                    NSUInteger numberOfColumnsToInsert = aNumberOfDaysToShow - ((eventsRootLayer.sublayers).count - NSMaxRange(rangeOfColumnRootLayers));
                     for (NSUInteger i = 0; i < numberOfColumnsToInsert; ++i)
                     {
                         CALayer *c = [self setupColumnRootLayer];
-                        CGRect toFrame = NSRectToCGRect([[toFrames objectAtIndex:[toFrames count] - numberOfColumnsToInsert + i] rectValue]);
+                        CGRect toFrame = NSRectToCGRect([toFrames[toFrames.count - numberOfColumnsToInsert + i] rectValue]);
                         c.frame = CGRectMake(minXOfLayer,
                                              CGRectGetMinY(toFrame),
                                              CGRectGetWidth(toFrame),
@@ -679,7 +679,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                         [eventsRootLayer addSublayer:c];
                         minXOfLayer += _WLXMarginBetweenColumns + CGRectGetWidth(toFrame);
                     }
-                    rangeOfInsertedColumns = NSMakeRange([eventsRootLayer.sublayers count] - numberOfColumnsToInsert, numberOfColumnsToInsert);
+                    rangeOfInsertedColumns = NSMakeRange((eventsRootLayer.sublayers).count - numberOfColumnsToInsert, numberOfColumnsToInsert);
                 }
                 rangeOfColumnRootLayers.location += aNumberOfDaysToHide;
                 rangeOfColumnRootLayers.length += (NSInteger)aNumberOfDaysToShow - aNumberOfDaysToHide;
@@ -709,15 +709,15 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 
     NSRange rangeOfLeftHidingColumns = NSMakeRange(0, rangeOfColumnRootLayers.location);
     NSParameterAssert(NSMaxRange(rangeOfLeftHidingColumns) <= [eventsRootLayer.sublayers count] || rangeOfLeftHidingColumns.length == 0);
-    NSRange rangeOfRightHidingColumns = NSMakeRange(NSMaxRange(rangeOfColumnRootLayers), [eventsRootLayer.sublayers count] - NSMaxRange(rangeOfColumnRootLayers));
+    NSRange rangeOfRightHidingColumns = NSMakeRange(NSMaxRange(rangeOfColumnRootLayers), (eventsRootLayer.sublayers).count - NSMaxRange(rangeOfColumnRootLayers));
     NSParameterAssert(NSMaxRange(rangeOfRightHidingColumns) <= [eventsRootLayer.sublayers count] || rangeOfRightHidingColumns.length == 0);
 
     // Calculate toFrames for hiding columns.
     if (rangeOfLeftHidingColumns.length > 0)
     {
         __block CGFloat maxXOfLayer = CGFLOAT_MAX;
-        if ([toFrames count] > 0)
-            maxXOfLayer = NSMinX([[toFrames objectAtIndex:0] rectValue]) - _WLXMarginBetweenColumns;
+        if (toFrames.count > 0)
+            maxXOfLayer = NSMinX([toFrames[0] rectValue]) - _WLXMarginBetweenColumns;
         else
             maxXOfLayer = CGRectGetMinX(eventsRootLayer.bounds) + _WLXMarginBetweenTimeRulerAndColumns - _WLXMarginBetweenColumns;
         [eventsRootLayer.sublayers enumerateObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:rangeOfLeftHidingColumns]
@@ -735,8 +735,8 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     if (rangeOfRightHidingColumns.length > 0)
     {
         __block CGFloat minXOfLayer = CGFLOAT_MAX;
-        if ([toFrames count] > 0)
-            minXOfLayer = NSMaxX([[toFrames lastObject] rectValue]) + _WLXMarginBetweenColumns;
+        if (toFrames.count > 0)
+            minXOfLayer = NSMaxX([toFrames.lastObject rectValue]) + _WLXMarginBetweenColumns;
         else
             minXOfLayer = CGRectGetMaxX(eventsRootLayer.bounds) + _WLXMarginBetweenColumns;
         [eventsRootLayer.sublayers enumerateObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:rangeOfRightHidingColumns]
@@ -756,21 +756,21 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     // Add animations.
     [eventsRootLayer.sublayers enumerateObjectsUsingBlock:^(CALayer *l, NSUInteger idx, BOOL *stop)
     {
-        CGRect toFrame = NSRectToCGRect([[toFrames objectAtIndex:idx] rectValue]);
+        CGRect toFrame = NSRectToCGRect([toFrames[idx] rectValue]);
         if (isAnimated)
         {
             CABasicAnimation *boundsAnimation = [CABasicAnimation animationWithKeyPath:@"bounds"];
-            boundsAnimation.fromValue = [NSValue valueWithRect:NSRectFromCGRect([(CALayer *)[l presentationLayer] bounds])];
+            boundsAnimation.fromValue = [NSValue valueWithRect:NSRectFromCGRect(((CALayer *)[l presentationLayer]).bounds)];
             boundsAnimation.toValue = [NSValue valueWithRect:NSRectFromCGRect(CGRectMake(0.0,
                                                                                          0.0,
                                                                                          CGRectGetWidth(toFrame),
                                                                                          CGRectGetHeight(toFrame)))];
             CABasicAnimation *positionXAnimation = [CABasicAnimation animationWithKeyPath:@"position.x"];
-            positionXAnimation.fromValue = @(CGRectGetMinX([(CALayer *)[l presentationLayer] frame]));
+            positionXAnimation.fromValue = @(CGRectGetMinX(((CALayer *)[l presentationLayer]).frame));
             positionXAnimation.toValue = @(CGRectGetMinX(toFrame));
             if (idx >= rangeOfInsertedColumns.location && idx < NSMaxRange(rangeOfInsertedColumns))
             {
-                CGRect fromFrame = [l frame];
+                CGRect fromFrame = l.frame;
                 boundsAnimation.fromValue = [NSValue valueWithRect:NSRectFromCGRect(CGRectMake(0.0,
                                                                                                0.0,
                                                                                                CGRectGetWidth(fromFrame),
@@ -778,13 +778,13 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                 positionXAnimation.fromValue = @(CGRectGetMinX(fromFrame));
             }
             CAAnimationGroup *g = [CAAnimationGroup animation];
-            g.animations = [NSArray arrayWithObjects:boundsAnimation, positionXAnimation, nil];
+            g.animations = @[boundsAnimation, positionXAnimation];
             [l addAnimation:g forKey:@"boundsAndPositionX"];
         }
         l.frame = toFrame;
     }];
 
-    CALayer *rootLayer = [self layer];
+    CALayer *rootLayer = self.layer;
     NSParameterAssert(rootLayer != nil);
     [rootLayer setNeedsLayout];
     [CATransaction commit];
@@ -792,7 +792,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 
 - (NSUInteger)numberOfColumns
 {
-    return [[self columnRootLayers] count];
+    return [self columnRootLayers].count;
 }
 
 - (WLHourRange)hourRangeOfEvents
@@ -801,7 +801,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     WLHourRange r = WLHourRangeInvalid;
     for (WLCalendarDayEventsLayer *l in [self dayLayers])
     {
-        WLHourRange columnHourRange = [l hourRangeOfEvents];
+        WLHourRange columnHourRange = l.hourRangeOfEvents;
         if (!WLHourRangeEqualToHourRange(columnHourRange, WLHourRangeZero))
         {
             r.startHour = fmin(r.startHour, columnHourRange.startHour);
@@ -1034,21 +1034,21 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 {
     [self setNeedsUpdateHoursLengthAndLocation];
 
-    WLCalendarDayEventsLayer *dayLayer = [[self dayLayers] objectAtIndex:anIndex];
+    WLCalendarDayEventsLayer *dayLayer = [self dayLayers][anIndex];
     NSParameterAssert(dayLayer != nil);
-    [dayLayer setEvents:[NSSet setWithArray:[self.dataSource weekView:self eventsForColumnAtIndex:anIndex]]];
+    dayLayer.events = [NSSet setWithArray:[self.dataSource weekView:self eventsForColumnAtIndex:anIndex]];
 
     if (self.showsAllDayEvents)
     {
-        WLCalendarAllDayEventsLayer *allDayLayer = [[self allDayLayers] objectAtIndex:anIndex];
+        WLCalendarAllDayEventsLayer *allDayLayer = [self allDayLayers][anIndex];
         NSParameterAssert(allDayLayer != nil);
-        [allDayLayer setEvents:[self.dataSource weekView:self allDayEventsForColumnAtIndex:anIndex]];
+        allDayLayer.events = [self.dataSource weekView:self allDayEventsForColumnAtIndex:anIndex];
     }
 }
 
 - (void)_updateTitleOfColumnAtIndex:(NSUInteger)anIndex
 {
-    WLCalendarDayEventsBackgroundLayer *l = [[self dayBackgroundLayers] objectAtIndex:anIndex];
+    WLCalendarDayEventsBackgroundLayer *l = [self dayBackgroundLayers][anIndex];
     NSParameterAssert(l != nil);
     NSString *newTitle = [self.dataSource weekView:self titleForColumnAtIndex:anIndex];
     l.title = newTitle;
@@ -1056,7 +1056,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 
 - (void)_updateHighlightsTitleOfColumnAtIndex:(NSUInteger)anIndex
 {
-    WLCalendarDayEventsBackgroundLayer *l = [[self dayBackgroundLayers] objectAtIndex:anIndex];
+    WLCalendarDayEventsBackgroundLayer *l = [self dayBackgroundLayers][anIndex];
     NSParameterAssert(l != nil);
     BOOL newIsTitleHighlighted = [self.dataSource weekView:self highlightsTitleForColumnAtIndex:anIndex];
     l.isTitleHighlighted = newIsTitleHighlighted;
@@ -1094,7 +1094,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 {
     [super makeLayers];
     [self reloadDataAnimated:NO];
-    [[self layer] setNeedsLayout];
+    [self.layer setNeedsLayout];
 }
 
 - (CALayer *)makeRootLayer
@@ -1103,12 +1103,10 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     l.masksToBounds = YES;
     l.name = _WLRootLayerName;
     l.layoutManager = self;
-    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNull null], kCAOnOrderIn,
-                             [NSNull null], kCAOnOrderOut,
-                             [NSNull null], kCATransition,
-                             [NSNull null], @"contents",
-                             nil];
+    NSDictionary *actions = @{kCAOnOrderIn: [NSNull null],
+                             kCAOnOrderOut: [NSNull null],
+                             kCATransition: [NSNull null],
+                             @"contents": [NSNull null]};
     l.actions = actions;
     l.delegate = self;
 
@@ -1144,20 +1142,18 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 {
     CALayer *l = [CALayer layer];
 
-    NSWindow *window = [self window];
+    NSWindow *window = self.window;
     if (window)
-        l.contentsScale = [window backingScaleFactor];
+        l.contentsScale = window.backingScaleFactor;
 
     l.name = _WLTimeRulerRootLayerName;
     l.layoutManager = self;
     l.masksToBounds = YES;
     l.zPosition = 0;
-    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNull null], kCAOnOrderIn,
-                             [NSNull null], kCAOnOrderOut,
-                             [NSNull null], kCATransition,
-                             [NSNull null], @"contents",
-                             nil];
+    NSDictionary *actions = @{kCAOnOrderIn: [NSNull null],
+                             kCAOnOrderOut: [NSNull null],
+                             kCATransition: [NSNull null],
+                             @"contents": [NSNull null]};
     l.actions = actions;
     l.delegate = self;
 
@@ -1176,31 +1172,29 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 {
     __block WLBlockLayer *l = [WLBlockLayer layer];
 
-    NSWindow *window = [self window];
+    NSWindow *window = self.window;
     if (window)
-        l.contentsScale = [window backingScaleFactor];
+        l.contentsScale = window.backingScaleFactor;
 
     l.name = _WLTimeRulerBackgroundLayerName;
     l.needsDisplayOnBoundsChange = YES;
     l.layoutManager = self;
-    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNull null], kCAOnOrderIn,
-                             [NSNull null], kCAOnOrderOut,
-                             [NSNull null], kCATransition,
-                             [NSNull null], @"contents",
-                             nil];
+    NSDictionary *actions = @{kCAOnOrderIn: [NSNull null],
+                             kCAOnOrderOut: [NSNull null],
+                             kCATransition: [NSNull null],
+                             @"contents": [NSNull null]};
     l.actions = actions;
     l.delegate = self;
 
 #ifndef DEBUG_LAYERS
     l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
         NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:[aLayer contentsAreFlipped]];
-        [c setImageInterpolation:NSImageInterpolationHigh];
+        c.imageInterpolation = NSImageInterpolationHigh;
         [NSGraphicsContext saveGraphicsState];
         [NSGraphicsContext setCurrentContext:c];
 
-        NSSize bottomBorderSize = NSMakeSize(aLayer.bounds.size.width, [[NSImage imageNamed:@"calendar-week-timeruler-bottom-middle"] size].height);
-        NSSize topBorderSize = NSMakeSize(aLayer.bounds.size.width, [[NSImage imageNamed:@"calendar-week-timeruler-top-middle"] size].height);
+        NSSize bottomBorderSize = NSMakeSize(aLayer.bounds.size.width, [NSImage imageNamed:@"calendar-week-timeruler-bottom-middle"].size.height);
+        NSSize topBorderSize = NSMakeSize(aLayer.bounds.size.width, [NSImage imageNamed:@"calendar-week-timeruler-top-middle"].size.height);
         NSSize middleBorderSize = NSMakeSize(aLayer.bounds.size.width, aLayer.bounds.size.height - bottomBorderSize.height - topBorderSize.height);
 
         NSRect dirtyRect = NSRectFromCGRect(aDirtyRect);
@@ -1271,20 +1265,18 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 {
     CAScrollLayer *l = [CAScrollLayer layer];
 
-    NSWindow *window = [self window];
+    NSWindow *window = self.window;
     if (window)
-        l.contentsScale = [window backingScaleFactor];
+        l.contentsScale = window.backingScaleFactor;
 
     l.name = _WLTimeRulerScrollLayerName;
     l.scrollMode = kCAScrollVertically;
     l.geometryFlipped = YES;
     l.layoutManager = self;
-    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNull null], kCAOnOrderIn,
-                             [NSNull null], kCAOnOrderOut,
-                             [NSNull null], kCATransition,
-                             [NSNull null], @"contents",
-                             nil];
+    NSDictionary *actions = @{kCAOnOrderIn: [NSNull null],
+                             kCAOnOrderOut: [NSNull null],
+                             kCATransition: [NSNull null],
+                             @"contents": [NSNull null]};
     l.actions = actions;
     l.delegate = self;
 
@@ -1303,19 +1295,17 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 {
     WLCalendarTimeRulerLayer *l = [WLCalendarTimeRulerLayer layer];
 
-    NSWindow *window = [self window];
+    NSWindow *window = self.window;
     if (window)
-        l.contentsScale = [window backingScaleFactor];
+        l.contentsScale = window.backingScaleFactor;
 
     l.name = _WLTimeRulerLayerName;
     l.timeRuler = self;
     l.onlyCompletelyVisibleMarkersShown = self.fitsDayEvents;
-    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNull null], kCAOnOrderIn,
-                             [NSNull null], kCAOnOrderOut,
-                             [NSNull null], kCATransition,
-                             [NSNull null], @"contents",
-                             nil];
+    NSDictionary *actions = @{kCAOnOrderIn: [NSNull null],
+                             kCAOnOrderOut: [NSNull null],
+                             kCATransition: [NSNull null],
+                             @"contents": [NSNull null]};
     l.actions = actions;
     l.delegate = self;
     l.markers = [self _timeRulerMarkers];
@@ -1334,20 +1324,18 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 {
     CALayer *l = [CALayer layer];
 
-    NSWindow *window = [self window];
+    NSWindow *window = self.window;
     if (window)
-        l.contentsScale = [window backingScaleFactor];
+        l.contentsScale = window.backingScaleFactor;
 
     l.masksToBounds = YES;
     l.name = _WLEventsRootLayerName;
     l.zPosition = 1;
     l.layoutManager = self;
-    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNull null], kCAOnOrderIn,
-                             [NSNull null], kCAOnOrderOut,
-                             [NSNull null], kCATransition,
-                             [NSNull null], @"contents",
-                             nil];
+    NSDictionary *actions = @{kCAOnOrderIn: [NSNull null],
+                             kCAOnOrderOut: [NSNull null],
+                             kCATransition: [NSNull null],
+                             @"contents": [NSNull null]};
     l.actions = actions;
     l.delegate = self;
 
@@ -1374,20 +1362,18 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 {
     CALayer *l = [CALayer layer];
 
-    NSWindow *window = [self window];
+    NSWindow *window = self.window;
     if (window)
-        l.contentsScale = [window backingScaleFactor];
+        l.contentsScale = window.backingScaleFactor;
 
     l.geometryFlipped = YES;
     l.name = _WLColumnRootLayerName;
     l.anchorPoint = CGPointMake(0.0, 0.0);
     l.layoutManager = self;
-    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNull null], kCAOnOrderIn,
-                             [NSNull null], kCAOnOrderOut,
-                             [NSNull null], kCATransition,
-                             [NSNull null], @"contents",
-                             nil];
+    NSDictionary *actions = @{kCAOnOrderIn: [NSNull null],
+                             kCAOnOrderOut: [NSNull null],
+                             kCATransition: [NSNull null],
+                             @"contents": [NSNull null]};
     l.actions = actions;
     l.delegate = self;
 
@@ -1410,20 +1396,18 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 {
     __block WLBlockLayer *l = [WLBlockLayer layer];
 
-    NSWindow *window = [self window];
+    NSWindow *window = self.window;
     if (window)
-        l.contentsScale = [window backingScaleFactor];
+        l.contentsScale = window.backingScaleFactor;
 
     l.name = _WLAllDayBackgroundLayerName;
     l.needsDisplayOnBoundsChange = YES;
     l.masksToBounds = YES;
     l.layoutManager = self;
-    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNull null], kCAOnOrderIn,
-                             [NSNull null], kCAOnOrderOut,
-                             [NSNull null], kCATransition,
-                             [NSNull null], @"contents",
-                             nil];
+    NSDictionary *actions = @{kCAOnOrderIn: [NSNull null],
+                             kCAOnOrderOut: [NSNull null],
+                             kCATransition: [NSNull null],
+                             @"contents": [NSNull null]};
     l.actions = actions;
     l.delegate = self;
 
@@ -1431,11 +1415,11 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect) {
         // (0, 0) is top left.
         NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:[aLayer contentsAreFlipped]];
-        [c setImageInterpolation:NSImageInterpolationHigh];
+        c.imageInterpolation = NSImageInterpolationHigh;
         [NSGraphicsContext saveGraphicsState];
         [NSGraphicsContext setCurrentContext:c];
 
-        [c setImageInterpolation:NSImageInterpolationHigh];
+        c.imageInterpolation = NSImageInterpolationHigh;
 
         WLDrawScaledNinePartImage(NSRectFromCGRect(aLayer.bounds),
                                   [NSImage imageNamed:@"calendar-week-all-day-top-left"],
@@ -1468,18 +1452,16 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 {
     WLCalendarDayEventsBackgroundLayer *l = [WLCalendarDayEventsBackgroundLayer layer];
 
-    NSWindow *window = [self window];
+    NSWindow *window = self.window;
     if (window)
-        l.contentsScale = [window backingScaleFactor];
+        l.contentsScale = window.backingScaleFactor;
 
     l.name = _WLDayBackgroundLayerName;
     l.layoutManager = self;
-    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNull null], kCAOnOrderIn,
-                             [NSNull null], kCAOnOrderOut,
-                             [NSNull null], kCATransition,
-                             [NSNull null], @"contents",
-                             nil];
+    NSDictionary *actions = @{kCAOnOrderIn: [NSNull null],
+                             kCAOnOrderOut: [NSNull null],
+                             kCATransition: [NSNull null],
+                             @"contents": [NSNull null]};
     l.actions = actions;
     l.delegate = self;
 
@@ -1498,17 +1480,15 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 {
     WLCalendarAllDayEventsLayer *l = [WLCalendarAllDayEventsLayer layer];
 
-    NSWindow *window = [self window];
+    NSWindow *window = self.window;
     if (window)
-        l.contentsScale = [window backingScaleFactor];
+        l.contentsScale = window.backingScaleFactor;
 
     l.name = _WLAllDayLayerName;
-    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNull null], kCAOnOrderIn,
-                             [NSNull null], kCAOnOrderOut,
-                             [NSNull null], kCATransition,
-                             [NSNull null], @"contents",
-                             nil];
+    NSDictionary *actions = @{kCAOnOrderIn: [NSNull null],
+                             kCAOnOrderOut: [NSNull null],
+                             kCATransition: [NSNull null],
+                             @"contents": [NSNull null]};
     l.actions = actions;
     l.delegate = self;
 
@@ -1523,18 +1503,16 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 {
     CAScrollLayer *l = [CAScrollLayer layer];
 
-    NSWindow *window = [self window];
+    NSWindow *window = self.window;
     if (window)
-        l.contentsScale = [window backingScaleFactor];
+        l.contentsScale = window.backingScaleFactor;
 
     l.name = _WLDayScrollLayerName;
     l.layoutManager = self;
-    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNull null], kCAOnOrderIn,
-                             [NSNull null], kCAOnOrderOut,
-                             [NSNull null], kCATransition,
-                             [NSNull null], @"contents",
-                             nil];
+    NSDictionary *actions = @{kCAOnOrderIn: [NSNull null],
+                             kCAOnOrderOut: [NSNull null],
+                             kCATransition: [NSNull null],
+                             @"contents": [NSNull null]};
     l.actions = actions;
     l.delegate = self;
 
@@ -1553,19 +1531,17 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 {
     WLCalendarDayEventsLayer *l = [WLCalendarDayEventsLayer layer];
 
-    NSWindow *window = [self window];
+    NSWindow *window = self.window;
     if (window)
-        l.contentsScale = [window backingScaleFactor];
+        l.contentsScale = window.backingScaleFactor;
 
     l.name = _WLDayLayerName;
     l.timeRuler = self;
     l.keepsTextOfEventsVisible = !self.fitsDayEvents;
-    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNull null], kCAOnOrderIn,
-                             [NSNull null], kCAOnOrderOut,
-                             [NSNull null], kCATransition,
-                             [NSNull null], @"contents",
-                             nil];
+    NSDictionary *actions = @{kCAOnOrderIn: [NSNull null],
+                             kCAOnOrderOut: [NSNull null],
+                             kCATransition: [NSNull null],
+                             @"contents": [NSNull null]};
     l.actions = actions;
     l.delegate = self;
 
@@ -1584,20 +1560,18 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 {
     CALayer *l = [CALayer layer];
 
-    NSWindow *window = [self window];
+    NSWindow *window = self.window;
     if (window)
-        l.contentsScale = [window backingScaleFactor];
+        l.contentsScale = window.backingScaleFactor;
 
     l.name = _WLTimeIndicatorRootLayerName;
     l.masksToBounds = YES;
     l.zPosition = 2;
     l.layoutManager = self;
-    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNull null], kCAOnOrderIn,
-                             [NSNull null], kCAOnOrderOut,
-                             [NSNull null], kCATransition,
-                             [NSNull null], @"contents",
-                             nil];
+    NSDictionary *actions = @{kCAOnOrderIn: [NSNull null],
+                             kCAOnOrderOut: [NSNull null],
+                             kCATransition: [NSNull null],
+                             @"contents": [NSNull null]};
     l.actions = actions;
     l.delegate = self;
 
@@ -1616,19 +1590,17 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 {
     WLCalendarTimeIndicatorLayer *l = [WLCalendarTimeIndicatorLayer layer];
 
-    NSWindow *window = [self window];
+    NSWindow *window = self.window;
     if (window)
-        l.contentsScale = [window backingScaleFactor];
+        l.contentsScale = window.backingScaleFactor;
 
     l.name = _WLTimeIndicatorLayerName;
     l.anchorPoint = CGPointMake(0.0, 0.5);
     l.hidden = !self.showsTimeIndicator;
-    NSDictionary *actions = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNull null], kCAOnOrderIn,
-                             [NSNull null], kCAOnOrderOut,
-                             [NSNull null], kCATransition,
-                             [NSNull null], @"contents",
-                             nil];
+    NSDictionary *actions = @{kCAOnOrderIn: [NSNull null],
+                             kCAOnOrderOut: [NSNull null],
+                             kCATransition: [NSNull null],
+                             @"contents": [NSNull null]};
     l.actions = actions;
     l.delegate = self;
 
@@ -1644,7 +1616,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 
 - (CALayer *)timeRulerRootLayer
 {
-    return [[self layer] valueForKey:_WLTimeRulerRootLayerName];
+    return [self.layer valueForKey:_WLTimeRulerRootLayerName];
 }
 
 - (WLBlockLayer *)timeRulerBackgroundLayer
@@ -1664,7 +1636,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 
 - (CALayer *)eventsRootLayer
 {
-    return [[self layer] valueForKey:_WLEventsRootLayerName];
+    return [self.layer valueForKey:_WLEventsRootLayerName];
 }
 
 - (NSMutableArray *)columnRootLayers
@@ -1704,7 +1676,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 
 - (CALayer *)timeIndicatorRootLayer
 {
-    return [[self layer] valueForKey:_WLTimeIndicatorRootLayerName];
+    return [self.layer valueForKey:_WLTimeIndicatorRootLayerName];
 }
 
 - (WLCalendarTimeIndicatorLayer *)timeIndicatorLayer
@@ -1837,14 +1809,14 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     NSArray *columnLayers = [anEventsRootLayer valueForKey:_WLColumnLayersKey];
 
     NSParameterAssert(columnLayers != nil);
-    NSUInteger numberOfColumns = [columnLayers count];
+    NSUInteger numberOfColumns = columnLayers.count;
     if (numberOfColumns == 0)
         return;
 
     NSArray *frames = [self framesForNumberOfColumns:numberOfColumns];
     NSParameterAssert([frames count] == numberOfColumns);
     [columnLayers enumerateObjectsUsingBlock:^(CALayer *c, NSUInteger idx, BOOL *stop) {
-        c.frame = NSRectToCGRect([[frames objectAtIndex:idx] rectValue]);
+        c.frame = NSRectToCGRect([frames[idx] rectValue]);
         [c setNeedsLayout];
     }];
 }
@@ -1975,7 +1947,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 - (NSArray *)framesForNumberOfColumns:(NSUInteger)aNumberOfColumns;
 {
     if (aNumberOfColumns == 0)
-        return [NSArray array];
+        return @[];
 
     CALayer *eventsRootLayer = [self eventsRootLayer];
     NSParameterAssert(eventsRootLayer != nil);
@@ -2016,7 +1988,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
     NSParameterAssert([frames count] == [frames count]);
     for (NSValue *frame in frames)
     {
-        NSRect rectValue = [frame rectValue];
+        NSRect rectValue = frame.rectValue;
         width = fmin(width, rectValue.size.width);
         maximumHeight = fmax(maximumHeight, rectValue.size.height - heightAndMarginOfAllDayEventsPartOfColumn);
     }
@@ -2070,7 +2042,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 
 - (CGFloat)visibleHeightOfTimeRuler
 {
-    return fdim([self frame].size.height, [self heightAndMarginOfAllDayEventsPartOfColumn] + NSMaxY([self columnTitleFrame]));
+    return fdim(self.frame.size.height, [self heightAndMarginOfAllDayEventsPartOfColumn] + NSMaxY([self columnTitleFrame]));
 }
 
 - (CGFloat)positionForTimeIndicator

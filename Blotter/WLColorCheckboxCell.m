@@ -18,7 +18,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         ImagesCache = [[NSCache alloc] init];
-        [ImagesCache setName:@"WLColorCheckboxCell cache"];
+        ImagesCache.name = @"WLColorCheckboxCell cache";
     });
 
     NSDictionary *imagesPair = [ImagesCache objectForKey:aColor];
@@ -83,7 +83,7 @@
     return checkboxImage;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
     if (self != nil)
@@ -91,29 +91,29 @@
         // NSButtonCell
         [self setButtonType:NSSwitchButton];
         [self setBackgroundColor:nil];
-        [self setBezelStyle:NSRegularSquareBezelStyle];
-        [self setGradientType:NSGradientNone];
-        [self setHighlightsBy:NSNoCellMask];
+        self.bezelStyle = NSRegularSquareBezelStyle;
+        self.gradientType = NSGradientNone;
+        self.highlightsBy = NSNoCellMask;
         [self setImageDimsWhenDisabled:YES];
-        [self setImagePosition:NSImageOnly];
-        [self setImageScaling:NSImageScaleNone];
+        self.imagePosition = NSImageOnly;
+        self.imageScaling = NSImageScaleNone;
         [self setTransparent:NO];
         [self setShowsBorderOnlyWhileMouseInside:NO];
-        [self setShowsStateBy:NSContentsCellMask];
+        self.showsStateBy = NSContentsCellMask;
 
         // NSCell
-        [self setAlignment:NSNaturalTextAlignment];
+        self.alignment = NSNaturalTextAlignment;
         [self setAllowsEditingTextAttributes:NO];
         [self setAllowsMixedState:NO];
         [self setAllowsUndo:YES];
-        [self setBackgroundStyle:NSBackgroundStyleLight];
-        [self setControlSize:NSSmallControlSize];
-        [self setControlTint:NSDefaultControlTint];
-        [self setFocusRingType:NSFocusRingTypeDefault];
+        self.backgroundStyle = NSBackgroundStyleLight;
+        self.controlSize = NSSmallControlSize;
+        self.controlTint = NSDefaultControlTint;
+        self.focusRingType = NSFocusRingTypeDefault;
         [self setImportsGraphics:NO];
         [self setBezeled:NO];
         [self setBordered:NO];
-        [self setType:NSTextCellType];
+        self.type = NSTextCellType;
         [self setShowsFirstResponder:NO];
         [self setSendsActionOnEndEditing:NO];
         [self setRefusesFirstResponder:NO];
@@ -130,8 +130,8 @@
 
 - (void)setButtonColor:(NSColor *)newColor
 {
-    [self setImage:[[self class] checkboxCellImageWithColor:newColor state:NSOffState]];
-    [self setAlternateImage:[[self class] checkboxCellImageWithColor:newColor state:NSOnState]];
+    self.image = [[self class] checkboxCellImageWithColor:newColor state:NSOffState];
+    self.alternateImage = [[self class] checkboxCellImageWithColor:newColor state:NSOnState];
 }
 
 @end

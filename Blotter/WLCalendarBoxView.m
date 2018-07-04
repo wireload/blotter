@@ -23,7 +23,7 @@ static const CGFloat _WLMysteriousExtraBottomSpace = 4.0;
 
 @implementation WLCalendarBoxView
 
-- (id)initWithFrame:(NSRect)aFrameRect
+- (instancetype)initWithFrame:(NSRect)aFrameRect
 {
     self = [super initWithFrame:aFrameRect];
     if (self != nil)
@@ -46,8 +46,8 @@ static const CGFloat _WLMysteriousExtraBottomSpace = 4.0;
 
 - (void)setContentView:(NSView *)newContentView
 {
-    [newContentView setFrame:[self _contentFrame]];
-    [newContentView setAutoresizingMask:NSViewHeightSizable];
+    newContentView.frame = [self _contentFrame];
+    newContentView.autoresizingMask = NSViewHeightSizable;
     if (contentView != nil)
         [self replaceSubview:contentView with:newContentView];
     else
@@ -60,12 +60,12 @@ static const CGFloat _WLMysteriousExtraBottomSpace = 4.0;
 - (void)setSoftEdges:(BOOL)newSoftEdges
 {
     softEdges = newSoftEdges;
-    if (![self.contentView wantsLayer])
+    if (!(self.contentView).wantsLayer)
         return;
     else if (self.softEdges)
-        [self.contentView layer].mask = [WLSoftEdgeLayer layer];
+        (self.contentView).layer.mask = [WLSoftEdgeLayer layer];
     else
-        [self.contentView layer].mask = nil;
+        (self.contentView).layer.mask = nil;
 }
 
 
@@ -76,21 +76,20 @@ static const CGFloat _WLMysteriousExtraBottomSpace = 4.0;
 - (NSDictionary *)_titleAttributes
 {
     NSShadow *s = [[NSShadow alloc] init];
-    [s setShadowColor:[NSColor WL_taskTextShadowColor]];
-    [s setShadowBlurRadius:0.0];
+    s.shadowColor = [NSColor WL_taskTextShadowColor];
+    s.shadowBlurRadius = 0.0;
     // View is flipped
-    [s setShadowOffset:NSMakeSize(0.0, -1.0)];
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [NSFont WL_boxViewTitleFont],   NSFontAttributeName,
-                                [NSColor WL_boxViewTitleColor], NSForegroundColorAttributeName,
-                                s,                               NSShadowAttributeName, nil];
+    s.shadowOffset = NSMakeSize(0.0, -1.0);
+    NSDictionary *attributes = @{NSFontAttributeName: [NSFont WL_boxViewTitleFont],
+                                NSForegroundColorAttributeName: [NSColor WL_boxViewTitleColor],
+                                NSShadowAttributeName: s};
     [s release];
     return attributes;
 }
 
 - (NSRect)_titleFrame
 {
-    NSRect bounds = [self bounds];
+    NSRect bounds = self.bounds;
     return NSIntegralRect(NSMakeRect(NSMinX(bounds) + _WLXPadding / 2 + _WLMysteriousExtraLeftSpace,
                                      NSMinY(bounds) + _WLYPadding / 2,
                                      NSWidth(bounds) - _WLXPadding,
@@ -99,7 +98,7 @@ static const CGFloat _WLMysteriousExtraBottomSpace = 4.0;
 
 - (NSRect)_contentFrame
 {
-    NSRect bounds = [self bounds];
+    NSRect bounds = self.bounds;
     NSRect titleFrame = [self _titleFrame];
     CGFloat yTopMargin = 10.0;
     CGFloat yBottomMargin = _WLYPadding / 2 + _WLMysteriousExtraBottomSpace;
@@ -121,11 +120,11 @@ static const CGFloat _WLMysteriousExtraBottomSpace = 4.0;
 {
     // (0, 0) is top left.
     [NSGraphicsContext saveGraphicsState];
-    NSRect bounds = [self bounds];
+    NSRect bounds = self.bounds;
 #ifndef DEBUG_LAYERS
     NSGraphicsContext *context = [NSGraphicsContext currentContext];
     [context setShouldAntialias:YES];
-    [context setImageInterpolation:NSImageInterpolationHigh];
+    context.imageInterpolation = NSImageInterpolationHigh;
 
     WLDrawScaledNinePartImage(bounds,
                               [NSImage imageNamed:@"box-top-left"],
@@ -147,7 +146,7 @@ static const CGFloat _WLMysteriousExtraBottomSpace = 4.0;
     [[NSColor blackColor] setFill];
     NSRectFill(aDirtyRect);
 #endif
-    CGContextRef cgContext = [[NSGraphicsContext currentContext] graphicsPort];
+    CGContextRef cgContext = [NSGraphicsContext currentContext].graphicsPort;
     CGContextSetAllowsAntialiasing(cgContext, YES);
     CGContextSetShouldAntialias(cgContext, YES);
     CGContextSetAllowsFontSmoothing(cgContext, NO);
@@ -168,11 +167,11 @@ static const CGFloat _WLMysteriousExtraBottomSpace = 4.0;
 {
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
-    [super setFrame:newFrameRect];
-    [self.contentView setFrame:[self _contentFrame]];
-    [self.contentView layer].mask.frame = NSRectToCGRect([self.contentView bounds]);
-    [[self.contentView layer].mask setNeedsLayout];
-    [[self.contentView layer].mask layoutIfNeeded];
+    super.frame = newFrameRect;
+    (self.contentView).frame = [self _contentFrame];
+    (self.contentView).layer.mask.frame = NSRectToCGRect((self.contentView).bounds);
+    [(self.contentView).layer.mask setNeedsLayout];
+    [(self.contentView).layer.mask layoutIfNeeded];
     [CATransaction commit];
 }
 

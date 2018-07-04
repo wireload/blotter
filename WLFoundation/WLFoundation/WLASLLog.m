@@ -31,7 +31,7 @@ static void _WLFreeASLClient(aslclient aClient)
         loggerQueue = dispatch_queue_create("net.wireload.WLFoundation.LoggerQueue", 0);
 
 #ifdef DEBUG
-        aslClient = asl_open(NULL, [aName UTF8String], ASL_OPT_STDERR);
+        aslClient = asl_open(NULL, aName.UTF8String, ASL_OPT_STDERR);
         asl_set_filter(aslClient, ASL_FILTER_MASK_UPTO(ASL_LEVEL_DEBUG));
 #else
         aslClient = asl_open(NULL, [aName UTF8String], 0);
@@ -59,7 +59,7 @@ static void _WLFreeASLClient(aslclient aClient)
 
 - (instancetype)initWithFile:(NSFileHandle *)aFileHandle name:(NSString *)aName
 {
-    return [self initWithFileDescriptor:[aFileHandle fileDescriptor] name:aName];
+    return [self initWithFileDescriptor:aFileHandle.fileDescriptor name:aName];
 }
 
 
@@ -97,7 +97,7 @@ NS_INLINE void LogMessage(WLASLLog *self, int aLevel, NSString *aFormat, va_list
 {
     NSString *message = [[NSString alloc] initWithFormat:aFormat arguments:args];
     dispatch_async(self->loggerQueue, ^{
-        asl_log(self->aslClient, NULL, aLevel, "%s", [message UTF8String]);
+        asl_log(self->aslClient, NULL, aLevel, "%s", message.UTF8String);
     });
 }
 
@@ -174,7 +174,7 @@ NS_INLINE void LogMessage(WLASLLog *self, int aLevel, NSString *aFormat, va_list
 NS_INLINE void LogMessageWithMessager(WLASLLog *self, int aLevel, WLASLLogMessenger aMessager)
 {
     dispatch_async(self->loggerQueue, ^{
-        asl_log(self->aslClient, NULL, aLevel, "%s", [aMessager() UTF8String]);
+        asl_log(self->aslClient, NULL, aLevel, "%s", aMessager().UTF8String);
     });
 }
 

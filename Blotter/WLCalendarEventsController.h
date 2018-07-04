@@ -40,12 +40,12 @@ extern NSString *WLCalendarEventsDidChangeNotification;
 
     @discussion Designated initializer.
  */
-- (instancetype)initWithCalStores:(NSArray *)aStores;
+- (instancetype)initWithCalStores:(NSArray *)aStores NS_DESIGNATED_INITIALIZER;
 
 /*!
     @brief  Returns currently observed date ranges.
  */
-- (NSSet *)observedDateRanges;
+@property (readonly, copy) NSSet *observedDateRanges;
 
 /*!
     @brief      Adds aRange to currently observed date ranges or increments its count.

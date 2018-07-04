@@ -14,7 +14,7 @@
 
 @implementation WLCalendarTimeRulerLayer
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self != nil)
@@ -45,18 +45,18 @@
 
 - (void)setMarkers:(NSArray *)aHours
 {
-    if ([aHours count] > [_sortedMarkerLayers count])
+    if (aHours.count > _sortedMarkerLayers.count)
     {
-        for (NSUInteger i = 0, size = [aHours count] - [_sortedMarkerLayers count]; i < size; ++i)
+        for (NSUInteger i = 0, size = aHours.count - _sortedMarkerLayers.count; i < size; ++i)
         {
             WLCalendarTimeRulerMarkerLayer *markerLayer = [self setupMarkerLayer];
             [_sortedMarkerLayers addObject:markerLayer];
             [self addSublayer:markerLayer];
         }
     }
-    else if ([aHours count] < [_sortedMarkerLayers count])
+    else if (aHours.count < _sortedMarkerLayers.count)
     {
-        NSRange rangeOfmarkerLayersToRemove = NSMakeRange(0, [_sortedMarkerLayers count] - [aHours count]);
+        NSRange rangeOfmarkerLayersToRemove = NSMakeRange(0, _sortedMarkerLayers.count - aHours.count);
         NSArray *markerLayersToRemove = [_sortedMarkerLayers subarrayWithRange:rangeOfmarkerLayersToRemove];
         [markerLayersToRemove makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
         [_sortedMarkerLayers removeObjectsInRange:rangeOfmarkerLayersToRemove];
@@ -65,8 +65,8 @@
     NSParameterAssert([aHours count] == [_sortedMarkerLayers count]);
 
     [aHours enumerateObjectsUsingBlock:^(NSString *marker, NSUInteger idx, BOOL *stop) {
-        WLCalendarTimeRulerMarkerLayer *l = [_sortedMarkerLayers objectAtIndex:idx];
-        if (![[l.marker string] isEqualToString:marker])
+        WLCalendarTimeRulerMarkerLayer *l = _sortedMarkerLayers[idx];
+        if (![(l.marker).string isEqualToString:marker])
         {
             static dispatch_once_t onceToken;
             static NSDictionary *attributes = nil;
@@ -76,7 +76,7 @@
                 CTParagraphStyleRef p = CTParagraphStyleCreate(&alignmentSetting, 1);
                 attributes = [[NSDictionary alloc] initWithObjectsAndKeys:
                               (id)[NSFont WL_timeRulerMarkerFont],                (id)kCTFontAttributeName,
-                              (id)[[NSColor WL_timeRulerMarkerColor] CGColor],    (id)kCTForegroundColorAttributeName,
+                              (id)[NSColor WL_timeRulerMarkerColor].CGColor,    (id)kCTForegroundColorAttributeName,
                               (id)p,                                              (id)kCTParagraphStyleAttributeName,
                               nil];
                 CFRelease(p);
@@ -94,7 +94,7 @@
 
 - (CGFloat)maximumHeightOfMarker
 {
-    if ([_sortedMarkerLayers count] == 0)
+    if (_sortedMarkerLayers.count == 0)
         return 0.0;
 
     if (_needsUpdatePreferredMaximumHeightOfMarker)
@@ -109,7 +109,7 @@
 
 - (CGFloat)preferredFrameWidth
 {
-    if ([_sortedMarkerLayers count] == 0)
+    if (_sortedMarkerLayers.count == 0)
         return 0.0;
 
     if (_needsUpdatePreferredFrameWidthCache)
@@ -127,7 +127,7 @@
 
 - (CGSize)preferredFrameSize
 {
-    if ([_sortedMarkerLayers count] == 0)
+    if (_sortedMarkerLayers.count == 0)
         return CGSizeZero;
 
     CGFloat h = [self.timeRuler originOffset] + [self.timeRuler lengthForHourRange:[self.timeRuler hourRange]];
@@ -142,12 +142,12 @@
         return;
 
     WLHourRange r = [self.timeRuler hourRange];
-    NSUInteger numberOfMarkers = [_sortedMarkerLayers count];
+    NSUInteger numberOfMarkers = _sortedMarkerLayers.count;
     WLEnumerateHourRange(r, NSCalendarUnitHour, ^(NSCalendarUnit aUnit, NSUInteger anIndex, CGFloat aMatchedValue, BOOL *aShouldStop)
     {
         if (anIndex < numberOfMarkers)
         {
-            WLCalendarTimeRulerMarkerLayer *hourMarker = [_sortedMarkerLayers objectAtIndex:anIndex];
+            WLCalendarTimeRulerMarkerLayer *hourMarker = _sortedMarkerLayers[anIndex];
             CGSize size = [hourMarker preferredFrameSize];
             CGFloat hourPosition = [self.timeRuler locationForHour:aMatchedValue];
             CGRect frame = CGRectIntegral(CGRectMake(0.0,

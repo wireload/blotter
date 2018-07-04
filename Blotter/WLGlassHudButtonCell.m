@@ -14,7 +14,7 @@
 
 -(void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-    if (![self isEnabled])
+    if (!self.enabled)
     {
         WLDrawScaledThreePartImage(cellFrame,
                              [NSImage imageNamed:@"glass-hud-button-disabled-left"],
@@ -25,7 +25,7 @@
                              1.0,
                              NO);
     }
-    else if (![self isHighlighted])
+    else if (!self.highlighted)
     {
         WLDrawScaledThreePartImage(cellFrame,
                              [NSImage imageNamed:@"glass-hud-button-left"],
@@ -49,9 +49,9 @@
     }
     // Title frame is the button frame without round parts and shadows.
     NSRect titleFrame = NSInsetRect(cellFrame, 7, 2);
-    [self drawTitle:[self attributedTitle] withFrame:titleFrame inView:controlView];
+    [self drawTitle:self.attributedTitle withFrame:titleFrame inView:controlView];
     
-    if ([self showsFirstResponder])
+    if (self.showsFirstResponder)
     {
         [NSGraphicsContext saveGraphicsState];
         NSSetFocusRingStyle(NSFocusRingOnly);
@@ -63,10 +63,10 @@
 - (NSRect)drawTitle:(NSAttributedString *)title withFrame:(NSRect)frame inView:(NSView *)controlView
 {
     NSMutableAttributedString *whiteTitle = [[title mutableCopy] autorelease];
-    NSRange titleLength = NSMakeRange(0, [whiteTitle length]);
+    NSRange titleLength = NSMakeRange(0, whiteTitle.length);
     [whiteTitle beginEditing];
     [whiteTitle addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Lucida Grande" size:11] range:titleLength];
-    CGFloat titleAlpha = [self isEnabled] ? 1.0 : 0.85;
+    CGFloat titleAlpha = self.enabled ? 1.0 : 0.85;
     [whiteTitle addAttribute:NSForegroundColorAttributeName value:[NSColor colorWithCalibratedWhite:0.98 alpha:titleAlpha] range:titleLength];
     [whiteTitle endEditing];
     return [super drawTitle:whiteTitle withFrame:frame inView:controlView];

@@ -14,7 +14,7 @@
 
 @implementation WLGlassHudWindow
 
-- (id)initWithContentRect:(NSRect)contentRect
+- (instancetype)initWithContentRect:(NSRect)contentRect
                 styleMask:(NSUInteger)windowStyle
                   backing:(NSBackingStoreType)bufferingType
                     defer:(BOOL)deferCreation
@@ -26,8 +26,8 @@
     if (self)
     {
         [self setOpaque:NO];
-        [self setBackgroundColor:[NSColor clearColor]];
-        [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces | NSWindowCollectionBehaviorParticipatesInCycle];
+        self.backgroundColor = [NSColor clearColor];
+        self.collectionBehavior = NSWindowCollectionBehaviorCanJoinAllSpaces | NSWindowCollectionBehaviorParticipatesInCycle;
         [self setMovable:YES];
         [self setMovableByWindowBackground:YES];
     }
@@ -59,21 +59,21 @@
 
 + (NSRect)frameRectForContentRect:(NSRect)windowContentRect styleMask:(NSUInteger)windowStyle
 {
-	return windowContentRect;
+    return windowContentRect;
 }
 
 - (void)setContentView:(NSView *)aView
 {
     if (![_realContentView isEqualTo:aView])
     {
-        NSRect bounds = [self frame];
+        NSRect bounds = self.frame;
         bounds.origin = NSZeroPoint;
 
-        WLGlassHudWindowBackgroundView *frameView = [super contentView];
+        WLGlassHudWindowBackgroundView *frameView = super.contentView;
         if (frameView == nil)
         {
             frameView = [[[WLGlassHudWindowBackgroundView alloc] initWithFrame:bounds] autorelease];
-            [super setContentView:frameView];
+            super.contentView = frameView;
         }
 
         if (_realContentView != nil)
@@ -81,7 +81,7 @@
 
         _realContentView = aView;
 
-        for (id view in [aView subviews])
+        for (id view in aView.subviews)
         {
             if ([view respondsToSelector:@selector(setBezeled:)])
                 [view setBezeled:NO];
@@ -90,8 +90,8 @@
 
         }
 
-        [_realContentView setFrame:[self contentRectForFrameRect:bounds]];
-        [_realContentView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+        _realContentView.frame = [self contentRectForFrameRect:bounds];
+        _realContentView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
         [_realContentView setNeedsDisplay:YES];
         [frameView addSubview:_realContentView];
     }
@@ -99,12 +99,12 @@
 
 - (BOOL)canBecomeKeyWindow
 {
-	return YES;
+    return YES;
 }
 
 - (BOOL)canBecomeMainWindow
 {
-	return YES;
+    return YES;
 }
 
 - (BOOL)performKeyEquivalent:(NSEvent *)theEvent
@@ -118,7 +118,7 @@
     // Select All
     if (WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_A))
     {
-        id firstResponder = [self firstResponder];
+        id firstResponder = self.firstResponder;
         if ([firstResponder respondsToSelector:@selector(selectAll:)])
         {
             [firstResponder selectAll:self];
@@ -128,7 +128,7 @@
     // Cut/Copy/Paste
     else if (WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_X))
     {
-        id firstResponder = [self firstResponder];
+        id firstResponder = self.firstResponder;
         if ([firstResponder respondsToSelector:@selector(cut:)])
         {
             [firstResponder cut:self];
@@ -137,7 +137,7 @@
     }
     else if (WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_C))
     {
-        id firstResponder = [self firstResponder];
+        id firstResponder = self.firstResponder;
         if ([firstResponder respondsToSelector:@selector(copy:)])
         {
             [firstResponder copy:self];
@@ -146,7 +146,7 @@
     }
     else if (WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_V))
     {
-        id firstResponder = [self firstResponder];
+        id firstResponder = self.firstResponder;
         if ([firstResponder respondsToSelector:@selector(paste:)])
         {
             [firstResponder paste:self];
@@ -156,7 +156,7 @@
     // Undo/Redo
     else if (WLDoesEventContainShortcut(theEvent, NSCommandKeyMask, kVK_ANSI_Z))
     {
-        id firstResponder = [self firstResponder];
+        id firstResponder = self.firstResponder;
         if ([firstResponder respondsToSelector:@selector(undoManager)])
         {
             [[firstResponder undoManager] undo];
@@ -165,10 +165,10 @@
     }
     else if (WLDoesEventContainShortcut(theEvent, NSCommandKeyMask | NSShiftKeyMask, kVK_ANSI_Z))
     {
-        id firstResponder = [self firstResponder];
+        id firstResponder = self.firstResponder;
         if ([firstResponder respondsToSelector:@selector(undoManager)])
         {
-            [[[self firstResponder] undoManager] redo];
+            [self.firstResponder.undoManager redo];
             return YES;
         }
     }

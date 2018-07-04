@@ -80,14 +80,14 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
     arrangementMode = newArrangementMode;
     if (arrangementMode & WLCalendarWindowResizingArrangement) {
         _resizeHandlesLayer.opacity = 1.0;
-        _calendarWindowLayer.borderColor = [[NSColor whiteColor] CGColor];
+        _calendarWindowLayer.borderColor = [NSColor whiteColor].CGColor;
     }
     else {
         _resizeHandlesLayer.opacity = 0.0;
-        _calendarWindowLayer.borderColor = [[NSColor clearColor] CGColor];
+        _calendarWindowLayer.borderColor = [NSColor clearColor].CGColor;
     }
     [_navigationLayer setNeedsDisplay];
-    [[self layer] setNeedsLayout];
+    [self.layer setNeedsLayout];
 }
 
 - (void)setEdgeSize:(NSSize)newEdgeSize
@@ -95,7 +95,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
     NSParameterAssert([self wantsLayer]);
 
     [_calendarWindowLayer setValue:[NSValue valueWithSize:newEdgeSize] forKeyPath:_WLEdgeSizeKey];
-    [[self layer] setNeedsLayout];
+    [self.layer setNeedsLayout];
     [_calendarWindowLayer setNeedsDisplay];
 }
 
@@ -110,7 +110,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
 {
     NSParameterAssert([self wantsLayer]);
 
-    return NSRectFromCGRect([recessedLayer bounds]);
+    return NSRectFromCGRect(recessedLayer.bounds);
 }
 
 
@@ -127,7 +127,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
             _navigationHelperAreas[i] = [[NSTrackingArea alloc] initWithRect:f
                                                                      options:NSTrackingMouseEnteredAndExited | NSTrackingActiveWhenFirstResponder | NSTrackingEnabledDuringMouseDrag
                                                                        owner:self
-                                                                    userInfo:[NSDictionary dictionaryWithObject:@(i) forKey:_WLPositionKey]];
+                                                                    userInfo:@{_WLPositionKey: @(i)}];
             [self addTrackingArea:_navigationHelperAreas[i]];
             [_navigationHelperAreas[i] release];
             [CATransaction WL_performWithDisabledActions:^{
@@ -169,7 +169,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
         BOOL isPositionSelected = NO;
         for (NSInteger i=0; i<9; ++i)
         {
-            if (!isPositionSelected && NSPointInRect(aPoint, [_navigationHelperAreas[i] rect]))
+            if (!isPositionSelected && NSPointInRect(aPoint, _navigationHelperAreas[i].rect))
             {
                 isPositionSelected = YES;
                 _calendarWindowLayer.frame = NSRectToCGRect([self.delegate calendarWindowArrangement:self setPosition:i]);
@@ -582,7 +582,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
 
 - (NSInteger)edgeForLocationInView:(NSPoint)aLocation
 {
-    NSPoint locationInCalendarLayer = NSPointFromCGPoint([[self layer] convertPoint:NSPointToCGPoint(aLocation) toLayer:_calendarWindowLayer]);
+    NSPoint locationInCalendarLayer = NSPointFromCGPoint([self.layer convertPoint:NSPointToCGPoint(aLocation) toLayer:_calendarWindowLayer]);
     if (self.arrangementMode & WLCalendarWindowResizingArrangement)
     {
         if (NSPointInRect(locationInCalendarLayer, NSOffsetRect([[_calendarWindowLayer valueForKey:_WLTopLeftEdgeFrameKey] rectValue], 0.0, -1.0)))
@@ -658,9 +658,9 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
     if (_isPositioning || _isResizing)
         return;
 
-    if (aLayer == [self layer] || aLayer == recessedLayer)
+    if (aLayer == self.layer || aLayer == recessedLayer)
     {
-        if ([self inLiveResize])
+        if (self.inLiveResize)
         {
             /*
              Conceal certain glitches in the calendar widgets CA based resize animation. The window frame
@@ -673,12 +673,12 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
             */
             [CATransaction setAnimationDuration:0.1];
         }
-        if (aLayer == [self layer])
+        if (aLayer == self.layer)
         {
             recessedLayer.frame = CGRectMake(0,
                                              1,
-                                             [self bounds].size.width,
-                                             [self bounds].size.height - 1);
+                                             self.bounds.size.width,
+                                             self.bounds.size.height - 1);
             [recessedLayer setNeedsLayout];
         }
         NSRect windowFrame = [self.delegate calendarWindowViewFrameOfCalendarWindowArrangement:self];
@@ -701,7 +701,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
 
 - (void)viewDidEndLiveResize
 {
-    [[self layer] setNeedsLayout];
+    [self.layer setNeedsLayout];
 }
 
 - (void)resetCursorRects
@@ -714,7 +714,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
     static void (^SetCursorRect)(WLCalendarWindowArrangementView *aSelf, NSString *aFrameKey, WLCalendarWindowEdge anEdge) = ^(WLCalendarWindowArrangementView *aSelf, NSString *aFrameKey, WLCalendarWindowEdge anEdge)
     {
         NSRect frameInCalendarLayer = [[aSelf->_calendarWindowLayer valueForKey:aFrameKey] rectValue];
-        CGRect frameInView = [aSelf->_calendarWindowLayer convertRect:NSRectToCGRect(frameInCalendarLayer) toLayer:[aSelf layer]];
+        CGRect frameInView = [aSelf->_calendarWindowLayer convertRect:NSRectToCGRect(frameInCalendarLayer) toLayer:aSelf.layer];
         frameInView = CGRectOffset(frameInView, 0.0, -1.0);
         [aSelf addCursorRect:NSRectFromCGRect(frameInView) cursor:[NSCursor WL_cursorForEdge:anEdge]];
     };
@@ -745,19 +745,19 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
 
 - (void)mouseEntered:(NSEvent *)anEvent
 {
-    BLPosition p = (BLPosition)[[(NSDictionary *)[anEvent userData] objectForKey:_WLPositionKey] integerValue];
+    BLPosition p = (BLPosition)[((NSDictionary *)anEvent.userData)[_WLPositionKey] integerValue];
     _navigationHelperLayers[p].hidden = NO;
 }
 
 - (void)mouseExited:(NSEvent *)anEvent
 {
-    BLPosition p = (BLPosition)[[(NSDictionary *)[anEvent userData] objectForKey:_WLPositionKey] integerValue];
+    BLPosition p = (BLPosition)[((NSDictionary *)anEvent.userData)[_WLPositionKey] integerValue];
     _navigationHelperLayers[p].hidden = YES;
 }
 
 - (void)mouseDown:(NSEvent *)anEvent
 {
-    NSPoint locationInView = [self convertPoint:[anEvent locationInWindow] fromView:nil];
+    NSPoint locationInView = [self convertPoint:anEvent.locationInWindow fromView:nil];
     NSInteger edge = [self edgeForLocationInView:locationInView];
     if (edge != -1)
     {
@@ -813,15 +813,15 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
         else if (self.arrangementMode & WLCalendarWindowPositioningArrangement && edge == WLCalendarWindowCenterCenterEdge)
             StartPositioning(self, _startPoint);
     }
-    [[self window] invalidateCursorRectsForView:self];
+    [self.window invalidateCursorRectsForView:self];
 }
 
 - (void)mouseDragged:(NSEvent *)anEvent
 {
     if (_isPositioning)
-        [self continuePositioningAtPoint:[self convertPoint:[anEvent locationInWindow] fromView:nil] startPoint:_startPoint];
+        [self continuePositioningAtPoint:[self convertPoint:anEvent.locationInWindow fromView:nil] startPoint:_startPoint];
     else if (_isResizing) {
-        [self continueResizingAtPoint:[self convertPoint:[anEvent locationInWindow] fromView:nil] startPoint:_startPoint edge:_resizedEdge];
+        [self continueResizingAtPoint:[self convertPoint:anEvent.locationInWindow fromView:nil] startPoint:_startPoint edge:_resizedEdge];
         [self cursorUpdate:anEvent];
     }
 }
@@ -830,28 +830,28 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
 {
     if (_isPositioning)
     {
-        [self stopPositioningAtPoint:[self convertPoint:[anEvent locationInWindow] fromView:nil]];
+        [self stopPositioningAtPoint:[self convertPoint:anEvent.locationInWindow fromView:nil]];
         _isPositioning = NO;
     }
     else if (_isResizing)
     {
-        [self stopResizingAtPoint:[self convertPoint:[anEvent locationInWindow] fromView:nil] edge:_resizedEdge];
+        [self stopResizingAtPoint:[self convertPoint:anEvent.locationInWindow fromView:nil] edge:_resizedEdge];
         _isResizing = NO;
     }
     _startPoint = NSZeroPoint;
-    [[self window] invalidateCursorRectsForView:self];
+    [self.window invalidateCursorRectsForView:self];
 }
 
 - (void)cursorUpdate:(NSEvent *)anEvent
 {
     static const CGFloat testDelta = 9999.00;
 
-    NSPoint locationInView = [self convertPoint:[anEvent locationInWindow] fromView:nil];
+    NSPoint locationInView = [self convertPoint:anEvent.locationInWindow fromView:nil];
     WLCalendarWindowEdge edge = [self edgeForLocationInView:locationInView];
 
     NSRect oldFrame = NSRectFromCGRect(_calendarWindowLayer.frame);
 
-    NSPoint comparisonPoint = [self convertPoint:[anEvent locationInWindow] fromView:nil];
+    NSPoint comparisonPoint = [self convertPoint:anEvent.locationInWindow fromView:nil];
     comparisonPoint.x -= testDelta;
     BOOL canMoveLeft = _isResizing && !NSEqualRects(oldFrame, [self frameAfterResizingAtPoint:comparisonPoint startPoint:_startPoint edge:_resizedEdge]);
     comparisonPoint.x += 2 * testDelta;
@@ -941,7 +941,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
                                                                                         self.edgeSize.height))]
                                 forKey:_WLTopRightEdgeFrameKey];
         if (!_isResizing && !_isPositioning)
-            [[self window] invalidateCursorRectsForView:self];
+            [self.window invalidateCursorRectsForView:self];
     }
     else
         [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];
@@ -954,7 +954,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
 
 - (void)createLayers
 {
-    if (![self wantsLayer])
+    if (!self.wantsLayer)
     {
         CALayer *rootLayer = [CALayer layer];
         // The shadow layer draws a semi transparent shine line at the bottom.
@@ -972,11 +972,11 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
         recessedLayer.opaque = YES;
         recessedLayer.delegate = self;
 
-        NSWindow *window = [self window];
+        NSWindow *window = self.window;
         if (window)
         {
-            rootLayer.contentsScale = [window backingScaleFactor];
-            recessedLayer.contentsScale = [window backingScaleFactor];
+            rootLayer.contentsScale = window.backingScaleFactor;
+            recessedLayer.contentsScale = window.backingScaleFactor;
         }
 
         _imageLayer = [self setupImageLayer];
@@ -1009,7 +1009,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
         [recessedLayer addSublayer:_calendarWindowLayer];
         [rootLayer addSublayer:recessedLayer];
         [rootLayer addSublayer:_shadowLayer];
-        [self setLayer:rootLayer];
+        self.layer = rootLayer;
         [self setWantsLayer:YES];
     }
 }
@@ -1024,9 +1024,9 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
     l.cornerRadius = 1.25;
     l.delegate = self;
 
-    NSWindow *window = [self window];
+    NSWindow *window = self.window;
     if (window)
-        l.contentsScale = [window backingScaleFactor];
+        l.contentsScale = window.backingScaleFactor;
 
     return l;
 }
@@ -1046,9 +1046,9 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
     l.opaque = NO;
     l.delegate = self;
 
-    NSWindow *window = [self window];
+    NSWindow *window = self.window;
     if (window)
-        l.contentsScale = [window backingScaleFactor];
+        l.contentsScale = window.backingScaleFactor;
 
     return l;
 }
@@ -1059,9 +1059,9 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
     l.needsDisplayOnBoundsChange = YES;
     l.delegate = self;
 
-    NSWindow *window = [self window];
+    NSWindow *window = self.window;
     if (window)
-        l.contentsScale = [window backingScaleFactor];
+        l.contentsScale = window.backingScaleFactor;
 
     __block WLCalendarWindowArrangementView *selfBlock = self;
     l.drawer = ^(CGContextRef aContext, WLBlockLayer *aLayer, CGRect aDirtyRect)
@@ -1069,32 +1069,32 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
         CGContextSetAllowsAntialiasing(aContext, NO);
         if (selfBlock.arrangementMode == WLCalendarWindowPositioningArrangement)
         {
-            CGContextSetStrokeColorWithColor(aContext, [[[NSColor whiteColor] colorWithAlphaComponent:0.9] CGColor]);
+            CGContextSetStrokeColorWithColor(aContext, [[NSColor whiteColor] colorWithAlphaComponent:0.9].CGColor);
             CGContextSetLineDash(aContext, 0.0, (CGFloat[]){2.0, 3.0}, 2);
 
             CGContextAddRect(aContext,
-                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionTopLeft]) fromLayer:[selfBlock layer]]);
+                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionTopLeft]) fromLayer:selfBlock.layer]);
             CGContextAddRect(aContext,
-                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionCenterLeft]) fromLayer:[selfBlock layer]]);
+                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionCenterLeft]) fromLayer:selfBlock.layer]);
             CGContextAddRect(aContext,
-                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionBottomLeft]) fromLayer:[selfBlock layer]]);
+                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionBottomLeft]) fromLayer:selfBlock.layer]);
             CGContextAddRect(aContext,
-                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionTopCenter]) fromLayer:[selfBlock layer]]);
+                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionTopCenter]) fromLayer:selfBlock.layer]);
             CGContextAddRect(aContext,
-                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionCenterCenter]) fromLayer:[selfBlock layer]]);
+                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionCenterCenter]) fromLayer:selfBlock.layer]);
             CGContextAddRect(aContext,
-                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionBottomCenter]) fromLayer:[selfBlock layer]]);
+                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionBottomCenter]) fromLayer:selfBlock.layer]);
             CGContextAddRect(aContext,
-                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionTopRight]) fromLayer:[selfBlock layer]]);
+                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionTopRight]) fromLayer:selfBlock.layer]);
             CGContextAddRect(aContext,
-                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionCenterRight]) fromLayer:[selfBlock layer]]);
+                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionCenterRight]) fromLayer:selfBlock.layer]);
             CGContextAddRect(aContext,
-                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionBottomRight]) fromLayer:[selfBlock layer]]);
+                             [aLayer convertRect:NSRectToCGRect([selfBlock navigationHelperFrameForPosition:BLPositionBottomRight]) fromLayer:selfBlock.layer]);
             CGContextStrokePath(aContext);
         }
         else
         {
-            CGContextSetStrokeColorWithColor(aContext, [[[NSColor whiteColor] colorWithAlphaComponent:0.5] CGColor]);
+            CGContextSetStrokeColorWithColor(aContext, [[NSColor whiteColor] colorWithAlphaComponent:0.5].CGColor);
             for (CGFloat i=aLayer.bounds.origin.x; i<CGRectGetMaxX(aLayer.bounds); i += 20.0)
             {
                 CGContextMoveToPoint(aContext, i, aLayer.bounds.origin.y);
@@ -1107,7 +1107,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
             }
             CGContextStrokePath(aContext);
 
-            CGContextSetStrokeColorWithColor(aContext, [[[NSColor whiteColor] colorWithAlphaComponent:0.25] CGColor]);
+            CGContextSetStrokeColorWithColor(aContext, [[NSColor whiteColor] colorWithAlphaComponent:0.25].CGColor);
             for (CGFloat i=aLayer.bounds.origin.x + 10.0; i<CGRectGetMaxX(aLayer.bounds); i += 20.0)
             {
                 CGContextMoveToPoint(aContext, i, aLayer.bounds.origin.y);
@@ -1143,7 +1143,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
         [path fill];
 
         [[[NSColor blackColor] colorWithAlphaComponent:0.75] setStroke];
-        [path setLineWidth:CalendarWindowFrameLineWidth];
+        path.lineWidth = CalendarWindowFrameLineWidth;
         [path stroke];
         [NSGraphicsContext restoreGraphicsState];
     };
@@ -1157,11 +1157,11 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
     l.borderWidth = 2.0;
     l.delegate = self;
 
-    NSWindow *window = [self window];
+    NSWindow *window = self.window;
     if (window)
-        l.contentsScale = [window backingScaleFactor];
+        l.contentsScale = window.backingScaleFactor;
 
-    l.borderColor = [[NSColor whiteColor] CGColor];
+    l.borderColor = [NSColor whiteColor].CGColor;
     [l setValue:[NSValue valueWithSize:_WLDefaultEdgeSize] forKeyPath:_WLEdgeSizeKey];
     [l addObserver:self forKeyPath:@"bounds" options:NSKeyValueObservingOptionNew context:NULL];
     return l;
@@ -1176,16 +1176,16 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
     CALayer *l = [CALayer layer];
     l.delegate = self;
 
-    NSWindow *window = [self window];
+    NSWindow *window = self.window;
     if (window)
-        l.contentsScale = [window backingScaleFactor];
+        l.contentsScale = window.backingScaleFactor;
 
     l.layoutManager = [[[WLBlockLayoutManager alloc] initWithLayoutManager:^(CALayer *aLayer) {
-        CGSize size = [aLayer bounds].size;
+        CGSize size = aLayer.bounds.size;
         for (NSInteger i = 0; i < WLCalendarWindowNumberOfEdges; i++) {
             if (i == WLCalendarWindowCenterCenterEdge)
                 continue;
-            CALayer *sublayer = [[aLayer sublayers] objectAtIndex:i + (i > 4 ? -1 : 0)];
+            CALayer *sublayer = aLayer.sublayers[i + (i > 4 ? -1 : 0)];
 
             CGRect frame = CGRectMake(Margin.width + 1, Margin.height, DotSpace * 2 + DotWidth, DotSpace * 2 + DotWidth + 1);
             switch(i % 3) {
@@ -1243,8 +1243,8 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
                                    (i == WLCalendarWindowBottomCenterEdge && selfBlock->_resizedEdge == WLCalendarWindowTopCenterEdge) ||
                                    (i == WLCalendarWindowBottomRightEdge && selfBlock->_resizedEdge == WLCalendarWindowTopRightEdge)
                                    );
-            CGContextSetFillColorWithColor(aContext, [(isResizeHandle ? [NSColor WL_activeDotColor] : [NSColor WL_dotColor]) CGColor]);
-            CGContextSetShadowWithColor(aContext, CGSizeMake(0, -1.0), 0.0, [[isResizeHandle ? [NSColor whiteColor] : [NSColor blackColor] colorWithAlphaComponent:0.20] CGColor]);
+            CGContextSetFillColorWithColor(aContext, (isResizeHandle ? [NSColor WL_activeDotColor] : [NSColor WL_dotColor]).CGColor);
+            CGContextSetShadowWithColor(aContext, CGSizeMake(0, -1.0), 0.0, [isResizeHandle ? [NSColor whiteColor] : [NSColor blackColor] colorWithAlphaComponent:0.20].CGColor);
 
             switch(i)
             {
@@ -1293,12 +1293,12 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
 - (CALayer *)setupNavigationHelperLayer
 {
     CALayer *l = [CALayer layer];
-    l.backgroundColor = [[[NSColor blackColor] colorWithAlphaComponent:0.25] CGColor];
+    l.backgroundColor = [[NSColor blackColor] colorWithAlphaComponent:0.25].CGColor;
     l.delegate = self;
 
-    NSWindow *window = [self window];
+    NSWindow *window = self.window;
     if (window)
-        l.contentsScale = [window backingScaleFactor];
+        l.contentsScale = window.backingScaleFactor;
 
     return l;
 }

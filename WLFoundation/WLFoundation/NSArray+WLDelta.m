@@ -22,20 +22,20 @@
     if (!aComparator)
         [NSException raise:NSInvalidArgumentException format:@"You must pass a comparator."];
 
-    if ([self count] == 0)
+    if (self.count == 0)
     {
         if (outInsertedIndexes)
-            *outInsertedIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [aRelativeArray count])];
+            *outInsertedIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, aRelativeArray.count)];
         if (outDeletedIndexes)
             *outDeletedIndexes = [NSIndexSet indexSet];
         return;
     }
-    else if ([aRelativeArray count] == 0)
+    else if (aRelativeArray.count == 0)
     {
         if (outInsertedIndexes)
             *outInsertedIndexes = [NSIndexSet indexSet];
         if (outDeletedIndexes)
-            *outDeletedIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [self count])];
+            *outDeletedIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.count)];
         return;
     }
 
@@ -44,12 +44,12 @@
     if (outDeletedIndexes)
         *outDeletedIndexes = [NSMutableIndexSet indexSet];
 
-    NSUInteger fromObjectIdx = 0, fromArraySize = [self count];
-    NSUInteger toObjectIdx = 0, toArraySize = [aRelativeArray count];
+    NSUInteger fromObjectIdx = 0, fromArraySize = self.count;
+    NSUInteger toObjectIdx = 0, toArraySize = aRelativeArray.count;
     while (fromObjectIdx < fromArraySize && toObjectIdx < toArraySize)
     {
-        id fromObject = [self objectAtIndex:fromObjectIdx];
-        id toObject = [aRelativeArray objectAtIndex:toObjectIdx];
+        id fromObject = self[fromObjectIdx];
+        id toObject = aRelativeArray[toObjectIdx];
 
         NSComparisonResult r = aComparator(fromObject, toObject);
         switch (r) {
@@ -92,8 +92,8 @@
     if (!aComparator)
         [NSException raise:NSInvalidArgumentException format:@"You must pass a comparator."];
 
-    NSUInteger selfCount = [self count];
-    NSUInteger fromArrayCount = [aRelativeArray count];
+    NSUInteger selfCount = self.count;
+    NSUInteger fromArrayCount = aRelativeArray.count;
 
     if (selfCount == 0)
     {
@@ -124,7 +124,7 @@
         {
             if (outInsertedIndexes)
                 [(NSMutableIndexSet *)*outInsertedIndexes addIndex:idx];
-            [selfInsertedIndexes addIndex:[selfInsertedIndexes count] + i];
+            [selfInsertedIndexes addIndex:selfInsertedIndexes.count + i];
         }
         else
         {

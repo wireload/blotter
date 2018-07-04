@@ -17,7 +17,7 @@
     NSUInteger numberOfWeekdays = [self maximumRangeOfUnit:NSCalendarUnitWeekday].length;
     // Weekdays are 1 based by default. make them 0 based.
     aWeekday -= 1;
-    NSUInteger firstWeekday = [self firstWeekday] - 1;
+    NSUInteger firstWeekday = self.firstWeekday - 1;
     NSUInteger firstWeekend = (firstWeekday + numberOfWeekdays - 1) % (numberOfWeekdays);
     NSUInteger secondWeekend = (firstWeekday + numberOfWeekdays - 2) % (numberOfWeekdays);
     return (aWeekday == firstWeekend || aWeekday == secondWeekend);

@@ -34,8 +34,8 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
         _observedCalendarIdentifiers = [NSMapTable strongToStrongObjectsMapTable];
 
         _fetchOperationsQueue = [[NSOperationQueue alloc] init];
-        [_fetchOperationsQueue setName:@"Fetch Operations Queue (Reminders)"];
-        [_fetchOperationsQueue setMaxConcurrentOperationCount:1];
+        _fetchOperationsQueue.name = @"Fetch Operations Queue (Reminders)";
+        _fetchOperationsQueue.maxConcurrentOperationCount = 1;
         _fetchPredicateSemaphore = dispatch_semaphore_create(1);
         _notificationsDeliveryQueue = dispatch_queue_create("Notifications Queue (Reminders)", 0);
     }
@@ -58,7 +58,7 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
 
     for (NSNumber *aMask in _observedCompletionMasks)
     {
-        mask |= [aMask unsignedIntegerValue];
+        mask |= aMask.unsignedIntegerValue;
 
         if (mask == WLCalReminderCompletionMaskAny)
             break;
@@ -147,7 +147,7 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
 
     NSBlockOperation *operation = [[NSBlockOperation alloc] init];
     __unsafe_unretained NSBlockOperation *localOperation = operation;
-    [operation setQueuePriority:aPriority];
+    operation.queuePriority = aPriority;
     NSMapTable *userInfoPerStore = nil;
     dispatch_semaphore_t userInfoPerStoreSemaphore = dispatch_semaphore_create(1);
 
@@ -163,7 +163,7 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
                                                                           calendarIdentifiers:[localCalendarIdentifiers objectForKey:store]];
             [reminders addObjectsFromArray:[store remindersMatchingPredicate:p]];
 
-            if (![localOperation isCancelled])
+            if (!localOperation.cancelled)
             {
                 // Parse reminders into per-store userInfo
                 NSMutableDictionary *storeUserInfo = [NSMutableDictionary dictionaryWithCapacity:3];
@@ -187,7 +187,7 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
                         break;
                 }
 
-                if (![localOperation isCancelled])
+                if (!localOperation.cancelled)
                 {
                     dispatch_semaphore_wait(userInfoPerStoreSemaphore, DISPATCH_TIME_FOREVER);
                     [userInfoPerStore setObject:storeUserInfo forKey:store];
@@ -197,9 +197,9 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
         }];
     }
 
-    [operation setCompletionBlock:^
+    operation.completionBlock = ^
     {
-        if ([localOperation isCancelled])
+        if (localOperation.cancelled)
             return;
 
         NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithCapacity:3];
@@ -220,14 +220,14 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
             [userInfo[@(WLCalReminderCompletionMaskAny)] addObjectsFromArray:storeUserInfo[@(WLCalReminderCompletionMaskAny)]];
         }
 
-        if ([localOperation isCancelled])
+        if (localOperation.cancelled)
             return;
 
         dispatch_async(_notificationsDeliveryQueue, ^
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:WLCalendarRemindersDidChangeNotification object:self userInfo:userInfo];
         });
-    }];
+    };
     [_fetchOperationsQueue addOperation:operation];
 }
 
@@ -264,7 +264,7 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
 
 - (NSString *)description
 {
-    NSMutableString *description = [NSMutableString stringWithFormat:@"%@: {\n", [super description]];
+    NSMutableString *description = [NSMutableString stringWithFormat:@"%@: {\n", super.description];
     for (NSObject<WLCalStore> *store in self.calStores)
     {
         [description appendFormat:@"\t%@: %@\n", store, [self observedCalendarIdentifiersForStore:store]];

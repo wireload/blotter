@@ -13,8 +13,8 @@ BOOL WLDoesEventContainShortcut(NSEvent *event, NSUInteger shortcutFlags, int sh
 {
     static NSUInteger FlagsMask = NSShiftKeyMask | NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask;
     
-    NSUInteger eventFlags = [event modifierFlags];
-    unsigned short eventKeyCode = [event keyCode];
+    NSUInteger eventFlags = event.modifierFlags;
+    unsigned short eventKeyCode = event.keyCode;
     
     BOOL doesFlagsMatch = (eventFlags & (FlagsMask ^ shortcutFlags)) == 0 && (eventFlags & shortcutFlags);
     return (doesFlagsMatch || shortcutFlags == 0) && eventKeyCode == shortcutKey;

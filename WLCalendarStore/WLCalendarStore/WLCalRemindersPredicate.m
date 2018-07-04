@@ -51,7 +51,7 @@
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"%@:\ncompletionMask: %ld\ncalendars: %@",
-                     [super description],
+                     super.description,
                      self.completionMask,
                      self.calendarIdentifiers];
 }

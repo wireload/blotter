@@ -24,7 +24,7 @@
     NSParameterAssert(aCSReminder != nil);
     NSParameterAssert(aCalendar != nil);
 
-    if (![aCSReminder.uid length])
+    if (!(aCSReminder.uid).length)
         return nil;
 
     self = [super init];

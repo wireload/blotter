@@ -23,7 +23,7 @@ const CGFloat _WLMinimumStringHeight = 5.0;
 
 @implementation WLCalendarEventLayer
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self != nil)
@@ -56,7 +56,7 @@ const CGFloat _WLMinimumStringHeight = 5.0;
         self.borderColor = [self _lineColor];
         self.borderWidth = 1.0;
     }
-    [super setCornerRadius:newCornerRadius];
+    super.cornerRadius = newCornerRadius;
 }
 
 
@@ -81,7 +81,7 @@ const CGFloat _WLMinimumStringHeight = 5.0;
 
 - (CGFloat)minimumHumanVisibleHeight
 {
-    NSAttributedString *visibleString = [self.title length] > 0 ? self.title : self.location;
+    NSAttributedString *visibleString = (self.title).length > 0 ? self.title : self.location;
     if (![visibleString isEqualToAttributedString:_cachedVisibleString])
     {
         [visibleString retain];
@@ -98,7 +98,7 @@ const CGFloat _WLMinimumStringHeight = 5.0;
 
 - (CGFloat)minimumHumanVisibleHeightWithWidth:(CGFloat)aWidth
 {
-    NSAttributedString *visibleString = [self.title length] > 0 ? self.title : self.location;
+    NSAttributedString *visibleString = (self.title).length > 0 ? self.title : self.location;
     return [visibleString WL_firstLineHeightWithWidth:fdim(aWidth, _WLXPadding)] + _WLYPadding;
 }
 
@@ -110,11 +110,11 @@ const CGFloat _WLMinimumStringHeight = 5.0;
     CGContextSaveGState(aContext);
     CGColorRef backgroundColor = CGColorCreateCopyWithAlpha(self.contentsBackgroundColor, self.contentsBackgroundOpacity);
     NSColor *nsBackgroundColor = [[NSColor colorWithCGColor:backgroundColor] colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
-    nsBackgroundColor = [NSColor colorWithCalibratedHue:[nsBackgroundColor hueComponent]
-                                             saturation:fmin(1.0, [nsBackgroundColor saturationComponent] * 1.05)
-                                             brightness:fmin(1.0, [nsBackgroundColor brightnessComponent] * 1.05)
+    nsBackgroundColor = [NSColor colorWithCalibratedHue:nsBackgroundColor.hueComponent
+                                             saturation:fmin(1.0, nsBackgroundColor.saturationComponent * 1.05)
+                                             brightness:fmin(1.0, nsBackgroundColor.brightnessComponent * 1.05)
                                                   alpha:self.contentsBackgroundOpacity];
-    CGContextSetFillColorWithColor(aContext, [nsBackgroundColor CGColor]);
+    CGContextSetFillColorWithColor(aContext, nsBackgroundColor.CGColor);
     CGContextFillRect(aContext, self.bounds);
     CGColorRelease(backgroundColor);
 
@@ -157,7 +157,7 @@ const CGFloat _WLMinimumStringHeight = 5.0;
 
 - (void)_drawString:(CGContextRef)aContext
 {
-    if ([self.title length] == 0 && [self.location length] == 0)
+    if ((self.title).length == 0 && (self.location).length == 0)
         return;
 
     if (IS_LESS_CGFLOAT(fdim(CGRectGetHeight(self.bounds), _WLYPadding), _WLMinimumStringHeight) || IS_LESS_CGFLOAT(fdim(CGRectGetWidth(self.bounds), _WLXPadding), _WLMinimumStringWidth))
@@ -175,7 +175,7 @@ const CGFloat _WLMinimumStringHeight = 5.0;
         CGContextSetAllowsFontSmoothing(aContext, YES);
         CGContextSetShouldAntialias(aContext, YES);
         CGContextSetAllowsAntialiasing(aContext, YES);
-        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0), 0.0, [[NSColor WL_eventTextShadowColor] CGColor]);
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0), 0.0, [NSColor WL_eventTextShadowColor].CGColor);
 
         CGFloat preferredTitleHeight = [self.title WL_preferredHeightWithWidth:fdim(CGRectGetWidth(self.bounds), _WLXPadding)];
         if (preferredTitleHeight < titleAndLocationFrame.size.height)
@@ -249,7 +249,7 @@ const CGFloat _WLMinimumStringHeight = 5.0;
 
 - (CGColorRef)_lineColor
 {
-    CGColorRef lineColor = CGColorCreateCopyWithAlpha([[NSColor whiteColor] CGColor], 0.25);
+    CGColorRef lineColor = CGColorCreateCopyWithAlpha([NSColor whiteColor].CGColor, 0.25);
     return (CGColorRef)[(id)lineColor autorelease];
 }
 
@@ -280,7 +280,7 @@ const CGFloat _WLMinimumStringHeight = 5.0;
     else if ([aKey isEqualToString:@"contentsBackgroundOpacity"])
         return @(1.0);
     else if ([aKey isEqualToString:@"contentsBackgroundColor"])
-        return (id)[[NSColor clearColor] CGColor];
+        return (id)[NSColor clearColor].CGColor;
     else
         return [super defaultValueForKey:aKey];
 }
@@ -299,9 +299,9 @@ const CGFloat _WLMinimumStringHeight = 5.0;
 {
     id<CAAction> action = [super actionForKey:aKey];
     if ([aKey isEqualToString:@"contentsBackgroundOpacity"])
-        [(CABasicAnimation *)action setFromValue:[[self presentationLayer] valueForKeyPath:@"contentsBackgroundOpacity"]];
+        ((CABasicAnimation *)action).fromValue = [[self presentationLayer] valueForKeyPath:@"contentsBackgroundOpacity"];
     else if ([aKey isEqualToString:@"contentsBackgroundColor"])
-        [(CABasicAnimation *)action setFromValue:[[self presentationLayer] valueForKeyPath:@"contentsBackgroundColor"]];
+        ((CABasicAnimation *)action).fromValue = [[self presentationLayer] valueForKeyPath:@"contentsBackgroundColor"];
     return action;
 }
 
@@ -345,14 +345,14 @@ const CGFloat _WLMinimumStringHeight = 5.0;
 
 + (NSAttributedString *)WL_eventTitleWithString:(NSString *)aString
 {
-    if ([aString length] == 0)
+    if (aString.length == 0)
         return nil;
 
     static dispatch_once_t onceToken;
     static NSDictionary *TitleAttributes = nil;
     dispatch_once(&onceToken, ^{
         TitleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
-                           (id)[[NSColor whiteColor] CGColor], (id)kCTForegroundColorAttributeName,
+                           (id)[NSColor whiteColor].CGColor, (id)kCTForegroundColorAttributeName,
                            (id)[NSFont WL_eventTitleFont],        (id)kCTFontAttributeName,
                            nil];
     });
@@ -362,14 +362,14 @@ const CGFloat _WLMinimumStringHeight = 5.0;
 
 + (NSAttributedString *)WL_eventLocationWithString:(NSString *)aString;
 {
-    if ([aString length] == 0)
+    if (aString.length == 0)
         return nil;
 
     static dispatch_once_t onceToken;
     static NSDictionary *LocationAttributes = nil;
     dispatch_once(&onceToken, ^{
         LocationAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
-                              (id)[[NSColor WL_eventLocationColor] CGColor], (id)kCTForegroundColorAttributeName,
+                              (id)[NSColor WL_eventLocationColor].CGColor, (id)kCTForegroundColorAttributeName,
                               (id)[NSFont WL_eventLocationFont],                (id)kCTFontAttributeName,
                               nil];
     });

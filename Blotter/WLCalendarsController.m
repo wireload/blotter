@@ -78,8 +78,8 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
             [_calCalendarsPerStore setObject:@[] forKey:s];
 
             NSOperationQueue *q = [[NSOperationQueue alloc] init];
-            [q setName:[NSString stringWithFormat:@"Fetch Calendars From %@ Queue (Calendars)", s.storeIdentifier]];
-            [q setMaxConcurrentOperationCount:1];
+            q.name = [NSString stringWithFormat:@"Fetch Calendars From %@ Queue (Calendars)", s.storeIdentifier];
+            q.maxConcurrentOperationCount = 1;
             [_fetchQueuesPerStore setObject:q forKey:s];
         }
 
@@ -157,7 +157,7 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
 
 - (NSArray *)calReminderCalendarsFromCalCalendars:(NSArray *)aCalCalendars
 {
-    if (![aCalCalendars count])
+    if (!aCalCalendars.count)
         return @[];
 
     NSIndexSet *indexesOfCalReminderCalendars = [aCalCalendars indexesOfObjectsWithOptions:NSEnumerationConcurrent
@@ -170,7 +170,7 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
 
 - (NSArray *)calEventCalendarsFromCalCalendars:(NSArray *)aCalCalendars
 {
-    if (![aCalCalendars count])
+    if (!aCalCalendars.count)
         return @[];
 
     NSIndexSet *indexesOfCalReminderCalendars = [aCalCalendars indexesOfObjectsWithOptions:NSEnumerationConcurrent
@@ -183,7 +183,7 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
 
 - (NSArray *)calCalendarsToDisplayFromCalCalendars:(NSArray *)aCalCalendars
 {
-    if (![aCalCalendars count])
+    if (!aCalCalendars.count)
         return @[];
 
     if ([[NSUserDefaults standardUserDefaults] WL_displaysAllCalendars])
@@ -204,7 +204,7 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
 
 - (NSArray *)calReminderCalendarsToDisplayFromCalCalendars:(NSArray *)aCalCalendars
 {
-    if (![aCalCalendars count])
+    if (!aCalCalendars.count)
         return @[];
 
     if ([[NSUserDefaults standardUserDefaults] WL_displaysAllCalendars])
@@ -225,7 +225,7 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
 
 - (NSArray *)calEventCalendarsToDisplayFromCalCalendars:(NSArray *)aCalCalendars
 {
-    if (![aCalCalendars count])
+    if (!aCalCalendars.count)
         return @[];
 
     if ([[NSUserDefaults standardUserDefaults] WL_displaysAllCalendars])
@@ -249,13 +249,13 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
     NSBlockOperation *operation = [[NSBlockOperation alloc] init];
     __unsafe_unretained NSBlockOperation *unretainedOperation = operation;
     __unsafe_unretained WLCalendarsController *unretainedSelf = self;
-    [operation setQueuePriority:aPriority];
+    operation.queuePriority = aPriority;
 
     [operation addExecutionBlock:^
     {
         NSArray *calendars = [aStore calendars];
 
-        if ([unretainedOperation isCancelled])
+        if (unretainedOperation.cancelled)
             return;
 
         dispatch_sync(dispatch_get_main_queue(), ^
@@ -290,7 +290,7 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             NSMutableDictionary *defaultsCalendars = [NSMutableDictionary dictionaryWithDictionary:[defaults dictionaryForKey:unretainedSelf.autosaveKeyPath]];
             NSDictionary *oldDefaultsStore = defaultsCalendars[aStore.storeIdentifier];
-            NSMutableDictionary *newDefaultsStore = [NSMutableDictionary dictionaryWithCapacity:[calendars count]];
+            NSMutableDictionary *newDefaultsStore = [NSMutableDictionary dictionaryWithCapacity:calendars.count];
 
             // Preserve old calendars but disable them. They may reappear shortly after due to syncing problems.
             for (NSString *calendarIdentifier in oldDefaultsStore)
@@ -349,7 +349,7 @@ NSString *WLChangedCalStoresKey = @"WLChangedCalStoresKey";
 
 - (void)calStoreDidChange:(NSNotification *)aNotification
 {
-    [self fetchCalCalendarsForStore:[aNotification object] withPriority:NSOperationQueuePriorityLow];
+    [self fetchCalCalendarsForStore:aNotification.object withPriority:NSOperationQueuePriorityLow];
 }
 
 

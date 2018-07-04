@@ -27,7 +27,7 @@
     NSParameterAssert(aCalCalendar != nil);
     NSParameterAssert(aCurrentCalendar != nil);
 
-    if (![aCSEvent.uid length])
+    if (!(aCSEvent.uid).length)
         return nil;
 
     self = [super init];
@@ -112,7 +112,7 @@
 
 - (NSString *)description
 {
-    NSMutableString *d = [NSMutableString stringWithFormat:@"%@: {", [super description]];
+    NSMutableString *d = [NSMutableString stringWithFormat:@"%@: {", super.description];
     [d appendFormat:@"Identifier: %@, ", self.itemIdentifier];
     [d appendFormat:@"Title: %@, ", self.title];
     [d appendFormat:@"Location: %@, ", self.location];

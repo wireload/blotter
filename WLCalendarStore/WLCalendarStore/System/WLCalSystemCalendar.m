@@ -28,7 +28,7 @@
 {
     NSParameterAssert(aCSCalendar != nil);
 
-    if (![aCSCalendar.uid length])
+    if (!(aCSCalendar.uid).length)
         return nil;
 
     self = [super initWithStore:aStore];
@@ -98,13 +98,13 @@
 
 - (NSUInteger)hash
 {
-    return [self.calendarIdentifier hash];
+    return (self.calendarIdentifier).hash;
 }
 
 - (NSString *)description
 {
     NSDictionary *d = [self dictionaryWithValuesForKeys:@[@"allowsContentModifications", @"color", @"immutable", @"title", @"type", @"allowedEntityTypes"]];
-    return [NSString stringWithFormat:@"%@: %@", [super description], d];
+    return [NSString stringWithFormat:@"%@: %@", super.description, d];
 }
 
 @end

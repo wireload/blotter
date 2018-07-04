@@ -51,7 +51,7 @@
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"%@:\ndateRange: %@\ncalendars: %@",
-                     [super description],
+                     super.description,
                      self.dateRange,
                      self.calendarIdentifiers];
 }

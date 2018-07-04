@@ -71,7 +71,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
         _calendarTypeCache = [[NSMutableDictionary alloc] init];
         _calendarTypeCacheSemaphore = dispatch_semaphore_create(1);
 
-        [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self
+        [[NSWorkspace sharedWorkspace].notificationCenter addObserver:self
                                                                selector:@selector(_systemStoreDidChange:)
                                                                    name:NSWorkspaceDidLaunchApplicationNotification
                                                                  object:nil];
@@ -103,7 +103,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
         [[NSNotificationCenter defaultCenter] removeObserver:self
                                                         name:CalTasksChangedExternallyNotification
                                                       object:self.calendarStore];
-        [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self
+        [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self
                                                                       name:NSWorkspaceDidLaunchApplicationNotification
                                                                     object:nil];
     }
@@ -186,9 +186,9 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
         // Scripting Bridge known to be very unreliable.
         @try
         {
-            [iCalApp setDelegate:self];
+            iCalApp.delegate = self;
 
-            if ([iCalApp isRunning])
+            if (iCalApp.running)
             {
                 UIDs = [[(id)iCalApp calendars] valueForKey:@"uid"];
                 [_log logDebug:@"Successfuly fetched calendar UIDs from iCal: %@", UIDs];
@@ -198,7 +198,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
         }
         @catch (NSException *anException)
         {
-            [_log logError:@"Exception occured while fetching calendar UIDs from iCal (%@): %@ (%@).", iCalApp, [anException reason], [anException userInfo]];
+            [_log logError:@"Exception occured while fetching calendar UIDs from iCal (%@): %@ (%@).", iCalApp, anException.reason, anException.userInfo];
         }
         @catch (...)
         {
@@ -220,14 +220,14 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 - (NSArray *)fetchCSCalendarsForUIDs:(NSSet *)anUIDs
                          invalidUIDs:(__autoreleasing NSSet **)outInvalidUIDs
 {
-    if ([anUIDs count] == 0)
+    if (anUIDs.count == 0)
         return @[];
 
     // Accessing store is potentially long operation.
     // To improve the response time we access it concurrently.
     //
     // 2 Semaphores are used to protect mutable containers from being smashed.
-    NSMutableArray *csCalendars = [NSMutableArray arrayWithCapacity:[anUIDs count]];
+    NSMutableArray *csCalendars = [NSMutableArray arrayWithCapacity:anUIDs.count];
     NSMutableSet *invalidUIDs = [NSMutableSet set];
     dispatch_semaphore_t csCalendarsSemaphore = dispatch_semaphore_create(1);
     dispatch_semaphore_t invalidUIDsSemaphore = dispatch_semaphore_create(1);
@@ -250,7 +250,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
         }
     }];
 
-    if ([invalidUIDs count])
+    if (invalidUIDs.count)
     {
         if (outInvalidUIDs)
             *outInvalidUIDs = invalidUIDs;
@@ -265,10 +265,10 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 {
     NSParameterAssert(anEventsPredicate);
 
-    if (!anEventsPredicate.dateRange || [anEventsPredicate.dateRange isEmpty])
+    if (!anEventsPredicate.dateRange || (anEventsPredicate.dateRange).empty)
         return @[];
 
-    if ([anEventsPredicate.calendarIdentifiers count] == 0)
+    if ((anEventsPredicate.calendarIdentifiers).count == 0)
         return @[];
 
     NSArray *csCalendars = nil;
@@ -280,7 +280,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
         if (outCSCalendars)
             *outCSCalendars = csCalendars;
 
-        if ([csCalendars count] == 0)
+        if (csCalendars.count == 0)
             return @[];
     }
 
@@ -300,7 +300,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 {
     NSParameterAssert(aReminderPredicate);
 
-    if ([aReminderPredicate.calendarIdentifiers count] == 0)
+    if ((aReminderPredicate.calendarIdentifiers).count == 0)
         return @[];
 
     if (aReminderPredicate.completionMask == WLCalReminderCompletionMaskNothing)
@@ -315,7 +315,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
         if (outCSCalendars)
             *outCSCalendars = csCalendars;
 
-        if ([csCalendars count] == 0)
+        if (csCalendars.count == 0)
             return @[];
     }
 
@@ -348,10 +348,10 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
 - (NSArray *)makeCalendarsFromCSCalendars:(NSArray *)aCSCalendars
 {
-    if ([aCSCalendars count] == 0)
+    if (aCSCalendars.count == 0)
         return @[];
 
-    NSMutableArray *calendars = [NSMutableArray arrayWithCapacity:[aCSCalendars count]];
+    NSMutableArray *calendars = [NSMutableArray arrayWithCapacity:aCSCalendars.count];
 
     for (CalCalendar *csCalendar in aCSCalendars)
     {
@@ -372,7 +372,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
     NSParameterAssert(aCalendar.uid);
 
     dispatch_semaphore_wait(_calendarTypeCacheSemaphore, DISPATCH_TIME_FOREVER);
-    NSNumber *mask = [_calendarTypeCache objectForKey:aCalendar.uid];
+    NSNumber *mask = _calendarTypeCache[aCalendar.uid];
     if (mask == nil)
     {
         WLCalEntityMask maskValue = [self _fastAllowedEntityTypesForCSCalendar:aCalendar];;
@@ -389,11 +389,11 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
         mask = @(maskValue);
 
-        [_calendarTypeCache setObject:mask forKey:aCalendar.uid];
+        _calendarTypeCache[aCalendar.uid] = mask;
     }
     dispatch_semaphore_signal(_calendarTypeCacheSemaphore);
 
-    return (WLCalEntityMask)[mask unsignedIntegerValue];
+    return (WLCalEntityMask)mask.unsignedIntegerValue;
 }
 
 
@@ -439,11 +439,11 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
         EndOf4YearsPeriod = [NSDate date];
         NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
         NSDateComponents *minus4Years = [[NSDateComponents alloc] init];
-        [minus4Years setYear:-4];
+        minus4Years.year = -4;
         StartOf4YearsPeriod = [calendar dateByAddingComponents:minus4Years toDate:EndOf4YearsPeriod options:0];
 
-        TmpItemsTitle = [NSString stringWithFormat:@"Quit %@ and delete me.", [[NSProcessInfo processInfo] processName]];
-        TmpItemsNotes = [[NSBundle mainBundle] bundleIdentifier];
+        TmpItemsTitle = [NSString stringWithFormat:@"Quit %@ and delete me.", [NSProcessInfo processInfo].processName];
+        TmpItemsNotes = [NSBundle mainBundle].bundleIdentifier;
         CFUUIDRef uuid = CFUUIDCreate(NULL);
 
         if (uuid)
@@ -468,7 +468,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
     if (p)
         events = [self.calendarStore eventsWithPredicate:p];
 
-    if ([events count] > 0)
+    if (events.count > 0)
         allowedEntityTypes |= WLCalEntityMaskEvent;
     else if (allowsAdvancedCalendarTypeCheck)
     {
@@ -485,7 +485,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
         while (aCalendar.isEditable &&
                currentAttempt < MaximumNumberOfAttemptsToAddOrDelete &&
                !canSaveEvent &&
-               [error code] != CalCalendarNotEditableError)
+               error.code != CalCalendarNotEditableError)
         {
             if (currentAttempt > 0)
                 [NSThread sleepForTimeInterval:AttemptDelay];
@@ -510,7 +510,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
             }
 
             if (currentAttempt == MaximumNumberOfAttemptsToAddOrDelete)
-                [_log logError:@"Cannot delete tmp event (%@): %@.", tmpEvent.uid, [error localizedDescription]];
+                [_log logError:@"Cannot delete tmp event (%@): %@.", tmpEvent.uid, error.localizedDescription];
 
             allowedEntityTypes |= WLCalEntityMaskEvent;
         }
@@ -521,7 +521,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
     if (p)
         reminders = [self.calendarStore tasksWithPredicate:p];
 
-    if ([reminders count] > 0)
+    if (reminders.count > 0)
         allowedEntityTypes |= WLCalEntityMaskReminder;
     else if (allowsAdvancedCalendarTypeCheck)
     {
@@ -538,7 +538,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
         while (aCalendar.isEditable &&
                currentAttempt < MaximumNumberOfAttemptsToAddOrDelete &&
                !canSaveTask &&
-               [error code] != CalCalendarNotEditableError)
+               error.code != CalCalendarNotEditableError)
         {
             if (currentAttempt > 0)
                 [NSThread sleepForTimeInterval:AttemptDelay];
@@ -563,7 +563,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
             }
 
             if (currentAttempt == MaximumNumberOfAttemptsToAddOrDelete)
-                [_log logError:@"Cannot delete tmp event (%@): %@.", tmpReminder.uid, [error localizedDescription]];
+                [_log logError:@"Cannot delete tmp event (%@): %@.", tmpReminder.uid, error.localizedDescription];
 
             allowedEntityTypes |= WLCalEntityMaskReminder;
         }
@@ -615,7 +615,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
 - (id)eventDidFail:(const AppleEvent *)anEvent withError:(NSError *)anError
 {
-    [_log logError:@"Scripting Bridge failed to deliver event: %@ (%@).", [anError localizedDescription], [anError userInfo]];
+    [_log logError:@"Scripting Bridge failed to deliver event: %@ (%@).", anError.localizedDescription, anError.userInfo];
     return nil;
 }
 
@@ -646,7 +646,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
 - (id <WLCalCalendar>)calendarWithIdentifier:(NSString *)anIdentifier
 {
-    return [[self makeCalendarsFromCSCalendars:@[[self.calendarStore calendarWithUID:anIdentifier]]] lastObject];
+    return [self makeCalendarsFromCSCalendars:@[[self.calendarStore calendarWithUID:anIdentifier]]].lastObject;
 }
 
 - (NSArray *)eventsMatchingPredicate:(WLCalEventsPredicate *)aPredicate
@@ -660,13 +660,13 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
     [cachedCalendars sortWithOptions:NSSortStable | NSSortConcurrent usingComparator:WLCalCalendarsComparator];
     [cachedCalendars WL_removeDuplicatesInSortedArrayUsingComparator:WLCalCalendarsComparator];
 
-    NSMutableArray *events = [NSMutableArray arrayWithCapacity:[csEvents count]];
+    NSMutableArray *events = [NSMutableArray arrayWithCapacity:csEvents.count];
 
     for (CalEvent *csEvent in csEvents)
     {
         WLCalSystemCalendar *calendar = nil;
         NSUInteger cachedCalendarIndex = [cachedCalendars indexOfObject:@{ @"calendarIdentifier" : csEvent.calendar.uid }
-                                                          inSortedRange:NSMakeRange(0, [cachedCalendars count])
+                                                          inSortedRange:NSMakeRange(0, cachedCalendars.count)
                                                                 options:NSBinarySearchingFirstEqual
                                                         usingComparator:WLCalCalendarsComparator];
 
@@ -674,12 +674,12 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
             calendar = cachedCalendars[cachedCalendarIndex];
         else
         {
-            WLCalSystemCalendar *newCalendar = [[self makeCalendarsFromCSCalendars:@[[self.calendarStore calendarWithUID:csEvent.calendar.uid]]] lastObject];
+            WLCalSystemCalendar *newCalendar = [self makeCalendarsFromCSCalendars:@[[self.calendarStore calendarWithUID:csEvent.calendar.uid]]].lastObject;
 
             if (newCalendar)
             {
                 NSUInteger newCalendarInsertionIndex = [cachedCalendars indexOfObject:newCalendar
-                                                                        inSortedRange:NSMakeRange(0, [cachedCalendars count])
+                                                                        inSortedRange:NSMakeRange(0, cachedCalendars.count)
                                                                               options:NSBinarySearchingInsertionIndex
                                                                       usingComparator:WLCalCalendarsComparator];
                 [cachedCalendars insertObject:newCalendar atIndex:newCalendarInsertionIndex];
@@ -712,13 +712,13 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
     [cachedCalendars sortWithOptions:NSSortStable | NSSortConcurrent usingComparator:WLCalCalendarsComparator];
     [cachedCalendars WL_removeDuplicatesInSortedArrayUsingComparator:WLCalCalendarsComparator];
 
-    NSMutableArray *reminders = [NSMutableArray arrayWithCapacity:[csReminders count]];
+    NSMutableArray *reminders = [NSMutableArray arrayWithCapacity:csReminders.count];
 
     for (CalTask *csReminder in csReminders)
     {
         WLCalSystemCalendar *calendar = nil;
         NSUInteger cachedCalendarIndex = [cachedCalendars indexOfObject:@{ @"calendarIdentifier" : csReminder.calendar.uid }
-                                                          inSortedRange:NSMakeRange(0, [cachedCalendars count])
+                                                          inSortedRange:NSMakeRange(0, cachedCalendars.count)
                                                                 options:NSBinarySearchingFirstEqual
                                                         usingComparator:WLCalCalendarsComparator];
 
@@ -726,12 +726,12 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
             calendar = cachedCalendars[cachedCalendarIndex];
         else
         {
-            WLCalSystemCalendar *newCalendar = [[self makeCalendarsFromCSCalendars:@[[self.calendarStore calendarWithUID:csReminder.calendar.uid]]] lastObject];
+            WLCalSystemCalendar *newCalendar = [self makeCalendarsFromCSCalendars:@[[self.calendarStore calendarWithUID:csReminder.calendar.uid]]].lastObject;
 
             if (newCalendar)
             {
                 NSUInteger newCalendarInsertionIndex = [cachedCalendars indexOfObject:newCalendar
-                                                                        inSortedRange:NSMakeRange(0, [cachedCalendars count])
+                                                                        inSortedRange:NSMakeRange(0, cachedCalendars.count)
                                                                               options:NSBinarySearchingInsertionIndex
                                                                       usingComparator:WLCalCalendarsComparator];
                 [cachedCalendars insertObject:newCalendar atIndex:newCalendarInsertionIndex];
@@ -775,7 +775,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
 - (NSUInteger)hash
 {
-    return [self.storeIdentifier hash];
+    return (self.storeIdentifier).hash;
 }
 
 @end

@@ -15,7 +15,7 @@
     NSDateFormatter *_titleFormatter;
 }
 
-- (id)initWithNibName:(NSString *)aNibNameOrNil bundle:(NSBundle *)aNibBundleOrNil
+- (instancetype)initWithNibName:(NSString *)aNibNameOrNil bundle:(NSBundle *)aNibBundleOrNil
 {
     self = [super initWithNibName:aNibNameOrNil bundle:aNibBundleOrNil];
 
@@ -133,16 +133,16 @@
     switch (_titleFormat)
     {
         case WLTitleFormatWeekdayAndMonthday:
-            [_titleFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"eeedMMM" options:0 locale:_calendar.locale]];
+            _titleFormatter.dateFormat = [NSDateFormatter dateFormatFromTemplate:@"eeedMMM" options:0 locale:_calendar.locale];
             break;
         case WLTitleFormatWeekdayOnly:
         default:
-            [_titleFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:_calendar.locale]];
+            _titleFormatter.dateFormat = [NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:_calendar.locale];
             break;
     }
 
-    [_titleFormatter setCalendar:_calendar];
-    [_titleFormatter setLocale:_calendar.locale];
+    _titleFormatter.calendar = _calendar;
+    _titleFormatter.locale = _calendar.locale;
 }
 
 

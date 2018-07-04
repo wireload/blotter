@@ -32,7 +32,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         oneHourComponents = [[NSDateComponents alloc] init];
-        [oneHourComponents setHour:1];
+        oneHourComponents.hour = 1;
     });
     NSDate *nextHour = [aCalendar dateByAddingComponents:oneHourComponents toDate:self options:0];
     NSDate *roundedNextHour = nil;
@@ -44,9 +44,9 @@
 {
     NSDateComponents *dateNoonComponents = [aCalendar components:NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:self];
     NSRange hoursRange = [aCalendar rangeOfUnit:NSCalendarUnitHour inUnit:NSCalendarUnitDay forDate:self];
-    [dateNoonComponents setHour:(NSInteger)(hoursRange.location + hoursRange.length / 2)];
-    [dateNoonComponents setMinute:0];
-    [dateNoonComponents setSecond:0];
+    dateNoonComponents.hour = (NSInteger)(hoursRange.location + hoursRange.length / 2);
+    dateNoonComponents.minute = 0;
+    dateNoonComponents.second = 0;
     return [aCalendar dateFromComponents:dateNoonComponents];
 }
 

@@ -16,13 +16,13 @@ static NSString* const _WLWeekdayDateFormatterCacheKey = @"weekdayDateFormatter"
 
 @implementation WLCalendarDateViewController
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self != nil)
     {
         _cache = [[NSCache alloc] init];
-        [_cache setName:@"WLCalendarDateViewController cache"];
+        _cache.name = @"WLCalendarDateViewController cache";
     }
     return self;
 }
@@ -41,8 +41,8 @@ static NSString* const _WLWeekdayDateFormatterCacheKey = @"weekdayDateFormatter"
 - (void)reloadViewData
 {
     WLCalendarDateView *view = [self view];
-    NSDate *date = [[self representedObject] date];
-    NSInteger day = [[[[self representedObject] calendar] components:NSCalendarUnitDay fromDate:date] day];
+    NSDate *date = [self representedObject].date;
+    NSInteger day = [[self representedObject].calendar components:NSCalendarUnitDay fromDate:date].day;
     view.monthDay = [NSString stringWithFormat:@"%ld", day];
     view.monthAndYear = [self._monthAndYearDateFormatter stringFromDate:date];
     view.weekday = [self._weekdayDateFormatter stringFromDate:date];
@@ -59,7 +59,7 @@ static NSString* const _WLWeekdayDateFormatterCacheKey = @"weekdayDateFormatter"
     NSDateFormatter *f = [[[_cache objectForKey:_WLMonthAndYearDateFormatterCacheKey] retain] autorelease];
     if (f == nil) {
         f = [[[NSDateFormatter alloc] init] autorelease];
-        [f setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"MMMMy" options:0 locale:[[self representedObject].calendar locale]]];
+        f.dateFormat = [NSDateFormatter dateFormatFromTemplate:@"MMMMy" options:0 locale:([self representedObject].calendar).locale];
         [_cache setObject:f forKey:_WLMonthAndYearDateFormatterCacheKey];
     }
     return f;
@@ -76,7 +76,7 @@ static NSString* const _WLWeekdayDateFormatterCacheKey = @"weekdayDateFormatter"
     NSDateFormatter *f = [[[_cache objectForKey:_WLWeekdayDateFormatterCacheKey] retain] autorelease];
     if (f == nil) {
         f = [[[NSDateFormatter alloc] init] autorelease];
-        [f setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:[[self representedObject].calendar locale]]];
+        f.dateFormat = [NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:([self representedObject].calendar).locale];
         [_cache setObject:f forKey:_WLWeekdayDateFormatterCacheKey];
     }
     return f;
@@ -94,7 +94,7 @@ static NSString* const _WLWeekdayDateFormatterCacheKey = @"weekdayDateFormatter"
 - (void)loadView
 {
     WLCalendarDateView *v = [[WLCalendarDateView alloc] init];
-    [self setView:v];
+    self.view = v;
     [v release];
     [self reloadViewData];
     [self addObserver:self forKeyPath:@"representedObject.date" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:NULL];
@@ -103,12 +103,12 @@ static NSString* const _WLWeekdayDateFormatterCacheKey = @"weekdayDateFormatter"
 
 - (WLCalendarDateView *)view
 {
-    return (WLCalendarDateView *)[super view];
+    return (WLCalendarDateView *)super.view;
 }
 
 - (WLSmartClock *)representedObject
 {
-    return (WLSmartClock *)[super representedObject];
+    return (WLSmartClock *)super.representedObject;
 }
 
 
@@ -129,13 +129,13 @@ static NSString* const _WLWeekdayDateFormatterCacheKey = @"weekdayDateFormatter"
     {
         NSCalendar *calendar = [self representedObject].calendar;
         NSDateComponents *oldDateComponents = [calendar components:NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay
-                                                          fromDate:[aChange objectForKey:NSKeyValueChangeOldKey]];
+                                                          fromDate:aChange[NSKeyValueChangeOldKey]];
         NSDateComponents *newDateComponents = [calendar components:NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay
-                                                          fromDate:[aChange objectForKey:NSKeyValueChangeNewKey]];
+                                                          fromDate:aChange[NSKeyValueChangeNewKey]];
         if (![oldDateComponents isEqual:newDateComponents])
         {
 #ifdef DEBUG
-            NSLog(@"%@ date did changed to %@", NSStringFromSelector(_cmd), [aChange objectForKey:NSKeyValueChangeNewKey]);
+            NSLog(@"%@ date did changed to %@", NSStringFromSelector(_cmd), aChange[NSKeyValueChangeNewKey]);
 #endif
             [self reloadViewData];
         }

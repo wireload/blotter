@@ -51,9 +51,9 @@ static const CGFloat _WLGlassHudBackgroundActiveDarkness = 0.70;
 - (void)drawRect:(NSRect)aDirtyRect
 {
     [NSGraphicsContext saveGraphicsState];
-    [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
+    [NSGraphicsContext currentContext].imageInterpolation = NSImageInterpolationHigh;
 
-    NSRect innerArea = [[self class] glassRectForBounds:[self bounds]];
+    NSRect innerArea = [[self class] glassRectForBounds:self.bounds];
     NSBezierPath *innerPath = [NSBezierPath bezierPathWithRoundedRect:innerArea xRadius:5 yRadius:5];
     [NSGraphicsContext saveGraphicsState];
 
@@ -65,7 +65,7 @@ static const CGFloat _WLGlassHudBackgroundActiveDarkness = 0.70;
     [innerPath fill];
     [NSGraphicsContext restoreGraphicsState];
 
-    WLDrawScaledNinePartImage([self bounds],
+    WLDrawScaledNinePartImage(self.bounds,
                               [NSImage imageNamed:@"calendar-background-active-top-left"],
                               [NSImage imageNamed:@"calendar-background-active-top-middle"],
                               [NSImage imageNamed:@"calendar-background-active-top-right"],
@@ -77,7 +77,7 @@ static const CGFloat _WLGlassHudBackgroundActiveDarkness = 0.70;
                               [NSImage imageNamed:@"calendar-background-active-bottom-right"],
                               NSCompositeSourceOver,
                               1.0,
-                              [self isFlipped]);
+                              self.flipped);
 
 
     [[WLCalendarWindowBackgroundView backgroundNoisePatternColor] setFill];

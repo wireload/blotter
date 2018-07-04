@@ -11,7 +11,7 @@
 
 @implementation WLCustomCursorButton
 
-- (id)initWithFrame:(NSRect)aFrameRect
+- (instancetype)initWithFrame:(NSRect)aFrameRect
 {
     self = [super initWithFrame:aFrameRect];
     if (self != nil)
@@ -39,7 +39,7 @@
 - (NSTrackingArea *)makeCursorTrackingArea
 {
     NSTrackingAreaOptions trackingOptions = NSTrackingCursorUpdate | NSTrackingActiveInActiveApp;
-    NSTrackingArea *cursorTrackingArea = [[NSTrackingArea alloc] initWithRect:[self bounds]
+    NSTrackingArea *cursorTrackingArea = [[NSTrackingArea alloc] initWithRect:self.bounds
                                                                       options:trackingOptions
                                                                         owner:self
                                                                      userInfo:nil];

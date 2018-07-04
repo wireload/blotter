@@ -39,7 +39,7 @@
 
 - (BOOL)canCreateEvent
 {
-    return [self.editableCalCalendars count] > 0;
+    return (self.editableCalCalendars).count > 0;
 }
 
 
@@ -79,7 +79,7 @@
 
 - (IBAction)create:(id)aSender;
 {
-    if (![self canCreateEvent])
+    if (!self.canCreateEvent)
     {
         NSBeep();
         return;
@@ -91,13 +91,13 @@
     event.isAllDay = self.isAllDay;
     event.startDate = self.startDate;
     event.endDate = self.endDate;
-    NSObject <WLCalCalendar> *selectedCalendar = [self.editableCalCalendars objectAtIndex:self.selectedCalCalendarIndex];
+    NSObject <WLCalCalendar> *selectedCalendar = (self.editableCalCalendars)[self.selectedCalCalendarIndex];
     event.calendar = [[CalCalendarStore defaultCalendarStore] calendarWithUID:selectedCalendar.calendarIdentifier];
 
     NSError *error = nil;
 
     if ([[CalCalendarStore defaultCalendarStore] saveEvent:event span:CalSpanThisEvent error:&error])
-        [[self window] orderOut:self];
+        [self.window orderOut:self];
     else
     {
         NSBeep();
@@ -110,7 +110,7 @@
 
 - (void)datePickerCellDidResignFirstResponder:(NSDatePickerCell *)aDatePickerCell
 {
-    if (aDatePickerCell == [_startDatePicker cell])
+    if (aDatePickerCell == _startDatePicker.cell)
     {
         NSTimeInterval diffBetweenDates = [self.startDate timeIntervalSinceDate:_datePickerValueBackup];
 
@@ -123,7 +123,7 @@
             self.endDate = [[NSCalendar currentCalendar] dateByAddingComponents:c toDate:self.startDate options:0];
         }
     }
-    else if (aDatePickerCell == [_endDatePicker cell])
+    else if (aDatePickerCell == _endDatePicker.cell)
     {
         if ([self.endDate compare:self.startDate] == NSOrderedAscending)
         {
@@ -137,7 +137,7 @@
 
 - (void)datePickerCellDidBecomeFirstResponder:(NSDatePickerCell *)aDatePickerCell
 {
-    _datePickerValueBackup = [[aDatePickerCell dateValue] copy];
+    _datePickerValueBackup = [aDatePickerCell.dateValue copy];
 }
 
 
@@ -145,15 +145,15 @@
 
 - (void)windowDidLoad
 {
-    [[self window] setLevel:NSFloatingWindowLevel];
+    self.window.level = NSFloatingWindowLevel;
 
     unichar keyEquiv = NSEnterCharacter;
     NSString *equivString = [NSString stringWithCharacters:&keyEquiv length:1];
-    [_createButton setKeyEquivalent:equivString];
+    _createButton.keyEquivalent = equivString;
     [_startDatePicker setDelegate:self];
     [_endDatePicker setDelegate:self];
     [(NSTextView *)_titleView setDrawsBackground:NO];
-    [(NSTextView *)_titleView setFont:[NSFont boldSystemFontOfSize:16]];
+    ((NSTextView *)_titleView).font = [NSFont boldSystemFontOfSize:16];
     [(NSTextView *)_locationView setDrawsBackground:NO];
 
     _titleViewObserver = [[NSNotificationCenter defaultCenter] addObserverForName:WLViewSizeDidChangeNotification
@@ -161,11 +161,11 @@
                                                                             queue:nil
                                                                        usingBlock:^(NSNotification *arg1)
                           {
-                              CGFloat heightDiff = [[[arg1 userInfo] objectForKey:WLSizeDiff] sizeValue].height;
-                              NSRect newWindowFrame = [[self window] frame];
+                              CGFloat heightDiff = [arg1.userInfo[WLSizeDiff] sizeValue].height;
+                              NSRect newWindowFrame = self.window.frame;
                               newWindowFrame.size.height += heightDiff;
                               newWindowFrame.origin.y -= heightDiff;
-                              [[self window] setFrame:newWindowFrame display:YES animate:YES];
+                              [self.window setFrame:newWindowFrame display:YES animate:YES];
                           }];
     _titleView.postsSizeChangedNotifications = YES;
 
@@ -174,26 +174,26 @@
                                                                                queue:nil
                                                                           usingBlock:^(NSNotification *arg1)
                              {
-                                 CGFloat heightDiff = [[[arg1 userInfo] objectForKey:WLSizeDiff] sizeValue].height;
-                                 NSRect newWindowFrame = [[self window] frame];
+                                 CGFloat heightDiff = [arg1.userInfo[WLSizeDiff] sizeValue].height;
+                                 NSRect newWindowFrame = self.window.frame;
                                  newWindowFrame.size.height += heightDiff;
                                  newWindowFrame.origin.y -= heightDiff;
-                                 [_locationViewContainer setAutoresizingMask:([_locationViewContainer autoresizingMask] | NSViewHeightSizable) ^ NSViewMaxYMargin];
-                                 [_titleView setAutoresizingMask:([_titleView autoresizingMask] ^ NSViewHeightSizable) | NSViewMinYMargin];
-                                 [[self window] setFrame:newWindowFrame display:YES animate:YES];
-                                 [_titleView setAutoresizingMask:([_titleView autoresizingMask] | NSViewHeightSizable) ^ NSViewMinYMargin];
-                                 [_locationViewContainer setAutoresizingMask:([_locationViewContainer autoresizingMask] ^ NSViewHeightSizable) | NSViewMaxYMargin];
+                                 _locationViewContainer.autoresizingMask = (_locationViewContainer.autoresizingMask | NSViewHeightSizable) ^ NSViewMaxYMargin;
+                                 _titleView.autoresizingMask = (_titleView.autoresizingMask ^ NSViewHeightSizable) | NSViewMinYMargin;
+                                 [self.window setFrame:newWindowFrame display:YES animate:YES];
+                                 _titleView.autoresizingMask = (_titleView.autoresizingMask | NSViewHeightSizable) ^ NSViewMinYMargin;
+                                 _locationViewContainer.autoresizingMask = (_locationViewContainer.autoresizingMask ^ NSViewHeightSizable) | NSViewMaxYMargin;
                              }];
     _locationView.postsSizeChangedNotifications = YES;
 
     [[_titleView valueForKey:@"_textView"] bind:NSValueBinding
                                        toObject:self
                                     withKeyPath:@"title"
-                                        options:[NSDictionary dictionaryWithObject:@(YES) forKey:NSContinuouslyUpdatesValueBindingOption]];
+                                        options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
     [[_locationView valueForKey:@"_textView"] bind:NSValueBinding
                                           toObject:self
                                        withKeyPath:@"location"
-                                           options:[NSDictionary dictionaryWithObject:@(YES) forKey:NSContinuouslyUpdatesValueBindingOption]];
+                                           options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
     [_startDatePicker bind:@"datePickerElements" toObject:self withKeyPath:@"datePickerElements" options:nil];
     [_endDatePicker bind:@"datePickerElements" toObject:self withKeyPath:@"datePickerElements" options:nil];
 
@@ -232,7 +232,7 @@
 
 - (void)setSelectedCalCalendarIndex:(NSUInteger)newSelectedCalCalendarIndex
 {
-    NSObject <WLCalCalendar> *c = [self.editableCalCalendars objectAtIndex:newSelectedCalCalendarIndex];
+    NSObject <WLCalCalendar> *c = (self.editableCalCalendars)[newSelectedCalCalendarIndex];
     [[NSUserDefaults standardUserDefaults] setObject:c.calendarIdentifier forKey:WLLastSelectedCalEventCalendarUID];
 }
 

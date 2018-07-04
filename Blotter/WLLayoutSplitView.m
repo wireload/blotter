@@ -15,12 +15,12 @@
 
 - (NSObject<WLLayoutSplitViewDelegate> *)delegate
 {
-    return (NSObject<WLLayoutSplitViewDelegate> *)[super delegate];
+    return (NSObject<WLLayoutSplitViewDelegate> *)super.delegate;
 }
 
 - (void)setDelegate:(NSObject <WLLayoutSplitViewDelegate> *)delegate
 {
-    [super setDelegate:delegate];
+    super.delegate = delegate;
 }
 
 
@@ -31,11 +31,11 @@
     static const CGFloat DotWidth = 3.0;
     static const CGFloat DotSpace = 6.0;
 
-    CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
-    CGContextSetFillColorWithColor(context, [[NSColor WL_dotColor] CGColor]);
-    CGContextSetShadowWithColor(context, CGSizeMake(0, -1.0), 0.0, [[NSColor WL_dotShadowColor] CGColor]);
+    CGContextRef context = [NSGraphicsContext currentContext].graphicsPort;
+    CGContextSetFillColorWithColor(context, [NSColor WL_dotColor].CGColor);
+    CGContextSetShadowWithColor(context, CGSizeMake(0, -1.0), 0.0, [NSColor WL_dotShadowColor].CGColor);
 
-    if ([self isVertical])
+    if (self.vertical)
     {
         CGContextFillEllipseInRect(context, CGRectMake(NSMinX(aRect) + (NSWidth(aRect) - DotWidth) / 2.0,
                                                        NSMinY(aRect) + (NSHeight(aRect) - DotWidth) / 2.0 - DotSpace,

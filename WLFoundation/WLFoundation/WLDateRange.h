@@ -49,7 +49,7 @@ typedef NS_ENUM(NSUInteger, WLPositionRelativeToRange)
     @discussion Designated initializer.
                 Automatically standardizes range so that start date is never later than end Date.
  */
-- (instancetype)initWithStartDate:(NSDate *)aStartDate endDate:(NSDate *)anEndDate;
+- (instancetype)initWithStartDate:(NSDate *)aStartDate endDate:(NSDate *)anEndDate NS_DESIGNATED_INITIALIZER;
 
 /*!
     @brief  Instantiates new date range with given start and end dates.
@@ -120,7 +120,7 @@ typedef NS_ENUM(NSUInteger, WLPositionRelativeToRange)
 
     @result YES if startDate is equal to endDate. Otherwise NO.
  */
-- (BOOL)isEmpty;
+@property (getter=isEmpty, readonly) BOOL empty;
 
 @end
 

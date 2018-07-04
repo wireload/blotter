@@ -23,7 +23,7 @@ NSString* const WLApplicationRunTimerDidFireNotification = @"WLApplicationRunTim
 
 - (instancetype)initWithDelayDefaultsKey:(NSString *)aDelayKey isFiredDefaultsKey:(NSString *)anIsFiredKey elapsedSecondsDefaultsKey:(NSString *)anElapsedSecondsDefaultsKey
 {
-    if (![aDelayKey length] || ![anIsFiredKey length] || ![anElapsedSecondsDefaultsKey length])
+    if (!aDelayKey.length || !anIsFiredKey.length || !anElapsedSecondsDefaultsKey.length)
         return nil;
 
     self = [super init];

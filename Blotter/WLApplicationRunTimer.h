@@ -32,7 +32,7 @@ extern NSString* const WLApplicationRunTimerDidFireNotification;
 
     @param  anElapsedSecondsDefaultsKey Specifies a key in NSUserDefaults that points to a double value which represents elapsed number of seconds. CANNOT not be empty.
  */
-- (instancetype)initWithDelayDefaultsKey:(NSString *)aDelayKey isFiredDefaultsKey:(NSString *)anIsFiredKey elapsedSecondsDefaultsKey:(NSString *)anElapsedSecondsDefaultsKey;
+- (instancetype)initWithDelayDefaultsKey:(NSString *)aDelayKey isFiredDefaultsKey:(NSString *)anIsFiredKey elapsedSecondsDefaultsKey:(NSString *)anElapsedSecondsDefaultsKey NS_DESIGNATED_INITIALIZER;
 
 /*!
     @brief      Resets timer.

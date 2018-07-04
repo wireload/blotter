@@ -48,7 +48,7 @@
     return automatic;
 }
 
--(id)initWithIdentifier:(NSString*)identifier {
+-(instancetype)initWithIdentifier:(NSString*)identifier {
     self = [self init];
     if(self) {
         self.identifier = identifier;
@@ -58,7 +58,7 @@
 
 -(void)setIdentifier:(NSString *)identifier {
     _identifier = identifier;
-    [self startAtLogin];
+    self.startAtLogin;
 #if !defined(NDEBUG)
     NSLog(@"Launcher '%@' %@ configured to start at login",
           self.identifier, (_enabled ? @"is" : @"is not"));
@@ -75,10 +75,10 @@
     CFArrayRef cfJobDicts = SMCopyAllJobDictionaries(kSMDomainUserLaunchd);
     NSArray* jobDicts = CFBridgingRelease(cfJobDicts);
     
-    if (jobDicts && [jobDicts count] > 0) {
+    if (jobDicts && jobDicts.count > 0) {
         for (NSDictionary* job in jobDicts) {
-            if ([_identifier isEqualToString:[job objectForKey:@"Label"]]) {
-                isEnabled = [[job objectForKey:@"OnDemand"] boolValue];
+            if ([_identifier isEqualToString:job[@"Label"]]) {
+                isEnabled = [job[@"OnDemand"] boolValue];
                 break;
             }
         }
@@ -121,7 +121,7 @@
 
 - (void)setEnabled:(BOOL)enabled
 {
-    [self setStartAtLogin:enabled];
+    self.startAtLogin = enabled;
 }
 
 @end

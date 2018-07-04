@@ -14,7 +14,7 @@ typedef void (^WLLayoutManager)(CALayer *aLayer);
     WLLayoutManager layoutManager;
 }
 
-- (id)initWithLayoutManager:(WLLayoutManager)aLayoutManager;
+- (instancetype)initWithLayoutManager:(WLLayoutManager)aLayoutManager NS_DESIGNATED_INITIALIZER;
 
 - (void)layoutSublayersOfLayer:(CALayer *)layer;
 

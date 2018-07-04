@@ -16,7 +16,7 @@
 
 @property (readonly) WLDateRange *dateRange;
 
-- (instancetype)initWithDateRange:(WLDateRange *)aDateRange calendarIdentifiers:(NSSet *)aCalendarIdentifiers;
+- (instancetype)initWithDateRange:(WLDateRange *)aDateRange calendarIdentifiers:(NSSet *)aCalendarIdentifiers NS_DESIGNATED_INITIALIZER;
 
 + (instancetype)predicateWithDateRange:(WLDateRange *)aDateRange calendarIdentifiers:(NSSet *)aCalendarIdentifiers;
 

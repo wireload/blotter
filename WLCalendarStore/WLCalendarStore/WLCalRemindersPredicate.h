@@ -27,7 +27,7 @@ typedef NS_ENUM(NSUInteger, WLCalReminderCompletionMask)
 
 @property (readonly) WLCalReminderCompletionMask completionMask;
 
-- (instancetype)initWithCompletionMask:(WLCalReminderCompletionMask)aCompletionMask calendarIdentifiers:(NSSet *)aCalendarIdentifiers;
+- (instancetype)initWithCompletionMask:(WLCalReminderCompletionMask)aCompletionMask calendarIdentifiers:(NSSet *)aCalendarIdentifiers NS_DESIGNATED_INITIALIZER;
 
 + (instancetype)predicateWithCompletionMask:(WLCalReminderCompletionMask)aCompletionMask calendarIdentifiers:(NSSet *)aCalendarIdentifiers;
 

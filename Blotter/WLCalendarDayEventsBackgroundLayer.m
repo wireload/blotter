@@ -17,7 +17,7 @@ static const NSStringDrawingOptions _WLTitleDrawingOptions = NSStringDrawingUses
 
 @implementation WLCalendarDayEventsBackgroundLayer
 
-- (id)initWithLayer:(id)aLayer
+- (instancetype)initWithLayer:(id)aLayer
 {
     self = [super initWithLayer:aLayer];
     if (self != nil)
@@ -127,14 +127,14 @@ static const NSStringDrawingOptions _WLTitleDrawingOptions = NSStringDrawingUses
     });
 
     NSGraphicsContext *c = [NSGraphicsContext graphicsContextWithGraphicsPort:aContext flipped:[self contentsAreFlipped]];
-    [c setImageInterpolation:NSImageInterpolationHigh];
+    c.imageInterpolation = NSImageInterpolationHigh;
     [c setShouldAntialias:YES];
     [NSGraphicsContext saveGraphicsState];
     [NSGraphicsContext setCurrentContext:c];
 
     NSRect dirtyRect = NSRectFromCGRect(CGContextGetClipBoundingBox(aContext));
 #ifndef DEBUG_LAYERS
-    NSRect bounds = [self bounds];
+    NSRect bounds = self.bounds;
 
     WLDrawScaledNinePartImage(bounds,
                               [NSImage imageNamed:@"calendar-week-day-top-left"],
@@ -156,7 +156,7 @@ static const NSStringDrawingOptions _WLTitleDrawingOptions = NSStringDrawingUses
                                                        1.0)
                                      angle:90];
 #endif
-    if ([self.title length] > 0 && NSIntersectsRect(NSRectFromCGRect(self.titleFrame), dirtyRect))
+    if ((self.title).length > 0 && NSIntersectsRect(NSRectFromCGRect(self.titleFrame), dirtyRect))
     {
         NSDictionary *attributes = self.isTitleHighlighted ? [NSDictionary WL_highlightedTitleAttributes] : [NSDictionary WL_titleAttributes];
         // Vertically center the title.
@@ -189,12 +189,12 @@ static const NSStringDrawingOptions _WLTitleDrawingOptions = NSStringDrawingUses
     static NSDictionary *titleAttributes = nil;
     dispatch_once(&onceToken, ^{
         NSMutableParagraphStyle *p = [[NSMutableParagraphStyle alloc] init];
-        [p setAlignment:NSCenterTextAlignment];
-        [p setLineBreakMode:NSLineBreakByWordWrapping];
+        p.alignment = NSCenterTextAlignment;
+        p.lineBreakMode = NSLineBreakByWordWrapping;
         NSShadow *s = [[NSShadow alloc] init];
-        [s setShadowBlurRadius:0.0];
-        [s setShadowColor:[NSColor WL_columnTitleShadowColor]];
-        [s setShadowOffset:NSMakeSize(0.0, 1.0)];
+        s.shadowBlurRadius = 0.0;
+        s.shadowColor = [NSColor WL_columnTitleShadowColor];
+        s.shadowOffset = NSMakeSize(0.0, 1.0);
         titleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
                            (id)[NSFont WL_columnTitleFont],  NSFontAttributeName,
                            p,                                NSParagraphStyleAttributeName,
@@ -214,7 +214,7 @@ static const NSStringDrawingOptions _WLTitleDrawingOptions = NSStringDrawingUses
     dispatch_once(&onceToken, ^{
         NSDictionary *titleAttributes = [self WL_titleAttributes];
         highlightedTitleAttributes = [titleAttributes mutableCopy];
-        [highlightedTitleAttributes setObject:(id)[NSFont WL_columnBoldTitleFont] forKey:NSFontAttributeName];
+        highlightedTitleAttributes[NSFontAttributeName] = (id)[NSFont WL_columnBoldTitleFont];
     });
     return highlightedTitleAttributes;
 }

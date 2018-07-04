@@ -12,7 +12,7 @@
 
 @implementation WLNinePartBlockLayer
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self != nil)
@@ -62,8 +62,8 @@
         return;
     }
 
-    CALayer *sublayer = [_sublayers objectAtIndex:i];
-    CGRect sliceFrame = [sublayer frame];
+    CALayer *sublayer = _sublayers[i];
+    CGRect sliceFrame = sublayer.frame;
 
     if (!self.geometryFlipped)
         sliceFrame.origin.y = self.bounds.size.height - sliceFrame.size.height - sliceFrame.origin.y;
@@ -101,12 +101,12 @@
 
 - (void)layoutSublayers
 {
-    CGSize size = [self bounds].size;
+    CGSize size = self.bounds.size;
     CGFloat middleWidth = fmax(1.0, size.width - 2 * self.edgeSize.width);
     CGFloat middleHeight = fmax(1.0, size.height - 2 * self.edgeSize.height);
     for (NSUInteger i = 0; i < 9; ++i)
     {
-        CALayer *sublayer = [_sublayers objectAtIndex:i];
+        CALayer *sublayer = _sublayers[i];
         CGRect frame = CGRectMake(0.0, 0.0, middleWidth, middleHeight);
         switch(i % 3)
         {

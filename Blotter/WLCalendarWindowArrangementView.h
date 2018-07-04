@@ -18,7 +18,7 @@ enum {
 };
 
 
-typedef enum {
+typedef NS_ENUM(NSUInteger, WLCalendarWindowEdge) {
     WLCalendarWindowTopLeftEdge = 0,
     WLCalendarWindowTopCenterEdge = 1,
     WLCalendarWindowTopRightEdge = 2,
@@ -30,7 +30,7 @@ typedef enum {
     WLCalendarWindowBottomRightEdge = 8,
 
     WLCalendarWindowNumberOfEdges
-} WLCalendarWindowEdge;
+};
 
 
 @protocol WLCalendarWindowArrangementDelegate;

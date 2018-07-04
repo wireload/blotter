@@ -28,7 +28,7 @@
         [self willChangeValueForKey:@"isViewLoaded"];
 
     self.isViewLoaded = newView != nil;
-    [super setView:newView];
+    super.view = newView;
 
     if (changeIsViewLoaded)
         [self didChangeValueForKey:@"isViewLoaded"];

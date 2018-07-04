@@ -67,7 +67,7 @@
     if (isTaken)
     {
         NSBeep();
-        [self presentError:error modalForWindow:[[self view] window] delegate:nil didPresentSelector:NULL contextInfo:NULL];
+        [self presentError:error modalForWindow:[self view].window delegate:nil didPresentSelector:NULL contextInfo:NULL];
     }
 
     return !isTaken;

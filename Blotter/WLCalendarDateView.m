@@ -33,23 +33,23 @@
 {
     [NSGraphicsContext saveGraphicsState];
     [[NSGraphicsContext currentContext] setShouldAntialias:YES];
-    NSRect bounds = [self bounds];
+    NSRect bounds = self.bounds;
 #ifdef DEBUG_LAYERS
     [[NSColor blackColor] setFill];
     NSRectFill(aDirtyRect);
 #endif
-    CGContextRef cgContext = [[NSGraphicsContext currentContext] graphicsPort];
+    CGContextRef cgContext = [NSGraphicsContext currentContext].graphicsPort;
     CGContextSetAllowsAntialiasing(cgContext, YES);
     CGContextSetShouldAntialias(cgContext, YES);
     CGContextSetAllowsFontSmoothing(cgContext, NO);
 
     NSShadow *s = [[NSShadow alloc] init];
-    [s setShadowColor:[NSColor WL_dateViewTextShadowColor]];
-    [s setShadowBlurRadius:0.0];
+    s.shadowColor = [NSColor WL_dateViewTextShadowColor];
+    s.shadowBlurRadius = 0.0;
     // Shadow direction is /not/ flipped.
-    [s setShadowOffset:NSMakeSize(0.0, -1.0)];
+    s.shadowOffset = NSMakeSize(0.0, -1.0);
     NSMutableParagraphStyle *p = [[NSMutableParagraphStyle alloc] init];
-    [p setAlignment:NSCenterTextAlignment];
+    p.alignment = NSCenterTextAlignment;
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                        [NSFont WL_dateViewMonthDayFont],    NSFontAttributeName,
                                        [NSColor WL_dateViewTextColor],      NSForegroundColorAttributeName,
@@ -74,7 +74,7 @@
         [[NSColor greenColor] set];
         NSRectFill(monthAndYearFrame);
 #endif
-        [attributes setObject:[NSFont WL_dateViewMonthAndYearFont] forKey:NSFontAttributeName];
+        attributes[NSFontAttributeName] = [NSFont WL_dateViewMonthAndYearFont];
         [self.monthAndYear drawInRect:monthAndYearFrame withAttributes:attributes];
     }
 
@@ -85,7 +85,7 @@
         [[NSColor greenColor] set];
         NSRectFill(weekdayFrame);
 #endif
-        [attributes setObject:[NSFont WL_dateViewWeekdayFont] forKey:NSFontAttributeName];
+        attributes[NSFontAttributeName] = [NSFont WL_dateViewWeekdayFont];
         [self.weekday drawInRect:weekdayFrame withAttributes:attributes];
     }
     [NSGraphicsContext restoreGraphicsState];

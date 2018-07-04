@@ -33,8 +33,8 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
         _observedCalendarIdentifiers = [NSMapTable strongToStrongObjectsMapTable];
 
         _fetchOperationsQueue = [[NSOperationQueue alloc] init];
-        [_fetchOperationsQueue setName:@"Fetch Operations Queue (Events)"];
-        [_fetchOperationsQueue setMaxConcurrentOperationCount:1];
+        _fetchOperationsQueue.name = @"Fetch Operations Queue (Events)";
+        _fetchOperationsQueue.maxConcurrentOperationCount = 1;
         _accessQueue = dispatch_queue_create("Access Queue (Events)", 0);
     }
 
@@ -57,7 +57,7 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
 
 - (void)addObservedDateRange:(WLDateRange *)aRange
 {
-    if (!aRange || [aRange isEmpty])
+    if (!aRange || aRange.empty)
         return;
 
     [self willChangeValueForKey:@"observedDateRanges"];
@@ -72,7 +72,7 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
 
 - (void)removeObservedDateRange:(WLDateRange *)aRange
 {
-    if (!aRange || [aRange isEmpty])
+    if (!aRange || aRange.empty)
         return;
 
     [self willChangeValueForKey:@"observedDateRanges"];
@@ -86,7 +86,7 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
 
 - (void)removeAllObservedDateRanges
 {
-    if (![_observedDateRanges count])
+    if (!_observedDateRanges.count)
         return;
 
     [self willChangeValueForKey:@"observedDateRanges"];
@@ -124,10 +124,10 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
     if (!aRanges)
         [NSException raise:NSInvalidArgumentException format:@"aRanges cannot be nil."];
 
-    if (![aRanges count])
+    if (!aRanges.count)
         return @[];
 
-    if ([aRanges count] == 1)
+    if (aRanges.count == 1)
         return aRanges;
 
     NSArray *sortedRanges = [aRanges sortedArrayWithOptions:NSSortConcurrent usingComparator:^NSComparisonResult(WLDateRange *obj1, WLDateRange *obj2)
@@ -135,10 +135,10 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
         return [obj1.startDate compare:obj2.startDate];
     }];
 
-    NSMutableArray *optimizedDateRanges = [NSMutableArray arrayWithCapacity:[sortedRanges count]];
-    __block WLDateRange *currentDateRange = [sortedRanges objectAtIndex:0];
+    NSMutableArray *optimizedDateRanges = [NSMutableArray arrayWithCapacity:sortedRanges.count];
+    __block WLDateRange *currentDateRange = sortedRanges[0];
 
-    [sortedRanges enumerateObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, [sortedRanges count] - 1)]
+    [sortedRanges enumerateObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, sortedRanges.count - 1)]
                                     options:0
                                  usingBlock:^(WLDateRange *aRange, NSUInteger idx, BOOL *stop)
     {
@@ -164,8 +164,8 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
 {
     NSBlockOperation *operation = [[NSBlockOperation alloc] init];
     __unsafe_unretained NSBlockOperation *unretainedOperation = operation;
-    [operation setQueuePriority:aPriority];
-    NSArray *optimizedRanges = [self optimizeDateRanges:[aRanges allObjects]];
+    operation.queuePriority = aPriority;
+    NSArray *optimizedRanges = [self optimizeDateRanges:aRanges.allObjects];
     NSMapTable *calendarIdentifiers = [_observedCalendarIdentifiers copy];
     NSMapTable *userInfoPerStore = nil;
     dispatch_semaphore_t userInfoPerStoreSemaphore = dispatch_semaphore_create(1);
@@ -185,14 +185,14 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
                                                                    calendarIdentifiers:[calendarIdentifiers objectForKey:store]];
                 [events addObjectsFromArray:[store eventsMatchingPredicate:p]];
 
-                if ([unretainedOperation isCancelled])
+                if (unretainedOperation.cancelled)
                     break;
             }
 
-            if (![unretainedOperation isCancelled])
+            if (!unretainedOperation.cancelled)
             {
                 // Parse events into per-store userInfo
-                NSMutableDictionary *storeUserInfo = [NSMutableDictionary dictionaryWithCapacity:[aRanges count]];
+                NSMutableDictionary *storeUserInfo = [NSMutableDictionary dictionaryWithCapacity:aRanges.count];
                 dispatch_semaphore_t storeUserInfoSemaphore = dispatch_semaphore_create(1);
                 [aRanges enumerateObjectsWithOptions:NSEnumerationConcurrent
                                           usingBlock:^(WLDateRange *aRange, BOOL *stop)
@@ -203,14 +203,14 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
                         return [aRange intersectsRange:[WLDateRange dateRangeWithStartDate:anEvent.startDate endDate:anEvent.endDate]];
                     }];
                     dispatch_semaphore_wait(storeUserInfoSemaphore, DISPATCH_TIME_FOREVER);
-                    [storeUserInfo setObject:[events objectsAtIndexes:indexesOfRangeEvents] forKey:aRange];
+                    storeUserInfo[aRange] = [events objectsAtIndexes:indexesOfRangeEvents];
                     dispatch_semaphore_signal(storeUserInfoSemaphore);
 
-                    if ([unretainedOperation isCancelled])
+                    if (unretainedOperation.cancelled)
                         *stop = YES;
                 }];
 
-                if (![unretainedOperation isCancelled])
+                if (!unretainedOperation.cancelled)
                 {
                     dispatch_semaphore_wait(userInfoPerStoreSemaphore, DISPATCH_TIME_FOREVER);
                     [userInfoPerStore setObject:storeUserInfo forKey:store];
@@ -220,12 +220,12 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
         }];
     }
 
-    [operation setCompletionBlock:^
+    operation.completionBlock = ^
     {
-        if ([unretainedOperation isCancelled])
+        if (unretainedOperation.cancelled)
             return;
 
-        NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithCapacity:[aRanges count]];
+        NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithCapacity:aRanges.count];
         NSArray *userInfos = NSAllMapTableValues(userInfoPerStore);
 
         for (WLDateRange *range in aRanges)
@@ -233,16 +233,16 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
             NSMutableArray *events = [NSMutableArray array];
 
             for (NSDictionary *storeUserInfo in userInfos)
-                [events addObjectsFromArray:[storeUserInfo objectForKey:range]];
+                [events addObjectsFromArray:storeUserInfo[range]];
 
-            [userInfo setObject:events forKey:range];
+            userInfo[range] = events;
         }
 
-        if ([unretainedOperation isCancelled])
+        if (unretainedOperation.cancelled)
             return;
 
         [[NSNotificationCenter defaultCenter] postNotificationName:WLCalendarEventsDidChangeNotification object:self userInfo:userInfo];
-    }];
+    };
     [_fetchOperationsQueue addOperation:operation];
 }
 
@@ -273,13 +273,13 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
 
 - (void)fetchPredicateDidChange
 {
-    if (_isObserving && ![self.observedDateRanges count])
+    if (_isObserving && !(self.observedDateRanges).count)
     {
         [[NSNotificationCenter defaultCenter] removeObserver:self];
         [_fetchOperationsQueue cancelAllOperations];
         _isObserving = NO;
     }
-    else if (!_isObserving && [self.observedDateRanges count])
+    else if (!_isObserving && (self.observedDateRanges).count)
     {
         for (NSObject<WLCalStore> *store in _calStores)
         {

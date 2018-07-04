@@ -127,7 +127,7 @@
         return nil;
 
     NSDateComponents *columnDateComponents = [[NSDateComponents alloc] init];
-    [columnDateComponents setDay:(NSInteger)anIndex];
+    columnDateComponents.day = (NSInteger)anIndex;
     return [[_calendar dateByAddingComponents:columnDateComponents toDate:self.dateOfFirstColumn options:0] WL_noon:_calendar];
 }
 
@@ -204,9 +204,9 @@
 {
     NSDateComponents *components = [aCalendar components:NSCalendarUnitHour | NSCalendarUnitMinute
                                                 fromDate:aDate];
-    CGFloat newHour = [components hour];
+    CGFloat newHour = components.hour;
     NSRange minutesRange = [aCalendar rangeOfUnit:NSCalendarUnitMinute inUnit:NSCalendarUnitHour forDate:aDate];
-    newHour += (CGFloat)[components minute] / minutesRange.length;
+    newHour += (CGFloat)components.minute / minutesRange.length;
     return newHour;
 }
 
@@ -237,8 +237,8 @@
     _hourRange = WLHourRangeMake(r.location, NSMaxRange(r));
 
     // _timeFormatter
-    [_timeFormatter setCalendar:_calendar];
-    [_timeFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"j:mm" options:0 locale:[_calendar locale]]];
+    _timeFormatter.calendar = _calendar;
+    _timeFormatter.dateFormat = [NSDateFormatter dateFormatFromTemplate:@"j:mm" options:0 locale:_calendar.locale];
 }
 
 - (void)updateDerivativePropertiesAndMoveIfNeeded:(BOOL)isAnimated
@@ -294,9 +294,9 @@
 
 - (void)eventsDidChange:(NSNotification *)aNotification
 {
-    WLCalendarEventsController *localRepresentedObject = [aNotification object];
+    WLCalendarEventsController *localRepresentedObject = aNotification.object;
     WLDateRange *localRepresentedDateRange = [self.dateRangeOfColumns copy];
-    NSArray *events = [aNotification userInfo][localRepresentedDateRange];
+    NSArray *events = aNotification.userInfo[localRepresentedDateRange];
 
     if (events)
     {
@@ -348,7 +348,7 @@
 
     NSDateComponents *c = [_calendar components:NSCalendarUnitHour | NSCalendarUnitMinute fromDate:aDate];
     NSRange minutesRange = [_calendar rangeOfUnit:NSCalendarUnitMinute inUnit:NSCalendarUnitHour forDate:aDate];
-    return ((CGFloat)[c hour] + (CGFloat)((NSUInteger)[c minute] - minutesRange.location) / minutesRange.length);
+    return ((CGFloat)c.hour + (CGFloat)((NSUInteger)c.minute - minutesRange.location) / minutesRange.length);
 }
 
 - (NSString *)weekView:(WLCalendarWeekView *)aWeekView stringForHour:(NSUInteger)aHour;
@@ -357,7 +357,7 @@
 
     NSDateComponents *hourComponents = [_calendar components:NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay
                                                     fromDate:[NSDate dateWithTimeIntervalSinceReferenceDate:0.0]];
-    [hourComponents setHour:(NSInteger)aHour];
+    hourComponents.hour = (NSInteger)aHour;
     return [_timeFormatter stringFromDate:[_calendar dateFromComponents:hourComponents]];
 }
 
@@ -416,7 +416,7 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:WLCalendarEventsDidChangeNotification object:self.representedObject];
     }
 
-    [super setRepresentedObject:newRepresentedObject];
+    super.representedObject = newRepresentedObject;
 
     _storage = nil;
 

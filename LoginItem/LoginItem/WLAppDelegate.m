@@ -12,7 +12,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    NSArray *runningApps = [[NSWorkspace sharedWorkspace] runningApplications];
+    NSArray *runningApps = [NSWorkspace sharedWorkspace].runningApplications;
     BOOL isRunning = [runningApps indexOfObjectWithOptions:NSEnumerationConcurrent
                                                passingTest:^BOOL(NSRunningApplication *anApp, NSUInteger idx, BOOL *stop)
                       {
@@ -21,8 +21,8 @@
                       }] != NSNotFound;
     
     if (!isRunning) {
-        NSString *path = [[NSBundle mainBundle] bundlePath];
-        NSArray *p = [path pathComponents];
+        NSString *path = [NSBundle mainBundle].bundlePath;
+        NSArray *p = path.pathComponents;
         NSMutableArray *pathComponents = [NSMutableArray arrayWithArray:p];
         [pathComponents removeLastObject];
         [pathComponents removeLastObject];

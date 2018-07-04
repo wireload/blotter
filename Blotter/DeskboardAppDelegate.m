@@ -174,7 +174,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         [self.calendarWindowController setWindowState:WLFinderLevelState
                                              animated:isStateChangeAnimated
                                              duration:stateChangeDuration];
-        [self deactivateAppIfAllConditionsAreMet:[NSApp windows]];
+        [self deactivateAppIfAllConditionsAreMet:NSApp.windows];
     }
 }
 
@@ -188,12 +188,12 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (IBAction)showNewEvent:(id)aSender
 {
-    if ([self.newEventWindowController canCreateEvent])
+    if ((self.newEventWindowController).canCreateEvent)
     {
         [self.newEventWindowController resetDefaults:aSender];
 
         if ([[NSUserDefaults standardUserDefaults] objectForKey:_WLNewEventWindowAutosaveName] == nil)
-            [[self.newEventWindowController window] center];
+            [(self.newEventWindowController).window center];
 
         [self.newEventWindowController showWindow:aSender];
         [self _removeAutoFadeTimerIfNeeded];
@@ -206,12 +206,12 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (IBAction)showNewReminder:(id)aSender
 {
-    if ([self.newReminderWindowController canCreateReminder])
+    if ((self.newReminderWindowController).canCreateReminder)
     {
         [self.newReminderWindowController resetDefaults:aSender];
 
         if ([[NSUserDefaults standardUserDefaults] objectForKey:_WLNewTaskWindowAutosaveName] == nil)
-            [[self.newReminderWindowController window] center];
+            [(self.newReminderWindowController).window center];
 
         [self.newReminderWindowController showWindow:aSender];
         [self _removeAutoFadeTimerIfNeeded];
@@ -236,7 +236,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         if ([self.calendarWindowController isCurrentWeekShowed])
         {
             [self _removeShowCurrentWeekTimerIfNeeded];
-            [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:[NSApp windows]];
+            [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:NSApp.windows];
         }
         else
         {
@@ -257,7 +257,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         if ([self.calendarWindowController isCurrentWeekShowed])
         {
             [self _removeShowCurrentWeekTimerIfNeeded];
-            [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:[NSApp windows]];
+            [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:NSApp.windows];
         }
         else
         {
@@ -276,7 +276,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     {
         [self _removeShowCurrentWeekTimerIfNeeded];
         [self.calendarWindowController showCurrentWeek:aSender];
-        [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:[NSApp windows]];
+        [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:NSApp.windows];
     }
     else
         NSBeep();
@@ -297,12 +297,12 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
         _statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
         [_statusItem setHighlightMode:YES];
-        [_statusItem setMenu:_statusMenu];
+        _statusItem.menu = _statusMenu;
 
         NSImage *statusImage = [NSImage imageNamed:@"status-bar"];
         NSImage *statusHighlightImage = [NSImage imageNamed:@"status-bar-active"];
-        [_statusItem setImage:statusImage];
-        [_statusItem setAlternateImage:statusHighlightImage];
+        _statusItem.image = statusImage;
+        _statusItem.alternateImage = statusHighlightImage;
     }
     else
     {
@@ -337,14 +337,14 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 {
     NSMutableArray *visibleWindows = [aVisibleWindows mutableCopy];
     [visibleWindows filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSWindow *w, NSDictionary *bindings) {
-        return [w isVisible] && ![[w className] hasPrefix:@"NSStatusBarWindow"];
+        return w.visible && ![w.className hasPrefix:@"NSStatusBarWindow"];
     }]];
-    return ([visibleWindows count] == 1); // If only desktop window is visible
+    return (visibleWindows.count == 1); // If only desktop window is visible
 }
 
 - (void)scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:(NSArray *)aWindows
 {
-    BOOL isBlotterActive = [NSApp isActive];
+    BOOL isBlotterActive = NSApp.active;
     BOOL areThereUtilityWindows = ![self isOnlyCalendarWindowVisible:aWindows];
     BOOL isCurrentWeekShowed = [self.calendarWindowController isCurrentWeekShowed];
     if ((!isBlotterActive && !areThereUtilityWindows && isCurrentWeekShowed) ||
@@ -429,14 +429,14 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
                   options:NSKeyValueObservingOptionNew
                   context:NULL];
 
-    [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:[NSApp windows]];
+    [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:NSApp.windows];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)aNotification
 {
     [self _removeAutoFadeTimerIfNeeded];
     self.calendarWindowController.isFadedOut = NO;
-    [self deactivateAppIfAllConditionsAreMet:[NSApp windows]];
+    [self deactivateAppIfAllConditionsAreMet:NSApp.windows];
 }
 
 - (void)applicationDidResignActive:(NSNotification *)aNotification
@@ -454,8 +454,8 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
                                          animated:isStateChangeAnimated
                                          duration:stateChangeDuration];
 
-    [self deactivateAppIfAllConditionsAreMet:[NSApp windows]];
-    [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:[NSApp windows]];
+    [self deactivateAppIfAllConditionsAreMet:NSApp.windows];
+    [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:NSApp.windows];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)anApplication hasVisibleWindows:(BOOL)aFlag
@@ -471,8 +471,8 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (void)windowWillClose:(NSNotification *)aNotification
 {
-    NSMutableArray *visibleWindows = [[NSApp windows] mutableCopy];
-    NSWindow *closedWindow = [aNotification object];
+    NSMutableArray *visibleWindows = [NSApp.windows mutableCopy];
+    NSWindow *closedWindow = aNotification.object;
     [visibleWindows removeObjectIdenticalTo:closedWindow];
     [self deactivateAppIfAllConditionsAreMet:visibleWindows];
     [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:visibleWindows];
@@ -495,13 +495,13 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
          if (shortcut != nil)
          {
-             [shortcutMenuItem setKeyEquivalent:[[NSValueTransformer valueTransformerForName:@"SRKeyEquivalentTransformer"] transformedValue:shortcut]];
-             [shortcutMenuItem setKeyEquivalentModifierMask:[[[NSValueTransformer valueTransformerForName:@"SRKeyEquivalentModifierMaskTransformer"] transformedValue:shortcut] unsignedIntegerValue]];
+             shortcutMenuItem.keyEquivalent = [[NSValueTransformer valueTransformerForName:@"SRKeyEquivalentTransformer"] transformedValue:shortcut];
+             shortcutMenuItem.keyEquivalentModifierMask = [[[NSValueTransformer valueTransformerForName:@"SRKeyEquivalentModifierMaskTransformer"] transformedValue:shortcut] unsignedIntegerValue];
          }
          else
          {
-             [shortcutMenuItem setKeyEquivalent:@""];
-             [shortcutMenuItem setKeyEquivalentModifierMask:0];
+             shortcutMenuItem.keyEquivalent = @"";
+             shortcutMenuItem.keyEquivalentModifierMask = 0;
          }
      }];
 
@@ -511,7 +511,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 - (void)menuDidClose:(NSMenu *)aMenu
 {
-    [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:[NSApp windows]];
+    [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:NSApp.windows];
 }
 
 
@@ -520,9 +520,9 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 - (BOOL)validateMenuItem:(NSMenuItem *)aMenuItem
 {
     if (aMenuItem == _newEventMenuItem)
-        return [self.newEventWindowController canCreateEvent];
+        return (self.newEventWindowController).canCreateEvent;
     else if (aMenuItem == _newTaskMenuItem)
-        return [self.newReminderWindowController canCreateReminder];
+        return (self.newReminderWindowController).canCreateReminder;
     else if (aMenuItem == _showNextWeekMenuItem)
         return [self.calendarWindowController canShowNextWeek];
     else if (aMenuItem == _showCurrentWeekMenuItem)
@@ -612,7 +612,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 - (void)cancelOperation:(id)aSender
 {
     if (self.calendarWindowController.windowState == WLFloatingLevelState &&
-        [NSApp keyWindow] == [self.calendarWindowController window])
+        NSApp.keyWindow == [self.calendarWindowController window])
     {
         [self bringToFrontOrSendToBack:aSender];
     }
@@ -646,7 +646,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     else if ([aKeyPath isEqualToString:WLAutoFadeKey] || [aKeyPath isEqualToString:WLAutoFadeSecondsKey])
     {
         if ([[NSUserDefaults standardUserDefaults] WL_autoFades])
-            [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:[NSApp windows]];
+            [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:NSApp.windows];
         else
         {
             [self _removeAutoFadeTimerIfNeeded];

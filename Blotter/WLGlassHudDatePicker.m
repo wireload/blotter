@@ -14,17 +14,17 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    [self setTextColor:[NSColor whiteColor]];
+    self.textColor = [NSColor whiteColor];
 }
 
 - (id<WLGlassHudDatePickerCellDelegate>)delegate
 {
-    return (id<WLGlassHudDatePickerCellDelegate>)[super delegate];
+    return (id<WLGlassHudDatePickerCellDelegate>)super.delegate;
 }
 
 - (void)setDelegate:(id<WLGlassHudDatePickerCellDelegate>)newDelegate
 {
-    [super setDelegate:newDelegate];
+    super.delegate = newDelegate;
 }
 
 - (BOOL)becomeFirstResponder
@@ -33,8 +33,8 @@
     if (isBecome)
     {
         if ([[self delegate] respondsToSelector:@selector(datePickerCellDidBecomeFirstResponder:)])
-            [[self delegate] datePickerCellDidBecomeFirstResponder:[self cell]];
-        [self setTextColor:[NSColor blackColor]];
+            [[self delegate] datePickerCellDidBecomeFirstResponder:self.cell];
+        self.textColor = [NSColor blackColor];
     }
     return isBecome;
 }
@@ -45,8 +45,8 @@
     if (isResigned)
     {
         if ([[self delegate] respondsToSelector:@selector(datePickerCellDidResignFirstResponder:)])
-            [[self delegate] datePickerCellDidResignFirstResponder:[self cell]];
-        [self setTextColor:[NSColor whiteColor]];
+            [[self delegate] datePickerCellDidResignFirstResponder:self.cell];
+        self.textColor = [NSColor whiteColor];
     }
     return isResigned;
 }

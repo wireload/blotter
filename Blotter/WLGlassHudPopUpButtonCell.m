@@ -13,9 +13,9 @@
 
 - (NSAttributedString *)attributedTitle
 {
-    NSMutableAttributedString *attributedTitle = [[super attributedTitle] mutableCopy];
+    NSMutableAttributedString *attributedTitle = [super.attributedTitle mutableCopy];
     [attributedTitle addAttributes:@{ NSForegroundColorAttributeName: [NSColor whiteColor] }
-                             range:NSMakeRange(0, [attributedTitle length])];
+                             range:NSMakeRange(0, attributedTitle.length)];
     return attributedTitle;
 }
 
@@ -23,13 +23,13 @@
 {
     NSRect titleFrame = [self titleRectForBounds:aCellFrame];
     NSImage *arrows = [NSImage imageNamed:@"glass-hud-pop-up-button-arrows"];
-    NSPoint arrowsLocation = NSMakePoint(ceil(fdim(NSMaxX(titleFrame) + (NSMaxX(aCellFrame) - NSMaxX(titleFrame)) / 2.0, [arrows size].width / 2.0)),
-                                         ceil(fdim(NSMinY(aCellFrame) + (NSMaxY(aCellFrame) - NSMinY(aCellFrame)) / 2.0, [arrows size].height / 2.0)));
+    NSPoint arrowsLocation = NSMakePoint(ceil(fdim(NSMaxX(titleFrame) + (NSMaxX(aCellFrame) - NSMaxX(titleFrame)) / 2.0, arrows.size.width / 2.0)),
+                                         ceil(fdim(NSMinY(aCellFrame) + (NSMaxY(aCellFrame) - NSMinY(aCellFrame)) / 2.0, arrows.size.height / 2.0)));
     [arrows drawAtPoint:arrowsLocation
                fromRect:NSZeroRect
               operation:NSCompositeSourceOver
                fraction:1.0];
-    if ([self showsFirstResponder])
+    if (self.showsFirstResponder)
     {
         [NSGraphicsContext saveGraphicsState];
         NSSetFocusRingStyle(NSFocusRingOnly);

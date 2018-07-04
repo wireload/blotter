@@ -19,22 +19,22 @@ static NSString* const _WLBottomEdgeLayerKey = @"bottom";
 
 @implementation WLSoftEdgeLayer
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self != nil) {
         CAGradientLayer *topEdge = [CAGradientLayer layer];
-        topEdge.colors = [NSArray arrayWithObjects:(id)[[NSColor clearColor] CGColor], (id)[[NSColor blackColor] CGColor], nil];
+        topEdge.colors = @[(id)[NSColor clearColor].CGColor, (id)[NSColor blackColor].CGColor];
         [self addSublayer:topEdge];
         [self setValue:topEdge forKey:_WLTopEdgeLayerKey];
 
         CALayer *middle = [CALayer layer];
-        middle.backgroundColor = [[NSColor blackColor] CGColor];
+        middle.backgroundColor = [NSColor blackColor].CGColor;
         [self addSublayer:middle];
         [self setValue:middle forKey:_WLMiddleLayerKey];
 
         CAGradientLayer *bottomEdge = [CAGradientLayer layer];
-        bottomEdge.colors = [NSArray arrayWithObjects:(id)[[NSColor blackColor] CGColor], (id)[[NSColor clearColor] CGColor], nil];
+        bottomEdge.colors = @[(id)[NSColor blackColor].CGColor, (id)[NSColor clearColor].CGColor];
         [self addSublayer:bottomEdge];
         [self setValue:bottomEdge forKey:_WLBottomEdgeLayerKey];
     }

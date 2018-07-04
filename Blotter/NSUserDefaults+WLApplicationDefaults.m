@@ -151,9 +151,9 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
         [self setInteger:BLFullSize forKey:WLCalendarSizeKey];
 
     [self WL_updateCalendars:^(NSMutableArray *aCalendars) {
-        for (NSUInteger i = 0, size = [aCalendars count]; i < size; ++i)
+        for (NSUInteger i = 0, size = aCalendars.count; i < size; ++i)
         {
-            NSMutableDictionary *calendarDict = [[aCalendars objectAtIndex:i] mutableCopy];
+            NSMutableDictionary *calendarDict = [aCalendars[i] mutableCopy];
             NSNumber *oldCheck = [calendarDict valueForKey:@"check"];
             if (oldCheck != nil)
             {
@@ -166,7 +166,7 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
                 [calendarDict setValue:@(YES) forKey:WLCalendarIsUsedForEventsKey];
                 [calendarDict setValue:@(YES) forKey:WLCalendarIsUsedForRemindersKey];
             }
-            [aCalendars replaceObjectAtIndex:i withObject:calendarDict];
+            aCalendars[i] = calendarDict;
             [calendarDict release];
         }
     }];
@@ -177,7 +177,7 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
     NSLog(@"Migrate Preferences to %d", (int)WLBlotterBundleVersion2_2);
     NSArray *calendars = [self objectForKey:WLCalendarsKey];
     NSMutableDictionary *defaultsCalendars = [NSMutableDictionary dictionary];
-    NSMutableDictionary *defaultsStore = [NSMutableDictionary dictionaryWithCapacity:[calendars count]];
+    NSMutableDictionary *defaultsStore = [NSMutableDictionary dictionaryWithCapacity:calendars.count];
 
     for (NSDictionary *d in calendars)
     {
@@ -198,12 +198,12 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
 {
     NSLog(@"Migrate Preferences to %d", (int)WLBlotterBundleVersion2_2_1);
     NSDictionary *calendarStores = [self objectForKey:WLCalendarsKey];
-    NSMutableDictionary *newCalendarStores = [[NSMutableDictionary alloc] initWithCapacity:[calendarStores count]];
+    NSMutableDictionary *newCalendarStores = [[NSMutableDictionary alloc] initWithCapacity:calendarStores.count];
 
     for (NSString *storeIdentifier in calendarStores)
     {
         NSDictionary *store = calendarStores[storeIdentifier];
-        NSMutableDictionary *newStore = [[NSMutableDictionary alloc] initWithCapacity:[store count]];
+        NSMutableDictionary *newStore = [[NSMutableDictionary alloc] initWithCapacity:store.count];
 
         for (NSString *calendarIdentifier in store)
         {
@@ -240,8 +240,8 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
     if ([self WL_screenIdentifier] == nil)
     {
         NSArray *screens = [NSScreen screens];
-        if ([screens count] > 0)
-            [self WL_setScreenIdentifier:[[[screens objectAtIndex:0] deviceDescription] objectForKey:@"NSScreenNumber"]];
+        if (screens.count > 0)
+            [self WL_setScreenIdentifier:[screens[0] deviceDescription][@"NSScreenNumber"]];
     }
 }
 
@@ -456,8 +456,8 @@ NSComparator const WLCalendarsComparator = ^(id left, id right) {
 
 - (NSUInteger)WL_indexOfCalendarWithUID:(NSString *)anUID
 {
-    return [self indexOfObject:[NSDictionary dictionaryWithObject:anUID forKey:WLCalendarUIDKey]
-                 inSortedRange:NSMakeRange(0, [self count])
+    return [self indexOfObject:@{WLCalendarUIDKey: anUID}
+                 inSortedRange:NSMakeRange(0, self.count)
                        options:NSBinarySearchingFirstEqual
                usingComparator:WLCalendarsComparator];
 }
@@ -466,7 +466,7 @@ NSComparator const WLCalendarsComparator = ^(id left, id right) {
 {
     NSUInteger index = [self WL_indexOfCalendarWithUID:anUID];
     if (index != NSNotFound)
-        return [self objectAtIndex:index];
+        return self[index];
     else
         return nil;
 }
@@ -478,10 +478,10 @@ NSComparator const WLCalendarsComparator = ^(id left, id right) {
 
 - (void)WL_insertCalendar:(NSDictionary *)aCalendar
 {
-    NSParameterAssert([aCalendar objectForKey:WLCalendarUIDKey]);
+    NSParameterAssert(aCalendar[WLCalendarUIDKey]);
 
     NSUInteger index = [self indexOfObject:aCalendar
-                             inSortedRange:NSMakeRange(0, [self count])
+                             inSortedRange:NSMakeRange(0, self.count)
                                    options:NSBinarySearchingInsertionIndex
                            usingComparator:WLCalendarsComparator];
     [self insertObject:aCalendar atIndex:index];
@@ -503,11 +503,9 @@ NSComparator const WLCalendarsComparator = ^(id left, id right) {
 {
     NSParameterAssert(aCalCalendar != nil);
 
-    NSDictionary *calendar = [NSDictionary dictionaryWithObjectsAndKeys:
-                                               aCalCalendar.uid,                                                                     WLCalendarUIDKey,
-                                               @(YES),                                                        WLCalendarIsUsedForEventsKey,
-                                               @(YES),                                                        WLCalendarIsUsedForRemindersKey,
-                                               nil];
+    NSDictionary *calendar = @{WLCalendarUIDKey: aCalCalendar.uid,
+                                               WLCalendarIsUsedForEventsKey: @(YES),
+                                               WLCalendarIsUsedForRemindersKey: @(YES)};
     return calendar;
 }
 

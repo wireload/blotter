@@ -47,7 +47,7 @@
 
 - (NSUInteger)hash
 {
-    return [self.itemIdentifier hash];
+    return (self.itemIdentifier).hash;
 }
 
 @end

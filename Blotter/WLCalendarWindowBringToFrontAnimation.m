@@ -11,7 +11,7 @@
 
 @implementation WLCalendarWindowBringToFrontAnimation
 
-- (id)initWithWindow:(WLCalendarWindow *)aWindow
+- (instancetype)initWithWindow:(WLCalendarWindow *)aWindow
 {
     self = [super init];
     if (self != nil)
@@ -26,8 +26,8 @@
 
 - (void)setCurrentProgress:(NSAnimationProgress)aProgress
 {
-    [super setCurrentProgress:aProgress];
-    [_window setAlphaValue:[self currentValue]];
+    super.currentProgress = aProgress;
+    _window.alphaValue = self.currentValue;
 }
 
 @end

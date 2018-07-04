@@ -15,7 +15,7 @@
 {
     NSMutableIndexSet *duplicateIndexes = [NSMutableIndexSet indexSet];
 
-    for (NSUInteger i = 0, size = [self count]; i < size;)
+    for (NSUInteger i = 0, size = self.count; i < size;)
     {
         NSUInteger lastDuplicateIndex = [self indexOfObject:self[i]
                                               inSortedRange:NSMakeRange(i + 1, size - (i + 1))

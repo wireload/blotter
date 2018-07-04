@@ -61,7 +61,7 @@ extern NSString *WLChangedCalStoresKey;
 
     @discussion Designated initializer.
  */
-- (instancetype)initWithCalStores:(NSArray *)aStores autosaveKeyPath:(NSString *)anAutosaveKeyPath;
+- (instancetype)initWithCalStores:(NSArray *)aStores autosaveKeyPath:(NSString *)anAutosaveKeyPath NS_DESIGNATED_INITIALIZER;
 
 /*!
     @brief  Returns calendars for aStore.

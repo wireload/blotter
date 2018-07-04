@@ -56,7 +56,7 @@
 {
     WLDateRange *r = [WLDateRange dateRangeWithStartDate:anEvent.startDate endDate:anEvent.endDate];
     NSArray *partDateRanges = [r splitIntoCalendarUnits:aUnit calendar:aCalendar];
-    NSMutableArray *parts = [NSMutableArray arrayWithCapacity:[partDateRanges count]];
+    NSMutableArray *parts = [NSMutableArray arrayWithCapacity:partDateRanges.count];
 
     for (WLDateRange *partDateRange in partDateRanges)
     {

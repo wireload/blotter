@@ -109,16 +109,16 @@ static const CGFloat _WLMarkTailIndent = 6.0;
 #endif
 
     if (![self contentsAreFlipped])
-        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0), 0.0, [[[NSColor whiteColor] colorWithAlphaComponent:0.25] CGColor]);
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0), 0.0, [[NSColor whiteColor] colorWithAlphaComponent:0.25].CGColor);
     else
-        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, -1.0), 0.0, [[[NSColor whiteColor] colorWithAlphaComponent:0.25] CGColor]);
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, -1.0), 0.0, [[NSColor whiteColor] colorWithAlphaComponent:0.25].CGColor);
 
     [self.mark WL_drawWithRect:[self _markFrame] context:aContext];
 
     if (![self contentsAreFlipped])
-        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, -1.0), 0.0, [[NSColor WL_taskTextShadowColor] CGColor]);
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, -1.0), 0.0, [NSColor WL_taskTextShadowColor].CGColor);
     else
-        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0), 0.0, [[NSColor WL_taskTextShadowColor] CGColor]);
+        CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0), 0.0, [NSColor WL_taskTextShadowColor].CGColor);
 
     [self.mark WL_drawWithRect:[self _markFrame] context:aContext];
     [self.title WL_drawWithRect:[self _titleFrame] context:aContext];
@@ -141,16 +141,14 @@ static const CGFloat _WLMarkTailIndent = 6.0;
 
 + (NSAttributedString *)WL_reminderTitleWithString:(NSString *)aString
 {
-    if ([aString length] == 0)
+    if (aString.length == 0)
         return nil;
 
     static dispatch_once_t onceToken;
     static NSDictionary *TitleAttributes = nil;
     dispatch_once(&onceToken, ^{
-        TitleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
-                           (id)[NSFont WL_taskFont],                      (id)kCTFontAttributeName,
-                           (id)[[NSColor WL_taskTitleColor] CGColor],     (id)kCTForegroundColorAttributeName,
-                           nil];
+        TitleAttributes = @{(id)kCTFontAttributeName: (id)[NSFont WL_taskFont],
+                           (id)kCTForegroundColorAttributeName: (id)[NSColor WL_taskTitleColor].CGColor};
     });
     return [[NSAttributedString alloc] initWithString:[aString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
                                            attributes:TitleAttributes];
@@ -164,12 +162,10 @@ static const CGFloat _WLMarkTailIndent = 6.0;
     static dispatch_once_t onceToken;
     static NSDictionary *MarkAttributes = nil;
     dispatch_once(&onceToken, ^{
-        MarkAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
-                          (id)[NSFont WL_taskFont],                      (id)kCTFontAttributeName,
-                          nil];
+        MarkAttributes = @{(id)kCTFontAttributeName: (id)[NSFont WL_taskFont]};
     });
     NSMutableDictionary *a = [MarkAttributes mutableCopy];
-    [a setObject:(__bridge NSColor *)aColor forKey:(id)kCTForegroundColorAttributeName];
+    a[(id)kCTForegroundColorAttributeName] = (__bridge NSColor *)aColor;
     return [[NSAttributedString alloc] initWithString:NSLocalizedString(@"●", @"Task's mark")
                                            attributes:a];
 }

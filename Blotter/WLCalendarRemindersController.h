@@ -44,7 +44,7 @@ extern NSString *WLCalendarRemindersDidChangeNotification;
 
     @discussion Designated initializer.
  */
-- (instancetype)initWithCalStores:(NSArray *)aStores;
+- (instancetype)initWithCalStores:(NSArray *)aStores NS_DESIGNATED_INITIALIZER;
 
 /*!
     @brief  Returns currently observed completion mask.

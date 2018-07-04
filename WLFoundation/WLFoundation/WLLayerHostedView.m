@@ -121,7 +121,7 @@
 - (void)displayIfNeeded
 {
     [super displayIfNeeded];
-    [[self layer] WL_applyBlockToTree:^(CALayer *aLayer)
+    [self.layer WL_applyBlockToTree:^(CALayer *aLayer)
     {
         [aLayer displayIfNeeded];
     }];

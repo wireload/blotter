@@ -12,7 +12,7 @@
 
 @implementation WLLayoutRoundedAquaImageView
 
-- (id)initWithFrame:(NSRect)aFrameRect
+- (instancetype)initWithFrame:(NSRect)aFrameRect
 {
     self = [super initWithFrame:aFrameRect];
     if (self != nil)
@@ -30,7 +30,7 @@
     static const CGFloat RoundRadius = 1.25;
 
     [NSGraphicsContext saveGraphicsState];
-    NSRect imageFrame = [self bounds];
+    NSRect imageFrame = self.bounds;
     // WLRecessedBoxShadow draws 1px horizontal white line at the bottom.
     imageFrame.origin.y += 1.0;
     imageFrame.size.height -= 1.0;
@@ -47,7 +47,7 @@
            fraction:1.0];
     [NSGraphicsContext restoreGraphicsState];
 
-    WLRecessedBoxShadow([self bounds]);
+    WLRecessedBoxShadow(self.bounds);
 }
 
 @end

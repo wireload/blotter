@@ -30,7 +30,7 @@ static NSString* const _WLCursorKey = @"cursor";
 
 - (IBAction)showRateThisApp:(id)aSender
 {
-    [(DeskboardAppDelegate *)[NSApp delegate] showRateThisApp:aSender];
+    [(DeskboardAppDelegate *)NSApp.delegate showRateThisApp:aSender];
 }
 
 - (IBAction)showFollowUsOnTwitter:(id)aSender
@@ -65,8 +65,8 @@ static NSString* const _WLCursorKey = @"cursor";
 {
     [super loadView];
 
-    [_versionView setStringValue:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
-    [[_copyrightView cell] setBackgroundStyle:NSBackgroundStyleRaised];
+    _versionView.stringValue = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    _copyrightView.cell.backgroundStyle = NSBackgroundStyleRaised;
     
     _bannerButton.cursor = [NSCursor pointingHandCursor];
     _wireloadButton.cursor = [NSCursor pointingHandCursor];

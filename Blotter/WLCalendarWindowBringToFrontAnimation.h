@@ -21,6 +21,6 @@
 /*!
  @param aWindow A Window which alpha value will be animated. Is not retained!
  */
-- (id)initWithWindow:(WLCalendarWindow *)aWindow ;
+- (instancetype)initWithWindow:(WLCalendarWindow *)aWindow  NS_DESIGNATED_INITIALIZER;
 
 @end

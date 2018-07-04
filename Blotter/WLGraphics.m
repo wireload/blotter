@@ -53,11 +53,11 @@ void WLDrawScaledThreePartImage(NSRect frame,
                                 CGFloat alphaFraction,
                                 BOOL flipped)
 {
-    BOOL matchesOnlyOnBestFittingAxisCenterFill = [centerFill matchesOnlyOnBestFittingAxis];
+    BOOL matchesOnlyOnBestFittingAxisCenterFill = centerFill.matchesOnlyOnBestFittingAxis;
     [centerFill setMatchesOnlyOnBestFittingAxis:YES];
 
-    NSSize startSize = [startCap size];
-    NSSize endSize = [endCap size];
+    NSSize startSize = startCap.size;
+    NSSize endSize = endCap.size;
     CGFloat width = startSize.width;
     CGFloat startLength = vertical ? startSize.height : startSize.width;
     CGFloat endLength = vertical ? endSize.height : endSize.width;
@@ -112,7 +112,7 @@ void WLDrawScaledThreePartImage(NSRect frame,
         if (drawMiddle)
         {
             [centerFill drawInRect:NSMakeRect(0, midPosition, width, midLength)
-                          fromRect:NSMakeRect(0, flipped ? [centerFill size].height : 0, width, [centerFill size].height)
+                          fromRect:NSMakeRect(0, flipped ? centerFill.size.height : 0, width, centerFill.size.height)
                          operation:op
                           fraction:alphaFraction
                     respectFlipped:YES
@@ -136,7 +136,7 @@ void WLDrawScaledThreePartImage(NSRect frame,
         if (drawMiddle)
         {
             [centerFill drawInRect:NSMakeRect(midPosition, 0, midLength, startSize.height)
-                          fromRect:NSMakeRect(0, 0, [centerFill size].width, startSize.height)
+                          fromRect:NSMakeRect(0, 0, centerFill.size.width, startSize.height)
                          operation:op
                           fraction:alphaFraction
                     respectFlipped:YES
@@ -151,7 +151,7 @@ void WLDrawScaledThreePartImage(NSRect frame,
                      hints:nil];
     }
 
-    [centerFill setMatchesOnlyOnBestFittingAxis:matchesOnlyOnBestFittingAxisCenterFill];
+    centerFill.matchesOnlyOnBestFittingAxis = matchesOnlyOnBestFittingAxisCenterFill;
 }
 
 
@@ -173,11 +173,11 @@ void WLDrawScaledNinePartImage(NSRect bounds,
                                CGFloat alphaFraction,
                                BOOL flipped)
 {
-    BOOL matchesOnlyOnBestFittingAxisTopEdgeFill = [topEdgeFill matchesOnlyOnBestFittingAxis];
-    BOOL matchesOnlyOnBestFittingAxisLeftEdgeFill = [leftEdgeFill matchesOnlyOnBestFittingAxis];
-    BOOL matchesOnlyOnBestFittingAxisCenterFill = [centerFill matchesOnlyOnBestFittingAxis];
-    BOOL matchesOnlyOnBestFittingAxisRightEdgeFill = [rightEdgeFill matchesOnlyOnBestFittingAxis];
-    BOOL matchesOnlyOnBestFittingAxisBottomEdgeFill = [bottomEdgeFill matchesOnlyOnBestFittingAxis];
+    BOOL matchesOnlyOnBestFittingAxisTopEdgeFill = topEdgeFill.matchesOnlyOnBestFittingAxis;
+    BOOL matchesOnlyOnBestFittingAxisLeftEdgeFill = leftEdgeFill.matchesOnlyOnBestFittingAxis;
+    BOOL matchesOnlyOnBestFittingAxisCenterFill = centerFill.matchesOnlyOnBestFittingAxis;
+    BOOL matchesOnlyOnBestFittingAxisRightEdgeFill = rightEdgeFill.matchesOnlyOnBestFittingAxis;
+    BOOL matchesOnlyOnBestFittingAxisBottomEdgeFill = bottomEdgeFill.matchesOnlyOnBestFittingAxis;
 
     [topEdgeFill setMatchesOnlyOnBestFittingAxis:YES];
     [leftEdgeFill setMatchesOnlyOnBestFittingAxis:YES];
@@ -185,8 +185,8 @@ void WLDrawScaledNinePartImage(NSRect bounds,
     [rightEdgeFill setMatchesOnlyOnBestFittingAxis:YES];
     [bottomEdgeFill setMatchesOnlyOnBestFittingAxis:YES];
 
-    NSSize topLeftSize = [topLeftCorner size];
-    NSSize bottomRightSize = [bottomRightCorner size];
+    NSSize topLeftSize = topLeftCorner.size;
+    NSSize bottomRightSize = bottomRightCorner.size;
 
     // If we are drawing in an area in which the corner parts don't fit, remove pixels
     // from the centre instead of from the edges (and avoid overlapping). This looks a
@@ -291,11 +291,11 @@ void WLDrawScaledNinePartImage(NSRect bounds,
                    respectFlipped:YES
                             hints:nil];
 
-    [topEdgeFill setMatchesOnlyOnBestFittingAxis:matchesOnlyOnBestFittingAxisTopEdgeFill];
-    [leftEdgeFill setMatchesOnlyOnBestFittingAxis:matchesOnlyOnBestFittingAxisLeftEdgeFill];
-    [centerFill setMatchesOnlyOnBestFittingAxis:matchesOnlyOnBestFittingAxisCenterFill];
-    [rightEdgeFill setMatchesOnlyOnBestFittingAxis:matchesOnlyOnBestFittingAxisRightEdgeFill];
-    [bottomEdgeFill setMatchesOnlyOnBestFittingAxis:matchesOnlyOnBestFittingAxisBottomEdgeFill];
+    topEdgeFill.matchesOnlyOnBestFittingAxis = matchesOnlyOnBestFittingAxisTopEdgeFill;
+    leftEdgeFill.matchesOnlyOnBestFittingAxis = matchesOnlyOnBestFittingAxisLeftEdgeFill;
+    centerFill.matchesOnlyOnBestFittingAxis = matchesOnlyOnBestFittingAxisCenterFill;
+    rightEdgeFill.matchesOnlyOnBestFittingAxis = matchesOnlyOnBestFittingAxisRightEdgeFill;
+    bottomEdgeFill.matchesOnlyOnBestFittingAxis = matchesOnlyOnBestFittingAxisBottomEdgeFill;
 }
 
 #undef NSRectFromSize

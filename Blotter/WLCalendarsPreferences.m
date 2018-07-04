@@ -30,7 +30,7 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^
     {
-        WLCalendarsController *c = [[(DeskboardAppDelegate *)[NSApp delegate] calendarWindowController] calendarsController];
+        WLCalendarsController *c = ((DeskboardAppDelegate *)NSApp.delegate).calendarWindowController.calendarsController;
         _calEventCalendars = [c.calEventCalendars copy];
         _calReminderCalendars = [c.calReminderCalendars copy];
         [_eventsTableView reloadData];
@@ -53,7 +53,7 @@
 
 - (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-    if ([[aTableColumn identifier] isEqualToString:@"check"])
+    if ([aTableColumn.identifier isEqualToString:@"check"])
     {
         WLColorCheckboxCell *cell = aCell;
         NSColor *calColor = nil;
@@ -73,15 +73,15 @@
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
     if (aTableView == _eventsTableView)
-        return (NSInteger)[_calEventCalendars count];
+        return (NSInteger)_calEventCalendars.count;
     else
-        return (NSInteger)[_calReminderCalendars count];
+        return (NSInteger)_calReminderCalendars.count;
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-    WLCalendarsController *c = [[(DeskboardAppDelegate *)[NSApp delegate] calendarWindowController] calendarsController];
-    if ([[aTableColumn identifier] isEqualToString:@"check"])
+    WLCalendarsController *c = ((DeskboardAppDelegate *)NSApp.delegate).calendarWindowController.calendarsController;
+    if ([aTableColumn.identifier isEqualToString:@"check"])
     {
         if (aTableView == _eventsTableView)
             return @([c isCalCalendarUsedToDisplayEvents:_calEventCalendars[(NSUInteger)rowIndex]]);
@@ -99,9 +99,9 @@
 
 - (void)tableView:(NSTableView *)aTableView setObjectValue:(id)anObject forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-    if ([[aTableColumn identifier] isEqualToString:@"check"])
+    if ([aTableColumn.identifier isEqualToString:@"check"])
     {
-        WLCalendarsController *c = [[(DeskboardAppDelegate *)[NSApp delegate] calendarWindowController] calendarsController];
+        WLCalendarsController *c = ((DeskboardAppDelegate *)NSApp.delegate).calendarWindowController.calendarsController;
         if (aTableView == _eventsTableView)
             [c setCalCalendar:_calEventCalendars[(NSUInteger)rowIndex] usedToDisplayEvents:[anObject boolValue]];
         else
@@ -116,12 +116,12 @@
 {
     [super loadView];
 
-    [_eventsTableView setIntercellSpacing:NSMakeSize(3.0, 0.0)];
-    [_eventsTableView setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
-    [_remindersTableView setIntercellSpacing:NSMakeSize(3.0, 0.0)];
-    [_remindersTableView setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
+    _eventsTableView.intercellSpacing = NSMakeSize(3.0, 0.0);
+    _eventsTableView.selectionHighlightStyle = NSTableViewSelectionHighlightStyleNone;
+    _remindersTableView.intercellSpacing = NSMakeSize(3.0, 0.0);
+    _remindersTableView.selectionHighlightStyle = NSTableViewSelectionHighlightStyleNone;
 
-    WLCalendarsController *c = [[(DeskboardAppDelegate *)[NSApp delegate] calendarWindowController] calendarsController];
+    WLCalendarsController *c = ((DeskboardAppDelegate *)NSApp.delegate).calendarWindowController.calendarsController;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(calCalendarsDidChange:)
                                                  name:WLCalCalendarsDidChangeNotification

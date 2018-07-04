@@ -151,7 +151,7 @@ NSString* const WLDateRangeLogKey = @"net.wireload.mac.WLFoundation.WLDateRange"
 
 - (NSUInteger)hash
 {
-    return [self.startDate hash];
+    return (self.startDate).hash;
 }
 
 - (BOOL)isEqual:(WLDateRange *)anObject

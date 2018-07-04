@@ -27,7 +27,7 @@
         _calendarUnit = aUnit;
         _calendar = [aCalendar copy];
 
-        NSMutableArray *eventParts = [NSMutableArray arrayWithCapacity:[anEvents count]];
+        NSMutableArray *eventParts = [NSMutableArray arrayWithCapacity:anEvents.count];
 
         for (NSObject<WLCalEvent> *e in anEvents)
         {
@@ -40,7 +40,7 @@
         {
             return anEvent.isAllDay;
         }];
-        NSMutableIndexSet *indexesOfDayEvents = [NSMutableIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [eventParts count])];
+        NSMutableIndexSet *indexesOfDayEvents = [NSMutableIndexSet indexSetWithIndexesInRange:NSMakeRange(0, eventParts.count)];
         [indexesOfDayEvents removeIndexes:indexesOfAllDayEvents];
 
         dispatch_group_t g = dispatch_group_create();
@@ -174,7 +174,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@: { All Day Events: %@, Day Events: %@", [super description], _allDayEventsPerDateRange, _dayEventsPerDateRange];
+    return [NSString stringWithFormat:@"%@: { All Day Events: %@, Day Events: %@", super.description, _allDayEventsPerDateRange, _dayEventsPerDateRange];
 }
 
 @end

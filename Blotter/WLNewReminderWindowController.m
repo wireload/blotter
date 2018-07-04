@@ -34,7 +34,7 @@
 
 - (BOOL)canCreateReminder
 {
-    return [self.editableCalCalendars count] > 0;
+    return (self.editableCalCalendars).count > 0;
 }
 
 
@@ -68,13 +68,13 @@
     if (self.isDueDate)
         task.dueDate = self.dueDate;
     task.priority = self.priority;
-    NSObject <WLCalCalendar> *selectedCalendar = [self.editableCalCalendars objectAtIndex:self.selectedCalCalendarIndex];
+    NSObject <WLCalCalendar> *selectedCalendar = (self.editableCalCalendars)[self.selectedCalCalendarIndex];
     task.calendar = [[CalCalendarStore defaultCalendarStore] calendarWithUID:selectedCalendar.calendarIdentifier];
 
     NSError *error = nil;
 
     if ([[CalCalendarStore defaultCalendarStore] saveTask:task error:&error])
-        [[self window] orderOut:self];
+        [self.window orderOut:self];
     else
     {
         NSBeep();
@@ -87,32 +87,32 @@
 
 - (void)windowDidLoad
 {
-    [[self window] setLevel:NSFloatingWindowLevel];
+    self.window.level = NSFloatingWindowLevel;
 
     unichar keyEquiv = NSEnterCharacter;
     NSString *equivString = [NSString stringWithCharacters:&keyEquiv length:1];
-    [_createButton setKeyEquivalent:equivString];
+    _createButton.keyEquivalent = equivString;
 
-    [(NSTextView *)_titleView setFont:[NSFont boldSystemFontOfSize:16]];
+    ((NSTextView *)_titleView).font = [NSFont boldSystemFontOfSize:16];
 
     _titleViewObserver = [[NSNotificationCenter defaultCenter] addObserverForName:WLViewSizeDidChangeNotification
                                                                            object:_titleView
                                                                             queue:nil
                                                                        usingBlock:^(NSNotification *arg1)
     {
-        CGFloat heightDiff = [[[arg1 userInfo] objectForKey:WLSizeDiff] sizeValue].height;
-        NSRect newWindowFrame = [[self window] frame];
+        CGFloat heightDiff = [arg1.userInfo[WLSizeDiff] sizeValue].height;
+        NSRect newWindowFrame = self.window.frame;
         newWindowFrame.size.height += heightDiff;
         newWindowFrame.origin.y -= heightDiff;
 
-        [[self window] setFrame:newWindowFrame display:YES animate:YES];
+        [self.window setFrame:newWindowFrame display:YES animate:YES];
     }];
     _titleView.postsSizeChangedNotifications = YES;
 
     [[_titleView valueForKey:@"_textView"] bind:NSValueBinding
                                        toObject:self
                                     withKeyPath:@"title"
-                                        options:[NSDictionary dictionaryWithObject:@(YES) forKey:NSContinuouslyUpdatesValueBindingOption]];
+                                        options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
 
     [self resetDefaults:nil];
 }
@@ -145,7 +145,7 @@
 
 - (void)setSelectedCalCalendarIndex:(NSUInteger)newSelectedCalCalendarIndex
 {
-    NSObject <WLCalCalendar> *c = [self.self.editableCalCalendars objectAtIndex:newSelectedCalCalendarIndex];
+    NSObject <WLCalCalendar> *c = (self.self.editableCalCalendars)[newSelectedCalCalendarIndex];
     [[NSUserDefaults standardUserDefaults] setObject:c.calendarIdentifier forKey:WLLastSelectedCalReminderCalendarUID];
 }
 

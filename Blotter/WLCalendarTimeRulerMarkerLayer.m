@@ -40,7 +40,7 @@
     CGContextSetAllowsAntialiasing(aContext, YES);
     CGContextSetAllowsFontSubpixelQuantization(aContext, NO);
     CGContextSetAllowsFontSmoothing(aContext, NO);
-    CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0), 0.0, [[NSColor WL_timelineShadowColor] CGColor]);
+    CGContextSetShadowWithColor(aContext, CGSizeMake(0.0, 1.0), 0.0, [NSColor WL_timelineShadowColor].CGColor);
     [self.marker WL_drawWithRect:self.bounds context:aContext];
     CGContextRestoreGState(aContext);
 }

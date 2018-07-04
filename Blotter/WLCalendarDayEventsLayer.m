@@ -26,7 +26,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
 
 @implementation WLCalendarDayEventsLayer
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self != nil)
@@ -38,7 +38,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
     return self;
 }
 
-- (id)initWithLayer:(id)aLayer
+- (instancetype)initWithLayer:(id)aLayer
 {
     self = [super initWithLayer:aLayer];
     if (self != nil)
@@ -78,15 +78,15 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
         {
             NSObject<WLCalEvent> *layerEvent = l.dayEvent;
             return [layerEvent isEqual:event] || (
-                                                  [[layerEvent itemIdentifier] isEqual:[event itemIdentifier]] &&
-                                                  [[[layerEvent calendar] calendarIdentifier] isEqual:[[event calendar] calendarIdentifier]]
+                                                  [layerEvent.itemIdentifier isEqual:event.itemIdentifier] &&
+                                                  [layerEvent.calendar.calendarIdentifier isEqual:event.calendar.calendarIdentifier]
                                                   );
         }];
         WLCalendarEventLayer *layer = nil;
         if (indexOfUsedLayer != NSNotFound)
         {
             // Layer for the event already exist. Update it.
-            layer = [unusedSublayers objectAtIndex:indexOfUsedLayer];
+            layer = unusedSublayers[indexOfUsedLayer];
             layer.dayEvent = event;
             [unusedSublayers removeObjectAtIndex:indexOfUsedLayer];
         }
@@ -254,17 +254,17 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
 {
     NSArray *events = [_sortedByStartDateEventLayers valueForKeyPath:_WLEventKey];
     NSUInteger i = [events indexOfObject:anEvent
-                           inSortedRange:NSMakeRange(0, [_sortedByStartDateEventLayers count])
+                           inSortedRange:NSMakeRange(0, _sortedByStartDateEventLayers.count)
                                  options:NSBinarySearchingFirstEqual | NSBinarySearchingInsertionIndex
                          usingComparator:^(NSObject<WLCalEvent> *aEvent, NSObject<WLCalEvent> *bEvent)
     {
         // Storage can represent multiple instances of the same event because it may come from different servers/services.
         // To make layout consistent we compare different parameters of the event.
-        NSComparisonResult result = [[aEvent startDate] compare:[bEvent startDate]];
+        NSComparisonResult result = [aEvent.startDate compare:bEvent.startDate];
         if (result == NSOrderedSame)
-            result = [[aEvent itemIdentifier] compare:[bEvent itemIdentifier]];
+            result = [aEvent.itemIdentifier compare:bEvent.itemIdentifier];
         if (result == NSOrderedSame)
-            result = [[[aEvent calendar] calendarIdentifier] compare:[[bEvent calendar] calendarIdentifier]];
+            result = [aEvent.calendar.calendarIdentifier compare:bEvent.calendar.calendarIdentifier];
         return result;
     }];
     return i;
@@ -323,24 +323,24 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
             if (IS_LESS_CGFLOAT(layerTop, rowBottom))
             {
                 rowBottom = fmax(rowBottom, layerBottom);
-                [[rowNode representedObject] addObject:l];
+                [rowNode.representedObject addObject:l];
             }
             else
             {
                 if (rowNode != nil)
                 {
-                    [[_eventsLayoutTreeRootNode mutableChildNodes] addObject:rowNode];
+                    [_eventsLayoutTreeRootNode.mutableChildNodes addObject:rowNode];
                     [rowNode release];
                     rowNode = nil;
                 }
                 rowNode = [[NSTreeNode alloc] initWithRepresentedObject:[NSMutableArray array]];
                 rowTop = layerTop;
                 rowBottom = layerBottom;
-                [[rowNode representedObject] addObject:l];
+                [rowNode.representedObject addObject:l];
             }
         }];
-        if ([(NSArray *)[rowNode representedObject] count])
-            [[_eventsLayoutTreeRootNode mutableChildNodes] addObject:rowNode];
+        if (((NSArray *)rowNode.representedObject).count)
+            [_eventsLayoutTreeRootNode.mutableChildNodes addObject:rowNode];
         [rowNode release];
     }
     /* After Step 1
@@ -378,18 +378,18 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
 
     // Step 2: Divide elements of each row into columns, where each element doesn't intersect all other elements of the column.
     {
-        [[_eventsLayoutTreeRootNode childNodes] enumerateObjectsWithOptions:NSEnumerationConcurrent
+        [_eventsLayoutTreeRootNode.childNodes enumerateObjectsWithOptions:NSEnumerationConcurrent
                                                                  usingBlock:^(NSTreeNode *rowNode, NSUInteger rowIdx, BOOL *stopRow)
         {
-            __block NSMutableArray *row = [rowNode representedObject];
-            while ([row count] > 0 && [[rowNode childNodes] count] < [self maximumNumberOfColumns])
+            __block NSMutableArray *row = rowNode.representedObject;
+            while (row.count > 0 && rowNode.childNodes.count < [self maximumNumberOfColumns])
             {
-                WLCalendarEventLayer *topLayer = [row objectAtIndex:0];
+                WLCalendarEventLayer *topLayer = row[0];
                 NSMutableArray *column = [NSMutableArray arrayWithObject:topLayer];
                 NSTreeNode *columnNode = [NSTreeNode treeNodeWithRepresentedObject:column];
                 [row removeObjectAtIndex:0];
 
-                if ([row count] > 0)
+                if (row.count > 0)
                 {
                     __block CGFloat columnBottom = WLSegmentGetMaxLocation([topLayer segmentOnTimeRuler:self.timeRuler]);
                     NSMutableIndexSet *placedLayers = [NSMutableIndexSet indexSet];
@@ -408,15 +408,15 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
                     [row removeObjectsAtIndexes:placedLayers];
                     [placedLayers removeAllIndexes];
                 }
-                [[rowNode mutableChildNodes] addObject:columnNode];
+                [rowNode.mutableChildNodes addObject:columnNode];
             }
 
             // It's possible that not all objects are distributed among columns because of maximumNumberOfColumns.
             // Distribute them among available columns.
             [row enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger layerIdx, BOOL *stopLayer)
             {
-                NSTreeNode *columnNode = [[rowNode childNodes] objectAtIndex:layerIdx % [self maximumNumberOfColumns]];
-                NSMutableArray *column = [columnNode representedObject];
+                NSTreeNode *columnNode = rowNode.childNodes[layerIdx % [self maximumNumberOfColumns]];
+                NSMutableArray *column = columnNode.representedObject;
                 [column addObject:l];
             }];
         }];
@@ -459,19 +459,19 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
     // Step 3 (Optional): for each layer we look right to see if it intersects layers of next columns.
     // If it doesn't then it's width may be extended.
     {
-        NSArray *rowNodes = [_eventsLayoutTreeRootNode childNodes];
+        NSArray *rowNodes = _eventsLayoutTreeRootNode.childNodes;
         for (NSTreeNode *rowNode in rowNodes)
         {
-            __block NSArray *columnNodes = [rowNode childNodes];
+            __block NSArray *columnNodes = rowNode.childNodes;
             [columnNodes enumerateObjectsUsingBlock:^(NSTreeNode *columnNode, NSUInteger columnIdx, BOOL *stopColumn)
             {
-                NSArray *events = [columnNode representedObject];
+                NSArray *events = columnNode.representedObject;
                 for (WLCalendarEventLayer *left in events)
                 {
                     WLSegment leftSegment = [left segmentOnTimeRuler:self.timeRuler];
                     CGFloat leftTop = WLSegmentGetMinLocation(leftSegment);
                     CGFloat leftBottom = WLSegmentGetMaxLocation(leftSegment);
-                    NSRange rightColumns = NSMakeRange(columnIdx + 1, [columnNodes count] - columnIdx - 1);
+                    NSRange rightColumns = NSMakeRange(columnIdx + 1, columnNodes.count - columnIdx - 1);
                     __block NSUInteger numberOfColumnsToSkip = 0;
                     [columnNodes enumerateObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:rightColumns]
                                                    options:0
@@ -479,7 +479,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
                     {
 
                         BOOL doesIntersectRightColumn = NO;
-                        NSArray *rightEventLayers = [rightColumnNode representedObject];
+                        NSArray *rightEventLayers = rightColumnNode.representedObject;
                         for (WLCalendarEventLayer *right in rightEventLayers)
                         {
                             WLSegment rightSegment = [right segmentOnTimeRuler:self.timeRuler];
@@ -549,7 +549,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
 {
     NSAssert(self.layoutManager == nil, @"You cannot use custom layout managers with this class");
 
-    if ([_sortedByStartDateEventLayers count] == 0 || self.bounds.size.width == 0.0 || self.bounds.size.height == 0.0)
+    if (_sortedByStartDateEventLayers.count == 0 || self.bounds.size.width == 0.0 || self.bounds.size.height == 0.0)
     return;
 
     [self _buildEventsLayoutTreeIfNeeded];
@@ -559,10 +559,10 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
     CGFloat lastHourY = [self.timeRuler locationForHour:[self.timeRuler hourRange].endHour];
 
     // Layout rows.
-    for (NSTreeNode *rowNode in [_eventsLayoutTreeRootNode childNodes])
+    for (NSTreeNode *rowNode in _eventsLayoutTreeRootNode.childNodes)
     {
-        NSArray *columnNodes = [rowNode childNodes];
-        NSUInteger numberOfColumns = [columnNodes count];
+        NSArray *columnNodes = rowNode.childNodes;
+        NSUInteger numberOfColumns = columnNodes.count;
         CGFloat effectiveRowWidth = fdim(self.bounds.size.width, _XSpaceBetweenEvents * (numberOfColumns - 1));
         CGFloat baseColumnWidth = floor(fmax(effectiveRowWidth / numberOfColumns, [WLCalendarEventLayer minimumHumanVisibleWidth]));
         CGFloat extendedColumnWidth = baseColumnWidth + 1.0;
@@ -574,7 +574,7 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
         __block CGFloat x = CGRectGetMinX(self.bounds);
         [columnNodes enumerateObjectsUsingBlock:^(NSTreeNode *columnNode, NSUInteger columnIdx, BOOL *stopColumn)
         {
-            NSArray *eventLayers = [columnNode representedObject];
+            NSArray *eventLayers = columnNode.representedObject;
             CGFloat columnWidth = columnIdx < numberOfExtendedColumns ? extendedColumnWidth : baseColumnWidth;
             [eventLayers enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger layerIdx, BOOL *stopLayer)
             {
@@ -670,15 +670,15 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
 
 - (NSString *)description
 {
-    NSMutableString *description = [NSMutableString stringWithString:[super description]];
+    NSMutableString *description = [NSMutableString stringWithString:super.description];
     [description appendFormat:@"\n"];
-    [[_eventsLayoutTreeRootNode childNodes] enumerateObjectsUsingBlock:^(NSTreeNode *rowNode, NSUInteger rowIdx, BOOL *stopRow) {
+    [_eventsLayoutTreeRootNode.childNodes enumerateObjectsUsingBlock:^(NSTreeNode *rowNode, NSUInteger rowIdx, BOOL *stopRow) {
         NSLog(@"Row #%lu", (unsigned long)rowIdx);
-        NSArray *columnNodes = [rowNode childNodes];
+        NSArray *columnNodes = rowNode.childNodes;
         [columnNodes enumerateObjectsUsingBlock:^(NSTreeNode *columnNode, NSUInteger columnIdx, BOOL *stopColumn)
         {
             NSLog(@"\tColumn #%lu", (unsigned long)columnIdx);
-            NSArray *eventLayers = [columnNode representedObject];
+            NSArray *eventLayers = columnNode.representedObject;
             [eventLayers enumerateObjectsUsingBlock:^(WLCalendarEventLayer *l, NSUInteger layerIdx, BOOL *stopLayer)
             {
                 NSLog(@"\t\t%p: %@", l, [l valueForKeyPath:[NSString stringWithFormat:@"%@.title", _WLEventKey]]);
@@ -719,18 +719,18 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
 {
     [self setValue:newEvent forKey:_WLEventKey];
 
-    self.name = [newEvent itemIdentifier];
-    self.title = [NSAttributedString WL_eventTitleWithString:[newEvent title]];
-    self.location = [NSAttributedString WL_eventLocationWithString:[newEvent location]];
+    self.name = newEvent.itemIdentifier;
+    self.title = [NSAttributedString WL_eventTitleWithString:newEvent.title];
+    self.location = [NSAttributedString WL_eventLocationWithString:newEvent.location];
     self.numberOfColumnsToSkip = 0;
 
-    NSObject<WLCalendarTimeRuler> *timeRuler = [(WLCalendarDayEventsLayer *)[self superlayer] timeRuler];
+    NSObject<WLCalendarTimeRuler> *timeRuler = ((WLCalendarDayEventsLayer *)self.superlayer).timeRuler;
     NSParameterAssert([[timeRuler class] conformsToProtocol:@protocol(WLCalendarTimeRuler)]);
 
     WLHourRange h = WLHourRangeZero;
-    NSDate *startDate = [newEvent startDate];
+    NSDate *startDate = newEvent.startDate;
     h.startHour = [timeRuler hourForDate:startDate];
-    NSDate *endDate = [newEvent endDate];
+    NSDate *endDate = newEvent.endDate;
     h.endHour = [timeRuler hourForDate:endDate];
     if (h.endHour <= h.startHour && [endDate timeIntervalSinceDate:startDate] > 0.0)
     {
@@ -739,13 +739,13 @@ static const CGFloat _XSpaceBetweenEvents = 2.0;
     }
     self.hourRange = h;
 
-    NSColor *calendarColor = [[newEvent calendar] color];
+    NSColor *calendarColor = newEvent.calendar.color;
     if (calendarColor == NULL || (id)calendarColor == [NSNull null])
         calendarColor = [NSColor WL_defaultCalendarColorIfFrameworkFails];
 #ifdef DEBUG_LAYERS
     self.backgroundColor = [calendarColor CGColor];
 #else
-    self.contentsBackgroundColor = [calendarColor CGColor];
+    self.contentsBackgroundColor = calendarColor.CGColor;
 #endif
 }
 
