@@ -735,6 +735,16 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
         SetCursorRect(self, _WLCenterCenterEdgeFrameKey, WLCalendarWindowCenterCenterEdge);
 }
 
+- (void)viewWillMoveToWindow:(NSWindow *)newWindow
+{
+    if (newWindow)
+    {
+        [self.layer WL_applyBlockToTree:^(CALayer *aLayer) {
+            aLayer.contentsScale = newWindow.backingScaleFactor;
+        }];
+    }
+}
+
 
 #pragma mark NSResponder
 
