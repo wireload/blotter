@@ -113,8 +113,8 @@
                     <rect key="frame" x="400" y="126" width="199" height="39"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" id="57">
-                        <font key="font" size="10" name="LucidaGrande"/>
-                        <string key="title">© 2010-13 Wireload Inc.
+                        <font key="font" metaFont="system" size="10"/>
+                        <string key="title">© 2010-18 Wireload Inc.
 Все права защищены.</string>
                         <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

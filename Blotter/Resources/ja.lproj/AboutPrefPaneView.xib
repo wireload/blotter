@@ -115,7 +115,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" id="57">
                         <font key="font" metaFont="system" size="10"/>
-                        <string key="title">© 2010-13 WireLoad Inc.
+                        <string key="title">© 2010-18 WireLoad Inc.
 All rights reserved.</string>
                         <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
