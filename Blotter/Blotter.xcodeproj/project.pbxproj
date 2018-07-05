@@ -41,7 +41,6 @@
 		BA08AA53167743A50085F40C /* WLPreferencesButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08AA50167743A50085F40C /* WLPreferencesButtonCell.m */; };
 		BA105998168DAD8F00A3DDF5 /* WLCalendarEventsController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA105997168DAD8F00A3DDF5 /* WLCalendarEventsController.m */; };
 		BA1F51DB1663B2A400ABD662 /* WLGeneralPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1F51DA1663B2A400ABD662 /* WLGeneralPreferences.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		BA23662416F7371300779487 /* StartAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA23662316F7371300779487 /* StartAtLoginController.m */; };
 		BA2F70DA20E30D560079CCD4 /* PTHotKey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70D920E30D560079CCD4 /* PTHotKey.framework */; };
 		BA2F70DC20E30D5A0079CCD4 /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70DB20E30D5A0079CCD4 /* ShortcutRecorder.framework */; };
 		BA2F70DE20E30D5C0079CCD4 /* WLCalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70DD20E30D5C0079CCD4 /* WLCalendarStore.framework */; };
@@ -272,8 +271,6 @@
 		BA1F51DA1663B2A400ABD662 /* WLGeneralPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGeneralPreferences.m; sourceTree = "<group>"; };
 		BA1F51DC1663B30500ABD662 /* SystemPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemPreferences.h; sourceTree = "<group>"; };
 		BA23660816F706B600779487 /* Blotter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Blotter.entitlements; path = ../Blotter.entitlements; sourceTree = "<group>"; };
-		BA23662216F7371300779487 /* StartAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartAtLoginController.h; sourceTree = "<group>"; };
-		BA23662316F7371300779487 /* StartAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartAtLoginController.m; sourceTree = "<group>"; };
 		BA2F70D920E30D560079CCD4 /* PTHotKey.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PTHotKey.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA2F70DB20E30D5A0079CCD4 /* ShortcutRecorder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ShortcutRecorder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA2F70DD20E30D5C0079CCD4 /* WLCalendarStore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WLCalendarStore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -555,8 +552,6 @@
 		BA1F51D11663B23700ABD662 /* General */ = {
 			isa = PBXGroup;
 			children = (
-				BA23662216F7371300779487 /* StartAtLoginController.h */,
-				BA23662316F7371300779487 /* StartAtLoginController.m */,
 				BA1F51DC1663B30500ABD662 /* SystemPreferences.h */,
 				BA1F51D91663B2A400ABD662 /* WLGeneralPreferences.h */,
 				BA1F51DA1663B2A400ABD662 /* WLGeneralPreferences.m */,
@@ -1112,7 +1107,6 @@
 				BAF67F9D16D624C90047FE2A /* WLApplicationPreferencesWindow.m in Sources */,
 				BC5994A0A3B188B70572162C /* WLCalendarRemindersController.m in Sources */,
 				BC59962B9F05EFB31F00E8AC /* WLCalendarsController.m in Sources */,
-				BA23662416F7371300779487 /* StartAtLoginController.m in Sources */,
 				BC59994C6338E92FCB036C10 /* WLCalendarEventsStorage.m in Sources */,
 				BC5992938A36F5C335797DC6 /* WLCalEventPart.m in Sources */,
 				BC5995F4529F4C3069EE5316 /* WLCalendarFloatingWeekEventsViewController.m in Sources */,

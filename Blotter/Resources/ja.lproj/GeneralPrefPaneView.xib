@@ -25,7 +25,7 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="203" name="value" keyPath="startAtLogin" id="205"/>
+                        <binding destination="-2" name="value" keyPath="self.shouldStartAtLogin" id="3AG-By-USm"/>
                         <outlet property="nextKeyView" destination="31" id="125"/>
                     </connections>
                 </button>
@@ -150,12 +150,9 @@
                         <outlet property="nextKeyView" destination="1" id="141"/>
                     </connections>
                 </button>
-                <box autoresizesSubviews="NO" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="82">
+                <box verticalHuggingPriority="750" boxType="separator" id="82">
                     <rect key="frame" x="20" y="60" width="435" height="5"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
                 </box>
                 <button toolTip="隠れている場合は、アプリを再起動してこちらに戻ってください" id="84">
                     <rect key="frame" x="129" y="129" width="242" height="18"/>
@@ -229,11 +226,6 @@
             </connections>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="6"/>
-        <customObject id="203" customClass="StartAtLoginController">
-            <userDefinedRuntimeAttributes>
-                <userDefinedRuntimeAttribute type="string" keyPath="identifier" value="net.wireload.blotter.mac.LoginItem"/>
-            </userDefinedRuntimeAttributes>
-        </customObject>
     </objects>
     <resources>
         <image name="exclamation" width="16" height="16"/>

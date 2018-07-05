@@ -25,7 +25,7 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="203" name="value" keyPath="startAtLogin" id="205"/>
+                        <binding destination="-2" name="value" keyPath="self.shouldStartAtLogin" id="PvN-PQ-Jjr"/>
                         <outlet property="nextKeyView" destination="31" id="125"/>
                     </connections>
                 </button>
@@ -226,11 +226,6 @@
             </connections>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="6"/>
-        <customObject id="203" customClass="StartAtLoginController">
-            <userDefinedRuntimeAttributes>
-                <userDefinedRuntimeAttribute type="string" keyPath="identifier" value="net.wireload.blotter.mac.LoginItem"/>
-            </userDefinedRuntimeAttributes>
-        </customObject>
     </objects>
     <resources>
         <image name="exclamation" width="16" height="16"/>

@@ -16,6 +16,8 @@
 
 @interface WLGeneralPreferences : WLViewController <NSAlertDelegate, IKPreferencesRepresentation>
 
+@property (nonatomic) BOOL shouldStartAtLogin;
+
 - (IBAction)quitBlotter:(id)aSender;
 
 - (IBAction)showMacOSXCalendarSettings:(id)aSender;

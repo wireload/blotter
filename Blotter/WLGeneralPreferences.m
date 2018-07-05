@@ -6,12 +6,44 @@
 //  Copyright 2010 WireLoad, Inc. All rights reserved.
 //
 
+#import <ServiceManagement/ServiceManagement.h>
 #import "NSUserDefaults+WLApplicationDefaults.h"
 #import "WLGeneralPreferences.h"
 #import "SystemPreferences.h"
 
 
+static NSString *_WLLoginItemJobLabel = @"net.wireload.blotter.mac.LoginItem";
+
+
 @implementation WLGeneralPreferences
+
+#pragma mark Properties
+@dynamic shouldStartAtLogin;
+
+- (BOOL)shouldStartAtLogin
+{
+    // While deperecated, there is no replacement as of macOS 10.13
+    CFArrayRef cfJobDicts = SMCopyAllJobDictionaries(kSMDomainUserLaunchd);
+    NSArray* jobDicts = CFBridgingRelease(cfJobDicts);
+
+    if (jobDicts && jobDicts.count > 0)
+    {
+        for (NSDictionary* job in jobDicts)
+        {
+            if ([job[@"Label"] isEqualToString:_WLLoginItemJobLabel])
+            {
+                return [job[@"OnDemand"] boolValue];
+            }
+        }
+    }
+
+    return NO;
+}
+
+- (void)setShouldStartAtLogin:(BOOL)newShouldStartAtLogin
+{
+    SMLoginItemSetEnabled((__bridge CFStringRef)_WLLoginItemJobLabel, (Boolean)newShouldStartAtLogin);
+}
 
 #pragma mark Methods
 
