@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="all">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
@@ -14,7 +14,6 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="494" customClass="DeskboardAppDelegate">
             <connections>
-                <outlet property="QuitMenuItem" destination="136" id="543"/>
                 <outlet property="_bringToFrontMenuItem" destination="575" id="580"/>
                 <outlet property="_newEventMenuItem" destination="537" id="551"/>
                 <outlet property="_newTaskMenuItem" destination="536" id="552"/>
