@@ -35,6 +35,8 @@ static NSString* const _WLNewEventWindowAutosaveName = @"NSWindow Frame NewEvent
 
 static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWindow";
 
+static NSString* const _WLStatusItemAutosaveName = @"net.wireload.blotter.mac.StatusItem";
+
 
 @implementation DeskboardAppDelegate
 {
@@ -87,6 +89,9 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     [_autoFadeTimer invalidate];
 
     _shortcuts = nil;
+
+    if (_statusItem && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_12)
+        [_statusItem removeObserver:self forKeyPath:NSVisibleBinding];
 }
 
 
@@ -295,20 +300,28 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
         if (_statusItem)
             return;
 
-        _statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
-        [_statusItem setHighlightMode:YES];
-        _statusItem.menu = _statusMenu;
-
         NSImage *statusImage = [NSImage imageNamed:@"status-bar"];
-        NSImage *statusHighlightImage = [NSImage imageNamed:@"status-bar-active"];
-        _statusItem.image = statusImage;
-        _statusItem.alternateImage = statusHighlightImage;
+        statusImage.template = YES;
+
+        _statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
+        _statusItem.menu = _statusMenu;
+        _statusItem.button.image = statusImage;
+
+        if (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_12)
+        {
+            _statusItem.autosaveName = _WLStatusItemAutosaveName;
+            _statusItem.behavior = NSStatusItemBehaviorRemovalAllowed;
+            [_statusItem addObserver:self forKeyPath:NSVisibleBinding options:NSKeyValueObservingOptionNew context:NULL];
+        }
     }
     else
     {
         if (!_statusItem)
             return;
 
+        // TODO: Might make sense to use the visibility property instead of removal.
+        // That requres deployment target 10.12
+        [_statusItem removeObserver:self forKeyPath:NSVisibleBinding];
         [[NSStatusBar systemStatusBar] removeStatusItem:_statusItem];
         _statusItem = nil;
     }
@@ -545,8 +558,6 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 
 #pragma mark Private
 
-
-
 - (void)_scheduleShowCurrentWeekTimerIfNeeded
 {
     [self _removeShowCurrentWeekTimerIfNeeded];
@@ -618,6 +629,7 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
     }
 }
 
+
 #pragma mark NSObject
 
 - (void)observeValueForKeyPath:(NSString *)aKeyPath ofObject:(id)aObject change:(NSDictionary *)aChange context:(void *)aContext
@@ -653,6 +665,8 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
             self.calendarWindowController.isFadedOut = NO;
         }
     }
+    else if ([aKeyPath isEqualToString:NSVisibleBinding])
+        [[NSUserDefaults standardUserDefaults] setValue:aChange[NSKeyValueChangeNewKey] forKeyPath:WLShowInMenuBar];
     else
         [super observeValueForKeyPath:aKeyPath ofObject:aObject change:aChange context:aContext];
 }
