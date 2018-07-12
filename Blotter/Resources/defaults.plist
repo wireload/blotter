@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>RequestShareAnalyticsConsentAtStartup</key>
+	<true/>
+	<key>ShareAnalytics</key>
+	<false/>
 	<key>CalendarPosition</key>
 	<integer>0</integer>
 	<key>ShowInMenuBar</key>
@@ -78,6 +82,8 @@
 	<string>https://www.yippiemove.com/?utm_source=Blotter&amp;utm_medium=app&amp;utm_content=about-page&amp;utm_campaign=Blotter%2Bapp</string>
 	<key>AnimateBringToFront</key>
 	<true/>
+	<key>PrivacyPolicyURL</key>
+	<string>https://wireload.net/privacy-policy</string>
 	<key>WLCalSystemStoreAllowsAdvancedCalendarTypeCheck</key>
 	<true/>
 </dict>

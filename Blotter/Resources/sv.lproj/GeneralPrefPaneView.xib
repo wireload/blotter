@@ -14,11 +14,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView misplaced="YES" id="1" userLabel="General View">
-            <rect key="frame" x="0.0" y="0.0" width="420" height="292"/>
+            <rect key="frame" x="0.0" y="0.0" width="420" height="412"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button misplaced="YES" id="2">
-                    <rect key="frame" x="124" y="257" width="278" height="18"/>
+                    <rect key="frame" x="124" y="377" width="278" height="18"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Öppna vid inloggning" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="3">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -30,7 +30,7 @@
                     </connections>
                 </button>
                 <button misplaced="YES" id="4">
-                    <rect key="frame" x="124" y="223" width="278" height="18"/>
+                    <rect key="frame" x="124" y="343" width="278" height="18"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Visa veckodagar" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="5">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -45,8 +45,8 @@
                         <outlet property="nextKeyView" destination="75" id="127"/>
                     </connections>
                 </button>
-                <textField verticalHuggingPriority="750" id="29">
-                    <rect key="frame" x="35" y="258" width="85" height="17"/>
+                <textField verticalHuggingPriority="750" misplaced="YES" id="29">
+                    <rect key="frame" x="18" y="378" width="102" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Uppstart:" id="30">
                         <font key="font" metaFont="system"/>
@@ -58,7 +58,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" misplaced="YES" id="31">
-                    <rect key="frame" x="35" y="224" width="85" height="17"/>
+                    <rect key="frame" x="18" y="344" width="102" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Beteende:" id="32">
                         <font key="font" metaFont="system"/>
@@ -70,7 +70,7 @@
                     </connections>
                 </textField>
                 <button misplaced="YES" id="33">
-                    <rect key="frame" x="123" y="175" width="99" height="18"/>
+                    <rect key="frame" x="124" y="295" width="99" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Blekna efter " bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="34">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -82,7 +82,7 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" misplaced="YES" id="36">
-                    <rect key="frame" x="228" y="173" width="50" height="22"/>
+                    <rect key="frame" x="229" y="293" width="50" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="37">
                         <numberFormatter key="formatter" formatterBehavior="default10_4" positiveFormat="#,##0.###" negativeFormat="#,##0.###" numberStyle="decimal" lenient="YES" paddingCharacter="*" minimumIntegerDigits="1" maximumIntegerDigits="309" maximumFractionDigits="3" decimalSeparator="." groupingSeparator="," currencyDecimalSeparator="." plusSign="+" minusSign="-" notANumberSymbol="NaN" perMillSymbol="‰" percentSymbol="%" exponentSymbol="E" positivePrefix="" positiveSuffix="" negativePrefix="-" negativeSuffix="" id="44">
@@ -104,7 +104,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" misplaced="YES" id="38">
-                    <rect key="frame" x="284" y="176" width="118" height="17"/>
+                    <rect key="frame" x="285" y="296" width="117" height="17"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="sekunder" id="39">
                         <font key="font" metaFont="system"/>
@@ -113,7 +113,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" misplaced="YES" id="73">
-                    <rect key="frame" x="122" y="155" width="280" height="14"/>
+                    <rect key="frame" x="124" y="275" width="278" height="14"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Aktivera Blotter för att återställa." id="74">
                         <font key="font" metaFont="smallSystem"/>
@@ -125,7 +125,7 @@
                     </connections>
                 </textField>
                 <button misplaced="YES" id="75">
-                    <rect key="frame" x="123" y="201" width="279" height="18"/>
+                    <rect key="frame" x="124" y="321" width="278" height="18"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Visa de kommande 7 dagarna" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="76">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -137,7 +137,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" misplaced="YES" id="80">
-                    <rect key="frame" x="119" y="13" width="129" height="32"/>
+                    <rect key="frame" x="120" y="13" width="129" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <buttonCell key="cell" type="push" title="Avsluta Blotter" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="81">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -155,7 +155,7 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                 </box>
                 <button toolTip="Ifall ikonen är dold, starta om Blotter för att återvända hit" misplaced="YES" id="84">
-                    <rect key="frame" x="122" y="131" width="280" height="18"/>
+                    <rect key="frame" x="124" y="251" width="278" height="18"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Dölj Blotter i menyraden" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="85">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -171,7 +171,7 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" misplaced="YES" id="89">
-                    <rect key="frame" x="35" y="23" width="85" height="17"/>
+                    <rect key="frame" x="18" y="23" width="102" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Avstängning:" id="90">
                         <font key="font" metaFont="system"/>
@@ -183,7 +183,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" misplaced="YES" id="105">
-                    <rect key="frame" x="122" y="111" width="281" height="14"/>
+                    <rect key="frame" x="124" y="231" width="278" height="14"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Starta om Blotter för att öppna inställningarna igen." id="106">
                         <font key="font" metaFont="smallSystem"/>
@@ -195,7 +195,7 @@
                     </connections>
                 </textField>
                 <imageView misplaced="YES" id="109">
-                    <rect key="frame" x="104" y="110" width="16" height="16"/>
+                    <rect key="frame" x="105" y="230" width="16" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" image="exclamation" id="110"/>
                     <connections>
@@ -209,7 +209,7 @@
                     </connections>
                 </imageView>
                 <button verticalHuggingPriority="750" misplaced="YES" id="197">
-                    <rect key="frame" x="119" y="75" width="181" height="32"/>
+                    <rect key="frame" x="120" y="195" width="181" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="Datum och tid format..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="198">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -217,14 +217,70 @@
                     </buttonCell>
                     <connections>
                         <action selector="showMacOSXCalendarSettings:" target="-2" id="201"/>
-                        <outlet property="nextKeyView" destination="89" id="200"/>
+                        <outlet property="nextKeyView" destination="sFB-Wr-RJ2" id="sNf-eR-scd"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" id="sFB-Wr-RJ2">
+                    <rect key="frame" x="18" y="146" width="102" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Analys:" id="cWg-ZQ-7Vw">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <outlet property="nextKeyView" destination="Ihb-pl-N3Z" id="JxJ-7Y-482"/>
+                    </connections>
+                </textField>
+                <button verticalHuggingPriority="750" misplaced="YES" id="Ihb-pl-N3Z">
+                    <rect key="frame" x="124" y="145" width="278" height="18"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Dela användningsdata" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="CNX-6x-MD8">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="6" name="value" keyPath="values" id="Dru-UV-klu">
+                            <dictionary key="options">
+                                <integer key="NSNullPlaceholder" value="0"/>
+                            </dictionary>
+                        </binding>
+                        <outlet property="nextKeyView" destination="ihQ-nE-Jkb" id="L9t-jX-UkA"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" id="ihQ-nE-Jkb">
+                    <rect key="frame" x="124" y="111" width="278" height="28"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="Hjälp oss förbättra Blotter genom att automatisk skicka diagnostik och användningsdata." id="Olt-tS-5Nt">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <outlet property="nextKeyView" destination="fLX-0y-PYW" id="v1f-8a-UJm"/>
+                    </connections>
+                </textField>
+                <box verticalHuggingPriority="750" misplaced="YES" boxType="separator" id="10e-1Y-KDf">
+                    <rect key="frame" x="20" y="179" width="380" height="5"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                </box>
+                <button verticalHuggingPriority="750" misplaced="YES" id="fLX-0y-PYW">
+                    <rect key="frame" x="120" y="75" width="145" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Persondatapolicy" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DiP-UL-sse">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="showPrivacyPolicy:" target="-2" id="rC0-5L-6Hd"/>
+                        <outlet property="nextKeyView" destination="89" id="FYe-AI-wat"/>
                     </connections>
                 </button>
             </subviews>
             <connections>
                 <outlet property="nextKeyView" destination="29" id="123"/>
             </connections>
-            <point key="canvasLocation" x="139" y="168.5"/>
+            <point key="canvasLocation" x="139" y="168"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="6"/>
     </objects>

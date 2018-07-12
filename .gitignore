@@ -7,7 +7,6 @@
 *.pyc
 *~.nib/
 build/*
-*.xcworkspace
 xcuserdata
 
 # Textmate - if you build your xcode projects with it

@@ -60,6 +60,8 @@ NSString* const WLWireloadURLKey = @"WireloadURL";
 
 NSString* const WLBannerURLKey = @"BannerURL";
 
+NSString* const WLPrivacyPolicyURLKey = @"PrivacyPolicyURL";
+
 NSString* const WLAnimateBringToFrontKey = @"AnimateBringToFront";
 
 NSString* const WLAutoFadeKey = @"AutoFade";
@@ -87,6 +89,12 @@ NSString* const WLShowsNext7DaysKey = @"RollingCalendar";
 NSString* const WLLastSelectedCalEventCalendarUID = @"uidOfLastSelectedCalendarInEvents";
 
 NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalendarInTasks";
+
+NSString* const WLRequestShareAnalyticsConsentAtStartup = @"RequestShareAnalyticsConsentAtStartup";
+
+NSString* const WLShareAnalytics = @"ShareAnalytics";
+
+NSString* const WLShowPreferencesAtStartUp = @"ShowPreferencesAtStartUp";
 
 
 @implementation NSUserDefaults (WLApplicationDefaults)
@@ -372,6 +380,12 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
     return [NSURL URLWithString:s];
 }
 
+- (NSURL *)WL_privacyPolicyURL
+{
+    NSString *s = [self stringForKey:WLPrivacyPolicyURLKey];
+    return [NSURL URLWithString:s];
+}
+
 @end
 
 
@@ -400,6 +414,21 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
 - (void)WL_setDisplaysAllCalendars:(BOOL)newDisplaysAllCalendars
 {
     [self setBool:newDisplaysAllCalendars forKey:WLDisplayAllCalendarsKey];
+}
+
+@end
+
+
+@implementation NSUserDefaults (WLAboutPreferences)
+
+- (BOOL)WL_requestShareAnalyticsConsentAtStartup
+{
+    return [self boolForKey:WLRequestShareAnalyticsConsentAtStartup];
+}
+
+- (BOOL)WL_shareAnalytics
+{
+    return [self boolForKey:WLShareAnalytics];
 }
 
 @end

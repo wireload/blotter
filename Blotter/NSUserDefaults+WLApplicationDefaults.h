@@ -60,6 +60,8 @@ extern NSString* const WLWireloadURLKey;
 
 extern NSString* const WLBannerURLKey;
 
+extern NSString* const WLPrivacyPolicyURLKey;
+
 extern NSString* const WLAnimateBringToFrontKey;
 
 extern NSString* const WLAutoFadeKey;
@@ -87,6 +89,12 @@ extern NSString* const WLShowsNext7DaysKey;
 extern NSString* const WLLastSelectedCalEventCalendarUID;
 
 extern NSString* const WLLastSelectedCalReminderCalendarUID;
+
+extern NSString* const WLRequestShareAnalyticsConsentAtStartup;
+
+extern NSString* const WLShareAnalytics;
+
+extern NSString* const WLShowPreferencesAtStartUp;
 
 
 @interface NSUserDefaults (WLApplicationDefaults)
@@ -165,6 +173,8 @@ extern NSString* const WLLastSelectedCalReminderCalendarUID;
 
 - (NSURL *)WL_bannerURL;
 
+- (NSURL *)WL_privacyPolicyURL;
+
 @end
 
 
@@ -182,6 +192,15 @@ extern NSString* const WLLastSelectedCalReminderCalendarUID;
 - (BOOL)WL_displaysAllCalendars;
 
 - (void)WL_setDisplaysAllCalendars:(BOOL)newDisplaysAllCalendars;
+
+@end
+
+
+@interface NSUserDefaults (WLAboutPreferences)
+
+- (BOOL)WL_requestShareAnalyticsConsentAtStartup;
+
+- (BOOL)WL_shareAnalytics;
 
 @end
 

@@ -7,3 +7,6 @@
 [submodule "Blotter/IKApplicationPreferences"]
 	path = Blotter/IKApplicationPreferences
 	url = git://github.com/Kentzo/IKApplicationPreferences.git
+[submodule "Mixpanel"]
+	path = Mixpanel
+	url = git@github.com:mixpanel/mixpanel-iphone.git

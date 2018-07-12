@@ -74,6 +74,7 @@ static NSString* const _WLStatusItemAutosaveName = @"net.wireload.blotter.mac.St
     [defaults removeObserver:self forKeyPath:WLShowInMenuBar];
     [defaults removeObserver:self forKeyPath:WLAutoFadeKey];
     [defaults removeObserver:self forKeyPath:WLAutoFadeSecondsKey];
+    [defaults removeObserver:self forKeyPath:WLShareAnalytics];
     [_shortcuts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
     {
         NSString *shortcutName = obj[ShortcutsNameIdx];
@@ -374,6 +375,34 @@ static NSString* const _WLStatusItemAutosaveName = @"net.wireload.blotter.mac.St
         [NSApp hide:self];
 }
 
+- (void)reportLaunchedToMixpanelIfNeeded
+{
+    if (![[NSUserDefaults standardUserDefaults] WL_shareAnalytics])
+        return;
+
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSXPCConnection *connection = [[NSXPCConnection alloc] initWithServiceName:@"net.wireload.blotter.mac.mixpanel"];
+        connection.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(MixpanelProtocol)];
+        [connection resume];
+
+        NSLocale *locale = [NSLocale currentLocale];
+        NSDictionary *bundleInfo = [NSBundle mainBundle].infoDictionary;
+        NSMutableDictionary *properties = [@{
+            @"Locale": locale.localeIdentifier,
+            @"Calendar": locale.calendarIdentifier
+        } mutableCopy];
+        [properties setValue:bundleInfo[@"CFBundleVersion"] forKey:@"$app_version"];
+        [properties setValue:bundleInfo[@"CFBundleShortVersionString"] forKey:@"$app_release"];
+        [properties setValue:bundleInfo[@"CFBundleVersion"] forKey:@"$app_build_number"];
+        [properties setValue:bundleInfo[@"CFBundleShortVersionString"] forKey:@"$app_version_string"];
+
+        [connection.remoteObjectProxy track:@"Launched" withProperties:properties andReply:^{
+            [connection invalidate];
+        }];
+    });
+}
+
 
 #pragma mark NSApplicationDelegate
 
@@ -409,11 +438,11 @@ static NSString* const _WLStatusItemAutosaveName = @"net.wireload.blotter.mac.St
     _calendarWindowController = [[WLCalendarWindowController alloc] init];
     [_calendarWindowController showWindow:self];
 
-    // Show preferences at first start.
-    if ([defaults boolForKey:@"ShowPreferencesAtStartUp"])
+    // Show preferences at first start or to request share analytics consent.
+    if ([defaults boolForKey:WLShowPreferencesAtStartUp] || [defaults boolForKey:WLRequestShareAnalyticsConsentAtStartup])
     {
         [self showPreferences:self];
-        [defaults setBool:NO forKey:@"ShowPreferencesAtStartUp"];
+        [defaults setBool:NO forKey:WLShowPreferencesAtStartUp];
     }
 
     // Configure application run timer.
@@ -440,6 +469,11 @@ static NSString* const _WLStatusItemAutosaveName = @"net.wireload.blotter.mac.St
     [defaults addObserver:self
                forKeyPath:WLAutoFadeSecondsKey
                   options:NSKeyValueObservingOptionNew
+                  context:NULL];
+
+    [defaults addObserver:self
+               forKeyPath:WLShareAnalytics
+                  options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial
                   context:NULL];
 
     [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:NSApp.windows];
@@ -556,6 +590,15 @@ static NSString* const _WLStatusItemAutosaveName = @"net.wireload.blotter.mac.St
 }
 
 
+#pragma mark NSAlertDelegate
+
+- (BOOL)alertShowHelp:(NSAlert *)anAlert
+{
+    [[NSWorkspace sharedWorkspace] openURL:[[NSUserDefaults standardUserDefaults] WL_privacyPolicyURL]];
+    return YES;
+}
+
+
 #pragma mark Private
 
 - (void)_scheduleShowCurrentWeekTimerIfNeeded
@@ -667,6 +710,8 @@ static NSString* const _WLStatusItemAutosaveName = @"net.wireload.blotter.mac.St
     }
     else if ([aKeyPath isEqualToString:NSVisibleBinding])
         [[NSUserDefaults standardUserDefaults] setValue:aChange[NSKeyValueChangeNewKey] forKeyPath:WLShowInMenuBar];
+    else if ([aKeyPath isEqualToString:WLShareAnalytics])
+        [self reportLaunchedToMixpanelIfNeeded];
     else
         [super observeValueForKeyPath:aKeyPath ofObject:aObject change:aChange context:aContext];
 }

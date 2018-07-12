@@ -11,7 +11,10 @@
 #import "WLApplicationPreferences.h"
 #import "WLNewEventWindowController.h"
 #import "WLNewReminderWindowController.h"
+#import "MixpanelProtocol.h"
 
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface DeskboardAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate /*, NSMenuValidation*/>
 {
@@ -83,6 +86,15 @@
  */
 - (void)deactivateAppIfAllConditionsAreMet:(NSArray *)aWindows;
 
+/*!
+    @brief      Report the Launched event to Mixpanel.
+
+    @discussion Reports only once per application lifetime and only if user gave consent.
+
+    @see        WLShareAnalytics
+ */
+- (void)reportLaunchedToMixpanelIfNeeded;
+
 
 - (void)_scheduleShowCurrentWeekTimerIfNeeded;
 
@@ -98,3 +110,5 @@
 - (void)_autoFadeTimerDidFire;
 
 @end
+
+NS_ASSUME_NONNULL_END

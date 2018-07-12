@@ -9,6 +9,8 @@
 #import "IKApplicationPreferences.h"
 
 
-@interface WLApplicationPreferences : IKApplicationPreferences
+@interface WLApplicationPreferences : IKApplicationPreferences <NSAlertDelegate>
+
+- (void)requestShareAnalyticsConsentIfNeeded;
 
 @end

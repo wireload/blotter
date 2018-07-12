@@ -22,4 +22,6 @@
 
 - (IBAction)showMacOSXCalendarSettings:(id)aSender;
 
+- (IBAction)showPrivacyPolicy:(id)aSender;
+
 @end

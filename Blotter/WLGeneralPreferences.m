@@ -66,6 +66,11 @@ static NSString *_WLLoginItemJobLabel = @"net.wireload.blotter.mac.LoginItem";
     }
 }
 
+- (IBAction)showPrivacyPolicy:(id)aSender
+{
+    [[NSWorkspace sharedWorkspace] openURL:[[NSUserDefaults standardUserDefaults] WL_privacyPolicyURL]];
+}
+
 
 #pragma mark IKPreferencesRepresentation
 

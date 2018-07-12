@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Mixpanel/Mixpanel.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Blotter-mini/Blotter-mini.xcodeproj">
    </FileRef>
    <FileRef
