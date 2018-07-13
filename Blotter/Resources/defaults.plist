@@ -67,15 +67,15 @@
 	<key>WLCalSystemStoreChecksCalendarsAgainstICal</key>
 	<true/>
 	<key>GetHelpURL</key>
-	<string>http://wireload.net/products/blotter/faq/?utm_source=Blotter&amp;utm_medium=app&amp;utm_content=about_page_help&amp;utm_campaign=Blotter_app</string>
+	<string>https://wireload.net/products/blotter/faq/?utm_source=Blotter&amp;utm_medium=app&amp;utm_content=about_page_help&amp;utm_campaign=Blotter_app</string>
 	<key>GetSupportURL</key>
-	<string>http://wireload.net/products/blotter/help/?utm_source=Blotter&amp;utm_medium=app&amp;utm_content=about_page_support&amp;utm_campaign=Blotter_app</string>
+	<string>https://wireload.net/products/blotter/help/?utm_source=Blotter&amp;utm_medium=app&amp;utm_content=about_page_support&amp;utm_campaign=Blotter_app</string>
 	<key>FollowOnTwitterURL</key>
-	<string>http://twitter.com/BlotterApp</string>
+	<string>https://twitter.com/BlotterApp</string>
 	<key>WireloadURL</key>
-	<string>http://wireload.net/?utm_source=Blotter&amp;utm_medium=app&amp;utm_content=about_page_wireload&amp;utm_campaign=Blotter_app</string>
+	<string>https://wireload.net/?utm_source=Blotter&amp;utm_medium=app&amp;utm_content=about_page_wireload&amp;utm_campaign=Blotter_app</string>
 	<key>BannerURL</key>
-	<string>http://www.yippiemove.com/?utm_source=Blotter&amp;utm_medium=app&amp;utm_content=about-page&amp;utm_campaign=Blotter%2Bapp</string>
+	<string>https://www.yippiemove.com/?utm_source=Blotter&amp;utm_medium=app&amp;utm_content=about-page&amp;utm_campaign=Blotter%2Bapp</string>
 	<key>AnimateBringToFront</key>
 	<true/>
 	<key>WLCalSystemStoreAllowsAdvancedCalendarTypeCheck</key>
