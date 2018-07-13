@@ -54,20 +54,19 @@ static NSString *_WLLoginItemJobLabel = @"net.wireload.blotter.mac.LoginItem";
 
 - (IBAction)showMacOSXCalendarSettings:(id)aSender
 {
+    // This replaces -[SBApplication activate] that launches the app but does not bring it to foreground.
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"x-apple.systempreferences:"]];
+
     // TODO: Would be wise to replace it with proper NSError
     BOOL is_successful = YES;
-    
+
     // @try-@catch is used here because when Scripting Bridge fails due to sandboxing, exception is thrown rather than error.
     @try
     {
         SystemPreferencesApplication *app = (SystemPreferencesApplication *)[SBApplication applicationWithBundleIdentifier:@"com.apple.systempreferences"];
         SystemPreferencesPane *pane = [[app panes] objectWithID:@"com.apple.Localization"];
         SystemPreferencesAnchor *anchor = [[pane anchors] objectWithName:@"Region"];
-
-        if ([anchor reveal] != nil)
-            [app activate];
-        else
-            is_successful = NO;
+        is_successful = [anchor reveal] != nil;
     }
     @catch (...)
     {
