@@ -10,28 +10,20 @@
 
 
 @implementation WLCustomCursorButton
+{
+    NSTrackingArea *_cursorTrackingArea;
+}
 
 - (instancetype)initWithFrame:(NSRect)aFrameRect
 {
-    self = [super initWithFrame:aFrameRect];
-    if (self != nil)
+    if (self = [super initWithFrame:aFrameRect])
     {
-        _cursorTrackingArea = [[self makeCursorTrackingArea] retain];
+        _cursorTrackingArea = [self makeCursorTrackingArea];
         [self addTrackingArea:_cursorTrackingArea];
     }
+
     return self;
 }
-
-- (void)dealloc
-{
-    [cursor release];
-    [_cursorTrackingArea release];
-    [super dealloc];
-}
-
-
-#pragma mark Properties
-@synthesize cursor;
 
 
 #pragma mark Methods
@@ -43,7 +35,7 @@
                                                                       options:trackingOptions
                                                                         owner:self
                                                                      userInfo:nil];
-    return [cursorTrackingArea autorelease];
+    return cursorTrackingArea;
 }
 
 
@@ -53,8 +45,7 @@
 {
     [super updateTrackingAreas];
     [self removeTrackingArea:_cursorTrackingArea];
-    [_cursorTrackingArea release];
-    _cursorTrackingArea = [[self makeCursorTrackingArea] retain];
+    _cursorTrackingArea = [self makeCursorTrackingArea];
     [self addTrackingArea:_cursorTrackingArea];
 }
 

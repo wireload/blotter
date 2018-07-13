@@ -9,21 +9,18 @@
 #import <Foundation/Foundation.h>
 
 
+NS_ASSUME_NONNULL_BEGIN
+
 /*!
  @abstract  Allows a user to customize cursor for a button.
  */
 @interface WLCustomCursorButton : NSButton
-{
-    NSCursor *cursor;
-
-    NSTrackingArea *_cursorTrackingArea;
-}
 
 /*!
  @abstract      Specifies cursor of the button.
  @discussion    Sends -cursorUpdate:nil to the button when changes.
  */
-@property (nonatomic, retain) NSCursor *cursor;
+@property (nonatomic, strong) NSCursor *cursor;
 
 /*!
  @abstract      Returns cursor tracking area.
@@ -32,3 +29,5 @@
 - (NSTrackingArea *)makeCursorTrackingArea;
 
 @end
+
+NS_ASSUME_NONNULL_END
