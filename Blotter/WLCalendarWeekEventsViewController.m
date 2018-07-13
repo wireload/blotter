@@ -294,8 +294,12 @@
 
 - (void)eventsDidChange:(NSNotification *)aNotification
 {
-    WLCalendarEventsController *localRepresentedObject = aNotification.object;
     WLDateRange *localRepresentedDateRange = [self.dateRangeOfColumns copy];
+
+    if (localRepresentedDateRange == nil)
+        return;
+
+    WLCalendarEventsController *localRepresentedObject = aNotification.object;
     NSArray *events = aNotification.userInfo[localRepresentedDateRange];
 
     if (events)

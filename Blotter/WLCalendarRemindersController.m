@@ -215,9 +215,20 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
 
         for (NSDictionary *storeUserInfo in NSAllMapTableValues(userInfoPerStore))
         {
-            [userInfo[@(WLCalReminderCompletionMaskComplete)] addObjectsFromArray:storeUserInfo[@(WLCalReminderCompletionMaskComplete)]];
-            [userInfo[@(WLCalReminderCompletionMaskIncomplete)] addObjectsFromArray:storeUserInfo[@(WLCalReminderCompletionMaskIncomplete)]];
-            [userInfo[@(WLCalReminderCompletionMaskAny)] addObjectsFromArray:storeUserInfo[@(WLCalReminderCompletionMaskAny)]];
+            if (storeUserInfo[@(WLCalReminderCompletionMaskComplete)])
+            {
+                [userInfo[@(WLCalReminderCompletionMaskComplete)] addObjectsFromArray:storeUserInfo[@(WLCalReminderCompletionMaskComplete)]];
+            }
+
+            if (storeUserInfo[@(WLCalReminderCompletionMaskIncomplete)])
+            {
+                [userInfo[@(WLCalReminderCompletionMaskIncomplete)] addObjectsFromArray:storeUserInfo[@(WLCalReminderCompletionMaskIncomplete)]];
+            }
+
+            if (storeUserInfo[@(WLCalReminderCompletionMaskAny)])
+            {
+                [userInfo[@(WLCalReminderCompletionMaskAny)] addObjectsFromArray:storeUserInfo[@(WLCalReminderCompletionMaskAny)]];
+            }
         }
 
         if (localOperation.cancelled)

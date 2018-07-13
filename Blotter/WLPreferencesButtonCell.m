@@ -64,7 +64,8 @@
 
         [self drawTitle:self.attributedTitle withFrame:titleFrame inView:controlView];
 
-        [self drawImage:self.image withFrame:imageFrame inView:controlView];
+        if (self.image)
+            [self drawImage:self.image withFrame:imageFrame inView:controlView];
     }
     else
     {
@@ -100,7 +101,9 @@
         imageFrame.origin.y -= 2;
 
         [self drawTitle:self.attributedTitle withFrame:titleFrame inView:controlView];
-        [self drawImage:self.image withFrame:imageFrame inView:controlView];
+
+        if (self.image)
+            [self drawImage:self.image withFrame:imageFrame inView:controlView];
     }
 }
 

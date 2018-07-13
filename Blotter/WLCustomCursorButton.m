@@ -44,7 +44,10 @@
 - (void)updateTrackingAreas
 {
     [super updateTrackingAreas];
-    [self removeTrackingArea:_cursorTrackingArea];
+
+    if (_cursorTrackingArea)
+        [self removeTrackingArea:_cursorTrackingArea];
+
     _cursorTrackingArea = [self makeCursorTrackingArea];
     [self addTrackingArea:_cursorTrackingArea];
 }

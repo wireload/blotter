@@ -1036,7 +1036,12 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 
     WLCalendarDayEventsLayer *dayLayer = [self dayLayers][anIndex];
     NSParameterAssert(dayLayer != nil);
-    dayLayer.events = [NSSet setWithArray:[self.dataSource weekView:self eventsForColumnAtIndex:anIndex]];
+
+    NSArray *events = [self.dataSource weekView:self eventsForColumnAtIndex:anIndex];
+    if (events)
+        dayLayer.events = [NSSet setWithArray:events];
+    else
+        dayLayer.events = [NSSet set];
 
     if (self.showsAllDayEvents)
     {
