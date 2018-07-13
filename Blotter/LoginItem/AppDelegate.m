@@ -1,14 +1,15 @@
 //
-//  WLAppDelegate.m
+//  AppDelegate.m
 //  LoginItem
 //
-//  Created by Ilya Kulakov on 18.03.13.
-//  Copyright (c) 2013 Wireload. All rights reserved.
+//  Created by Ilya Kulakov on 7/12/18.
+//  Copyright © 2018 WireLoad. All rights reserved.
 //
 
-#import "WLAppDelegate.h"
+#import "AppDelegate.h"
 
-@implementation WLAppDelegate
+
+@implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -17,9 +18,9 @@
                                                passingTest:^BOOL(NSRunningApplication *anApp, NSUInteger idx, BOOL *stop)
                       {
                           return [anApp.bundleIdentifier isEqualToString:@"net.wireload.blotter.mac"];
-                          
+
                       }] != NSNotFound;
-    
+
     if (!isRunning) {
         NSString *path = [NSBundle mainBundle].bundlePath;
         NSArray *p = path.pathComponents;

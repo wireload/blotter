@@ -78,12 +78,14 @@
 		BA5AC43A16FC9A3A009321A0 /* NSUserDefaults+WLApplicationDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C8B16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BA5AC43B16FC9A54009321A0 /* WLHourRange.m in Sources */ = {isa = PBXBuildFile; fileRef = E23F746E14434DE40055D6CE /* WLHourRange.m */; };
 		BA5AC43C16FC9B49009321A0 /* NSDate+WLDayBoundaries.m in Sources */ = {isa = PBXBuildFile; fileRef = E253574F13DC884D0010A2ED /* NSDate+WLDayBoundaries.m */; };
+		BA699BA620F86C3600F3A0F9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA699BA520F86C3600F3A0F9 /* AppDelegate.m */; };
+		BA699BAB20F86C3800F3A0F9 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA699BA920F86C3800F3A0F9 /* MainMenu.xib */; };
+		BA699BAE20F86C3800F3A0F9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BA699BAD20F86C3800F3A0F9 /* main.m */; };
+		BA699BB420F86D4D00F3A0F9 /* LoginItem.app in Copy Login Item */ = {isa = PBXBuildFile; fileRef = BA699BA220F86C3600F3A0F9 /* LoginItem.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BA72ED7F20EC178200CF6F83 /* WLFoundation.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70DF20E30D5F0079CCD4 /* WLFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA72ED8020EC178200CF6F83 /* WLCalendarStore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70DD20E30D5C0079CCD4 /* WLCalendarStore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA72ED8120EC178200CF6F83 /* ShortcutRecorder.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70DB20E30D5A0079CCD4 /* ShortcutRecorder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA72ED8220EC178200CF6F83 /* PTHotKey.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70D920E30D560079CCD4 /* PTHotKey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		BA72ED9120EC1D8E00CF6F83 /* LoginItem.app in Resources */ = {isa = PBXBuildFile; fileRef = BA72ED9020EC1D8E00CF6F83 /* LoginItem.app */; };
-		BA72ED9220EC1DA500CF6F83 /* LoginItem.app in Copy Login Item */ = {isa = PBXBuildFile; fileRef = BA72ED9020EC1D8E00CF6F83 /* LoginItem.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BA807F0F1645460C0033B85B /* IKApplicationPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA807F0C1645460C0033B85B /* IKApplicationPreferences.m */; };
 		BA81A834164548070058EB16 /* IKApplicationPreferences.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA81A832164548070058EB16 /* IKApplicationPreferences.strings */; };
 		BA9617F120E440EB00AACC98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA9617F020E440EB00AACC98 /* Assets.xcassets */; };
@@ -156,6 +158,13 @@
 			remoteGlobalIDString = 8D1107260486CEB800E47090;
 			remoteInfo = Blotter;
 		};
+		BA699BB520F86D5A00F3A0F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BA699BA120F86C3600F3A0F9;
+			remoteInfo = LoginItem;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -179,7 +188,7 @@
 			dstPath = Contents/Library/LoginItems;
 			dstSubfolderSpec = 1;
 			files = (
-				BA72ED9220EC1DA500CF6F83 /* LoginItem.app in Copy Login Item */,
+				BA699BB420F86D4D00F3A0F9 /* LoginItem.app in Copy Login Item */,
 			);
 			name = "Copy Login Item";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -294,7 +303,13 @@
 		BA5AC3C616F9CB31009321A0 /* BlotterTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BlotterTests-Prefix.pch"; sourceTree = "<group>"; };
 		BA5AC3E316FAF662009321A0 /* WLCalendarEventsControllerTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarEventsControllerTests.h; sourceTree = "<group>"; };
 		BA5AC3E416FAF662009321A0 /* WLCalendarEventsControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarEventsControllerTests.m; sourceTree = "<group>"; };
-		BA72ED9020EC1D8E00CF6F83 /* LoginItem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = LoginItem.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA699BA220F86C3600F3A0F9 /* LoginItem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoginItem.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA699BA420F86C3600F3A0F9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		BA699BA520F86C3600F3A0F9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		BA699BAA20F86C3800F3A0F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		BA699BAC20F86C3800F3A0F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BA699BAD20F86C3800F3A0F9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		BA699BAF20F86C3800F3A0F9 /* LoginItem.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LoginItem.entitlements; sourceTree = "<group>"; };
 		BA807F0B1645460C0033B85B /* IKApplicationPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKApplicationPreferences.h; sourceTree = "<group>"; };
 		BA807F0C1645460C0033B85B /* IKApplicationPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKApplicationPreferences.m; sourceTree = "<group>"; };
 		BA807F0E1645460C0033B85B /* IKPreferencesRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKPreferencesRepresentation.h; sourceTree = "<group>"; };
@@ -500,6 +515,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BA699B9F20F86C3600F3A0F9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -508,6 +530,7 @@
 			children = (
 				8D1107320486CEB800E47090 /* Blotter.app */,
 				BA5AC3BA16F9CB31009321A0 /* BlotterTests.octest */,
+				BA699BA220F86C3600F3A0F9 /* LoginItem.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -515,9 +538,9 @@
 		29B97314FDCFA39411CA2CEA /* Deskboard */ = {
 			isa = PBXGroup;
 			children = (
-				BA72ED9020EC1D8E00CF6F83 /* LoginItem.app */,
 				BA5AC3CB16F9CB6D009321A0 /* Blotter */,
 				BA5AC3BD16F9CB31009321A0 /* BlotterTests */,
+				BA699BA320F86C3600F3A0F9 /* LoginItem */,
 				BA2F70D820E30D560079CCD4 /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
@@ -783,6 +806,19 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		BA699BA320F86C3600F3A0F9 /* LoginItem */ = {
+			isa = PBXGroup;
+			children = (
+				BA699BA420F86C3600F3A0F9 /* AppDelegate.h */,
+				BA699BA520F86C3600F3A0F9 /* AppDelegate.m */,
+				BA699BA920F86C3800F3A0F9 /* MainMenu.xib */,
+				BA699BAC20F86C3800F3A0F9 /* Info.plist */,
+				BA699BAD20F86C3800F3A0F9 /* main.m */,
+				BA699BAF20F86C3800F3A0F9 /* LoginItem.entitlements */,
+			);
+			path = LoginItem;
+			sourceTree = "<group>";
+		};
 		BA807E8D164545950033B85B /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
@@ -891,6 +927,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				BA699BB620F86D5A00F3A0F9 /* PBXTargetDependency */,
 			);
 			name = Blotter;
 			productInstallPath = "$(HOME)/Applications";
@@ -917,6 +954,23 @@
 			productReference = BA5AC3BA16F9CB31009321A0 /* BlotterTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
+		BA699BA120F86C3600F3A0F9 /* LoginItem */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BA699BB020F86C3800F3A0F9 /* Build configuration list for PBXNativeTarget "LoginItem" */;
+			buildPhases = (
+				BA699B9E20F86C3600F3A0F9 /* Sources */,
+				BA699B9F20F86C3600F3A0F9 /* Frameworks */,
+				BA699BA020F86C3600F3A0F9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LoginItem;
+			productName = LoginItem;
+			productReference = BA699BA220F86C3600F3A0F9 /* LoginItem.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -931,6 +985,11 @@
 					};
 					BA5AC3B916F9CB31009321A0 = {
 						DevelopmentTeam = 438Z2G77U3;
+					};
+					BA699BA120F86C3600F3A0F9 = {
+						CreatedOnToolsVersion = 9.4.1;
+						DevelopmentTeam = 438Z2G77U3;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -974,6 +1033,7 @@
 				tr,
 				uk,
 				"zh-Hant",
+				Base,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* Deskboard */;
 			projectDirPath = "";
@@ -981,6 +1041,7 @@
 			targets = (
 				8D1107260486CEB800E47090 /* Blotter */,
 				BA5AC3B916F9CB31009321A0 /* BlotterTests */,
+				BA699BA120F86C3600F3A0F9 /* LoginItem */,
 			);
 		};
 /* End PBXProject section */
@@ -990,7 +1051,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA72ED9120EC1D8E00CF6F83 /* LoginItem.app in Resources */,
 				28F69A1B129C1CAA00D4BB97 /* Credits.rtf in Resources */,
 				28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */,
 				E28C418D13F081A1005789DD /* defaults.plist in Resources */,
@@ -1016,6 +1076,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA5AC3C216F9CB31009321A0 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BA699BA020F86C3600F3A0F9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA699BAB20F86C3800F3A0F9 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1153,6 +1221,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BA699B9E20F86C3600F3A0F9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA699BAE20F86C3800F3A0F9 /* main.m in Sources */,
+				BA699BA620F86C3600F3A0F9 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1160,6 +1237,11 @@
 			isa = PBXTargetDependency;
 			target = 8D1107260486CEB800E47090 /* Blotter */;
 			targetProxy = BA5AC42016FC95D8009321A0 /* PBXContainerItemProxy */;
+		};
+		BA699BB620F86D5A00F3A0F9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BA699BA120F86C3600F3A0F9 /* LoginItem */;
+			targetProxy = BA699BB520F86D5A00F3A0F9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1170,6 +1252,14 @@
 				BA5AC3C116F9CB31009321A0 /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		BA699BA920F86C3800F3A0F9 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BA699BAA20F86C3800F3A0F9 /* Base */,
+			);
+			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 		BA81A832164548070058EB16 /* IKApplicationPreferences.strings */ = {
@@ -1424,6 +1514,111 @@
 			};
 			name = Archiving;
 		};
+		BA699BB120F86C3800F3A0F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = LoginItem/LoginItem.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 438Z2G77U3;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = LoginItem/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.blotter.mac.LoginItem;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		BA699BB220F86C3800F3A0F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = LoginItem/LoginItem.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 438Z2G77U3;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = LoginItem/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.blotter.mac.LoginItem;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		BA699BB320F86C3800F3A0F9 /* Archiving */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = LoginItem/LoginItem.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 438Z2G77U3;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = LoginItem/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.blotter.mac.LoginItem;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Archiving;
+		};
 		BAF67FF016D62B460047FE2A /* Archiving */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1630,6 +1825,16 @@
 				BA5AC3C816F9CB31009321A0 /* Debug */,
 				BA5AC3C916F9CB31009321A0 /* Release */,
 				BA5AC3CA16F9CB31009321A0 /* Archiving */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BA699BB020F86C3800F3A0F9 /* Build configuration list for PBXNativeTarget "LoginItem" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA699BB120F86C3800F3A0F9 /* Debug */,
+				BA699BB220F86C3800F3A0F9 /* Release */,
+				BA699BB320F86C3800F3A0F9 /* Archiving */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
