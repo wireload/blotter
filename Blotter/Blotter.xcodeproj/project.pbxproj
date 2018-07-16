@@ -50,7 +50,6 @@
 		BA2F70E620E30D7D0079CCD4 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70E520E30D7C0079CCD4 /* AppKit.framework */; };
 		BA2F70E820E30D8E0079CCD4 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70E720E30D8E0079CCD4 /* CoreText.framework */; };
 		BA2F70EA20E30DAF0079CCD4 /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70E920E30DAF0079CCD4 /* CalendarStore.framework */; };
-		BA2F70EC20E30DB80079CCD4 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70EB20E30DB80079CCD4 /* ScriptingBridge.framework */; };
 		BA2F70EE20E30DC20079CCD4 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70ED20E30DC20079CCD4 /* ServiceManagement.framework */; };
 		BA2F70F020E30DD50079CCD4 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70EF20E30DD50079CCD4 /* Carbon.framework */; };
 		BA2F70F420E30DE20079CCD4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70F320E30DE10079CCD4 /* QuartzCore.framework */; };
@@ -278,7 +277,6 @@
 		BA105997168DAD8F00A3DDF5 /* WLCalendarEventsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarEventsController.m; sourceTree = "<group>"; };
 		BA1F51D91663B2A400ABD662 /* WLGeneralPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGeneralPreferences.h; sourceTree = "<group>"; };
 		BA1F51DA1663B2A400ABD662 /* WLGeneralPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGeneralPreferences.m; sourceTree = "<group>"; };
-		BA1F51DC1663B30500ABD662 /* SystemPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemPreferences.h; sourceTree = "<group>"; };
 		BA23660816F706B600779487 /* Blotter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Blotter.entitlements; path = ../Blotter.entitlements; sourceTree = "<group>"; };
 		BA2F70D920E30D560079CCD4 /* PTHotKey.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PTHotKey.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA2F70DB20E30D5A0079CCD4 /* ShortcutRecorder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ShortcutRecorder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -495,7 +493,6 @@
 				BA2F70F420E30DE20079CCD4 /* QuartzCore.framework in Frameworks */,
 				BA2F70F020E30DD50079CCD4 /* Carbon.framework in Frameworks */,
 				BA2F70EE20E30DC20079CCD4 /* ServiceManagement.framework in Frameworks */,
-				BA2F70EC20E30DB80079CCD4 /* ScriptingBridge.framework in Frameworks */,
 				BA2F70EA20E30DAF0079CCD4 /* CalendarStore.framework in Frameworks */,
 				BA2F70E820E30D8E0079CCD4 /* CoreText.framework in Frameworks */,
 				BA2F70E620E30D7D0079CCD4 /* AppKit.framework in Frameworks */,
@@ -575,7 +572,6 @@
 		BA1F51D11663B23700ABD662 /* General */ = {
 			isa = PBXGroup;
 			children = (
-				BA1F51DC1663B30500ABD662 /* SystemPreferences.h */,
 				BA1F51D91663B2A400ABD662 /* WLGeneralPreferences.h */,
 				BA1F51DA1663B2A400ABD662 /* WLGeneralPreferences.m */,
 			);

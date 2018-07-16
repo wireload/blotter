@@ -13,10 +13,6 @@
 		<array>
 			<string>com.apple.iCal.read-write</string>
 		</array>
-		<key>com.apple.systempreferences</key>
-		<array>
-			<string>preferencepane.reveal</string>
-		</array>
 	</dict>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>

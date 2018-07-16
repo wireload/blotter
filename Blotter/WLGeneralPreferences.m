@@ -9,7 +9,6 @@
 #import <ServiceManagement/ServiceManagement.h>
 #import "NSUserDefaults+WLApplicationDefaults.h"
 #import "WLGeneralPreferences.h"
-#import "SystemPreferences.h"
 
 
 static NSString *_WLLoginItemJobLabel = @"net.wireload.blotter.mac.LoginItem";
@@ -54,37 +53,7 @@ static NSString *_WLLoginItemJobLabel = @"net.wireload.blotter.mac.LoginItem";
 
 - (IBAction)showMacOSXCalendarSettings:(id)aSender
 {
-    // This replaces -[SBApplication activate] that launches the app but does not bring it to foreground.
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"x-apple.systempreferences:"]];
-
-    // TODO: Would be wise to replace it with proper NSError
-    BOOL is_successful = YES;
-
-    // @try-@catch is used here because when Scripting Bridge fails due to sandboxing, exception is thrown rather than error.
-    @try
-    {
-        SystemPreferencesApplication *app = (SystemPreferencesApplication *)[SBApplication applicationWithBundleIdentifier:@"com.apple.systempreferences"];
-        SystemPreferencesPane *pane = [[app panes] objectWithID:@"com.apple.Localization"];
-        SystemPreferencesAnchor *anchor = [[pane anchors] objectWithName:@"Region"];
-        is_successful = [anchor reveal] != nil;
-    }
-    @catch (...)
-    {
-        is_successful = NO;
-    }
-    @finally
-    {
-        if (!is_successful)
-        {
-            NSAlert *a = [NSAlert new];
-            a.messageText = NSLocalizedString(@"Failed to open System Preferences.",  @"Cannot open System Preferences alert message");
-            a.informativeText = NSLocalizedString(@"You can open it manually by following:\n→System Preferences…→Language & Text→Region", @"Cannot open System Preferences alert informative text for 10.8 and higher");
-            a.alertStyle = NSCriticalAlertStyle;
-            a.showsHelp = YES;
-            a.delegate = self;
-            [a beginSheetModalForWindow:self.view.window completionHandler:nil];
-        }
-    }
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL fileURLWithPath:@"/System/Library/PreferencePanes/Localization.prefPane"]];
 }
 
 
