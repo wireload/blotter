@@ -40,11 +40,6 @@
     [[NSWorkspace sharedWorkspace] openURL:[[NSUserDefaults standardUserDefaults] WL_wireloadURL]];
 }
 
-- (IBAction)showBanner:(id)aSender
-{
-    [[NSWorkspace sharedWorkspace] openURL:[[NSUserDefaults standardUserDefaults] WL_bannerURL]];
-}
-
 
 #pragma mark IKPreferencesRepresentation
 

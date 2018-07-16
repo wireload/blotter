@@ -8,7 +8,6 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="WLAboutPreferences">
             <connections>
-                <outlet property="_bannerButton" destination="49" id="81"/>
                 <outlet property="_copyrightView" destination="56" id="58"/>
                 <outlet property="_versionView" destination="53" id="55"/>
                 <outlet property="_wireloadButton" destination="47" id="80"/>
@@ -88,17 +87,6 @@
                     </buttonCell>
                     <connections>
                         <action selector="showWireload:" target="-2" id="51"/>
-                    </connections>
-                </button>
-                <button focusRingType="none" id="49" userLabel="Banner Button" customClass="WLCustomCursorButton">
-                    <rect key="frame" x="0.0" y="-1" width="266" height="138"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" refusesFirstResponder="YES" state="on" focusRingType="none" transparent="YES" imageScaling="proportionallyDown" inset="2" id="50">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="showBanner:" target="-2" id="52"/>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="53" userLabel="Version Label">

@@ -16,7 +16,6 @@
 {
     IBOutlet NSTextField *_versionView;
     IBOutlet NSTextField *_copyrightView;
-    IBOutlet WLCustomCursorButton *_bannerButton;
     IBOutlet WLCustomCursorButton *_wireloadButton;
 }
 
@@ -29,7 +28,5 @@
 - (IBAction)showFollowUsOnTwitter:(id)aSender;
 
 - (IBAction)showWireload:(id)aSender;
-
-- (IBAction)showBanner:(id)aSender;
 
 @end
