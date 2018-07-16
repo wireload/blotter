@@ -32,7 +32,7 @@
                 <button id="4">
                     <rect key="frame" x="134" y="222" width="245" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Zeige Wochentage an" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="5">
+                    <buttonCell key="cell" type="check" title="Zeige Wochentag Termine" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="5">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -127,7 +127,7 @@
                 <button id="75">
                     <rect key="frame" x="134" y="202" width="245" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Nächste sieben Tage ab heute anzeigen" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="76">
+                    <buttonCell key="cell" type="check" title="Nächsten 7 Tage anzeigen ab heute" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="76">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -185,7 +185,7 @@
                 <textField verticalHuggingPriority="750" id="105">
                     <rect key="frame" x="133" y="107" width="316" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Blotter neustarten, um die Einstellungen wieder zu öffnen." id="106">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Blotter neu starten, um Einstellungen wieder zu öffnen." id="106">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
