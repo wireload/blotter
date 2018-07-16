@@ -22,6 +22,10 @@ static const CGFloat _WLMysteriousExtraLeftSpace = 2.0;
 static const CGFloat _WLMysteriousExtraBottomSpace = 4.0;
 
 @implementation WLCalendarBoxView
+{
+    NSView *_contentView;
+    BOOL _softEdges;
+}
 
 - (instancetype)initWithFrame:(NSRect)aFrameRect
 {
@@ -35,31 +39,23 @@ static const CGFloat _WLMysteriousExtraBottomSpace = 4.0;
 
 
 #pragma mark Properties
-@synthesize title;
-@dynamic contentView;
-@synthesize softEdges;
-
-- (NSView *)contentView
-{
-    return contentView;
-}
 
 - (void)setContentView:(NSView *)newContentView
 {
     newContentView.frame = [self _contentFrame];
     newContentView.autoresizingMask = NSViewHeightSizable;
-    if (contentView != nil)
-        [self replaceSubview:contentView with:newContentView];
+    if (_contentView != nil)
+        [self replaceSubview:_contentView with:newContentView];
     else
         [self addSubview:newContentView];
-    contentView = newContentView;
-    [contentView setNeedsDisplay:YES];
-    self.softEdges = softEdges;
+    _contentView = newContentView;
+    [_contentView setNeedsDisplay:YES];
+    self.softEdges = _softEdges;
 }
 
 - (void)setSoftEdges:(BOOL)newSoftEdges
 {
-    softEdges = newSoftEdges;
+    _softEdges = newSoftEdges;
     if (!(self.contentView).wantsLayer)
         return;
     else if (self.softEdges)
@@ -83,7 +79,6 @@ static const CGFloat _WLMysteriousExtraBottomSpace = 4.0;
     NSDictionary *attributes = @{NSFontAttributeName: [NSFont WL_boxViewTitleFont],
                                 NSForegroundColorAttributeName: [NSColor WL_boxViewTitleColor],
                                 NSShadowAttributeName: s};
-    [s release];
     return attributes;
 }
 

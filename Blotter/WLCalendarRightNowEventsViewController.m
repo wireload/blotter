@@ -11,12 +11,14 @@
 
 @implementation WLCalendarRightNowEventsViewController
 
+#pragma mark Properties
+@dynamic view;
+
 #pragma mark NSViewController
 
 - (void)setView:(WLCalendarWeekView *)newView
 {
     super.view = newView;
-
     self.view.showsAllDayEvents = NO;
 }
 

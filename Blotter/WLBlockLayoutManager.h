@@ -10,9 +10,7 @@
 typedef void (^WLLayoutManager)(CALayer *aLayer);
 
 
-@interface WLBlockLayoutManager : NSObject {
-    WLLayoutManager layoutManager;
-}
+@interface WLBlockLayoutManager : NSObject <CALayoutManager>
 
 - (instancetype)initWithLayoutManager:(WLLayoutManager)aLayoutManager NS_DESIGNATED_INITIALIZER;
 

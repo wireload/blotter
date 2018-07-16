@@ -9,16 +9,12 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface WLCalendarDateView : NSView {
-    NSString *monthDay;
-    NSString *monthAndYear;
-    NSString *weekday;
-}
+@interface WLCalendarDateView : NSView
 
-@property (nonatomic, copy) NSString *monthDay;
+@property (copy) NSString *monthDay;
 
-@property (nonatomic, copy) NSString *monthAndYear;
+@property (copy) NSString *monthAndYear;
 
-@property (nonatomic, copy) NSString *weekday;
+@property (copy) NSString *weekday;
 
 @end

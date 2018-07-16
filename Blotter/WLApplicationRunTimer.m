@@ -53,7 +53,7 @@ NSString* const WLApplicationRunTimerDidFireNotification = @"WLApplicationRunTim
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setDouble:0.0 forKey:self.elapsedSecondsDefaultsKey];
         [defaults setBool:NO forKey:self.isFiredDefaultsKey];
-        _start = mach_absolute_time();
+        self->_start = mach_absolute_time();
     });
 }
 
@@ -72,7 +72,7 @@ NSString* const WLApplicationRunTimerDidFireNotification = @"WLApplicationRunTim
             return;
 
         uint64_t end = mach_absolute_time();
-        uint64_t elapsed = end - _start;
+        uint64_t elapsed = end - self->_start;
         uint64_t elapsedNano = elapsed * TimebaseInfo.numer / TimebaseInfo.denom;
 
         NSTimeInterval elapsedSeconds = [defaults doubleForKey:self.elapsedSecondsDefaultsKey];
@@ -104,7 +104,7 @@ NSString* const WLApplicationRunTimerDidFireNotification = @"WLApplicationRunTim
             });
         }
         else
-            _start = mach_absolute_time();
+            self->_start = mach_absolute_time();
     });
 }
 

@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 WireLoad. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
 
-@interface WLCalendarEventsControllerTests : SenTestCase
+@interface WLCalendarEventsControllerTests : XCTestCase
 
 @end

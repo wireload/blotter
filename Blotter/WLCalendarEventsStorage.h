@@ -9,6 +9,9 @@
 #import <WLFoundation/WLFoundation.h>
 
 
+NS_ASSUME_NONNULL_BEGIN
+
+
 /*!
     @brief      WLCalendarEventsStorage represents events split into chunks.
                 Each chunk is represented by a date range which in turn represents calendar unit.
@@ -32,6 +35,8 @@
     @brief  Returns calendar unit used to split events into parts.
  */
 @property (readonly) NSCalendarUnit calendarUnit;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 /*!
     @brief      Initializes new storage with events split into aUnits using aCalendar.
@@ -79,3 +84,6 @@
 - (NSArray *)dayEventsForDate:(NSDate *)aDate;
 
 @end
+
+
+NS_ASSUME_NONNULL_END

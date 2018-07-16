@@ -580,7 +580,7 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
     return [self centerScanRect:aFrame];
 }
 
-- (NSInteger)edgeForLocationInView:(NSPoint)aLocation
+- (WLCalendarWindowEdge)edgeForLocationInView:(NSPoint)aLocation
 {
     NSPoint locationInCalendarLayer = NSPointFromCGPoint([self.layer convertPoint:NSPointToCGPoint(aLocation) toLayer:_calendarWindowLayer]);
     if (self.arrangementMode & WLCalendarWindowResizingArrangement)
@@ -604,14 +604,14 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
         else if (NSPointInRect(locationInCalendarLayer, NSOffsetRect([[_calendarWindowLayer valueForKey:_WLBottomRightEdgeKey] rectValue], 0.0, -1.0)))
             return WLCalendarWindowBottomRightEdge;
         else
-            return -1;
+            return WLCalendarWindowInvalidEdge;
     }
     else
     {
         if (NSPointInRect(locationInCalendarLayer, [[_calendarWindowLayer valueForKey:_WLCenterCenterEdgeFrameKey] rectValue]))
             return WLCalendarWindowCenterCenterEdge;
         else
-            return -1;
+            return WLCalendarWindowInvalidEdge;
     }
 }
 
@@ -763,8 +763,8 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
 - (void)mouseDown:(NSEvent *)anEvent
 {
     NSPoint locationInView = [self convertPoint:anEvent.locationInWindow fromView:nil];
-    NSInteger edge = [self edgeForLocationInView:locationInView];
-    if (edge != -1)
+    WLCalendarWindowEdge edge = [self edgeForLocationInView:locationInView];
+    if (edge != WLCalendarWindowInvalidEdge)
     {
         _startPoint = locationInView;
         static void (^StartResizing)(WLCalendarWindowArrangementView *aSelf, NSPoint aStartPoint, WLCalendarWindowEdge anEdge) = ^(WLCalendarWindowArrangementView *aSelf, NSPoint aStartPoint, WLCalendarWindowEdge anEdge)
@@ -1187,13 +1187,17 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
 
     l.layoutManager = [[[WLBlockLayoutManager alloc] initWithLayoutManager:^(CALayer *aLayer) {
         CGSize size = aLayer.bounds.size;
-        for (NSInteger i = 0; i < WLCalendarWindowNumberOfEdges; i++) {
+        for (WLCalendarWindowEdge i = WLCalendarWindowTopLeftEdge; i < WLCalendarWindowNumberOfEdges; ++i)
+        {
             if (i == WLCalendarWindowCenterCenterEdge)
                 continue;
-            CALayer *sublayer = aLayer.sublayers[i + (i > 4 ? -1 : 0)];
+
+            NSUInteger layerIndex = (NSUInteger)(i + (i > WLCalendarWindowCenterCenterEdge ? -1 : 0));
+            CALayer *sublayer = aLayer.sublayers[layerIndex];
 
             CGRect frame = CGRectMake(Margin.width + 1, Margin.height, DotSpace * 2 + DotWidth, DotSpace * 2 + DotWidth + 1);
-            switch(i % 3) {
+            switch(i % 3)
+            {
                 case 1:
                     frame.origin.x = floor(size.width / 2 - frame.size.width / 2);
                     break;
@@ -1201,15 +1205,16 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
                     frame.origin.x = floor(size.width - Margin.width - DotWidth);
                     break;
             }
-            if (i < 3)
+            if (i < WLCalendarWindowCenterLeftEdge)
                 ;
-            else if (i < 6) {
+            else if (i < WLCalendarWindowBottomLeftEdge)
                 frame.origin.y = floor(size.height / 2 - frame.size.height / 2) - 1;
-            } else {
+            else
                 frame.origin.y = floor(size.height - Margin.height - DotWidth) - 1;
-            }
+
             if (i == WLCalendarWindowTopRightEdge || i == WLCalendarWindowBottomRightEdge)
                 frame.origin.x = size.width - Margin.width - DotSpace - DotWidth;
+
             if (i == WLCalendarWindowBottomLeftEdge || i == WLCalendarWindowBottomRightEdge)
                 frame.origin.y = size.height - Margin.height - DotSpace - DotWidth - 1;
 
@@ -1218,9 +1223,11 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
         }
     }] autorelease];
 
-    for (NSInteger i = 0; i < WLCalendarWindowNumberOfEdges; i++) {
+    for (WLCalendarWindowEdge i = WLCalendarWindowTopLeftEdge; i < WLCalendarWindowNumberOfEdges; ++i)
+    {
         if (i == WLCalendarWindowCenterCenterEdge)
             continue;
+
         WLBlockLayer *sublayer = [WLBlockLayer layer];
         sublayer.delegate = l.delegate;
         sublayer.contentsScale = l.contentsScale;
@@ -1284,6 +1291,8 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
                     CGContextFillEllipseInRect(aContext, CGRectMake(0, 1 + DotSpace, DotWidth, DotWidth));
                     CGContextFillEllipseInRect(aContext, CGRectMake(DotSpace, 1 + DotSpace, DotWidth, DotWidth));
                     CGContextFillEllipseInRect(aContext, CGRectMake(DotSpace, 1, DotWidth, DotWidth));
+                    break;
+                default:
                     break;
             }
         };

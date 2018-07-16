@@ -73,7 +73,7 @@
         {
             NSUInteger oldReminderIndexValue = obj.unsignedIntegerValue;
             NSUInteger newReminderIndexValue = [indexesOfNewObjects[i] unsignedIntegerValue];
-            _reminders[oldReminderIndexValue] = newReminders[newReminderIndexValue];
+            self->_reminders[oldReminderIndexValue] = newReminders[newReminderIndexValue];
             [(WLCalendarRemindersView *)self.view updateReminderAtIndex:oldReminderIndexValue];
         }];
 
@@ -82,13 +82,13 @@
         NSArray *sortedOldReminders = [_reminders sortedArrayWithOptions:NSSortStable usingComparator:aComparator];
         [unsortedOldReminders enumerateObjectsUsingBlock:^(NSObject<WLCalReminder> *aReminder, NSUInteger idx, BOOL *stop)
         {
-            NSUInteger oldReminderIndex = [_reminders indexOfObjectIdenticalTo:aReminder];
+            NSUInteger oldReminderIndex = [self->_reminders indexOfObjectIdenticalTo:aReminder];
             NSUInteger newReminderIndex = [sortedOldReminders indexOfObjectIdenticalTo:aReminder];
 
             if (newReminderIndex != oldReminderIndex)
             {
-                [_reminders removeObjectAtIndex:oldReminderIndex];
-                [_reminders insertObject:aReminder atIndex:newReminderIndex];
+                [self->_reminders removeObjectAtIndex:oldReminderIndex];
+                [self->_reminders insertObject:aReminder atIndex:newReminderIndex];
                 [(WLCalendarRemindersView *)self.view moveReminderAtIndex:oldReminderIndex toIndex:newReminderIndex];
             }
         }];
@@ -103,13 +103,13 @@
 
         [deleted enumerateIndexesWithOptions:NSEnumerationReverse usingBlock:^(NSUInteger idx, BOOL *stop)
         {
-            [_reminders removeObjectAtIndex:idx];
+            [self->_reminders removeObjectAtIndex:idx];
             [(WLCalendarRemindersView *)self.view removeReminderAtIndex:idx];
         }];
 
         [inserted enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop)
         {
-            [_reminders insertObject:newReminders[idx] atIndex:idx];
+            [self->_reminders insertObject:newReminders[idx] atIndex:idx];
             [(WLCalendarRemindersView *)self.view insertReminderAtIndex:idx];
         }];
         [CATransaction commit];
@@ -241,11 +241,11 @@
 {
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(remindersComparatorDidChange) object:nil];
     dispatch_async(dispatch_get_main_queue(), ^{
-        dispatch_semaphore_wait(_comparatorSemaphore, DISPATCH_TIME_FOREVER);
+        dispatch_semaphore_wait(self->_comparatorSemaphore, DISPATCH_TIME_FOREVER);
         NSComparator c = [self makeRemindersComparator];
-        NSArray *reminders = [_reminders sortedArrayWithOptions:NSSortStable usingComparator:c];
+        NSArray *reminders = [self->_reminders sortedArrayWithOptions:NSSortStable usingComparator:c];
         [self setReminders:reminders sortedUsingComparator:c animated:YES];
-        dispatch_semaphore_signal(_comparatorSemaphore);
+        dispatch_semaphore_signal(self->_comparatorSemaphore);
     });
 }
 

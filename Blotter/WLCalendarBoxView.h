@@ -24,11 +24,7 @@
    +-----------------------+
 */
 
-@interface WLCalendarBoxView : NSView {
-    NSString *title;
-    NSView *contentView;
-    BOOL softEdges;
-}
+@interface WLCalendarBoxView : NSView
 
 @property (copy) NSString *title;
 

@@ -12,4 +12,6 @@
 
 @interface WLCalendarRightNowEventsViewController : WLCalendarWeekEventsViewController
 
+@property (strong) WLCalendarWeekView *view;
+
 @end

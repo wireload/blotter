@@ -29,6 +29,7 @@
 
 
 #pragma mark Properties
+@dynamic view;
 
 + (NSSet *)keyPathsForValuesAffectingCanShowNextWeek
 {

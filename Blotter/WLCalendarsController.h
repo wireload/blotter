@@ -10,6 +10,8 @@
 #import <WLCalendarStore/WLCalendarStore.h>
 
 
+NS_ASSUME_NONNULL_BEGIN
+
 /*
     @brief      The notification which is posted when calendars are changed.
 
@@ -55,6 +57,8 @@ extern NSString *WLChangedCalStoresKey;
     @brief  Autosave key path in the user defaults where the receiver stores it's state.
  */
 @property (readonly) NSString *autosaveKeyPath;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 /*!
     @brief      Initializes the receiver with aStores and autosave key path.
@@ -188,3 +192,6 @@ extern NSString *WLChangedCalStoresKey;
 @property (nonatomic, readonly) NSArray *calEventCalendarsToDisplay;
 
 @end
+
+
+NS_ASSUME_NONNULL_END

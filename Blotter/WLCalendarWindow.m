@@ -245,7 +245,8 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
     [super setFrameOrigin:aPoint];
     if (self.isFloatingWindow)
     {
-        [cachedBlurredBackgroundImage release], cachedBlurredBackgroundImage = nil;
+        [cachedBlurredBackgroundImage release];
+        cachedBlurredBackgroundImage = nil;
         [[self realContentView] setNeedsDisplay:YES];
     }
 }
@@ -255,7 +256,8 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
     [super setFrameTopLeftPoint:aPoint];
     if (self.isFloatingWindow)
     {
-        [cachedBlurredBackgroundImage release], cachedBlurredBackgroundImage = nil;
+        [cachedBlurredBackgroundImage release];
+        cachedBlurredBackgroundImage = nil;
         [[self realContentView] setNeedsDisplay:YES];
     }
 }
@@ -265,7 +267,8 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
     [super setFrame:frameRect display:flag];
     if (self.isFloatingWindow)
     {
-        [cachedBlurredBackgroundImage release], cachedBlurredBackgroundImage = nil;
+        [cachedBlurredBackgroundImage release];
+        cachedBlurredBackgroundImage = nil;
         [[self realContentView] setNeedsDisplay:YES];
     }
 }
@@ -275,7 +278,8 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
     [super setFrame:frameRect display:displayFlag animate:animateFlag];
     if (self.isFloatingWindow)
     {
-        [cachedBlurredBackgroundImage release], cachedBlurredBackgroundImage = nil;
+        [cachedBlurredBackgroundImage release];
+        cachedBlurredBackgroundImage = nil;
         [[self realContentView] setNeedsDisplay:YES];
     }
 }
@@ -285,7 +289,8 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
     [super setFrameFromString:string];
     if (self.isFloatingWindow)
     {
-        [cachedBlurredBackgroundImage release], cachedBlurredBackgroundImage = nil;
+        [cachedBlurredBackgroundImage release];
+        cachedBlurredBackgroundImage = nil;
         [[self realContentView] setNeedsDisplay:YES];
     }
 }
@@ -296,7 +301,8 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
     if (result && self.isFloatingWindow)
     {
         [[self realContentView] setNeedsDisplay:YES];
-        [cachedBlurredBackgroundImage release], cachedBlurredBackgroundImage = nil;
+        [cachedBlurredBackgroundImage release];
+        cachedBlurredBackgroundImage = nil;
     }
     return result;
 }
@@ -307,7 +313,8 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
     if (result && self.isFloatingWindow)
     {
         [[self realContentView] setNeedsDisplay:YES];
-        [cachedBlurredBackgroundImage release], cachedBlurredBackgroundImage = nil;
+        [cachedBlurredBackgroundImage release];
+        cachedBlurredBackgroundImage = nil;
     }
     return result;
 }
@@ -317,7 +324,8 @@ static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;
     BOOL result = [super setFrameAutosaveName:name];
     if (result && self.isFloatingWindow)
     {
-        [cachedBlurredBackgroundImage release], cachedBlurredBackgroundImage = nil;
+        [cachedBlurredBackgroundImage release];
+        cachedBlurredBackgroundImage = nil;
         [[self realContentView] setNeedsDisplay:YES];
     }
     return result;

@@ -178,11 +178,11 @@
                                  NSRect newWindowFrame = self.window.frame;
                                  newWindowFrame.size.height += heightDiff;
                                  newWindowFrame.origin.y -= heightDiff;
-                                 _locationViewContainer.autoresizingMask = (_locationViewContainer.autoresizingMask | NSViewHeightSizable) ^ NSViewMaxYMargin;
-                                 _titleView.autoresizingMask = (_titleView.autoresizingMask ^ NSViewHeightSizable) | NSViewMinYMargin;
+                                 self->_locationViewContainer.autoresizingMask = (self->_locationViewContainer.autoresizingMask | NSViewHeightSizable) ^ NSViewMaxYMargin;
+                                 self->_titleView.autoresizingMask = (self->_titleView.autoresizingMask ^ NSViewHeightSizable) | NSViewMinYMargin;
                                  [self.window setFrame:newWindowFrame display:YES animate:YES];
-                                 _titleView.autoresizingMask = (_titleView.autoresizingMask | NSViewHeightSizable) ^ NSViewMinYMargin;
-                                 _locationViewContainer.autoresizingMask = (_locationViewContainer.autoresizingMask ^ NSViewHeightSizable) | NSViewMaxYMargin;
+                                 self->_titleView.autoresizingMask = (self->_titleView.autoresizingMask | NSViewHeightSizable) ^ NSViewMinYMargin;
+                                 self->_locationViewContainer.autoresizingMask = (self->_locationViewContainer.autoresizingMask ^ NSViewHeightSizable) | NSViewMaxYMargin;
                              }];
     _locationView.postsSizeChangedNotifications = YES;
 

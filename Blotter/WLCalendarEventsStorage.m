@@ -83,7 +83,7 @@
                 [events addObject:e];
             }
 
-            _allDayEventsPerDateRange = [allDayEventsPerDateRange copy];
+            self->_allDayEventsPerDateRange = [allDayEventsPerDateRange copy];
         });
 
         NSCalendar *dayEventsCalendarCopy = [_calendar copy];
@@ -113,7 +113,7 @@
                 [events addObject:e];
             }
 
-            _dayEventsPerDateRange = [dayEventsPerDateRange copy];
+            self->_dayEventsPerDateRange = [dayEventsPerDateRange copy];
         });
 
         dispatch_group_wait(g, DISPATCH_TIME_FOREVER);

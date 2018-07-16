@@ -10,15 +10,10 @@
 #import "WLLayoutSplitView.h"
 
 
-@protocol WLLayoutSplitViewDelegate;
+NS_ASSUME_NONNULL_BEGIN
 
 
-@interface WLLayoutSplitView : NSSplitView
-
-@property (assign) NSObject<WLLayoutSplitViewDelegate> *delegate;
-
-
-@end
+@class WLLayoutSplitView;
 
 
 @protocol WLLayoutSplitViewDelegate <NSSplitViewDelegate>
@@ -30,3 +25,13 @@
 - (void)splitViewDidTrackMouse:(WLLayoutSplitView *)aSplitView;
 
 @end
+
+
+@interface WLLayoutSplitView : NSSplitView
+
+@property (nullable, assign) NSObject<WLLayoutSplitViewDelegate> *delegate;
+
+@end
+
+
+NS_ASSUME_NONNULL_END

@@ -15,7 +15,7 @@
 @implementation WLGlassHudWindow
 
 - (instancetype)initWithContentRect:(NSRect)contentRect
-                styleMask:(NSUInteger)windowStyle
+                styleMask:(NSWindowStyleMask)windowStyle
                   backing:(NSBackingStoreType)bufferingType
                     defer:(BOOL)deferCreation
 {
@@ -57,7 +57,7 @@
     return windowFrame;
 }
 
-+ (NSRect)frameRectForContentRect:(NSRect)windowContentRect styleMask:(NSUInteger)windowStyle
++ (NSRect)frameRectForContentRect:(NSRect)windowContentRect styleMask:(NSWindowStyleMask)windowStyle
 {
     return windowContentRect;
 }

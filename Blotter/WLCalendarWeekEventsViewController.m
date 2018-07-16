@@ -59,6 +59,7 @@
 
 
 #pragma mark Properties
+@dynamic view;
 
 + (BOOL)automaticallyNotifiesObserversOfDateRangeOfColumns
 {
@@ -314,15 +315,15 @@
             if (self.representedObject == localRepresentedObject)
             {
                 // Events may become unaligned when Represented Calendar is changed.
-                if (_calendar != localRepresentedCalendar)
-                    s = [[WLCalendarEventsStorage alloc] initWithEvents:s.events calendar:_calendar unit:NSCalendarUnitDay];
+                if (self->_calendar != localRepresentedCalendar)
+                    s = [[WLCalendarEventsStorage alloc] initWithEvents:s.events calendar:self->_calendar unit:NSCalendarUnitDay];
 
                 // Events become invalid when Represented Date Range is changed.
                 if ([localRepresentedDateRange isEqual:self.dateRangeOfColumns])
                 {
-                    _storage = s;
+                    self->_storage = s;
 
-                    [_log logDebugWithMessenger:^
+                    [self->_log logDebugWithMessenger:^
                     {
                         return [NSString stringWithFormat:@"New Events Storage (%@): %@", self, s];
                     }];
@@ -391,17 +392,11 @@
     [self.view scrollHour:self.hour animated:NO];
 }
 
-- (WLCalendarWeekView *)view
-{
-    return (WLCalendarWeekView *)super.view;
-}
-
 - (void)setView:(WLCalendarWeekView *)newView
 {
     NSParameterAssert(!self.isViewLoaded);
 
     super.view = newView;
-
     self.view.dataSource = self;
 }
 

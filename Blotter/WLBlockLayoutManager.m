@@ -9,20 +9,23 @@
 #import "WLBlockLayoutManager.h"
 
 @implementation WLBlockLayoutManager
+{
+    WLLayoutManager layoutManager;
+}
+
+- (instancetype)init
+{
+    return [self initWithLayoutManager:nil];
+}
 
 - (instancetype)initWithLayoutManager:(WLLayoutManager)aLayoutManager
 {
-    if (self = [super init]) {
+    if (self = [super init])
+    {
         layoutManager = [aLayoutManager copy];
     }
     
     return self;
-}
-
-- (void)dealloc
-{
-    [layoutManager release];
-    [super dealloc];
 }
 
 

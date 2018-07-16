@@ -234,7 +234,7 @@ NSString *WLCalendarRemindersDidChangeNotification = @"WLCalendarRemindersDidCha
         if (localOperation.cancelled)
             return;
 
-        dispatch_async(_notificationsDeliveryQueue, ^
+        dispatch_async(self->_notificationsDeliveryQueue, ^
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:WLCalendarRemindersDidChangeNotification object:self userInfo:userInfo];
         });

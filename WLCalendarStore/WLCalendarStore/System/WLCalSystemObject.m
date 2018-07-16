@@ -26,9 +26,4 @@
     return self;
 }
 
-- (instancetype)init
-{
-    return [self initWithStore:nil];
-}
-
 @end

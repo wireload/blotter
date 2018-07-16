@@ -63,7 +63,7 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
     [self willChangeValueForKey:@"observedDateRanges"];
     dispatch_sync(_accessQueue, ^
     {
-        [_observedDateRanges addObject:[aRange copy]];
+        [self->_observedDateRanges addObject:[aRange copy]];
         [self fetchPredicateDidChange];
         [self fetchCalEventsForDateRanges:[NSSet setWithObject:aRange] priority:NSOperationQueuePriorityNormal];
     });
@@ -78,7 +78,7 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
     [self willChangeValueForKey:@"observedDateRanges"];
     dispatch_sync(_accessQueue, ^
     {
-        [_observedDateRanges removeObject:aRange];
+        [self->_observedDateRanges removeObject:aRange];
         [self fetchPredicateDidChange];
     });
     [self didChangeValueForKey:@"observedDateRanges"];
@@ -86,13 +86,13 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
 
 - (void)removeAllObservedDateRanges
 {
-    if (!_observedDateRanges.count)
+    if (!self->_observedDateRanges.count)
         return;
 
     [self willChangeValueForKey:@"observedDateRanges"];
     dispatch_sync(_accessQueue, ^
     {
-        [_observedDateRanges removeAllObjects];
+        [self->_observedDateRanges removeAllObjects];
         [self fetchPredicateDidChange];
     });
     [self didChangeValueForKey:@"observedDateRanges"];
@@ -113,7 +113,7 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
 
     dispatch_sync(_accessQueue, ^
     {
-        [_observedCalendarIdentifiers setObject:[aCalendarIdentifiers copy] forKey:aStore];
+        [self->_observedCalendarIdentifiers setObject:[aCalendarIdentifiers copy] forKey:aStore];
         [self fetchPredicateDidChange];
         [self fetchCalEventsWithPriority:NSOperationQueuePriorityNormal];
     });
@@ -255,7 +255,7 @@ NSString *WLCalendarEventsDidChangeNotification = @"WLCalendarEventsDidChangeNot
         for (NSObject<WLCalStore> *store in self.calStores)
         {
             WLCalEventsPredicate *p = [WLCalEventsPredicate predicateWithDateRange:aRange
-                                                               calendarIdentifiers:[_observedCalendarIdentifiers objectForKey:store]];
+                                                               calendarIdentifiers:[self->_observedCalendarIdentifiers objectForKey:store]];
             [events addObjectsFromArray:[store eventsMatchingPredicate:p]];
         }
     });

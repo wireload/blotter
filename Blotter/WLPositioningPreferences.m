@@ -46,7 +46,7 @@
     NSScreen *windowScreen = [w windowScreen];
 
     NSRect screenFrame = windowScreen.visibleFrame;
-    CGFloat aspectRatio = screenFrame.size.height ? screenFrame.size.width / screenFrame.size.height : 16.0 / 10.0;
+    CGFloat aspectRatio = screenFrame.size.height >= 0.0 ? screenFrame.size.width / screenFrame.size.height : 16.0 / 10.0;
 
     // Remove the margins on the left and the right so we can calculate the desired height of the positioner alone.
     CGFloat desiredHeight = (preferredSize.width - PositionerMargins.width) / aspectRatio;

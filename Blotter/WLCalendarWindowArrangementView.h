@@ -18,7 +18,9 @@ enum {
 };
 
 
-typedef NS_ENUM(NSUInteger, WLCalendarWindowEdge) {
+typedef NS_ENUM(NSInteger, WLCalendarWindowEdge) {
+    WLCalendarWindowInvalidEdge = -1,
+
     WLCalendarWindowTopLeftEdge = 0,
     WLCalendarWindowTopCenterEdge = 1,
     WLCalendarWindowTopRightEdge = 2,
@@ -85,7 +87,7 @@ typedef NS_ENUM(NSUInteger, WLCalendarWindowEdge) {
  @abstract  Returns edge for a given location or -1 if no edge corresponds to it.
  @see       WLCalendarWindowEdge
  */
-- (NSInteger)edgeForLocationInView:(NSPoint)aLocation;
+- (WLCalendarWindowEdge)edgeForLocationInView:(NSPoint)aLocation;
 
 - (BOOL)shouldSnapToGrid;
 

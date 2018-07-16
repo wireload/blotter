@@ -10,17 +10,23 @@
 #import "WLCalendarWindow.h"
 
 
-/*!
- @abstract  Animates change of window's alpha value.
- */
-@interface WLCalendarWindowBringToFrontAnimation : NSAnimation
-{
-    WLCalendarWindow *_window;
-}
+NS_ASSUME_NONNULL_BEGIN
 
 /*!
- @param aWindow A Window which alpha value will be animated. Is not retained!
- */
-- (instancetype)initWithWindow:(WLCalendarWindow *)aWindow  NS_DESIGNATED_INITIALIZER;
+    @brief  Animates change of window's alpha value.
+*/
+@interface WLCalendarWindowBringToFrontAnimation : NSAnimation
+
+- (instancetype)initWithCoder:(NSCoder *)aCoder NS_UNAVAILABLE;
+
+- (instancetype)initWithDuration:(NSTimeInterval)aDuration animationCurve:(NSAnimationCurve)anAnimationCurve NS_UNAVAILABLE;
+
+/*!
+    @param aWindow A Window which alpha value will be animated. Is not retained!
+*/
+- (instancetype)initWithWindow:(WLCalendarWindow *)aWindow NS_DESIGNATED_INITIALIZER;
 
 @end
+
+
+NS_ASSUME_NONNULL_END

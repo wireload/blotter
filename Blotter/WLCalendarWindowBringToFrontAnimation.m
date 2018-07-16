@@ -10,14 +10,15 @@
 
 
 @implementation WLCalendarWindowBringToFrontAnimation
+{
+    __weak WLCalendarWindow *_window;
+}
 
 - (instancetype)initWithWindow:(WLCalendarWindow *)aWindow
 {
-    self = [super init];
-    if (self != nil)
-    {
+    if (self = [super initWithDuration:0.0 animationCurve:0])
         _window = aWindow;
-    }
+
     return self;
 }
 

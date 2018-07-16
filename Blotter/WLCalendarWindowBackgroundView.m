@@ -83,7 +83,8 @@ static const CGFloat _WLCalendarBackgroundActiveDarkness = 0.20;
 
 - (void)viewWillDraw
 {
-    dispatch_once(&_didWarmUp, ^{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
         [NSImage imageNamed:@"calendar-background-active-top-left"];
         [NSImage imageNamed:@"calendar-background-active-top-middle"];
         [NSImage imageNamed:@"calendar-background-active-top-right"];

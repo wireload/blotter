@@ -39,6 +39,8 @@ extern NSString *WLCalendarRemindersDidChangeNotification;
  */
 @property (copy, readonly) NSArray *calStores;
 
+- (instancetype)init NS_UNAVAILABLE;
+
 /*!
     @brief      Initialized the receiver with aStores.
 

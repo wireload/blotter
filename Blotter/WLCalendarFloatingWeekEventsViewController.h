@@ -29,6 +29,8 @@ typedef NS_ENUM(NSUInteger, WLTitleFormat)
 
 @property (nonatomic, readonly) BOOL canShowPreviousWeek;
 
+@property (strong) WLCalendarWeekView *view;
+
 - (void)setTitleFormat:(WLTitleFormat)newFormat animated:(BOOL)isAnimated;
 
 - (void)setWeekOffset:(NSInteger)newWeekOffset animated:(BOOL)isAnimated;

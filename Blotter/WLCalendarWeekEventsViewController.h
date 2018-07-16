@@ -72,6 +72,8 @@
 
 @property (readonly) CGFloat hour;
 
+@property (strong) WLCalendarWeekView *view;
+
 - (NSDate *)makeDateOfFirstColumnForCalendar:(NSCalendar *)aCalendar
                                         date:(NSDate *)aDate
                                   offsetUnit:(NSCalendarUnit)anOffsetUnit
@@ -111,9 +113,6 @@
     @discussion This is the only thread safe method.
  */
 - (void)eventsDidChange:(NSNotification *)aNotification;
-
-
-- (WLCalendarWeekView *)view;
 
 - (WLCalendarEventsController *)representedObject;
 

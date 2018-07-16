@@ -16,9 +16,6 @@
  @ownership     WLCalendarWindow
  */
 @interface WLCalendarWindowBackgroundView : NSView
-{
-    dispatch_once_t _didWarmUp;
-}
 
 + (NSColor *)backgroundNoisePatternColor;
 

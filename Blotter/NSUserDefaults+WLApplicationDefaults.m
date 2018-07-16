@@ -131,7 +131,6 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
     if (lastMigratedBundleVersion < WLBlotterBundleVersion2_2_3)
     {
         [self WL_migrateTo2_2_3];
-        lastMigratedBundleVersion = WLBlotterBundleVersion2_2_3;
     }
 
     lastMigratedBundleVersion = currentBundleVersion;
@@ -167,7 +166,6 @@ NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalend
                 [calendarDict setValue:@(YES) forKey:WLCalendarIsUsedForRemindersKey];
             }
             aCalendars[i] = calendarDict;
-            [calendarDict release];
         }
     }];
 }
@@ -436,7 +434,6 @@ NSComparator const WLCalendarsComparator = ^(id left, id right) {
     NSMutableArray *calendars = [[self arrayForKey:WLCalendarsKey] mutableCopy];
     anUpdaterBlock(calendars);
     [self setObject:calendars forKey:WLCalendarsKey];
-    [calendars release];
 }
 
 - (void)WL_setAllowsAdvancedCalendarTypeCheck:(BOOL)newAllowsAdvancedCalendarTypeCheck

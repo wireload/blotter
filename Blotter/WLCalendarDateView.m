@@ -13,15 +13,6 @@
 
 @implementation WLCalendarDateView
 
-#pragma mark Properties
-@synthesize monthDay;
-@synthesize monthAndYear;
-@synthesize weekday;
-
-
-#pragma mark Methods
-
-
 #pragma mark NSView
 
 - (BOOL)isFlipped
@@ -55,8 +46,6 @@
                                        [NSColor WL_dateViewTextColor],      NSForegroundColorAttributeName,
                                        s,                                   NSShadowAttributeName,
                                        p,                                   NSParagraphStyleAttributeName, nil];
-    [p release];
-    [s release];
     NSRect monthDayFrame = NSMakeRect(bounds.origin.x, bounds.origin.y, bounds.size.width, 200.0);
     if (NSIntersectsRect(monthDayFrame, aDirtyRect) && NSContainsRect(bounds, monthDayFrame))
     {

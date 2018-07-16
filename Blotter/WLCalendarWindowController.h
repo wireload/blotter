@@ -56,6 +56,8 @@ typedef NS_ENUM(NSUInteger, WLCalendarWindowState) {
 
 @property (readonly) WLCalendarsController *calendarsController;
 
+@property (strong) WLCalendarWindow *window;
+
 - (instancetype)initWithWindow:(WLCalendarWindow *)aWindow;
 
 - (IBAction)showWindow:(id)aSender;

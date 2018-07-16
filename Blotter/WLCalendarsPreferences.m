@@ -31,10 +31,10 @@
     dispatch_async(dispatch_get_main_queue(), ^
     {
         WLCalendarsController *c = ((DeskboardAppDelegate *)NSApp.delegate).calendarWindowController.calendarsController;
-        _calEventCalendars = [c.calEventCalendars copy];
-        _calReminderCalendars = [c.calReminderCalendars copy];
-        [_eventsTableView reloadData];
-        [_remindersTableView reloadData];
+        self->_calEventCalendars = [c.calEventCalendars copy];
+        self->_calReminderCalendars = [c.calReminderCalendars copy];
+        [self->_eventsTableView reloadData];
+        [self->_remindersTableView reloadData];
     });
 }
 

@@ -15,7 +15,7 @@
 @class WLCalendarEventLayer;
 
 
-@interface WLCalendarAllDayEventsLayer : CALayer
+@interface WLCalendarAllDayEventsLayer : CALayer <CALayerDelegate>
 
 @property (nonatomic, copy) NSArray *events;
 

@@ -36,16 +36,18 @@ extern NSString *WLCalendarEventsDidChangeNotification;
 @property (copy, readonly) NSArray *calStores;
 
 /*!
+    @brief  Returns currently observed date ranges.
+ */
+@property (readonly, copy) NSSet *observedDateRanges;
+
+/*!
     @brief      Initialized the receiver with aStores.
 
     @discussion Designated initializer.
  */
 - (instancetype)initWithCalStores:(NSArray *)aStores NS_DESIGNATED_INITIALIZER;
 
-/*!
-    @brief  Returns currently observed date ranges.
- */
-@property (readonly, copy) NSSet *observedDateRanges;
+- (instancetype)init NS_UNAVAILABLE;
 
 /*!
     @brief      Adds aRange to currently observed date ranges or increments its count.

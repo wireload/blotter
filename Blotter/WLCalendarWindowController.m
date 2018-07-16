@@ -181,6 +181,7 @@ static const float _WLFadeOutAlphaValue = 0.5f;
 
 
 #pragma mark Properties
+@dynamic window;
 @synthesize windowState;
 @synthesize isFadedOut;
 
@@ -846,7 +847,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0;
     [contentView setWantsLayer:YES];
     [contentView setAutoresizesSubviews:NO];
     if ([[NSUserDefaults standardUserDefaults] WL_slowsAnimation])
-        contentView.layer.speed = 0.1;
+        contentView.layer.speed = 0.1f;
 
     NSView *dateView = [_dateViewController view];
     [dateView setWantsLayer:YES];

@@ -6,8 +6,9 @@
 //  Copyright (c) 2013 WireLoad. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface BlotterTests : SenTestCase
+
+@interface BlotterTests : XCTestCase
 
 @end

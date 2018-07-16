@@ -652,7 +652,8 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                 }
                 else
                     rangeOfColumnRootLayers.location -= aNumberOfDaysToShow;
-                rangeOfColumnRootLayers.length += (NSInteger)aNumberOfDaysToShow - aNumberOfDaysToHide;
+
+                rangeOfColumnRootLayers.length = newNumberOfColumns;
                 break;
             }
             case WLRightToLeftDirection:
@@ -681,8 +682,9 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                     }
                     rangeOfInsertedColumns = NSMakeRange((eventsRootLayer.sublayers).count - numberOfColumnsToInsert, numberOfColumnsToInsert);
                 }
+
                 rangeOfColumnRootLayers.location += aNumberOfDaysToHide;
-                rangeOfColumnRootLayers.length += (NSInteger)aNumberOfDaysToShow - aNumberOfDaysToHide;
+                rangeOfColumnRootLayers.length = newNumberOfColumns;
                 break;
             }
         }
