@@ -59,8 +59,7 @@
 
     _versionView.stringValue = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     _copyrightView.cell.backgroundStyle = NSBackgroundStyleRaised;
-    
-    _bannerButton.cursor = [NSCursor pointingHandCursor];
+
     _wireloadButton.cursor = [NSCursor pointingHandCursor];
 }
 
