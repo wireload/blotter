@@ -70,7 +70,7 @@
 
 - (void)configureToolbarItem:(NSToolbarItem *)anItem
 {
-    anItem.image = [[NSWorkspace sharedWorkspace] iconForFileType: NSFileTypeForHFSTypeCode(kToolbarDesktopFolderIcon)];
+    anItem.image = [NSImage imageNamed:@"preferences-positioning-icon"];
     anItem.label = NSLocalizedString(@"Positioning", @"Positioing pref pane title");
     anItem.toolTip = NSLocalizedString(@"Position and Size Preferences", @"Positioning pref pane tooltip");
 }

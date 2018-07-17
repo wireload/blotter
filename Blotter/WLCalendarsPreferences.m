@@ -43,7 +43,7 @@
 
 - (void)configureToolbarItem:(NSToolbarItem *)anItem
 {
-    anItem.image = [[NSWorkspace sharedWorkspace] iconForFileType: NSFileTypeForHFSTypeCode(kToolbarLabelsIcon)];
+    anItem.image = [NSImage imageNamed:@"preferences-calendars-icon"];
     anItem.label = NSLocalizedString(@"Calendars", @"Calendars pref pane title");
     anItem.toolTip = NSLocalizedString(@"Calendars to display", @"Calendars pref pane tooltip");
 }
