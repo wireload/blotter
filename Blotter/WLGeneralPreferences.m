@@ -53,7 +53,17 @@ static NSString *_WLLoginItemJobLabel = @"net.wireload.blotter.mac.LoginItem";
 
 - (IBAction)showMacOSXCalendarSettings:(id)aSender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL fileURLWithPath:@"/System/Library/PreferencePanes/Localization.prefPane"]];
+
+    if (![[NSWorkspace sharedWorkspace] openURL:[NSURL fileURLWithPath:@"/System/Library/PreferencePanes/Localization.prefPane"]])
+    {
+        NSAlert *a = [NSAlert new];
+        a.messageText = NSLocalizedString(@"Failed to open System Preferences.",  @"Cannot open System Preferences alert message");
+        a.informativeText = NSLocalizedString(@"You can open it manually by following:\n→System Preferences…→Language & Region", @"Cannot open System Preferences alert informative text for 10.10 and higher");
+        a.alertStyle = NSCriticalAlertStyle;
+        a.showsHelp = YES;
+        a.delegate = self;
+        [a beginSheetModalForWindow:self.view.window completionHandler:nil];
+    }
 }
 
 
