@@ -15,12 +15,12 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView id="1" userLabel="Position View" customClass="WLPositioningPaneView">
+        <customView misplaced="YES" id="1" userLabel="Position View" customClass="WLPositioningPaneView">
             <rect key="frame" x="0.0" y="0.0" width="440" height="361"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <popUpButton verticalHuggingPriority="750" id="8">
-                    <rect key="frame" x="168" y="317" width="144" height="26"/>
+                <popUpButton verticalHuggingPriority="750" misplaced="YES" id="8">
+                    <rect key="frame" x="170" y="317" width="144" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="Schmal" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="11" id="9">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -41,8 +41,8 @@
                         <outlet property="nextKeyView" destination="34" id="146"/>
                     </connections>
                 </popUpButton>
-                <textField verticalHuggingPriority="750" id="14">
-                    <rect key="frame" x="17" y="323" width="149" height="17"/>
+                <textField verticalHuggingPriority="750" misplaced="YES" id="14">
+                    <rect key="frame" x="18" y="323" width="148" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Kalendergröße:" id="15">
                         <font key="font" metaFont="system"/>
@@ -53,8 +53,8 @@
                         <outlet property="nextKeyView" destination="8" id="145"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" id="34">
-                    <rect key="frame" x="18" y="293" width="148" height="17"/>
+                <textField verticalHuggingPriority="750" misplaced="YES" id="34">
+                    <rect key="frame" x="18" y="295" width="148" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Betroffener Bildschirm:" id="35">
                         <font key="font" metaFont="system"/>
@@ -65,9 +65,9 @@
                         <outlet property="nextKeyView" destination="64" id="147"/>
                     </connections>
                 </textField>
-                <popUpButton verticalHuggingPriority="750" id="64">
-                    <rect key="frame" x="168" y="287" width="255" height="26"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <popUpButton verticalHuggingPriority="750" misplaced="YES" id="64">
+                    <rect key="frame" x="170" y="288" width="253" height="26"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="65">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -88,7 +88,7 @@
                         <outlet property="nextKeyView" destination="139" id="148"/>
                     </connections>
                 </popUpButton>
-                <customView id="139" customClass="WLCalendarWindowArrangementView">
+                <customView misplaced="YES" id="139" customClass="WLCalendarWindowArrangementView">
                     <rect key="frame" x="20" y="20" width="400" height="251"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <connections>
@@ -101,6 +101,7 @@
                 <outlet property="_calendarWindowArrangementView" destination="139" id="143"/>
                 <outlet property="nextKeyView" destination="14" id="144"/>
             </connections>
+            <point key="canvasLocation" x="139" y="168.5"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="25"/>
         <arrayController objectClassName="NSScreen" editable="NO" preservesSelection="NO" selectsInsertedObjects="NO" avoidsEmptySelection="NO" id="46" customClass="WLScreensController">
