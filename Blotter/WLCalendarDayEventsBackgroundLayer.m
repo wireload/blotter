@@ -10,6 +10,7 @@
 #import "WLCalendarDayEventsBackgroundLayer.h"
 #import "NSColor+WLCalendar.h"
 #import "NSFont+WLCalendar.h"
+#import "WLMacro.h"
 
 
 static const NSStringDrawingOptions _WLTitleDrawingOptions = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine;

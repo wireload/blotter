@@ -20,6 +20,8 @@
 #import <CoreText/CoreText.h>
 #endif
 
+#import <Foundation/Foundation.h>
+
 typedef enum {
 	AB_CTLineRectAggregationTypeInline = 0,
 	AB_CTLineRectAggregationTypeBlock,

@@ -7,10 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BA6C871C20D8C50D00D0C30C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6C871920D8C26C00D0C30C /* IOKit.framework */; };
-		BA6C871D20D8C51200D0C30C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6C871A20D8C26C00D0C30C /* QuartzCore.framework */; };
-		BA6C871E20D8C51600D0C30C /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6C871820D8C26C00D0C30C /* AppKit.framework */; };
-		BA6C871F20D8C51B00D0C30C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6C871B20D8C26C00D0C30C /* Foundation.framework */; };
 		BA6C872720D8C77900D0C30C /* WLFoundationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6C872620D8C77900D0C30C /* WLFoundationTests.m */; };
 		BA6C872920D8C77900D0C30C /* WLFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA81DA67160DA09D00C83DC3 /* WLFoundation.framework */; };
 		BA6C873020D8C7AD00D0C30C /* NSArray+WLDelta_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */; };
@@ -60,18 +56,11 @@
 /* Begin PBXFileReference section */
 		BA1059A1168DE52E00A3DDF5 /* WLDateRangeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDateRangeTests.h; sourceTree = "<group>"; };
 		BA1059A2168DE52E00A3DDF5 /* WLDateRangeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDateRangeTests.m; sourceTree = "<group>"; };
-		BA6C871620D8C26100D0C30C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/MacOSX.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		BA6C871820D8C26C00D0C30C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		BA6C871920D8C26C00D0C30C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		BA6C871A20D8C26C00D0C30C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		BA6C871B20D8C26C00D0C30C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BA6C872420D8C77900D0C30C /* WLFoundationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WLFoundationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA6C872620D8C77900D0C30C /* WLFoundationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLFoundationTests.m; sourceTree = "<group>"; };
-		BA6C873420DC5F5D00D0C30C /* WLFoundationTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WLFoundationTests-Prefix.pch"; sourceTree = "<group>"; };
 		BA81DA67160DA09D00C83DC3 /* WLFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WLFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA81DA72160DA09D00C83DC3 /* WLFoundation-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WLFoundation-Info.plist"; sourceTree = "<group>"; };
 		BA81DA74160DA09D00C83DC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		BA81DA76160DA09D00C83DC3 /* WLFoundation-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WLFoundation-Prefix.pch"; sourceTree = "<group>"; };
 		BA81DA7F160DA0C800C83DC3 /* NSArray+WLDelta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+WLDelta.h"; sourceTree = "<group>"; };
 		BA81DA80160DA0C800C83DC3 /* NSArray+WLDelta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+WLDelta.m"; sourceTree = "<group>"; };
 		BA81DA81160DA0C800C83DC3 /* WLDateRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDateRange.h; sourceTree = "<group>"; };
@@ -121,28 +110,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA6C871F20D8C51B00D0C30C /* Foundation.framework in Frameworks */,
-				BA6C871E20D8C51600D0C30C /* AppKit.framework in Frameworks */,
-				BA6C871D20D8C51200D0C30C /* QuartzCore.framework in Frameworks */,
-				BA6C871C20D8C50D00D0C30C /* IOKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		BA6C871520D8C26100D0C30C /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				BA6C871820D8C26C00D0C30C /* AppKit.framework */,
-				BA6C871B20D8C26C00D0C30C /* Foundation.framework */,
-				BA6C871920D8C26C00D0C30C /* IOKit.framework */,
-				BA6C871A20D8C26C00D0C30C /* QuartzCore.framework */,
-				BA6C871620D8C26100D0C30C /* XCTest.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		BA6C872520D8C77900D0C30C /* WLFoundationTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,7 +134,6 @@
 		BA6C873320D8C7E700D0C30C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				BA6C873420DC5F5D00D0C30C /* WLFoundationTests-Prefix.pch */,
 				BAA049D51621A1040078DF12 /* WLFoundationTests-Info.plist */,
 			);
 			name = "Supporting Files";
@@ -173,7 +145,6 @@
 				BA81DA70160DA09D00C83DC3 /* WLFoundation */,
 				BA6C872520D8C77900D0C30C /* WLFoundationTests */,
 				BA81DA68160DA09D00C83DC3 /* Products */,
-				BA6C871520D8C26100D0C30C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -227,7 +198,6 @@
 			children = (
 				BA81DA72160DA09D00C83DC3 /* WLFoundation-Info.plist */,
 				BA81DA73160DA09D00C83DC3 /* InfoPlist.strings */,
-				BA81DA76160DA09D00C83DC3 /* WLFoundation-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -516,6 +486,7 @@
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_INTEGER = YES;
 				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_NULLABILITY = YES;
@@ -574,6 +545,7 @@
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_INTEGER = YES;
 				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_NULLABILITY = YES;
@@ -627,8 +599,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "WLFoundation/WLFoundation-Prefix.pch";
 				INFOPLIST_FILE = "WLFoundation/WLFoundation-Info.plist";
 				INSTALL_PATH = "@rpath";
 				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.WLFoundation;
@@ -645,8 +615,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "WLFoundation/WLFoundation-Prefix.pch";
 				INFOPLIST_FILE = "WLFoundation/WLFoundation-Info.plist";
 				INSTALL_PATH = "@rpath";
 				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.WLFoundation;
@@ -663,6 +631,7 @@
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_INTEGER = YES;
 				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_NULLABILITY = YES;
@@ -713,8 +682,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "WLFoundation/WLFoundation-Prefix.pch";
 				INFOPLIST_FILE = "WLFoundation/WLFoundation-Info.plist";
 				INSTALL_PATH = "@rpath";
 				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.WLFoundation;

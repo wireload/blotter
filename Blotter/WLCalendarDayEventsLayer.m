@@ -12,6 +12,7 @@
 #import "WLCalendarEventLayer.h"
 #import "NSFont+WLCalendar.h"
 #import "NSColor+WLCalendar.h"
+#import "WLMacro.h"
 
 
 static NSString *const _WLEventKey = @"WLCalendarDayEventsLayer_event";

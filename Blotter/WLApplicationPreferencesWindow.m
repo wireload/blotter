@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 WireLoad. All rights reserved.
 //
 
+#import <Carbon/Carbon.h>
 #import <WLFoundation/WLFoundation.h>
 #import "WLApplicationPreferencesWindow.h"
 #import "WLApplicationPreferences.h"

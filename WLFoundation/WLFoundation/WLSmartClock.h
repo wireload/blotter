@@ -6,7 +6,7 @@
 //  Copyright 2013 WireLoad. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <AppKit/AppKit.h>
 
 
 extern NSString* const WLSmartClockLogKey;

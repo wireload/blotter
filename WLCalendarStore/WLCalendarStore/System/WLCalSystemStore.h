@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <ScriptingBridge/ScriptingBridge.h>
 #import <WLCalendarStore/WLCalStore.h>
 #import <CalendarStore/CalendarStore.h>
 

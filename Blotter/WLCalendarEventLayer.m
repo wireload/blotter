@@ -10,6 +10,7 @@
 #import "WLCalendarEventLayer.h"
 #import "NSColor+WLCalendar.h"
 #import "NSFont+WLCalendar.h"
+#import "WLMacro.h"
 
 
 const CGFloat _WLYPadding = 6.0;

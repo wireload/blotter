@@ -36,7 +36,6 @@
 		BA08A7E1167735130085F40C /* README in Resources */ = {isa = PBXBuildFile; fileRef = BA08A7E0167735130085F40C /* README */; };
 		BA08A981167737730085F40C /* WLCalendarsPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7E3167737730085F40C /* WLCalendarsPreferences.m */; };
 		BA08AA34167737730085F40C /* WLColorCheckboxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A980167737730085F40C /* WLColorCheckboxCell.m */; };
-		BA08AA51167743A50085F40C /* WLAboutPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08AA4C167743A50085F40C /* WLAboutPreferences.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BA08AA51167743A50085F40C /* WLAboutPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08AA4C167743A50085F40C /* WLAboutPreferences.m */; };
 		BA08AA52167743A50085F40C /* WLCustomCursorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08AA4E167743A50085F40C /* WLCustomCursorButton.m */; };
 		BA08AA53167743A50085F40C /* WLPreferencesButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08AA50167743A50085F40C /* WLPreferencesButtonCell.m */; };
@@ -46,15 +45,6 @@
 		BA2F70DC20E30D5A0079CCD4 /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70DB20E30D5A0079CCD4 /* ShortcutRecorder.framework */; };
 		BA2F70DE20E30D5C0079CCD4 /* WLCalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70DD20E30D5C0079CCD4 /* WLCalendarStore.framework */; };
 		BA2F70E020E30D5F0079CCD4 /* WLFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70DF20E30D5F0079CCD4 /* WLFoundation.framework */; };
-		BA2F70E220E30D720079CCD4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70E120E30D720079CCD4 /* Cocoa.framework */; };
-		BA2F70E420E30D770079CCD4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70E320E30D770079CCD4 /* CoreGraphics.framework */; };
-		BA2F70E620E30D7D0079CCD4 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70E520E30D7C0079CCD4 /* AppKit.framework */; };
-		BA2F70E820E30D8E0079CCD4 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70E720E30D8E0079CCD4 /* CoreText.framework */; };
-		BA2F70EA20E30DAF0079CCD4 /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70E920E30DAF0079CCD4 /* CalendarStore.framework */; };
-		BA2F70EE20E30DC20079CCD4 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70ED20E30DC20079CCD4 /* ServiceManagement.framework */; };
-		BA2F70F020E30DD50079CCD4 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70EF20E30DD50079CCD4 /* Carbon.framework */; };
-		BA2F70F420E30DE20079CCD4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70F320E30DE10079CCD4 /* QuartzCore.framework */; };
-		BA2F70F620E30DE60079CCD4 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70F520E30DE60079CCD4 /* IOKit.framework */; };
 		BA2F955820F4309E000544FA /* MixpanelProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2F955720F4309E000544FA /* MixpanelProxy.m */; };
 		BA2F955A20F4309E000544FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2F955920F4309E000544FA /* main.m */; };
 		BA2F955E20F4309E000544FA /* Mixpanel.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = BA2F955320F4309E000544FA /* Mixpanel.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -83,7 +73,6 @@
 		BA5AC43A16FC9A3A009321A0 /* NSUserDefaults+WLApplicationDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C8B16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BA5AC43B16FC9A54009321A0 /* WLHourRange.m in Sources */ = {isa = PBXBuildFile; fileRef = E23F746E14434DE40055D6CE /* WLHourRange.m */; };
 		BA5AC43C16FC9B49009321A0 /* NSDate+WLDayBoundaries.m in Sources */ = {isa = PBXBuildFile; fileRef = E253574F13DC884D0010A2ED /* NSDate+WLDayBoundaries.m */; };
-		BA5C5A9A20F97BA0002A00BE /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA5C5A9920F97BA0002A00BE /* XCTest.framework */; };
 		BA699BA620F86C3600F3A0F9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA699BA520F86C3600F3A0F9 /* AppDelegate.m */; };
 		BA699BAB20F86C3800F3A0F9 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA699BA920F86C3800F3A0F9 /* MainMenu.xib */; };
 		BA699BAE20F86C3800F3A0F9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BA699BAD20F86C3800F3A0F9 /* main.m */; };
@@ -233,7 +222,6 @@
 /* Begin PBXFileReference section */
 		256AC3D80F4B6AC300CF3369 /* DeskboardAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeskboardAppDelegate.h; sourceTree = "<group>"; };
 		256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeskboardAppDelegate.m; sourceTree = "<group>"; };
-		256AC3F00F4B6AF500CF3369 /* Deskboard_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deskboard_Prefix.pch; sourceTree = "<group>"; };
 		289D40EE18117C3D009EAD73 /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ja; path = Resources/ja.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
 		28B3CDD1180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/AboutPrefPaneView.xib; sourceTree = "<group>"; };
 		28B3CDD2180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
@@ -318,17 +306,6 @@
 		BA2F70DB20E30D5A0079CCD4 /* ShortcutRecorder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ShortcutRecorder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA2F70DD20E30D5C0079CCD4 /* WLCalendarStore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WLCalendarStore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA2F70DF20E30D5F0079CCD4 /* WLFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WLFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA2F70E120E30D720079CCD4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		BA2F70E320E30D770079CCD4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		BA2F70E520E30D7C0079CCD4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		BA2F70E720E30D8E0079CCD4 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		BA2F70E920E30DAF0079CCD4 /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = System/Library/Frameworks/CalendarStore.framework; sourceTree = SDKROOT; };
-		BA2F70EB20E30DB80079CCD4 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
-		BA2F70ED20E30DC20079CCD4 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
-		BA2F70EF20E30DD50079CCD4 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
-		BA2F70F120E30DDA0079CCD4 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
-		BA2F70F320E30DE10079CCD4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		BA2F70F520E30DE60079CCD4 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		BA2F955320F4309E000544FA /* Mixpanel.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = Mixpanel.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA2F955520F4309E000544FA /* MixpanelProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MixpanelProtocol.h; sourceTree = "<group>"; };
 		BA2F955620F4309E000544FA /* MixpanelProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MixpanelProxy.h; sourceTree = "<group>"; };
@@ -341,10 +318,8 @@
 		BA5AC3C116F9CB31009321A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BA5AC3C316F9CB31009321A0 /* BlotterTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlotterTests.h; sourceTree = "<group>"; };
 		BA5AC3C416F9CB31009321A0 /* BlotterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlotterTests.m; sourceTree = "<group>"; };
-		BA5AC3C616F9CB31009321A0 /* BlotterTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BlotterTests-Prefix.pch"; sourceTree = "<group>"; };
 		BA5AC3E316FAF662009321A0 /* WLCalendarEventsControllerTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarEventsControllerTests.h; sourceTree = "<group>"; };
 		BA5AC3E416FAF662009321A0 /* WLCalendarEventsControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarEventsControllerTests.m; sourceTree = "<group>"; };
-		BA5C5A9920F97BA0002A00BE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/MacOSX.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		BA699BA220F86C3600F3A0F9 /* LoginItem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoginItem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA699BA420F86C3600F3A0F9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BA699BA520F86C3600F3A0F9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -352,6 +327,7 @@
 		BA699BAC20F86C3800F3A0F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BA699BAD20F86C3800F3A0F9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BA699BAF20F86C3800F3A0F9 /* LoginItem.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LoginItem.entitlements; sourceTree = "<group>"; };
+		BA731EE1210A7F2A0019BE8B /* WLMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLMacro.h; sourceTree = "<group>"; };
 		BA807F0B1645460C0033B85B /* IKApplicationPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKApplicationPreferences.h; sourceTree = "<group>"; };
 		BA807F0C1645460C0033B85B /* IKApplicationPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKApplicationPreferences.m; sourceTree = "<group>"; };
 		BA807F0E1645460C0033B85B /* IKPreferencesRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKPreferencesRepresentation.h; sourceTree = "<group>"; };
@@ -534,15 +510,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA2F70F620E30DE60079CCD4 /* IOKit.framework in Frameworks */,
-				BA2F70F420E30DE20079CCD4 /* QuartzCore.framework in Frameworks */,
-				BA2F70F020E30DD50079CCD4 /* Carbon.framework in Frameworks */,
-				BA2F70EE20E30DC20079CCD4 /* ServiceManagement.framework in Frameworks */,
-				BA2F70EA20E30DAF0079CCD4 /* CalendarStore.framework in Frameworks */,
-				BA2F70E820E30D8E0079CCD4 /* CoreText.framework in Frameworks */,
-				BA2F70E620E30D7D0079CCD4 /* AppKit.framework in Frameworks */,
-				BA2F70E420E30D770079CCD4 /* CoreGraphics.framework in Frameworks */,
-				BA2F70E220E30D720079CCD4 /* Cocoa.framework in Frameworks */,
 				BA2F70E020E30D5F0079CCD4 /* WLFoundation.framework in Frameworks */,
 				BA2F70DE20E30D5C0079CCD4 /* WLCalendarStore.framework in Frameworks */,
 				BA2F70DC20E30D5A0079CCD4 /* ShortcutRecorder.framework in Frameworks */,
@@ -562,7 +529,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA5C5A9A20F97BA0002A00BE /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -720,19 +686,7 @@
 		BA2F70D820E30D560079CCD4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BA5C5A9920F97BA0002A00BE /* XCTest.framework */,
 				BAB5145820F57972002D6C69 /* Mixpanel.framework */,
-				BA2F70F520E30DE60079CCD4 /* IOKit.framework */,
-				BA2F70F320E30DE10079CCD4 /* QuartzCore.framework */,
-				BA2F70F120E30DDA0079CCD4 /* CoreServices.framework */,
-				BA2F70EF20E30DD50079CCD4 /* Carbon.framework */,
-				BA2F70ED20E30DC20079CCD4 /* ServiceManagement.framework */,
-				BA2F70EB20E30DB80079CCD4 /* ScriptingBridge.framework */,
-				BA2F70E920E30DAF0079CCD4 /* CalendarStore.framework */,
-				BA2F70E720E30D8E0079CCD4 /* CoreText.framework */,
-				BA2F70E520E30D7C0079CCD4 /* AppKit.framework */,
-				BA2F70E320E30D770079CCD4 /* CoreGraphics.framework */,
-				BA2F70E120E30D720079CCD4 /* Cocoa.framework */,
 				BA2F70DF20E30D5F0079CCD4 /* WLFoundation.framework */,
 				BA2F70DD20E30D5C0079CCD4 /* WLCalendarStore.framework */,
 				BA2F70DB20E30D5A0079CCD4 /* ShortcutRecorder.framework */,
@@ -813,7 +767,6 @@
 			isa = PBXGroup;
 			children = (
 				BA5AC3CC16F9CC30009321A0 /* Resources */,
-				BA5AC3C616F9CB31009321A0 /* BlotterTests-Prefix.pch */,
 				BA5AC3C316F9CB31009321A0 /* BlotterTests.h */,
 				BA5AC3C416F9CB31009321A0 /* BlotterTests.m */,
 				BA5AC3E316FAF662009321A0 /* WLCalendarEventsControllerTests.h */,
@@ -858,8 +811,8 @@
 				E29F38ED1319694C00A865D9 /* WLNewReminderWindowController.m */,
 				E2E64B4C1402483500912A92 /* WLSoftEdgeLayer.h */,
 				E2E64B4D1402483500912A92 /* WLSoftEdgeLayer.m */,
-				256AC3F00F4B6AF500CF3369 /* Deskboard_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
+				BA731EE1210A7F2A0019BE8B /* WLMacro.h */,
 			);
 			name = Blotter;
 			sourceTree = "<group>";
@@ -1554,7 +1507,6 @@
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -1587,7 +1539,6 @@
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -1618,7 +1569,6 @@
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -1661,8 +1611,6 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1693,8 +1641,6 @@
 				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "BlotterTests/BlotterTests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.wireload.blotter.mac.${PRODUCT_NAME:rfc1034identifier}";
@@ -1719,8 +1665,6 @@
 				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "BlotterTests/BlotterTests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.wireload.blotter.mac.${PRODUCT_NAME:rfc1034identifier}";
@@ -1735,7 +1679,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -1770,7 +1713,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -1805,7 +1747,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -1841,6 +1782,7 @@
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_INTEGER = YES;
 				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_NULLABILITY = YES;
@@ -1890,8 +1832,6 @@
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
 				INFOPLIST_FILE = "Blotter-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.blotter.mac;
@@ -1905,8 +1845,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
 				INFOPLIST_FILE = "Blotter-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.blotter.mac;
@@ -1921,8 +1859,6 @@
 				CODE_SIGN_ENTITLEMENTS = Blotter.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Deskboard_Prefix.pch;
 				INFOPLIST_FILE = "Blotter-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.blotter.mac;
@@ -1937,6 +1873,7 @@
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_INTEGER = YES;
 				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_NULLABILITY = YES;
@@ -1990,6 +1927,7 @@
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_INTEGER = YES;
 				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_NULLABILITY = YES;

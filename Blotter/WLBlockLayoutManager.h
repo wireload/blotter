@@ -6,6 +6,8 @@
 //  Copyright (c) 2011 WireLoad. All rights reserved.
 //
 
+#import <Cocoa/Cocoa.h>
+
 
 typedef void (^WLLayoutManager)(CALayer *aLayer);
 

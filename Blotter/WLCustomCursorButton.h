@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 WireLoad. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
 
 NS_ASSUME_NONNULL_BEGIN

@@ -6,7 +6,8 @@
 //  Copyright (c) 2011 WireLoad Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+
+#import <AppKit/AppKit.h>
 
 
 /*!

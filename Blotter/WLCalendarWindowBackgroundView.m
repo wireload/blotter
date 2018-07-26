@@ -10,6 +10,7 @@
 #import "WLGraphics.h"
 #import "WLCalendarWindowBackgroundView.h"
 #import "WLCalendarWindow.h"
+#import "WLMacro.h"
 
 
 static const CGFloat _WLCalendarBackgroundShadowTop = 6.0;

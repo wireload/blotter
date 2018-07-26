@@ -6,8 +6,10 @@
 //  Copyright 2011 WireLoad. All rights reserved.
 //
 
+#import <CoreImage/CoreImage.h>
 #import "WLCalendarWindow.h"
 #import "NSColor+WLCalendar.h"
+#import "WLMacro.h"
 
 
 static const CGFloat _WLCalendarBackgroundActiveBlur = 4.0;

@@ -1,18 +1,12 @@
 //
-// Prefix header for all source files of the 'Deskboard' target in the 'Deskboard' project
+//  WLMacro.h
+//  Blotter
+//
+//  Created by Ilya Kulakov on 7/26/18.
+//  Copyright © 2018 WireLoad. All rights reserved.
 //
 
-#ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
-    #import <CalendarStore/CalendarStore.h>
-    #import <Carbon/Carbon.h>
-    #import <QuartzCore/QuartzCore.h>
-    #import <CoreServices/CoreServices.h>
-    #import <ScriptingBridge/ScriptingBridge.h>
-    #include <IOKit/ps/IOPowerSources.h>
-    #include <IOKit/ps/IOPSKeys.h>
-#endif
-
+#import <Foundation/Foundation.h>
 
 #define IS_EQ_CGFLOAT(a, b) (BOOL)(fabs((b) - (a)) < DBL_EPSILON)
 
