@@ -341,6 +341,7 @@
 				INSTALL_PATH = "@rpath";
 				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.WLCalendarStore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Archiving;
@@ -356,6 +357,7 @@
 				INSTALL_PATH = "@rpath";
 				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.WLCalendarStore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
@@ -429,6 +431,7 @@
 				INSTALL_PATH = "@rpath";
 				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.WLCalendarStore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
