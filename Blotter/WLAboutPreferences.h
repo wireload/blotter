@@ -9,14 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <WLFoundation/WLFoundation.h>
 #import "IKPreferencesRepresentation.h"
-#import "WLCustomCursorButton.h"
 
 
 @interface WLAboutPreferences : WLViewController <IKPreferencesRepresentation>
 {
     IBOutlet NSTextField *_versionView;
     IBOutlet NSTextField *_copyrightView;
-    IBOutlet WLCustomCursorButton *_wireloadButton;
 }
 
 - (IBAction)showHelp:(id)aSender;
@@ -26,7 +24,5 @@
 - (IBAction)showRateThisApp:(id)aSender;
 
 - (IBAction)showFollowUsOnTwitter:(id)aSender;
-
-- (IBAction)showWireload:(id)aSender;
 
 @end

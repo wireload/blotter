@@ -37,7 +37,6 @@
 		BA08A981167737730085F40C /* WLCalendarsPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7E3167737730085F40C /* WLCalendarsPreferences.m */; };
 		BA08AA34167737730085F40C /* WLColorCheckboxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A980167737730085F40C /* WLColorCheckboxCell.m */; };
 		BA08AA51167743A50085F40C /* WLAboutPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08AA4C167743A50085F40C /* WLAboutPreferences.m */; };
-		BA08AA52167743A50085F40C /* WLCustomCursorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08AA4E167743A50085F40C /* WLCustomCursorButton.m */; };
 		BA08AA53167743A50085F40C /* WLPreferencesButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08AA50167743A50085F40C /* WLPreferencesButtonCell.m */; };
 		BA105998168DAD8F00A3DDF5 /* WLCalendarEventsController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA105997168DAD8F00A3DDF5 /* WLCalendarEventsController.m */; };
 		BA1F51DB1663B2A400ABD662 /* WLGeneralPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1F51DA1663B2A400ABD662 /* WLGeneralPreferences.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -293,8 +292,6 @@
 		BA08A980167737730085F40C /* WLColorCheckboxCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLColorCheckboxCell.m; sourceTree = "<group>"; };
 		BA08AA4B167743A50085F40C /* WLAboutPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLAboutPreferences.h; sourceTree = "<group>"; };
 		BA08AA4C167743A50085F40C /* WLAboutPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = WLAboutPreferences.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		BA08AA4D167743A50085F40C /* WLCustomCursorButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCustomCursorButton.h; sourceTree = "<group>"; };
-		BA08AA4E167743A50085F40C /* WLCustomCursorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCustomCursorButton.m; sourceTree = "<group>"; };
 		BA08AA4F167743A50085F40C /* WLPreferencesButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLPreferencesButtonCell.h; sourceTree = "<group>"; };
 		BA08AA50167743A50085F40C /* WLPreferencesButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = WLPreferencesButtonCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		BA105996168DAD8F00A3DDF5 /* WLCalendarEventsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarEventsController.h; sourceTree = "<group>"; };
@@ -673,8 +670,6 @@
 		BA1F51D81663B26000ABD662 /* About */ = {
 			isa = PBXGroup;
 			children = (
-				BA08AA4D167743A50085F40C /* WLCustomCursorButton.h */,
-				BA08AA4E167743A50085F40C /* WLCustomCursorButton.m */,
 				BA08AA4F167743A50085F40C /* WLPreferencesButtonCell.h */,
 				BA08AA50167743A50085F40C /* WLPreferencesButtonCell.m */,
 				BA08AA4B167743A50085F40C /* WLAboutPreferences.h */,
@@ -1222,7 +1217,6 @@
 				BA08A981167737730085F40C /* WLCalendarsPreferences.m in Sources */,
 				BA08AA34167737730085F40C /* WLColorCheckboxCell.m in Sources */,
 				BA08AA51167743A50085F40C /* WLAboutPreferences.m in Sources */,
-				BA08AA52167743A50085F40C /* WLCustomCursorButton.m in Sources */,
 				BA08AA53167743A50085F40C /* WLPreferencesButtonCell.m in Sources */,
 				BA105998168DAD8F00A3DDF5 /* WLCalendarEventsController.m in Sources */,
 				BAF67C8C16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.m in Sources */,

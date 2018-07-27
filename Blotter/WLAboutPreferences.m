@@ -35,11 +35,6 @@
     [[NSWorkspace sharedWorkspace] openURL:[[NSUserDefaults standardUserDefaults] WL_followOnTwitterURL]];
 }
 
-- (IBAction)showWireload:(id)aSender
-{
-    [[NSWorkspace sharedWorkspace] openURL:[[NSUserDefaults standardUserDefaults] WL_wireloadURL]];
-}
-
 
 #pragma mark IKPreferencesRepresentation
 
@@ -59,8 +54,6 @@
 
     _versionView.stringValue = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     _copyrightView.cell.backgroundStyle = NSBackgroundStyleRaised;
-
-    _wireloadButton.cursor = [NSCursor pointingHandCursor];
 }
 
 @end
