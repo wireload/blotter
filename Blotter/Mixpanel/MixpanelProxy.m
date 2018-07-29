@@ -12,6 +12,24 @@
 
 
 @implementation MixpanelProxy
+{
+    Mixpanel *_mixpanel;
+}
+
+- (instancetype)init
+{
+    return [self initWithMixpanel:[Mixpanel sharedInstance]];
+}
+
+- (instancetype)initWithMixpanel:(Mixpanel *)aMixpanel
+{
+    if (self = [super init])
+    {
+        _mixpanel = aMixpanel;
+    }
+
+    return self;
+}
 
 - (void)track:(NSString *)anEvent withReply:(dispatch_block_t)aReply;
 {
@@ -20,7 +38,7 @@
 
 - (void)track:(NSString *)anEvent withProperties:(NSDictionary *)aProperties andReply:(dispatch_block_t)aReply;
 {
-    [self performBlock:^{ [[Mixpanel sharedInstance] track:anEvent properties:aProperties]; }
+    [self performBlock:^{ [self->_mixpanel track:anEvent properties:aProperties]; }
         withReply:aReply];
 }
 

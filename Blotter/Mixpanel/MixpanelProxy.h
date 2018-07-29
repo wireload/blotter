@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MixpanelProxy : NSObject <MixpanelProtocol>
 
+- (instancetype)initWithMixpanel:(Mixpanel *)aMixpanel NS_DESIGNATED_INITIALIZER;
+
 - (void)performBlock:(dispatch_block_t)aBlock withReply:(nullable dispatch_block_t)aReply;
 
 @end

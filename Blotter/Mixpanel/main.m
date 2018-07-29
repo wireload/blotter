@@ -18,22 +18,13 @@
 
 @implementation ServiceDelegate
 
-- (instancetype)init
-{
-    if (self = [super init])
-    {
-        [Mixpanel sharedInstanceWithToken:@"ece5b68a45f2721dd049f2e5585478ea"];
-    }
-
-    return self;
-}
-
 #pragma mark NSXPCListenerDelegate
 
 - (BOOL)listener:(NSXPCListener *)aListener shouldAcceptNewConnection:(NSXPCConnection *)newConnection
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstanceWithToken:@"ece5b68a45f2721dd049f2e5585478ea"];
     newConnection.exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(MixpanelProtocol)];
-    newConnection.exportedObject = [MixpanelProxy new];
+    newConnection.exportedObject = [[MixpanelProxy alloc] initWithMixpanel:mixpanel];
     [newConnection resume];
 
     return YES;

@@ -397,7 +397,10 @@ static NSString* const _WLStatusItemAutosaveName = @"net.wireload.blotter.mac.St
         [properties setValue:bundleInfo[@"CFBundleVersion"] forKey:@"$app_build_number"];
         [properties setValue:bundleInfo[@"CFBundleShortVersionString"] forKey:@"$app_version_string"];
 
-        [connection.remoteObjectProxy track:@"Launched" withProperties:properties andReply:^{
+        id<MixpanelProtocol> remoteObjectProxy = [connection remoteObjectProxyWithErrorHandler:^(NSError *anError) {
+            [[WLASLLog logForKey:@"Mixpanel"] logError:@"Unable to report to Mixpanel: %@", anError.localizedDescription];
+        }];
+        [remoteObjectProxy track:@"Launched" withProperties:properties andReply:^{
             [connection invalidate];
         }];
     });
