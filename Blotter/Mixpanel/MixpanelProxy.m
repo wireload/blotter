@@ -31,16 +31,8 @@
     return self;
 }
 
-- (void)track:(NSString *)anEvent withReply:(dispatch_block_t)aReply;
-{
-    [self track:anEvent withProperties:nil andReply:aReply];
-}
 
-- (void)track:(NSString *)anEvent withProperties:(NSDictionary *)aProperties andReply:(dispatch_block_t)aReply;
-{
-    [self performBlock:^{ [self->_mixpanel track:anEvent properties:aProperties]; }
-        withReply:aReply];
-}
+#pragma mark Methods
 
 - (void)performBlock:(dispatch_block_t)aBlock withReply:(dispatch_block_t)aReply;
 {
@@ -49,12 +41,28 @@
         aBlock();
 
         [[Mixpanel sharedInstance] flushWithCompletion:^{
-            if (aReply)
-                aReply();
-
+            aReply();
             xpc_transaction_end();
         }];
     }));
+}
+
+
+#pragma mark MixpanelProtocol
+
+- (void)track:(NSString *)anEvent withReply:(dispatch_block_t)aReply;
+{
+    [self track:anEvent withProperties:nil andReply:aReply];
+}
+
+- (void)track:(NSString *)anEvent withProperties:(NSDictionary *)aProperties andReply:(dispatch_block_t)aReply;
+{
+    [self performBlock:^{ [self->_mixpanel track:anEvent properties:aProperties]; } withReply:aReply];
+}
+
+- (void)peopleSet:(NSDictionary *)aProperties withReply:(dispatch_block_t)aReply
+{
+    [self performBlock:^{ [self->_mixpanel.people set:aProperties]; } withReply:aReply];
 }
 
 @end

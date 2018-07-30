@@ -10,9 +10,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol MixpanelProtocol
 
-- (void)track:(NSString *)anEvent withReply:(nullable dispatch_block_t)aReply;
+- (void)track:(NSString *)anEvent withReply:(dispatch_block_t)aReply;
 
-- (void)track:(NSString *)anEvent withProperties:(nullable NSDictionary *)aProperties andReply:(nullable dispatch_block_t)aReply;
+- (void)track:(NSString *)anEvent withProperties:(nullable NSDictionary *)aProperties andReply:(dispatch_block_t)aReply;
+
+- (void)peopleSet:(NSDictionary *)aProperties withReply:(dispatch_block_t)aReply;
 
 @end
 

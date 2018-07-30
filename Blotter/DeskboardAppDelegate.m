@@ -388,21 +388,22 @@ static NSString* const _WLStatusItemAutosaveName = @"net.wireload.blotter.mac.St
 
         NSLocale *locale = [NSLocale currentLocale];
         NSDictionary *bundleInfo = [NSBundle mainBundle].infoDictionary;
-        NSMutableDictionary *properties = [@{
-            @"Locale": locale.localeIdentifier,
-            @"Calendar": locale.calendarIdentifier
-        } mutableCopy];
-        [properties setValue:bundleInfo[@"CFBundleVersion"] forKey:@"$app_version"];
-        [properties setValue:bundleInfo[@"CFBundleShortVersionString"] forKey:@"$app_release"];
-        [properties setValue:bundleInfo[@"CFBundleVersion"] forKey:@"$app_build_number"];
-        [properties setValue:bundleInfo[@"CFBundleShortVersionString"] forKey:@"$app_version_string"];
+
+        NSMutableDictionary *appProperties = [NSMutableDictionary dictionary];
+        [appProperties setValue:bundleInfo[@"CFBundleVersion"] forKey:@"$app_version"];
+        [appProperties setValue:bundleInfo[@"CFBundleShortVersionString"] forKey:@"$app_release"];
+        [appProperties setValue:bundleInfo[@"CFBundleVersion"] forKey:@"$app_build_number"];
+        [appProperties setValue:bundleInfo[@"CFBundleShortVersionString"] forKey:@"$app_version_string"];
+
+        NSMutableDictionary *systemProperties = [appProperties mutableCopy];
+        systemProperties[@"Locale"] = locale.localeIdentifier;
+        systemProperties[@"Calendar"] = locale.calendarIdentifier;
 
         id<MixpanelProtocol> remoteObjectProxy = [connection remoteObjectProxyWithErrorHandler:^(NSError *anError) {
             [[WLASLLog logForKey:@"Mixpanel"] logError:@"Unable to report to Mixpanel: %@", anError.localizedDescription];
         }];
-        [remoteObjectProxy track:@"Launched" withProperties:properties andReply:^{
-            [connection invalidate];
-        }];
+        [remoteObjectProxy peopleSet:systemProperties withReply:^{}];
+        [remoteObjectProxy track:@"Launched" withProperties:appProperties andReply:^{ [connection invalidate]; }];
     });
 }
 
