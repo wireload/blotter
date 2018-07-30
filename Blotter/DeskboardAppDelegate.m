@@ -421,13 +421,13 @@ static NSString* const _WLStatusItemAutosaveName = @"net.wireload.blotter.mac.St
     [NSValueTransformer setValueTransformer:[[SRKeyEquivalentTransformer alloc] init] forName:@"SRKeyEquivalentTransformer"];
     [NSValueTransformer setValueTransformer:[[SRKeyEquivalentModifierMaskTransformer alloc] init] forName:@"SRKeyEquivalentModifierMaskTransformer"];
     _shortcuts = @[
-                   @[@"shortcutNewEvent", @"showNewEvent:", _newEventMenuItem],
-                   @[@"shortcutNewTask", @"showNewReminder:", _newTaskMenuItem],
-                   @[@"shortcutShowNextWeek", @"showNextWeek:", _showNextWeekMenuItem],
-                   @[@"shortcutShowPreviousWeek", @"showPreviousWeek:", _showPreviousWeekMenuItem],
-                   @[@"shortcutShowCurrentWeek", @"showCurrentWeek:", _showCurrentWeekMenuItem],
-                   @[@"shortcutBringToFront", @"bringToFrontOrSendToBack:", _bringToFrontMenuItem]
-                   ];
+        @[@"shortcutNewEvent", @"showNewEvent:", _newEventMenuItem],
+        @[@"shortcutNewTask", @"showNewReminder:", _newTaskMenuItem],
+        @[@"shortcutShowNextWeek", @"showNextWeek:", _showNextWeekMenuItem],
+        @[@"shortcutShowPreviousWeek", @"showPreviousWeek:", _showPreviousWeekMenuItem],
+        @[@"shortcutShowCurrentWeek", @"showCurrentWeek:", _showCurrentWeekMenuItem],
+        @[@"shortcutBringToFront", @"bringToFrontOrSendToBack:", _bringToFrontMenuItem]
+    ];
     [_shortcuts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
     {
         NSString *shortcutName = obj[ShortcutsNameIdx];
