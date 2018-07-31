@@ -936,7 +936,7 @@
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
-				BA7EFC432110E59300342612 /* Prepare frameworks for Archiving */,
+				BA7EFC432110E59300342612 /* Prepare Frameworks for Archiving */,
 				2840647F12833643000816FF /* Copy Frameworks */,
 				BA23664F16F739F200779487 /* Copy Login Item */,
 				BA2F956320F4309E000544FA /* Copy XPC Services */,
@@ -960,7 +960,7 @@
 				BA2F954F20F4309E000544FA /* Sources */,
 				BA2F955020F4309E000544FA /* Frameworks */,
 				BA2F955120F4309E000544FA /* Resources */,
-				BA7EFC422110E23B00342612 /* Prepare frameworks for Archiving */,
+				BA7EFC422110E23B00342612 /* Prepare Frameworks for Archiving */,
 				BAB5145A20F5797F002D6C69 /* Copy Frameworks */,
 			);
 			buildRules = (
@@ -1159,36 +1159,36 @@
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
-		BA7EFC422110E23B00342612 /* Prepare frameworks for Archiving */ = {
+		BA7EFC422110E23B00342612 /* Prepare Frameworks for Archiving */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Prepare frameworks for Archiving";
+			name = "Prepare Frameworks for Archiving";
 			outputPaths = (
 				"${CONFIGURATION_BUILD_DIR}/Mixpanel.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# The Mixpanel project is missing the Archiving configuration and Xcode fails to find the framework.\nif [ \"${CONFIGURATION}\" == \"Archiving\" ]; then\n    /bin/ln -vs \"${BUILD_ROOT}/Release/Mixpanel.framework\" \"${CONFIGURATION_BUILD_DIR}/Mixpanel.framework\"\nfi";
+			shellScript = "# The Mixpanel project is missing the Archiving configuration and Xcode fails to find the framework.\nif [ \"${CONFIGURATION}\" == \"Archiving\" ]; then\n    /bin/cp -vca \"${BUILD_ROOT}/Release/Mixpanel.framework\" \"${CONFIGURATION_BUILD_DIR}/Mixpanel.framework\"\nfi";
 		};
-		BA7EFC432110E59300342612 /* Prepare frameworks for Archiving */ = {
+		BA7EFC432110E59300342612 /* Prepare Frameworks for Archiving */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Prepare frameworks for Archiving";
+			name = "Prepare Frameworks for Archiving";
 			outputPaths = (
 				"${CONFIGURATION_BUILD_DIR}/ShortcutRecorder.framework",
 				"${CONFIGURATION_BUILD_DIR}/PTHotKey.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# The ShortcutRecorder project is missing the Archiving configuration and Xcode fails to find the frameworks.\nif [ \"${CONFIGURATION}\" == \"Archiving\" ]; then\n    /bin/ln -vs \"${BUILD_ROOT}/Release/ShortcutRecorder.framework\" \"${CONFIGURATION_BUILD_DIR}/ShortcutRecorder.framework\"\n    /bin/ln -vs \"${BUILD_ROOT}/Release/PTHotKey.framework\" \"${CONFIGURATION_BUILD_DIR}/PTHotKey.framework\"\nfi";
+			shellScript = "# The ShortcutRecorder project is missing the Archiving configuration and Xcode fails to find the frameworks.\nif [ \"${CONFIGURATION}\" == \"Archiving\" ]; then\n    /bin/cp -vca \"${BUILD_ROOT}/Release/ShortcutRecorder.framework\" \"${CONFIGURATION_BUILD_DIR}/ShortcutRecorder.framework\"\n    /bin/cp -vca \"${BUILD_ROOT}/Release/PTHotKey.framework\" \"${CONFIGURATION_BUILD_DIR}/PTHotKey.framework\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
