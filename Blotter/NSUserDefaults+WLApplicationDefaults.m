@@ -20,7 +20,7 @@ NSInteger const WLBlotterBundleVersion2_2_2 = 13;
 
 NSInteger const WLBlotterBundleVersion2_2_3 = 14;
 
-NSInteger const WLBlotterBundleVersion2_2_4 = 15;
+NSInteger const WLBlotterBundleVersion2_2_4 = 16;
 
 NSString* const WLLastMigratedBundleVersionKey = @"LastMigratedBundleVersion";
 
