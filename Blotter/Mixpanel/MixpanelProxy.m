@@ -6,8 +6,6 @@
 //  Copyright © 2018 WireLoad. All rights reserved.
 //
 
-#import <Mixpanel/Mixpanel.h>
-
 #import "MixpanelProxy.h"
 
 

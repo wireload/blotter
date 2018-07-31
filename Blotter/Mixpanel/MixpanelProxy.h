@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Mixpanel/Mixpanel.h>
+
 #import "MixpanelProtocol.h"
 
 

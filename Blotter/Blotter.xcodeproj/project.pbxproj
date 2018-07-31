@@ -46,9 +46,7 @@
 		BA2F70E020E30D5F0079CCD4 /* WLFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70DF20E30D5F0079CCD4 /* WLFoundation.framework */; };
 		BA2F955820F4309E000544FA /* MixpanelProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2F955720F4309E000544FA /* MixpanelProxy.m */; };
 		BA2F955A20F4309E000544FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2F955920F4309E000544FA /* main.m */; };
-		BA2F955E20F4309E000544FA /* Mixpanel.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = BA2F955320F4309E000544FA /* Mixpanel.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		BA4D504320F8282900A36938 /* Mixpanel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAB5145820F57972002D6C69 /* Mixpanel.framework */; };
-		BA4D504420F8283500A36938 /* Mixpanel.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BAB5145820F57972002D6C69 /* Mixpanel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BA2F955E20F4309E000544FA /* Mixpanel.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = BA2F955320F4309E000544FA /* Mixpanel.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BA5AC3C216F9CB31009321A0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA5AC3C016F9CB31009321A0 /* InfoPlist.strings */; };
 		BA5AC3C516F9CB31009321A0 /* BlotterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA5AC3C416F9CB31009321A0 /* BlotterTests.m */; };
 		BA5AC3E516FAF662009321A0 /* WLCalendarEventsControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA5AC3E416FAF662009321A0 /* WLCalendarEventsControllerTests.m */; };
@@ -80,6 +78,8 @@
 		BA72ED8020EC178200CF6F83 /* WLCalendarStore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70DD20E30D5C0079CCD4 /* WLCalendarStore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA72ED8120EC178200CF6F83 /* ShortcutRecorder.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70DB20E30D5A0079CCD4 /* ShortcutRecorder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA72ED8220EC178200CF6F83 /* PTHotKey.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70D920E30D560079CCD4 /* PTHotKey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BA7EFC3F2110D71A00342612 /* Mixpanel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA7EFC3E2110D71A00342612 /* Mixpanel.framework */; };
+		BA7EFC402110D72A00342612 /* Mixpanel.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BA7EFC3E2110D71A00342612 /* Mixpanel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA807F0F1645460C0033B85B /* IKApplicationPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA807F0C1645460C0033B85B /* IKApplicationPreferences.m */; };
 		BA81A834164548070058EB16 /* IKApplicationPreferences.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA81A832164548070058EB16 /* IKApplicationPreferences.strings */; };
 		BA9617F120E440EB00AACC98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA9617F020E440EB00AACC98 /* Assets.xcassets */; };
@@ -194,15 +194,15 @@
 			name = "Copy Login Item";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BA2F956320F4309E000544FA /* Embed XPC Services */ = {
+		BA2F956320F4309E000544FA /* Copy XPC Services */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
 			dstSubfolderSpec = 16;
 			files = (
-				BA2F955E20F4309E000544FA /* Mixpanel.xpc in Embed XPC Services */,
+				BA2F955E20F4309E000544FA /* Mixpanel.xpc in Copy XPC Services */,
 			);
-			name = "Embed XPC Services";
+			name = "Copy XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		BAB5145A20F5797F002D6C69 /* Copy Frameworks */ = {
@@ -211,7 +211,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				BA4D504420F8283500A36938 /* Mixpanel.framework in Copy Frameworks */,
+				BA7EFC402110D72A00342612 /* Mixpanel.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,6 +325,7 @@
 		BA699BAD20F86C3800F3A0F9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BA699BAF20F86C3800F3A0F9 /* LoginItem.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LoginItem.entitlements; sourceTree = "<group>"; };
 		BA731EE1210A7F2A0019BE8B /* WLMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLMacro.h; sourceTree = "<group>"; };
+		BA7EFC3E2110D71A00342612 /* Mixpanel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Mixpanel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA807F0B1645460C0033B85B /* IKApplicationPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKApplicationPreferences.h; sourceTree = "<group>"; };
 		BA807F0C1645460C0033B85B /* IKApplicationPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKApplicationPreferences.m; sourceTree = "<group>"; };
 		BA807F0E1645460C0033B85B /* IKPreferencesRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKPreferencesRepresentation.h; sourceTree = "<group>"; };
@@ -336,7 +337,6 @@
 		BA81A839164548120058EB16 /* ru */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ru; path = Resources/ru.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
 		BA81A83A164548140058EB16 /* sv */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = sv; path = Resources/sv.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
 		BA9617F020E440EB00AACC98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		BAB5145820F57972002D6C69 /* Mixpanel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Mixpanel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAF67C8A16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+WLApplicationDefaults.h"; sourceTree = "<group>"; };
 		BAF67C8B16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+WLApplicationDefaults.m"; sourceTree = "<group>"; };
 		BAF67CB416D607270047FE2A /* WLClosableWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLClosableWindow.h; sourceTree = "<group>"; };
@@ -518,7 +518,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA4D504320F8282900A36938 /* Mixpanel.framework in Frameworks */,
+				BA7EFC3F2110D71A00342612 /* Mixpanel.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -681,7 +681,7 @@
 		BA2F70D820E30D560079CCD4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BAB5145820F57972002D6C69 /* Mixpanel.framework */,
+				BA7EFC3E2110D71A00342612 /* Mixpanel.framework */,
 				BA2F70DF20E30D5F0079CCD4 /* WLFoundation.framework */,
 				BA2F70DD20E30D5C0079CCD4 /* WLCalendarStore.framework */,
 				BA2F70DB20E30D5A0079CCD4 /* ShortcutRecorder.framework */,
@@ -936,9 +936,10 @@
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
+				BA7EFC432110E59300342612 /* Prepare frameworks for Archiving */,
 				2840647F12833643000816FF /* Copy Frameworks */,
 				BA23664F16F739F200779487 /* Copy Login Item */,
-				BA2F956320F4309E000544FA /* Embed XPC Services */,
+				BA2F956320F4309E000544FA /* Copy XPC Services */,
 			);
 			buildRules = (
 			);
@@ -959,6 +960,7 @@
 				BA2F954F20F4309E000544FA /* Sources */,
 				BA2F955020F4309E000544FA /* Frameworks */,
 				BA2F955120F4309E000544FA /* Resources */,
+				BA7EFC422110E23B00342612 /* Prepare frameworks for Archiving */,
 				BAB5145A20F5797F002D6C69 /* Copy Frameworks */,
 			);
 			buildRules = (
@@ -1155,6 +1157,37 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		BA7EFC422110E23B00342612 /* Prepare frameworks for Archiving */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Prepare frameworks for Archiving";
+			outputPaths = (
+				"${CONFIGURATION_BUILD_DIR}/Mixpanel.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# The Mixpanel project is missing the Archiving configuration and Xcode fails to find the framework.\nif [ \"${CONFIGURATION}\" == \"Archiving\" ]; then\n    /bin/ln -vs \"${BUILD_ROOT}/Release/Mixpanel.framework\" \"${CONFIGURATION_BUILD_DIR}/Mixpanel.framework\"\nfi";
+		};
+		BA7EFC432110E59300342612 /* Prepare frameworks for Archiving */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Prepare frameworks for Archiving";
+			outputPaths = (
+				"${CONFIGURATION_BUILD_DIR}/ShortcutRecorder.framework",
+				"${CONFIGURATION_BUILD_DIR}/PTHotKey.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# The ShortcutRecorder project is missing the Archiving configuration and Xcode fails to find the frameworks.\nif [ \"${CONFIGURATION}\" == \"Archiving\" ]; then\n    /bin/ln -vs \"${BUILD_ROOT}/Release/ShortcutRecorder.framework\" \"${CONFIGURATION_BUILD_DIR}/ShortcutRecorder.framework\"\n    /bin/ln -vs \"${BUILD_ROOT}/Release/PTHotKey.framework\" \"${CONFIGURATION_BUILD_DIR}/PTHotKey.framework\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
