@@ -42,16 +42,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BC5999D1A3C7C09D4D70B7DF"
-               BuildableName = "WLCalendarStoreTests.octest"
-               BlueprintName = "WLCalendarStoreTests"
-               ReferencedContainer = "container:../WLCalendarStore/WLCalendarStore.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "BA6C872320D8C77900D0C30C"
                BuildableName = "WLFoundationTests.xctest"
                BlueprintName = "WLFoundationTests"
