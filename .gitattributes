@@ -1,2 +1,2 @@
 *.pbxproj merge=union
-*.strings diff=utf16
+*.strings text working-tree-encoding=UTF-16LE diff=strings
