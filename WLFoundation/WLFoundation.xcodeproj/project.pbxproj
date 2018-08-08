@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BA6C872720D8C77900D0C30C /* WLFoundationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6C872620D8C77900D0C30C /* WLFoundationTests.m */; };
 		BA6C872920D8C77900D0C30C /* WLFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA81DA67160DA09D00C83DC3 /* WLFoundation.framework */; };
 		BA6C873020D8C7AD00D0C30C /* NSArray+WLDelta_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */; };
 		BA6C873120D8C7B100D0C30C /* WLDateRangeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1059A2168DE52E00A3DDF5 /* WLDateRangeTests.m */; };
@@ -57,7 +56,6 @@
 		BA1059A1168DE52E00A3DDF5 /* WLDateRangeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDateRangeTests.h; sourceTree = "<group>"; };
 		BA1059A2168DE52E00A3DDF5 /* WLDateRangeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDateRangeTests.m; sourceTree = "<group>"; };
 		BA6C872420D8C77900D0C30C /* WLFoundationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WLFoundationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA6C872620D8C77900D0C30C /* WLFoundationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLFoundationTests.m; sourceTree = "<group>"; };
 		BA81DA67160DA09D00C83DC3 /* WLFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WLFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA81DA72160DA09D00C83DC3 /* WLFoundation-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WLFoundation-Info.plist"; sourceTree = "<group>"; };
 		BA81DA74160DA09D00C83DC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -69,8 +67,6 @@
 		BA9AFB99163AB71D00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+WLRemoveDuplicates.h"; sourceTree = "<group>"; };
 		BA9AFB9A163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+WLRemoveDuplicates.m"; sourceTree = "<group>"; };
 		BAA049D51621A1040078DF12 /* WLFoundationTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WLFoundationTests-Info.plist"; sourceTree = "<group>"; };
-		BAA049D91621A1040078DF12 /* WLFoundationTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLFoundationTests.h; sourceTree = "<group>"; };
-		BAA049DA1621A1040078DF12 /* WLFoundationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLFoundationTests.m; sourceTree = "<group>"; };
 		BAA049E11621A1810078DF12 /* NSArray+WLDelta_Tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+WLDelta_Tests.h"; sourceTree = "<group>"; };
 		BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+WLDelta_Tests.m"; sourceTree = "<group>"; };
 		BABB670116DCB2A600FFDCC5 /* WLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLViewController.h; sourceTree = "<group>"; };
@@ -120,9 +116,6 @@
 			isa = PBXGroup;
 			children = (
 				BA6C873320D8C7E700D0C30C /* Supporting Files */,
-				BAA049D91621A1040078DF12 /* WLFoundationTests.h */,
-				BA6C872620D8C77900D0C30C /* WLFoundationTests.m */,
-				BAA049DA1621A1040078DF12 /* WLFoundationTests.m */,
 				BAA049E11621A1810078DF12 /* NSArray+WLDelta_Tests.h */,
 				BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */,
 				BA1059A1168DE52E00A3DDF5 /* WLDateRangeTests.h */,
@@ -332,7 +325,6 @@
 			files = (
 				BA6C873020D8C7AD00D0C30C /* NSArray+WLDelta_Tests.m in Sources */,
 				BA6C873120D8C7B100D0C30C /* WLDateRangeTests.m in Sources */,
-				BA6C872720D8C77900D0C30C /* WLFoundationTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
