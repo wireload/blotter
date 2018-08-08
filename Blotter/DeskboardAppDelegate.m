@@ -308,7 +308,7 @@ static NSString* const _WLStatusItemAutosaveName = @"net.wireload.blotter.mac.St
         _statusItem.menu = _statusMenu;
         _statusItem.button.image = statusImage;
 
-        if (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_12)
+        if (@available(macOS 10.12, *))
         {
             _statusItem.autosaveName = _WLStatusItemAutosaveName;
             _statusItem.behavior = NSStatusItemBehaviorRemovalAllowed;
@@ -397,7 +397,11 @@ static NSString* const _WLStatusItemAutosaveName = @"net.wireload.blotter.mac.St
 
         NSMutableDictionary *systemProperties = [appProperties mutableCopy];
         systemProperties[@"Locale"] = locale.localeIdentifier;
-        systemProperties[@"Calendar"] = locale.calendarIdentifier;
+
+        if (@available(macOS 10.12, *))
+            systemProperties[@"Calendar"] = locale.calendarIdentifier;
+        else
+            systemProperties[@"Calendar"] = [NSCalendar currentCalendar].calendarIdentifier;
 
         id<MixpanelProtocol> remoteObjectProxy = [connection remoteObjectProxyWithErrorHandler:^(NSError *anError) {
             [[WLASLLog logForKey:@"Mixpanel"] logError:@"Unable to report to Mixpanel: %@", anError.localizedDescription];
