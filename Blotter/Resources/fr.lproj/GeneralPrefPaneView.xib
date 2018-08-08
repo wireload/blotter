@@ -249,9 +249,9 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" id="3NE-wo-BDc">
-                    <rect key="frame" x="150" y="111" width="347" height="28"/>
+                    <rect key="frame" x="150" y="111" width="346" height="28"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="Aidez-nous à améliorer Blotter en envoyant automatiquement les éléments de diagnostic et les données d'utilisation." id="0b7-8f-Lbi">
+                    <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="Aidez WireLoad à améliorer ses produits et services en envoyant automatiquement les données de diagnostic et d’utilisation." id="0b7-8f-Lbi">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

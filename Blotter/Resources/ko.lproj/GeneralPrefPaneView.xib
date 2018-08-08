@@ -251,7 +251,7 @@
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" id="jPh-FR-DEl">
                     <rect key="frame" x="128" y="111" width="309" height="28"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="자동으로 진단 루틴과 사용 데이터를 전송하여 Blotter를 개선할 수 있도록 도와주세요." id="Rv1-ul-MqW">
+                    <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="자동으로 진단 및 사용 내용에 대한 데이터를 보내서 WireLoad의 제품 및 서비스 개선에 도움을 줄 수 있습니다." id="Rv1-ul-MqW">
                         <font key="font" size="11" name=".AppleSDGothicNeoI-Regular"/>
                         <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
