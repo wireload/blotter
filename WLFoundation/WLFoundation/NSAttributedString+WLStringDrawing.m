@@ -159,14 +159,10 @@
         if (frame != NULL)
         {
             NSArray *lines = (__bridge NSArray *)CTFrameGetLines(frame);
-            if (lines.count == 1)
-                height = AB_CTFrameGetSize(frame).height;
-            else
-            {
-                CGPoint origins[2];
-                CTFrameGetLineOrigins(frame, CFRangeMake(0, 2), origins);
-                height = origins[0].y - origins[1].y;
-            }
+
+            if (lines.count)
+                height = AB_CTLineGetSize((__bridge CTLineRef)lines[0]).height;
+
             CFRelease(frame);
         }
         CFRelease(framePath);
