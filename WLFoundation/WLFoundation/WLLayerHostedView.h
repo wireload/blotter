@@ -12,7 +12,7 @@
 /*!
     If you want to change layerContentsRedrawPolicy, you MUST do this _after_ makeLayers. Otherwise your value will be overwritten.
  */
-@interface WLLayerHostedView : NSView /* <CALayerDelegate> */
+@interface WLLayerHostedView : NSView <CALayerDelegate>
 
 /*!
  @abstract  Stops animations applied to layer tree of the view.

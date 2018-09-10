@@ -57,7 +57,15 @@
 
 - (CALayer *)makeRootLayer
 {
-    return [CALayer layer];
+    CALayer *l = [CALayer layer];
+    l.delegate = self;
+
+    NSWindow *window = self.window;
+
+    if (window)
+        l.contentsScale = window.backingScaleFactor;
+
+    return l;
 }
 
 - (void)setNeedsLayout

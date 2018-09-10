@@ -183,17 +183,11 @@ static NSString* const _WLRootLayerName = @"WLCalendarRemindersViewLayer";
 
 - (CALayer *)makeRootLayer
 {
-    CALayer *l = [CALayer layer];
-
-    NSWindow *window = self.window;
-
-    if (window)
-        l.contentsScale = window.backingScaleFactor;
+    CALayer *l = [super makeRootLayer];
 
     l.layoutManager = self;
     l.masksToBounds = YES;
     l.name = _WLRootLayerName;
-    l.delegate = self;
     NSDictionary *actions = @{kCAOnOrderIn: [NSNull null],
                              kCAOnOrderOut: [NSNull null],
                              kCATransition: [NSNull null],

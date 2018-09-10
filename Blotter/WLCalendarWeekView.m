@@ -1100,7 +1100,7 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 
 - (CALayer *)makeRootLayer
 {
-    CALayer *l = [CALayer layer];
+    CALayer *l = [super makeRootLayer];
     l.masksToBounds = YES;
     l.name = _WLRootLayerName;
     l.layoutManager = self;
@@ -1109,7 +1109,6 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
                              kCATransition: [NSNull null],
                              @"contents": [NSNull null]};
     l.actions = actions;
-    l.delegate = self;
 
 #ifdef DEBUG_LAYERS
     l.backgroundColor = [[NSColor blackColor] CGColor];
