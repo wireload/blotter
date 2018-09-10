@@ -140,4 +140,19 @@
     return NO;
 }
 
+- (void)viewDidChangeBackingProperties
+{
+    [super viewDidChangeBackingProperties];
+
+    if (self.window && self.layer)
+    {
+        CGFloat scaleFactor = self.window.backingScaleFactor;
+
+        [self.layer WL_applyBlockToTree:^(CALayer *aLayer) {
+            aLayer.contentsScale = scaleFactor;
+            [aLayer setNeedsDisplay];
+        }];
+    }
+}
+
 @end
