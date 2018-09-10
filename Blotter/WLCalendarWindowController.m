@@ -861,10 +861,10 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0;
     [_tasksViewBox release];
 
     _rightNowViewBox = [[WLCalendarBoxView alloc] initWithFrame:NSZeroRect];
+    [_rightNowViewBox setWantsLayer:YES];
     _rightNowViewBox.title = NSLocalizedString(@"Right Now", @"Header of Right Now items list");
     _rightNowViewBox.contentView = [_rightNowViewController view];
     _rightNowViewBox.softEdges = YES;
-    [_rightNowViewBox setWantsLayer:YES];
     [contentView addSubview:_rightNowViewBox];
     [_rightNowViewBox release];
 
