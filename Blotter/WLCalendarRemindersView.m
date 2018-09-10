@@ -178,12 +178,6 @@ static NSString* const _WLRootLayerName = @"WLCalendarRemindersViewLayer";
     return nil;
 }
 
-- (BOOL)layer:(CALayer *)aLayer shouldInheritContentsScale:(CGFloat)aScale fromWindow:(NSWindow *)aWindow
-{
-    [aLayer setNeedsDisplay];
-    return YES;
-}
-
 
 #pragma mark WLLayerBackedView
 

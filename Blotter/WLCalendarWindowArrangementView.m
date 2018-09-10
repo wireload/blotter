@@ -647,7 +647,6 @@ static const NSSize _WLMinimumWindowFrameSize = {.width = 10.0, .height = 10.0};
     if (aLayer == _imageLayer)
         return NO;
 
-    [aLayer setNeedsDisplay];
     return YES;
 }
 
