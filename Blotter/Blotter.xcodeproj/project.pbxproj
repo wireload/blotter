@@ -1167,12 +1167,13 @@
 			inputPaths = (
 			);
 			name = "Prepare Frameworks for Archiving";
+			outputFileListPaths = (
+			);
 			outputPaths = (
-				"${CONFIGURATION_BUILD_DIR}/Mixpanel.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# The Mixpanel project is missing the Archiving configuration and Xcode fails to find the framework.\nif [ \"${CONFIGURATION}\" == \"Archiving\" ]; then\n    /bin/cp -vca \"${BUILD_ROOT}/Release/Mixpanel.framework\" \"${CONFIGURATION_BUILD_DIR}/Mixpanel.framework\"\nfi";
+			shellScript = "# The Mixpanel project is missing the Archiving configuration and Xcode fails to find the framework.\nif [ \"${CONFIGURATION}\" == \"Archiving\" ]; then\n    /bin/cp -vca \"${BUILD_ROOT}/Release/Mixpanel.framework\" \"${CONFIGURATION_BUILD_DIR}/Mixpanel.framework\"\nfi\n";
 		};
 		BA7EFC432110E59300342612 /* Prepare Frameworks for Archiving */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1183,12 +1184,10 @@
 			);
 			name = "Prepare Frameworks for Archiving";
 			outputPaths = (
-				"${CONFIGURATION_BUILD_DIR}/ShortcutRecorder.framework",
-				"${CONFIGURATION_BUILD_DIR}/PTHotKey.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# The ShortcutRecorder project is missing the Archiving configuration and Xcode fails to find the frameworks.\nif [ \"${CONFIGURATION}\" == \"Archiving\" ]; then\n    /bin/cp -vca \"${BUILD_ROOT}/Release/ShortcutRecorder.framework\" \"${CONFIGURATION_BUILD_DIR}/ShortcutRecorder.framework\"\n    /bin/cp -vca \"${BUILD_ROOT}/Release/PTHotKey.framework\" \"${CONFIGURATION_BUILD_DIR}/PTHotKey.framework\"\nfi";
+			shellScript = "# The ShortcutRecorder project is missing the Archiving configuration and Xcode fails to find the frameworks.\nif [ \"${CONFIGURATION}\" == \"Archiving\" ]; then\n    /bin/cp -vca \"${BUILD_ROOT}/Release/ShortcutRecorder.framework\" \"${CONFIGURATION_BUILD_DIR}/ShortcutRecorder.framework\"\n    /bin/cp -vca \"${BUILD_ROOT}/Release/PTHotKey.framework\" \"${CONFIGURATION_BUILD_DIR}/PTHotKey.framework\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
