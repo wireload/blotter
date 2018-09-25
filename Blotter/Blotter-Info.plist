@@ -32,6 +32,10 @@
 	<string>NSApplication</string>
 	<key>NSSupportsAutomaticGraphicsSwitching</key>
 	<true/>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Localize Me</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>Localize Me</string>
 	<key>NSSupportsSuddenTermination</key>
 	<string>YES</string>
 </dict>
