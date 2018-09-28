@@ -2,21 +2,23 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>com.apple.security.app-sandbox</key>
+	<true/>
+	<key>com.apple.security.automation.apple-events</key>
+	<true/>
+	<key>com.apple.security.personal-information.calendars</key>
+	<true/>
 	<key>com.apple.security.scripting-targets</key>
 	<dict>
+		<key>com.apple.iCal</key>
+		<array>
+			<string>com.apple.iCal.read-write</string>
+		</array>
 		<key>com.apple.reminders</key>
 		<array>
 			<string>com.apple.Reminders.List.read-write</string>
 			<string>com.apple.Reminders.read-write</string>
 		</array>
-		<key>com.apple.iCal</key>
-		<array>
-			<string>com.apple.iCal.read-write</string>
-		</array>
 	</dict>
-	<key>com.apple.security.app-sandbox</key>
-	<true/>
-	<key>com.apple.security.personal-information.calendars</key>
-	<true/>
 </dict>
 </plist>
