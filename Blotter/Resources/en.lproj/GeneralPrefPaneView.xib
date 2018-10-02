@@ -251,7 +251,7 @@
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" id="Iw3-HY-NK3">
                     <rect key="frame" x="120" y="111" width="215" height="42"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="Help Wireload improve its products and services by automatically sending diagnostics and usage data." id="3G9-iW-UPl">
+                    <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="Help WireLoad improve its products and services by automatically sending diagnostics and usage data." id="3G9-iW-UPl">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
