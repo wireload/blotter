@@ -16,21 +16,21 @@
     2. Remove any `strings` sections no longer generated.
     3. In the `skip` section, add any keys which are not necessary to translate and which should be ignored.
 
-6. Create the new global `.strings` file:
+6. Create the new global `.strings` file in the base language:
 
-        python auxiliary/litany.py create_global new.strings sv && iconv -f utf-16 -t utf-8 new.strings >new-utf8.strings
+        python auxiliary/litany.py create_global new.strings en && iconv -f utf-16 -t utf-8 new.strings >new-utf8.strings
 
 7. Grab a copy of the old strings:
 
         git checkout <last release version tag>
-        python auxiliary/litany.py create_global old.strings sv && iconv -f utf-16 -t utf-8 old.strings >old-utf8.strings
+        python auxiliary/litany.py create_global old.strings en && iconv -f utf-16 -t utf-8 old.strings >old-utf8.strings
         git checkout master
 
 8. Compare the new strings to the old strings:
 
         diff -w old-utf8.strings new-utf8.strings
 
-9. Update oneskyapp using the diff.
+9. Upload new-utf8.strings to OneSky as base language. Opt to deprecate strings missing.
 10. Enter standard system translations when known. Search for standard translations using commands such as:
 
         # First mount OS X glossary "russian.dmg" from https://developer.apple.com/downloads/index.action.
