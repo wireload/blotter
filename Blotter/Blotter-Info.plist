@@ -33,9 +33,9 @@
 	<key>NSSupportsAutomaticGraphicsSwitching</key>
 	<true/>
 	<key>NSCalendarsUsageDescription</key>
-	<string>Localize Me</string>
+	<string>Your calendar is used to display and add events.</string>
 	<key>NSRemindersUsageDescription</key>
-	<string>Localize Me</string>
+	<string>Your reminders are used to display and add reminders.</string>
 	<key>NSSupportsSuddenTermination</key>
 	<string>YES</string>
 </dict>
