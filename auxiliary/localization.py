@@ -77,6 +77,7 @@ def Sources():
                 'files': [
                     join(BLOTTER_DIR, "DeskboardAppDelegate.m"),
                     join(BLOTTER_DIR, "WLAboutPreferences.m"),
+                    join(BLOTTER_DIR, "WLApplicationPreferences.m"),
                     join(BLOTTER_DIR, "WLCalendarReminderLayer.m"),
                     join(BLOTTER_DIR, "WLCalendarsPreferences.m"),
                     join(BLOTTER_DIR, "WLCalendarWindowController.m"),
@@ -236,7 +237,7 @@ def GenerateXibStrings(xib_path, output_path, langs):
 
 def GenerateSourcesStrings(sources_paths, output_path, langs):
     """
-    Creates the strings filr for given sources and merges it with the localized .strings (if exists).
+    Creates the strings file for given sources and merges it with the localized .strings (if exists).
     """
     print "Generate strings from " + ", ".join([basename(x) for x in sources_paths])
     t_dir_path = mkdtemp()
