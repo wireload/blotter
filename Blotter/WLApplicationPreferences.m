@@ -20,7 +20,7 @@
         return;
 
     NSAlert *a = [NSAlert new];
-    a.messageText = NSLocalizedString(@"Share Usage", @"User consent to share usage dialog's message text");
+    a.messageText = NSLocalizedString(@"Share Analytics", @"User consent to share usage dialog's message text");
     a.informativeText = NSLocalizedString(@"Help WireLoad improve its products and services by automatically sending diagnostics and usage data.", @"User consent to share usage dialog's informative text");
     a.showsHelp = YES;
     a.delegate = self;
