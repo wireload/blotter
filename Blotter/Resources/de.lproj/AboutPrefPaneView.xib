@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,31 +14,31 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView misplaced="YES" id="1">
+        <customView id="1">
             <rect key="frame" x="0.0" y="0.0" width="640" height="416"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <imageView misplaced="YES" id="9" userLabel="Background Image View">
+                <imageView id="9" userLabel="Background Image View">
                     <rect key="frame" x="0.0" y="0.0" width="640" height="416"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="topLeft" image="preferences-about-blotter-bg" id="10"/>
                 </imageView>
-                <button misplaced="YES" id="23" userLabel="Follow us Button">
+                <button id="23" userLabel="Follow us Button">
                     <rect key="frame" x="401" y="111" width="221" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="bevel" title="Blotter auf Twitter folgen" bezelStyle="regularSquare" image="preferences-about-blotter-twitter-icon" imagePosition="left" alignment="center" borderStyle="border" inset="2" id="24" customClass="WLPreferencesButtonCell">
+                    <buttonCell key="cell" type="bevel" title="Folgen uns auf Twitter" bezelStyle="regularSquare" image="preferences-about-blotter-twitter-icon" imagePosition="left" alignment="center" borderStyle="border" inset="2" id="24" customClass="WLPreferencesButtonCell">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
                         <action selector="showFollowUsOnTwitter:" target="-2" id="33"/>
-                        <outlet property="nextKeyView" destination="1" id="79"/>
+                        <outlet property="nextKeyView" destination="1" id="ZxQ-R7-037"/>
                     </connections>
                 </button>
-                <button misplaced="YES" id="25" userLabel="Get Support Button">
+                <button id="25" userLabel="Get Support Button">
                     <rect key="frame" x="469" y="269" width="127" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="bevel" title="Support Erhalten" bezelStyle="regularSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="26" customClass="WLPreferencesButtonCell">
+                    <buttonCell key="cell" type="bevel" title="Hier erhalten Sie Support" bezelStyle="regularSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="26" customClass="WLPreferencesButtonCell">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -60,10 +59,10 @@
                         <outlet property="nextKeyView" destination="25" id="76"/>
                     </connections>
                 </button>
-                <button misplaced="YES" id="29" userLabel="Rate Button">
+                <button id="29" userLabel="Rate Button">
                     <rect key="frame" x="401" y="176" width="114" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="bevel" title="App bewerten" bezelStyle="regularSquare" image="preferences-about-blotter-five-star-icon" imagePosition="above" alignment="center" borderStyle="border" inset="2" id="30" customClass="WLPreferencesButtonCell">
+                    <buttonCell key="cell" type="bevel" title="Bewerten Sie diese App" bezelStyle="regularSquare" image="preferences-about-blotter-five-star-icon" imagePosition="above" alignment="center" borderStyle="border" inset="2" id="30" customClass="WLPreferencesButtonCell">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -72,7 +71,7 @@
                         <outlet property="nextKeyView" destination="23" id="78"/>
                     </connections>
                 </button>
-                <textField verticalHuggingPriority="750" misplaced="YES" id="53" userLabel="Version Label">
+                <textField verticalHuggingPriority="750" id="53" userLabel="Version Label">
                     <rect key="frame" x="562" y="332" width="81" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="left" title="2.2" id="54">

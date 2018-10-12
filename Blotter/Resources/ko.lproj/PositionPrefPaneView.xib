@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,7 +18,7 @@
             <rect key="frame" x="0.0" y="0.0" width="440" height="361"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <popUpButton verticalHuggingPriority="750" misplaced="YES" id="8">
+                <popUpButton verticalHuggingPriority="750" id="8">
                     <rect key="frame" x="131" y="317" width="106" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="좁힘" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="11" id="9">
@@ -41,7 +40,7 @@
                         <outlet property="nextKeyView" destination="34" id="146"/>
                     </connections>
                 </popUpButton>
-                <textField verticalHuggingPriority="750" misplaced="YES" id="14">
+                <textField verticalHuggingPriority="750" id="14">
                     <rect key="frame" x="18" y="323" width="109" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="달력 사이즈:" id="15">
@@ -53,7 +52,7 @@
                         <outlet property="nextKeyView" destination="8" id="145"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" misplaced="YES" id="34">
+                <textField verticalHuggingPriority="750" id="34">
                     <rect key="frame" x="18" y="295" width="110" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="표시:" id="35">
@@ -65,7 +64,7 @@
                         <outlet property="nextKeyView" destination="64" id="147"/>
                     </connections>
                 </textField>
-                <popUpButton verticalHuggingPriority="750" misplaced="YES" id="64">
+                <popUpButton verticalHuggingPriority="750" id="64">
                     <rect key="frame" x="131" y="288" width="292" height="26"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="65">
