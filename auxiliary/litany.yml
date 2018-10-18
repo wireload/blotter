@@ -3,7 +3,7 @@ project:
     /*
          Combined Blotter.strings
          Blotter
-         Copyright 2011 WireLoad. All rights reserved.
+         Copyright 2011-2018 WireLoad. All rights reserved.
     */
 
 strings:
@@ -54,3 +54,6 @@ strings:
   -
     id:       'store description'
     path:     "Blotter/Resources/%(lang)s.lproj/Meta.strings"
+  - 
+    id:       'App Info'
+    path:     "Blotter/Resources/%(lang)s.lproj/InfoPlist.strings"

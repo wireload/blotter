@@ -71,8 +71,8 @@
 - (void)configureToolbarItem:(NSToolbarItem *)anItem
 {
     anItem.image = [NSImage imageNamed:@"preferences-positioning-icon"];
-    anItem.label = NSLocalizedString(@"Positioning", @"Positioing pref pane title");
-    anItem.toolTip = NSLocalizedString(@"Position and Size Preferences", @"Positioning pref pane tooltip");
+    anItem.label = NSLocalizedString(@"Positioning", @"Positioning preferences pane title");
+    anItem.toolTip = NSLocalizedString(@"Position and Size Preferences", @"Positioning preferences pane tooltip");
 }
 
 

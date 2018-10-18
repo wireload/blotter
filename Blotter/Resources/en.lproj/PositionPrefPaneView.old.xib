@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="MacOSX.Cocoa" propertyAccessControl="all">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment version="1060" defaultVersion="1060" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="WLPositioningPreferences">
@@ -13,17 +13,17 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="1" userLabel="Position View" customClass="WLPositioningPaneView">
             <rect key="frame" x="0.0" y="0.0" width="440" height="361"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <popUpButton verticalHuggingPriority="750" id="8">
-                    <rect key="frame" x="129" y="317" width="141" height="26"/>
+                    <rect key="frame" x="131" y="317" width="141" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="Narrow" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="11" id="9">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="10">
                             <items>
                                 <menuItem title="Narrow" state="on" id="11"/>
@@ -53,7 +53,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" id="34">
-                    <rect key="frame" x="18" y="293" width="110" height="17"/>
+                    <rect key="frame" x="18" y="295" width="109" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Display:" id="35">
                         <font key="font" metaFont="system"/>
@@ -65,24 +65,24 @@
                     </connections>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" id="64">
-                    <rect key="frame" x="129" y="287" width="294" height="26"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <rect key="frame" x="131" y="288" width="292" height="26"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="65">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="66"/>
                     </popUpButtonCell>
                     <connections>
                         <binding destination="46" name="content" keyPath="arrangedObjects" id="98"/>
-                        <binding destination="46" name="contentObjects" keyPath="arrangedObjects.ScreenIdentifier" previousBinding="98" id="122"/>
-                        <binding destination="46" name="contentValues" keyPath="arrangedObjects.ScreenName" previousBinding="122" id="125"/>
                         <binding destination="46" name="enabled" keyPath="arrangedObjects" id="121">
                             <dictionary key="options">
-                                <integer key="NSNullPlaceholder" value="0"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="1"/>
+                                <integer key="NSNullPlaceholder" value="0"/>
                                 <string key="NSValueTransformerName">WLCountGreaterThanOneTransformer</string>
                             </dictionary>
                         </binding>
+                        <binding destination="46" name="contentObjects" keyPath="arrangedObjects.ScreenIdentifier" previousBinding="98" id="122"/>
+                        <binding destination="46" name="contentValues" keyPath="arrangedObjects.ScreenName" previousBinding="122" id="125"/>
                         <binding destination="25" name="selectedObject" keyPath="values.ScreenIdentifier" previousBinding="125" id="132"/>
                         <outlet property="nextKeyView" destination="139" id="148"/>
                     </connections>
@@ -100,6 +100,7 @@
                 <outlet property="_calendarWindowArrangementView" destination="139" id="143"/>
                 <outlet property="nextKeyView" destination="14" id="144"/>
             </connections>
+            <point key="canvasLocation" x="139" y="168.5"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="25"/>
         <arrayController objectClassName="NSScreen" editable="NO" preservesSelection="NO" selectsInsertedObjects="NO" avoidsEmptySelection="NO" id="46" customClass="WLScreensController">

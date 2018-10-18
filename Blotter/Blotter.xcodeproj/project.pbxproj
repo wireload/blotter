@@ -112,6 +112,7 @@
 		BC599AB4A76677D3767F215A /* WLCalendarDayEventsBackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5990B8D1DBD38C0B116696 /* WLCalendarDayEventsBackgroundLayer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BC599C624B5E265A7EBB16E3 /* WLCalendarWeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC59971D13DC11F07B63B0E2 /* WLCalendarWeekView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BC599F40F71330FB583F52A2 /* WLCalendarTimeRulerMarkerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BC59915011B7F9C2C5190C3B /* WLCalendarTimeRulerMarkerLayer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C8E878D32171427F00BA697E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C8E878D52171427F00BA697E /* InfoPlist.strings */; };
 		E21A5F451403D2A4000B6634 /* WLCalendarReminderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E21A5F441403D2A4000B6634 /* WLCalendarReminderLayer.m */; };
 		E22C78AB13FFCD9F00EE44C0 /* NSColor+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E23F746F14434DE40055D6CE /* WLHourRange.m in Sources */ = {isa = PBXBuildFile; fileRef = E23F746E14434DE40055D6CE /* WLHourRange.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -425,6 +426,14 @@
 		BC599F202574FB0FACB75640 /* WLCalendarTimeRulerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarTimeRulerLayer.h; sourceTree = "<group>"; };
 		BC599F5EDDD89594E0D36477 /* WLCalendarDayEventsBackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarDayEventsBackgroundLayer.h; sourceTree = "<group>"; };
 		BC599F72BCC4AE0D59DFA114 /* WLCalendarWeekEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWeekEventsViewController.m; sourceTree = "<group>"; };
+		C8E878D42171427F00BA697E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C8E878D62171428600BA697E /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C8E878D72171428800BA697E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C8E878D82171428A00BA697E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C8E878D92171428E00BA697E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C8E878DA2171429900BA697E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C8E878DB2171429F00BA697E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C8E878DC217142A700BA697E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E21A5F431403D2A4000B6634 /* WLCalendarReminderLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarReminderLayer.h; sourceTree = "<group>"; };
 		E21A5F441403D2A4000B6634 /* WLCalendarReminderLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarReminderLayer.m; sourceTree = "<group>"; };
 		E22C78A913FFCD9F00EE44C0 /* NSColor+WLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+WLCalendar.h"; sourceTree = "<group>"; };
@@ -566,6 +575,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C8E878D52171427F00BA697E /* InfoPlist.strings */,
 				BA08A7E0167735130085F40C /* README */,
 				BA23660816F706B600779487 /* Blotter.entitlements */,
 				8D1107310486CEB800E47090 /* Blotter-Info.plist */,
@@ -1123,6 +1133,7 @@
 				E2E826D0145023A6007035E5 /* MainMenu.xib in Resources */,
 				E2E826D1145023A6007035E5 /* NewEventWindow.xib in Resources */,
 				E2E826D2145023A6007035E5 /* NewTaskWindow.xib in Resources */,
+				C8E878D32171427F00BA697E /* InfoPlist.strings in Resources */,
 				BA81A834164548070058EB16 /* IKApplicationPreferences.strings in Resources */,
 				BA08A7E1167735130085F40C /* README in Resources */,
 				BAF67DCA16D622820047FE2A /* AboutPrefPaneView.xib in Resources */,
@@ -1480,6 +1491,21 @@
 				28B3CDDC180D7C7C004CF0DE /* ja */,
 			);
 			name = ShortcutsPrefPaneView.xib;
+			sourceTree = "<group>";
+		};
+		C8E878D52171427F00BA697E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C8E878D42171427F00BA697E /* en */,
+				C8E878D62171428600BA697E /* ja */,
+				C8E878D72171428800BA697E /* fr */,
+				C8E878D82171428A00BA697E /* de */,
+				C8E878D92171428E00BA697E /* ru */,
+				C8E878DA2171429900BA697E /* es */,
+				C8E878DB2171429F00BA697E /* sv */,
+				C8E878DC217142A700BA697E /* ko */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		E2E826C7145023A6007035E5 /* Localizable.strings */ = {

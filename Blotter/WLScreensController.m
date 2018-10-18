@@ -94,7 +94,7 @@ NSString* const WLScreenLocalizedName = @"ScreenName";
         deviceName = [[localizedNames[localizedNames.allKeys[0]] copy] autorelease];
     }
     else {
-        deviceName = NSLocalizedString(@"Unknown screen", @"Placeholder when name of the screen cannot be given");
+        deviceName = NSLocalizedString(@"Unknown display", @"Placeholder when name of the screen cannot be given");
     }
 
     [deviceInfo release];
