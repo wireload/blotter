@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -13,26 +13,26 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView misplaced="YES" id="1" userLabel="General View">
-            <rect key="frame" x="0.0" y="0.0" width="466" height="412"/>
+        <customView id="1" userLabel="General View">
+            <rect key="frame" x="0.0" y="0.0" width="466" height="425"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button misplaced="YES" id="2">
-                    <rect key="frame" x="135" y="377" width="313" height="18"/>
+                <button id="2">
+                    <rect key="frame" x="135" y="390" width="313" height="18"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Bei der Anmeldung öffnen" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="3">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.shouldStartAtLogin" id="2Hj-gB-JbK"/>
+                        <binding destination="-2" name="value" keyPath="self.shouldStartAtLogin" id="PvN-PQ-Jjr"/>
                         <outlet property="nextKeyView" destination="31" id="125"/>
                     </connections>
                 </button>
-                <button misplaced="YES" id="4">
-                    <rect key="frame" x="135" y="343" width="313" height="18"/>
+                <button id="4">
+                    <rect key="frame" x="135" y="356" width="313" height="18"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Zeige Wochentag Termine" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="5">
+                    <buttonCell key="cell" type="check" title="Zeige Wochentage an" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="5">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -45,8 +45,8 @@
                         <outlet property="nextKeyView" destination="75" id="127"/>
                     </connections>
                 </button>
-                <textField verticalHuggingPriority="750" misplaced="YES" id="29">
-                    <rect key="frame" x="18" y="378" width="113" height="17"/>
+                <textField verticalHuggingPriority="750" id="29">
+                    <rect key="frame" x="18" y="391" width="113" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Startup:" id="30">
                         <font key="font" metaFont="system"/>
@@ -57,8 +57,8 @@
                         <outlet property="nextKeyView" destination="2" id="124"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" misplaced="YES" id="31">
-                    <rect key="frame" x="18" y="344" width="113" height="17"/>
+                <textField verticalHuggingPriority="750" id="31">
+                    <rect key="frame" x="18" y="357" width="113" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Verhalten:" id="32">
                         <font key="font" metaFont="system"/>
@@ -69,8 +69,8 @@
                         <outlet property="nextKeyView" destination="4" id="126"/>
                     </connections>
                 </textField>
-                <button misplaced="YES" id="33">
-                    <rect key="frame" x="135" y="295" width="127" height="18"/>
+                <button id="33">
+                    <rect key="frame" x="135" y="308" width="127" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Ausblenden nach" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="34">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -81,8 +81,8 @@
                         <outlet property="nextKeyView" destination="36" id="129"/>
                     </connections>
                 </button>
-                <textField verticalHuggingPriority="750" misplaced="YES" id="36">
-                    <rect key="frame" x="268" y="293" width="50" height="22"/>
+                <textField verticalHuggingPriority="750" id="36">
+                    <rect key="frame" x="268" y="306" width="50" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="37">
                         <numberFormatter key="formatter" formatterBehavior="default10_4" positiveFormat="#,##0.###" negativeFormat="#,##0.###" numberStyle="decimal" lenient="YES" paddingCharacter="*" minimumIntegerDigits="1" maximumIntegerDigits="309" maximumFractionDigits="3" decimalSeparator="." groupingSeparator="," currencyDecimalSeparator="." plusSign="+" minusSign="-" notANumberSymbol="NaN" perMillSymbol="‰" percentSymbol="%" exponentSymbol="E" positivePrefix="" positiveSuffix="" negativePrefix="-" negativeSuffix="" id="44">
@@ -90,7 +90,7 @@
                             <real key="maximum" value="99999"/>
                         </numberFormatter>
                         <font key="font" metaFont="system"/>
-                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
@@ -103,8 +103,8 @@
                         <outlet property="nextKeyView" destination="73" id="130"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" misplaced="YES" id="38">
-                    <rect key="frame" x="324" y="296" width="124" height="17"/>
+                <textField verticalHuggingPriority="750" id="38">
+                    <rect key="frame" x="324" y="309" width="124" height="17"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Sekunden" id="39">
                         <font key="font" metaFont="system"/>
@@ -112,8 +112,8 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" misplaced="YES" id="73">
-                    <rect key="frame" x="135" y="275" width="313" height="14"/>
+                <textField verticalHuggingPriority="750" id="73">
+                    <rect key="frame" x="135" y="288" width="313" height="14"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Blotter aktivieren, um es einzublenden." id="74">
                         <font key="font" metaFont="smallSystem"/>
@@ -124,10 +124,10 @@
                         <outlet property="nextKeyView" destination="84" id="131"/>
                     </connections>
                 </textField>
-                <button misplaced="YES" id="75">
-                    <rect key="frame" x="135" y="321" width="313" height="18"/>
+                <button id="75">
+                    <rect key="frame" x="135" y="334" width="313" height="18"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Nächsten 7 Tage anzeigen ab heute" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="76">
+                    <buttonCell key="cell" type="check" title="Nächste sieben Tage ab heute anzeigen" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="76">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -136,7 +136,7 @@
                         <outlet property="nextKeyView" destination="33" id="128"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" misplaced="YES" id="80">
+                <button verticalHuggingPriority="750" id="80">
                     <rect key="frame" x="131" y="13" width="138" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <buttonCell key="cell" type="push" title="Blotter beenden" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="81">
@@ -150,14 +150,10 @@
                         <outlet property="nextKeyView" destination="1" id="141"/>
                     </connections>
                 </button>
-                <box verticalHuggingPriority="750" misplaced="YES" boxType="separator" id="82">
-                    <rect key="frame" x="20" y="59" width="426" height="5"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                </box>
-                <button toolTip="Falls versteckt, starten Sie die App neu, um zurückzukehren." misplaced="YES" id="84">
-                    <rect key="frame" x="135" y="251" width="313" height="18"/>
+                <button toolTip="Falls versteckt, starten Sie die App neu, um zurückzukehren." id="84">
+                    <rect key="frame" x="135" y="264" width="313" height="18"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Menübar-Icon verstecken" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="85">
+                    <buttonCell key="cell" type="check" title="Menüleistensymbol ausblenden" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="85">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -170,7 +166,7 @@
                         <outlet property="nextKeyView" destination="109" id="133"/>
                     </connections>
                 </button>
-                <textField verticalHuggingPriority="750" misplaced="YES" id="89">
+                <textField verticalHuggingPriority="750" id="89">
                     <rect key="frame" x="18" y="23" width="113" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Ausschalten:" id="90">
@@ -182,10 +178,10 @@
                         <outlet property="nextKeyView" destination="80" id="140"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" misplaced="YES" id="105">
-                    <rect key="frame" x="135" y="231" width="313" height="14"/>
+                <textField verticalHuggingPriority="750" id="105">
+                    <rect key="frame" x="135" y="244" width="313" height="14"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Blotter neu starten, um Einstellungen wieder zu öffnen." id="106">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Blotter neustarten, um die Einstellungen wieder zu öffnen." id="106">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -194,8 +190,8 @@
                         <outlet property="nextKeyView" destination="197" id="199"/>
                     </connections>
                 </textField>
-                <imageView misplaced="YES" id="109">
-                    <rect key="frame" x="117" y="230" width="16" height="16"/>
+                <imageView id="109">
+                    <rect key="frame" x="117" y="243" width="16" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" image="exclamation" id="110"/>
                     <connections>
@@ -208,8 +204,8 @@
                         <outlet property="nextKeyView" destination="105" id="134"/>
                     </connections>
                 </imageView>
-                <button verticalHuggingPriority="750" misplaced="YES" id="197">
-                    <rect key="frame" x="131" y="195" width="259" height="32"/>
+                <button verticalHuggingPriority="750" id="197">
+                    <rect key="frame" x="131" y="208" width="259" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="Datums- und Uhrzeiteinstellungen..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="198">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -217,69 +213,74 @@
                     </buttonCell>
                     <connections>
                         <action selector="showMacOSXCalendarSettings:" target="-2" id="201"/>
-                        <outlet property="nextKeyView" destination="Nj9-1o-AXL" id="VJL-xh-bLh"/>
+                        <outlet property="nextKeyView" destination="kWD-tu-3cw" id="RAB-tW-6ZL"/>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" id="Nj9-1o-AXL">
-                    <rect key="frame" x="18" y="146" width="113" height="17"/>
+                <box verticalHuggingPriority="750" boxType="separator" id="82">
+                    <rect key="frame" x="20" y="59" width="426" height="5"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                </box>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="kWD-tu-3cw">
+                    <rect key="frame" x="18" y="158" width="98" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Analytik:" id="Ji4-7R-AVr">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Analyse:" id="D8j-9o-S8e">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <outlet property="nextKeyView" destination="a3a-kX-fF5" id="mF4-8M-gxM"/>
+                        <outlet property="nextKeyView" destination="cee-CW-FUo" id="swc-Gt-Cv0"/>
                     </connections>
                 </textField>
-                <button verticalHuggingPriority="750" misplaced="YES" id="a3a-kX-fF5">
-                    <rect key="frame" x="135" y="145" width="313" height="18"/>
+                <button verticalHuggingPriority="750" id="cee-CW-FUo">
+                    <rect key="frame" x="135" y="157" width="313" height="18"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Nutzung teilen" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="RQu-GW-Uz2">
+                    <buttonCell key="cell" type="check" title="Analyse teilen" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="hyU-rN-pZK">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="6" name="value" keyPath="values.ShareAnalytics" id="ylK-Ob-2gN">
+                        <binding destination="6" name="value" keyPath="values.ShareAnalytics" id="Fn3-CJ-5gl">
                             <dictionary key="options">
                                 <integer key="NSNullPlaceholder" value="0"/>
                             </dictionary>
                         </binding>
-                        <outlet property="nextKeyView" destination="HY1-Yg-DIB" id="vsn-Gy-PAp"/>
+                        <outlet property="nextKeyView" destination="Iw3-HY-NK3" id="uwm-ic-9Ni"/>
                     </connections>
                 </button>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" id="HY1-Yg-DIB">
-                    <rect key="frame" x="135" y="111" width="313" height="28"/>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="Iw3-HY-NK3">
+                    <rect key="frame" x="135" y="109" width="289" height="42"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="Hilf WireLoad Produkte und Dienste zu verbessern, indem du automatisch Diagnose- und Nutzungsdaten sendest." id="cEc-0q-HEi">
+                    <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="Helfen Sie WireLoad Produkte und Dienste zu verbessern, indem automatisch Diagnose- und Nutzungsdaten gesendet werden." id="3G9-iW-UPl">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <outlet property="nextKeyView" destination="eu0-dI-412" id="AKJ-UH-smG"/>
+                        <outlet property="nextKeyView" destination="Ckg-ly-dfE" id="gJL-KY-PAc"/>
                     </connections>
                 </textField>
-                <box verticalHuggingPriority="750" misplaced="YES" boxType="separator" id="tii-8M-8sR">
-                    <rect key="frame" x="20" y="179" width="426" height="5"/>
+                <box verticalHuggingPriority="750" boxType="separator" id="erh-s9-bp6">
+                    <rect key="frame" x="20" y="191" width="426" height="5"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                 </box>
-                <button verticalHuggingPriority="750" misplaced="YES" id="eu0-dI-412">
-                    <rect key="frame" x="131" y="75" width="169" height="32"/>
+                <button verticalHuggingPriority="750" id="Ckg-ly-dfE">
+                    <rect key="frame" x="131" y="75" width="197" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="push" title="Datenschutzrichtlinie" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Qfb-GQ-TRM">
+                    <buttonCell key="cell" type="push" title="Datenschutzvereinbarung" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="AKm-he-LGr">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="showPrivacyPolicy:" target="-2" id="aN8-TD-IjQ"/>
-                        <outlet property="nextKeyView" destination="89" id="NIM-n4-osM"/>
+                        <action selector="showPrivacyPolicy:" target="-2" id="D3p-dU-kei"/>
+                        <outlet property="nextKeyView" destination="89" id="itY-xY-jpS"/>
                     </connections>
                 </button>
             </subviews>
             <connections>
                 <outlet property="nextKeyView" destination="29" id="123"/>
             </connections>
+            <point key="canvasLocation" x="139" y="254.5"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="6"/>
     </objects>

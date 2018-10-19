@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -136,6 +135,20 @@
                         <outlet property="nextKeyView" destination="33" id="128"/>
                     </connections>
                 </button>
+                <button verticalHuggingPriority="750" id="80">
+                    <rect key="frame" x="152" y="13" width="127" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <buttonCell key="cell" type="push" title="Quitter Blotter" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="81">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent">q</string>
+                        <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="quitBlotter:" target="-2" id="83"/>
+                        <outlet property="nextKeyView" destination="1" id="141"/>
+                    </connections>
+                </button>
                 <button toolTip="Si caché, redémarrez l'application pour revenir ici" id="84">
                     <rect key="frame" x="156" y="251" width="366" height="18"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -262,25 +275,11 @@
                         <outlet property="nextKeyView" destination="89" id="itY-xY-jpS"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" id="80">
-                    <rect key="frame" x="152" y="13" width="127" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <buttonCell key="cell" type="push" title="Quitter Blotter" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="81">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                        <string key="keyEquivalent">q</string>
-                        <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="quitBlotter:" target="-2" id="83"/>
-                        <outlet property="nextKeyView" destination="1" id="141"/>
-                    </connections>
-                </button>
             </subviews>
             <connections>
                 <outlet property="nextKeyView" destination="29" id="123"/>
             </connections>
-            <point key="canvasLocation" x="151" y="248.5"/>
+            <point key="canvasLocation" x="139.5" y="248.5"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="6"/>
     </objects>

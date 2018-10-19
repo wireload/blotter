@@ -27,9 +27,9 @@
                         <menu key="menu" title="OtherViews" id="10">
                             <items>
                                 <menuItem title="schmal" state="on" id="11"/>
-                                <menuItem title="normal" tag="1" id="12"/>
+                                <menuItem title="Normal" tag="1" id="12"/>
                                 <menuItem title="vollständig" tag="2" id="13"/>
-                                <menuItem title="benutzerdefiniert" tag="3" id="133">
+                                <menuItem title="Benutzerdefiniert" tag="3" id="133">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                 </menuItem>
                             </items>

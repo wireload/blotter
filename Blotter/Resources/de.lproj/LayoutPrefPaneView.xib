@@ -129,15 +129,15 @@
                 <popUpButton verticalHuggingPriority="750" id="61">
                     <rect key="frame" x="130" y="283" width="149" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="normal" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="66" id="62">
+                    <popUpButtonCell key="cell" type="push" title="Normal" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="66" id="62">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="63">
                             <items>
-                                <menuItem title="normal" state="on" id="66"/>
+                                <menuItem title="Normal" state="on" id="66"/>
                                 <menuItem title="Erinnerungen" tag="2" id="81"/>
                                 <menuItem title="Jetzt" tag="3" id="82"/>
-                                <menuItem title="benutzerdefiniert" tag="1" id="64">
+                                <menuItem title="Benutzerdefiniert" tag="1" id="64">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                 </menuItem>
                             </items>
