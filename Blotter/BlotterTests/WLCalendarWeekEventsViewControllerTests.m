@@ -17,13 +17,13 @@
     WLCalendarWeekEventsViewController *w = [[WLCalendarWeekEventsViewController alloc] initWithNibName:nil bundle:nil];
     w.calendar = [NSCalendar currentCalendar];
     w.date = [NSDate date];
-    [w setAlignmentUnit:NSWeekOfMonthCalendarUnit number:1 animated:NO];
+    [w setAlignmentUnit:NSCalendarUnitWeekOfMonth number:1 animated:NO];
     
     WLDateRange *thisWeekRange = [WLDateRange dateRangeWithStartDate:w.date endDate:w.date];
-    thisWeekRange = [thisWeekRange dateRangeByAligningCalendarUnit:NSWeekOfMonthCalendarUnit
+    thisWeekRange = [thisWeekRange dateRangeByAligningCalendarUnit:NSCalendarUnitWeekOfMonth
                                                           calendar:w.calendar
                                                            options:WLAlignOutward];
-    STAssertEqualObjects(w.dateRangeOfColumns, thisWeekRange, @"Date ranges are no equal");
+    XCTAssertEqualObjects(w.dateRangeOfColumns, thisWeekRange, @"Date ranges are no equal");
 }
 
 - (void)testDayAlignment
@@ -31,13 +31,13 @@
     WLCalendarWeekEventsViewController *w = [[WLCalendarWeekEventsViewController alloc] initWithNibName:nil bundle:nil];
     w.calendar = [NSCalendar currentCalendar];
     w.date = [NSDate date];
-    [w setAlignmentUnit:NSDayCalendarUnit number:7 animated:NO];
+    [w setAlignmentUnit:NSCalendarUnitDay number:7 animated:NO];
     
     WLDateRange *thisDayRange = [WLDateRange dateRangeWithStartDate:w.date endDate:w.date];
-    thisDayRange = [thisDayRange dateRangeByAligningCalendarUnit:NSDayCalendarUnit
+    thisDayRange = [thisDayRange dateRangeByAligningCalendarUnit:NSCalendarUnitDay
                                                         calendar:w.calendar
                                                          options:WLAlignOutward];
-    STAssertEqualObjects(w.dateRangeOfColumns.startDate, thisDayRange.startDate, @"Start dates are no equal");
+    XCTAssertEqualObjects(w.dateRangeOfColumns.startDate, thisDayRange.startDate, @"Start dates are no equal");
 }
 
 - (void)testSwitchingAlignmentFromWeekToDay
@@ -45,20 +45,20 @@
     WLCalendarWeekEventsViewController *w = [[WLCalendarWeekEventsViewController alloc] initWithNibName:nil bundle:nil];
     w.calendar = [NSCalendar currentCalendar];
     w.date = [NSDate date];
-    [w setAlignmentUnit:NSWeekOfMonthCalendarUnit number:1 animated:NO];
+    [w setAlignmentUnit:NSCalendarUnitWeekOfMonth number:1 animated:NO];
 
     WLDateRange *thisWeekRange = [WLDateRange dateRangeWithStartDate:w.date endDate:w.date];
-    thisWeekRange = [thisWeekRange dateRangeByAligningCalendarUnit:NSWeekOfMonthCalendarUnit
+    thisWeekRange = [thisWeekRange dateRangeByAligningCalendarUnit:NSCalendarUnitWeekOfMonth
                                                           calendar:w.calendar
                                                            options:WLAlignOutward];
-    STAssertEqualObjects(w.dateRangeOfColumns, thisWeekRange, @"Date ranges are no equal");
+    XCTAssertEqualObjects(w.dateRangeOfColumns, thisWeekRange, @"Date ranges are no equal");
     
     WLDateRange *thisDayRange = [WLDateRange dateRangeWithStartDate:w.date endDate:w.date];
-    thisDayRange = [thisDayRange dateRangeByAligningCalendarUnit:NSDayCalendarUnit
+    thisDayRange = [thisDayRange dateRangeByAligningCalendarUnit:NSCalendarUnitDay
                                                         calendar:w.calendar
                                                          options:WLAlignOutward];
-    [w setAlignmentUnit:NSDayCalendarUnit number:7 animated:NO];
-    STAssertEqualObjects(w.dateRangeOfColumns.startDate, thisDayRange.startDate, @"Start dates are no equal");
+    [w setAlignmentUnit:NSCalendarUnitDay number:7 animated:NO];
+    XCTAssertEqualObjects(w.dateRangeOfColumns.startDate, thisDayRange.startDate, @"Start dates are no equal");
 }
 
 @end

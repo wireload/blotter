@@ -17,14 +17,14 @@
 {
     WLCalendarEventsController *c = [[WLCalendarEventsController alloc] initWithCalStores:@[[WLCalendarStore systemStore]]];
     [c addObservedDateRange:[WLDateRange emptyDateRange]];
-    STAssertTrue([[c observedDateRanges] count] == 0, @"Observed date ranges are not empty");
+    XCTAssertTrue([[c observedDateRanges] count] == 0, @"Observed date ranges are not empty");
 }
 
 - (void)testAddNilObservedRange
 {
     WLCalendarEventsController *c = [[WLCalendarEventsController alloc] initWithCalStores:@[[WLCalendarStore systemStore]]];
     [c addObservedDateRange:nil];
-    STAssertTrue([[c observedDateRanges] count] == 0, @"Observed date ranges are not empty");
+    XCTAssertTrue([[c observedDateRanges] count] == 0, @"Observed date ranges are not empty");
 }
 
 @end

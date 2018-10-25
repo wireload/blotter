@@ -32,8 +32,8 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BA5AC3B916F9CB31009321A0"
-               BuildableName = "BlotterTests.octest"
+               BlueprintIdentifier = "BA85BA73218158BE00CAAFC7"
+               BuildableName = "BlotterTests.xctest"
                BlueprintName = "BlotterTests"
                ReferencedContainer = "container:Blotter.xcodeproj">
             </BuildableReference>
