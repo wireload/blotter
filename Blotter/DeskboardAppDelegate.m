@@ -397,6 +397,8 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
         [appProperties setValue:bundleInfo[@"CFBundleShortVersionString"] forKey:@"$app_release"];
         [appProperties setValue:bundleInfo[@"CFBundleVersion"] forKey:@"$app_build_number"];
         [appProperties setValue:bundleInfo[@"CFBundleShortVersionString"] forKey:@"$app_version_string"];
+        NSOperatingSystemVersion osVersion = NSProcessInfo.processInfo.operatingSystemVersion;
+        [appProperties setValue:[NSString stringWithFormat:@"%ld.%ld", osVersion.majorVersion, osVersion.minorVersion] forKey:@"General OS Version"];
 
         NSMutableDictionary *systemProperties = [appProperties mutableCopy];
         systemProperties[@"Locale"] = locale.localeIdentifier;
