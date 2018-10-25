@@ -18,5 +18,6 @@
 #import <WLFoundation/WLDateRange.h>
 #import <WLFoundation/WLEvents.h>
 #import <WLFoundation/WLLayerHostedView.h>
+#import <WLFoundation/WLReceipt.h>
 #import <WLFoundation/WLViewController.h>
 #import <WLFoundation/WLSmartClock.h>

@@ -38,6 +38,8 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 static NSString* const _WLStatusItemAutosaveName = @"net.wireload.blotter.mac.StatusItem";
 
 
+NSString* const WLBlotterLogName = @"net.wireload.blotter.mac";
+
 NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 
 
@@ -671,6 +673,15 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
         else
             systemProperties[@"Calendar"] = NSCalendar.currentCalendar.calendarIdentifier;
 
+        @try
+        {
+            [systemProperties addEntriesFromDictionary:[self _parseReceipt]];
+        }
+        @catch (NSException *e)
+        {
+            [[WLASLLog logForName:WLBlotterLogName] logError:@"Unable to parse the receipt: %@", e.reason];
+        }
+
         NSXPCConnection *connection = [self _makeReportConnection];
         id<MixpanelProtocol> remoteObjectProxy = [connection remoteObjectProxyWithErrorHandler:^(NSError *anError) {
             [[WLASLLog logForName:WLMixpanelLogName] logError:@"Unable to report to Mixpanel: %@", anError.localizedDescription];
@@ -708,6 +719,100 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
         [[WLASLLog logForName:WLMixpanelLogName] logError:@"Unable to report to Mixpanel: %@", anError.localizedDescription];
     }];
     [remoteObjectProxy track:@"Daily" withProperties:appProperties andReply:^{ [connection invalidate]; }];
+}
+
+- (NSDictionary *)_parseReceipt
+{
+    // https://developer.apple.com/library/archive/releasenotes/General/ValidateAppStoreReceipt/Chapters/ReceiptFields.html#//apple_ref/doc/uid/TP40010573-CH106-SW1
+    static const long PURCHASE_DATE_FIELD = 18; // reverse-engineered
+    static const long PURCHASE_APP_VERSION_FIELD = 19;
+
+    static const size_t RECEIPT_OFFSET = 62; // reverse-engineered
+    static const size_t STR_BYTES_OFFSET = 2;
+
+#ifdef DEBUG
+    NSURL *receiptURL = [NSURL fileURLWithPath:@"/Applications/Blotter.app/Contents/_MASReceipt/receipt"];
+#else
+    NSURL *receiptURL = NSBundle.mainBundle.appStoreReceiptURL;
+#endif
+
+    NSError *error = nil;
+    NSData *receiptData = [NSData dataWithContentsOfURL:receiptURL
+                                                options:NSDataReadingUncached
+                                                  error:&error];
+    if (!receiptData)
+    {
+        [[WLASLLog logForName:WLBlotterLogName] logError:@"Unable to read receipt file: %@", error.localizedDescription];
+        return @{};
+    }
+    else if (receiptData.length <= RECEIPT_OFFSET)
+    {
+        [[WLASLLog logForName:WLBlotterLogName] logError:@"Receipt file is of unexpected format."];
+        return @{};
+    }
+
+    WLReceipt_t *receipt = NULL;
+    asn_dec_rval_t parseResult = ber_decode(0, &asn_DEF_WLReceipt, (void **)&receipt, receiptData.bytes + RECEIPT_OFFSET, receiptData.length - RECEIPT_OFFSET);
+
+    @try
+    {
+        if (parseResult.code != RC_OK && parseResult.consumed == 0)
+            return @{};
+
+        NSString *purchaseVersion = nil;
+        NSString *purchaseDate = nil;
+
+        for (int i = 0; i < receipt->list.count; ++i)
+        {
+            WLReceiptAttribute_t *entry = receipt->list.array[i];
+
+            switch (entry->type)
+            {
+                case PURCHASE_DATE_FIELD:
+                {
+                    if (entry->value.size > (int)STR_BYTES_OFFSET)
+                        purchaseDate = [[NSString alloc] initWithBytes:entry->value.buf + STR_BYTES_OFFSET
+                                                                length:(NSUInteger)entry->value.size - STR_BYTES_OFFSET
+                                                              encoding:NSASCIIStringEncoding];
+                    break;
+                }
+                case PURCHASE_APP_VERSION_FIELD:
+                {
+                    if (entry->value.size > (int)STR_BYTES_OFFSET)
+                        purchaseVersion = [[NSString alloc] initWithBytes:entry->value.buf + STR_BYTES_OFFSET
+                                                                   length:(NSUInteger)entry->value.size - STR_BYTES_OFFSET
+                                                                 encoding:NSUTF8StringEncoding];
+                    break;
+                }
+                default:
+                    break;
+            }
+
+            if (purchaseVersion && purchaseDate)
+                break;
+        }
+
+        NSMutableDictionary *result = [NSMutableDictionary dictionary];
+
+        if (purchaseDate)
+        {
+            NSDateFormatter *RFC3339DateFormatter = [[NSDateFormatter alloc] init];
+            RFC3339DateFormatter.locale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
+            RFC3339DateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
+            RFC3339DateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+
+            [result setObject:[RFC3339DateFormatter dateFromString:purchaseDate] forKey:@"Purchase Date"];
+        }
+
+        if (purchaseVersion)
+            [result setObject:purchaseVersion forKey:@"Purchase Version"];
+
+        return [result copy];
+    }
+    @finally
+    {
+        asn_DEF_WLReceipt.free_struct(&asn_DEF_WLReceipt, receipt, 0);
+    }
 }
 
 
