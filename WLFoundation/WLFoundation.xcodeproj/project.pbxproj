@@ -7,6 +7,58 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA3E470E21813FB50088A49D /* xer_support.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E46D921813FAE0088A49D /* xer_support.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E470F21813FB50088A49D /* constraints.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E46DA21813FAE0088A49D /* constraints.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA3E471021813FB50088A49D /* per_encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E46DB21813FAE0088A49D /* per_encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA3E471121813FB50088A49D /* xer_encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E46DC21813FAE0088A49D /* xer_encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA3E471221813FB50088A49D /* der_encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E46DD21813FAE0088A49D /* der_encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA3E471321813FB50088A49D /* BIT_STRING.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E46DE21813FAF0088A49D /* BIT_STRING.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E471421813FB50088A49D /* INTEGER.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E46DF21813FAF0088A49D /* INTEGER.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA3E471521813FB50088A49D /* per_opentype.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E46E021813FAF0088A49D /* per_opentype.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Wno-unreachable-code -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E471621813FB50088A49D /* xer_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E46E121813FAF0088A49D /* xer_encoder.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E471721813FB50088A49D /* WLReceiptAttribute.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E46E221813FAF0088A49D /* WLReceiptAttribute.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E471821813FB50088A49D /* constr_SET_OF.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E46E321813FAF0088A49D /* constr_SET_OF.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA3E471921813FB50088A49D /* OCTET_STRING.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E46E421813FAF0088A49D /* OCTET_STRING.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E471A21813FB50088A49D /* NativeInteger.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E46E521813FAF0088A49D /* NativeInteger.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E471B21813FB50088A49D /* INTEGER.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E46E621813FAF0088A49D /* INTEGER.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E471C21813FB50088A49D /* per_decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E46E721813FB00088A49D /* per_decoder.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E471E21813FB50088A49D /* per_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E46E921813FB00088A49D /* per_encoder.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E471F21813FB50088A49D /* constr_TYPE.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E46EA21813FB00088A49D /* constr_TYPE.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E472021813FB50088A49D /* asn_codecs_prim.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E46EB21813FB00088A49D /* asn_codecs_prim.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E472121813FB50088A49D /* xer_decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E46EC21813FB00088A49D /* xer_decoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA3E472221813FB50088A49D /* WLReceipt.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E46ED21813FB00088A49D /* WLReceipt.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E472321813FB50088A49D /* asn_codecs.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E46EE21813FB00088A49D /* asn_codecs.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA3E472421813FB50088A49D /* xer_decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E46EF21813FB00088A49D /* xer_decoder.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E472521813FB50088A49D /* WLReceipt.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E46F021813FB10088A49D /* WLReceipt.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA3E472621813FB50088A49D /* BIT_STRING.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E46F121813FB10088A49D /* BIT_STRING.h */; };
+		BA3E472721813FB50088A49D /* per_opentype.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E46F221813FB10088A49D /* per_opentype.h */; };
+		BA3E472821813FB50088A49D /* ber_decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E46F321813FB10088A49D /* ber_decoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA3E472921813FB50088A49D /* NativeEnumerated.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E46F421813FB10088A49D /* NativeEnumerated.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E472A21813FB50088A49D /* asn_SET_OF.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E46F521813FB10088A49D /* asn_SET_OF.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA3E472B21813FB50088A49D /* NativeEnumerated.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E46F621813FB10088A49D /* NativeEnumerated.h */; };
+		BA3E472C21813FB50088A49D /* constr_SEQUENCE.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E46F721813FB10088A49D /* constr_SEQUENCE.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E472D21813FB50088A49D /* WLReceiptAttribute.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E46F821813FB10088A49D /* WLReceiptAttribute.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA3E472E21813FB50088A49D /* asn_system.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E46F921813FB10088A49D /* asn_system.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA3E472F21813FB50088A49D /* der_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E46FA21813FB20088A49D /* der_encoder.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E473021813FB50088A49D /* ber_tlv_length.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E46FB21813FB20088A49D /* ber_tlv_length.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA3E473121813FB50088A49D /* NativeInteger.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E46FC21813FB20088A49D /* NativeInteger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA3E473221813FB50088A49D /* asn_codecs_prim.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E46FD21813FB20088A49D /* asn_codecs_prim.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA3E473321813FB50088A49D /* constr_SET_OF.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E46FE21813FB20088A49D /* constr_SET_OF.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E473421813FB50088A49D /* ber_tlv_tag.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E46FF21813FB20088A49D /* ber_tlv_tag.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA3E473521813FB50088A49D /* ber_decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E470021813FB20088A49D /* ber_decoder.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E473621813FB50088A49D /* asn_SET_OF.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E470121813FB20088A49D /* asn_SET_OF.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E473721813FB50088A49D /* per_decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E470221813FB30088A49D /* per_decoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA3E473821813FB50088A49D /* ber_tlv_tag.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E470321813FB30088A49D /* ber_tlv_tag.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E473921813FB50088A49D /* constraints.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E470421813FB30088A49D /* constraints.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E473A21813FB50088A49D /* xer_support.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E470521813FB30088A49D /* xer_support.h */; };
+		BA3E473B21813FB50088A49D /* constr_TYPE.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E470621813FB30088A49D /* constr_TYPE.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA3E473C21813FB50088A49D /* ber_tlv_length.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E470721813FB30088A49D /* ber_tlv_length.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E473D21813FB50088A49D /* per_support.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E470821813FB30088A49D /* per_support.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA3E473E21813FB50088A49D /* per_support.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E470921813FB30088A49D /* per_support.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA3E473F21813FB50088A49D /* asn_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E470A21813FB40088A49D /* asn_internal.h */; };
+		BA3E474021813FB50088A49D /* constr_SEQUENCE.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E470B21813FB40088A49D /* constr_SEQUENCE.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA3E474121813FB50088A49D /* OCTET_STRING.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E470C21813FB40088A49D /* OCTET_STRING.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA3E474221813FB50088A49D /* asn_application.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E470D21813FB50088A49D /* asn_application.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA6C872920D8C77900D0C30C /* WLFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA81DA67160DA09D00C83DC3 /* WLFoundation.framework */; };
 		BA6C873020D8C7AD00D0C30C /* NSArray+WLDelta_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */; };
 		BA6C873120D8C7B100D0C30C /* WLDateRangeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1059A2168DE52E00A3DDF5 /* WLDateRangeTests.m */; };
@@ -55,6 +107,58 @@
 /* Begin PBXFileReference section */
 		BA1059A1168DE52E00A3DDF5 /* WLDateRangeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDateRangeTests.h; sourceTree = "<group>"; };
 		BA1059A2168DE52E00A3DDF5 /* WLDateRangeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDateRangeTests.m; sourceTree = "<group>"; };
+		BA3E46D921813FAE0088A49D /* xer_support.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xer_support.c; sourceTree = "<group>"; };
+		BA3E46DA21813FAE0088A49D /* constraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constraints.h; sourceTree = "<group>"; };
+		BA3E46DB21813FAE0088A49D /* per_encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = per_encoder.h; sourceTree = "<group>"; };
+		BA3E46DC21813FAE0088A49D /* xer_encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xer_encoder.h; sourceTree = "<group>"; };
+		BA3E46DD21813FAE0088A49D /* der_encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = der_encoder.h; sourceTree = "<group>"; };
+		BA3E46DE21813FAF0088A49D /* BIT_STRING.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BIT_STRING.c; sourceTree = "<group>"; };
+		BA3E46DF21813FAF0088A49D /* INTEGER.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INTEGER.h; sourceTree = "<group>"; };
+		BA3E46E021813FAF0088A49D /* per_opentype.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = per_opentype.c; sourceTree = "<group>"; };
+		BA3E46E121813FAF0088A49D /* xer_encoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xer_encoder.c; sourceTree = "<group>"; };
+		BA3E46E221813FAF0088A49D /* WLReceiptAttribute.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = WLReceiptAttribute.c; sourceTree = "<group>"; };
+		BA3E46E321813FAF0088A49D /* constr_SET_OF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constr_SET_OF.h; sourceTree = "<group>"; };
+		BA3E46E421813FAF0088A49D /* OCTET_STRING.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = OCTET_STRING.c; sourceTree = "<group>"; };
+		BA3E46E521813FAF0088A49D /* NativeInteger.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = NativeInteger.c; sourceTree = "<group>"; };
+		BA3E46E621813FAF0088A49D /* INTEGER.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = INTEGER.c; sourceTree = "<group>"; };
+		BA3E46E721813FB00088A49D /* per_decoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = per_decoder.c; sourceTree = "<group>"; };
+		BA3E46E921813FB00088A49D /* per_encoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = per_encoder.c; sourceTree = "<group>"; };
+		BA3E46EA21813FB00088A49D /* constr_TYPE.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = constr_TYPE.c; sourceTree = "<group>"; };
+		BA3E46EB21813FB00088A49D /* asn_codecs_prim.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = asn_codecs_prim.c; sourceTree = "<group>"; };
+		BA3E46EC21813FB00088A49D /* xer_decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xer_decoder.h; sourceTree = "<group>"; };
+		BA3E46ED21813FB00088A49D /* WLReceipt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = WLReceipt.c; sourceTree = "<group>"; };
+		BA3E46EE21813FB00088A49D /* asn_codecs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn_codecs.h; sourceTree = "<group>"; };
+		BA3E46EF21813FB00088A49D /* xer_decoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xer_decoder.c; sourceTree = "<group>"; };
+		BA3E46F021813FB10088A49D /* WLReceipt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLReceipt.h; sourceTree = "<group>"; };
+		BA3E46F121813FB10088A49D /* BIT_STRING.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BIT_STRING.h; sourceTree = "<group>"; };
+		BA3E46F221813FB10088A49D /* per_opentype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = per_opentype.h; sourceTree = "<group>"; };
+		BA3E46F321813FB10088A49D /* ber_decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ber_decoder.h; sourceTree = "<group>"; };
+		BA3E46F421813FB10088A49D /* NativeEnumerated.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = NativeEnumerated.c; sourceTree = "<group>"; };
+		BA3E46F521813FB10088A49D /* asn_SET_OF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn_SET_OF.h; sourceTree = "<group>"; };
+		BA3E46F621813FB10088A49D /* NativeEnumerated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeEnumerated.h; sourceTree = "<group>"; };
+		BA3E46F721813FB10088A49D /* constr_SEQUENCE.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = constr_SEQUENCE.c; sourceTree = "<group>"; };
+		BA3E46F821813FB10088A49D /* WLReceiptAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLReceiptAttribute.h; sourceTree = "<group>"; };
+		BA3E46F921813FB10088A49D /* asn_system.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn_system.h; sourceTree = "<group>"; };
+		BA3E46FA21813FB20088A49D /* der_encoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = der_encoder.c; sourceTree = "<group>"; };
+		BA3E46FB21813FB20088A49D /* ber_tlv_length.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ber_tlv_length.h; sourceTree = "<group>"; };
+		BA3E46FC21813FB20088A49D /* NativeInteger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeInteger.h; sourceTree = "<group>"; };
+		BA3E46FD21813FB20088A49D /* asn_codecs_prim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn_codecs_prim.h; sourceTree = "<group>"; };
+		BA3E46FE21813FB20088A49D /* constr_SET_OF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = constr_SET_OF.c; sourceTree = "<group>"; };
+		BA3E46FF21813FB20088A49D /* ber_tlv_tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ber_tlv_tag.h; sourceTree = "<group>"; };
+		BA3E470021813FB20088A49D /* ber_decoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ber_decoder.c; sourceTree = "<group>"; };
+		BA3E470121813FB20088A49D /* asn_SET_OF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = asn_SET_OF.c; sourceTree = "<group>"; };
+		BA3E470221813FB30088A49D /* per_decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = per_decoder.h; sourceTree = "<group>"; };
+		BA3E470321813FB30088A49D /* ber_tlv_tag.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ber_tlv_tag.c; sourceTree = "<group>"; };
+		BA3E470421813FB30088A49D /* constraints.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = constraints.c; sourceTree = "<group>"; };
+		BA3E470521813FB30088A49D /* xer_support.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xer_support.h; sourceTree = "<group>"; };
+		BA3E470621813FB30088A49D /* constr_TYPE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constr_TYPE.h; sourceTree = "<group>"; };
+		BA3E470721813FB30088A49D /* ber_tlv_length.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ber_tlv_length.c; sourceTree = "<group>"; };
+		BA3E470821813FB30088A49D /* per_support.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = per_support.c; sourceTree = "<group>"; };
+		BA3E470921813FB30088A49D /* per_support.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = per_support.h; sourceTree = "<group>"; };
+		BA3E470A21813FB40088A49D /* asn_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn_internal.h; sourceTree = "<group>"; };
+		BA3E470B21813FB40088A49D /* constr_SEQUENCE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constr_SEQUENCE.h; sourceTree = "<group>"; };
+		BA3E470C21813FB40088A49D /* OCTET_STRING.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCTET_STRING.h; sourceTree = "<group>"; };
+		BA3E470D21813FB50088A49D /* asn_application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn_application.h; sourceTree = "<group>"; };
 		BA6C872420D8C77900D0C30C /* WLFoundationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WLFoundationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA81DA67160DA09D00C83DC3 /* WLFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WLFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA81DA72160DA09D00C83DC3 /* WLFoundation-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WLFoundation-Info.plist"; sourceTree = "<group>"; };
@@ -112,6 +216,65 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BA3E466C21813F3C0088A49D /* WLReceipt */ = {
+			isa = PBXGroup;
+			children = (
+				BA3E470D21813FB50088A49D /* asn_application.h */,
+				BA3E46EB21813FB00088A49D /* asn_codecs_prim.c */,
+				BA3E46FD21813FB20088A49D /* asn_codecs_prim.h */,
+				BA3E46EE21813FB00088A49D /* asn_codecs.h */,
+				BA3E470A21813FB40088A49D /* asn_internal.h */,
+				BA3E470121813FB20088A49D /* asn_SET_OF.c */,
+				BA3E46F521813FB10088A49D /* asn_SET_OF.h */,
+				BA3E46F921813FB10088A49D /* asn_system.h */,
+				BA3E470021813FB20088A49D /* ber_decoder.c */,
+				BA3E46F321813FB10088A49D /* ber_decoder.h */,
+				BA3E470721813FB30088A49D /* ber_tlv_length.c */,
+				BA3E46FB21813FB20088A49D /* ber_tlv_length.h */,
+				BA3E470321813FB30088A49D /* ber_tlv_tag.c */,
+				BA3E46FF21813FB20088A49D /* ber_tlv_tag.h */,
+				BA3E46DE21813FAF0088A49D /* BIT_STRING.c */,
+				BA3E46F121813FB10088A49D /* BIT_STRING.h */,
+				BA3E46F721813FB10088A49D /* constr_SEQUENCE.c */,
+				BA3E470B21813FB40088A49D /* constr_SEQUENCE.h */,
+				BA3E46FE21813FB20088A49D /* constr_SET_OF.c */,
+				BA3E46E321813FAF0088A49D /* constr_SET_OF.h */,
+				BA3E46EA21813FB00088A49D /* constr_TYPE.c */,
+				BA3E470621813FB30088A49D /* constr_TYPE.h */,
+				BA3E470421813FB30088A49D /* constraints.c */,
+				BA3E46DA21813FAE0088A49D /* constraints.h */,
+				BA3E46FA21813FB20088A49D /* der_encoder.c */,
+				BA3E46DD21813FAE0088A49D /* der_encoder.h */,
+				BA3E46E621813FAF0088A49D /* INTEGER.c */,
+				BA3E46DF21813FAF0088A49D /* INTEGER.h */,
+				BA3E46F421813FB10088A49D /* NativeEnumerated.c */,
+				BA3E46F621813FB10088A49D /* NativeEnumerated.h */,
+				BA3E46E521813FAF0088A49D /* NativeInteger.c */,
+				BA3E46FC21813FB20088A49D /* NativeInteger.h */,
+				BA3E46E421813FAF0088A49D /* OCTET_STRING.c */,
+				BA3E470C21813FB40088A49D /* OCTET_STRING.h */,
+				BA3E46E721813FB00088A49D /* per_decoder.c */,
+				BA3E470221813FB30088A49D /* per_decoder.h */,
+				BA3E46E921813FB00088A49D /* per_encoder.c */,
+				BA3E46DB21813FAE0088A49D /* per_encoder.h */,
+				BA3E46E021813FAF0088A49D /* per_opentype.c */,
+				BA3E46F221813FB10088A49D /* per_opentype.h */,
+				BA3E470821813FB30088A49D /* per_support.c */,
+				BA3E470921813FB30088A49D /* per_support.h */,
+				BA3E46ED21813FB00088A49D /* WLReceipt.c */,
+				BA3E46F021813FB10088A49D /* WLReceipt.h */,
+				BA3E46E221813FAF0088A49D /* WLReceiptAttribute.c */,
+				BA3E46F821813FB10088A49D /* WLReceiptAttribute.h */,
+				BA3E46EF21813FB00088A49D /* xer_decoder.c */,
+				BA3E46EC21813FB00088A49D /* xer_decoder.h */,
+				BA3E46E121813FAF0088A49D /* xer_encoder.c */,
+				BA3E46DC21813FAE0088A49D /* xer_encoder.h */,
+				BA3E46D921813FAE0088A49D /* xer_support.c */,
+				BA3E470521813FB30088A49D /* xer_support.h */,
+			);
+			path = WLReceipt;
+			sourceTree = "<group>";
+		};
 		BA6C872520D8C77900D0C30C /* WLFoundationTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -153,6 +316,7 @@
 		BA81DA70160DA09D00C83DC3 /* WLFoundation */ = {
 			isa = PBXGroup;
 			children = (
+				BA3E466C21813F3C0088A49D /* WLReceipt */,
 				BAF67C8D16D604200047FE2A /* IKPowerSources */,
 				BA81DA71160DA09D00C83DC3 /* Supporting Files */,
 				BAF67C9216D606080047FE2A /* CALayer+WLBlocks.h */,
@@ -217,6 +381,34 @@
 				BA9AFB9B163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h in Headers */,
 				BC5997CEDCD382068CDD26E3 /* WLASLLog.h in Headers */,
 				BAF67C9016D604200047FE2A /* IKPowerSources.h in Headers */,
+				BA3E472521813FB50088A49D /* WLReceipt.h in Headers */,
+				BA3E471221813FB50088A49D /* der_encoder.h in Headers */,
+				BA3E472E21813FB50088A49D /* asn_system.h in Headers */,
+				BA3E474221813FB50088A49D /* asn_application.h in Headers */,
+				BA3E472821813FB50088A49D /* ber_decoder.h in Headers */,
+				BA3E472321813FB50088A49D /* asn_codecs.h in Headers */,
+				BA3E473F21813FB50088A49D /* asn_internal.h in Headers */,
+				BA3E473E21813FB50088A49D /* per_support.h in Headers */,
+				BA3E473B21813FB50088A49D /* constr_TYPE.h in Headers */,
+				BA3E473121813FB50088A49D /* NativeInteger.h in Headers */,
+				BA3E473421813FB50088A49D /* ber_tlv_tag.h in Headers */,
+				BA3E471121813FB50088A49D /* xer_encoder.h in Headers */,
+				BA3E472121813FB50088A49D /* xer_decoder.h in Headers */,
+				BA3E471421813FB50088A49D /* INTEGER.h in Headers */,
+				BA3E470F21813FB50088A49D /* constraints.h in Headers */,
+				BA3E472A21813FB50088A49D /* asn_SET_OF.h in Headers */,
+				BA3E473A21813FB50088A49D /* xer_support.h in Headers */,
+				BA3E474121813FB50088A49D /* OCTET_STRING.h in Headers */,
+				BA3E473021813FB50088A49D /* ber_tlv_length.h in Headers */,
+				BA3E471021813FB50088A49D /* per_encoder.h in Headers */,
+				BA3E472621813FB50088A49D /* BIT_STRING.h in Headers */,
+				BA3E473721813FB50088A49D /* per_decoder.h in Headers */,
+				BA3E474021813FB50088A49D /* constr_SEQUENCE.h in Headers */,
+				BA3E473221813FB50088A49D /* asn_codecs_prim.h in Headers */,
+				BA3E472D21813FB50088A49D /* WLReceiptAttribute.h in Headers */,
+				BA3E471821813FB50088A49D /* constr_SET_OF.h in Headers */,
+				BA3E472721813FB50088A49D /* per_opentype.h in Headers */,
+				BA3E472B21813FB50088A49D /* NativeEnumerated.h in Headers */,
 				BAF67CA216D606090047FE2A /* CALayer+WLBlocks.h in Headers */,
 				BAF67CA416D606090047FE2A /* CATransaction+WLBlocks.h in Headers */,
 				BAF67CA616D606090047FE2A /* CoreText+Additions.h in Headers */,
@@ -332,20 +524,44 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA3E471C21813FB50088A49D /* per_decoder.c in Sources */,
+				BA3E472421813FB50088A49D /* xer_decoder.c in Sources */,
+				BA3E471A21813FB50088A49D /* NativeInteger.c in Sources */,
 				BA81DA84160DA0C800C83DC3 /* NSArray+WLDelta.m in Sources */,
 				BA81DA86160DA0C800C83DC3 /* WLDateRange.m in Sources */,
+				BA3E471E21813FB50088A49D /* per_encoder.c in Sources */,
+				BA3E471321813FB50088A49D /* BIT_STRING.c in Sources */,
 				BC599131671997B089C3D4C8 /* WLASLLog.m in Sources */,
 				BA9AFB9C163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m in Sources */,
 				BAF67C9116D604200047FE2A /* IKPowerSources.m in Sources */,
 				BAF67CA316D606090047FE2A /* CALayer+WLBlocks.m in Sources */,
+				BA3E471B21813FB50088A49D /* INTEGER.c in Sources */,
+				BA3E472021813FB50088A49D /* asn_codecs_prim.c in Sources */,
+				BA3E471721813FB50088A49D /* WLReceiptAttribute.c in Sources */,
+				BA3E471921813FB50088A49D /* OCTET_STRING.c in Sources */,
+				BA3E473621813FB50088A49D /* asn_SET_OF.c in Sources */,
+				BA3E471521813FB50088A49D /* per_opentype.c in Sources */,
 				BAF67CA516D606090047FE2A /* CATransaction+WLBlocks.m in Sources */,
+				BA3E473821813FB50088A49D /* ber_tlv_tag.c in Sources */,
 				BAF67CA716D606090047FE2A /* CoreText+Additions.m in Sources */,
 				BAF67CA916D606090047FE2A /* NSAttributedString+WLStringDrawing.m in Sources */,
+				BA3E472921813FB50088A49D /* NativeEnumerated.c in Sources */,
+				BA3E472221813FB50088A49D /* WLReceipt.c in Sources */,
+				BA3E470E21813FB50088A49D /* xer_support.c in Sources */,
 				BAF67CAD16D606090047FE2A /* WLBlockLayer.m in Sources */,
+				BA3E472F21813FB50088A49D /* der_encoder.c in Sources */,
+				BA3E471F21813FB50088A49D /* constr_TYPE.c in Sources */,
+				BA3E473C21813FB50088A49D /* ber_tlv_length.c in Sources */,
 				BAF67CAF16D606090047FE2A /* WLEvents.m in Sources */,
+				BA3E471621813FB50088A49D /* xer_encoder.c in Sources */,
+				BA3E473521813FB50088A49D /* ber_decoder.c in Sources */,
+				BA3E473321813FB50088A49D /* constr_SET_OF.c in Sources */,
 				BAF67CB116D606090047FE2A /* WLLayerHostedView.m in Sources */,
+				BA3E473D21813FB50088A49D /* per_support.c in Sources */,
+				BA3E472C21813FB50088A49D /* constr_SEQUENCE.c in Sources */,
 				BABB670416DCB2A600FFDCC5 /* WLViewController.m in Sources */,
 				BC599F8A6F0C3B7C3E67165E /* WLSmartClock.m in Sources */,
+				BA3E473921813FB50088A49D /* constraints.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

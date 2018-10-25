@@ -14,6 +14,8 @@
 #import "MixpanelProtocol.h"
 
 
+extern NSString* const WLBlotterLogName;
+
 extern NSString* const WLMixpanelLogName;
 
 
@@ -124,6 +126,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)_removeAutoFadeTimerIfNeeded;
 
 - (void)_autoFadeTimerDidFire;
+
+
+- (NSDictionary *)_parseReceipt;
 
 @end
 
