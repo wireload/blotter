@@ -11,7 +11,7 @@
 #import "WLASLLog.h"
 
 
-NSString* const WLSmartClockLogKey = @"net.wireload.mac.WLFoundation.WLSmartClock";
+NSString* const WLSmartClockLogName = @"net.wireload.mac.WLFoundation.WLSmartClock";
 
 
 @implementation WLSmartClock
@@ -169,7 +169,7 @@ NSString* const WLSmartClockLogKey = @"net.wireload.mac.WLFoundation.WLSmartCloc
     NSAssert([NSThread currentThread] == [NSThread mainThread], @"%@ MUST be called on the Main Thread", NSStringFromSelector(_cmd));
 
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(calendarDidChange) object:nil];
-    [[WLASLLog logForKey:WLSmartClockLogKey] logDebug:@"Calendar did change"];
+    [[WLASLLog logForName:WLSmartClockLogName] logDebug:@"Calendar did change"];
 
     [self willChangeValueForKey:@"calendar"];
     _calendar = [[NSCalendar currentCalendar] copy];
@@ -184,7 +184,7 @@ NSString* const WLSmartClockLogKey = @"net.wireload.mac.WLFoundation.WLSmartCloc
     NSAssert([NSThread currentThread] == [NSThread mainThread], @"%@ MUST be called on the Main Thread", NSStringFromSelector(_cmd));
 
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(dateDidChange) object:nil];
-    [[WLASLLog logForKey:WLSmartClockLogKey] logDebug:@"Date did change"];
+    [[WLASLLog logForName:WLSmartClockLogName] logDebug:@"Date did change"];
 
     [self willChangeValueForKey:@"date"];
     _date = [NSDate date];

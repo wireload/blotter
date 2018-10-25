@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-extern NSString* const WLDateRangeLogKey;
+extern NSString* const WLDateRangeLogName;
 
 
 /*!

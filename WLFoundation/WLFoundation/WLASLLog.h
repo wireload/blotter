@@ -31,7 +31,7 @@ typedef NSString * (^WLASLLogMessenger)(void);
 
 - (instancetype)initWithFile:(NSFileHandle *)aFileHandle name:(NSString *)aName;
 
-+ (instancetype)logForKey:(NSString *)aName;
++ (instancetype)logForName:(NSString *)aName;
 
 @end
 

@@ -65,7 +65,7 @@ static void _WLFreeASLClient(aslclient aClient)
 
 #pragma mark Methods
 
-+ (instancetype)logForKey:(NSString *)aName
++ (instancetype)logForName:(NSString *)aName
 {
     static dispatch_once_t Once;
     static NSMutableDictionary *Logs = nil;

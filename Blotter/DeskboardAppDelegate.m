@@ -38,6 +38,9 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 static NSString* const _WLStatusItemAutosaveName = @"net.wireload.blotter.mac.StatusItem";
 
 
+NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
+
+
 @implementation DeskboardAppDelegate
 {
     WLApplicationPreferences *_preferencesController;
@@ -404,7 +407,7 @@ static NSString* const _WLStatusItemAutosaveName = @"net.wireload.blotter.mac.St
             systemProperties[@"Calendar"] = [NSCalendar currentCalendar].calendarIdentifier;
 
         id<MixpanelProtocol> remoteObjectProxy = [connection remoteObjectProxyWithErrorHandler:^(NSError *anError) {
-            [[WLASLLog logForKey:@"Mixpanel"] logError:@"Unable to report to Mixpanel: %@", anError.localizedDescription];
+            [[WLASLLog logForName:WLMixpanelLogName] logError:@"Unable to report to Mixpanel: %@", anError.localizedDescription];
         }];
         [remoteObjectProxy peopleSet:systemProperties withReply:^{}];
         [remoteObjectProxy track:@"Launched" withProperties:appProperties andReply:^{ [connection invalidate]; }];

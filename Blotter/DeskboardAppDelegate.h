@@ -14,6 +14,9 @@
 #import "MixpanelProtocol.h"
 
 
+extern NSString* const WLMixpanelLogName;
+
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface DeskboardAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate /*, NSMenuValidation*/>

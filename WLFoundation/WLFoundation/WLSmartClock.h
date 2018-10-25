@@ -9,7 +9,7 @@
 #import <AppKit/AppKit.h>
 
 
-extern NSString* const WLSmartClockLogKey;
+extern NSString* const WLSmartClockLogName;
 
 
 /*!
