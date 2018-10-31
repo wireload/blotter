@@ -34,8 +34,9 @@
 
 - (void)performBlock:(dispatch_block_t)aBlock withReply:(dispatch_block_t)aReply;
 {
+    xpc_transaction_begin();
+
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), dispatch_block_create(DISPATCH_BLOCK_DETACHED, ^{
-        xpc_transaction_begin();
         aBlock();
 
         [[Mixpanel sharedInstance] flushWithCompletion:^{
