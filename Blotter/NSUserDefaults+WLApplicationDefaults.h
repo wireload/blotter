@@ -98,6 +98,8 @@ extern NSString* const WLShareAnalytics;
 
 extern NSString* const WLShowPreferencesAtStartUp;
 
+extern NSString* const WLLastReportedDailyEventAt;
+
 
 @interface NSUserDefaults (WLApplicationDefaults)
 

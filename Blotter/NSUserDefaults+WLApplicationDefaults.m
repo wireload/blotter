@@ -98,6 +98,8 @@ NSString* const WLShareAnalytics = @"ShareAnalytics";
 
 NSString* const WLShowPreferencesAtStartUp = @"ShowPreferencesAtStartUp";
 
+NSString* const WLLastReportedDailyEventAt = @"LastReportedDailyEventAt";
+
 
 @implementation NSUserDefaults (WLApplicationDefaults)
 
