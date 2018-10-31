@@ -98,6 +98,8 @@ NSString* const WLShareAnalytics = @"ShareAnalytics";
 
 NSString* const WLShowPreferencesAtStartUp = @"ShowPreferencesAtStartUp";
 
+NSString* const WLLastReportedDailyEventAt = @"LastReportedDailyEventAt";
+
 
 @implementation NSUserDefaults (WLApplicationDefaults)
 
@@ -403,6 +405,16 @@ NSString* const WLShowPreferencesAtStartUp = @"ShowPreferencesAtStartUp";
     return [self boolForKey:WLShowsNext7DaysKey];
 }
 
+- (BOOL)WL_requestShareAnalyticsConsentAtStartup
+{
+    return [self boolForKey:WLRequestShareAnalyticsConsentAtStartup];
+}
+
+- (BOOL)WL_shareAnalytics
+{
+    return [self boolForKey:WLShareAnalytics];
+}
+
 @end
 
 
@@ -416,21 +428,6 @@ NSString* const WLShowPreferencesAtStartUp = @"ShowPreferencesAtStartUp";
 - (void)WL_setDisplaysAllCalendars:(BOOL)newDisplaysAllCalendars
 {
     [self setBool:newDisplaysAllCalendars forKey:WLDisplayAllCalendarsKey];
-}
-
-@end
-
-
-@implementation NSUserDefaults (WLAboutPreferences)
-
-- (BOOL)WL_requestShareAnalyticsConsentAtStartup
-{
-    return [self boolForKey:WLRequestShareAnalyticsConsentAtStartup];
-}
-
-- (BOOL)WL_shareAnalytics
-{
-    return [self boolForKey:WLShareAnalytics];
 }
 
 @end

@@ -84,8 +84,7 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
         [defaults removeObserver:self forKeyPath:shortcutName];
     }];
 
-    if (_applicationRunTimer != nil)
-        [[WLSmartClock defaultClock] removeObserver:self forKeyPath:@"date"];
+    [[WLSmartClock defaultClock] removeObserver:self forKeyPath:@"date"];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
@@ -339,7 +338,6 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
     [d WL_setShowRateThisAppInMenu:YES];
 
     _applicationRunTimer = nil;
-    [[WLSmartClock defaultClock] removeObserver:self forKeyPath:@"date"];
 }
 
 - (void)hideRateThisAppMenuItem
@@ -376,44 +374,6 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 {
     if ([self isOnlyCalendarWindowVisible:aWindows] && self.calendarWindowController.windowState == WLFinderLevelState)
         [NSApp hide:self];
-}
-
-- (void)reportLaunchedToMixpanelIfNeeded
-{
-    if (![[NSUserDefaults standardUserDefaults] WL_shareAnalytics])
-        return;
-
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSXPCConnection *connection = [[NSXPCConnection alloc] initWithServiceName:@"net.wireload.blotter.mac.mixpanel"];
-        connection.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(MixpanelProtocol)];
-        [connection resume];
-
-        NSLocale *locale = [NSLocale currentLocale];
-        NSDictionary *bundleInfo = [NSBundle mainBundle].infoDictionary;
-
-        NSMutableDictionary *appProperties = [NSMutableDictionary dictionary];
-        [appProperties setValue:bundleInfo[@"CFBundleVersion"] forKey:@"$app_version"];
-        [appProperties setValue:bundleInfo[@"CFBundleShortVersionString"] forKey:@"$app_release"];
-        [appProperties setValue:bundleInfo[@"CFBundleVersion"] forKey:@"$app_build_number"];
-        [appProperties setValue:bundleInfo[@"CFBundleShortVersionString"] forKey:@"$app_version_string"];
-        NSOperatingSystemVersion osVersion = NSProcessInfo.processInfo.operatingSystemVersion;
-        [appProperties setValue:[NSString stringWithFormat:@"%ld.%ld", osVersion.majorVersion, osVersion.minorVersion] forKey:@"General OS Version"];
-
-        NSMutableDictionary *systemProperties = [appProperties mutableCopy];
-        systemProperties[@"Locale"] = locale.localeIdentifier;
-
-        if (@available(macOS 10.12, *))
-            systemProperties[@"Calendar"] = locale.calendarIdentifier;
-        else
-            systemProperties[@"Calendar"] = [NSCalendar currentCalendar].calendarIdentifier;
-
-        id<MixpanelProtocol> remoteObjectProxy = [connection remoteObjectProxyWithErrorHandler:^(NSError *anError) {
-            [[WLASLLog logForName:WLMixpanelLogName] logError:@"Unable to report to Mixpanel: %@", anError.localizedDescription];
-        }];
-        [remoteObjectProxy peopleSet:systemProperties withReply:^{}];
-        [remoteObjectProxy track:@"Launched" withProperties:appProperties andReply:^{ [connection invalidate]; }];
-    });
 }
 
 
@@ -468,12 +428,12 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
                                                  selector:@selector(showRateThisAppMenuItem)
                                                      name:WLApplicationRunTimerDidFireNotification
                                                    object:_applicationRunTimer];
-        // Bind tick to changes of date. So we can avoid using additional timer.
-        [[WLSmartClock defaultClock] addObserver:self
-                                      forKeyPath:@"date"
-                                         options:NSKeyValueObservingOptionNew
-                                         context:NULL];
     }
+
+    [[WLSmartClock defaultClock] addObserver:self
+                                  forKeyPath:@"date"
+                                     options:NSKeyValueObservingOptionNew
+                                     context:NULL];
 
     [defaults addObserver:self
                forKeyPath:WLAutoFadeKey
@@ -673,6 +633,83 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
     self.calendarWindowController.isFadedOut = YES;
 }
 
+- (NSXPCConnection *)_makeReportConnection;
+{
+    NSXPCConnection *connection = [[NSXPCConnection alloc] initWithServiceName:@"net.wireload.blotter.mac.mixpanel"];
+    connection.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(MixpanelProtocol)];
+    [connection resume];
+    return connection;
+}
+
+- (NSDictionary *)_makeReportAppProperties
+{
+    NSDictionary *bundleInfo = [NSBundle mainBundle].infoDictionary;
+    NSMutableDictionary *appProperties = [NSMutableDictionary dictionary];
+    [appProperties setValue:bundleInfo[@"CFBundleVersion"] forKey:@"$app_version"];
+    [appProperties setValue:bundleInfo[@"CFBundleShortVersionString"] forKey:@"$app_release"];
+    [appProperties setValue:bundleInfo[@"CFBundleVersion"] forKey:@"$app_build_number"];
+    [appProperties setValue:bundleInfo[@"CFBundleShortVersionString"] forKey:@"$app_version_string"];
+    NSOperatingSystemVersion osVersion = NSProcessInfo.processInfo.operatingSystemVersion;
+    [appProperties setValue:[NSString stringWithFormat:@"%ld.%ld", osVersion.majorVersion, osVersion.minorVersion] forKey:@"General OS Version"];
+    return appProperties;
+}
+
+- (void)_reportLaunchedToMixpanelIfNeeded
+{
+    if (![NSUserDefaults.standardUserDefaults WL_shareAnalytics])
+        return;
+
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSDictionary *appProperties = [self _makeReportAppProperties];
+        NSMutableDictionary *systemProperties = [appProperties mutableCopy];
+        NSLocale *locale = NSLocale.currentLocale;
+        systemProperties[@"Locale"] = locale.localeIdentifier;
+
+        if (@available(macOS 10.12, *))
+            systemProperties[@"Calendar"] = locale.calendarIdentifier;
+        else
+            systemProperties[@"Calendar"] = NSCalendar.currentCalendar.calendarIdentifier;
+
+        NSXPCConnection *connection = [self _makeReportConnection];
+        id<MixpanelProtocol> remoteObjectProxy = [connection remoteObjectProxyWithErrorHandler:^(NSError *anError) {
+            [[WLASLLog logForName:WLMixpanelLogName] logError:@"Unable to report to Mixpanel: %@", anError.localizedDescription];
+        }];
+        [remoteObjectProxy peopleSet:systemProperties withReply:^{}];
+        [remoteObjectProxy track:@"Launched" withProperties:appProperties andReply:^{ [connection invalidate]; }];
+    });
+}
+
+- (void)_reportDailyToMixpanelIfNeeded
+{
+    NSUserDefaults *d = NSUserDefaults.standardUserDefaults;
+
+    if (![d WL_shareAnalytics])
+        return;
+
+    static NSCalendar *posixCalendar = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        posixCalendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+        posixCalendar.locale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
+        posixCalendar.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+    });
+
+    NSDate *now = NSDate.date;
+    NSDate *lastReportedAt = [d objectForKey:WLLastReportedDailyEventAt];
+
+    if (lastReportedAt && [posixCalendar isDate:now inSameDayAsDate:lastReportedAt])
+        return;
+
+    [d setObject:now forKey:WLLastReportedDailyEventAt];
+    NSDictionary *appProperties = [self _makeReportAppProperties];
+    NSXPCConnection *connection = [self _makeReportConnection];
+    id<MixpanelProtocol> remoteObjectProxy = [connection remoteObjectProxyWithErrorHandler:^(NSError *anError) {
+        [[WLASLLog logForName:WLMixpanelLogName] logError:@"Unable to report to Mixpanel: %@", anError.localizedDescription];
+    }];
+    [remoteObjectProxy track:@"Daily" withProperties:appProperties andReply:^{ [connection invalidate]; }];
+}
+
 
 #pragma mark NSResponder
 
@@ -710,7 +747,10 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
     else if ([aKeyPath isEqualToString:WLShowInMenuBar])
         [self toggleStatusItem];
     else if ([aKeyPath isEqualToString:@"date"])
+    {
         [_applicationRunTimer tick];
+        [self _reportDailyToMixpanelIfNeeded];
+    }
     else if ([aKeyPath isEqualToString:WLAutoFadeKey] || [aKeyPath isEqualToString:WLAutoFadeSecondsKey])
     {
         if ([[NSUserDefaults standardUserDefaults] WL_autoFades])
@@ -724,7 +764,10 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
     else if ([aKeyPath isEqualToString:NSVisibleBinding])
         [[NSUserDefaults standardUserDefaults] setValue:aChange[NSKeyValueChangeNewKey] forKeyPath:WLShowInMenuBar];
     else if ([aKeyPath isEqualToString:WLShareAnalytics])
-        [self reportLaunchedToMixpanelIfNeeded];
+    {
+        [self _reportLaunchedToMixpanelIfNeeded];
+        [self _reportDailyToMixpanelIfNeeded];
+    }
     else
         [super observeValueForKeyPath:aKeyPath ofObject:aObject change:aChange context:aContext];
 }
