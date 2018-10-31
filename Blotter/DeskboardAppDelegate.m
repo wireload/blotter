@@ -687,10 +687,18 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
     if (![d WL_shareAnalytics])
         return;
 
+    static NSCalendar *posixCalendar = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        posixCalendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+        posixCalendar.locale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
+        posixCalendar.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+    });
+
     NSDate *now = NSDate.date;
     NSDate *lastReportedAt = [d objectForKey:WLLastReportedDailyEventAt];
 
-    if (lastReportedAt && [NSCalendar.currentCalendar isDate:now inSameDayAsDate:lastReportedAt])
+    if (lastReportedAt && [posixCalendar isDate:now inSameDayAsDate:lastReportedAt])
         return;
 
     [d setObject:now forKey:WLLastReportedDailyEventAt];
