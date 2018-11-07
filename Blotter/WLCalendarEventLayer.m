@@ -83,7 +83,7 @@ const CGFloat _WLMinimumStringHeight = 5.0;
 - (CGFloat)minimumHumanVisibleHeight
 {
     NSAttributedString *visibleString = (self.title).length > 0 ? self.title : self.location;
-    if (_cachedVisibleString && ![visibleString isEqualToAttributedString:_cachedVisibleString])
+    if (!_cachedVisibleString || ![visibleString isEqualToAttributedString:_cachedVisibleString])
     {
         [visibleString retain];
         [_cachedVisibleString release];
