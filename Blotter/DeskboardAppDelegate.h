@@ -11,7 +11,6 @@
 #import "WLApplicationPreferences.h"
 #import "WLNewEventWindowController.h"
 #import "WLNewReminderWindowController.h"
-#import "MixpanelProtocol.h"
 
 
 extern NSString* const WLBlotterLogName;
@@ -91,28 +90,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)deactivateAppIfAllConditionsAreMet:(NSArray *)aWindows;
 
-- (NSXPCConnection *)_makeReportConnection;
-
-- (NSDictionary *)_makeReportAppProperties;
-
-/*!
-    @brief Report the Launched event to Mixpanel.
-
-    @discussion Reports only once per application lifetime and only if user gave consent.
-
-    @see WLShareAnalytics
- */
-- (void)_reportLaunchedToMixpanelIfNeeded;
-
-/*!
-    @brief Report the Daily event to Mixpanel.
-
-    @discussion Reports daily (if system allows) only if user gave consent.
-
-    @see WLShareAnalytics
- */
-- (void)_reportDailyToMixpanelIfNeeded;
-
 
 - (void)_scheduleShowCurrentWeekTimerIfNeeded;
 
@@ -126,9 +103,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)_removeAutoFadeTimerIfNeeded;
 
 - (void)_autoFadeTimerDidFire;
-
-
-- (NSDictionary *)_parseReceipt;
 
 @end
 

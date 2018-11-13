@@ -55,6 +55,7 @@
 		BA72ED8020EC178200CF6F83 /* WLCalendarStore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70DD20E30D5C0079CCD4 /* WLCalendarStore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA72ED8120EC178200CF6F83 /* ShortcutRecorder.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70DB20E30D5A0079CCD4 /* ShortcutRecorder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA72ED8220EC178200CF6F83 /* PTHotKey.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70D920E30D560079CCD4 /* PTHotKey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BA7A22E0219A3DE50078CF86 /* WLAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7A22DF219A3DE50078CF86 /* WLAnalytics.m */; };
 		BA7EFC3F2110D71A00342612 /* Mixpanel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA7EFC3E2110D71A00342612 /* Mixpanel.framework */; };
 		BA7EFC402110D72A00342612 /* Mixpanel.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BA7EFC3E2110D71A00342612 /* Mixpanel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA807F0F1645460C0033B85B /* IKApplicationPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA807F0C1645460C0033B85B /* IKApplicationPreferences.m */; };
@@ -298,6 +299,8 @@
 		BA699BAD20F86C3800F3A0F9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BA699BAF20F86C3800F3A0F9 /* LoginItem.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LoginItem.entitlements; sourceTree = "<group>"; };
 		BA731EE1210A7F2A0019BE8B /* WLMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLMacro.h; sourceTree = "<group>"; };
+		BA7A22DE219A3DE50078CF86 /* WLAnalytics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLAnalytics.h; sourceTree = "<group>"; };
+		BA7A22DF219A3DE50078CF86 /* WLAnalytics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLAnalytics.m; sourceTree = "<group>"; };
 		BA7EFC3E2110D71A00342612 /* Mixpanel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Mixpanel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA807F0B1645460C0033B85B /* IKApplicationPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKApplicationPreferences.h; sourceTree = "<group>"; };
 		BA807F0C1645460C0033B85B /* IKApplicationPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKApplicationPreferences.m; sourceTree = "<group>"; };
@@ -781,6 +784,8 @@
 				E2E64B4D1402483500912A92 /* WLSoftEdgeLayer.m */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 				BA731EE1210A7F2A0019BE8B /* WLMacro.h */,
+				BA7A22DE219A3DE50078CF86 /* WLAnalytics.h */,
+				BA7A22DF219A3DE50078CF86 /* WLAnalytics.m */,
 			);
 			name = Blotter;
 			sourceTree = "<group>";
@@ -1204,6 +1209,7 @@
 				E2957E5A152B117E00AE05E8 /* WLApplicationRunTimer.m in Sources */,
 				E2D6D8F9153335C8005F070D /* WLCalendarWindowBringToFrontAnimation.m in Sources */,
 				E252E9C515545AD300B64F5F /* WLGlassHudPopUpButtonCell.m in Sources */,
+				BA7A22E0219A3DE50078CF86 /* WLAnalytics.m in Sources */,
 				BA807F0F1645460C0033B85B /* IKApplicationPreferences.m in Sources */,
 				BA1F51DB1663B2A400ABD662 /* WLGeneralPreferences.m in Sources */,
 				BA08A75B1675EE4E0085F40C /* WLShortcutsPreferences.m in Sources */,
