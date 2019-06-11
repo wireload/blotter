@@ -144,7 +144,8 @@
 {
     WLDateRange *k = [WLDateRange dateRangeWithStartDate:aDate endDate:aDate];
     k = [k dateRangeByAligningCalendarUnit:self.calendarUnit calendar:_calendar options:WLAlignOutward];
-    return [_allDayEventsPerDateRange[k] copy];
+    NSArray *events = _allDayEventsPerDateRange[k];
+    return events != nil ? events.copy : @[];
 }
 
 - (NSArray *)dayEventsWithinDateRange:(WLDateRange *)aDateRange
@@ -166,7 +167,8 @@
 {
     WLDateRange *k = [WLDateRange dateRangeWithStartDate:aDate endDate:aDate];
     k = [k dateRangeByAligningCalendarUnit:self.calendarUnit calendar:_calendar options:WLAlignOutward];
-    return [_dayEventsPerDateRange[k] copy];
+    NSArray *events = _dayEventsPerDateRange[k];
+    return events != nil ? events.copy : @[];
 }
 
 

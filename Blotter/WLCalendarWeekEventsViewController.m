@@ -83,7 +83,9 @@
 {
     _calendar = newCalendar;
     [self updateDerivativeProperties];
-    _storage = [[WLCalendarEventsStorage alloc] initWithEvents:_storage.events calendar:_calendar unit:NSCalendarUnitDay];
+    _storage = [[WLCalendarEventsStorage alloc] initWithEvents:_storage != nil ? _storage.events : @[]
+                                                      calendar:_calendar
+                                                          unit:NSCalendarUnitDay];
 
     if (self.isViewLoaded)
     {
