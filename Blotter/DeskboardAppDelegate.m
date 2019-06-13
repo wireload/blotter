@@ -7,8 +7,6 @@
 //
 
 #import <WLFoundation/WLFoundation.h>
-#import <PTHotKey/PTHotKeyCenter.h>
-#import <PTHotKey/PTHotKey+ShortcutRecorder.h>
 #import "DeskboardAppDelegate.h"
 #import "WLAnalytics.h"
 #import "WLCalendarWindow.h"
@@ -21,13 +19,6 @@
 #import "WLCalendarsPreferences.h"
 #import "WLAboutPreferences.h"
 #import "NSUserDefaults+WLApplicationDefaults.h"
-
-
-enum {
-    ShortcutsNameIdx = 0,
-    ShortcutsSelectorIdx = 1,
-    ShortcutsMenuItemIdx = 2
-};
 
 
 // TODO: Update if the New Event/Task windows stop centering at first launch.
@@ -54,7 +45,8 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
     NSTimer *_showCurrentWeekTimer;
     NSTimer *_autoFadeTimer;
     WLApplicationRunTimer *_applicationRunTimer;
-    NSArray *_shortcuts;
+
+    NSDictionary<NSString *, SRShortcutRegistration *> *_shortcutRegistrations;
 }
 
 + (void)initialize
@@ -81,11 +73,7 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
     [defaults removeObserver:self forKeyPath:WLAutoFadeKey];
     [defaults removeObserver:self forKeyPath:WLAutoFadeSecondsKey];
     [defaults removeObserver:self forKeyPath:WLShareAnalytics];
-    [_shortcuts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
-    {
-        NSString *shortcutName = obj[ShortcutsNameIdx];
-        [defaults removeObserver:self forKeyPath:shortcutName];
-    }];
+    _shortcutRegistrations = nil;
 
     [[WLSmartClock defaultClock] removeObserver:self forKeyPath:@"date"];
 
@@ -93,8 +81,6 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 
     [_showCurrentWeekTimer invalidate];
     [_autoFadeTimer invalidate];
-
-    _shortcuts = nil;
 
     if (_statusItem && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_12)
         [_statusItem removeObserver:self forKeyPath:NSVisibleBinding];
@@ -404,19 +390,28 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
     // Configure shortcuts
     [NSValueTransformer setValueTransformer:[[SRKeyEquivalentTransformer alloc] init] forName:@"SRKeyEquivalentTransformer"];
     [NSValueTransformer setValueTransformer:[[SRKeyEquivalentModifierMaskTransformer alloc] init] forName:@"SRKeyEquivalentModifierMaskTransformer"];
-    _shortcuts = @[
-        @[@"shortcutNewEvent", @"showNewEvent:", _newEventMenuItem],
-        @[@"shortcutNewTask", @"showNewReminder:", _newTaskMenuItem],
-        @[@"shortcutShowNextWeek", @"showNextWeek:", _showNextWeekMenuItem],
-        @[@"shortcutShowPreviousWeek", @"showPreviousWeek:", _showPreviousWeekMenuItem],
-        @[@"shortcutShowCurrentWeek", @"showCurrentWeek:", _showCurrentWeekMenuItem],
-        @[@"shortcutBringToFront", @"bringToFrontOrSendToBack:", _bringToFrontMenuItem]
-    ];
-    [_shortcuts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
-    {
-        NSString *shortcutName = obj[ShortcutsNameIdx];
-        [defaults addObserver:self forKeyPath:shortcutName options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:(void *)idx];
-    }];
+
+    _shortcutRegistrations = NSMutableDictionary.dictionary;
+    __auto_type RegisterShortcut = ^(NSString *aKeyPath, NSMenuItem *aMenuItem) {
+        SRShortcutRegistration *registration = [SRShortcutRegistration registerShortcutKeyPath:aKeyPath
+                                                                                      ofObject:defaults
+                                                                                 actionHandler:^(SRShortcutRegistration *aRegistration)
+        {
+            NSMenu *menu = aMenuItem.menu;
+            NSInteger i = [menu indexOfItem:aMenuItem];
+            NSAssert(i != -1, @"Item must be added to the main menu");
+            [menu performActionForItemAtIndex:i];
+        }];
+        [(NSMutableDictionary *)self->_shortcutRegistrations setObject:registration forKey:aKeyPath];
+    };
+
+    RegisterShortcut(@"shortcutNewEvent", _newEventMenuItem);
+    RegisterShortcut(@"shortcutNewTask", _newTaskMenuItem);
+    RegisterShortcut(@"shortcutShowNextWeek", _showNextWeekMenuItem);
+    RegisterShortcut(@"shortcutShowPreviousWeek", _showPreviousWeekMenuItem);
+    RegisterShortcut(@"shortcutShowCurrentWeek", _showCurrentWeekMenuItem);
+    RegisterShortcut(@"shortcutBringToFront", _bringToFrontMenuItem);
+    _shortcutRegistrations = [_shortcutRegistrations copy];
 
     // Configure windows.
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -518,27 +513,28 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 
 - (void)menuWillOpen:(NSMenu *)aMenu
 {
-    [_shortcuts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
-     {
-         // If the menu item is nil, the shortcut definition will only be 2 items long. Ignore those.
-         if ([obj count] < 3)
-             return;
+    __auto_type UpdateKeyEquivalent = ^(NSMenuItem *anItem) {
+        SRShortcutRegistration *registration = self->_shortcutRegistrations[anItem.identifier];
+        SRShortcut *shortcut = registration.shortcut;
 
-         NSString *shortcutName = obj[ShortcutsNameIdx];
-         NSDictionary *shortcut = [[NSUserDefaults standardUserDefaults] objectForKey:shortcutName];
-         NSMenuItem *shortcutMenuItem = obj[ShortcutsMenuItemIdx];
+        if (shortcut != nil)
+        {
+            anItem.keyEquivalent = [SRKeyEquivalentTransformer.sharedTransformer transformedValue:shortcut];
+            anItem.keyEquivalentModifierMask = [[SRKeyEquivalentModifierMaskTransformer.sharedTransformer transformedValue:shortcut] unsignedIntegerValue];
+        }
+        else
+        {
+            anItem.keyEquivalent = @"";
+            anItem.keyEquivalentModifierMask = 0;
+        }
+    };
 
-         if (shortcut != nil)
-         {
-             shortcutMenuItem.keyEquivalent = [[NSValueTransformer valueTransformerForName:@"SRKeyEquivalentTransformer"] transformedValue:shortcut];
-             shortcutMenuItem.keyEquivalentModifierMask = [[[NSValueTransformer valueTransformerForName:@"SRKeyEquivalentModifierMaskTransformer"] transformedValue:shortcut] unsignedIntegerValue];
-         }
-         else
-         {
-             shortcutMenuItem.keyEquivalent = @"";
-             shortcutMenuItem.keyEquivalentModifierMask = 0;
-         }
-     }];
+    UpdateKeyEquivalent(_newEventMenuItem);
+    UpdateKeyEquivalent(_newTaskMenuItem);
+    UpdateKeyEquivalent(_showNextWeekMenuItem);
+    UpdateKeyEquivalent(_showCurrentWeekMenuItem);
+    UpdateKeyEquivalent(_showPreviousWeekMenuItem);
+    UpdateKeyEquivalent(_bringToFrontMenuItem);
 
     [self _removeAutoFadeTimerIfNeeded];
     self.calendarWindowController.isFadedOut = NO;
@@ -665,24 +661,7 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 
 - (void)observeValueForKeyPath:(NSString *)aKeyPath ofObject:(id)aObject change:(NSDictionary *)aChange context:(void *)aContext
 {
-    if ([aKeyPath hasPrefix:@"shortcut"])
-    {
-        NSArray *shortcut = _shortcuts[(NSUInteger)aContext];
-        PTHotKeyCenter *hotKeyCenter = [PTHotKeyCenter sharedCenter];
-        PTHotKey *oldHotKey = [hotKeyCenter hotKeyWithIdentifier:aKeyPath];
-        [hotKeyCenter unregisterHotKey:oldHotKey];
-
-        NSDictionary *newHotKeyDict = aChange[NSKeyValueChangeNewKey];
-        if (newHotKeyDict != nil && (id)newHotKeyDict != [NSNull null])
-        {
-            PTHotKey *newHotKey = [PTHotKey hotKeyWithIdentifier:aKeyPath
-                                                        keyCombo:newHotKeyDict
-                                                          target:self
-                                                          action:NSSelectorFromString(shortcut[ShortcutsSelectorIdx])];
-            [hotKeyCenter registerHotKey:newHotKey];
-        }
-    }
-    else if ([aKeyPath isEqualToString:WLShowInMenuBar])
+    if ([aKeyPath isEqualToString:WLShowInMenuBar])
         [self toggleStatusItem];
     else if ([aKeyPath isEqualToString:@"date"])
     {

@@ -10,6 +10,9 @@
 
 
 @implementation WLShortcutsPreferences
+{
+    SRValidator *_validator;
+}
 
 #pragma mark IKPreferencesRepresentation
 
@@ -28,30 +31,33 @@
     [super loadView];
 
     NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
+    NSDictionary *bindingOptions = @{
+        NSValueTransformerNameBindingOption: NSKeyedUnarchiveFromDataTransformerName
+    };
 
     [_bringToFrontRecroderControl setAllowedModifierFlags:SRCocoaModifierFlagsMask requiredModifierFlags:0 allowsEmptyModifierFlags:NO];
     _bringToFrontRecroderControl.drawsASCIIEquivalentOfShortcut = YES;
-    [_bringToFrontRecroderControl bind:NSValueBinding toObject:defaultsController withKeyPath:@"values.shortcutBringToFront" options:nil];
+    [_bringToFrontRecroderControl bind:NSValueBinding toObject:defaultsController withKeyPath:@"values.shortcutBringToFront" options:bindingOptions];
 
     [_newEventRecorderControl setAllowedModifierFlags:SRCocoaModifierFlagsMask requiredModifierFlags:0 allowsEmptyModifierFlags:NO];
     _newEventRecorderControl.drawsASCIIEquivalentOfShortcut = YES;
-    [_newEventRecorderControl bind:NSValueBinding toObject:defaultsController withKeyPath:@"values.shortcutNewEvent" options:nil];
+    [_newEventRecorderControl bind:NSValueBinding toObject:defaultsController withKeyPath:@"values.shortcutNewEvent" options:bindingOptions];
 
     [_newReminderRecorderControl setAllowedModifierFlags:SRCocoaModifierFlagsMask requiredModifierFlags:0 allowsEmptyModifierFlags:NO];
     _newReminderRecorderControl.drawsASCIIEquivalentOfShortcut = YES;
-    [_newReminderRecorderControl bind:NSValueBinding toObject:defaultsController withKeyPath:@"values.shortcutNewTask" options:nil];
+    [_newReminderRecorderControl bind:NSValueBinding toObject:defaultsController withKeyPath:@"values.shortcutNewTask" options:bindingOptions];
 
     [_showNextWeekControl setAllowedModifierFlags:SRCocoaModifierFlagsMask requiredModifierFlags:0 allowsEmptyModifierFlags:NO];
     _showNextWeekControl.drawsASCIIEquivalentOfShortcut = YES;
-    [_showNextWeekControl bind:NSValueBinding toObject:defaultsController withKeyPath:@"values.shortcutShowNextWeek" options:nil];
+    [_showNextWeekControl bind:NSValueBinding toObject:defaultsController withKeyPath:@"values.shortcutShowNextWeek" options:bindingOptions];
 
     [_showCurrentWeekControl setAllowedModifierFlags:SRCocoaModifierFlagsMask requiredModifierFlags:0 allowsEmptyModifierFlags:NO];
     _showCurrentWeekControl.drawsASCIIEquivalentOfShortcut = YES;
-    [_showCurrentWeekControl bind:NSValueBinding toObject:defaultsController withKeyPath:@"values.shortcutShowCurrentWeek" options:nil];
+    [_showCurrentWeekControl bind:NSValueBinding toObject:defaultsController withKeyPath:@"values.shortcutShowCurrentWeek" options:bindingOptions];
 
     [_showPrevWeekControl setAllowedModifierFlags:SRCocoaModifierFlagsMask requiredModifierFlags:0 allowsEmptyModifierFlags:NO];
     _showPrevWeekControl.drawsASCIIEquivalentOfShortcut = YES;
-    [_showPrevWeekControl bind:NSValueBinding toObject:defaultsController withKeyPath:@"values.shortcutShowPreviousWeek" options:nil];
+    [_showPrevWeekControl bind:NSValueBinding toObject:defaultsController withKeyPath:@"values.shortcutShowPreviousWeek" options:bindingOptions];
 
     _validator = [[SRValidator alloc] initWithDelegate:self];
 }
@@ -59,10 +65,10 @@
 
 #pragma mark SRRecorderControlDelegate
 
-- (BOOL)shortcutRecorder:(SRRecorderControl *)aRecorder canRecordShortcut:(NSDictionary *)aShortcut
+- (BOOL)recorderControl:(SRRecorderControl *)aControl canRecordShortcut:(SRShortcut *)aShortcut
 {
     __autoreleasing NSError *error = nil;
-    BOOL isTaken = [_validator isKeyCode:[aShortcut[SRShortcutKeyCode] unsignedShortValue] andFlagsTaken:[aShortcut[SRShortcutModifierFlagsKey] unsignedIntegerValue] error:&error];
+    BOOL isTaken = [_validator validateShortcut:aShortcut error:&error];
 
     if (isTaken)
     {
@@ -73,10 +79,10 @@
     return !isTaken;
 }
 
-- (BOOL)shortcutRecorder:(SRRecorderControl *)aRecorder shouldUnconditionallyAllowModifierFlags:(NSEventModifierFlags)aModifierFlags forKeyCode:(unsigned short)aKeyCode
+- (BOOL)recorderControl:(SRRecorderControl *)aControl shouldUnconditionallyAllowModifierFlags:(NSEventModifierFlags)aModifierFlags forKeyCode:(unsigned short)aKeyCode
 {
     // Don't allow disallowed flags.
-    if ((aModifierFlags & aRecorder.allowedModifierFlags) != aModifierFlags)
+    if ((aModifierFlags & aControl.allowedModifierFlags) != aModifierFlags)
         return NO;
     
     switch (aKeyCode)
@@ -110,29 +116,30 @@
 
 #pragma mark SRValidatorDelegate
 
-- (BOOL)shortcutValidator:(SRValidator *)aValidator isKeyCode:(unsigned short)aKeyCode andFlagsTaken:(NSEventModifierFlags)aFlags reason:(NSString **)outReason
+- (BOOL)shortcutValidator:(SRValidator *)aValidator isShortcutValid:(SRShortcut *)aShortcut reason:(NSString *__autoreleasing *)outReason
 {
-#define IS_TAKEN(aRecorder) (recorder != (aRecorder) && SRShortcutEqualToShortcut(shortcut, [(aRecorder) objectValue]))
-    WLRecorderControl *recorder = (WLRecorderControl *)self.view.window.firstResponder;
+    SRRecorderControl *currentControl = (SRRecorderControl *)self.view.window.firstResponder;
 
-    if (![recorder isKindOfClass:[WLRecorderControl class]])
-        return NO;
-     NSDictionary *shortcut = SRShortcutWithCocoaModifierFlagsAndKeyCode(aFlags, aKeyCode);
-
-    if (IS_TAKEN(_bringToFrontRecroderControl) ||
-        IS_TAKEN(_newEventRecorderControl) ||
-        IS_TAKEN(_newReminderRecorderControl) ||
-        IS_TAKEN(_showNextWeekControl) ||
-        IS_TAKEN(_showNextWeekControl) ||
-        IS_TAKEN(_showCurrentWeekControl) ||
-        IS_TAKEN(_showPrevWeekControl))
+    __auto_type IsShortcutTakenByOtherControl = ^(SRRecorderControl *aControl)
     {
-        *outReason = NSLocalizedString(@"it's already used as a different Blotter shortcut. To use this shortcut, first remove or change the other shortcut", @"A reason to use other shortcut");
-        return YES;
+        return (aControl != currentControl) && [aControl.objectValue isEqualToShortcut:aShortcut];
+    };
+
+    BOOL isTaken = IsShortcutTakenByOtherControl(_bringToFrontRecroderControl) ||
+        IsShortcutTakenByOtherControl(_newEventRecorderControl) ||
+        IsShortcutTakenByOtherControl(_newReminderRecorderControl) ||
+        IsShortcutTakenByOtherControl(_showNextWeekControl) ||
+        IsShortcutTakenByOtherControl(_showCurrentWeekControl) ||
+        IsShortcutTakenByOtherControl(_showPrevWeekControl);
+
+    if (isTaken)
+    {
+        if (outReason)
+            *outReason = NSLocalizedString(@"it's already used as a different Blotter shortcut. To use this shortcut, first remove or change the other shortcut", @"A reason to use other shortcut");
+        return NO;
     }
     else
-        return NO;
-#undef IS_TAKEN
+        return YES;
 }
 
 - (BOOL)shortcutValidatorShouldCheckMenu:(SRValidator *)aValidator
