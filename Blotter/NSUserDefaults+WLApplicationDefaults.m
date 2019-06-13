@@ -8,6 +8,7 @@
 
 #import "NSUserDefaults+WLApplicationDefaults.h"
 #import "WLCalendarWindowController.h"
+#import <ShortcutRecorder/ShortcutRecorder.h>
 
 
 NSInteger const WLBlotterBundleVersion2_1 = 9;
@@ -22,7 +23,7 @@ NSInteger const WLBlotterBundleVersion2_2_3 = 14;
 
 NSInteger const WLBlotterBundleVersion2_2_4 = 23;
 
-NSInteger const WLBlotterBundleVersion2_2_5 = 24;
+NSInteger const WLBlotterBundleVersion2_2_5 = 25;
 
 NSString* const WLLastMigratedBundleVersionKey = @"LastMigratedBundleVersion";
 
@@ -136,15 +137,10 @@ NSString* const WLLastReportedDailyEventAt = @"LastReportedDailyEventAt";
         lastMigratedBundleVersion = WLBlotterBundleVersion2_2_1;
     }
 
-    if (lastMigratedBundleVersion < WLBlotterBundleVersion2_2_2)
+    if (lastMigratedBundleVersion < WLBlotterBundleVersion2_2_5)
     {
-        [self WL_migrateTo2_2_2];
-        lastMigratedBundleVersion = WLBlotterBundleVersion2_2_2;
-    }
-
-    if (lastMigratedBundleVersion < WLBlotterBundleVersion2_2_3)
-    {
-        [self WL_migrateTo2_2_3];
+        [self WL_migrateTo2_2_5];
+        lastMigratedBundleVersion = WLBlotterBundleVersion2_2_5;
     }
 
     lastMigratedBundleVersion = currentBundleVersion;
@@ -230,14 +226,29 @@ NSString* const WLLastReportedDailyEventAt = @"LastReportedDailyEventAt";
     [self setObject:newCalendarStores forKey:WLCalendarsKey];
 }
 
-- (void)WL_migrateTo2_2_2
+- (void)WL_migrateTo2_2_5
 {
-    NSLog(@"Migrate Preferences to %d", (int)WLBlotterBundleVersion2_2_2);
-}
+    NSLog(@"Migrate Preferences to %d", (int)WLBlotterBundleVersion2_2_5);
 
-- (void)WL_migrateTo2_2_3
-{
-    NSLog(@"Migrate Preferences to %d", (int)WLBlotterBundleVersion2_2_2);
+    __auto_type MigrateShortcut = ^(NSString *aKeyPath) {
+        id shortcut = [self objectForKey:aKeyPath];
+
+        if ([shortcut isKindOfClass:NSDictionary.class])
+        {
+            // shortcutWithDictionary: may return nil if the dict is invalid
+            // which in turn will reset the shortcut to default by removing
+            // it from the preferences file.
+            shortcut = [SRShortcut shortcutWithDictionary:shortcut];
+            [self setObject:[NSKeyedArchiver archivedDataWithRootObject:shortcut] forKey:aKeyPath];
+        }
+    };
+
+    MigrateShortcut(WLShortcutNewTask);
+    MigrateShortcut(WLShortcutNewEvent);
+    MigrateShortcut(WLShortcutBringToFront);
+    MigrateShortcut(WLShortcutShowNextWeek);
+    MigrateShortcut(WLShortcutShowCurrentWeek);
+    MigrateShortcut(WLShortcutShowPreviousWeek);
 }
 
 @end

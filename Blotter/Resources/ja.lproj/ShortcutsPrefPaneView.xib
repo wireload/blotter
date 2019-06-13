@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -76,7 +77,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <customView id="33" userLabel="Bring to Front Recorder" customClass="WLRecorderControl">
+                <customView id="33" userLabel="Bring to Front Recorder" customClass="SRRecorderControl">
                     <rect key="frame" x="148" y="185" width="301" height="25"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <connections>
@@ -85,7 +86,7 @@
                         <outlet property="nextKeyView" destination="34" id="40"/>
                     </connections>
                 </customView>
-                <customView id="34" userLabel="New Event Recorder" customClass="WLRecorderControl">
+                <customView id="34" userLabel="New Event Recorder" customClass="SRRecorderControl">
                     <rect key="frame" x="148" y="152" width="301" height="25"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <connections>
@@ -94,7 +95,7 @@
                         <outlet property="nextKeyView" destination="35" id="41"/>
                     </connections>
                 </customView>
-                <customView id="35" userLabel="New Reminder Recorder" customClass="WLRecorderControl">
+                <customView id="35" userLabel="New Reminder Recorder" customClass="SRRecorderControl">
                     <rect key="frame" x="148" y="119" width="301" height="25"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <connections>
@@ -103,7 +104,7 @@
                         <outlet property="nextKeyView" destination="36" id="42"/>
                     </connections>
                 </customView>
-                <customView id="36" userLabel="New Week Recorder" customClass="WLRecorderControl">
+                <customView id="36" userLabel="New Week Recorder" customClass="SRRecorderControl">
                     <rect key="frame" x="148" y="86" width="301" height="25"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <connections>
@@ -112,7 +113,7 @@
                         <outlet property="nextKeyView" destination="37" id="43"/>
                     </connections>
                 </customView>
-                <customView id="37" userLabel="Current Week Recorder" customClass="WLRecorderControl">
+                <customView id="37" userLabel="Current Week Recorder" customClass="SRRecorderControl">
                     <rect key="frame" x="148" y="53" width="301" height="25"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <connections>
@@ -121,7 +122,7 @@
                         <outlet property="nextKeyView" destination="38" id="44"/>
                     </connections>
                 </customView>
-                <customView id="38" userLabel="Previous Week Recorder" customClass="WLRecorderControl">
+                <customView id="38" userLabel="Previous Week Recorder" customClass="SRRecorderControl">
                     <rect key="frame" x="148" y="20" width="301" height="25"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <connections>

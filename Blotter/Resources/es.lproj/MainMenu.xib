@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -26,39 +27,39 @@
         <userDefaultsController representsSharedInstance="YES" id="569"/>
         <menu title="Blotter" systemMenu="apple" id="57">
             <items>
-                <menuItem title="Traer al Frente" id="575">
+                <menuItem title="Traer al Frente" identifier="shortcutBringToFront" id="575">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="bringToFrontOrSendToBack:" target="494" id="581"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="538"/>
-                <menuItem title="Nuevo Evento" tag="1" id="537">
+                <menuItem title="Nuevo Evento" tag="1" identifier="shortcutNewEvent" id="537">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showNewEvent:" target="494" id="582"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Nuevo Recordatorio" tag="2" id="536">
+                <menuItem title="Nuevo Recordatorio" tag="2" identifier="shortcutNewTask" id="536">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showNewReminder:" target="494" id="583"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="557"/>
-                <menuItem title="Semana Siguiente" id="558">
+                <menuItem title="Semana Siguiente" identifier="shortcutShowNextWeek" id="558">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showNextWeek:" target="494" id="561"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Semana Actual" id="559">
+                <menuItem title="Semana Actual" identifier="shortcutShowCurrentWeek" id="559">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showCurrentWeek:" target="494" id="562"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Semana Anterior" id="560">
+                <menuItem title="Semana Anterior" identifier="shortcutShowPreviousWeek" id="560">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showPreviousWeek:" target="494" id="563"/>

@@ -113,9 +113,10 @@ extern NSString* const WLLastReportedDailyEventAt;
 
 - (void)WL_migrateTo2_2_1;
 
-- (void)WL_migrateTo2_2_2;
-
-- (void)WL_migrateTo2_2_3;
+/*!
+ - Transform NSDictionary-based shortcuts into SRShortcut
+ */
+- (void)WL_migrateTo2_2_5;
 
 @end
 
