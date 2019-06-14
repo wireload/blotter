@@ -24,6 +24,8 @@ extern NSInteger const WLBlotterBundleVersion2_2_4;
 
 extern NSInteger const WLBlotterBundleVersion2_2_5;
 
+extern NSInteger const WLBlotterBundleVersion2_2_6;
+
 extern NSString* const WLLastMigratedBundleVersionKey;
 
 extern NSString* const WLCalendarSizeKey;
