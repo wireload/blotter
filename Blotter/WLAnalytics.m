@@ -75,7 +75,26 @@ const CGFloat WLAnalyticsDefaultSampleRate = 1.0;
         [appProperties setValue:bundleInfo[@"CFBundleShortVersionString"] forKey:@"$app_version_string"];
         NSOperatingSystemVersion osVersion = NSProcessInfo.processInfo.operatingSystemVersion;
         [appProperties setValue:[NSString stringWithFormat:@"%ld.%ld", osVersion.majorVersion, osVersion.minorVersion] forKey:@"General OS Version"];
-        appProperties = [appProperties copy]; // make it immutable.
+
+        NSWorkspace *workspace = NSWorkspace.sharedWorkspace;
+        [appProperties setValue:@(workspace.accessibilityDisplayShouldDifferentiateWithoutColor) forKey:@"Accessibility Differentiate Without Color"];
+        [appProperties setValue:@(workspace.accessibilityDisplayShouldIncreaseContrast) forKey:@"Accessibility Increase Contrast"];
+        [appProperties setValue:@(workspace.accessibilityDisplayShouldReduceTransparency) forKey:@"Accessibility Reduce Transparency"];
+
+
+        if (@available(macOS 10.12, *))
+        {
+            [appProperties setValue:@(workspace.accessibilityDisplayShouldInvertColors) forKey:@"Accessibility Invert Colors"];
+            [appProperties setValue:@(workspace.accessibilityDisplayShouldReduceMotion) forKey:@"Accessibility Reduce Motion"];
+        }
+
+        if (@available(macOS 10.13, *))
+        {
+            [appProperties setValue:@(workspace.isSwitchControlEnabled) forKey:@"Accessibility Switch Control"];
+            [appProperties setValue:@(workspace.isVoiceOverEnabled) forKey:@"Accessibility VoiceOver Control"];
+        }
+
+        appProperties = [appProperties copy];
     });
 
     return appProperties;
