@@ -25,6 +25,8 @@ NSInteger const WLBlotterBundleVersion2_2_4 = 23;
 
 NSInteger const WLBlotterBundleVersion2_2_5 = 25;
 
+NSInteger const WLBlotterBundleVersion2_2_6 = 26;
+
 NSString* const WLLastMigratedBundleVersionKey = @"LastMigratedBundleVersion";
 
 NSString* const WLCalendarSizeKey = @"CalendarSize";
