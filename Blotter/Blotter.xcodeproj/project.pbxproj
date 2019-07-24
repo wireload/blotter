@@ -207,7 +207,6 @@
 		28B3CDD9180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
 		28B3CDDA180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
 		28B3CDDB180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/PositionPrefPaneView.xib; sourceTree = "<group>"; };
-		28B3CDDC180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
 		28F69A1A129C1CAA00D4BB97 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		28F69CF4129CC12100D4BB97 /* Licenses.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Licenses.rtf; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -319,6 +318,14 @@
 		BA85BA80218158DE00CAAFC7 /* WLCalendarEventsControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarEventsControllerTests.m; sourceTree = "<group>"; };
 		BA85BA832181594400CAAFC7 /* WLCalendarWeekEventsViewControllerTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWeekEventsViewControllerTests.h; sourceTree = "<group>"; };
 		BA85BA842181594400CAAFC7 /* WLCalendarEventsControllerTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarEventsControllerTests.h; sourceTree = "<group>"; };
+		BA8794D522E7FCDF00F46966 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
+		BA8794D822E8106800F46966 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ShortcutsPrefPaneView.strings; sourceTree = "<group>"; };
+		BA8794D922E8107000F46966 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/ShortcutsPrefPaneView.strings; sourceTree = "<group>"; };
+		BA8794DA22E8107400F46966 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/ShortcutsPrefPaneView.strings; sourceTree = "<group>"; };
+		BA8794DB22E8107700F46966 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/ShortcutsPrefPaneView.strings; sourceTree = "<group>"; };
+		BA8794DC22E8107B00F46966 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/ShortcutsPrefPaneView.strings; sourceTree = "<group>"; };
+		BA8794DD22E8107E00F46966 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/ShortcutsPrefPaneView.strings; sourceTree = "<group>"; };
+		BA8794DE22E8108200F46966 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/ShortcutsPrefPaneView.strings; sourceTree = "<group>"; };
 		BA9617F020E440EB00AACC98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BAF67C8A16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+WLApplicationDefaults.h"; sourceTree = "<group>"; };
 		BAF67C8B16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+WLApplicationDefaults.m"; sourceTree = "<group>"; };
@@ -332,7 +339,6 @@
 		BAF67DC316D622820047FE2A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
 		BAF67DC516D622820047FE2A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LayoutPrefPaneView.xib; sourceTree = "<group>"; };
 		BAF67DC716D622820047FE2A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PositionPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DC916D622820047FE2A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
 		BAF67DD616D622B10047FE2A /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
 		BAF67DD716D622B20047FE2A /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
 		BAF67DD816D622B40047FE2A /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
@@ -357,12 +363,6 @@
 		BAF67DEB16D622E50047FE2A /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = ko.lproj/PositionPrefPaneView.xib; sourceTree = "<group>"; };
 		BAF67DEC16D622E70047FE2A /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/PositionPrefPaneView.xib; sourceTree = "<group>"; };
 		BAF67DED16D622EA0047FE2A /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = sv.lproj/PositionPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DEE16D622ED0047FE2A /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DEF16D622EF0047FE2A /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DF016D622F10047FE2A /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DF116D622F20047FE2A /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = ko.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DF216D622F50047FE2A /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = sv.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DF316D622F70047FE2A /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
 		BAF67F9816D624C80047FE2A /* WLApplicationPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLApplicationPreferences.h; sourceTree = "<group>"; };
 		BAF67F9916D624C80047FE2A /* WLApplicationPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLApplicationPreferences.m; sourceTree = "<group>"; };
 		BAF67F9A16D624C90047FE2A /* WLApplicationPreferencesWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLApplicationPreferencesWindow.h; sourceTree = "<group>"; };
@@ -1401,14 +1401,14 @@
 		BAF67DC816D622820047FE2A /* ShortcutsPrefPaneView.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				BAF67DC916D622820047FE2A /* en */,
-				BAF67DEE16D622ED0047FE2A /* de */,
-				BAF67DEF16D622EF0047FE2A /* es */,
-				BAF67DF016D622F10047FE2A /* fr */,
-				BAF67DF116D622F20047FE2A /* ko */,
-				BAF67DF216D622F50047FE2A /* sv */,
-				BAF67DF316D622F70047FE2A /* ru */,
-				28B3CDDC180D7C7C004CF0DE /* ja */,
+				BA8794D522E7FCDF00F46966 /* Base */,
+				BA8794D822E8106800F46966 /* de */,
+				BA8794D922E8107000F46966 /* ru */,
+				BA8794DA22E8107400F46966 /* es */,
+				BA8794DB22E8107700F46966 /* fr */,
+				BA8794DC22E8107B00F46966 /* sv */,
+				BA8794DD22E8107E00F46966 /* ko */,
+				BA8794DE22E8108200F46966 /* ja */,
 			);
 			name = ShortcutsPrefPaneView.xib;
 			sourceTree = "<group>";
