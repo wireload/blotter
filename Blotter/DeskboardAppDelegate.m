@@ -46,7 +46,7 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
     NSTimer *_autoFadeTimer;
     WLApplicationRunTimer *_applicationRunTimer;
 
-    NSDictionary<NSString *, SRShortcutRegistration *> *_shortcutRegistrations;
+    NSDictionary<NSUserInterfaceItemIdentifier, SRShortcutAction *> *_shortcutActions;
 }
 
 + (void)initialize
@@ -73,7 +73,7 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
     [defaults removeObserver:self forKeyPath:WLAutoFadeKey];
     [defaults removeObserver:self forKeyPath:WLAutoFadeSecondsKey];
     [defaults removeObserver:self forKeyPath:WLShareAnalytics];
-    _shortcutRegistrations = nil;
+    _shortcutActions = nil;
 
     [[WLSmartClock defaultClock] removeObserver:self forKeyPath:@"date"];
 
@@ -391,18 +391,21 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
     [NSValueTransformer setValueTransformer:[[SRKeyEquivalentTransformer alloc] init] forName:@"SRKeyEquivalentTransformer"];
     [NSValueTransformer setValueTransformer:[[SRKeyEquivalentModifierMaskTransformer alloc] init] forName:@"SRKeyEquivalentModifierMaskTransformer"];
 
-    _shortcutRegistrations = NSMutableDictionary.dictionary;
+    NSMutableDictionary *actions = [NSMutableDictionary new];
     __auto_type RegisterShortcut = ^(NSString *aKeyPath, NSMenuItem *aMenuItem) {
-        SRShortcutRegistration *registration = [SRShortcutRegistration registerShortcutKeyPath:aKeyPath
-                                                                                      ofObject:defaults
-                                                                                 actionHandler:^(SRShortcutRegistration *aRegistration)
+        SRShortcutAction *action = [SRShortcutAction shortcutActionWithKeyPath:aKeyPath
+                                                                      ofObject:defaults
+                                                                 actionHandler:^BOOL(SRShortcutAction *anAction)
         {
             NSMenu *menu = aMenuItem.menu;
             NSInteger i = [menu indexOfItem:aMenuItem];
-            NSAssert(i != -1, @"Item must be added to the main menu");
+            NSAssert(i != -1, @"Item must be added to the menu");
             [menu performActionForItemAtIndex:i];
+            return YES;
         }];
-        [(NSMutableDictionary *)self->_shortcutRegistrations setObject:registration forKey:aKeyPath];
+
+        [SRGlobalShortcutMonitor.sharedMonitor addAction:action forKeyEvent:SRKeyEventTypeDown];
+        actions[aMenuItem.identifier] = action;
     };
 
     RegisterShortcut(@"shortcutNewEvent", _newEventMenuItem);
@@ -411,7 +414,7 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
     RegisterShortcut(@"shortcutShowPreviousWeek", _showPreviousWeekMenuItem);
     RegisterShortcut(@"shortcutShowCurrentWeek", _showCurrentWeekMenuItem);
     RegisterShortcut(@"shortcutBringToFront", _bringToFrontMenuItem);
-    _shortcutRegistrations = [_shortcutRegistrations copy];
+    _shortcutActions = [actions copy];
 
     // Configure windows.
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -514,8 +517,7 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 - (void)menuWillOpen:(NSMenu *)aMenu
 {
     __auto_type UpdateKeyEquivalent = ^(NSMenuItem *anItem) {
-        SRShortcutRegistration *registration = self->_shortcutRegistrations[anItem.identifier];
-        SRShortcut *shortcut = registration.shortcut;
+        SRShortcut *shortcut = self->_shortcutActions[anItem.identifier].shortcut;
 
         if (shortcut != nil)
         {

@@ -12,7 +12,7 @@
 #import "IKPreferencesRepresentation.h"
 
 
-@interface WLShortcutsPreferences : WLViewController <IKPreferencesRepresentation, SRRecorderControlDelegate, SRValidatorDelegate>
+@interface WLShortcutsPreferences : WLViewController <IKPreferencesRepresentation, SRRecorderControlDelegate, SRShortcutValidatorDelegate>
 {
     __weak IBOutlet SRRecorderControl *_bringToFrontRecroderControl;
     __weak IBOutlet SRRecorderControl *_newEventRecorderControl;

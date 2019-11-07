@@ -11,7 +11,7 @@
 
 @implementation WLShortcutsPreferences
 {
-    SRValidator *_validator;
+    SRShortcutValidator *_validator;
 }
 
 #pragma mark IKPreferencesRepresentation
@@ -59,7 +59,7 @@
     _showPrevWeekControl.drawsASCIIEquivalentOfShortcut = YES;
     [_showPrevWeekControl bind:NSValueBinding toObject:defaultsController withKeyPath:@"values.shortcutShowPreviousWeek" options:bindingOptions];
 
-    _validator = [[SRValidator alloc] initWithDelegate:self];
+    _validator = [[SRShortcutValidator alloc] initWithDelegate:self];
 }
 
 
@@ -68,15 +68,15 @@
 - (BOOL)recorderControl:(SRRecorderControl *)aControl canRecordShortcut:(SRShortcut *)aShortcut
 {
     __autoreleasing NSError *error = nil;
-    BOOL isTaken = [_validator validateShortcut:aShortcut error:&error];
+    BOOL isValid = [_validator validateShortcut:aShortcut error:&error];
 
-    if (isTaken)
+    if (!isValid)
     {
         NSBeep();
         [self presentError:error modalForWindow:[self view].window delegate:nil didPresentSelector:NULL contextInfo:NULL];
     }
 
-    return !isTaken;
+    return isValid;
 }
 
 - (BOOL)recorderControl:(SRRecorderControl *)aControl shouldUnconditionallyAllowModifierFlags:(NSEventModifierFlags)aModifierFlags forKeyCode:(unsigned short)aKeyCode
@@ -116,7 +116,7 @@
 
 #pragma mark SRValidatorDelegate
 
-- (BOOL)shortcutValidator:(SRValidator *)aValidator isShortcutValid:(SRShortcut *)aShortcut reason:(NSString *__autoreleasing *)outReason
+- (BOOL)shortcutValidator:(SRShortcutValidator *)aValidator isShortcutValid:(SRShortcut *)aShortcut reason:(NSString *__autoreleasing *)outReason
 {
     SRRecorderControl *currentControl = (SRRecorderControl *)self.view.window.firstResponder;
 
@@ -142,7 +142,7 @@
         return YES;
 }
 
-- (BOOL)shortcutValidatorShouldCheckMenu:(SRValidator *)aValidator
+- (BOOL)shortcutValidatorShouldCheckMenu:(SRShortcutValidator *)aValidator
 {
     return NO;
 }
