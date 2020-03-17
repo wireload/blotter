@@ -20,7 +20,7 @@
     @discussion All animations are implicit. You can group them and disable if needed by calling methods within
                 the CATransaction group.
  */
-@interface WLCalendarRemindersView : WLLayerHostedView <CALayoutManager, CALayerDelegate>
+@interface WLCalendarRemindersView : WLLayerHostingView <CALayoutManager, CALayerDelegate>
 
 @property (assign) id<WLCalendarTasksViewDataSource> dataSource;
 

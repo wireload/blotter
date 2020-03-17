@@ -389,7 +389,7 @@
 - (void)loadView
 {
     self.view = [[WLCalendarWeekView alloc] init];
-    [self.view makeLayers];
+    [self.view prepareForHostingLayers];
     [self.view reloadDataAnimated:NO];
     [self.view scrollHour:self.hour animated:NO];
 }

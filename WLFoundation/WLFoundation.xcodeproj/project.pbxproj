@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA011487241AA92900CF2AFC /* NSObject+WLAnimationTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = BA011485241AA92800CF2AFC /* NSObject+WLAnimationTracking.m */; };
+		BA011488241AA92900CF2AFC /* NSObject+WLAnimationTracking.h in Headers */ = {isa = PBXBuildFile; fileRef = BA011486241AA92800CF2AFC /* NSObject+WLAnimationTracking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA105B4924093BB7009DD0E3 /* WLAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = BA105B4824093BB7009DD0E3 /* WLAnimation.m */; };
+		BA105B4B24093BDE009DD0E3 /* WLAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = BA105B4A24093BCE009DD0E3 /* WLAnimation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA1B340022F4178A00FFF0D1 /* WLAnimationSequence.h in Headers */ = {isa = PBXBuildFile; fileRef = BA1B33FE22F4178A00FFF0D1 /* WLAnimationSequence.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA1B340122F4178A00FFF0D1 /* WLAnimationSequence.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1B33FF22F4178A00FFF0D1 /* WLAnimationSequence.m */; };
 		BA3E470E21813FB50088A49D /* xer_support.c in Sources */ = {isa = PBXBuildFile; fileRef = BA3E46D921813FAE0088A49D /* xer_support.c */; settings = {COMPILER_FLAGS = "-fstack-protector -Wno-sign-conversion -Wno-shorten-64-to-32 -Wno-conversion -Wno-comma -Xanalyzer -analyzer-disable-all-checks"; }; };
 		BA3E470F21813FB50088A49D /* constraints.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E46DA21813FAE0088A49D /* constraints.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA3E471021813FB50088A49D /* per_encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E46DB21813FAE0088A49D /* per_encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -62,22 +68,18 @@
 		BA6C872920D8C77900D0C30C /* WLFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA81DA67160DA09D00C83DC3 /* WLFoundation.framework */; };
 		BA6C873020D8C7AD00D0C30C /* NSArray+WLDelta_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */; };
 		BA6C873120D8C7B100D0C30C /* WLDateRangeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1059A2168DE52E00A3DDF5 /* WLDateRangeTests.m */; };
-		BA81DA75160DA09D00C83DC3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA81DA73160DA09D00C83DC3 /* InfoPlist.strings */; };
 		BA81DA83160DA0C800C83DC3 /* NSArray+WLDelta.h in Headers */ = {isa = PBXBuildFile; fileRef = BA81DA7F160DA0C800C83DC3 /* NSArray+WLDelta.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA81DA84160DA0C800C83DC3 /* NSArray+WLDelta.m in Sources */ = {isa = PBXBuildFile; fileRef = BA81DA80160DA0C800C83DC3 /* NSArray+WLDelta.m */; };
 		BA81DA85160DA0C800C83DC3 /* WLDateRange.h in Headers */ = {isa = PBXBuildFile; fileRef = BA81DA81160DA0C800C83DC3 /* WLDateRange.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA81DA86160DA0C800C83DC3 /* WLDateRange.m in Sources */ = {isa = PBXBuildFile; fileRef = BA81DA82160DA0C800C83DC3 /* WLDateRange.m */; };
 		BA81DAC1160DA7FB00C83DC3 /* WLFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = BA81DAC0160DA7FB00C83DC3 /* WLFoundation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA8DF21623AAB15C00AE44B2 /* WLAnimationSequenceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8DF21523AAB15C00AE44B2 /* WLAnimationSequenceTests.m */; };
 		BA9AFB9B163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h in Headers */ = {isa = PBXBuildFile; fileRef = BA9AFB99163AB71D00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA9AFB9C163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9AFB9A163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m */; };
 		BABB670316DCB2A600FFDCC5 /* WLViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = BABB670116DCB2A600FFDCC5 /* WLViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BABB670416DCB2A600FFDCC5 /* WLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BABB670216DCB2A600FFDCC5 /* WLViewController.m */; };
 		BAF67C9016D604200047FE2A /* IKPowerSources.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C8E16D604200047FE2A /* IKPowerSources.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BAF67C9116D604200047FE2A /* IKPowerSources.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C8F16D604200047FE2A /* IKPowerSources.m */; };
-		BAF67CA216D606090047FE2A /* CALayer+WLBlocks.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9216D606080047FE2A /* CALayer+WLBlocks.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BAF67CA316D606090047FE2A /* CALayer+WLBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9316D606080047FE2A /* CALayer+WLBlocks.m */; };
-		BAF67CA416D606090047FE2A /* CATransaction+WLBlocks.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9416D606080047FE2A /* CATransaction+WLBlocks.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BAF67CA516D606090047FE2A /* CATransaction+WLBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9516D606080047FE2A /* CATransaction+WLBlocks.m */; };
 		BAF67CA616D606090047FE2A /* CoreText+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9616D606080047FE2A /* CoreText+Additions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BAF67CA716D606090047FE2A /* CoreText+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9716D606080047FE2A /* CoreText+Additions.m */; };
 		BAF67CA816D606090047FE2A /* NSAttributedString+WLStringDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9816D606080047FE2A /* NSAttributedString+WLStringDrawing.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -86,8 +88,8 @@
 		BAF67CAD16D606090047FE2A /* WLBlockLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9D16D606090047FE2A /* WLBlockLayer.m */; };
 		BAF67CAE16D606090047FE2A /* WLEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67C9E16D606090047FE2A /* WLEvents.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BAF67CAF16D606090047FE2A /* WLEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9F16D606090047FE2A /* WLEvents.m */; };
-		BAF67CB016D606090047FE2A /* WLLayerHostedView.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67CA016D606090047FE2A /* WLLayerHostedView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BAF67CB116D606090047FE2A /* WLLayerHostedView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67CA116D606090047FE2A /* WLLayerHostedView.m */; };
+		BAF67CB016D606090047FE2A /* WLLayerView.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67CA016D606090047FE2A /* WLLayerView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BAF67CB116D606090047FE2A /* WLLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67CA116D606090047FE2A /* WLLayerView.m */; };
 		BC599131671997B089C3D4C8 /* WLASLLog.m in Sources */ = {isa = PBXBuildFile; fileRef = BC599C7F0C238E9F874213D0 /* WLASLLog.m */; };
 		BC5997CEDCD382068CDD26E3 /* WLASLLog.h in Headers */ = {isa = PBXBuildFile; fileRef = BC599C9AE6ABE5619B104BB3 /* WLASLLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC599E2DFEB2244DCB9952E8 /* WLSmartClock.h in Headers */ = {isa = PBXBuildFile; fileRef = BC5995CD6AFDCECCAD38C456 /* WLSmartClock.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -105,8 +107,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		BA1059A1168DE52E00A3DDF5 /* WLDateRangeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDateRangeTests.h; sourceTree = "<group>"; };
+		BA011485241AA92800CF2AFC /* NSObject+WLAnimationTracking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+WLAnimationTracking.m"; sourceTree = "<group>"; };
+		BA011486241AA92800CF2AFC /* NSObject+WLAnimationTracking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+WLAnimationTracking.h"; sourceTree = "<group>"; };
 		BA1059A2168DE52E00A3DDF5 /* WLDateRangeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDateRangeTests.m; sourceTree = "<group>"; };
+		BA105B4824093BB7009DD0E3 /* WLAnimation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLAnimation.m; sourceTree = "<group>"; };
+		BA105B4A24093BCE009DD0E3 /* WLAnimation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLAnimation.h; sourceTree = "<group>"; };
+		BA1B33FE22F4178A00FFF0D1 /* WLAnimationSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLAnimationSequence.h; sourceTree = "<group>"; };
+		BA1B33FF22F4178A00FFF0D1 /* WLAnimationSequence.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLAnimationSequence.m; sourceTree = "<group>"; };
 		BA3E46D921813FAE0088A49D /* xer_support.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xer_support.c; sourceTree = "<group>"; };
 		BA3E46DA21813FAE0088A49D /* constraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constraints.h; sourceTree = "<group>"; };
 		BA3E46DB21813FAE0088A49D /* per_encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = per_encoder.h; sourceTree = "<group>"; };
@@ -162,25 +169,20 @@
 		BA6C872420D8C77900D0C30C /* WLFoundationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WLFoundationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA81DA67160DA09D00C83DC3 /* WLFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WLFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA81DA72160DA09D00C83DC3 /* WLFoundation-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WLFoundation-Info.plist"; sourceTree = "<group>"; };
-		BA81DA74160DA09D00C83DC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BA81DA7F160DA0C800C83DC3 /* NSArray+WLDelta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+WLDelta.h"; sourceTree = "<group>"; };
 		BA81DA80160DA0C800C83DC3 /* NSArray+WLDelta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+WLDelta.m"; sourceTree = "<group>"; };
 		BA81DA81160DA0C800C83DC3 /* WLDateRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDateRange.h; sourceTree = "<group>"; };
 		BA81DA82160DA0C800C83DC3 /* WLDateRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDateRange.m; sourceTree = "<group>"; };
 		BA81DAC0160DA7FB00C83DC3 /* WLFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLFoundation.h; sourceTree = "<group>"; };
+		BA8DF21523AAB15C00AE44B2 /* WLAnimationSequenceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLAnimationSequenceTests.m; sourceTree = "<group>"; };
 		BA9AFB99163AB71D00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+WLRemoveDuplicates.h"; sourceTree = "<group>"; };
 		BA9AFB9A163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+WLRemoveDuplicates.m"; sourceTree = "<group>"; };
 		BAA049D51621A1040078DF12 /* WLFoundationTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WLFoundationTests-Info.plist"; sourceTree = "<group>"; };
-		BAA049E11621A1810078DF12 /* NSArray+WLDelta_Tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+WLDelta_Tests.h"; sourceTree = "<group>"; };
 		BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+WLDelta_Tests.m"; sourceTree = "<group>"; };
 		BABB670116DCB2A600FFDCC5 /* WLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLViewController.h; sourceTree = "<group>"; };
 		BABB670216DCB2A600FFDCC5 /* WLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLViewController.m; sourceTree = "<group>"; };
 		BAF67C8E16D604200047FE2A /* IKPowerSources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKPowerSources.h; sourceTree = "<group>"; };
 		BAF67C8F16D604200047FE2A /* IKPowerSources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKPowerSources.m; sourceTree = "<group>"; };
-		BAF67C9216D606080047FE2A /* CALayer+WLBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+WLBlocks.h"; sourceTree = "<group>"; };
-		BAF67C9316D606080047FE2A /* CALayer+WLBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+WLBlocks.m"; sourceTree = "<group>"; };
-		BAF67C9416D606080047FE2A /* CATransaction+WLBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CATransaction+WLBlocks.h"; sourceTree = "<group>"; };
-		BAF67C9516D606080047FE2A /* CATransaction+WLBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CATransaction+WLBlocks.m"; sourceTree = "<group>"; };
 		BAF67C9616D606080047FE2A /* CoreText+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreText+Additions.h"; sourceTree = "<group>"; };
 		BAF67C9716D606080047FE2A /* CoreText+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CoreText+Additions.m"; sourceTree = "<group>"; };
 		BAF67C9816D606080047FE2A /* NSAttributedString+WLStringDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+WLStringDrawing.h"; sourceTree = "<group>"; };
@@ -189,8 +191,8 @@
 		BAF67C9D16D606090047FE2A /* WLBlockLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLBlockLayer.m; sourceTree = "<group>"; };
 		BAF67C9E16D606090047FE2A /* WLEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLEvents.h; sourceTree = "<group>"; };
 		BAF67C9F16D606090047FE2A /* WLEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLEvents.m; sourceTree = "<group>"; };
-		BAF67CA016D606090047FE2A /* WLLayerHostedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayerHostedView.h; sourceTree = "<group>"; };
-		BAF67CA116D606090047FE2A /* WLLayerHostedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayerHostedView.m; sourceTree = "<group>"; };
+		BAF67CA016D606090047FE2A /* WLLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayerView.h; sourceTree = "<group>"; };
+		BAF67CA116D606090047FE2A /* WLLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayerView.m; sourceTree = "<group>"; };
 		BC5995CD6AFDCECCAD38C456 /* WLSmartClock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLSmartClock.h; sourceTree = "<group>"; };
 		BC599A9B15C63A85CA872284 /* WLSmartClock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLSmartClock.m; sourceTree = "<group>"; };
 		BC599C7F0C238E9F874213D0 /* WLASLLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLASLLog.m; sourceTree = "<group>"; };
@@ -279,10 +281,9 @@
 			isa = PBXGroup;
 			children = (
 				BA6C873320D8C7E700D0C30C /* Supporting Files */,
-				BAA049E11621A1810078DF12 /* NSArray+WLDelta_Tests.h */,
 				BAA049E21621A1810078DF12 /* NSArray+WLDelta_Tests.m */,
-				BA1059A1168DE52E00A3DDF5 /* WLDateRangeTests.h */,
 				BA1059A2168DE52E00A3DDF5 /* WLDateRangeTests.m */,
+				BA8DF21523AAB15C00AE44B2 /* WLAnimationSequenceTests.m */,
 			);
 			path = WLFoundationTests;
 			sourceTree = "<group>";
@@ -319,18 +320,21 @@
 				BA3E466C21813F3C0088A49D /* WLReceipt */,
 				BAF67C8D16D604200047FE2A /* IKPowerSources */,
 				BA81DA71160DA09D00C83DC3 /* Supporting Files */,
-				BAF67C9216D606080047FE2A /* CALayer+WLBlocks.h */,
-				BAF67C9316D606080047FE2A /* CALayer+WLBlocks.m */,
-				BAF67C9416D606080047FE2A /* CATransaction+WLBlocks.h */,
-				BAF67C9516D606080047FE2A /* CATransaction+WLBlocks.m */,
+				BA81DAC0160DA7FB00C83DC3 /* WLFoundation.h */,
 				BAF67C9616D606080047FE2A /* CoreText+Additions.h */,
 				BAF67C9716D606080047FE2A /* CoreText+Additions.m */,
 				BA81DA7F160DA0C800C83DC3 /* NSArray+WLDelta.h */,
 				BA81DA80160DA0C800C83DC3 /* NSArray+WLDelta.m */,
 				BAF67C9816D606080047FE2A /* NSAttributedString+WLStringDrawing.h */,
 				BAF67C9916D606080047FE2A /* NSAttributedString+WLStringDrawing.m */,
+				BA011486241AA92800CF2AFC /* NSObject+WLAnimationTracking.h */,
+				BA011485241AA92800CF2AFC /* NSObject+WLAnimationTracking.m */,
 				BA9AFB99163AB71D00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h */,
 				BA9AFB9A163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m */,
+				BA1B33FE22F4178A00FFF0D1 /* WLAnimationSequence.h */,
+				BA1B33FF22F4178A00FFF0D1 /* WLAnimationSequence.m */,
+				BA105B4A24093BCE009DD0E3 /* WLAnimation.h */,
+				BA105B4824093BB7009DD0E3 /* WLAnimation.m */,
 				BC599C9AE6ABE5619B104BB3 /* WLASLLog.h */,
 				BC599C7F0C238E9F874213D0 /* WLASLLog.m */,
 				BAF67C9C16D606090047FE2A /* WLBlockLayer.h */,
@@ -339,9 +343,8 @@
 				BA81DA82160DA0C800C83DC3 /* WLDateRange.m */,
 				BAF67C9E16D606090047FE2A /* WLEvents.h */,
 				BAF67C9F16D606090047FE2A /* WLEvents.m */,
-				BA81DAC0160DA7FB00C83DC3 /* WLFoundation.h */,
-				BAF67CA016D606090047FE2A /* WLLayerHostedView.h */,
-				BAF67CA116D606090047FE2A /* WLLayerHostedView.m */,
+				BAF67CA016D606090047FE2A /* WLLayerView.h */,
+				BAF67CA116D606090047FE2A /* WLLayerView.m */,
 				BC5995CD6AFDCECCAD38C456 /* WLSmartClock.h */,
 				BC599A9B15C63A85CA872284 /* WLSmartClock.m */,
 				BABB670116DCB2A600FFDCC5 /* WLViewController.h */,
@@ -354,7 +357,6 @@
 			isa = PBXGroup;
 			children = (
 				BA81DA72160DA09D00C83DC3 /* WLFoundation-Info.plist */,
-				BA81DA73160DA09D00C83DC3 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -381,8 +383,10 @@
 				BA9AFB9B163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h in Headers */,
 				BC5997CEDCD382068CDD26E3 /* WLASLLog.h in Headers */,
 				BAF67C9016D604200047FE2A /* IKPowerSources.h in Headers */,
+				BA105B4B24093BDE009DD0E3 /* WLAnimation.h in Headers */,
 				BA3E472521813FB50088A49D /* WLReceipt.h in Headers */,
 				BA3E471221813FB50088A49D /* der_encoder.h in Headers */,
+				BA011488241AA92900CF2AFC /* NSObject+WLAnimationTracking.h in Headers */,
 				BA3E472E21813FB50088A49D /* asn_system.h in Headers */,
 				BA3E474221813FB50088A49D /* asn_application.h in Headers */,
 				BA3E472821813FB50088A49D /* ber_decoder.h in Headers */,
@@ -398,6 +402,7 @@
 				BA3E470F21813FB50088A49D /* constraints.h in Headers */,
 				BA3E472A21813FB50088A49D /* asn_SET_OF.h in Headers */,
 				BA3E473A21813FB50088A49D /* xer_support.h in Headers */,
+				BA1B340022F4178A00FFF0D1 /* WLAnimationSequence.h in Headers */,
 				BA3E474121813FB50088A49D /* OCTET_STRING.h in Headers */,
 				BA3E473021813FB50088A49D /* ber_tlv_length.h in Headers */,
 				BA3E471021813FB50088A49D /* per_encoder.h in Headers */,
@@ -409,15 +414,13 @@
 				BA3E471821813FB50088A49D /* constr_SET_OF.h in Headers */,
 				BA3E472721813FB50088A49D /* per_opentype.h in Headers */,
 				BA3E472B21813FB50088A49D /* NativeEnumerated.h in Headers */,
-				BAF67CA216D606090047FE2A /* CALayer+WLBlocks.h in Headers */,
-				BAF67CA416D606090047FE2A /* CATransaction+WLBlocks.h in Headers */,
 				BAF67CA616D606090047FE2A /* CoreText+Additions.h in Headers */,
 				BAF67CA816D606090047FE2A /* NSAttributedString+WLStringDrawing.h in Headers */,
 				BAF67CAC16D606090047FE2A /* WLBlockLayer.h in Headers */,
 				BAF67CAE16D606090047FE2A /* WLEvents.h in Headers */,
 				BABB670316DCB2A600FFDCC5 /* WLViewController.h in Headers */,
 				BC599E2DFEB2244DCB9952E8 /* WLSmartClock.h in Headers */,
-				BAF67CB016D606090047FE2A /* WLLayerHostedView.h in Headers */,
+				BAF67CB016D606090047FE2A /* WLLayerView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,6 +449,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BA81DA7C160DA09D00C83DC3 /* Build configuration list for PBXNativeTarget "WLFoundation" */;
 			buildPhases = (
+				BAAAC0C623C575F7006F3843 /* ShellScript */,
 				BA81DA62160DA09D00C83DC3 /* Sources */,
 				BA81DA63160DA09D00C83DC3 /* Frameworks */,
 				BA81DA64160DA09D00C83DC3 /* Headers */,
@@ -466,7 +470,7 @@
 		BA81DA5D160DA09D00C83DC3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = Wireload;
 				TargetAttributes = {
 					BA6C872320D8C77900D0C30C = {
@@ -476,10 +480,11 @@
 			};
 			buildConfigurationList = BA81DA60160DA09D00C83DC3 /* Build configuration list for PBXProject "WLFoundation" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = BA81DA5B160DA09D00C83DC3;
 			productRefGroup = BA81DA68160DA09D00C83DC3 /* Products */;
@@ -504,11 +509,32 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA81DA75160DA09D00C83DC3 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		BAAAC0C623C575F7006F3843 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(PROJECT_DIR)/WLFoundation/NSObject+WLAnimationTracking.h",
+				"$(PROJECT_DIR)/WLFoundation/NSObject+WLAnimationTracking.m",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nNSAnimationManagerGetAnimationsForObjectAddr=0x$(/usr/bin/xcrun nm -arch x86_64 -p /System/Library/Frameworks/AppKit.framework/AppKit | /usr/bin/grep NSAnimationManagerGetAnimationsForObject | /usr/bin/cut -f 1 -d \" \" -)\nNSApplicationMainAddr=0x$(/usr/bin/xcrun nm -arch x86_64 -p /System/Library/Frameworks/AppKit.framework/AppKit | /usr/bin/grep NSApplicationMain | /usr/bin/cut -f 1 -d \" \" -)\nAddrDiff=$(($NSAnimationManagerGetAnimationsForObjectAddr-$NSApplicationMainAddr))\n\n\ncat > \"$SCRIPT_OUTPUT_FILE_0\" << EOL\n#import <AppKit/AppKit.h>\n\n\n@interface NSObject (WLAnimationTracking)\n\n/*!\n Animations currently in progress under NSAnimationManager's control.\n \n @discussion\n Current implementation works only against AppKit version present at compile time.\n*/\n- (nullable NSDictionary<NSString *, CAAnimation *> *)WL_animationManagerAnimations;\n\n@end\nEOL\n\ncat > \"$SCRIPT_OUTPUT_FILE_1\" << EOL\n#import <dlfcn.h>\n#import <objc/runtime.h>\n\n#import <WLFoundation/NSObject+WLAnimationTracking.h>\n\n\n@implementation NSObject (WLAnimationTracking)\n\n- (NSDictionary *)WL_animationManagerAnimations\n{\n    void *key = dlsym(RTLD_DEFAULT, \"NSApplicationMain\") + ${AddrDiff};\n    return objc_getAssociatedObject(self, key);\n}\n\n@end\nEOL\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BA6C872020D8C77900D0C30C /* Sources */ = {
@@ -517,6 +543,7 @@
 			files = (
 				BA6C873020D8C7AD00D0C30C /* NSArray+WLDelta_Tests.m in Sources */,
 				BA6C873120D8C7B100D0C30C /* WLDateRangeTests.m in Sources */,
+				BA8DF21623AAB15C00AE44B2 /* WLAnimationSequenceTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -534,14 +561,13 @@
 				BC599131671997B089C3D4C8 /* WLASLLog.m in Sources */,
 				BA9AFB9C163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m in Sources */,
 				BAF67C9116D604200047FE2A /* IKPowerSources.m in Sources */,
-				BAF67CA316D606090047FE2A /* CALayer+WLBlocks.m in Sources */,
 				BA3E471B21813FB50088A49D /* INTEGER.c in Sources */,
 				BA3E472021813FB50088A49D /* asn_codecs_prim.c in Sources */,
 				BA3E471721813FB50088A49D /* WLReceiptAttribute.c in Sources */,
 				BA3E471921813FB50088A49D /* OCTET_STRING.c in Sources */,
 				BA3E473621813FB50088A49D /* asn_SET_OF.c in Sources */,
 				BA3E471521813FB50088A49D /* per_opentype.c in Sources */,
-				BAF67CA516D606090047FE2A /* CATransaction+WLBlocks.m in Sources */,
+				BA105B4924093BB7009DD0E3 /* WLAnimation.m in Sources */,
 				BA3E473821813FB50088A49D /* ber_tlv_tag.c in Sources */,
 				BAF67CA716D606090047FE2A /* CoreText+Additions.m in Sources */,
 				BAF67CA916D606090047FE2A /* NSAttributedString+WLStringDrawing.m in Sources */,
@@ -554,14 +580,16 @@
 				BA3E473C21813FB50088A49D /* ber_tlv_length.c in Sources */,
 				BAF67CAF16D606090047FE2A /* WLEvents.m in Sources */,
 				BA3E471621813FB50088A49D /* xer_encoder.c in Sources */,
+				BA1B340122F4178A00FFF0D1 /* WLAnimationSequence.m in Sources */,
 				BA3E473521813FB50088A49D /* ber_decoder.c in Sources */,
 				BA3E473321813FB50088A49D /* constr_SET_OF.c in Sources */,
-				BAF67CB116D606090047FE2A /* WLLayerHostedView.m in Sources */,
+				BAF67CB116D606090047FE2A /* WLLayerView.m in Sources */,
 				BA3E473D21813FB50088A49D /* per_support.c in Sources */,
 				BA3E472C21813FB50088A49D /* constr_SEQUENCE.c in Sources */,
 				BABB670416DCB2A600FFDCC5 /* WLViewController.m in Sources */,
 				BC599F8A6F0C3B7C3E67165E /* WLSmartClock.m in Sources */,
 				BA3E473921813FB50088A49D /* constraints.c in Sources */,
+				BA011487241AA92900CF2AFC /* NSObject+WLAnimationTracking.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -574,17 +602,6 @@
 			targetProxy = BA6C872A20D8C77900D0C30C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		BA81DA73160DA09D00C83DC3 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BA81DA74160DA09D00C83DC3 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		BA6C872D20D8C77900D0C30C /* Debug */ = {
@@ -691,6 +708,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ADDRESS_SANITIZER_CONTAINER_OVERFLOW = YES;
+				CLANG_ANALYZER_GCD_PERFORMANCE = YES;
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
@@ -737,7 +755,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-bind_at_load";
 				RUN_CLANG_STATIC_ANALYZER = YES;
@@ -751,6 +769,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ADDRESS_SANITIZER_CONTAINER_OVERFLOW = YES;
+				CLANG_ANALYZER_GCD_PERFORMANCE = YES;
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
@@ -793,7 +812,7 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LLVM_LTO = YES_THIN;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = macosx;
 				VALID_ARCHS = x86_64;
@@ -839,6 +858,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ADDRESS_SANITIZER_CONTAINER_OVERFLOW = YES;
+				CLANG_ANALYZER_GCD_PERFORMANCE = YES;
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
@@ -879,7 +899,7 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LLVM_LTO = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				SDKROOT = macosx;
 				VALID_ARCHS = x86_64;
 			};

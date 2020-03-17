@@ -20,8 +20,7 @@ const CGFloat WLAnalyticsDefaultSampleRate = 1.0;
 
 @implementation WLAnalytics
 {
-    CGFloat _sampleRate;
-    NSXPCConnection *_actionsConnection;
+    NSXPCConnection *_connection;
 }
 
 + (WLAnalytics *)sharedAnalytics
@@ -40,8 +39,7 @@ const CGFloat WLAnalyticsDefaultSampleRate = 1.0;
 
     if (self = [super init])
     {
-        _sampleRate = aSampleRate;
-        _actionsConnection = [self makeConnection];
+        _connection = [self makeConnection];
     }
 
     return self;
@@ -49,7 +47,7 @@ const CGFloat WLAnalyticsDefaultSampleRate = 1.0;
 
 - (void)dealloc
 {
-    [_actionsConnection invalidate];
+    [_connection invalidate];
 }
 
 #pragma mark Methods
@@ -220,12 +218,11 @@ const CGFloat WLAnalyticsDefaultSampleRate = 1.0;
             [[WLASLLog logForName:WLBlotterLogName] logError:@"Unable to parse the receipt: %@", e.reason];
         }
 
-        NSXPCConnection *connection = [self makeConnection];
-        id<MixpanelProtocol> remoteObjectProxy = [connection remoteObjectProxyWithErrorHandler:^(NSError *anError) {
+        id<MixpanelProtocol> remoteObjectProxy = [_connection remoteObjectProxyWithErrorHandler:^(NSError *anError) {
             [[WLASLLog logForName:WLMixpanelLogName] logError:@"Unable to report launched to Mixpanel: %@", anError.localizedDescription];
         }];
         [remoteObjectProxy peopleSet:systemProperties withReply:^{}];
-        [remoteObjectProxy track:@"Launched" withProperties:appProperties andReply:^{ [connection invalidate]; }];
+        [remoteObjectProxy track:@"Launched" withProperties:appProperties andReply:^{}];
     });
 }
 
@@ -252,11 +249,10 @@ const CGFloat WLAnalyticsDefaultSampleRate = 1.0;
 
     [d setObject:now forKey:WLLastReportedDailyEventAt];
     NSDictionary *appProperties = [self parseAppProperties];
-    NSXPCConnection *connection = [self makeConnection];
-    id<MixpanelProtocol> remoteObjectProxy = [connection remoteObjectProxyWithErrorHandler:^(NSError *anError) {
+    id<MixpanelProtocol> remoteObjectProxy = [_connection remoteObjectProxyWithErrorHandler:^(NSError *anError) {
         [[WLASLLog logForName:WLMixpanelLogName] logError:@"Unable to report daily to Mixpanel: %@", anError.localizedDescription];
     }];
-    [remoteObjectProxy track:@"Daily" withProperties:appProperties andReply:^{ [connection invalidate]; }];
+    [remoteObjectProxy track:@"Daily" withProperties:appProperties andReply:^{}];
 }
 
 - (void)reportAction:(NSString *)anActionName
@@ -265,7 +261,7 @@ const CGFloat WLAnalyticsDefaultSampleRate = 1.0;
         return;
 
     NSDictionary *appProperties = [self parseAppProperties];
-    id<MixpanelProtocol> remoteObjectProxy = [_actionsConnection remoteObjectProxyWithErrorHandler:^(NSError *anError) {
+    id<MixpanelProtocol> remoteObjectProxy = [_connection remoteObjectProxyWithErrorHandler:^(NSError *anError) {
         [[WLASLLog logForName:WLMixpanelLogName] logError:@"Unable to report %@ to Mixpanel: %@", anActionName, anError.localizedDescription];
     }];
     [remoteObjectProxy track:anActionName withProperties:appProperties andReply:^{}];

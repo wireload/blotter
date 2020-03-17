@@ -8,6 +8,7 @@
 
 #import "WLCountGreaterThanOneTransformer.h"
 
+
 @implementation WLCountGreaterThanOneTransformer : NSValueTransformer
 
 + (Class)transformedValueClass

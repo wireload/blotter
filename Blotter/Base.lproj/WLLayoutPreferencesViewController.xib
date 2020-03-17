@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15705" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15705"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="WLLayoutPreferencesViewController">
+            <connections>
+                <outlet property="_arrangementViewHeightConstraint" destination="VyL-8J-CAI" id="UOH-ck-PaF"/>
+                <outlet property="_arrangementViewWidthConstraint" destination="993-5u-URf" id="eLU-df-yG7"/>
+                <outlet property="_infoSplitView" destination="32" id="56"/>
+                <outlet property="_mockupViewHeightConstraint" destination="9i2-71-I1a" id="V78-3N-aff"/>
+                <outlet property="_mockupViewWidthConstraint" destination="UZL-Wm-fix" id="AcC-Z4-0AD"/>
+                <outlet property="_rootSplitView" destination="23" id="54"/>
+                <outlet property="_weekSplitView" destination="26" id="55"/>
+                <outlet property="view" destination="1" id="103"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="1" userLabel="View">
+            <rect key="frame" x="0.0" y="0.0" width="440" height="324"/>
+            <subviews>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="71" userLabel="Layout Label">
+                    <rect key="frame" x="18" y="286" width="107" height="16"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Calendar Layout:" id="72">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <attributedString key="userComments">
+                        <fragment content="Title for the Layout label"/>
+                    </attributedString>
+                    <connections>
+                        <outlet property="nextKeyView" destination="61" id="99"/>
+                    </connections>
+                </textField>
+                <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="61" userLabel="Layout Options Button">
+                    <rect key="frame" x="129" y="280" width="101" height="25"/>
+                    <popUpButtonCell key="cell" type="push" title="Normal" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="66" id="62">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" title="OtherViews" id="63">
+                            <items>
+                                <menuItem title="Normal" state="on" id="66">
+                                    <attributedString key="userComments">
+                                        <fragment content="Title for the Normal layout option"/>
+                                    </attributedString>
+                                </menuItem>
+                                <menuItem title="To Do" tag="2" id="81">
+                                    <attributedString key="userComments">
+                                        <fragment content="Title for the To Do layout option"/>
+                                    </attributedString>
+                                </menuItem>
+                                <menuItem title="Right Now" tag="3" id="82">
+                                    <attributedString key="userComments">
+                                        <fragment content="Title for the Right Now layout option"/>
+                                    </attributedString>
+                                </menuItem>
+                                <menuItem title="Custom" tag="1" id="64">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                    <attributedString key="userComments">
+                                        <fragment content="Title for the Custom layout option"/>
+                                    </attributedString>
+                                </menuItem>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="71" id="QYO-RN-L9l"/>
+                        <binding destination="68" name="selectedTag" keyPath="values.CalendarLayout" id="70"/>
+                    </connections>
+                </popUpButton>
+                <customView wantsLayer="YES" focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="80" customClass="WLDesktopView">
+                    <rect key="frame" x="20" y="20" width="400" height="255"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="400" id="993-5u-URf"/>
+                        <constraint firstAttribute="height" constant="255" id="VyL-8J-CAI"/>
+                    </constraints>
+                    <connections>
+                        <outlet property="nextKeyView" destination="17" id="88"/>
+                    </connections>
+                </customView>
+                <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="17" userLabel="Mockup View" customClass="WLMockupView">
+                    <rect key="frame" x="60" y="46" width="320" height="204"/>
+                    <constraints>
+                        <constraint firstAttribute="height" priority="750" constant="204" id="9i2-71-I1a"/>
+                        <constraint firstAttribute="width" priority="750" constant="320" id="UZL-Wm-fix"/>
+                    </constraints>
+                    <connections>
+                        <outlet property="nextKeyView" destination="23" id="ntr-aA-OE3"/>
+                    </connections>
+                </customView>
+                <splitView vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="23" userLabel="Root Split View" customClass="WLLayoutArrangementView">
+                    <rect key="frame" x="70" y="56" width="300" height="184"/>
+                    <subviews>
+                        <splitView fixedFrame="YES" id="32" userLabel="Info Split View" customClass="WLLayoutArrangementView">
+                            <rect key="frame" x="0.0" y="0.0" width="86" height="184"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <subviews>
+                                <customView fixedFrame="YES" id="33" userLabel="Date View" customClass="WLLayoutDateView">
+                                    <rect key="frame" x="0.0" y="0.0" width="86" height="61"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <connections>
+                                        <outlet property="nextKeyView" destination="76" id="92"/>
+                                    </connections>
+                                </customView>
+                                <customView fixedFrame="YES" id="76" userLabel="Tasks View" customClass="WLLayoutTasksView">
+                                    <rect key="frame" x="0.0" y="70" width="86" height="52"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <connections>
+                                        <outlet property="nextKeyView" destination="78" id="93"/>
+                                    </connections>
+                                </customView>
+                                <customView fixedFrame="YES" id="78" userLabel="Right Now View" customClass="WLLayoutRightNowView">
+                                    <rect key="frame" x="0.0" y="131" width="86" height="53"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <connections>
+                                        <outlet property="nextKeyView" destination="26" id="94"/>
+                                    </connections>
+                                </customView>
+                            </subviews>
+                            <holdingPriorities>
+                                <real value="252"/>
+                                <real value="250"/>
+                                <real value="251"/>
+                            </holdingPriorities>
+                            <connections>
+                                <outlet property="delegate" destination="-2" id="39"/>
+                                <outlet property="nextKeyView" destination="33" id="91"/>
+                            </connections>
+                        </splitView>
+                        <splitView fixedFrame="YES" id="26" userLabel="Week Split View" customClass="WLLayoutArrangementView">
+                            <rect key="frame" x="95" y="0.0" width="205" height="184"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <subviews>
+                                <customView fixedFrame="YES" id="27" userLabel="All Day View" customClass="WLLayoutAllDayView">
+                                    <rect key="frame" x="0.0" y="0.0" width="205" height="43"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <connections>
+                                        <outlet property="nextKeyView" destination="28" id="96"/>
+                                    </connections>
+                                </customView>
+                                <customView fixedFrame="YES" id="28" userLabel="Day View" customClass="WLLayoutDayView">
+                                    <rect key="frame" x="0.0" y="52" width="205" height="132"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <connections>
+                                        <outlet property="nextKeyView" destination="1" id="102"/>
+                                    </connections>
+                                </customView>
+                            </subviews>
+                            <holdingPriorities>
+                                <real value="251"/>
+                                <real value="250"/>
+                            </holdingPriorities>
+                            <connections>
+                                <outlet property="delegate" destination="-2" id="41"/>
+                                <outlet property="nextKeyView" destination="27" id="95"/>
+                            </connections>
+                        </splitView>
+                    </subviews>
+                    <holdingPriorities>
+                        <real value="251"/>
+                        <real value="250"/>
+                    </holdingPriorities>
+                    <connections>
+                        <outlet property="delegate" destination="-2" id="38"/>
+                        <outlet property="nextKeyView" destination="32" id="90"/>
+                    </connections>
+                </splitView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="17" firstAttribute="height" relation="greaterThanOrEqual" secondItem="80" secondAttribute="height" multiplier="0.25" id="0kf-no-Ex7"/>
+                <constraint firstItem="23" firstAttribute="right" secondItem="17" secondAttribute="right" constant="-10" id="0nX-N5-JDl"/>
+                <constraint firstItem="17" firstAttribute="centerX" secondItem="80" secondAttribute="centerX" id="8yk-Rz-aMn"/>
+                <constraint firstItem="17" firstAttribute="width" relation="greaterThanOrEqual" secondItem="80" secondAttribute="width" multiplier="0.25" id="A97-gi-RZQ"/>
+                <constraint firstItem="17" firstAttribute="centerY" secondItem="80" secondAttribute="centerY" id="Dph-ou-q6j"/>
+                <constraint firstItem="61" firstAttribute="leading" secondItem="71" secondAttribute="trailing" constant="8" symbolic="YES" id="GEX-8r-ncx"/>
+                <constraint firstAttribute="bottom" secondItem="80" secondAttribute="bottom" constant="20" symbolic="YES" id="KN5-b7-0hj"/>
+                <constraint firstItem="80" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="Nzs-aW-C4r"/>
+                <constraint firstItem="17" firstAttribute="height" relation="lessThanOrEqual" secondItem="80" secondAttribute="height" multiplier="0.9" id="OMs-Ni-UEV"/>
+                <constraint firstItem="17" firstAttribute="width" relation="lessThanOrEqual" secondItem="80" secondAttribute="width" multiplier="0.9" id="Otp-v8-bdg"/>
+                <constraint firstAttribute="right" secondItem="80" secondAttribute="right" constant="20" symbolic="YES" id="PAX-yk-cXu"/>
+                <constraint firstItem="23" firstAttribute="bottom" secondItem="17" secondAttribute="bottom" constant="-10" id="QZm-ne-cQn"/>
+                <constraint firstItem="23" firstAttribute="left" secondItem="17" secondAttribute="left" constant="10" id="Wk5-gl-JAU"/>
+                <constraint firstItem="80" firstAttribute="top" secondItem="61" secondAttribute="bottom" constant="8" symbolic="YES" id="Y3t-4X-P8P"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="61" secondAttribute="trailing" constant="20" symbolic="YES" id="fbY-jd-N9I"/>
+                <constraint firstItem="71" firstAttribute="firstBaseline" secondItem="61" secondAttribute="firstBaseline" id="gvW-Bg-41J"/>
+                <constraint firstItem="71" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="htW-n8-e7v"/>
+                <constraint firstItem="23" firstAttribute="top" secondItem="17" secondAttribute="top" constant="10" id="jKx-KE-eA3"/>
+                <constraint firstItem="61" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" symbolic="YES" id="tsT-aH-gxj"/>
+            </constraints>
+            <connections>
+                <outlet property="nextKeyView" destination="71" id="98"/>
+            </connections>
+            <point key="canvasLocation" x="111" y="188"/>
+        </customView>
+        <userDefaultsController representsSharedInstance="YES" id="68"/>
+    </objects>
+</document>

@@ -115,6 +115,8 @@ typedef NS_ENUM(NSInteger, BLPosition)
     BLPositionBottomRight =     8
 };
 
+static const BLPosition BLPositionCount = 9;
+
 
 typedef NS_ENUM(NSUInteger, WLCalendarLayout)
 {

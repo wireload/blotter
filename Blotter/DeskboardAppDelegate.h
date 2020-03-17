@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "WLCalendarWindowController.h"
-#import "WLApplicationPreferences.h"
+#import "WLPreferencesWindowController.h"
 #import "WLNewEventWindowController.h"
 #import "WLNewReminderWindowController.h"
 
@@ -18,9 +18,12 @@ extern NSString* const WLBlotterLogName;
 extern NSString* const WLMixpanelLogName;
 
 
+extern NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier;
+
+
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DeskboardAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate /*, NSMenuValidation*/>
+@interface DeskboardAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate, NSMenuItemValidation>
 {
     IBOutlet NSMenu *_statusMenu;
     IBOutlet NSMenuItem *_bringToFrontMenuItem;
@@ -32,9 +35,11 @@ NS_ASSUME_NONNULL_BEGIN
     IBOutlet NSMenuItem *_preferencesMenuItem;
 }
 
+@property (readonly) NSStoryboard *storyboard;
+
 @property (readonly) WLCalendarWindowController *calendarWindowController;
 
-@property (nonatomic, readonly) WLApplicationPreferences *preferencesController;
+@property (nonatomic, readonly) WLPreferencesWindowController *preferencesWindowController;
 
 @property (nonatomic, readonly) WLNewEventWindowController *newEventWindowController;
 

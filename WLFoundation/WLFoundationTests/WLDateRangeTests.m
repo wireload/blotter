@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 Wireload. All rights reserved.
 //
 
-#import "WLDateRangeTests.h"
 #import "WLDateRange.h"
 
 

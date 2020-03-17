@@ -7,17 +7,13 @@
 //
 
 #import <WLFoundation/WLFoundation.h>
+#import <ShortcutRecorder/ShortcutRecorder.h>
+
 #import "DeskboardAppDelegate.h"
 #import "WLAnalytics.h"
 #import "WLCalendarWindow.h"
 #import "WLCalendarWindowController.h"
 #import "WLApplicationRunTimer.h"
-#import "WLGeneralPreferences.h"
-#import "WLShortcutsPreferences.h"
-#import "WLPositioningPreferences.h"
-#import "WLLayoutPreferences.h"
-#import "WLCalendarsPreferences.h"
-#import "WLAboutPreferences.h"
 #import "NSUserDefaults+WLApplicationDefaults.h"
 
 
@@ -35,9 +31,12 @@ NSString* const WLBlotterLogName = @"net.wireload.blotter.mac";
 NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 
 
+NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreferencesWindow";
+
+
 @implementation DeskboardAppDelegate
 {
-    WLApplicationPreferences *_preferencesController;
+    WLPreferencesWindowController *_preferencesWindowController;
     WLNewEventWindowController *_newEventWindowController;
     WLNewReminderWindowController *_newReminderWindowController;
 
@@ -61,7 +60,7 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 
         // Migrate preferences and set defaults.
         [userDefaults WL_migrateIfNeeded];
-        [userDefaults WL_setDefaultScreenIdentifierIfNeeded];
+        [userDefaults WL_validateAndFixIfNeeded];
     }
 }
 
@@ -89,29 +88,50 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 
 #pragma mark Properties
 
-- (WLApplicationPreferences *)preferencesController
+- (NSStoryboard *)storyboard
 {
-    if (_preferencesController == nil)
+    if (@available(macOS 10.13, *))
     {
-        WLGeneralPreferences *general = [[WLGeneralPreferences alloc] initWithNibName:@"GeneralPrefPaneView" bundle:nil];
-        WLShortcutsPreferences *shortcuts = [[WLShortcutsPreferences alloc] initWithNibName:@"ShortcutsPrefPaneView" bundle:nil];
-        WLPositioningPreferences *positioning = [[WLPositioningPreferences alloc] initWithNibName:@"PositionPrefPaneView" bundle:nil];
-        WLLayoutPreferences *layout = [[WLLayoutPreferences alloc] initWithNibName:@"LayoutPrefPaneView" bundle:nil];
-        WLCalendarsPreferences *calendars = [[WLCalendarsPreferences alloc] initWithNibName:@"CalendarsPrefPaneView" bundle:nil];
-        WLAboutPreferences *about = [[WLAboutPreferences alloc] initWithNibName:@"AboutPrefPaneView" bundle:nil];
-        _preferencesController = [WLApplicationPreferences preferencesWithWindowNibName:@"WLApplicationPreferencesWindow"
-                                                                           visualFormat:@"general,shortcuts,positioning,layout,calendars,-,about"
-                                                                        representations:@{
-                                                                           @"general": general,
-                                                                           @"shortcuts": shortcuts,
-                                                                           @"positioning": positioning,
-                                                                           @"layout": layout,
-                                                                           @"calendars": calendars,
-                                                                           @"about": about
-                                                                        }];
+        return NSStoryboard.mainStoryboard;
+    }
+    else
+    {
+        static NSStoryboard *MainStoryboard;
+        static dispatch_once_t OnceToken;
+        dispatch_once(&OnceToken, ^{
+            NSBundle *mainBundle = NSBundle.mainBundle;
+            NSStoryboardName mainStoryboardName = mainBundle.infoDictionary[@"NSMainStoryboardFile"];
+            MainStoryboard = [NSStoryboard storyboardWithName:mainStoryboardName bundle:mainBundle];
+        });
+
+        return MainStoryboard;
+    }
+}
+
+- (WLPreferencesWindowController *)preferencesWindowController
+{
+    if (!_preferencesWindowController)
+    {
+        _preferencesWindowController = [self.storyboard instantiateControllerWithIdentifier:WLPreferencesWindowIdentifier];
+//        WLGeneralPreferences *general = [[WLGeneralPreferences alloc] initWithNibName:@"GeneralPrefPaneView" bundle:nil];
+//        WLShortcutsPreferences *shortcuts = [[WLShortcutsPreferences alloc] initWithNibName:@"ShortcutsPrefPaneView" bundle:nil];
+//        WLPositioningPreferences *positioning = [[WLPositioningPreferences alloc] initWithNibName:@"PositionPrefPaneView" bundle:nil];
+//        WLLayoutPreferences *layout = [[WLLayoutPreferences alloc] initWithNibName:@"LayoutPrefPaneView" bundle:nil];
+//        WLCalendarsPreferences *calendars = [[WLCalendarsPreferences alloc] initWithNibName:@"CalendarsPrefPaneView" bundle:nil];
+//        WLAboutPreferences *about = [[WLAboutPreferences alloc] initWithNibName:@"AboutPrefPaneView" bundle:nil];
+//        _preferencesController = [WLApplicationPreferences preferencesWithWindowNibName:@"WLApplicationPreferencesWindow"
+//                                                                           visualFormat:@"general,shortcuts,positioning,layout,calendars,-,about"
+//                                                                        representations:@{
+//                                                                           @"general": general,
+//                                                                           @"shortcuts": shortcuts,
+//                                                                           @"positioning": positioning,
+//                                                                           @"layout": layout,
+//                                                                           @"calendars": calendars,
+//                                                                           @"about": about
+//                                                                        }];
     }
 
-    return _preferencesController;
+    return _preferencesWindowController;
 }
 
 - (WLNewEventWindowController *)newEventWindowController
@@ -179,7 +199,7 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 
 - (IBAction)showPreferences:(id)aSender
 {
-    [self.preferencesController showWindow:aSender];
+    [self.preferencesWindowController showWindow:aSender];
     [self _removeAutoFadeTimerIfNeeded];
     self.calendarWindowController.isFadedOut = NO;
     [NSApp activateIgnoringOtherApps:YES];
@@ -227,7 +247,7 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 
 - (IBAction)showAbout:(id)aSender
 {
-    [self.preferencesController setSelectedRepresentationIdentifier:@"about" animated:NO];
+    self.preferencesWindowController.contentViewController.selectedPreferencesIdentifier = WLAboutPreferencesIdentifier;
     [self showPreferences:aSender];
 }
 
@@ -382,6 +402,10 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+#ifdef DEBUG
+    [NSAnimationContext WL_enableAnimationTracking];
+#endif
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
     // Configure status bar
@@ -548,7 +572,7 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 }
 
 
-#pragma mark NSMenuValidation
+#pragma mark NSMenuItemValidation
 
 - (BOOL)validateMenuItem:(NSMenuItem *)aMenuItem
 {
@@ -573,15 +597,6 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
     }
     else
         return YES;
-}
-
-
-#pragma mark NSAlertDelegate
-
-- (BOOL)alertShowHelp:(NSAlert *)anAlert
-{
-    [[NSWorkspace sharedWorkspace] openURL:[[NSUserDefaults standardUserDefaults] WL_privacyPolicyURL]];
-    return YES;
 }
 
 

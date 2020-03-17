@@ -8,6 +8,7 @@
 
 #import "NSUserDefaults+WLApplicationDefaults.h"
 #import "WLCalendarWindowController.h"
+#import "WLScreensController.h"
 #import <ShortcutRecorder/ShortcutRecorder.h>
 
 
@@ -25,13 +26,15 @@ NSInteger const WLBlotterBundleVersion2_2_4 = 23;
 
 NSInteger const WLBlotterBundleVersion2_2_5 = 25;
 
-NSInteger const WLBlotterBundleVersion2_2_6 = 26;
+NSInteger const WLBlotterBundleVersion2_2_6 = 27;
 
 NSString* const WLLastMigratedBundleVersionKey = @"LastMigratedBundleVersion";
 
 NSString* const WLCalendarSizeKey = @"CalendarSize";
 
 NSString* const WLScreenIdentifierKey = @"ScreenIdentifier";
+
+NSString* const WLScreenUUIDKey = @"ScreenUUID";
 
 NSString* const WLCalendarsKey = @"Calendars";
 
@@ -105,12 +108,16 @@ NSString* const WLShowPreferencesAtStartUp = @"ShowPreferencesAtStartUp";
 
 NSString* const WLLastReportedDailyEventAt = @"LastReportedDailyEventAt";
 
+NSString* const WLCustomFrameFactorsKey = @"CustomFrameFactors";
+
+NSString* const WLCalendarPositionKey = @"CalendarPosition";
+
 
 @implementation NSUserDefaults (WLApplicationDefaults)
 
 - (void)WL_migrateIfNeeded
 {
-    [[NSProcessInfo processInfo] disableSuddenTermination];
+    [NSProcessInfo.processInfo disableSuddenTermination];
     NSInteger lastMigratedBundleVersion = [self integerForKey:WLLastMigratedBundleVersionKey];
     NSBundle *blotterBundle = [NSBundle bundleWithIdentifier:@"net.wireload.blotter.mac"];
     NSInteger currentBundleVersion = [[blotterBundle objectForInfoDictionaryKey:@"CFBundleVersion"] integerValue];
@@ -122,37 +129,31 @@ NSString* const WLLastReportedDailyEventAt = @"LastReportedDailyEventAt";
     }
 
     if (lastMigratedBundleVersion < WLBlotterBundleVersion2_1)
-    {
         [self WL_migrateTo2_1];
-        lastMigratedBundleVersion = WLBlotterBundleVersion2_1;
-    }
 
     if (lastMigratedBundleVersion < WLBlotterBundleVersion2_2)
-    {
         [self WL_migrateTo2_2];
-        lastMigratedBundleVersion = WLBlotterBundleVersion2_2;
-    }
 
     if (lastMigratedBundleVersion < WLBlotterBundleVersion2_2_1)
-    {
         [self WL_migrateTo2_2_1];
-        lastMigratedBundleVersion = WLBlotterBundleVersion2_2_1;
-    }
 
     if (lastMigratedBundleVersion < WLBlotterBundleVersion2_2_5)
-    {
         [self WL_migrateTo2_2_5];
-        lastMigratedBundleVersion = WLBlotterBundleVersion2_2_5;
-    }
+
+    if (lastMigratedBundleVersion < WLBlotterBundleVersion2_2_6)
+        [self WL_migrateTo2_2_6];
 
     lastMigratedBundleVersion = currentBundleVersion;
     [self setInteger:lastMigratedBundleVersion forKey:WLLastMigratedBundleVersionKey];
-    [[NSProcessInfo processInfo] enableSuddenTermination];
+    [NSProcessInfo.processInfo enableSuddenTermination];
 }
 
 - (void)WL_migrateTo2_1
 {
     NSLog(@"Migrate Preferences to %d", (int)WLBlotterBundleVersion2_1);
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     // In pre 1.3 versions of Blotter CalendarSize was a string.
     if ([[self stringForKey:WLCalendarSizeKey] isEqualToString:@"Narrow"])
         [self setInteger:BLNarrowSize forKey:WLCalendarSizeKey];
@@ -180,11 +181,15 @@ NSString* const WLLastReportedDailyEventAt = @"LastReportedDailyEventAt";
             aCalendars[i] = calendarDict;
         }
     }];
+#pragma clang diagnostic pop
 }
 
 - (void)WL_migrateTo2_2
 {
     NSLog(@"Migrate Preferences to %d", (int)WLBlotterBundleVersion2_2);
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     NSArray *calendars = [self objectForKey:WLCalendarsKey];
     NSMutableDictionary *defaultsCalendars = [NSMutableDictionary dictionary];
     NSMutableDictionary *defaultsStore = [NSMutableDictionary dictionaryWithCapacity:calendars.count];
@@ -202,6 +207,7 @@ NSString* const WLLastReportedDailyEventAt = @"LastReportedDailyEventAt";
 
     defaultsCalendars[[WLCalendarStore systemStore].storeIdentifier] = defaultsStore;
     [self setObject:defaultsCalendars forKey:WLCalendarsKey];
+#pragma clang diagnostic pop
 }
 
 - (void)WL_migrateTo2_2_1
@@ -253,31 +259,39 @@ NSString* const WLLastReportedDailyEventAt = @"LastReportedDailyEventAt";
     MigrateShortcut(WLShortcutShowPreviousWeek);
 }
 
-@end
-
-
-#pragma mark -
-
-@implementation NSUserDefaults (WLScreensController)
-
-- (void)WL_setDefaultScreenIdentifierIfNeeded
+- (void)WL_migrateTo2_2_6
 {
-    if ([self WL_screenIdentifier] == nil)
+    NSLog(@"Migrate Preferences to %d", (int)WLBlotterBundleVersion2_2_6);
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    NSNumber *screenIdentifier = [self objectForKey:WLScreenIdentifierKey];
+
+    if (screenIdentifier != nil)
     {
-        NSArray *screens = [NSScreen screens];
-        if (screens.count > 0)
-            [self WL_setScreenIdentifier:[screens[0] deviceDescription][@"NSScreenNumber"]];
+        __auto_type screens = NSScreen.screens;
+        NSUInteger currentScreenIdx = [screens indexOfObjectPassingTest:^BOOL(NSScreen *obj, NSUInteger idx, BOOL *stop) {
+            return [obj.WL_identifier isEqual:screenIdentifier];
+        }];
+
+        if (currentScreenIdx != NSNotFound)
+        {
+            __auto_type currentScreen = screens[currentScreenIdx];
+            [self setObject:currentScreen.WL_uuid.UUIDString forKey:WLScreenUUIDKey];
+        }
+
+        [self removeObjectForKey:WLScreenIdentifierKey];
     }
+#pragma clang diagnostic pop
 }
 
-- (void)WL_setScreenIdentifier:(NSNumber *)newScreenIdentifier
+- (void)WL_validateAndFixIfNeeded
 {
-    [self setObject:newScreenIdentifier forKey:WLScreenIdentifierKey];
-}
-
-- (NSNumber *)WL_screenIdentifier
-{
-    return [self objectForKey:WLScreenIdentifierKey];
+    if (![[NSUUID alloc] initWithUUIDString:[self stringForKey:WLScreenUUIDKey]])
+    {
+        // TODO: log error
+        [self setObject:NSScreen.mainScreen.WL_uuid.UUIDString forKey:WLScreenUUIDKey];
+    }
 }
 
 @end
@@ -363,46 +377,76 @@ NSString* const WLLastReportedDailyEventAt = @"LastReportedDailyEventAt";
 
 @implementation NSUserDefaults (WLURLs)
 
+#pragma mark Properties
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_rateThisAppURL
+{
+    return [NSSet setWithObject:WLRateThisAppURLKey];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_getHelpURL
+{
+    return [NSSet setWithObject:WLGetHelpURLKey];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_getSupportURL
+{
+    return [NSSet setWithObject:WLGetSupportURLKey];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_followOnTwitterURL
+{
+    return [NSSet setWithObject:WLFollowOnTwitterURLKey];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_wireloadURL
+{
+    return [NSSet setWithObject:WLWireloadURLKey];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_bannerURL
+{
+    return [NSSet setWithObject:WLBannerURLKey];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_privacyPolicyURL
+{
+    return [NSSet setWithObject:WLPrivacyPolicyURLKey];
+}
+
 - (NSURL *)WL_rateThisAppURL
 {
-    NSString *s = [self stringForKey:WLRateThisAppURLKey];
-    return [NSURL URLWithString:s];
+    return [NSURL URLWithString:[self stringForKey:WLRateThisAppURLKey]];
 }
 
 - (NSURL *)WL_getHelpURL
 {
-    NSString *s = [self stringForKey:WLGetHelpURLKey];
-    return [NSURL URLWithString:s];
+    return [NSURL URLWithString:[self stringForKey:WLGetHelpURLKey]];
 }
 
 - (NSURL *)WL_getSupportURL
 {
-    NSString *s = [self stringForKey:WLGetSupportURLKey];
-    return [NSURL URLWithString:s];
+    return [NSURL URLWithString:[self stringForKey:WLGetSupportURLKey]];
 }
 
 - (NSURL *)WL_followOnTwitterURL
 {
-    NSString *s = [self stringForKey:WLFollowOnTwitterURLKey];
-    return [NSURL URLWithString:s];
+    return [NSURL URLWithString:[self stringForKey:WLFollowOnTwitterURLKey]];
 }
 
 - (NSURL *)WL_wireloadURL
 {
-    NSString *s = [self stringForKey:WLWireloadURLKey];
-    return [NSURL URLWithString:s];
+    return [NSURL URLWithString:[self stringForKey:WLWireloadURLKey]];
 }
 
 - (NSURL *)WL_bannerURL
 {
-    NSString *s = [self stringForKey:WLBannerURLKey];
-    return [NSURL URLWithString:s];
+    return [NSURL URLWithString:[self stringForKey:WLBannerURLKey]];
 }
 
 - (NSURL *)WL_privacyPolicyURL
 {
-    NSString *s = [self stringForKey:WLPrivacyPolicyURLKey];
-    return [NSURL URLWithString:s];
+    return [NSURL URLWithString:[self stringForKey:WLPrivacyPolicyURLKey]];
 }
 
 @end
@@ -428,6 +472,78 @@ NSString* const WLLastReportedDailyEventAt = @"LastReportedDailyEventAt";
 - (BOOL)WL_shareAnalytics
 {
     return [self boolForKey:WLShareAnalytics];
+}
+
+@end
+
+
+@implementation NSUserDefaults (WLPositioningPreferences)
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_customFrameFactors
+{
+    return [NSSet setWithObject:WLCustomFrameFactorsKey];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_calendarPosition
+{
+    return [NSSet setWithObject:WLCalendarPositionKey];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_screenUUID
+{
+    return [NSSet setWithObject:WLScreenUUIDKey];
+}
+
+- (NSRect)WL_customFrameFactors
+{
+    NSRect factors = NSRectFromString([self stringForKey:WLCustomFrameFactorsKey]);
+    factors.origin.x = MAX(0.0, MIN(1.0, factors.origin.x));
+    factors.origin.y = MAX(0.0, MIN(1.0, factors.origin.y));
+    factors.size.width = MAX(0.0, MIN(1.0, factors.size.width));
+    factors.size.height = MAX(0.0, MIN(1.0, factors.size.height));
+    return factors;
+}
+
+- (void)setWL_customFrameFactors:(NSRect)newFactors
+{
+    newFactors.origin.x = MAX(0.0, MIN(1.0, newFactors.origin.x));
+    newFactors.origin.y = MAX(0.0, MIN(1.0, newFactors.origin.y));
+    newFactors.size.width = MAX(0.0, MIN(1.0, newFactors.size.width));
+    newFactors.size.height = MAX(0.0, MIN(1.0, newFactors.size.height));
+    [self setObject:NSStringFromRect(newFactors) forKey:WLCustomFrameFactorsKey];
+}
+
+- (BLSize)WL_calendarSize
+{
+    return (BLSize)[self integerForKey:WLCalendarSizeKey];
+}
+
+- (BLPosition)WL_calendarPosition
+{
+    BLPosition p = [self integerForKey:WLCalendarPositionKey];
+
+    if (p < 0 || 0 >= BLPositionCount)
+        p = BLPositionCenterCenter;
+
+    return p;
+}
+
+- (void)setWL_calendarPosition:(BLPosition)newPosition
+{
+    [self setInteger:newPosition forKey:WLCalendarPositionKey];
+}
+
+- (NSUUID *)WL_screenUUID
+{
+    return [[NSUUID alloc] initWithUUIDString:[self stringForKey:WLScreenUUIDKey]];
+}
+
+- (void)setWL_screenUUID:(NSUUID *)newUUID
+{
+    if (newUUID)
+        [self setObject:newUUID.UUIDString forKey:WLScreenUUIDKey];
+    else
+        [self setObject:NSScreen.mainScreen.WL_uuid.UUIDString forKey:WLScreenUUIDKey];
 }
 
 @end
@@ -477,76 +593,6 @@ NSComparator const WLCalendarsComparator = ^(id left, id right) {
     NSMutableArray *calendars = [[self arrayForKey:WLCalendarsKey] mutableCopy];
     anUpdaterBlock(calendars);
     [self setObject:calendars forKey:WLCalendarsKey];
-}
-
-- (void)WL_setAllowsAdvancedCalendarTypeCheck:(BOOL)newAllowsAdvancedCalendarTypeCheck
-{
-    [self setBool:newAllowsAdvancedCalendarTypeCheck forKey:WLAllowsAdvancedCalendarTypeCheck];
-}
-
-- (BOOL)WL_allowsAdvancedCalendarTypeCheck
-{
-    return [self boolForKey:WLAllowsAdvancedCalendarTypeCheck];
-}
-
-@end
-
-
-@implementation NSArray (WLCalendarController)
-
-- (NSUInteger)WL_indexOfCalendarWithUID:(NSString *)anUID
-{
-    return [self indexOfObject:@{WLCalendarUIDKey: anUID}
-                 inSortedRange:NSMakeRange(0, self.count)
-                       options:NSBinarySearchingFirstEqual
-               usingComparator:WLCalendarsComparator];
-}
-
-- (NSDictionary *)WL_calendarWithUID:(NSString *)anUID
-{
-    NSUInteger index = [self WL_indexOfCalendarWithUID:anUID];
-    if (index != NSNotFound)
-        return self[index];
-    else
-        return nil;
-}
-
-@end
-
-
-@implementation NSMutableArray (WLCalendarController)
-
-- (void)WL_insertCalendar:(NSDictionary *)aCalendar
-{
-    NSParameterAssert(aCalendar[WLCalendarUIDKey]);
-
-    NSUInteger index = [self indexOfObject:aCalendar
-                             inSortedRange:NSMakeRange(0, self.count)
-                                   options:NSBinarySearchingInsertionIndex
-                           usingComparator:WLCalendarsComparator];
-    [self insertObject:aCalendar atIndex:index];
-}
-
-- (void)WL_removeCalendarWithUID:(NSString *)anUID
-{
-    NSUInteger index = [self WL_indexOfCalendarWithUID:anUID];
-    if (index != NSNotFound)
-        [self removeObjectAtIndex:index];
-}
-
-@end
-
-
-@implementation NSDictionary (WLCalendarController)
-
-+ (NSDictionary *)WL_makeCalendarWithCalCalendar:(CalCalendar *)aCalCalendar
-{
-    NSParameterAssert(aCalCalendar != nil);
-
-    NSDictionary *calendar = @{WLCalendarUIDKey: aCalCalendar.uid,
-                                               WLCalendarIsUsedForEventsKey: @(YES),
-                                               WLCalendarIsUsedForRemindersKey: @(YES)};
-    return calendar;
 }
 
 @end

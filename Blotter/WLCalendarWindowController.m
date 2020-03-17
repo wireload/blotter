@@ -126,9 +126,9 @@ static const float _WLFadeOutAlphaValue = 0.5f;
         _dateViewController = [[WLCalendarDateViewController alloc] init];
         _dateViewController.representedObject = _smartClock;
 
-        [defaults addObserver:self forKeyPath:@"CalendarSize" options:NSKeyValueObservingOptionNew context:NULL];
+        [defaults addObserver:self forKeyPath:WLCalendarSizeKey options:NSKeyValueObservingOptionNew context:NULL];
         [defaults addObserver:self forKeyPath:@"CalendarPosition" options:NSKeyValueObservingOptionNew context:NULL];
-        [defaults addObserver:self forKeyPath:WLScreenIdentifierKey options:NSKeyValueObservingOptionNew context:NULL];
+        [defaults addObserver:self forKeyPath:WLScreenUUIDKey options:NSKeyValueObservingOptionNew context:NULL];
         [defaults addObserver:self forKeyPath:@"CustomFrameFactors" options:NSKeyValueObservingOptionNew context:NULL];
         [defaults addObserver:self forKeyPath:@"InfoViewsWidth" options:NSKeyValueObservingOptionNew context:NULL];
         [defaults addObserver:self forKeyPath:@"DateViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
@@ -165,9 +165,9 @@ static const float _WLFadeOutAlphaValue = 0.5f;
     [defaults removeObserver:self forKeyPath:@"DateViewHeight"];
     [defaults removeObserver:self forKeyPath:@"TasksViewHeight"];
     [defaults removeObserver:self forKeyPath:@"AllDayViewHeight"];
-    [defaults removeObserver:self forKeyPath:@"CalendarSize"];
+    [defaults removeObserver:self forKeyPath:WLCalendarSizeKey];
     [defaults removeObserver:self forKeyPath:@"CalendarPosition"];
-    [defaults removeObserver:self forKeyPath:WLScreenIdentifierKey];
+    [defaults removeObserver:self forKeyPath:WLScreenUUIDKey];
     [defaults removeObserver:self forKeyPath:@"CustomFrameFactors"];
 
     [_smartClock removeObserver:self forKeyPath:@"calendar"];
@@ -570,12 +570,12 @@ static const float _WLFadeOutAlphaValue = 0.5f;
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_updateFrame) object:nil];
         [self performSelector:@selector(_updateFrame) withObject:nil afterDelay:0.0];
     }
-    else if ([aKeyPath isEqualToString:@"CalendarSize"] ||
+    else if ([aKeyPath isEqualToString:WLCalendarSizeKey] ||
              [aKeyPath isEqualToString:@"CalendarPosition"] ||
-             [aKeyPath isEqualToString:WLScreenIdentifierKey] ||
+             [aKeyPath isEqualToString:WLScreenUUIDKey] ||
              [aKeyPath isEqualToString:@"CustomFrameFactors"])
     {
-        BLSize calendarSize = (BLSize)[[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"];
+        BLSize calendarSize = [[NSUserDefaults standardUserDefaults] WL_calendarSize];
         if (![aKeyPath isEqualToString:@"CustomFrameFactors"] ||
             ([aKeyPath isEqualToString:@"CustomFrameFactors"] && calendarSize == BLCustomSize))
         {
@@ -614,7 +614,7 @@ static const float _WLFadeOutAlphaValue = 0.5f;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     return [self windowFrameOnScreen:[self windowScreen]
                         withPosition:(BLPosition)[defaults integerForKey:@"CalendarPosition"]
-                                size:(BLSize)[defaults integerForKey:@"CalendarSize"]];
+                                size:[defaults WL_calendarSize]];
 }
 
 - (NSRect)windowFrameOnScreen:(NSScreen *)aScreen withPosition:(BLPosition)aPosition size:(BLSize)aSize
@@ -688,25 +688,11 @@ static const float _WLFadeOutAlphaValue = 0.5f;
 
 - (NSScreen *)windowScreen
 {
-    NSArray *screens = [NSScreen screens];
-    NSNumber *screenIdentifier = [[NSUserDefaults standardUserDefaults] WL_screenIdentifier];
-    if (screens.count > 0)
-    {
-        NSUInteger index = NSNotFound;
-        if (screenIdentifier != nil)
-        {
-            index = [screens indexOfObjectPassingTest:^(NSScreen *screen, NSUInteger idx, BOOL *stop)
-            {
-                return [[screen valueForKeyPath:@"deviceDescription.NSScreenNumber"] isEqualToNumber:screenIdentifier];
-            }];
-        }
-        if (index != NSNotFound)
-            return screens[index];
-        else
-            return screens[0];
-    }
-    else
-        return nil;
+    __auto_type s = [NSScreen WL_screenWithUUID:NSUserDefaults.standardUserDefaults.WL_screenUUID];
+    if (!s)
+        s = NSScreen.mainScreen;
+
+    return s;
 }
 
 @end
@@ -725,7 +711,7 @@ static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0;
 
 - (void)_applyWindowSizeToViews
 {
-    switch ((BLSize)[[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"])
+    switch ([[NSUserDefaults standardUserDefaults] WL_calendarSize])
     {
         case BLNarrowSize:
             [self _applyNarrowSizeToViews];

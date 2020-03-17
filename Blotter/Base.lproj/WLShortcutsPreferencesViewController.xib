@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="WLShortcutsPreferencesViewController">
+            <connections>
+                <outlet property="_bringToFrontRecroderControl" destination="33" id="46"/>
+                <outlet property="_newEventRecorderControl" destination="34" id="47"/>
+                <outlet property="_newReminderRecorderControl" destination="35" id="48"/>
+                <outlet property="_showCurrentWeekControl" destination="37" id="49"/>
+                <outlet property="_showNextWeekControl" destination="36" id="50"/>
+                <outlet property="_showPrevWeekControl" destination="38" id="51"/>
+                <outlet property="view" destination="1" id="58"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="341" height="236"/>
+            <subviews>
+                <textField horizontalHuggingPriority="749" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="29" userLabel="Bring to Front Label">
+                    <rect key="frame" x="18" y="213" width="97" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Bring to Front:" id="30">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <attributedString key="userComments">
+                        <fragment content="Title for the Bring to Front label"/>
+                    </attributedString>
+                </textField>
+                <customView horizontalHuggingPriority="749" verticalHuggingPriority="750" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="26" translatesAutoresizingMaskIntoConstraints="NO" id="33" userLabel="Bring to Front Recorder" customClass="SRRecorderControl">
+                    <rect key="frame" x="121" y="190" width="200" height="26"/>
+                    <connections>
+                        <accessibilityConnection property="title" destination="29" id="59"/>
+                        <outlet property="delegate" destination="-2" id="52"/>
+                        <outlet property="nextKeyView" destination="34" id="40"/>
+                    </connections>
+                </customView>
+                <textField horizontalHuggingPriority="749" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="31" userLabel="New Event Label">
+                    <rect key="frame" x="18" y="179" width="97" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="New Event:" id="32">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <attributedString key="userComments">
+                        <fragment content="Title for the New Event label"/>
+                    </attributedString>
+                </textField>
+                <customView horizontalHuggingPriority="749" verticalHuggingPriority="750" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="26" translatesAutoresizingMaskIntoConstraints="NO" id="34" userLabel="New Event Recorder" customClass="SRRecorderControl">
+                    <rect key="frame" x="121" y="156" width="200" height="26"/>
+                    <connections>
+                        <accessibilityConnection property="title" destination="31" id="60"/>
+                        <outlet property="delegate" destination="-2" id="53"/>
+                        <outlet property="nextKeyView" destination="35" id="41"/>
+                    </connections>
+                </customView>
+                <textField horizontalHuggingPriority="749" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="27" userLabel="New Reminder Label">
+                    <rect key="frame" x="18" y="145" width="97" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="New Reminder:" id="28">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <attributedString key="userComments">
+                        <fragment content="Title for the New Reminder label"/>
+                    </attributedString>
+                </textField>
+                <customView horizontalHuggingPriority="749" verticalHuggingPriority="750" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="26" translatesAutoresizingMaskIntoConstraints="NO" id="35" userLabel="New Reminder Recorder" customClass="SRRecorderControl">
+                    <rect key="frame" x="121" y="122" width="200" height="26"/>
+                    <connections>
+                        <accessibilityConnection property="title" destination="27" id="61"/>
+                        <outlet property="delegate" destination="-2" id="54"/>
+                        <outlet property="nextKeyView" destination="36" id="42"/>
+                    </connections>
+                </customView>
+                <textField horizontalHuggingPriority="749" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="25" userLabel="Next Week Label">
+                    <rect key="frame" x="18" y="111" width="97" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Next Week:" id="26">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <attributedString key="userComments">
+                        <fragment content="Title for the Next Week label"/>
+                    </attributedString>
+                </textField>
+                <customView horizontalHuggingPriority="749" verticalHuggingPriority="750" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="26" translatesAutoresizingMaskIntoConstraints="NO" id="36" userLabel="New Week Recorder" customClass="SRRecorderControl">
+                    <rect key="frame" x="121" y="88" width="200" height="26"/>
+                    <connections>
+                        <accessibilityConnection property="title" destination="25" id="62"/>
+                        <outlet property="delegate" destination="-2" id="55"/>
+                        <outlet property="nextKeyView" destination="37" id="43"/>
+                    </connections>
+                </customView>
+                <textField horizontalHuggingPriority="749" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="21" userLabel="Current Week Label">
+                    <rect key="frame" x="18" y="77" width="97" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Current Week:" id="22">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <attributedString key="userComments">
+                        <fragment content="Title for the Current Week label"/>
+                    </attributedString>
+                </textField>
+                <customView horizontalHuggingPriority="749" verticalHuggingPriority="750" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="26" translatesAutoresizingMaskIntoConstraints="NO" id="37" userLabel="Current Week Recorder" customClass="SRRecorderControl">
+                    <rect key="frame" x="121" y="54" width="200" height="26"/>
+                    <connections>
+                        <accessibilityConnection property="title" destination="21" id="63"/>
+                        <outlet property="delegate" destination="-2" id="56"/>
+                        <outlet property="nextKeyView" destination="38" id="44"/>
+                    </connections>
+                </customView>
+                <textField horizontalHuggingPriority="749" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="19" userLabel="Previous Week Label">
+                    <rect key="frame" x="18" y="43" width="97" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Previous Week:" id="20">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <attributedString key="userComments">
+                        <fragment content="Title for the Previous Week label"/>
+                    </attributedString>
+                </textField>
+                <customView horizontalHuggingPriority="749" verticalHuggingPriority="750" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="26" translatesAutoresizingMaskIntoConstraints="NO" id="38" userLabel="Previous Week Recorder" customClass="SRRecorderControl">
+                    <rect key="frame" x="121" y="20" width="200" height="26"/>
+                    <connections>
+                        <accessibilityConnection property="title" destination="19" id="64"/>
+                        <outlet property="delegate" destination="-2" id="57"/>
+                        <outlet property="nextKeyView" destination="1" id="45"/>
+                    </connections>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="36" firstAttribute="leading" secondItem="25" secondAttribute="trailing" constant="8" symbolic="YES" id="2z6-P8-V1t"/>
+                <constraint firstItem="38" firstAttribute="top" secondItem="37" secondAttribute="bottom" constant="8" symbolic="YES" id="4Mq-Zt-IRf"/>
+                <constraint firstItem="19" firstAttribute="firstBaseline" secondItem="38" secondAttribute="firstBaseline" id="9LV-x7-k1t"/>
+                <constraint firstItem="37" firstAttribute="leading" secondItem="21" secondAttribute="trailing" constant="8" symbolic="YES" id="G1x-bS-X47"/>
+                <constraint firstItem="37" firstAttribute="leading" secondItem="34" secondAttribute="leading" id="GNB-Qg-ssb"/>
+                <constraint firstItem="31" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="JB1-M2-hLE"/>
+                <constraint firstItem="35" firstAttribute="top" secondItem="34" secondAttribute="bottom" constant="8" symbolic="YES" id="JV9-Wd-v3a"/>
+                <constraint firstItem="21" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="Kw3-PY-1ho"/>
+                <constraint firstItem="36" firstAttribute="leading" secondItem="34" secondAttribute="leading" id="Ncc-C4-Tu0"/>
+                <constraint firstAttribute="bottom" secondItem="38" secondAttribute="bottom" constant="20" symbolic="YES" id="NnI-w4-pGo"/>
+                <constraint firstItem="25" firstAttribute="firstBaseline" secondItem="36" secondAttribute="firstBaseline" id="OAR-EG-r0E"/>
+                <constraint firstItem="31" firstAttribute="firstBaseline" secondItem="34" secondAttribute="firstBaseline" id="TKD-fs-K5t"/>
+                <constraint firstItem="21" firstAttribute="firstBaseline" secondItem="37" secondAttribute="firstBaseline" id="V9D-sL-McX"/>
+                <constraint firstItem="35" firstAttribute="leading" secondItem="34" secondAttribute="leading" id="VaK-vg-Z1W"/>
+                <constraint firstItem="27" firstAttribute="firstBaseline" secondItem="35" secondAttribute="firstBaseline" id="VzY-Ug-f8A"/>
+                <constraint firstItem="35" firstAttribute="leading" secondItem="27" secondAttribute="trailing" constant="8" symbolic="YES" id="ZFG-o5-sZt"/>
+                <constraint firstAttribute="trailing" secondItem="33" secondAttribute="trailing" constant="20" symbolic="YES" id="bIQ-If-7lL"/>
+                <constraint firstItem="38" firstAttribute="leading" secondItem="19" secondAttribute="trailing" constant="8" symbolic="YES" id="bOW-4J-JBf"/>
+                <constraint firstItem="27" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="cND-tI-9V9"/>
+                <constraint firstItem="25" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="cy4-We-HJr"/>
+                <constraint firstItem="33" firstAttribute="leading" secondItem="29" secondAttribute="trailing" constant="8" symbolic="YES" id="gBK-Ii-KI6"/>
+                <constraint firstItem="33" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" symbolic="YES" id="hd7-HY-vqc"/>
+                <constraint firstItem="38" firstAttribute="leading" secondItem="34" secondAttribute="leading" id="hwI-lt-p69"/>
+                <constraint firstItem="29" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="j2s-KG-ctn"/>
+                <constraint firstItem="36" firstAttribute="top" secondItem="35" secondAttribute="bottom" constant="8" symbolic="YES" id="msG-FT-VXZ"/>
+                <constraint firstItem="34" firstAttribute="leading" secondItem="31" secondAttribute="trailing" constant="8" symbolic="YES" id="nRv-f2-h6W"/>
+                <constraint firstItem="37" firstAttribute="top" secondItem="36" secondAttribute="bottom" constant="8" symbolic="YES" id="pAV-sM-JKC"/>
+                <constraint firstItem="19" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="pcE-AQ-unG"/>
+                <constraint firstItem="29" firstAttribute="firstBaseline" secondItem="33" secondAttribute="firstBaseline" id="wxR-we-o9i"/>
+                <constraint firstItem="33" firstAttribute="leading" secondItem="34" secondAttribute="leading" id="xwi-oZ-hrv"/>
+                <constraint firstItem="34" firstAttribute="top" secondItem="33" secondAttribute="bottom" constant="8" symbolic="YES" id="ztA-8k-Knp"/>
+            </constraints>
+            <connections>
+                <outlet property="nextKeyView" destination="33" id="39"/>
+            </connections>
+            <point key="canvasLocation" x="383.5" y="21"/>
+        </customView>
+    </objects>
+</document>

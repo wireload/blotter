@@ -9,6 +9,10 @@
 #import "WLGraphics.h"
 
 
+const NSAlignmentOptions WLAlignTiebreakerInward = 1ULL << 32;
+const NSAlignmentOptions WLAlignTiebreakerOutward = 1ULL << 33;
+
+
 void WLRecessedBoxShadow(NSRect frame)
 {
     static dispatch_once_t onceToken;
@@ -38,8 +42,213 @@ void WLRecessedBoxShadow(NSRect frame)
                         Images[8],
                         NSCompositeSourceOver,
                         1.0,
-                        NO);
+                        NSGraphicsContext.currentContext.flipped);
     [NSGraphicsContext restoreGraphicsState];
+}
+
+NSRect WLIntegralRect(NSRect aRect, NSAlignmentOptions anOptions, CGFloat aMultiple)
+{
+    static const CGFloat Tolerance = 1e-6;
+
+    NSCParameterAssert((anOptions & (WLAlignTiebreakerInward | WLAlignTiebreakerOutward)) != (WLAlignTiebreakerInward | WLAlignTiebreakerOutward));
+
+    NSRect intRect = NSMakeRect(NSMinX(aRect) / aMultiple,
+                                NSMinY(aRect) / aMultiple,
+                                NSWidth(aRect) / aMultiple,
+                                NSHeight(aRect) / aMultiple);
+
+    if (anOptions & NSAlignMinXNearest && anOptions & (WLAlignTiebreakerInward | WLAlignTiebreakerOutward))
+    {
+        CGFloat minXInt;
+        CGFloat minXFrac = modf(NSMinX(intRect), &minXInt);
+        if (fabs(minXFrac - 0.5) < Tolerance)
+            anOptions ^= NSAlignMinXNearest | ((anOptions & WLAlignTiebreakerInward) ? NSAlignMinXInward : NSAlignMinXOutward);
+    }
+
+    if (anOptions & NSAlignMinYNearest && anOptions & (WLAlignTiebreakerInward | WLAlignTiebreakerOutward))
+    {
+        CGFloat minYInt;
+        CGFloat minYFrac = modf(NSMinY(intRect), &minYInt);
+        if (fabs(minYFrac - 0.5) < Tolerance)
+            anOptions ^= NSAlignMinYNearest | ((anOptions & WLAlignTiebreakerInward) ? NSAlignMinYInward : NSAlignMinYOutward);
+    }
+
+    if (anOptions & NSAlignMaxXNearest && anOptions & (WLAlignTiebreakerInward | WLAlignTiebreakerOutward))
+    {
+        CGFloat maxXInt;
+        CGFloat maxXFrac = modf(NSMaxX(intRect), &maxXInt);
+        if (fabs(maxXFrac - 0.5) < Tolerance)
+            anOptions ^= NSAlignMaxXNearest | ((anOptions & WLAlignTiebreakerInward) ? NSAlignMaxXInward : NSAlignMaxXOutward);
+    }
+
+    if (anOptions & NSAlignMaxYNearest && anOptions & (WLAlignTiebreakerInward | WLAlignTiebreakerOutward))
+    {
+        CGFloat maxYInt;
+        CGFloat maxYFrac = modf(NSMaxY(intRect), &maxYInt);
+        if (fabs(maxYFrac - 0.5) < Tolerance)
+            anOptions ^= NSAlignMaxYNearest | ((anOptions & WLAlignTiebreakerInward) ? NSAlignMaxYInward : NSAlignMaxYOutward);
+    }
+
+    if (anOptions & NSAlignWidthNearest && anOptions & (WLAlignTiebreakerInward | WLAlignTiebreakerOutward))
+    {
+        CGFloat widthInt;
+        CGFloat widthFrac = modf(NSWidth(intRect), &widthInt);
+        if (fabs(widthFrac - 0.5) < Tolerance)
+            anOptions ^= NSAlignWidthNearest | ((anOptions & WLAlignTiebreakerInward) ? NSAlignWidthInward : NSAlignWidthOutward);
+    }
+
+    if (anOptions & NSAlignHeightNearest && anOptions & (WLAlignTiebreakerInward | WLAlignTiebreakerOutward))
+    {
+        CGFloat heightInt;
+        CGFloat heightFrac = modf(NSWidth(intRect), &heightInt);
+        if (fabs(heightFrac - 0.5) < Tolerance)
+            anOptions ^= NSAlignHeightNearest | ((anOptions & WLAlignTiebreakerInward) ? NSAlignHeightInward : NSAlignHeightOutward);
+    }
+
+    intRect = NSIntegralRectWithOptions(intRect, anOptions);
+    return NSMakeRect(NSMinX(intRect) * aMultiple,
+                      NSMinY(intRect) * aMultiple,
+                      NSWidth(intRect) * aMultiple,
+                      NSHeight(intRect) * aMultiple);
+}
+
+NSRect WLConstrainedIntegralRect(NSRect aRect, NSAlignmentOptions anOptions, CGFloat aMultiple, NSSize aMinSize, WLEdge aMovingEdge)
+{
+    __block NSRect intRect = WLIntegralRect(aRect, anOptions, aMultiple);
+
+    BOOL shouldAdjustWidth = NO;
+    BOOL shouldAdjustHeight = NO;
+    if ((shouldAdjustWidth = NSWidth(intRect) < aMinSize.width) || (shouldAdjustHeight = NSHeight(intRect) < aMinSize.height))
+    {
+        // intRect is integral and aligned perfectly but too small
+        // It needs to be resized with respect to the edge being stationary (i.e. edge which position is unchanged)
+
+        __block NSAlignmentOptions resizeOptions = anOptions & NSAlignRectFlipped;
+
+        __auto_type KeepLeft = ^{
+            if (shouldAdjustWidth)
+            {
+                resizeOptions |= NSAlignMinXNearest | NSAlignWidthOutward;
+                intRect.size.width = aMinSize.width;
+            }
+            else
+                resizeOptions |= NSAlignMinXNearest | NSAlignMaxXNearest;
+        };
+
+        __auto_type KeepMidX = ^{
+            if (shouldAdjustWidth)
+            {
+                resizeOptions |= NSAlignMinXOutward | NSAlignMaxXOutward;
+                intRect.origin.x = NSMidX(intRect) - aMinSize.width / 2.0;
+                intRect.size.width = aMinSize.width;
+            }
+            else
+                resizeOptions |= NSAlignMinXNearest | NSAlignMaxXNearest;
+        };
+
+        __auto_type KeepRight = ^{
+            if (shouldAdjustWidth)
+            {
+                resizeOptions |= NSAlignMaxXNearest | NSAlignWidthOutward;
+                intRect.origin.x = NSMaxX(intRect) - aMinSize.width;
+                intRect.size.width = aMinSize.width;
+            }
+            else
+                resizeOptions |= NSAlignMinXNearest | NSAlignMaxXNearest;
+        };
+        __auto_type KeepTop = ^{
+            if (shouldAdjustHeight)
+            {
+                if (anOptions & NSAlignRectFlipped)
+                {
+                    resizeOptions |= NSAlignMinYNearest | NSAlignHeightOutward;
+                    intRect.size.height = aMinSize.height;
+                }
+                else
+                {
+                    resizeOptions |= NSAlignMaxYNearest | NSAlignHeightOutward;
+                    intRect.origin.y = NSMaxY(intRect) - aMinSize.height;
+                    intRect.size.height = aMinSize.height;
+                }
+            }
+            else
+                resizeOptions |= NSAlignMinYNearest | NSAlignMaxYNearest;
+        };
+
+        __auto_type KeepMidY = ^{
+            if (shouldAdjustHeight)
+            {
+                resizeOptions |= NSAlignMinYOutward | NSAlignMaxYOutward;
+                intRect.origin.y = NSMidY(intRect) - aMinSize.height / 2.0;
+                intRect.size.height = aMinSize.height;
+            }
+            else
+                resizeOptions |= NSAlignMinYNearest | NSAlignMaxYNearest;
+        };
+
+        __auto_type KeepBottom = ^{
+            if (shouldAdjustHeight)
+            {
+                if (anOptions & NSAlignRectFlipped)
+                {
+                    resizeOptions |= NSAlignMaxYNearest | NSAlignHeightOutward;
+                    intRect.origin.y = NSMaxY(intRect) - aMinSize.height;
+                    intRect.size.height = aMinSize.height;
+                }
+                else
+                {
+                    resizeOptions |= NSAlignMinYNearest | NSAlignHeightOutward;
+                    intRect.size.height = aMinSize.height;
+                }
+            }
+            else
+                resizeOptions |= NSAlignMinYNearest | NSAlignMaxYNearest;
+        };
+
+        switch (aMovingEdge)
+        {
+            case WLEdgeLeft:
+                KeepRight();
+                KeepMidY();
+                break;
+            case WLEdgeTopLeft:
+                KeepRight();
+                KeepBottom();
+                break;
+            case WLEdgeTop:
+                KeepMidX();
+                KeepBottom();
+                break;
+            case WLEdgeTopRight:
+                KeepLeft();
+                KeepBottom();
+                break;
+            case WLEdgeRight:
+                KeepLeft();
+                KeepMidY();
+                break;
+            case WLEdgeBottomRight:
+                KeepLeft();
+                KeepTop();
+                break;
+            case WLEdgeBottom:
+                KeepMidX();
+                KeepTop();
+                break;
+            case WLEdgeBottomLeft:
+                KeepRight();
+                KeepTop();
+                break;
+            case WLEdgeCenter:
+                KeepMidX();
+                KeepMidY();
+                break;
+        }
+
+        intRect = WLIntegralRect(intRect, resizeOptions, aMultiple);
+    }
+
+    return intRect;
 }
 
 #define NSRectFromSize(size) (NSMakeRect(0, 0, (size).width, (size).height))

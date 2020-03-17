@@ -7,8 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import <CalendarStore/CalendarStore.h>
 
+#import "WLCalendarWindowController.h"
+
+
+NS_ASSUME_NONNULL_BEGIN
 
 extern NSInteger const WLBlotterBundleVersion2_1;
 
@@ -30,7 +35,7 @@ extern NSString* const WLLastMigratedBundleVersionKey;
 
 extern NSString* const WLCalendarSizeKey;
 
-extern NSString* const WLScreenIdentifierKey;
+extern NSString* const WLScreenUUIDKey;
 
 extern NSString* const WLDisplayAllCalendarsKey;
 
@@ -104,6 +109,10 @@ extern NSString* const WLShowPreferencesAtStartUp;
 
 extern NSString* const WLLastReportedDailyEventAt;
 
+extern NSString* const WLCustomFrameFactorsKey;
+
+extern NSString* const WLCalendarPositionKey;
+
 
 @interface NSUserDefaults (WLApplicationDefaults)
 
@@ -116,20 +125,20 @@ extern NSString* const WLLastReportedDailyEventAt;
 - (void)WL_migrateTo2_2_1;
 
 /*!
+ @discussion
  - Transform NSDictionary-based shortcuts into SRShortcut
  */
 - (void)WL_migrateTo2_2_5;
 
-@end
+/*!
+ @discussion
+ - Replace screen identifier with screen UUID.
+    Screen's identifier may change for the same screen when GPU is automatically switched (e.g. on MBP)
+    while its UUID is more persistent.
+ */
+- (void)WL_migrateTo2_2_6;
 
-
-@interface NSUserDefaults (WLScreensController)
-
-- (void)WL_setDefaultScreenIdentifierIfNeeded;
-
-- (void)WL_setScreenIdentifier:(NSNumber *)newScreenIdentifier;
-
-- (NSNumber *)WL_screenIdentifier;
+- (void)WL_validateAndFixIfNeeded;
 
 @end
 
@@ -170,19 +179,19 @@ extern NSString* const WLLastReportedDailyEventAt;
 
 @interface NSUserDefaults (WLURLs)
 
-- (NSURL *)WL_rateThisAppURL;
+@property (nullable, readonly, copy) NSURL *WL_rateThisAppURL;
 
-- (NSURL *)WL_getHelpURL;
+@property (nullable, readonly, copy) NSURL *WL_getHelpURL;
 
-- (NSURL *)WL_getSupportURL;
+@property (nullable, readonly, copy) NSURL *WL_getSupportURL;
 
-- (NSURL *)WL_followOnTwitterURL;
+@property (nullable, readonly, copy) NSURL *WL_followOnTwitterURL;
 
-- (NSURL *)WL_wireloadURL;
+@property (nullable, readonly, copy) NSURL *WL_wireloadURL;
 
-- (NSURL *)WL_bannerURL;
+@property (nullable, readonly, copy) NSURL *WL_bannerURL;
 
-- (NSURL *)WL_privacyPolicyURL;
+@property (nullable, readonly, copy) NSURL *WL_privacyPolicyURL;
 
 @end
 
@@ -205,6 +214,22 @@ extern NSString* const WLLastReportedDailyEventAt;
 @end
 
 
+@interface NSUserDefaults (WLPositioningPreferences)
+
+- (BLSize)WL_calendarSize;
+
+/*!
+ Frame expressed using the screen coordinate system.
+ */
+@property NSRect WL_customFrameFactors;
+
+@property BLPosition WL_calendarPosition;
+
+@property (null_resettable, copy) NSUUID *WL_screenUUID;
+
+@end
+
+
 @interface NSUserDefaults (WLAboutPreferences)
 
 - (BOOL)WL_requestShareAnalyticsConsentAtStartup;
@@ -216,11 +241,13 @@ extern NSString* const WLLastReportedDailyEventAt;
 
 #pragma mark - Deprecated
 
-__attribute__((deprecated("Deprecated since 2.2"))) extern NSString* const WLCalendarUIDKey;
+extern NSString* const WLCalendarUIDKey __attribute__((deprecated("Deprecated since 2.2")));
 
-__attribute__((deprecated("Deprecated since 2.2"))) typedef void (^WLCalendarsUpdaterBlock)(NSMutableArray *aCalendars);
+extern NSString* const WLScreenIdentifierKey __attribute__((deprecated("Deprecated in 2.2.6", "WLScreenUUIDKey")));
 
-__attribute__((deprecated("Deprecated since 2.2"))) extern NSComparator const WLCalendarsComparator;
+typedef void (^WLCalendarsUpdaterBlock)(NSMutableArray *aCalendars) __attribute__((deprecated("Deprecated since 2.2"))) ;
+
+extern NSComparator const WLCalendarsComparator __attribute__((deprecated("Deprecated since 2.2"))) ;
 
 
 @interface NSUserDefaults (WLCalendarController)
@@ -231,36 +258,6 @@ __attribute__((deprecated("Deprecated since 2.2"))) extern NSComparator const WL
 
 - (void)WL_updateCalendars:(WLCalendarsUpdaterBlock)anUpdaterBlock __attribute__((deprecated("Deprecated since 2.2")));
 
-- (void)WL_setAllowsAdvancedCalendarTypeCheck:(BOOL)newAllowsAdvancedCalendarTypeCheck __attribute__((deprecated("Deprecated since 2.2")));
-
-- (BOOL)WL_allowsAdvancedCalendarTypeCheck __attribute__((deprecated("Deprecated since 2.2")));
-
 @end
 
-
-@interface NSArray (WLCalendarController)
-
-- (NSUInteger)WL_indexOfCalendarWithUID:(NSString *)anUID __attribute__((deprecated("Deprecated since 2.2")));
-
-- (NSDictionary *)WL_calendarWithUID:(NSString *)anUID __attribute__((deprecated("Deprecated since 2.2")));
-
-@end
-
-
-@interface NSMutableArray (WLCalendarController)
-
-- (void)WL_insertCalendar:(NSDictionary *)aCalendar __attribute__((deprecated("Deprecated since 2.2")));
-
-- (void)WL_removeCalendarWithUID:(NSString *)anUID __attribute__((deprecated("Deprecated since 2.2")));
-
-@end
-
-
-@interface NSDictionary (WLCalendarController)
-
-/*!
- @param aCalCalendar    MUST be non-nil.
- */
-+ (NSDictionary *)WL_makeCalendarWithCalCalendar:(CalCalendar *)aCalCalendar __attribute__((deprecated("Deprecated since 2.2")));
-
-@end
+NS_ASSUME_NONNULL_END

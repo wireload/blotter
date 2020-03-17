@@ -181,9 +181,9 @@ static NSString* const _WLRootLayerName = @"WLCalendarRemindersViewLayer";
 
 #pragma mark WLLayerBackedView
 
-- (CALayer *)makeRootLayer
+- (CALayer *)makeHostedLayer
 {
-    CALayer *l = [super makeRootLayer];
+    CALayer *l = [super makeHostedLayer];
 
     l.layoutManager = self;
     l.masksToBounds = YES;

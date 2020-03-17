@@ -9,8 +9,5 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface WLCountGreaterThanOneTransformer : NSValueTransformer {
-
-}
-
+@interface WLCountGreaterThanOneTransformer : NSValueTransformer
 @end

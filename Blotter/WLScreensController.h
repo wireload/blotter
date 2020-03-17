@@ -9,34 +9,70 @@
 #import <Cocoa/Cocoa.h>
 
 
-extern NSString* const WLScreenLocalizedName;
+NS_ASSUME_NONNULL_BEGIN
 
 /*!
-    @discussion  WLScreensController monitors parameters of system's screens and user selected screen.
-    When either parameter changes, WLScreensController updates content.
+ Keys for the WLScreenDescription
+
+ @const WLScreenDescriptionKeyLocalizedName Localized screen name as NSString.
+
+ @const WLScreenDescriptionKeyUUID Unique screen identifier as NSUUID.
+ */
+typedef NSString *WLScreenDescriptionKey NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(ScreenDescriptionKey);
+extern WLScreenDescriptionKey const WLScreenDescriptionKeyLocalizedName;
+extern WLScreenDescriptionKey const WLScreenDescriptionKeyUUID;
+
+typedef NSDictionary<WLScreenDescriptionKey, id> WLScreenDescription;
+
+/*!
+ Exposes the list of currently connected screens via controller's content property.
+
+ @discussion
+ Special care is taken for user-selected screen (stored in user defaults): if the selected screen is currently
+ disconnected, special "Unplugged" screen takes its place.
 */
 @interface WLScreensController : NSArrayController
 
 /*!
- @abstract      Returns list of screens currently presented in the system taking care of user selected screen.
- @discussion    If user selected screen is unplugged, returns a dummy dictionary for this screen.
+ List of descriptions for all currently connected screens + an optional dummy description
+ for the unplugged user-selected screen.
  */
-- (NSArray *)screens;
+- (NSArray<WLScreenDescription *> *)screens;
 
 /*!
- @abstract  Updates content of the controller.
+ Called when either selected screen or list of available screens changes.
  */
-- (void)_screensDidChange;
+- (void)screensDidChange;
 
 @end
 
 
 @interface NSScreen (WLScreensController)
 
-- (NSDictionary *)WL_dictionary;
+/*!
+ Instance of NSScreen with matching UUID.
+ */
++ (nullable NSScreen *)WL_screenWithUUID:(NSUUID *)anUUID;
 
-- (NSString *)WL_localizedScreenName;
+/*!
+ Instance of NSScreen with matching identifier.
+ */
++ (nullable NSScreen *)WL_screenWithIdentifier:(NSNumber *)anIdentifier;
 
-- (NSString *)WL_localizedScreenSizeString;
+/*!
+ @see CGDisplayCreateUUIDFromDisplayID
+ */
+@property (readonly, copy) NSUUID *WL_uuid;
+
+/*!
+ @see NSScreenNumber
+ */
+@property (readonly, copy) NSNumber *WL_identifier;
+
+@property (readonly, copy) NSString *WL_localizedScreenName;
+
+@property (readonly, copy) NSString *WL_localizedScreenSizeString;
 
 @end
+
+NS_ASSUME_NONNULL_END

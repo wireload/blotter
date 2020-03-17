@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 Wireload. All rights reserved.
 //
 
-#import "NSArray+WLDelta_Tests.h"
 #import <WLFoundation/WLFoundation.h>
 
 
