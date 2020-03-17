@@ -13,7 +13,7 @@
 
 @implementation WLPreferencesViewController
 {
-    NSTabViewItem *_tabViewItem;
+    __weak NSTabViewItem *_tabViewItem;
 }
 
 - (NSTabViewItem *)tabViewItem

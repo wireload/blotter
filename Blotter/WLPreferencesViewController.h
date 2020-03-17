@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WLPreferencesViewController : NSViewController
 
-@property (readonly) NSTabViewItem *tabViewItem;
+@property (weak, readonly) NSTabViewItem *tabViewItem;
 
 - (NSTabViewItem *)makeTabViewItem;
 
