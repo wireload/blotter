@@ -95,6 +95,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)deactivateAppIfAllConditionsAreMet:(NSArray *)aWindows;
 
+/*!
+ Called when the preferences window is closed to release the associated resources.
+ */
+- (void)preferencesWindowDidClose:(NSNotification *)aNotification;
+
 
 - (void)_scheduleShowCurrentWeekTimerIfNeeded;
 

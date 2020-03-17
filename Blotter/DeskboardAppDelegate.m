@@ -113,22 +113,10 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
     if (!_preferencesWindowController)
     {
         _preferencesWindowController = [self.storyboard instantiateControllerWithIdentifier:WLPreferencesWindowIdentifier];
-//        WLGeneralPreferences *general = [[WLGeneralPreferences alloc] initWithNibName:@"GeneralPrefPaneView" bundle:nil];
-//        WLShortcutsPreferences *shortcuts = [[WLShortcutsPreferences alloc] initWithNibName:@"ShortcutsPrefPaneView" bundle:nil];
-//        WLPositioningPreferences *positioning = [[WLPositioningPreferences alloc] initWithNibName:@"PositionPrefPaneView" bundle:nil];
-//        WLLayoutPreferences *layout = [[WLLayoutPreferences alloc] initWithNibName:@"LayoutPrefPaneView" bundle:nil];
-//        WLCalendarsPreferences *calendars = [[WLCalendarsPreferences alloc] initWithNibName:@"CalendarsPrefPaneView" bundle:nil];
-//        WLAboutPreferences *about = [[WLAboutPreferences alloc] initWithNibName:@"AboutPrefPaneView" bundle:nil];
-//        _preferencesController = [WLApplicationPreferences preferencesWithWindowNibName:@"WLApplicationPreferencesWindow"
-//                                                                           visualFormat:@"general,shortcuts,positioning,layout,calendars,-,about"
-//                                                                        representations:@{
-//                                                                           @"general": general,
-//                                                                           @"shortcuts": shortcuts,
-//                                                                           @"positioning": positioning,
-//                                                                           @"layout": layout,
-//                                                                           @"calendars": calendars,
-//                                                                           @"about": about
-//                                                                        }];
+        [NSNotificationCenter.defaultCenter addObserver:self
+                                               selector:@selector(preferencesWindowDidClose:)
+                                                   name:NSWindowWillCloseNotification
+                                                 object:_preferencesWindowController.window];
     }
 
     return _preferencesWindowController;
@@ -395,6 +383,11 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
 {
     if ([self isOnlyCalendarWindowVisible:aWindows] && self.calendarWindowController.windowState == WLFinderLevelState)
         [NSApp hide:self];
+}
+
+- (void)preferencesWindowDidClose:(NSNotification *)aNotification
+{
+    _preferencesWindowController = nil;
 }
 
 
