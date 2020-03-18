@@ -59,6 +59,7 @@
 {
     [super windowDidLoad];
     self.window.level = NSFloatingWindowLevel;
+    self.contentViewController.transitionOptions = WLViewControllerTransitionResize;
     _shortcuts = [SRShortcutItemCatalog new];
     [_shortcuts addAction:@selector(performClose:) forKeyEquivalent:@"⌘W"];
 }

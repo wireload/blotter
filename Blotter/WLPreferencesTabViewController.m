@@ -19,6 +19,9 @@ WLPreferencesIdentifier const WLCalendarsPreferencesIdentifier = @"WLCalendarsPr
 WLPreferencesIdentifier const WLAboutPreferencesIdentifier = @"WLAboutPreferences";
 
 
+const NSViewControllerTransitionOptions WLViewControllerTransitionResize = 0x2000;
+
+
 @implementation WLPreferencesTabViewController
 {
     NSLayoutConstraint *_tabViewWidthAnimationConstraint;
@@ -120,7 +123,14 @@ WLPreferencesIdentifier const WLAboutPreferencesIdentifier = @"WLAboutPreference
                              options:(NSViewControllerTransitionOptions)anOptions
                    completionHandler:(void (^)(void))aCompletion
 {
-    NSAssert(anOptions == NSViewControllerTransitionNone, @"unexpected transition animation");
+    if (anOptions != WLViewControllerTransitionResize)
+    {
+        [super transitionFromViewController:aFromViewController
+                           toViewController:aToViewController
+                                    options:anOptions
+                          completionHandler:aCompletion];
+        return;
+    }
 
     [_runningTransitionAnimation cancel];
 
@@ -135,6 +145,12 @@ WLPreferencesIdentifier const WLAboutPreferencesIdentifier = @"WLAboutPreference
 
     NSTimeInterval fadeOutAnimationDuration = 0.1;
     NSTimeInterval fadeInAnimationDuration = fadeOutAnimationDuration;
+
+    if (@available(macOS 10.12, *))
+    {
+        if (NSWorkspace.sharedWorkspace.accessibilityDisplayShouldReduceMotion)
+            fadeOutAnimationDuration = fadeInAnimationDuration = 0.0;
+    }
 
     WLAnimationScene *fadeOutScene = [WLAnimationScene sceneWithAnimatorChanges:^(WLAnimationSequence *aSequence) {
         fromView.animator.alphaValue = 0.0;

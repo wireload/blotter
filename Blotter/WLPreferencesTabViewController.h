@@ -25,6 +25,9 @@ extern WLPreferencesIdentifier const WLCalendarsPreferencesIdentifier;
 extern WLPreferencesIdentifier const WLAboutPreferencesIdentifier;
 
 
+extern const NSViewControllerTransitionOptions WLViewControllerTransitionResize;
+
+
 /*!
  Root view controller for the preferences window that manages transition between preferences tabs.
  */
