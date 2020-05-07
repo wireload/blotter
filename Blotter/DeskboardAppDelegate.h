@@ -116,4 +116,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+
+#define WLAppDelegate ((DeskboardAppDelegate *)NSApp.delegate)
+
 NS_ASSUME_NONNULL_END
