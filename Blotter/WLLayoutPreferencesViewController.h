@@ -10,71 +10,40 @@
 #import <WLFoundation/WLFoundation.h>
 
 #import "WLPreferencesViewController.h"
-#import "WLLayoutSplitView.h"
+#import "WLLayoutArrangementView.h"
 
 
-@interface WLLayoutPreferencesViewController : WLPreferencesViewController <WLLayoutSplitViewDelegate>
-{
-    IBOutlet WLLayoutSplitView *_rootSplitView;
-    IBOutlet WLLayoutSplitView *_weekSplitView;
-    IBOutlet WLLayoutSplitView *_infoSplitView;
-    IBOutlet NSView *_calendarWindowView;
-    IBOutlet NSView *_layoutControl;
-    NSAffineTransform *_blotterWindowToRootSplitViewTransform;
-    NSAffineTransform *_rootSplitViewToBlotterWindowTransform;
-    NSAffineTransform *_blotterWindowToWeekSplitViewTransform;
-    NSAffineTransform *_weekSplitViewToBlotterWindowTransform;
-    NSAffineTransform *_blotterWindowToInfoSplitViewTransform;
-    NSAffineTransform *_infoSplitViewToBlotterWindowTransform;
-    BOOL _areSplitViewsResizedUsingMouse;
-    WLLayoutSplitView *_resizedSplitView;
-}
+NS_ASSUME_NONNULL_BEGIN
 
-- (NSSize)preferredFrameSizeOfPaneView;
-
-
-@property (retain) NSAffineTransform *_blotterWindowToRootSplitViewTransform;
-
-@property (retain) NSAffineTransform *_rootSplitViewToBlotterWindowTransform;
-
-@property (retain) NSAffineTransform *_blotterWindowToWeekSplitViewTransform;
-
-@property (retain) NSAffineTransform *_weekSplitViewToBlotterWindowTransform;
-
-@property (retain) NSAffineTransform *_blotterWindowToInfoSplitViewTransform;
-
-@property (retain) NSAffineTransform *_infoSplitViewToBlotterWindowTransform;
+extern NSString * const WLLayoutViewSizeConstraintIdentifier;
 
 /*!
- @abstract  Updates transformers according to current frame size of _mainView. Updates split views.
+ Preferences view controller for elements layout of the calendar window.
  */
-- (void)_recalculateTransforms;
+@interface WLLayoutPreferencesViewController : WLPreferencesViewController <NSSplitViewDelegate>
 
 /*!
- @abstract  Updates preferred size of the _mainView.
+ Called to update transforms that map available mockup space onto calendar.
  */
-- (void)_screenFrameDidChange;
+- (void)updateTransforms;
 
 /*!
- @abstract  Adjusts frame of the _calendarWindowView to match new aspect ratio and size.
- @see       _adjustCalendarWindowViewFrame
+ Called to update arrangement for current preferences.
  */
-- (void)_calendarWindowSizeDidChange;
+- (void)updateArrangementView;
 
-- (void)_layoutFrameDidChange;
+/*!
+ Called after the preferences affecting layout change to update appearance and behavior.
+ */
+- (void)layoutDidChange;
 
-- (void)_adjustCalendarWindowViewFrame;
+/*!
+ Called after split view finishes resize initiated by the user via mouse dragging to update layout preferences.
 
-- (void)_layoutSplitViewsWithParameters:(NSDictionary *)aParameters;
-
-- (void)_layoutRootSplitViewWithParameters:(NSDictionary *)aParameters;
-
-- (void)_layoutWeekSplitViewWithParameters:(NSDictionary *)aParameters;
-
-- (void)_layoutInfoSplitViewWithParameters:(NSDictionary *)aParameters;
-
-- (NSDictionary *)_parameters;
-
-- (NSDictionary *)_defaultParameters;
+ @param aSender Split view that was resized by the user.
+ */
+- (void)userDidChangeLayout:(WLLayoutArrangementView *)aSender;
 
 @end
+
+NS_ASSUME_NONNULL_END

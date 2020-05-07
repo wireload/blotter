@@ -8,73 +8,22 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import <WLFoundation/WLFoundation.h>
+
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSUInteger, WLLayoutViewTag)
-{
-    WLLayoutViewTagDate = 1,
-    WLLayoutViewTagTasks,
-    WLLayoutViewTagAllDay,
-    WLLayoutViewTagDay,
-    WLLayoutViewTagRightNow,
-    WLLayoutViewTagInfo,
-    WLLayoutViewTagWeek
-};
-
-#pragma mark - WLLayoutSplitView
-
-@class WLLayoutArrangementView;
-
-
-@protocol WLLayoutArrangementViewDelegate <NSSplitViewDelegate>
-
-@optional
-
-- (void)splitViewWillTrackMouse:(WLLayoutArrangementView *)aSplitView;
-
-- (void)splitViewDidTrackMouse:(WLLayoutArrangementView *)aSplitView;
-
-@end
-
-
 @interface WLLayoutArrangementView : NSSplitView
 
-@property (nullable, weak) id<WLLayoutArrangementViewDelegate> delegate;
+/*!
+ Position of a given divider in view's coordinate system.
+ */
+- (CGFloat)positionOfDividerAtIndex:(NSInteger)anIndex;
 
 @end
 
 
-@interface WLLayoutWeekSplitView : WLLayoutArrangementView
-@end
-
-#pragma mark - WLLayoutView
-
-@interface WLLayoutView : NSView
-@end
-
-
-@interface WLLayoutAllDayView : WLLayoutView
-@end
-
-
-@interface WLLayoutDateView : WLLayoutView
-@end
-
-
-@interface WLLayoutDayView : WLLayoutView
-@end
-
-
-@interface WLLayoutInfoSplitView : WLLayoutArrangementView
-@end
-
-
-@interface WLLayoutRightNowView : WLLayoutView
-@end
-
-
-@interface WLLayoutTasksView : WLLayoutView
+@interface WLLayoutArrangementPaneAuxView : WLLayerBackedView
 @end
 
 NS_ASSUME_NONNULL_END

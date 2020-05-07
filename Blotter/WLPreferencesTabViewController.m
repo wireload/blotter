@@ -15,6 +15,7 @@
 WLPreferencesIdentifier const WLGeneralPreferencesIdentifier = @"WLGeneralPreferences";
 WLPreferencesIdentifier const WLShortcutsPreferencesIdentifier = @"WLShortcutsPreferences";
 WLPreferencesIdentifier const WLPositioningPreferencesIdentifier = @"WLPositioningPreferences";
+WLPreferencesIdentifier const WLLayoutPreferencesIdentifier = @"WLLayoutPreferences";
 WLPreferencesIdentifier const WLCalendarsPreferencesIdentifier = @"WLCalendarsPreferences";
 WLPreferencesIdentifier const WLAboutPreferencesIdentifier = @"WLAboutPreferences";
 
@@ -90,6 +91,12 @@ const NSViewControllerTransitionOptions WLViewControllerTransitionResize = 0x200
     _positioningController.tabViewItem.identifier = WLPositioningPreferencesIdentifier;
     [self addTabViewItem:_positioningController.tabViewItem];
     [self didChangeValueForKey:@"positioningController"];
+
+    [self willChangeValueForKey:@"layoutController"];
+    _layoutController = [WLLayoutPreferencesViewController new];
+    _layoutController.tabViewItem.identifier = WLLayoutPreferencesIdentifier;
+    [self addTabViewItem:_layoutController.tabViewItem];
+    [self didChangeValueForKey:@"layoutController"];
 
     [self willChangeValueForKey:@"calendarsController"];
     _calendarsController = [WLCalendarsPreferencesViewController new];

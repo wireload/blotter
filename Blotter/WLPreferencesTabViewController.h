@@ -11,6 +11,7 @@
 #import "WLGeneralPreferencesViewController.h"
 #import "WLShortcutsPreferencesViewController.h"
 #import "WLPositioningPreferencesViewController.h"
+#import "WLLayoutPreferencesViewController.h"
 #import "WLCalendarsPreferencesViewController.h"
 #import "WLAboutPreferencesViewController.h"
 
@@ -21,6 +22,7 @@ typedef NSToolbarItemIdentifier WLPreferencesIdentifier NS_TYPED_EXTENSIBLE_ENUM
 extern WLPreferencesIdentifier const WLGeneralPreferencesIdentifier;
 extern WLPreferencesIdentifier const WLShortcutsPreferencesIdentifier;
 extern WLPreferencesIdentifier const WLPositioningPreferencesIdentifier;
+extern WLPreferencesIdentifier const WLLayoutPreferencesIdentifier;
 extern WLPreferencesIdentifier const WLCalendarsPreferencesIdentifier;
 extern WLPreferencesIdentifier const WLAboutPreferencesIdentifier;
 
@@ -36,6 +38,8 @@ extern const NSViewControllerTransitionOptions WLViewControllerTransitionResize;
 @property (nullable, readonly) WLGeneralPreferencesViewController *generalController;
 
 @property (nullable, readonly) WLShortcutsPreferencesViewController *shortcutsController;
+
+@property (nullable, readonly) WLLayoutPreferencesViewController *layoutController;
 
 @property (nullable, readonly) WLPositioningPreferencesViewController *positioningController;
 
