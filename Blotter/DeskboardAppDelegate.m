@@ -59,8 +59,10 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
         // @see -[WLCalendarWindowController tasksViewFrame] for default value of TasksViewHeight.
 
         // Migrate preferences and set defaults.
-        [userDefaults WL_migrateIfNeeded];
-        [userDefaults WL_validateAndFixIfNeeded];
+        __auto_type defaults = NSUserDefaults.standardUserDefaults;
+        [defaults WL_registerDefaults];
+        [defaults WL_migrateIfNeeded];
+        [defaults WL_validateAndFixIfNeeded];
     }
 }
 

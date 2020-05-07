@@ -31,6 +31,7 @@ extern NSInteger const WLBlotterBundleVersion2_2_5;
 
 extern NSInteger const WLBlotterBundleVersion2_2_6;
 
+
 extern NSString* const WLLastMigratedBundleVersionKey;
 
 extern NSString* const WLCalendarSizeKey;
@@ -113,6 +114,32 @@ extern NSString* const WLCustomFrameFactorsKey;
 
 extern NSString* const WLCalendarPositionKey;
 
+extern NSString* const WLCalendarLayoutKey;
+
+extern NSString* const WLMinimumDateViewWidthtKey;
+
+extern NSString* const WLMinimumDateViewHeightKey;
+
+extern NSString* const WLMinimumWeekViewWidthKey;
+
+extern NSString* const WLMinimumWeekViewHeightKey;
+
+extern NSString* const WLMinimumTasksViewWidthKey;
+
+extern NSString* const WLMinimumTasksViewHeightKey;
+
+extern NSString* const WLMinimumRightNowViewWidthKey;
+
+extern NSString* const WLMinimumRightNowViewHeightKey;
+
+extern NSString* const WLInfoViewsWidthKey;
+
+extern NSString* const WLDateViewHeightKey;
+
+extern NSString* const WLTasksViewHeightKey;
+
+extern NSString* const WLAllDayViewHeightKey;
+
 
 @interface NSUserDefaults (WLApplicationDefaults)
 
@@ -138,6 +165,14 @@ extern NSString* const WLCalendarPositionKey;
  */
 - (void)WL_migrateTo2_2_6;
 
+/*!
+ Register defaults values for application preferences.
+ */
+- (void)WL_registerDefaults;
+
+/*!
+ Verify that serialized application preferences are correct and fix them if needed.
+ */
 - (void)WL_validateAndFixIfNeeded;
 
 @end
@@ -214,9 +249,40 @@ extern NSString* const WLCalendarPositionKey;
 @end
 
 
+@interface NSUserDefaults (WLLayoutPreferences)
+
+@property WLCalendarLayout WL_calendarLayout;
+
+@property (readonly) CGFloat WL_minimumWeekViewWidth;
+
+@property (readonly) CGFloat WL_minimumWeekViewHeight;
+
+@property (readonly) CGFloat WL_minimumDateViewWidth;
+
+@property (readonly) CGFloat WL_minimumDateViewHeight;
+
+@property (readonly) CGFloat WL_minimumTasksViewWidth;
+
+@property (readonly) CGFloat WL_minimumTasksViewHeight;
+
+@property (readonly) CGFloat WL_minimumRightNowViewWidth;
+
+@property (readonly) CGFloat WL_minimumRightNowViewHeight;
+
+@property CGFloat WL_infoViewsWidth;
+
+@property CGFloat WL_dateViewHeight;
+
+@property CGFloat WL_tasksViewHeight;
+
+@property CGFloat WL_allDayViewHeight;
+
+@end
+
+
 @interface NSUserDefaults (WLPositioningPreferences)
 
-- (BLSize)WL_calendarSize;
+@property BLSize WL_calendarSize;
 
 /*!
  Frame expressed using the screen coordinate system.
@@ -225,7 +291,10 @@ extern NSString* const WLCalendarPositionKey;
 
 @property BLPosition WL_calendarPosition;
 
-@property (null_resettable, copy) NSUUID *WL_screenUUID;
+/*!
+ UUID of the screen selected by the user for the main window.
+ */
+@property (nullable, copy) NSUUID *WL_screenUUID;
 
 @end
 

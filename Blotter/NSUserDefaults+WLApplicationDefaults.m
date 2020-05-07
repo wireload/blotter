@@ -112,6 +112,32 @@ NSString* const WLCustomFrameFactorsKey = @"CustomFrameFactors";
 
 NSString* const WLCalendarPositionKey = @"CalendarPosition";
 
+NSString* const WLCalendarLayoutKey = @"CalendarLayout";
+
+NSString* const WLMinimumDateViewWidthtKey = @"MinimumDateViewWidth";
+
+NSString* const WLMinimumDateViewHeightKey = @"MinimumDateViewHeight";
+
+NSString* const WLMinimumWeekViewWidthKey = @"MinimumWeekViewWidth";
+
+NSString* const WLMinimumWeekViewHeightKey = @"MinimumWeekViewHeight";
+
+NSString* const WLMinimumTasksViewWidthKey = @"MinimumTasksViewWidth";
+
+NSString* const WLMinimumTasksViewHeightKey = @"MinimumTasksViewHeight";
+
+NSString* const WLMinimumRightNowViewWidthKey = @"MinimumRightNowViewWidth";
+
+NSString* const WLMinimumRightNowViewHeightKey = @"MinimumRightNowViewHeight";
+
+NSString* const WLInfoViewsWidthKey = @"InfoViewsWidth";
+
+NSString* const WLDateViewHeightKey = @"DateViewHeight";
+
+NSString* const WLTasksViewHeightKey = @"TasksViewHeight";
+
+NSString* const WLAllDayViewHeightKey = @"AllDayViewHeight";
+
 
 @implementation NSUserDefaults (WLApplicationDefaults)
 
@@ -285,13 +311,56 @@ NSString* const WLCalendarPositionKey = @"CalendarPosition";
 #pragma clang diagnostic pop
 }
 
+- (void)WL_registerDefaults
+{
+    NSURL *defaultsURL = [NSBundle.mainBundle URLForResource:@"defaults" withExtension:@"plist"];
+    NSMutableDictionary *defaults = [NSMutableDictionary dictionaryWithContentsOfURL:defaultsURL];
+
+    // See -[WLCalendarWindowController tasksViewFrame] for default value of TasksViewHeight.
+
+    __auto_type screens = NSScreen.screens;
+    if (screens.count)
+        defaults[WLScreenUUIDKey] = screens[0].WL_uuid.UUIDString;
+
+    [self registerDefaults:defaults];
+}
+
 - (void)WL_validateAndFixIfNeeded
 {
+    // TODO: log error
+
     if (![[NSUUID alloc] initWithUUIDString:[self stringForKey:WLScreenUUIDKey]])
     {
-        // TODO: log error
-        [self setObject:NSScreen.mainScreen.WL_uuid.UUIDString forKey:WLScreenUUIDKey];
+        __auto_type screens = NSScreen.screens;
+
+        if (screens.count)
+            [self setObject:screens[0].WL_uuid.UUIDString forKey:WLScreenUUIDKey];
+        else
+            [self removeObjectForKey:WLScreenUUIDKey];
     }
+
+    if (self.WL_calendarLayout >= WLCalendarLayoutCount)
+        [self removeObjectForKey:WLCalendarLayoutKey];
+
+    if (self.WL_calendarPosition >= BLPositionCount)
+        [self removeObjectForKey:WLCalendarPositionKey];
+
+    if (self.WL_calendarSize >= BLSizeCount)
+        [self removeObjectForKey:WLCalendarSizeKey];
+
+    NSRect factors = self.WL_customFrameFactors;
+    factors.origin.x = MAX(0.0, MIN(1.0, factors.origin.x));
+    factors.origin.y = MAX(0.0, MIN(1.0, factors.origin.y));
+    factors.size.width = MAX(0.0, MIN(1.0, factors.size.width));
+    factors.size.height = MAX(0.0, MIN(1.0, factors.size.height));
+
+    if (NSIsEmptyRect(factors))
+    {
+        [self removeObjectForKey:WLCustomFrameFactorsKey];
+        self.WL_calendarSize = BLNormalSize;
+    }
+    else
+        self.WL_customFrameFactors = factors;
 }
 
 @end
@@ -477,11 +546,176 @@ NSString* const WLCalendarPositionKey = @"CalendarPosition";
 @end
 
 
+@implementation NSUserDefaults (WLLayoutPreferences)
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_calendarLayout
+{
+    return [NSSet setWithObject:WLCalendarLayoutKey];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_minimumWeekViewWidth
+{
+    return [NSSet setWithObject:WLMinimumWeekViewWidthKey];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_minimumWeekViewHeight
+{
+    return [NSSet setWithObject:WLMinimumWeekViewHeightKey];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_infoViewsWidth
+{
+    return [NSSet setWithObject:WLInfoViewsWidthKey];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_dateViewHeight
+{
+    return [NSSet setWithObject:WLDateViewHeightKey];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_tasksViewHeight
+{
+    return [NSSet setWithObject:WLTasksViewHeightKey];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_allDayViewHeight
+{
+    return [NSSet setWithObject:WLAllDayViewHeightKey];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_minimumDateViewWidth
+{
+    return [NSSet setWithObject:WLMinimumDateViewWidthtKey];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_minimumDateViewHeight
+{
+    return [NSSet setWithObject:WLMinimumDateViewHeightKey];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_minimumTasksViewWidth
+{
+    return [NSSet setWithObject:WLMinimumTasksViewWidthKey];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_minimumTasksViewHeight
+{
+    return [NSSet setWithObject:WLMinimumTasksViewHeightKey];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_minimumRightNowViewWidth
+{
+    return [NSSet setWithObject:WLMinimumRightNowViewWidthKey];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_minimumRightNowViewHeight
+{
+    return [NSSet setWithObject:WLMinimumRightNowViewHeightKey];
+}
+
+- (WLCalendarLayout)WL_calendarLayout
+{
+    return [[self objectForKey:WLCalendarLayoutKey] unsignedIntegerValue];
+}
+
+- (void)setWL_calendarLayout:(WLCalendarLayout)newLayout
+{
+    [self setObject:@(newLayout) forKey:WLCalendarLayoutKey];
+}
+
+- (CGFloat)WL_minimumWeekViewHeight
+{
+    return [self doubleForKey:WLMinimumWeekViewHeightKey];
+}
+
+- (CGFloat)WL_minimumWeekViewWidth
+{
+    return [self doubleForKey:WLMinimumWeekViewWidthKey];
+}
+
+- (CGFloat)WL_infoViewsWidth
+{
+    return [self doubleForKey:WLInfoViewsWidthKey];
+}
+
+- (void)setWL_infoViewsWidth:(CGFloat)newWidth
+{
+    [self setDouble:newWidth forKey:WLInfoViewsWidthKey];
+}
+
+- (CGFloat)WL_dateViewHeight
+{
+    return [self doubleForKey:WLDateViewHeightKey];
+}
+
+- (void)setWL_dateViewHeight:(CGFloat)newHeight
+{
+    [self setDouble:newHeight forKey:WLDateViewHeightKey];
+}
+
+- (CGFloat)WL_tasksViewHeight
+{
+    return [self doubleForKey:WLTasksViewHeightKey];
+}
+
+- (void)setWL_tasksViewHeight:(CGFloat)newHeight
+{
+    [self setDouble:newHeight forKey:WLTasksViewHeightKey];
+}
+
+- (CGFloat)WL_allDayViewHeight
+{
+    return [self doubleForKey:WLAllDayViewHeightKey];
+}
+
+- (void)setWL_allDayViewHeight:(CGFloat)newHeight
+{
+    [self setDouble:newHeight forKey:WLAllDayViewHeightKey];
+}
+
+- (CGFloat)WL_minimumDateViewWidth
+{
+    return [self doubleForKey:WLMinimumDateViewWidthtKey];
+}
+
+- (CGFloat)WL_minimumDateViewHeight
+{
+    return [self doubleForKey:WLMinimumDateViewHeightKey];
+}
+
+- (CGFloat)WL_minimumTasksViewWidth
+{
+    return [self doubleForKey:WLMinimumTasksViewWidthKey];
+}
+
+- (CGFloat)WL_minimumTasksViewHeight
+{
+    return [self doubleForKey:WLMinimumTasksViewHeightKey];
+}
+
+- (CGFloat)WL_minimumRightNowViewWidth
+{
+    return [self doubleForKey:WLMinimumRightNowViewWidthKey];
+}
+
+- (CGFloat)WL_minimumRightNowViewHeight
+{
+    return [self doubleForKey:WLMinimumRightNowViewHeightKey];
+}
+
+@end
+
+
 @implementation NSUserDefaults (WLPositioningPreferences)
 
 + (NSSet<NSString *> *)keyPathsForValuesAffectingWL_customFrameFactors
 {
     return [NSSet setWithObject:WLCustomFrameFactorsKey];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_calendarSize
+{
+    return [NSSet setWithObject:WLCalendarSizeKey];
 }
 
 + (NSSet<NSString *> *)keyPathsForValuesAffectingWL_calendarPosition
@@ -496,41 +730,32 @@ NSString* const WLCalendarPositionKey = @"CalendarPosition";
 
 - (NSRect)WL_customFrameFactors
 {
-    NSRect factors = NSRectFromString([self stringForKey:WLCustomFrameFactorsKey]);
-    factors.origin.x = MAX(0.0, MIN(1.0, factors.origin.x));
-    factors.origin.y = MAX(0.0, MIN(1.0, factors.origin.y));
-    factors.size.width = MAX(0.0, MIN(1.0, factors.size.width));
-    factors.size.height = MAX(0.0, MIN(1.0, factors.size.height));
-    return factors;
+    return NSRectFromString([self stringForKey:WLCustomFrameFactorsKey]);
 }
 
 - (void)setWL_customFrameFactors:(NSRect)newFactors
 {
-    newFactors.origin.x = MAX(0.0, MIN(1.0, newFactors.origin.x));
-    newFactors.origin.y = MAX(0.0, MIN(1.0, newFactors.origin.y));
-    newFactors.size.width = MAX(0.0, MIN(1.0, newFactors.size.width));
-    newFactors.size.height = MAX(0.0, MIN(1.0, newFactors.size.height));
     [self setObject:NSStringFromRect(newFactors) forKey:WLCustomFrameFactorsKey];
 }
 
 - (BLSize)WL_calendarSize
 {
-    return (BLSize)[self integerForKey:WLCalendarSizeKey];
+    return [[self objectForKey:WLCalendarSizeKey] unsignedIntegerValue];
+}
+
+- (void)setWL_calendarSize:(BLSize)newSize
+{
+    [self setObject:@(newSize) forKey:WLCalendarSizeKey];
 }
 
 - (BLPosition)WL_calendarPosition
 {
-    BLPosition p = [self integerForKey:WLCalendarPositionKey];
-
-    if (p < 0 || 0 >= BLPositionCount)
-        p = BLPositionCenterCenter;
-
-    return p;
+    return [[self objectForKey:WLCalendarPositionKey] unsignedIntegerValue];
 }
 
 - (void)setWL_calendarPosition:(BLPosition)newPosition
 {
-    [self setInteger:newPosition forKey:WLCalendarPositionKey];
+    [self setObject:@(newPosition) forKey:WLCalendarPositionKey];
 }
 
 - (NSUUID *)WL_screenUUID
@@ -540,10 +765,7 @@ NSString* const WLCalendarPositionKey = @"CalendarPosition";
 
 - (void)setWL_screenUUID:(NSUUID *)newUUID
 {
-    if (newUUID)
-        [self setObject:newUUID.UUIDString forKey:WLScreenUUIDKey];
-    else
-        [self setObject:NSScreen.mainScreen.WL_uuid.UUIDString forKey:WLScreenUUIDKey];
+    [self setObject:newUUID.UUIDString forKey:WLScreenUUIDKey];
 }
 
 @end
