@@ -11,14 +11,14 @@
 #import <WLFoundation/WLFoundation.h>
 
 #import "WLPreferencesViewController.h"
-#import "WLWindowArrangementView.h"
+#import "WLFrameArrangementView.h"
 #import "WLScreensController.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
 
 /*!
- Preferences pane controller for the size and position of the calendar window on the screen.
+ Preferences view controller for the size and position of the calendar window on screen.
 
  @discussion
  When active, actively observers screen size and settings that affect positioning.
@@ -31,21 +31,14 @@ NS_ASSUME_NONNULL_BEGIN
  dynamically to changes in Screen's visible frame. A side effect being that pixel size of Window
  may differ between configurations e.g. due to Dock's reappearance.
  */
-@interface WLPositioningPreferencesViewController : WLPreferencesViewController <WLWindowArrangementDelegate>
-{
-    IBOutlet WLScreensController *_screensController;
-}
-
-@property (strong) IBOutlet WLWindowArrangementView *arrangementView;
-
-@property (strong) IBOutlet NSLayoutConstraint *arrangementViewWidthConstraint;
-
-@property (strong) IBOutlet NSLayoutConstraint *arrangementViewHeightConstraint;
+@interface WLPositioningPreferencesViewController : WLPreferencesViewController <WLFrameArrangementDelegate>
 
 /*!
- Called after either screen or relevant application settings changed.
+ Called when configuration of the connected screens changes to update the arrangement view.
+
+ @see NSApplicationDidChangeScreenParametersNotification
  */
-- (void)calendarWindowArrangementDidChange;
+- (void)screensDidChange:(NSNotification *)aNotification;
 
 /*!
  Called to update state of the arrangement view, optionally animating.
@@ -59,6 +52,9 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSSize)preferredArrangementViewSize;
 
+/*!
+ Calculate frame ratios for given position, size and screen.
+ */
 - (NSRect)mockupFrameRatiosForPosition:(BLPosition)aPosition size:(BLSize)aSize onScreen:(NSScreen *)aScreen;
 
 /*!

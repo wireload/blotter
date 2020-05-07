@@ -12,40 +12,39 @@
 #import <WLFoundation/WLFoundation.h>
 
 #import "WLGraphics.h"
-#import "WLMockupView.h"
+#import "WLCalendarMockupView.h"
 #import "WLCalendarWindowController.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
 
 /*!
- @const WLWindowArrangementModePositioning Arrange the window using sticky areas.
+ @const WLFrameArrangementModePositioning Arrange the window using sticky areas.
 
- @const WLWindowArrangementModeResizing Arrange the window by manually adjusting its position and size.
+ @const WLFrameArrangementModeResizing Arrange the window by manually adjusting its position and size.
  */
-typedef NS_OPTIONS(NSUInteger, WLWindowArrangementMode)
+typedef NS_OPTIONS(NSUInteger, WLFrameArrangementMode)
 {
-    WLWindowArrangementModePositioning = 1 << 0,
-    WLWindowArrangementModeResizing = 1 << 1
+    WLFrameArrangementModePositioning = 1 << 0,
+    WLFrameArrangementModeResizing = 1 << 1
 };
 
 
-typedef NS_ENUM(NSUInteger, WLWindowArrangementAnimation)
+typedef NS_ENUM(NSUInteger, WLFrameArrangementAnimation)
 {
-    WLWindowArrangementAnimationResizingGridViewAppearance,
-    WLWindowArrangementAnimationResizingGridViewDisappearance,
-    WLWindowArrangementAnimationPositioningGridViewAppearance,
-    WLWindowArrangementAnimationPositioningGridViewDisappearance,
-    WLWindowArrangementAnimationPositioningGridViewGuideHover,
-    WLWindowArrangementAnimationMockupFrameUpdate
+    WLFrameArrangementAnimationResizingGridViewAppearance,
+    WLFrameArrangementAnimationResizingGridViewDisappearance,
+    WLFrameArrangementAnimationPositioningGridViewAppearance,
+    WLFrameArrangementAnimationPositioningGridViewDisappearance,
+    WLFrameArrangementAnimationPositioningGridViewGuideHover,
+    WLFrameArrangementAnimationMockupFrameUpdate
 };
 
 
-@protocol WLWindowArrangementDelegate;
-@class WLWindowArrangementResizingGridAuxView;
-@class WLWindowArrangementPositioningGridAuxView;
-@class WLWindowArrangementHandlesAuxView;
-@class WLWindowArrangementScene;
+@protocol WLFrameArrangementDelegate;
+@class WLFrameArrangementResizingGridAuxView;
+@class WLFrameArrangementPositioningGridAuxView;
+@class WLFrameArrangementHandlesAuxView;
 
 
 /*!
@@ -55,9 +54,9 @@ typedef NS_ENUM(NSUInteger, WLWindowArrangementAnimation)
  The control displays a mockup of the the window that a user may edit by modifying the mockupFrameRatios.
 
  There are two editing modes:
-    1. WLWindowArrangementModePositioning in which the mockup can only change position and only by using
+    1. WLFrameArrangementModePositioning in which the mockup can only change position and only by using
        the predefined areas
-    2. WLWindowArrangementModeResizing in which the user has all control
+    2. WLFrameArrangementModeResizing in which the user has all control
 
  The -drawingAlignedFrameSize:forEditingMode: method allows to calculate view's size for pixel-perfect
  drawing for the current editingmode.
@@ -66,7 +65,7 @@ typedef NS_ENUM(NSUInteger, WLWindowArrangementAnimation)
  */
 @interface WLFrameArrangementView : WLLayerBackedView
 
-@property (weak) id<WLWindowArrangementDelegate> delegate;
+@property (weak) id<WLFrameArrangementDelegate> delegate;
 
 /*!
  Area taken by the mockup frame with respect to view's coordinates (top left being the origin)
@@ -88,7 +87,7 @@ typedef NS_ENUM(NSUInteger, WLWindowArrangementAnimation)
  */
 @property (nonatomic) NSSize mockupMinFrameSizeRatios;
 
-@property (nonatomic) WLWindowArrangementMode editingMode;
+@property (nonatomic) WLFrameArrangementMode editingMode;
 
 /*!
  Whether mockup frame should snap to grid during resizing.
@@ -115,9 +114,9 @@ typedef NS_ENUM(NSUInteger, WLWindowArrangementAnimation)
  */
 @property (readonly) BOOL isPositioning;
 
-@property (strong, readonly) WLMockupView *mockupView;
+@property (strong, readonly) WLCalendarMockupView *mockupView;
 
-@property (strong, readonly) WLWindowArrangementHandlesAuxView *handlesView;
+@property (strong, readonly) WLFrameArrangementHandlesAuxView *handlesView;
 
 /*!
  Return an animation scene that modifies mockup frame.
@@ -127,7 +126,7 @@ typedef NS_ENUM(NSUInteger, WLWindowArrangementAnimation)
 /*!
  Return an animation scene that modifies editing mode.s
  */
-- (WLAnimationScene *)animateEditingMode:(WLWindowArrangementMode)newEditingMode;
+- (WLAnimationScene *)animateEditingMode:(WLFrameArrangementMode)newEditingMode;
 
 /*!
  Called when resizing begins.
@@ -179,16 +178,16 @@ typedef NS_ENUM(NSUInteger, WLWindowArrangementAnimation)
  */
 - (void)positioningDidFinish;
 
-- (WLWindowArrangementResizingGridAuxView *)makeResizingGridView;
+- (WLFrameArrangementResizingGridAuxView *)makeResizingGridView;
 
-- (WLWindowArrangementPositioningGridAuxView *)makePositioningGridView;
+- (WLFrameArrangementPositioningGridAuxView *)makePositioningGridView;
 
-- (WLWindowArrangementHandlesAuxView *)makeHandlesView;
+- (WLFrameArrangementHandlesAuxView *)makeHandlesView;
 
 /*!
  Align frame size for the best visuals.
  */
-- (NSSize)drawingAlignedFrameSize:(NSSize)aSize forEditingMode:(WLWindowArrangementMode)anEditingMode;
+- (NSSize)drawingAlignedFrameSize:(NSSize)aSize forEditingMode:(WLFrameArrangementMode)anEditingMode;
 
 @end
 
@@ -196,7 +195,7 @@ typedef NS_ENUM(NSUInteger, WLWindowArrangementAnimation)
 /*!
  Handles that user can drag to resize the mockup.
  */
-@interface WLWindowArrangementHandlesAuxView : WLLayerBackedView
+@interface WLFrameArrangementHandlesAuxView : WLLayerBackedView
 
 - (nullable NSImageView *)viewForHandle:(WLEdge)aHandle;
 
@@ -229,7 +228,7 @@ typedef NS_ENUM(NSUInteger, WLWindowArrangementAnimation)
  Sepration of the drawing and layout coordinate systems allows to render rectangles in a way that
  makes them appear perfectly aligned with the guide lines.
  */
-@interface WLWindowArrangementResizingGridAuxView : WLLayerBackedView
+@interface WLFrameArrangementResizingGridAuxView : WLLayerBackedView
 
 @property (readonly) NSRect layoutBounds;
 
@@ -276,7 +275,7 @@ typedef NS_ENUM(NSUInteger, WLWindowArrangementAnimation)
  @discussion
  The arrangement view aligns view's frame to match the desktop view.
  */
-@interface WLWindowArrangementPositioningGridAuxView : WLLayerBackedView
+@interface WLFrameArrangementPositioningGridAuxView : WLLayerBackedView
 
 /*!
  Make new guide view that is highlighted when hovered.
@@ -314,32 +313,32 @@ typedef NS_ENUM(NSUInteger, WLWindowArrangementAnimation)
 @end
 
 
-@protocol WLWindowArrangementDelegate
+@protocol WLFrameArrangementDelegate
 
 /*!
  Verify and adjust mockup frame ratios/
  */
-- (NSRect)windowArrangement:(WLFrameArrangementView *)anArrangement didChangeMockupFrameRatios:(NSRect)newFrameRatios;
+- (NSRect)frameArrangement:(WLFrameArrangementView *)anArrangement didChangeMockupFrameRatios:(NSRect)newFrameRatios;
 
 /*!
  Verify and adjust mockup frame ratios for the selected position.
 */
-- (NSRect)windowArrangement:(WLFrameArrangementView *)anArrangement didChangeMockupPosition:(BLPosition)aPosition;
+- (NSRect)frameArrangement:(WLFrameArrangementView *)anArrangement didChangeMockupPosition:(BLPosition)aPosition;
 
 /*!
  Whether the view should run the animation.
 
  @discussion
- In addition to -[WLWindowArrangement animate…] methods that allow external code to animate certain properties
+ In addition to -[WLFrameArrangementView animate…] methods that allow external code to animate certain properties
  the view may also schedule animations on its own in response to user actions. This method allows the delegate
  to opt out from running the latter.
  */
-- (BOOL)windowArrangement:(WLFrameArrangementView *)anArrangement shouldAnimate:(WLWindowArrangementAnimation)anAnimation;
+- (BOOL)frameArrangement:(WLFrameArrangementView *)anArrangement shouldAnimate:(WLFrameArrangementAnimation)anAnimation;
 
 @end
 
 
-@interface NSCursor (WLWindowArrangement)
+@interface NSCursor (WLFrameArrangementView)
 
 + (NSCursor *)WL_cursorForEdge:(WLEdge)anEdge;
 

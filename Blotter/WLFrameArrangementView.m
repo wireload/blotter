@@ -8,7 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import "WLDesktopView.h"
+#import "WLDesktopMockupView.h"
 #import "WLGraphics.h"
 #import "WLFrameArrangementView.h"
 #import "NSColor+WLPrefColors.h"
@@ -28,9 +28,9 @@ static const CGFloat _WLGridLineWidth = 1.0;
 
 @implementation WLFrameArrangementView
 {
-    WLDesktopView *_desktopView;
-    WLWindowArrangementResizingGridAuxView *_resizingGridView;
-    WLWindowArrangementPositioningGridAuxView *_positioningGridView;
+    WLDesktopMockupView *_desktopView;
+    WLFrameArrangementResizingGridAuxView *_resizingGridView;
+    WLFrameArrangementPositioningGridAuxView *_positioningGridView;
 
 #if DEBUG_EDITING
     NSBox *_editingGuideView;
@@ -112,7 +112,7 @@ static const CGFloat _WLGridLineWidth = 1.0;
     [self.window invalidateCursorRectsForView:self];
 }
 
-- (void)setEditingMode:(WLWindowArrangementMode)newEditingMode
+- (void)setEditingMode:(WLFrameArrangementMode)newEditingMode
 {
     if (_editingMode == newEditingMode)
         return;
@@ -123,11 +123,11 @@ static const CGFloat _WLGridLineWidth = 1.0;
 
     switch (newEditingMode)
     {
-        case WLWindowArrangementModeResizing:
+        case WLFrameArrangementModeResizing:
             self.handlesView.alphaValue = 1.0;
             [self positioningDidCancel];
             break;
-        case WLWindowArrangementModePositioning:
+        case WLFrameArrangementModePositioning:
             self.handlesView.alphaValue = 0.0;
             [self resizingDidCancel];
             break;
@@ -138,17 +138,17 @@ static const CGFloat _WLGridLineWidth = 1.0;
 
 - (BOOL)shouldSnapToGrid
 {
-    return _editingMode == WLWindowArrangementModeResizing && !(NSEvent.modifierFlags & NSControlKeyMask);
+    return _editingMode == WLFrameArrangementModeResizing && !(NSEvent.modifierFlags & NSControlKeyMask);
 }
 
 - (BOOL)shouldPreserveAspectRatio
 {
-    return _editingMode == WLWindowArrangementModeResizing && (NSEvent.modifierFlags & NSShiftKeyMask);
+    return _editingMode == WLFrameArrangementModeResizing && (NSEvent.modifierFlags & NSShiftKeyMask);
 }
 
 - (BOOL)shouldPreserveCenter
 {
-    return _editingMode == WLWindowArrangementModeResizing && (NSEvent.modifierFlags & NSAlternateKeyMask);
+    return _editingMode == WLFrameArrangementModeResizing && (NSEvent.modifierFlags & NSAlternateKeyMask);
 }
 
 - (BOOL)isResizing
@@ -158,16 +158,16 @@ static const CGFloat _WLGridLineWidth = 1.0;
 
 #pragma mark Methods
 
-- (NSSize)drawingAlignedFrameSize:(NSSize)aSize forEditingMode:(WLWindowArrangementMode)anEditingMode
+- (NSSize)drawingAlignedFrameSize:(NSSize)aSize forEditingMode:(WLFrameArrangementMode)anEditingMode
 {
     aSize = NSMakeSize(fdim(aSize.width, _WLCellWidth), fdim(aSize.height, _WLCellWidth));
 
     switch (anEditingMode)
     {
-        case WLWindowArrangementModeResizing:
+        case WLFrameArrangementModeResizing:
             aSize = [_resizingGridView drawingAlignedFrameSize:aSize];
             break;
-        case WLWindowArrangementModePositioning:
+        case WLFrameArrangementModePositioning:
             aSize = [_positioningGridView drawingAlignedFrameSize:aSize];
             break;
     }
@@ -206,7 +206,7 @@ static const CGFloat _WLGridLineWidth = 1.0;
     return scene;
 }
 
-- (WLAnimationScene *)animateEditingMode:(WLWindowArrangementMode)newEditingMode
+- (WLAnimationScene *)animateEditingMode:(WLFrameArrangementMode)newEditingMode
 {
     __weak __auto_type weakSelf = self;
     __auto_type scene = [WLAnimationScene sceneWithChanges:^(WLAnimationSequence * _Nonnull aSequence) {
@@ -231,12 +231,12 @@ static const CGFloat _WLGridLineWidth = 1.0;
 
         switch (newEditingMode)
         {
-            case WLWindowArrangementModeResizing:
+            case WLFrameArrangementModeResizing:
                 opacityAnimation.beginTime = [strongSelf.handlesView.layer convertTime:CACurrentMediaTime() fromLayer:nil] + NSAnimationContext.currentContext.duration * 0.5;
                 opacityAnimation.fromValue = @0.0;
                 opacityAnimation.toValue = @1.0;
                 break;
-            case WLWindowArrangementModePositioning:
+            case WLFrameArrangementModePositioning:
                 opacityAnimation.fromValue = @1.0;
                 opacityAnimation.toValue = @0.0;
                 break;
@@ -331,7 +331,7 @@ static const CGFloat _WLGridLineWidth = 1.0;
 
 
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-        if ([self.delegate windowArrangement:self shouldAnimate:WLWindowArrangementAnimationResizingGridViewAppearance])
+        if ([self.delegate frameArrangement:self shouldAnimate:WLFrameArrangementAnimationResizingGridViewAppearance])
         {
             CALayer *presentationLayer = _resizingGridView.layer.presentationLayer;
             CGFloat currentValue = presentationLayer ? presentationLayer.opacity : _resizingGridView.alphaValue;
@@ -653,11 +653,11 @@ static const CGFloat _WLGridLineWidth = 1.0;
         return;
 
     [self willChangeValueForKey:@"mockupFrameRatios"];
-    _mockupFrameRatios = [self.delegate windowArrangement:self didChangeMockupFrameRatios:_resizingFrameRatios];
+    _mockupFrameRatios = [self.delegate frameArrangement:self didChangeMockupFrameRatios:_resizingFrameRatios];
     [self didChangeValueForKey:@"mockupFrameRatios"];
 
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-        if ([self.delegate windowArrangement:self shouldAnimate:WLWindowArrangementAnimationResizingGridViewDisappearance])
+        if ([self.delegate frameArrangement:self shouldAnimate:WLFrameArrangementAnimationResizingGridViewDisappearance])
         {
             CALayer *presentationLayer = _resizingGridView.layer.presentationLayer;
             CGFloat currentValue = presentationLayer ? presentationLayer.opacity : _resizingGridView.alphaValue;
@@ -694,7 +694,7 @@ static const CGFloat _WLGridLineWidth = 1.0;
 
     self.needsUpdateConstraints = YES;
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
-        if ([self.delegate windowArrangement:self shouldAnimate:WLWindowArrangementAnimationMockupFrameUpdate])
+        if ([self.delegate frameArrangement:self shouldAnimate:WLFrameArrangementAnimationMockupFrameUpdate])
             context.duration = 0.1;
         else
             context.duration = 0.0;
@@ -774,7 +774,7 @@ static const CGFloat _WLGridLineWidth = 1.0;
     [self.window invalidateCursorRectsForView:self];
 
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-        if ([self.delegate windowArrangement:self shouldAnimate:WLWindowArrangementAnimationPositioningGridViewAppearance])
+        if ([self.delegate frameArrangement:self shouldAnimate:WLFrameArrangementAnimationPositioningGridViewAppearance])
         {
             CALayer *presentationLayer = _positioningGridView.layer.presentationLayer;
             CGFloat currentValue = presentationLayer ? presentationLayer.opacity : _positioningGridView.alphaValue;
@@ -800,8 +800,8 @@ static const CGFloat _WLGridLineWidth = 1.0;
     _positioningTopConstraint.constant = _startingPositioningTopLeft.y + offset.height;
 
     NSPoint locationInGridView = [_positioningGridView convertPoint:aPoint fromView:self];
-    BOOL shouldAnimate = [self.delegate windowArrangement:self
-                                            shouldAnimate:WLWindowArrangementAnimationPositioningGridViewGuideHover];
+    BOOL shouldAnimate = [self.delegate frameArrangement:self
+                                           shouldAnimate:WLFrameArrangementAnimationPositioningGridViewGuideHover];
     [_positioningGridView highlightPosition:[_positioningGridView positionForPoint:locationInGridView]
                                    animated:shouldAnimate];
 
@@ -815,14 +815,14 @@ static const CGFloat _WLGridLineWidth = 1.0;
 
     NSPoint locationInGridView = [_positioningGridView convertPoint:aPoint fromView:self];
     BLPosition newPosition = [_positioningGridView positionForPoint:locationInGridView];
-    NSRect frameRatios = [self.delegate windowArrangement:self didChangeMockupPosition:newPosition];
+    NSRect frameRatios = [self.delegate frameArrangement:self didChangeMockupPosition:newPosition];
 
     [self willChangeValueForKey:@"mockupFrameRatios"];
     _mockupFrameRatios = frameRatios;
     [self didChangeValueForKey:@"mockupFrameRatios"];
 
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-        if ([self.delegate windowArrangement:self shouldAnimate:WLWindowArrangementAnimationPositioningGridViewDisappearance])
+        if ([self.delegate frameArrangement:self shouldAnimate:WLFrameArrangementAnimationPositioningGridViewDisappearance])
         {
             CALayer *presentationLayer = _positioningGridView.layer.presentationLayer;
             CGFloat currentValue = presentationLayer ? presentationLayer.opacity : _positioningGridView.alphaValue;
@@ -859,7 +859,7 @@ static const CGFloat _WLGridLineWidth = 1.0;
 
     self.needsUpdateConstraints = YES;
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
-        if ([self.delegate windowArrangement:self shouldAnimate:WLWindowArrangementAnimationMockupFrameUpdate])
+        if ([self.delegate frameArrangement:self shouldAnimate:WLFrameArrangementAnimationMockupFrameUpdate])
             context.duration = 0.1;
         else
             context.duration = 0.0;
@@ -883,25 +883,25 @@ static const CGFloat _WLGridLineWidth = 1.0;
     [self.window invalidateCursorRectsForView:self];
 }
 
-- (WLWindowArrangementResizingGridAuxView *)makeResizingGridView
+- (WLFrameArrangementResizingGridAuxView *)makeResizingGridView
 {
-    WLWindowArrangementResizingGridAuxView *v = [WLWindowArrangementResizingGridAuxView new];
+    WLFrameArrangementResizingGridAuxView *v = [WLFrameArrangementResizingGridAuxView new];
     v.translatesAutoresizingMaskIntoConstraints = NO;
     v.alphaValue = 0.0;
     return v;
 }
 
-- (WLWindowArrangementPositioningGridAuxView *)makePositioningGridView
+- (WLFrameArrangementPositioningGridAuxView *)makePositioningGridView
 {
-    WLWindowArrangementPositioningGridAuxView *v = [WLWindowArrangementPositioningGridAuxView new];
+    WLFrameArrangementPositioningGridAuxView *v = [WLFrameArrangementPositioningGridAuxView new];
     v.translatesAutoresizingMaskIntoConstraints = NO;
     v.alphaValue = 0.0;
     return v;
 }
 
-- (WLWindowArrangementHandlesAuxView *)makeHandlesView
+- (WLFrameArrangementHandlesAuxView *)makeHandlesView
 {
-    __auto_type v = [WLWindowArrangementHandlesAuxView new];
+    __auto_type v = [WLFrameArrangementHandlesAuxView new];
     v.translatesAutoresizingMaskIntoConstraints = NO;
     v.alphaValue = 0.0;
     return v;
@@ -931,7 +931,7 @@ static const CGFloat _WLGridLineWidth = 1.0;
     [super prepareForBackingLayer];
     self.layerContentsRedrawPolicy = NSViewLayerContentsRedrawOnSetNeedsDisplay;
 
-    _desktopView = [WLDesktopView new];
+    _desktopView = [WLDesktopMockupView new];
     [self addSubview:_desktopView];
     [NSLayoutConstraint activateConstraints:@[
         [_desktopView.leftAnchor constraintEqualToAnchor:self.leftAnchor constant:_WLCellWidth],
@@ -958,7 +958,7 @@ static const CGFloat _WLGridLineWidth = 1.0;
         [_positioningGridView.bottomAnchor constraintEqualToAnchor:_desktopView.bottomAnchor]
     ]];
 
-    _mockupView = [WLMockupView new];
+    _mockupView = [WLCalendarMockupView new];
     [self addSubview:_mockupView];
     [NSLayoutConstraint activateConstraints:@[
         [_mockupView.leftAnchor constraintGreaterThanOrEqualToAnchor:_desktopView.leftAnchor],
@@ -994,7 +994,7 @@ static const CGFloat _WLGridLineWidth = 1.0;
 
     _resizingHandle = WLEdgeInvalid;
     self.mockupFrameRatios = NSMakeRect(0.375, 0.375, 0.25, 0.25);
-    self.editingMode = WLWindowArrangementModeResizing;
+    self.editingMode = WLFrameArrangementModeResizing;
 }
 
 #pragma mark NSView
@@ -1059,7 +1059,7 @@ static const CGFloat _WLGridLineWidth = 1.0;
 
     switch (_editingMode)
     {
-        case WLWindowArrangementModeResizing:
+        case WLFrameArrangementModeResizing:
         {
             _resizingHandleLeftConstraint.constant = -_WLCellWidth;
             _resizingHandleTopConstraint.constant = -_WLCellWidth;
@@ -1078,7 +1078,7 @@ static const CGFloat _WLGridLineWidth = 1.0;
 
             break;
         }
-        case WLWindowArrangementModePositioning:
+        case WLFrameArrangementModePositioning:
         {
             _resizingHandleLeftConstraint.constant = 0.0;
             _resizingHandleTopConstraint.constant = 0.0;
@@ -1110,7 +1110,7 @@ static const CGFloat _WLGridLineWidth = 1.0;
 {
     [super resetCursorRects];
 
-    if (_editingMode == WLWindowArrangementModeResizing)
+    if (_editingMode == WLFrameArrangementModeResizing)
     {
         if (!self.isResizing)
         {
@@ -1172,7 +1172,7 @@ static const CGFloat _WLGridLineWidth = 1.0;
 - (void)mouseDown:(NSEvent *)anEvent
 {
     switch (_editingMode) {
-        case WLWindowArrangementModeResizing:
+        case WLFrameArrangementModeResizing:
         {
             NSPoint locationInView = [self convertPoint:anEvent.locationInWindow fromView:nil];
             NSPoint locationInResizeView = [_handlesView convertPoint:locationInView fromView:self];
@@ -1187,7 +1187,7 @@ static const CGFloat _WLGridLineWidth = 1.0;
 
             break;
         }
-        case WLWindowArrangementModePositioning:
+        case WLFrameArrangementModePositioning:
         {
             NSPoint locationInMockupView = [_mockupView convertPoint:anEvent.locationInWindow fromView:nil];
 
@@ -1260,7 +1260,7 @@ static NSUserInterfaceItemIdentifier const _WLAttachmentAnimationIdentifier = @"
 static NSUserInterfaceItemIdentifier const _WLDetachmentAnimationIdentifier = @"WLDetachmentAnimation";
 
 
-@implementation WLWindowArrangementHandlesAuxView
+@implementation WLFrameArrangementHandlesAuxView
 {
     NSImageView *_handleViews[WLEdgeCount];
     NSLayoutGuide *_handleGuides[WLEdgeCount];
@@ -1426,7 +1426,7 @@ static NSUserInterfaceItemIdentifier const _WLDetachmentAnimationIdentifier = @"
 @end
 
 
-@implementation WLWindowArrangementResizingGridAuxView
+@implementation WLFrameArrangementResizingGridAuxView
 
 #pragma mark Properties
 
@@ -1568,7 +1568,7 @@ static NSUserInterfaceItemIdentifier const _WLDetachmentAnimationIdentifier = @"
 - (void)prepareForBackingLayer
 {
     [super prepareForBackingLayer];
-    self.layerContentsRedrawPolicy = NSViewLayerContentsRedrawBeforeViewResize;
+    self.layerContentsRedrawPolicy = NSViewLayerContentsRedrawDuringViewResize;
 }
 
 #pragma mark NSView
@@ -1656,7 +1656,7 @@ static const CGFloat _WLGuideLineWidth = _WLGuideLineLength / 2.0;
 static const CGFloat _WLGuideViewSpacing = 10.0;
 
 
-@implementation WLWindowArrangementPositioningGridAuxView
+@implementation WLFrameArrangementPositioningGridAuxView
 {
     NSBox *_guideViews[BLPositionCount];
     BLPosition _highlightedPosition;
@@ -1884,7 +1884,7 @@ static const CGFloat _WLGuideViewSpacing = 10.0;
 
 #pragma mark -
 
-@implementation NSCursor (WLWindowArrangement)
+@implementation NSCursor (WLFrameArrangementView)
 
 + (NSCursor *)WL_cursorForEdge:(WLEdge)anEdge
 {
