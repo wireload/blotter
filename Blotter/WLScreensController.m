@@ -21,11 +21,11 @@ NSString* const WLScreenDescriptionKeyUUID = @"ScreenUUID";
 
 - (void)awakeFromNib
 {
-    self.content = [self screens];
+    self.content = [self screenDescriptions];
     [NSNotificationCenter.defaultCenter addObserver:self
-                                           selector:@selector(screensDidChange)
+                                           selector:@selector(screensDidChange:)
                                                name:NSApplicationDidChangeScreenParametersNotification
-                                             object:nil];
+                                             object:NSApp];
     [NSUserDefaults.standardUserDefaults addObserver:self
                                           forKeyPath:WLScreenUUIDKey
                                              options:NSKeyValueObservingOptionNew
@@ -34,18 +34,17 @@ NSString* const WLScreenDescriptionKeyUUID = @"ScreenUUID";
 
 - (void)dealloc
 {
-    [NSNotificationCenter.defaultCenter removeObserver:self];
     [NSUserDefaults.standardUserDefaults removeObserver:self forKeyPath:WLScreenUUIDKey];
 }
 
 #pragma mark Methods
 
-- (NSArray<WLScreenDescription *> *)screens
+- (NSArray<WLScreenDescription *> *)screenDescriptions
 {
     __auto_type screens = NSScreen.screens;
     NSMutableArray *screenObjects = [NSMutableArray arrayWithCapacity:screens.count];
 
-    __auto_type selectedScreenUUID = NSUserDefaults.standardUserDefaults.WL_screenUUID;
+    NSUUID *selectedScreenUUID = NSUserDefaults.standardUserDefaults.WL_screenUUID;
     BOOL foundSelectedScreen = NO;
 
     for (NSScreen *s in screens)
@@ -63,7 +62,7 @@ NSString* const WLScreenDescriptionKeyUUID = @"ScreenUUID";
         }];
     }
 
-    if (!foundSelectedScreen)
+    if (!foundSelectedScreen && selectedScreenUUID)
     {
         [screenObjects insertObject:@{
             WLScreenDescriptionKeyUUID: selectedScreenUUID,
@@ -74,9 +73,9 @@ NSString* const WLScreenDescriptionKeyUUID = @"ScreenUUID";
     return screenObjects;
 }
 
-- (void)screensDidChange
+- (void)screensDidChange:(NSNotification *)aNotification
 {
-    self.content = [self screens];
+    self.content = [self screenDescriptions];
 }
 
 #pragma mark NSObject
@@ -87,7 +86,7 @@ NSString* const WLScreenDescriptionKeyUUID = @"ScreenUUID";
                        context:(void *)aContext
 {
     if ([aKeyPath isEqualToString:WLScreenUUIDKey])
-        [self screensDidChange];
+        [self screensDidChange:nil];
     else
         [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];
 }

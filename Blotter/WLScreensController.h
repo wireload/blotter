@@ -37,12 +37,14 @@ typedef NSDictionary<WLScreenDescriptionKey, id> WLScreenDescription;
  List of descriptions for all currently connected screens + an optional dummy description
  for the unplugged user-selected screen.
  */
-- (NSArray<WLScreenDescription *> *)screens;
+- (NSArray<WLScreenDescription *> *)screenDescriptions;
 
 /*!
- Called when either selected screen or list of available screens changes.
+ Called when configuration of the connected screens changes to update controller's content.
+
+ @see NSApplicationDidChangeScreenParametersNotification
  */
-- (void)screensDidChange;
+- (void)screensDidChange:(nullable NSNotification *)aNotification;
 
 @end
 
