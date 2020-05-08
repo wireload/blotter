@@ -1,5 +1,5 @@
 //
-//  WLASLLog
+//  WLLog
 //  WLFoundation
 //
 //  Created by Ilya Kulakov on 03.10.12.
@@ -8,13 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NSString * WLLogName NS_TYPED_EXTENSIBLE_ENUM;
+
 
 typedef NSString * (^WLASLLogMessenger)(void);
 
 
 /*!
     @brief  Provides logging facility which is supposed to be alternate to NSLog.
-            It's ASL-based, and asynchronous and up to x378 faster.
+            It's os_log (ASL, if not available) and asynchronous and up to x378 faster.
 
             There are 2 group of methods that represent semi-async and async approaches:
 
@@ -23,20 +25,20 @@ typedef NSString * (^WLASLLogMessenger)(void);
             - Async means that both logging and composing is done in the concurrent queue. This approach may be not suitable for
               mutable data, because logging time is undefined and therefore data might change.
  */
-@interface WLASLLog : NSObject
+@interface WLLog : NSObject
 
-- (instancetype)initWithName:(NSString *)aName;
++ (instancetype)logForName:(WLLogName)aName;
 
-- (instancetype)initWithFileDescriptor:(int)aFileDescriptor name:(NSString *)aName NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithName:(WLLogName)aName;
+
+- (instancetype)initWithFileDescriptor:(int)aFileDescriptor name:(WLLogName)aName NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)initWithFile:(NSFileHandle *)aFileHandle name:(NSString *)aName;
-
-+ (instancetype)logForName:(NSString *)aName;
 
 @end
 
 
-@interface WLASLLog (SemiAsynchronous)
+@interface WLLog (SemiAsynchronous)
 
 - (void)logAlert:(NSString *)aFormat, ...;
 
@@ -55,7 +57,7 @@ typedef NSString * (^WLASLLogMessenger)(void);
 @end
 
 
-@interface WLASLLog (Asynchronous)
+@interface WLLog (Asynchronous)
 
 - (void)logAlertWithMessenger:(WLASLLogMessenger)aMessenger;
 

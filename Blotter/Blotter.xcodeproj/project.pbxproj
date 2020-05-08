@@ -43,6 +43,7 @@
 		BA2F955A20F4309E000544FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2F955920F4309E000544FA /* main.m */; };
 		BA2F955E20F4309E000544FA /* Mixpanel.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = BA2F955320F4309E000544FA /* Mixpanel.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BA4C215422E92EF800D0C973 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA4C215322E92EF800D0C973 /* Main.storyboard */; };
+		BA5D90A72465B52200CF1CE6 /* WLLogNames.m in Sources */ = {isa = PBXBuildFile; fileRef = BA5D90A62465B52200CF1CE6 /* WLLogNames.m */; };
 		BA699BA620F86C3600F3A0F9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA699BA520F86C3600F3A0F9 /* AppDelegate.m */; };
 		BA699BAB20F86C3800F3A0F9 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA699BA920F86C3800F3A0F9 /* MainMenu.xib */; };
 		BA699BAE20F86C3800F3A0F9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BA699BAD20F86C3800F3A0F9 /* main.m */; };
@@ -299,6 +300,8 @@
 		BA4C214A22E8ED2900D0C973 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/WLGeneralPreferencesViewController.strings; sourceTree = "<group>"; };
 		BA4C214B22E8ED2E00D0C973 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/WLGeneralPreferencesViewController.strings; sourceTree = "<group>"; };
 		BA4C215322E92EF800D0C973 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		BA5D90A52465B52200CF1CE6 /* WLLogNames.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLLogNames.h; sourceTree = "<group>"; };
+		BA5D90A62465B52200CF1CE6 /* WLLogNames.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLLogNames.m; sourceTree = "<group>"; };
 		BA6955DA22E619E90047152A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/WLAboutPreferencesViewController.xib; sourceTree = "<group>"; };
 		BA6955DB22E628560047152A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/WLAboutPreferencesViewController.strings; sourceTree = "<group>"; };
 		BA6955DC22E628690047152A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/WLAboutPreferencesViewController.strings; sourceTree = "<group>"; };
@@ -744,6 +747,8 @@
 				BA731EE1210A7F2A0019BE8B /* WLMacro.h */,
 				BA7A22DE219A3DE50078CF86 /* WLAnalytics.h */,
 				BA7A22DF219A3DE50078CF86 /* WLAnalytics.m */,
+				BA5D90A52465B52200CF1CE6 /* WLLogNames.h */,
+				BA5D90A62465B52200CF1CE6 /* WLLogNames.m */,
 			);
 			name = Blotter;
 			sourceTree = "<group>";
@@ -1199,6 +1204,7 @@
 				BA1B33B122EE96C600FFF0D1 /* WLShortcutsPreferencesViewController.m in Sources */,
 				BC599AB4A76677D3767F215A /* WLCalendarDayEventsBackgroundLayer.m in Sources */,
 				BC599C624B5E265A7EBB16E3 /* WLCalendarWeekView.m in Sources */,
+				BA5D90A72465B52200CF1CE6 /* WLLogNames.m in Sources */,
 				BC5997B3EB9782C3E77A2BFB /* WLCalendarEventLayer.m in Sources */,
 				BC5997F3D69F5BF811DAD1A9 /* WLCalendarDayEventsLayer.m in Sources */,
 				BC5992DF714338D62CE3D801 /* WLCalendarTimeIndicatorLayer.m in Sources */,

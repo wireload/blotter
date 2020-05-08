@@ -90,8 +90,8 @@
 		BAF67CAF16D606090047FE2A /* WLEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C9F16D606090047FE2A /* WLEvents.m */; };
 		BAF67CB016D606090047FE2A /* WLLayerView.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF67CA016D606090047FE2A /* WLLayerView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BAF67CB116D606090047FE2A /* WLLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67CA116D606090047FE2A /* WLLayerView.m */; };
-		BC599131671997B089C3D4C8 /* WLASLLog.m in Sources */ = {isa = PBXBuildFile; fileRef = BC599C7F0C238E9F874213D0 /* WLASLLog.m */; };
-		BC5997CEDCD382068CDD26E3 /* WLASLLog.h in Headers */ = {isa = PBXBuildFile; fileRef = BC599C9AE6ABE5619B104BB3 /* WLASLLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC599131671997B089C3D4C8 /* WLLog.m in Sources */ = {isa = PBXBuildFile; fileRef = BC599C7F0C238E9F874213D0 /* WLLog.m */; };
+		BC5997CEDCD382068CDD26E3 /* WLLog.h in Headers */ = {isa = PBXBuildFile; fileRef = BC599C9AE6ABE5619B104BB3 /* WLLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC599E2DFEB2244DCB9952E8 /* WLSmartClock.h in Headers */ = {isa = PBXBuildFile; fileRef = BC5995CD6AFDCECCAD38C456 /* WLSmartClock.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC599F8A6F0C3B7C3E67165E /* WLSmartClock.m in Sources */ = {isa = PBXBuildFile; fileRef = BC599A9B15C63A85CA872284 /* WLSmartClock.m */; };
 /* End PBXBuildFile section */
@@ -195,8 +195,8 @@
 		BAF67CA116D606090047FE2A /* WLLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayerView.m; sourceTree = "<group>"; };
 		BC5995CD6AFDCECCAD38C456 /* WLSmartClock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLSmartClock.h; sourceTree = "<group>"; };
 		BC599A9B15C63A85CA872284 /* WLSmartClock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLSmartClock.m; sourceTree = "<group>"; };
-		BC599C7F0C238E9F874213D0 /* WLASLLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLASLLog.m; sourceTree = "<group>"; };
-		BC599C9AE6ABE5619B104BB3 /* WLASLLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLASLLog.h; sourceTree = "<group>"; };
+		BC599C7F0C238E9F874213D0 /* WLLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLog.m; sourceTree = "<group>"; };
+		BC599C9AE6ABE5619B104BB3 /* WLLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLog.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,8 +335,8 @@
 				BA1B33FF22F4178A00FFF0D1 /* WLAnimationSequence.m */,
 				BA105B4A24093BCE009DD0E3 /* WLAnimation.h */,
 				BA105B4824093BB7009DD0E3 /* WLAnimation.m */,
-				BC599C9AE6ABE5619B104BB3 /* WLASLLog.h */,
-				BC599C7F0C238E9F874213D0 /* WLASLLog.m */,
+				BC599C9AE6ABE5619B104BB3 /* WLLog.h */,
+				BC599C7F0C238E9F874213D0 /* WLLog.m */,
 				BAF67C9C16D606090047FE2A /* WLBlockLayer.h */,
 				BAF67C9D16D606090047FE2A /* WLBlockLayer.m */,
 				BA81DA81160DA0C800C83DC3 /* WLDateRange.h */,
@@ -381,7 +381,7 @@
 				BA81DA85160DA0C800C83DC3 /* WLDateRange.h in Headers */,
 				BA81DAC1160DA7FB00C83DC3 /* WLFoundation.h in Headers */,
 				BA9AFB9B163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.h in Headers */,
-				BC5997CEDCD382068CDD26E3 /* WLASLLog.h in Headers */,
+				BC5997CEDCD382068CDD26E3 /* WLLog.h in Headers */,
 				BAF67C9016D604200047FE2A /* IKPowerSources.h in Headers */,
 				BA105B4B24093BDE009DD0E3 /* WLAnimation.h in Headers */,
 				BA3E472521813FB50088A49D /* WLReceipt.h in Headers */,
@@ -558,7 +558,7 @@
 				BA81DA86160DA0C800C83DC3 /* WLDateRange.m in Sources */,
 				BA3E471E21813FB50088A49D /* per_encoder.c in Sources */,
 				BA3E471321813FB50088A49D /* BIT_STRING.c in Sources */,
-				BC599131671997B089C3D4C8 /* WLASLLog.m in Sources */,
+				BC599131671997B089C3D4C8 /* WLLog.m in Sources */,
 				BA9AFB9C163AB71E00FAAAD3 /* NSMutableArray+WLRemoveDuplicates.m in Sources */,
 				BAF67C9116D604200047FE2A /* IKPowerSources.m in Sources */,
 				BA3E471B21813FB50088A49D /* INTEGER.c in Sources */,

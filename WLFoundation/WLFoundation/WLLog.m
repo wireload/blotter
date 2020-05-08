@@ -1,12 +1,12 @@
 //
-//  WLASLLog
+//  WLLog
 //  WLFoundation
 //
 //  Created by Ilya Kulakov on 03.10.12.
 //  Copyright 2012 WireLoad. All rights reserved.
 //
 
-#import "WLASLLog.h"
+#import "WLLog.h"
 #import <asl.h>
 
 
@@ -16,13 +16,13 @@ static void _WLFreeASLClient(aslclient aClient)
 }
 
 
-@implementation WLASLLog
+@implementation WLLog
 {
     dispatch_queue_t loggerQueue;
     aslclient aslClient;
 }
 
-- (instancetype)initWithFileDescriptor:(int)aFileDescriptor name:(NSString *)aName
+- (instancetype)initWithFileDescriptor:(int)aFileDescriptor name:(WLLogName)aName
 {
     self = [super init];
 
@@ -34,7 +34,7 @@ static void _WLFreeASLClient(aslclient aClient)
         aslClient = asl_open(NULL, aName.UTF8String, ASL_OPT_STDERR);
         asl_set_filter(aslClient, ASL_FILTER_MASK_UPTO(ASL_LEVEL_DEBUG));
 #else
-        aslClient = asl_open(NULL, [aName UTF8String], 0);
+        aslClient = asl_open(NULL, aName.UTF8String, 0);
 #endif // DEBUG
 
         dispatch_set_context(loggerQueue, aslClient);
@@ -47,7 +47,7 @@ static void _WLFreeASLClient(aslclient aClient)
     return self;
 }
 
-- (instancetype)initWithName:(NSString *)aName
+- (instancetype)initWithName:(WLLogName)aName
 {
     return [self initWithFileDescriptor:-1 name:aName];
 }
@@ -62,10 +62,9 @@ static void _WLFreeASLClient(aslclient aClient)
     return [self initWithFileDescriptor:aFileHandle.fileDescriptor name:aName];
 }
 
-
 #pragma mark Methods
 
-+ (instancetype)logForName:(NSString *)aName
++ (instancetype)logForName:(WLLogName)aName
 {
     static dispatch_once_t Once;
     static NSMutableDictionary *Logs = nil;
@@ -76,11 +75,11 @@ static void _WLFreeASLClient(aslclient aClient)
 
     @synchronized (Logs)
     {
-        WLASLLog *l = Logs[aName];
+        WLLog *l = Logs[aName];
 
         if (!l)
         {
-            l = [[WLASLLog alloc] initWithName:aName];
+            l = [[WLLog alloc] initWithName:aName];
             Logs[aName] = l;
         }
         
@@ -91,9 +90,9 @@ static void _WLFreeASLClient(aslclient aClient)
 @end
 
 
-@implementation WLASLLog (SemiAsynchronous)
+@implementation WLLog (SemiAsynchronous)
 
-NS_INLINE void LogMessage(WLASLLog *self, int aLevel, NSString *aFormat, va_list args)
+NS_INLINE void LogMessage(WLLog *self, int aLevel, NSString *aFormat, va_list args)
 {
     NSString *message = [[NSString alloc] initWithFormat:aFormat arguments:args];
     dispatch_async(self->loggerQueue, ^{
@@ -169,9 +168,9 @@ NS_INLINE void LogMessage(WLASLLog *self, int aLevel, NSString *aFormat, va_list
 @end
 
 
-@implementation WLASLLog (Asynchronous)
+@implementation WLLog (Asynchronous)
 
-NS_INLINE void LogMessageWithMessager(WLASLLog *self, int aLevel, WLASLLogMessenger aMessager)
+NS_INLINE void LogMessageWithMessager(WLLog *self, int aLevel, WLASLLogMessenger aMessager)
 {
     dispatch_async(self->loggerQueue, ^{
         asl_log(self->aslClient, NULL, aLevel, "%s", aMessager().UTF8String);

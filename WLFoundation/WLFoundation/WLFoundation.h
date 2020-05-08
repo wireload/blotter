@@ -14,7 +14,7 @@
 #import <WLFoundation/IKPowerSources.h>
 #import <WLFoundation/WLAnimation.h>
 #import <WLFoundation/WLAnimationSequence.h>
-#import <WLFoundation/WLASLLog.h>
+#import <WLFoundation/WLLog.h>
 #import <WLFoundation/WLBlockLayer.h>
 #import <WLFoundation/WLDateRange.h>
 #import <WLFoundation/WLEvents.h>
