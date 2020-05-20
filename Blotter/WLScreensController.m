@@ -7,9 +7,12 @@
 //
 
 #import <IOKit/graphics/IOGraphicsLib.h>
+
 #import <WLFoundation/WLFoundation.h>
-#import "WLScreensController.h"
+
 #import "NSUserDefaults+WLApplicationDefaults.h"
+#import "WLLogNames.h"
+#import "WLScreensController.h"
 
 
 NSString* const WLScreenDescriptionKeyLocalizedName = @"ScreenName";
@@ -133,6 +136,18 @@ NSString* const WLScreenDescriptionKeyUUID = @"ScreenUUID";
 // http://stackoverflow.com/questions/1236498/how-to-get-the-display-name-with-the-display-id-in-mac-os-x/1241627#1241627
 - (NSString *)WL_localizedScreenName
 {
+    NSString *localizedName = nil;
+
+    // NSScreen exposes localized name in 10.15+
+
+    if (@available(macOS 10.15, *))
+    {
+        localizedName = self.localizedName;
+
+        if (localizedName.length)
+            return localizedName;
+    }
+
     CGDirectDisplayID displayID = [self.WL_identifier unsignedIntValue];
 
 #pragma clang diagnostic push
@@ -144,16 +159,14 @@ NSString* const WLScreenDescriptionKeyUUID = @"ScreenUUID";
 
     NSDictionary *localizedNames = deviceInfo[@(kDisplayProductName)];
 
-    NSString *deviceName = nil;
     if (localizedNames.count > 0)
-        deviceName = [localizedNames[localizedNames.allKeys[0]] copy];
-    else
-    {
-        // TODO: log the error
-        deviceName = NSLocalizedString(@"Unknown display", @"Placeholder when name of the screen cannot be given");
-    }
+        localizedName = [localizedNames[localizedNames.allKeys[0]] copy];
 
-    return deviceName;
+    if (localizedName.length)
+        return localizedName;
+
+    [[WLLog logForName:WLLogNameBlotter] logNotice:@"Unable to get name for screen %@", self.deviceDescription];
+    return NSLocalizedString(@"Unknown display", @"Placeholder when name of the screen cannot be given");
 }
 
 - (NSString *)WL_localizedScreenSizeString
