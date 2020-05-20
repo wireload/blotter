@@ -79,7 +79,7 @@
 
 @implementation CALayer (WLAnimation)
 
-- (void)WL_performRecursively:(void (^)(CALayer *aLayer))aBlock
+- (void)WL_performRecursively:(NS_NOESCAPE void (^)(CALayer *aLayer))aBlock
 {
     aBlock(self);
     for (CALayer *l in self.sublayers)
@@ -103,7 +103,7 @@
 
 @implementation CATransaction (WLBlocks)
 
-+ (void)WL_performWithDisabledActions:(void (^)(void))aBlock
++ (void)WL_performWithDisabledActions:(NS_NOESCAPE void (^)(void))aBlock
 {
     BOOL old = [self disableActions];
 

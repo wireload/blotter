@@ -40,7 +40,6 @@ typedef NS_ENUM(NSInteger, WLAnimationSequenceState) {
 
 typedef NS_ENUM(NSInteger, WLAnimationSceneState) {
     WLAnimationSceneStateNone = 0,
-    WLAnimationSceneStatePreparing,
     WLAnimationSceneStateRunning,
     WLAnimationSceneStateCancelling,
     WLAnimationSceneStateCompleted
@@ -116,6 +115,21 @@ typedef NS_OPTIONS(NSUInteger, WLAnimationCancellationPolicy) {
 
 typedef void (^WLAnimationHandler)(WLAnimationSequence *aSequence);
 
+static const WLAnimationHandler WLAnimationHandlerNoop = ^(WLAnimationSequence *aSequence){};
+
+
+typedef NS_OPTIONS(NSUInteger, WLAnimationSceneMergePolicy) {
+    WLAnimationSceneMergePolicyMergeAll = 0,
+    WLAnimationSceneMergePolicyPreservePreparationHandler,
+    WLAnimationSceneMergePolicyPreserveDefaultDuration,
+    WLAnimationSceneMergePolicyPreserveDefaultTimingFunction,
+    WLAnimationSceneMergePolicyPreserveDefaultAllowsImplicitAnimation,
+    WLAnimationSceneMergePolicyPreserveDurationHandler,
+    WLAnimationSceneMergePolicyPreserveCancellationHandler,
+    WLAnimationSceneMergePolicyPreserveCompletionHandler,
+    WLAnimationSceneMergePolicyPreserveIdentifier
+};
+
 
 /*!
  An execution unit inside WLAnimationSequence that actually schedules the animations.
@@ -128,17 +142,21 @@ typedef void (^WLAnimationHandler)(WLAnimationSequence *aSequence);
  @discussion
  If actual animations are driven by Core Animation the initial values
  must be set within a separate transaction to avoid being coalesced (which would result in no animation).
+
+ The handler is executed even if the scene is cancelled before it had a chance to run. In that case,
+ scene's state will be WLAnimationSceneStateCancelling and not WLAnimationSceneStateRunning.
  */
 @property (nullable, copy) WLAnimationHandler preparationHandler;
 
 /*!
  Animation actions, e.g. using the animator proxy.
+
+ @note The handler is not executed if the scene is cancelled before it had a chance to run.
  */
-@property (copy) WLAnimationHandler changesHandler;
+@property (nonatomic, nullable, copy) WLAnimationHandler changesHandler;
 
 /*!
- Cancellation actions that fast-forward all animations specified in the scene and bring all changes
- to their final values.
+ Cancellation actions that all changes to their final values effectively ending all animations.
  */
 @property (nullable, copy) WLAnimationHandler cancellationHandler;
 
@@ -192,8 +210,10 @@ typedef void (^WLAnimationHandler)(WLAnimationSequence *aSequence);
  Duration of the scene.
 
  @discussion
- If constant duration set via the defaultDuration property is not suffician, dynamic duration can be provided
+ If constant duration set via the defaultDuration property is not sufficiant, dynamic duration can be provided
  via a block.
+
+ The handler is re-evaluted for every change and may be updated while the scene is running.
 
  @see defaultDuration
  */
@@ -225,14 +245,14 @@ typedef void (^WLAnimationHandler)(WLAnimationSequence *aSequence);
  If the scene is already running, calls the cancellation handler (if present).
  If not, the cancellation handler (if present) will be called upon run.
  */
-- (BOOL)cancel;
+- (void)cancel;
 
 /*!
  Add additional changes to the scene.
 
  @discussion
  If the scene is already running, runs the changes immediately. If not,
- the changes are queued and executed in order after the changes handler.
+ the changes are queued and executed in order after changesHandler.
 
  The scene completes only after all changes complete.
 
@@ -246,30 +266,34 @@ typedef void (^WLAnimationHandler)(WLAnimationSequence *aSequence);
  @discussion
  This method allows to "attach" animations that run outside of the sequence.
 
- The scene completes only after all attached changes complete.
+ The scene completes only after all changes complete.
 
  @throws NSInternalInconsistencyException if the scene is cancelling or already completed.
  */
 - (void)runChanges:(NS_NOESCAPE void (^)(void))aBlock;
 
+- (void)mergeWithScene:(WLAnimationScene *)aScene;
+
 /*!
- Apply preparation, changes and cancellation handlers if possible.
+ Apply changes from aScene to the current scene.
 
  @param aScene Scene to be applied.
+
+ @param aPolicy Rules that allow to preserve certain properties of the receiver.
 
  @discussion
  aScene is consumed in the process and its state is changed to Completed.
 
- If the scene didn't run yet, then all handlers are replaced.
- If the scene is preparing, then only the \c changesHandler and \c cancellationHandler are replaced.
- If the scene is already running, then the \c changesHandler is executed immediately and \c cancellationHander is replaced.
- Otherwise an exception is thrown.
+ Only non-nil handlers are used as replacements. To intentionally remove a handler
+ specify the WLAnimationHandlerNoop block.
+
+ One practical application is to replace the scene in-place.
 
  @throws NSInternalInconsistencyException if aScene is already a part of some sequence.
 
  @throws NSInternalInconsistencyException if the scene is cancelling or already completed.
  */
-- (void)applyScene:(WLAnimationScene *)aScene;
+- (void)mergeWithScene:(WLAnimationScene *)aScene policy:(WLAnimationSceneMergePolicy)aPolicy;
 
 /*!
  Set duration of the current animation context by taking into account whether slow motion is requested
@@ -303,7 +327,7 @@ typedef void (^WLAnimationHandler)(WLAnimationSequence *aSequence);
 @property (nonatomic, readonly, getter=isRunning) BOOL running;
 
 /*!
- Scene that is currently running.
+ Scene that is currently running. 
  */
 @property (nullable, readonly) WLAnimationScene *currentScene;
 
@@ -329,11 +353,15 @@ typedef void (^WLAnimationHandler)(WLAnimationSequence *aSequence);
  */
 @property (nonatomic) WLAnimationCancellationPolicy autoCancellationPolicy;
 
+/*!
+ Pending scenes yet to be executed.
+
+ @note KVO-observable
+
+ @see mutableScenes
+ */
 @property (readonly, strong) NSArray<WLAnimationScene *> *scenes;
 
-/*!
- @throws Throws if the sequence has already finished.
- */
 @property (nonatomic, readonly, strong) NSMutableArray<WLAnimationScene *> *mutableScenes;
 
 - (nullable WLAnimationScene *)sceneWithIdentifier:(NSUserInterfaceItemIdentifier)anIdentifier;
@@ -398,7 +426,10 @@ typedef void (^WLAnimationHandler)(WLAnimationSequence *aSequence);
  Mark the sequence for cancellation.
 
  @discussion
- Cancel the current scene and then cancel'n'run the remaining scenes.
+ Cancel the current scene and then either cancel'n'run the remaining scenes
+ or call sequence's cancellation handler and complete.
+
+ @see cancellationHandler
  */
 - (void)cancelWithReason:(WLAnimationStateReason)aReason;
 

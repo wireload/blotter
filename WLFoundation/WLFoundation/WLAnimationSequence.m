@@ -10,9 +10,9 @@
 #import <os/trace.h>
 #import <os/activity.h>
 
-#import "WLAnimation.h"
-
 #import "WLAnimationSequence.h"
+#import "WLAnimation.h"
+#import "WLLog.h"
 
 
 const WLAnimationStateReason WLAnimationStateReasonInherit = -1;
@@ -57,6 +57,9 @@ _WLNoReentryScopeEnter(var);
 #define WLNoReentryScope(aVarPtr) _WLNoReentryScope(OS_CONCAT(WLNoReentryScope, __COUNTER__), aVarPtr)
 
 
+static const WLLogName _WLAnimationLog = @"net.wireload.blotter.mac.Animation";
+
+
 @interface WLAnimationSequence ()
 @property (class, readonly) BOOL willAppKitSlowMotion;
 @property (weak) WLAnimationSequence *linkedSequence;
@@ -71,10 +74,9 @@ _WLNoReentryScopeEnter(var);
 {
     __weak WLAnimationSequence *_owningSequence;
     NSMutableArray<WLAnimationHandler> *_changes;
-
-    NSUInteger _completionCounter;
-
+    NSUInteger _pendingChangesCount;
     WLAnimationSceneState _nextState;
+    BOOL _isPreparing;
 
     WLAnimationTrace *_preparationTrace;
     NSMutableArray<WLAnimationTrace *> *_changesTraces;
@@ -113,7 +115,7 @@ _WLNoReentryScopeEnter(var);
 
     if (self)
     {
-        _changesHandler = [aChangesHandler copy];
+        self.changesHandler = aChangesHandler;
     }
 
     return self;
@@ -124,22 +126,34 @@ _WLNoReentryScopeEnter(var);
     switch (_state)
     {
         case WLAnimationSceneStateNone:
-            // TODO: better logging
-            NSLog(@"%@ was allocated but not used", self);
+            [[WLLog logForName:_WLAnimationLog] logDebug:@"%@ was allocated but not used", self];
             break;
         case WLAnimationSceneStateCompleted:
             break;
         case WLAnimationSceneStateRunning:
         case WLAnimationSceneStateCancelling:
-        case WLAnimationSceneStatePreparing:
-            // TODO: better logging
-            NSAssert(NO, @"cannot deallocate while in state %lu", _state);
+            [[WLLog logForName:_WLAnimationLog] logError:@"cannot deallocate %@ while in state %lu", self, _state];
+            NSAssert(NO, @"cannot deallocate %@ while in state %lu", self, _state);
             break;
     }
 }
 
 #pragma mark Properties
+@dynamic changesHandler;
 @synthesize identifier;
+
+- (WLAnimationHandler)changesHandler
+{
+    return _changes.count ? _changes[0] : nil;
+}
+
+- (void)setChangesHandler:(WLAnimationHandler)newHandler
+{
+    if (_state == WLAnimationSceneStateCompleted)
+        [NSException raise:NSInternalInconsistencyException format:@"invalid state %lu", _state];
+
+    _changes[0] = [newHandler copy];
+}
 
 #pragma mark Methods
 
@@ -154,16 +168,10 @@ _WLNoReentryScopeEnter(var);
         switch (_nextState)
         {
             case WLAnimationSceneStateRunning:
-                if (_preparationHandler)
-                    [self _prepareAndRun:aSequence];
-                else
-                    [self _run:aSequence];
-                break;
             case WLAnimationSceneStateCancelling:
-                [self _cancel:aSequence andComplete:YES];
+                [self _prepareAndRunOrCancel:aSequence];
                 break;
             case WLAnimationSceneStateNone:
-            case WLAnimationSceneStatePreparing:
             case WLAnimationSceneStateCompleted:
                 [NSException raise:NSInternalInconsistencyException format:@"invalid state %lu", _nextState];
                 break;
@@ -171,29 +179,31 @@ _WLNoReentryScopeEnter(var);
     }));
 }
 
-- (BOOL)cancel
+- (void)cancel
 {
-    __block BOOL result = NO;
-
     os_activity_initiate("-[WLAnimationScene cancel]", OS_ACTIVITY_FLAG_DEFAULT, (^{
         switch (_state)
         {
             case WLAnimationSceneStateNone:
                 _nextState = WLAnimationSceneStateCancelling;
-                result = YES;
                 break;
-            case WLAnimationSceneStatePreparing:
             case WLAnimationSceneStateRunning:
-                result = [self _cancel:_owningSequence andComplete:NO];
+                if (_isPreparing)
+                    _nextState = WLAnimationSceneStateCancelling;
+                else
+                {
+                    [self willChangeValueForKey:@"state"];
+                    _state = WLAnimationSceneStateCancelling;
+                    [self _cancel:_owningSequence andComplete:NO];
+                }
                 break;
             case WLAnimationSceneStateCancelling:
+                break;
             case WLAnimationSceneStateCompleted:
-                result = YES;
+                [NSException raise:NSInternalInconsistencyException format:@"invalid state %lu", _state];
                 break;
         }
     }));
-
-    return result;
 }
 
 - (void)addChanges:(WLAnimationHandler)aChangesHandler
@@ -204,15 +214,19 @@ _WLNoReentryScopeEnter(var);
         switch (_state)
         {
             case WLAnimationSceneStateNone:
-            case WLAnimationSceneStatePreparing:
                 [_changes addObject:[aChangesHandler copy]];
                 break;
             case WLAnimationSceneStateRunning:
             {
-                [self runChanges:^{
-                    WLNoReentryScope(&owningSequence->_reentryCanary);
-                    aChangesHandler(owningSequence);
-                }];
+                if (_isPreparing)
+                    [_changes addObject:[aChangesHandler copy]];
+                else
+                {
+                    [self runChanges:^{
+                        WLNoReentryScope(&owningSequence->_reentryCanary);
+                        aChangesHandler(owningSequence);
+                    }];
+                }
                 break;
             }
             case WLAnimationSceneStateCancelling:
@@ -229,13 +243,12 @@ _WLNoReentryScopeEnter(var);
         switch (_state)
         {
             case WLAnimationSceneStateNone:
-            case WLAnimationSceneStatePreparing:
             case WLAnimationSceneStateRunning:
             {
                 __auto_type completion = ^{
-                    self->_completionCounter -= 1;
+                    self->_pendingChangesCount -= 1;
 
-                    if (self->_state != WLAnimationSceneStateNone)
+                    if (self->_state != WLAnimationSceneStateNone && !self->_isPreparing)
                         [self _completeIfNeeded:self->_owningSequence];
                 };
 
@@ -243,7 +256,7 @@ _WLNoReentryScopeEnter(var);
                 objc_setAssociatedObject(completion, &WLTransactionsToken, traces, OBJC_ASSOCIATION_RETAIN);
 
                 [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull aContext) {
-                    self->_completionCounter += 1;
+                    self->_pendingChangesCount += 1;
                     [self _configureAnimationContext];
 
                     aBlock();
@@ -261,7 +274,12 @@ _WLNoReentryScopeEnter(var);
     }));
 }
 
-- (void)applyScene:(WLAnimationScene *)aScene
+- (void)mergeWithScene:(WLAnimationScene *)aScene
+{
+    [self mergeWithScene:aScene policy:WLAnimationSceneMergePolicyMergeAll];
+}
+
+- (void)mergeWithScene:(WLAnimationScene *)aScene policy:(WLAnimationSceneMergePolicy)aPolicy
 {
     {
         __auto_type owningSequence = aScene->_owningSequence;
@@ -269,29 +287,54 @@ _WLNoReentryScopeEnter(var);
             [NSException raise:NSInvalidArgumentException format:@"aScene is already added to %@", owningSequence];
     }
 
+#define WLSetIfNotNil(aTo, aFrom) \
+    { \
+        __auto_type aFromVar = aFrom; \
+        if (aFromVar != nil) \
+            aTo = aFromVar; \
+    }
+
+
     switch (_state)
     {
         case WLAnimationSceneStateNone:
-            self.preparationHandler = aScene.preparationHandler;
-            self.completionHandler = aScene.completionHandler;
-        case WLAnimationSceneStatePreparing:
-            self.changesHandler = aScene.changesHandler;
-            self.durationHandler = aScene.durationHandler;
+            if ((aPolicy & WLAnimationSceneMergePolicyPreservePreparationHandler) == 0)
+                WLSetIfNotNil(self.preparationHandler, aScene.preparationHandler);
+
             [_changes removeAllObjects];
-            [_changes addObjectsFromArray:aScene->_changes];
-            self.cancellationHandler = aScene.cancellationHandler;
-            break;
         case WLAnimationSceneStateRunning:
-            self.cancellationHandler = aScene.cancellationHandler;
-            [self addChanges:aScene.changesHandler];
+            if ((aPolicy & WLAnimationSceneMergePolicyPreserveDefaultDuration) == 0)
+                WLSetIfNotNil(self.defaultDuration, aScene.defaultDuration);
+
+            if ((aPolicy & WLAnimationSceneMergePolicyPreserveDefaultTimingFunction) == 0)
+                WLSetIfNotNil(self.defaultTimingFunction, aScene.defaultTimingFunction);
+
+            if ((aPolicy & WLAnimationSceneMergePolicyPreserveDefaultAllowsImplicitAnimation) == 0)
+                WLSetIfNotNil(self.defaultAllowsImplicitAnimation, aScene.defaultAllowsImplicitAnimation);
+
+            if ((aPolicy & WLAnimationSceneMergePolicyPreserveDurationHandler) == 0)
+                WLSetIfNotNil(self.durationHandler, aScene.durationHandler);
+
+            if ((aPolicy & WLAnimationSceneMergePolicyPreserveCancellationHandler) == 0)
+                WLSetIfNotNil(self.cancellationHandler, aScene.cancellationHandler);
+
+            if ((aPolicy & WLAnimationSceneMergePolicyPreserveCompletionHandler) == 0)
+                WLSetIfNotNil(self.completionHandler, aScene.completionHandler);
+
+            if ((aPolicy & WLAnimationSceneMergePolicyPreserveIdentifier) == 0)
+                WLSetIfNotNil(self.identifier, aScene.identifier);
+
             for (WLAnimationHandler c in aScene->_changes)
                 [self addChanges:c];
+
             break;
         case WLAnimationSceneStateCancelling:
         case WLAnimationSceneStateCompleted:
             [NSException raise:NSInternalInconsistencyException format:@"invalid state %lu", _state];
             break;
     }
+
+#undef WLSetIfNotNil
 
     [aScene->_changes removeAllObjects];
     [aScene willChangeValueForKey:@"state"];
@@ -339,29 +382,53 @@ _WLNoReentryScopeEnter(var);
         context.allowsImplicitAnimation = owningSequence.defaultAllowsImplicitAnimations;
 }
 
-- (void)_prepareAndRun:(WLAnimationSequence *)aSequence
+- (void)_prepareAndRunOrCancel:(WLAnimationSequence *)aSequence
 {
     NSParameterAssert(_state == WLAnimationSceneStateNone);
 
     __auto_type completion = ^{
-        if (self->_state == WLAnimationSceneStateCancelling)
-            [self _completeIfNeeded:aSequence];
-        else
-            [self _run:aSequence];
+        switch (self->_nextState)
+        {
+            case WLAnimationSceneStateRunning:
+                [self _run:aSequence];
+                break;
+            case WLAnimationSceneStateCancelling:
+                [self _cancel:aSequence andComplete:YES];
+                break;
+            case WLAnimationSceneStateNone:
+            case WLAnimationSceneStateCompleted:
+                [NSException raise:NSInternalInconsistencyException format:@"invalid state %lu", self->_state];
+                break;
+        }
+
+        self->_isPreparing = NO;
     };
+
+    {
+        // With a non-noop preparation handler change of state is span across multiple animation transactions.
+        // It's initiated here and finished by either run or cancel.
+
+        WLNoReentryScope(&aSequence->_reentryCanary);
+        [self willChangeValueForKey:@"state"];
+        self->_state = _nextState;
+        _isPreparing = YES;
+    }
+
+    if (!_preparationHandler || _preparationHandler == WLAnimationHandlerNoop)
+    {
+        completion();
+        return;
+    }
 
     NSMutableArray *traces = [NSMutableArray new];
     objc_setAssociatedObject(completion, &WLTransactionsToken, traces, OBJC_ASSOCIATION_RETAIN);
 
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull aContext) {
+        WLNoReentryScope(&aSequence->_reentryCanary);
+
         aContext.duration = 0.0;
         aContext.allowsImplicitAnimation = NO;
-
-        WLNoReentryScope(&aSequence->_reentryCanary);
-        [self willChangeValueForKey:@"state"];
-        self->_state = WLAnimationSceneStatePreparing;
         self->_preparationHandler(aSequence);
-        [self didChangeValueForKey:@"state"];
     } completionHandler:completion];
 
     _preparationTrace = traces.lastObject; // last object contains animations from all nested groups
@@ -370,11 +437,10 @@ _WLNoReentryScopeEnter(var);
 
 - (void)_run:(WLAnimationSequence *)aSequence
 {
-    NSParameterAssert(_state == WLAnimationSceneStateNone ||
-                      _state == WLAnimationSceneStatePreparing);
+    NSParameterAssert(_state == WLAnimationSceneStateRunning);
 
     __auto_type completion = ^{
-        self->_completionCounter -= 1;
+        self->_pendingChangesCount -= 1;
         [self _completeIfNeeded:aSequence];
     };
 
@@ -382,18 +448,17 @@ _WLNoReentryScopeEnter(var);
     objc_setAssociatedObject(completion, &WLTransactionsToken, traces, OBJC_ASSOCIATION_RETAIN);
 
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull aContext) {
-        _completionCounter += 1;
+        WLNoReentryScope(&aSequence->_reentryCanary);
+
+        _pendingChangesCount += 1;
 
         [self _configureAnimationContext];
 
-        WLNoReentryScope(&aSequence->_reentryCanary);
-        [self willChangeValueForKey:@"state"];
-        self->_state = WLAnimationSceneStateRunning;
-        self->_changesHandler(aSequence);
-
         while (_changes.count)
         {
-            _changes[0](aSequence);
+            if (_changes[0] != WLAnimationHandlerNoop)
+                _changes[0](aSequence);
+
             [_changes removeObjectAtIndex:0];
         }
 
@@ -405,67 +470,64 @@ _WLNoReentryScopeEnter(var);
     objc_setAssociatedObject(completion, &WLTransactionsToken, nil, OBJC_ASSOCIATION_ASSIGN);
 }
 
--(BOOL)_cancel:(WLAnimationSequence *)aSequence andComplete:(BOOL)aShouldComplete
+-(void)_cancel:(WLAnimationSequence *)aSequence andComplete:(BOOL)aShouldComplete
 {
-    NSParameterAssert(_state == WLAnimationSceneStateNone ||
-                      _state == WLAnimationSceneStatePreparing ||
-                      _state == WLAnimationSceneStateRunning);
+    NSParameterAssert(_state == WLAnimationSceneStateCancelling);
 
-    if (!_cancellationHandler)
+    if (!_cancellationHandler || _cancellationHandler == WLAnimationHandlerNoop)
     {
+        [self didChangeValueForKey:@"state"];
+
         if (aShouldComplete)
             [self _completeIfNeeded:aSequence];
 
-        return NO;
+        return;
     }
-    else
-    {
-        __auto_type completion = ^{
-            if (aShouldComplete)
-                [self _completeIfNeeded:aSequence];
-        };
 
-        NSMutableArray *traces = [NSMutableArray new];
-        objc_setAssociatedObject(completion, &WLTransactionsToken, traces, OBJC_ASSOCIATION_RETAIN);
+    __auto_type completion = ^{
+        if (aShouldComplete)
+            [self _completeIfNeeded:aSequence];
+    };
 
-        [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull aContext) {
-            aContext.duration = 0.0;
-            aContext.allowsImplicitAnimation = NO;
+    NSMutableArray *traces = [NSMutableArray new];
+    objc_setAssociatedObject(completion, &WLTransactionsToken, traces, OBJC_ASSOCIATION_RETAIN);
 
-            WLNoReentryScope(&aSequence->_reentryCanary);
-            [self willChangeValueForKey:@"state"];
-            _state = WLAnimationSceneStateCancelling;
-            _cancellationHandler(aSequence);
-            [self didChangeValueForKey:@"state"];
-        } completionHandler:completion];
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull aContext) {
+        WLNoReentryScope(&aSequence->_reentryCanary);
 
-        _cancellationTrace = traces.lastObject; // last object contains animations from all nested groups
-        objc_setAssociatedObject(completion, &WLTransactionsToken, nil, OBJC_ASSOCIATION_ASSIGN);
+        aContext.duration = 0.0;
+        aContext.allowsImplicitAnimation = NO;
+        _cancellationHandler(aSequence);
+        [self didChangeValueForKey:@"state"];
+    } completionHandler:completion];
 
-        return YES;
-    }
+    _cancellationTrace = traces.lastObject; // last object contains animations from all nested groups
+    objc_setAssociatedObject(completion, &WLTransactionsToken, nil, OBJC_ASSOCIATION_ASSIGN);
 }
 
 - (void)_completeIfNeeded:(WLAnimationSequence *)aSequence
 {
-    NSParameterAssert(_state == WLAnimationSceneStateNone ||
-                      _state == WLAnimationSceneStateRunning ||
+    NSParameterAssert(_state == WLAnimationSceneStateRunning ||
                       _state == WLAnimationSceneStateCancelling);
     NSParameterAssert(aSequence != nil);
 
-    if (_completionCounter != 0)
+    if (_pendingChangesCount != 0)
         return;
 
-    {
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull aContext) {
         WLNoReentryScope(&aSequence->_reentryCanary);
+
+        aContext.duration = 0.0;
+        aContext.allowsImplicitAnimation = NO;
+
         [self willChangeValueForKey:@"state"];
 
-        if (self->_completionHandler)
+        if (self->_completionHandler && _completionHandler != WLAnimationHandlerNoop)
             self->_completionHandler(aSequence);
 
         self->_state = WLAnimationSceneStateCompleted;
         [self didChangeValueForKey:@"state"];
-    }
+    } completionHandler:nil];
 
     [_changes removeAllObjects];
     [aSequence sceneDidComplete:self];
@@ -489,9 +551,9 @@ _WLNoReentryScopeEnter(var);
 {
     NSMutableArray<WLAnimationScene *> *_scenes;
 
-    WLAnimationSequenceState _nextState;
-    WLAnimationStateReason _nextReason; // reason for the next scheduled state
-    WLAnimationStateReason _nextRunReason; // dedicated variable to restore reason upon resume
+    WLAnimationSequenceState _nextState; // state for the next scheduled scene
+    WLAnimationStateReason _nextReason; // reason for the next scheduled scene
+    WLAnimationStateReason _nextRunReason; // reason for the next scheduled run / resume
 
     BOOL _isRunScheduled;
     WLAnimationHandler _runCompletion;
@@ -525,15 +587,13 @@ _WLNoReentryScopeEnter(var);
     switch (_state)
     {
         case WLAnimationSequenceStateNone:
-            // TODO: better logging
-            NSLog(@"%@ was allocated but not used", self);
+            [[WLLog logForName:_WLAnimationLog] logDebug:@"%@ was allocated but not used", self];
             break;
         case WLAnimationSequenceStatePausing:
         case WLAnimationSequenceStatePaused:
         case WLAnimationSequenceStateRunning:
         case WLAnimationSequenceStateCancelling:
-            // TODO: better logging
-            NSLog(@"%@ is being deallocated while in-use", self);
+            [[WLLog logForName:_WLAnimationLog] logError:@"%@ is being deallocated while in-use", self];
             [self abort];
             break;
         case WLAnimationSequenceStateAborting:
@@ -827,7 +887,7 @@ _WLNoReentryScopeEnter(var);
                 break;
             case WLAnimationSequenceStatePausing:
                 _nextRunReason = aReason;
-                _nextState = WLAnimationSequenceStatePausing;
+                _nextState = WLAnimationSequenceStateRunning;
                 break;
             case WLAnimationSequenceStatePaused:
                 _nextRunReason = aReason;
@@ -885,10 +945,8 @@ _WLNoReentryScopeEnter(var);
             case WLAnimationSequenceStateRunning:
             case WLAnimationSequenceStatePausing:
                 [self _setState:WLAnimationSequenceStateCancelling withReason:aReason];
-
-                if (![self _cancelCurrentSceneIfNeeded])
-                    [self _cancelSequenceIfNeeded];
-
+                [self _cancelCurrentSceneIfNeeded];
+                [self _cancelSequenceIfNeeded];
                 break;
             case WLAnimationSequenceStatePaused:
                 [self _setState:WLAnimationSequenceStateCancelling withReason:aReason];
@@ -945,10 +1003,8 @@ _WLNoReentryScopeEnter(var);
             case WLAnimationSequenceStatePausing:
             case WLAnimationSequenceStateCancelling:
                 [self _setState:WLAnimationSequenceStateAborting withReason:aReason];
-
-                if (![self _cancelCurrentSceneIfNeeded])
-                    [self _cancelSequenceIfNeeded];
-
+                [self _cancelCurrentSceneIfNeeded];
+                [self _cancelSequenceIfNeeded];
                 break;
             case WLAnimationSequenceStatePaused:
                 [self _setState:WLAnimationSequenceStateAborted withReason:aReason];
@@ -971,10 +1027,14 @@ _WLNoReentryScopeEnter(var);
         {
             switch (_state) {
                 case WLAnimationSequenceStateRunning:
-                case WLAnimationSequenceStateCancelling:
                 case WLAnimationSequenceStatePausing:
                     [self _performPauseCompletionsWithState:_state reason:_nextRunReason];
                     [self _setState:WLAnimationSequenceStateCompleted withReason:_nextRunReason];
+                    [self _sequenceDidComplete];
+                    break;
+                case WLAnimationSequenceStateCancelling:
+                    [self _performPauseCompletionsWithState:_state reason:_stateReason];
+                    [self _setState:WLAnimationSequenceStateCompleted withReason:_stateReason];
                     [self _sequenceDidComplete];
                     break;
                 case WLAnimationSequenceStateAborting:
@@ -1003,7 +1063,7 @@ _WLNoReentryScopeEnter(var);
                     switch (_nextState)
                     {
                         case WLAnimationSequenceStateRunning:
-                            [self _setState:WLAnimationSequenceStateRunning withReason:_stateReason];
+                            [self _setState:WLAnimationSequenceStateRunning withReason:_nextRunReason];
                             [self _runNextScene];
                             break;
                         case WLAnimationSequenceStatePausing:
@@ -1101,22 +1161,20 @@ _WLNoReentryScopeEnter(var);
         [self didChangeValueForKey:@"state"];
 }
 
-- (BOOL)_cancelCurrentSceneIfNeeded
+- (void)_cancelCurrentSceneIfNeeded
 {
-    if (!_isCurrentSceneCancelled && [_currentScene cancel])
-    {
-        os_trace_debug("#Animation cancelling current scene");
-        _cancellationRequestedAt = dispatch_time(DISPATCH_TIME_NOW, 0);
-        _isCurrentSceneCancelled = YES;
-        return YES;
-    }
-    else
-        return _isCurrentSceneCancelled;
+    if (_isCurrentSceneCancelled)
+        return;
+
+    os_trace_debug("#Animation cancelling current scene");
+    [_currentScene cancel];
+    _cancellationRequestedAt = dispatch_time(DISPATCH_TIME_NOW, 0);
+    _isCurrentSceneCancelled = YES;
 }
 
 - (BOOL)_cancelSequenceIfNeeded
 {
-    if (!_isSequenceCancelled && _cancellationHandler)
+    if (!_isSequenceCancelled && _cancellationHandler && _cancellationHandler != WLAnimationHandlerNoop)
     {
         os_trace_debug("#Animation cancelling sequence");
         _cancellationRequestedAt = dispatch_time(DISPATCH_TIME_NOW, 0);
@@ -1257,7 +1315,15 @@ _WLNoReentryScopeEnter(var);
     [self _unregisterAutoCancellationObservers];
 
     os_trace_debug("#Animation completing sequence with %lu remaining scenes", _scenes.count);
-    [_scenes removeAllObjects];
+
+    {
+        WLNoReentryScope(&_reentryCanary);
+        __auto_type allScenesIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, _scenes.count)];
+        [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:allScenesIndexes forKey:@"scenes"];
+        [_scenes removeAllObjects];
+        [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:allScenesIndexes forKey:@"scenes"];
+    }
+
     _currentScene = nil;
 
     if (_runCompletion)
