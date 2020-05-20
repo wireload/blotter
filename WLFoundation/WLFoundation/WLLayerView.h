@@ -9,6 +9,8 @@
 #import <Cocoa/Cocoa.h>
 
 
+NS_ASSUME_NONNULL_BEGIN
+
 /*!
  @file
  Properties of view's layer that are still managed by AppKit:
@@ -262,3 +264,29 @@ such as setting the layerContentsRedrawPolicy property.
 - (void)prepareForBackingLayer NS_REQUIRES_SUPER;
 
 @end
+
+
+@interface NSView (WLAdditions)
+
+/*!
+ Distribute rect in receiver's coordinate system according to given constraints by using Auto Layout.
+
+ @param aRect
+ Rect in view's coordiate system that is distributed. Distribution is done along the non-zero axis.
+
+ @discussion
+ Sizes may be fractional as they are aligned with respect to the space frame.
+ The layout is done strictly within provided space, provided constraints are adjusted if necessary.
+
+ @note -[NSView layoutSubtreeIfNeeded] is called on the receiver.
+
+ @note Distributed size may be smaller than its min size by 1 pixel due to rounding.
+ */
+- (NSArray<NSNumber *> *)WL_distributeRect:(NSRect)aRect
+                                  minSizes:(NSArray<NSNumber *> *)aMinSizes
+                                  maxSizes:(NSArray<NSNumber *> *)aMaxSizes
+                            preferredSizes:(NSArray<NSNumber *> *)aPreferredSizes;
+
+@end
+
+NS_ASSUME_NONNULL_END

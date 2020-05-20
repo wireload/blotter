@@ -34,6 +34,8 @@ static const CGFloat _WLSpacingAfterAllDayEventsView = 8.0;
     if (!aPreferences)
         aPreferences = (NSDictionary *)NSUserDefaults.standardUserDefaults;
 
+    _owningView = aParentView;
+
     _minInfoWidth = [[aPreferences objectForKey:WLMinimumDateViewWidthtKey] doubleValue];
     _minDateHeight = [[aPreferences objectForKey:WLMinimumDateViewHeightKey] doubleValue];
     _minRemindersHeight = [[aPreferences objectForKey:WLMinimumTasksViewHeightKey] doubleValue];
@@ -115,12 +117,11 @@ static const CGFloat _WLSpacingAfterAllDayEventsView = 8.0;
         *outCanFitB = canFitB;
     };
 
-    _boundsWidth = NSWidth(aBounds);
-    _boundsHeight = NSHeight(aBounds);
+    _bounds = aBounds;
 
     CGFloat defaultInfoWidth = [[[NSUserDefaults.standardUserDefaults volatileDomainForName:NSRegistrationDomain] objectForKey:WLInfoViewsWidthKey] doubleValue];
 
-    SplitSpace(_boundsWidth,
+    SplitSpace(NSWidth(aBounds),
 
                _minInfoWidth,
                prefLayout == WLCalendarLayoutCustom ? prefInfoWidth : defaultInfoWidth,
@@ -130,7 +131,7 @@ static const CGFloat _WLSpacingAfterAllDayEventsView = 8.0;
 
                // When size is Narrow, Week is excluded by setting its min size to a value
                // that cannot be satisfied.
-               prefSize != BLNarrowSize ? _minWeekWidth : _boundsWidth + 1.0,
+               prefSize != BLNarrowSize ? _minWeekWidth : NSWidth(aBounds) + 1.0,
                &_weekWidth,
 
                &_canFitInfo,
@@ -140,7 +141,7 @@ static const CGFloat _WLSpacingAfterAllDayEventsView = 8.0;
     CGFloat minRRNHeight = fmin(_minRemindersHeight, _minRightNowHeight);
     CGFloat rrnHeight = 0.0;
     BOOL canFitRRN = NO;
-    SplitSpace(_boundsHeight,
+    SplitSpace(NSHeight(aBounds),
 
                _minDateHeight,
                prefDateHeight,
@@ -220,7 +221,7 @@ static const CGFloat _WLSpacingAfterAllDayEventsView = 8.0;
             break;
     }
 
-    SplitSpace(_boundsHeight,
+    SplitSpace(NSHeight(aBounds),
 
                _minAllDayEventsHeight,
                prefAllDayHeight,
@@ -238,12 +239,12 @@ static const CGFloat _WLSpacingAfterAllDayEventsView = 8.0;
     _spacingAfterReminders = _WLSpacingAfterRemindersView;
     _spacingAfterAllDayEvents = _WLSpacingAfterAllDayEventsView;
 
-    _canFitInfoAndWeek = (_minInfoWidth + _spacingAfterInfo + _minWeekWidth) <= _boundsWidth;
-    _canFitDateRemindersAndRightNow = (_minDateHeight + _spacingAfterDate + _minRemindersHeight + _spacingAfterReminders + _minRightNowHeight) <= _boundsHeight;
-    _canFitDateAndReminders = (_minDateHeight + _spacingAfterDate + _minRemindersHeight) <= _boundsHeight;
-    _canFitDateAndRightNow = (_minDateHeight + _spacingAfterDate + _minRightNowHeight) <= _boundsHeight;
-    _canFitRemindersAndRightNow = (_minRemindersHeight + _spacingAfterReminders + _minRightNowHeight) <= _boundsHeight;
-    _canFitAllDayAndDayEvents = (_minAllDayEventsHeight + _spacingAfterAllDayEvents + _minDayEventsHeight) <= _boundsHeight;
+    _canFitInfoAndWeek = (_minInfoWidth + _spacingAfterInfo + _minWeekWidth) <= NSWidth(aBounds);
+    _canFitDateRemindersAndRightNow = (_minDateHeight + _spacingAfterDate + _minRemindersHeight + _spacingAfterReminders + _minRightNowHeight) <= NSHeight(aBounds);
+    _canFitDateAndReminders = (_minDateHeight + _spacingAfterDate + _minRemindersHeight) <= NSHeight(aBounds);
+    _canFitDateAndRightNow = (_minDateHeight + _spacingAfterDate + _minRightNowHeight) <= NSHeight(aBounds);
+    _canFitRemindersAndRightNow = (_minRemindersHeight + _spacingAfterReminders + _minRightNowHeight) <= NSHeight(aBounds);
+    _canFitAllDayAndDayEvents = (_minAllDayEventsHeight + _spacingAfterAllDayEvents + _minDayEventsHeight) <= NSHeight(aBounds);
 
     return self;
 }

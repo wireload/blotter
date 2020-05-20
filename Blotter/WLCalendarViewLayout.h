@@ -40,9 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) CGFloat minDayEventsHeight;
 
 
-@property (readonly) CGFloat boundsWidth;
-
-@property (readonly) CGFloat boundsHeight;
+@property (readonly) NSRect bounds;
 
 
 @property CGFloat infoWidth;
@@ -101,6 +99,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL isAllDayEventsCollapsed;
 
 @property (readonly) BOOL isDayEventsCollapsed;
+
+
+@property (weak, nullable) NSView *owningView;
 
 /*!
  @param aBounds Bounding rectangle for the layout.

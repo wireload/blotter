@@ -249,3 +249,115 @@ static NSString * const _WLLayerSpeedToken = @"WLLayerSpeed";
 }
 
 @end
+
+
+@implementation NSView (WLAdditions)
+
+- (NSArray<NSNumber *> *)WL_distributeRect:(NSRect)aRect
+                                  minSizes:(NSArray<NSNumber *> *)aMinSizes
+                                  maxSizes:(NSArray<NSNumber *> *)aMaxSizes
+                            preferredSizes:(NSArray<NSNumber *> *)aPreferredSizes
+{
+    if (NSWidth(aRect) > 0.0 && NSHeight(aRect) > 0.0)
+        [NSException raise:NSInvalidArgumentException format:@"aRect cannot have more than one non-empty dimentsion"];
+
+    NSParameterAssert(aMinSizes.count == aMaxSizes.count);
+    NSParameterAssert(aMinSizes.count == aPreferredSizes.count);
+
+    NSUInteger numberOfSizes = aMinSizes.count;
+
+    if (!numberOfSizes)
+        return @[];
+
+    BOOL isVertical = NSHeight(aRect) > 0.0;
+
+    NSLayoutGuide *rootGuide = [NSLayoutGuide new];
+    rootGuide.identifier = @"WL_distributeRect_rootGuide";
+    NSMutableArray<NSLayoutGuide *> *sizeGuides = [NSMutableArray arrayWithCapacity:numberOfSizes];
+    NSMutableArray *constraints = [NSMutableArray new];
+
+    // Configure the root guide.
+
+    [self addLayoutGuide:rootGuide];
+
+    [constraints addObjectsFromArray:@[
+        [rootGuide.leftAnchor constraintEqualToAnchor:self.leftAnchor constant:NSMinX(aRect)],
+        [rootGuide.widthAnchor constraintEqualToConstant:NSWidth(aRect)],
+        [rootGuide.heightAnchor constraintEqualToConstant:NSHeight(aRect)]
+    ]];
+
+    if (self.isFlipped)
+        [constraints addObject:[rootGuide.topAnchor constraintEqualToAnchor:self.topAnchor constant:NSMinY(aRect)]];
+    else
+        [constraints addObject:[self.bottomAnchor constraintEqualToAnchor:rootGuide.bottomAnchor constant:NSMinY(aRect)]];
+
+    // Configure the size guides.
+
+    for (NSUInteger i = 0; i < numberOfSizes; ++i)
+    {
+        __auto_type sizeGuide = [NSLayoutGuide new];
+        sizeGuide.identifier = [NSString stringWithFormat:@"WL_distributeRect_%luGuide", i];
+        [sizeGuides addObject:sizeGuide];
+        [self addLayoutGuide:sizeGuide];
+
+        NSLayoutDimension *dimensionAnchor = isVertical ? sizeGuide.heightAnchor : sizeGuide.widthAnchor;
+        NSLayoutAnchor *minAnchor = isVertical ? sizeGuide.topAnchor : sizeGuide.leftAnchor;
+        NSLayoutAnchor *maxAnchor = isVertical ? sizeGuide.bottomAnchor : sizeGuide.rightAnchor;
+        NSLayoutAnchor *minBoundsAnchor = isVertical ? rootGuide.topAnchor : rootGuide.leftAnchor;
+        NSLayoutAnchor *maxBoundsAnchor = isVertical ? rootGuide.bottomAnchor : rootGuide.rightAnchor;
+
+        if (i == 0)
+            [constraints addObject:[minAnchor constraintEqualToAnchor:minBoundsAnchor]];
+        else
+        {
+            __auto_type prevSizeGuide = sizeGuides[i - 1];
+            NSLayoutAnchor *maxPrevAnchor = isVertical ? prevSizeGuide.bottomAnchor : prevSizeGuide.rightAnchor;
+            [constraints addObject:[minAnchor constraintEqualToAnchor:maxPrevAnchor]];
+        }
+
+        if (i == numberOfSizes - 1)
+            [constraints addObject:[maxAnchor constraintEqualToAnchor:maxBoundsAnchor]];
+
+        __auto_type c = [dimensionAnchor constraintGreaterThanOrEqualToConstant:aMinSizes[i].doubleValue];
+        c.priority = NSLayoutPriorityRequired - 2;
+        [constraints addObject:c];
+
+        c = [dimensionAnchor constraintEqualToConstant:aPreferredSizes[i].doubleValue];
+        c.priority = NSLayoutPriorityDefaultLow;
+        [constraints addObject:c];
+
+        c = [dimensionAnchor constraintLessThanOrEqualToConstant:aMaxSizes[i].doubleValue];
+        c.priority = NSLayoutPriorityRequired - 1;
+        [constraints addObject:c];
+
+        if (isVertical)
+        {
+            [constraints addObject:[sizeGuide.leftAnchor constraintEqualToAnchor:rootGuide.leftAnchor]];
+            [constraints addObject:[sizeGuide.rightAnchor constraintEqualToAnchor:rootGuide.rightAnchor]];
+        }
+        else
+        {
+            [constraints addObject:[sizeGuide.topAnchor constraintEqualToAnchor:rootGuide.topAnchor]];
+            [constraints addObject:[sizeGuide.bottomAnchor constraintEqualToAnchor:rootGuide.bottomAnchor]];
+        }
+    }
+
+    // Use Auto Layout to distribute rect.
+
+    [NSLayoutConstraint activateConstraints:constraints];
+    [self layoutSubtreeIfNeeded];
+
+    NSMutableArray *distribution = [NSMutableArray arrayWithCapacity:numberOfSizes];
+    for (NSLayoutGuide *g in sizeGuides)
+        [distribution addObject:@(isVertical ? NSHeight(g.frame) : NSWidth(g.frame))];
+
+    // Clean up.
+
+    [self removeLayoutGuide:rootGuide];
+    for (NSLayoutGuide *g in sizeGuides)
+        [self removeLayoutGuide:g];
+
+    return [distribution copy];
+}
+
+@end

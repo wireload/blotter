@@ -23,16 +23,6 @@ extern NSString * const WLLayoutViewSizeConstraintIdentifier;
 @interface WLLayoutPreferencesViewController : WLPreferencesViewController <NSSplitViewDelegate>
 
 /*!
- Called to update transforms that map available mockup space onto calendar.
- */
-- (void)updateTransforms;
-
-/*!
- Called to update arrangement for current preferences.
- */
-- (void)updateArrangementView;
-
-/*!
  Called after the preferences affecting layout change to update appearance and behavior.
  */
 - (void)layoutDidChange;
