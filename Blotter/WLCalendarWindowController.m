@@ -40,7 +40,7 @@ static const float _WLFadeOutAlphaValue = 0.5f;
     WLCalendarEventsController *_eventsController;
     WLSmartClock *_smartClock;
 
-    WLASLLog *_log;
+    WLLog *_log;
 }
 
 - (instancetype)init
@@ -59,7 +59,7 @@ static const float _WLFadeOutAlphaValue = 0.5f;
 
     if (self != nil)
     {
-        _log = [[WLASLLog alloc] initWithName:@"Calendar Window"];
+        _log = [[WLLog alloc] initWithName:@"Calendar Window"];
         aWindow.delegate = self;
 
         windowState = WLFinderLevelState;

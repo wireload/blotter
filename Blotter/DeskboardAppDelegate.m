@@ -15,6 +15,7 @@
 #import "WLCalendarWindowController.h"
 #import "WLApplicationRunTimer.h"
 #import "NSUserDefaults+WLApplicationDefaults.h"
+#import "WLLogNames.h"
 
 
 // TODO: Update if the New Event/Task windows stop centering at first launch.
