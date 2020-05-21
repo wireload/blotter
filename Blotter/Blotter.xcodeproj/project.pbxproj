@@ -48,7 +48,6 @@
 		BA9617F120E440EB00AACC98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA9617F020E440EB00AACC98 /* Assets.xcassets */; };
 		BAAC022B22EA900500D20F7F /* WLPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAC022A22EA900500D20F7F /* WLPreferencesWindowController.m */; };
 		BAB730072476CA5000FF3C0B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAB730092476CA5000FF3C0B /* Main.storyboard */; };
-		BAB730252476E13E00FF3C0B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BAB730242476E13E00FF3C0B /* Info.plist */; };
 		BAB7302A2476F0C400FF3C0B /* NSFont+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB730272476F0C400FF3C0B /* NSFont+WLCalendar.m */; };
 		BAB7302B2476F0C400FF3C0B /* NSColor+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB730292476F0C400FF3C0B /* NSColor+WLCalendar.m */; };
 		BAD40DDB241B9921007AD60E /* WLCalendarMockupView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD40DDA241B9921007AD60E /* WLCalendarMockupView.m */; };
@@ -892,7 +891,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = WireLoad;
 				TargetAttributes = {
 					8D1107260486CEB800E47090 = {
@@ -939,44 +938,17 @@
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Blotter" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
-				English,
-				Japanese,
-				French,
-				German,
 				ru,
-				se,
 				es,
 				de,
-				kr,
 				fr,
 				sv,
 				ko,
-				"zh-Hans",
-				ca,
-				cs,
-				da,
-				el,
-				"en-GB",
 				en,
-				fi,
-				he,
-				hr,
-				hu,
-				it,
 				ja,
-				"nb-NO",
-				nl,
-				pl,
-				pt,
-				ro,
-				sk,
-				th,
-				tr,
-				uk,
-				"zh-Hant",
 				Base,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* Deskboard */;
@@ -1005,7 +977,6 @@
 				C8E878D32171427F00BA697E /* InfoPlist.strings in Resources */,
 				BAF67DCA16D622820047FE2A /* WLAboutPreferencesViewController.xib in Resources */,
 				BAF67DCB16D622820047FE2A /* WLCalendarsPreferencesViewController.xib in Resources */,
-				BAB730252476E13E00FF3C0B /* Info.plist in Resources */,
 				BAF67DCC16D622820047FE2A /* WLGeneralPreferencesViewController.xib in Resources */,
 				BAF67DCD16D622820047FE2A /* WLLayoutPreferencesViewController.xib in Resources */,
 				BAF67DCE16D622820047FE2A /* WLPositioningPreferencesViewController.xib in Resources */,
