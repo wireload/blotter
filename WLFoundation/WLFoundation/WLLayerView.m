@@ -251,6 +251,33 @@ static NSString * const _WLLayerSpeedToken = @"WLLayerSpeed";
 @end
 
 
+@implementation WLDrawingLayerBackedView
+
+- (void)setDrawingBlock:(void (^)(__kindof WLDrawingLayerBackedView * _Nonnull, NSRect))newDrawingBlock
+{
+    _drawingBlock = [newDrawingBlock copy];
+    self.needsDisplay = YES;
+}
+
+#pragma mark WLBackingLayerView
+
+- (void)prepareForBackingLayer
+{
+    [super prepareForBackingLayer];
+    self.layerContentsRedrawPolicy = NSViewLayerContentsRedrawDuringViewResize;
+}
+
+#pragma mark NSView
+
+- (void)drawRect:(NSRect)aDirtyRect
+{
+    if (_drawingBlock)
+        _drawingBlock(self, aDirtyRect);
+}
+
+@end
+
+
 @implementation NSView (WLAdditions)
 
 - (NSArray<NSNumber *> *)WL_distributeRect:(NSRect)aRect

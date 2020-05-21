@@ -277,6 +277,19 @@ such as setting the layerContentsRedrawPolicy property.
 @end
 
 
+/*!
+ View that draws its content with a block.
+
+ @discussion
+ The redraw policy is set to NSViewLayerContentsRedrawDuringViewResize.
+ */
+@interface WLDrawingLayerBackedView : WLLayerBackedView
+
+@property (nonatomic, nullable, copy) void (^drawingBlock)(__kindof WLDrawingLayerBackedView *aView, NSRect aDirtyRect);
+
+@end
+
+
 @interface NSView (WLAdditions)
 
 /*!
