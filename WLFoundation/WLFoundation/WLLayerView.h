@@ -243,7 +243,7 @@ such as setting the layerContentsRedrawPolicy property.
 /*!
  Overridden to return nil.
  */
-- (id <CAAction>)actionForLayer:(CALayer *)aLayer forKey:(NSString *)aKey;
+- (nullable id <CAAction>)actionForLayer:(CALayer *)aLayer forKey:(NSString *)aKey;
 
 @end
 
