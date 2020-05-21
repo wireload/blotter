@@ -290,6 +290,26 @@ static NSString * const _WLLayerSpeedToken = @"WLLayerSpeed";
 
 @implementation NSView (WLAdditions)
 
+- (NSLayoutConstraint *)WL_constraintWithIdentifier:(NSString *)anIdentifier
+{
+    __auto_type constraints = self.constraints;
+    __auto_type i = [constraints indexOfObjectPassingTest:^BOOL(NSLayoutConstraint * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        return [obj.identifier isEqual:anIdentifier];
+    }];
+
+    return i != NSNotFound ? constraints[i] : nil;
+}
+
+- (NSLayoutGuide *)WL_layoutGuideWithIdentifier:(NSString *)anIdentifier
+{
+    __auto_type guides = self.layoutGuides;
+    __auto_type i = [guides indexOfObjectPassingTest:^BOOL(NSLayoutGuide * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        return [obj.identifier isEqual:anIdentifier];
+    }];
+
+    return i != NSNotFound ? guides[i] : nil;
+}
+
 - (NSArray<NSNumber *> *)WL_distributeRect:(NSRect)aRect
                                   minSizes:(NSArray<NSNumber *> *)aMinSizes
                                   maxSizes:(NSArray<NSNumber *> *)aMaxSizes

@@ -301,6 +301,16 @@ such as setting the layerContentsRedrawPolicy property.
 @interface NSView (WLAdditions)
 
 /*!
+ Constraint for a given identifier.
+ */
+- (nullable NSLayoutConstraint *)WL_constraintWithIdentifier:(NSString *)anIdentifier;
+
+/*!
+ Layout guide for a given identifier.
+ */
+- (nullable NSLayoutGuide *)WL_layoutGuideWithIdentifier:(NSString *)anIdentifier;
+
+/*!
  Distribute rect in receiver's coordinate system according to given constraints by using Auto Layout.
 
  @param aRect
