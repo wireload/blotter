@@ -119,7 +119,12 @@ static NSString * const _WLLayerSpeedToken = @"WLLayerSpeed";
 - (void)prepareForBackingLayer
 {
     self.translatesAutoresizingMaskIntoConstraints = NO;
-    self.wantsLayer = YES;
+
+    // macOS 10.14+ works better if it's left to decide whether a layer should be assigned.
+    if (@available(macOS 10.14, *)) {}
+    else
+        self.wantsLayer = YES;
+
     self.layerContentsRedrawPolicy = NSViewLayerContentsRedrawOnSetNeedsDisplay;
 }
 
