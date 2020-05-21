@@ -35,28 +35,34 @@ NS_ASSUME_NONNULL_BEGIN
         - layoutManager
 
  Layout:
-    - View must use -setNeedsLayout: to ensure that -layout will get called during the layout pass
-    - Sublayers of view's layer appear behind subviews (macOS 10.13 Release Notes)
-    - If updateConstraints is implemented but requiresConstraintBasedLayout is not, starting with 10.12 AppKit
-        will consider that view requires constrains and will enable AutoLayout (macOS 10.12 Release Notes)
-    - Layout is applied in deferred manner; view cannot rely on the frames of any subviews inside -[NSView layout];
-        To circumvent call -[NSView layoutSubtreeIfNeeded].
-    - To update constraints during live resize, override updateConstraints and then call needsUpdateConstraints
+    - View must use -setNeedsUpdateConstraints: to ensure that -updateConstraints will get called before the layout pass
+    - If there are no constraints yet and no views in the hierarchy return YES from +requiresConstraintBasedLayout,
+        it is still possible for -updateConstraints to get called when Auto Layout is not yet set up.
+        The view thus must not imply that Auto Layout is enabled. (macOS 10.13 Release Notes)
+    - If -updateConstraints is implemented but +requiresConstraintBasedLayout is not, starting with 10.12 AppKit
+        will consider that view requires constrains and will enable Auto Layout (macOS 10.12 Release Notes)
+    - To update constraints during live resize, override -updateConstraints and then call -setNeedsUpdateConstraints:
         when necessary (macOS 10.12 Release Notes)
+    - View must use -setNeedsLayout: to ensure that -layout will get called during the layout pass
+    - -layout is called for layer-backed views that responded YES for -wantsUpdateLayer even outside of Auto Layout
+        and can be used to modify the view hierarchy (macOS 10.8 Release Notes)
+    - Sublayers of view's layer appear behind subviews (macOS 10.13 Release Notes)
+    - Layout is applied in deferred manner; view cannot rely on the frames of any subviews inside -layout
+        To circumvent call -layoutSubtreeIfNeeded
     - Avoid adding and removing constraints; activate and deactivate them instead (Mac OS X 10.10 Release Notes)
     - Use integral values for width and height of sublayers (Core Animation Programming Guide - Positioning and Sizing Sublayers)
     - Overriding -[CALayer layoutSublayers] prevernts CoreAnimation to use its constraints and autoresizing masks (Core Animation Programming Guide)
     - In layer-backed views, view's coordinates match layer's coordinates
-    - -layout is called for layer-backed views even outside of the Auto Layout
 
  Drawing:
     - It is recommended to mark window's contentView as layer-backed so that all subviews can inherit it
     - Overriding -makeBackingLayer to return custom view effectively makes view layer-hosting
-    - View is recommended to implement -drawRect: alongside -updateLayer to support
-        all drawing circumstances (macOS 10.13 Release Notes)
-    - Starting with 10.14 it is not necessary to explicitly set -wantsLayer: in order to receive -updateLayer;
-        AppKit will determine in runtime whether view is assigned a layer or whether it's drawn to some shared image;
-        Depending on the decision and the value of -wantsUpdateLayer either -updateLayer or -draw: will be called (WWDC 2018, Session 209)
+    - Starting with 10.13 if an NSView does not explicitly set the -wantsLayer property, AppKit determines in runtime
+      whether the view actually gets a dedicated layer or shares a layer with other siblings and/or ancestors.
+      To benefit from this behavior the view must implement both -updateLayer and -draw:
+      (macOS 10.13 Release Notes)
+    - Starting with 10.14 an NSView should generally avoid setting the -wantsLayer property and use -wantsUpdateLayer instead
+      (macOS 10.14 Release Notes, WWDC 2018, Session 209)
     - -canDrawConcurrently has no effect on layer-hosting views and views with any of its ancestors having
         -canDrawSubviewsIntoLayer set (based on the private -[NSView _reallyCanDrawConcurrently])
     - -canDrawSubviewsIntoLayer make view and all its descendants to ignore wantsUpdateLayer and updateLayer (docs)
@@ -130,8 +136,13 @@ NS_ASSUME_NONNULL_BEGIN
             additionally set NSViewLayoutStrictModeThrowsException YES to throw an exception (macOS 10.12 Release Notes)
     macOS 10.7+:
         - Set NSViewRaiseOnInvalidFrames to detect invalid frame origins and sizes
-        - Use the -[NSView recursiveDescription] method to log description of the view itself all its subviews recursively
         - Use the -[NSLayoutConstraint asciiArtDescription] method to log constraint's description
+
+ Performance Tricks:
+    macos 10.15+:
+        - Subclasses of NSView that calculate custom intrinsic sizes can signal to the layout engine that
+          it should ignore them by setting the horizontalContentSizeConstraintActive / verticalContentSizeConstraintActive
+          properties to win some performance when external constraints determine view's size
 
  @see Core Animation Programming Guide: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CoreAnimation_guide/
  @see High Resolution Guidelines for OS X: https://developer.apple.com/library/archive/documentation/GraphicsAnimation/Conceptual/HighResolutionOSX/Introduction/Introduction.html#//apple_ref/doc/uid/TP40012302-CH1-SW1
