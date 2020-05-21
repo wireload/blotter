@@ -363,17 +363,17 @@ static NSString * const _WLLayerSpeedToken = @"WLLayerSpeed";
         [self addLayoutGuide:sizeGuide];
 
         NSLayoutDimension *dimensionAnchor = isVertical ? sizeGuide.heightAnchor : sizeGuide.widthAnchor;
-        NSLayoutAnchor *minAnchor = isVertical ? sizeGuide.topAnchor : sizeGuide.leftAnchor;
-        NSLayoutAnchor *maxAnchor = isVertical ? sizeGuide.bottomAnchor : sizeGuide.rightAnchor;
-        NSLayoutAnchor *minBoundsAnchor = isVertical ? rootGuide.topAnchor : rootGuide.leftAnchor;
-        NSLayoutAnchor *maxBoundsAnchor = isVertical ? rootGuide.bottomAnchor : rootGuide.rightAnchor;
+        __auto_type minAnchor = isVertical ? (NSLayoutAnchor *)sizeGuide.topAnchor : (NSLayoutAnchor *)sizeGuide.leftAnchor;
+        __auto_type maxAnchor = isVertical ? (NSLayoutAnchor *)sizeGuide.bottomAnchor : (NSLayoutAnchor *)sizeGuide.rightAnchor;
+        __auto_type minBoundsAnchor = isVertical ? (NSLayoutAnchor *)rootGuide.topAnchor : (NSLayoutAnchor *)rootGuide.leftAnchor;
+        __auto_type maxBoundsAnchor = isVertical ? (NSLayoutAnchor *)rootGuide.bottomAnchor : (NSLayoutAnchor *)rootGuide.rightAnchor;
 
         if (i == 0)
             [constraints addObject:[minAnchor constraintEqualToAnchor:minBoundsAnchor]];
         else
         {
             __auto_type prevSizeGuide = sizeGuides[i - 1];
-            NSLayoutAnchor *maxPrevAnchor = isVertical ? prevSizeGuide.bottomAnchor : prevSizeGuide.rightAnchor;
+            __auto_type maxPrevAnchor = isVertical ? (NSLayoutAnchor *)prevSizeGuide.bottomAnchor : (NSLayoutAnchor *)prevSizeGuide.rightAnchor;
             [constraints addObject:[minAnchor constraintEqualToAnchor:maxPrevAnchor]];
         }
 
