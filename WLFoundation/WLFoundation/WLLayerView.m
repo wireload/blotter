@@ -278,6 +278,16 @@ static NSString * const _WLLayerSpeedToken = @"WLLayerSpeed";
 @end
 
 
+@implementation WLFlippedView
+
+- (BOOL)isFlipped
+{
+    return YES;
+}
+
+@end
+
+
 @implementation NSView (WLAdditions)
 
 - (NSArray<NSNumber *> *)WL_distributeRect:(NSRect)aRect

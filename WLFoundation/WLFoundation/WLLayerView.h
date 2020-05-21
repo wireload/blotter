@@ -290,6 +290,14 @@ such as setting the layerContentsRedrawPolicy property.
 @end
 
 
+/*!
+ Minimal subclass that only flips NSView's coordinate system.
+ */
+@interface WLFlippedView : NSView
+
+@end
+
+
 @interface NSView (WLAdditions)
 
 /*!
