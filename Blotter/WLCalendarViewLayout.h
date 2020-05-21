@@ -101,6 +101,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL isDayEventsCollapsed;
 
 
+@property (readonly) NSRect dateFrame;
+
+@property (readonly) NSRect remindersFrame;
+
+@property (readonly) NSRect rightNowFrame;
+
+@property (readonly) NSRect weekFrame;
+
+
 @property (weak, nullable) NSView *owningView;
 
 /*!

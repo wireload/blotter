@@ -60,12 +60,6 @@
     XCTAssertThrows([self.sequence run]);
 }
 
-- (void)testAbortedSequenceCannotBeRun
-{
-    [self.sequence abort];
-    XCTAssertThrows([self.sequence run]);
-}
-
 #pragma mark - Before Run
 
 - (void)test_SequenceState_BeforeRun
@@ -342,12 +336,12 @@
     [self.sequence runWithReason:44 completion:^(WLAnimationSequence * _Nonnull aSequence) {
         XCTAssertNil(aSequence.currentScene);
         XCTAssertEqual(aSequence.state, WLAnimationSequenceStateCompleted);
-        XCTAssertEqual(aSequence.stateReason, 44);
+        XCTAssertEqual(aSequence.stateReason, 42);
     }];
 
     XCTAssertNil(self.sequence.currentScene);
     XCTAssertEqual(self.sequence.state, WLAnimationSequenceStateCompleted);
-    XCTAssertEqual(self.sequence.stateReason, 44);
+    XCTAssertEqual(self.sequence.stateReason, 42);
 }
 
 - (void)test_SequenceState_Pause_Cancel_AfterRun_Empty
@@ -361,12 +355,12 @@
     [self.sequence runWithReason:44 completion:^(WLAnimationSequence * _Nonnull aSequence) {
         XCTAssertNil(aSequence.currentScene);
         XCTAssertEqual(aSequence.state, WLAnimationSequenceStateCompleted);
-        XCTAssertEqual(aSequence.stateReason, 44);
+        XCTAssertEqual(aSequence.stateReason, 42);
     }];
 
     XCTAssertNil(self.sequence.currentScene);
     XCTAssertEqual(self.sequence.state, WLAnimationSequenceStateCompleted);
-    XCTAssertEqual(self.sequence.stateReason, 44);
+    XCTAssertEqual(self.sequence.stateReason, 42);
 }
 
 - (void)test_SequenceState_Abort_Pause_AfterRun_Empty

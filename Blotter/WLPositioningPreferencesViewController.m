@@ -66,14 +66,15 @@ static void *_WLFrameArrangementDidChangeContext = &_WLFrameArrangementDidChange
                 break;
         }
 
-        if (_runningAnimation == nil)
+        if (_runningAnimation.state != WLAnimationSequenceStateRunning)
         {
             __auto_type animation = [WLAnimationSequence new];
             animation.identifier = _WLPositioningPreferencesControllerSequence;
             [animation.mutableScenes addObjectsFromArray:scenes];
 
+            __auto_type previousAnimation = _runningAnimation;
             _runningAnimation = animation;
-            [_runningAnimation runWithCompletion:^(WLAnimationSequence *aSequence) {
+            [_runningAnimation runAfter:previousAnimation withCompletion:^(WLAnimationSequence *aSequence) {
                 if (self->_runningAnimation == aSequence)
                     self->_runningAnimation = nil;
             }];
@@ -85,7 +86,7 @@ static void *_WLFrameArrangementDidChangeContext = &_WLFrameArrangementDidChange
                 __auto_type runningScene = [_runningAnimation sceneWithIdentifier:scene.identifier];
 
                 if (runningScene)
-                    [runningScene applyScene:scene];
+                    [runningScene mergeWithScene:scene];
                 else
                     [_runningAnimation.mutableScenes addObject:scene];
             }
@@ -93,6 +94,8 @@ static void *_WLFrameArrangementDidChangeContext = &_WLFrameArrangementDidChange
     }
     else
     {
+        [_runningAnimation abort];
+
         NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
 
         NSSize preferredArrangementViewSize = self.preferredArrangementViewSize;
@@ -102,9 +105,9 @@ static void *_WLFrameArrangementDidChangeContext = &_WLFrameArrangementDidChange
         __auto_type editingMode = defaults.WL_calendarSize == BLCustomSize ? WLFrameArrangementModeResizing : WLFrameArrangementModePositioning;
         _arrangementView.editingMode = editingMode;
 
-        WLCalendarWindowController *windowController = ((DeskboardAppDelegate *)NSApp.delegate).calendarWindowController;
+        __auto_type windowController = WLAppDelegate.calendarWindowController;
         NSRect screenFrame = windowController.windowScreen.visibleFrame;
-        NSSize minSize = windowController.minimumSize;
+        NSSize minSize = defaults.WL_minimumWindowSize;
         minSize = NSMakeSize(minSize.width / NSWidth(screenFrame), minSize.height / NSHeight(screenFrame));
         _arrangementView.mockupMinFrameSizeRatios = minSize;
 
@@ -127,7 +130,7 @@ static void *_WLFrameArrangementDidChangeContext = &_WLFrameArrangementDidChange
 {
     static const CGFloat ArrangementViewLongestSideLength = 400.0;
 
-    WLCalendarWindowController *windowController = ((DeskboardAppDelegate *)NSApp.delegate).calendarWindowController;
+    __auto_type windowController = WLAppDelegate.calendarWindowController;
     NSRect screenFrame = windowController.windowScreen.visibleFrame;
     CGFloat screenAspectRatio = NSHeight(screenFrame) > 0.0 ? NSWidth(screenFrame) / NSHeight(screenFrame) : 16.0 / 10.0;
 
@@ -157,17 +160,11 @@ static void *_WLFrameArrangementDidChangeContext = &_WLFrameArrangementDidChange
 
 - (NSRect)mockupFrameRatiosForPosition:(BLPosition)aPosition size:(BLSize)aSize onScreen:(NSScreen *)aScreen
 {
-    DeskboardAppDelegate *appDelegate = (DeskboardAppDelegate *)NSApp.delegate;
-    NSRect windowFrameOnScreen = [appDelegate.calendarWindowController windowFrameOnScreen:aScreen
-                                                                              withPosition:aPosition
-                                                                                      size:aSize];
+    NSMutableDictionary *preferences = [NSUserDefaults.standardUserDefaults.dictionaryRepresentation mutableCopy];
+    preferences[WLCalendarSizeKey] = @(aSize);
+    preferences[WLCalendarPositionKey] = @(aPosition);
+    NSRect windowFrameOnScreen = [WLCalendarWindowController windowFrameOnScreen:aScreen preferences:preferences];
     NSRect screenBounds = aScreen.visibleFrame;
-
-    if (!NSContainsRect(screenBounds, windowFrameOnScreen))
-    {
-        // TODO: log error
-    }
-
     NSRect frameRatios = NSMakeRect(fdim(NSMinX(windowFrameOnScreen), NSMinX(screenBounds)) / NSWidth(screenBounds),
                                     fdim(NSMinY(windowFrameOnScreen), NSMinY(screenBounds)) / NSHeight(screenBounds),
                                     NSWidth(windowFrameOnScreen) / NSWidth(screenBounds),
@@ -220,12 +217,12 @@ static void *_WLFrameArrangementDidChangeContext = &_WLFrameArrangementDidChange
 
 - (WLAnimationScene *)animateMockupResize
 {
-    WLCalendarWindowController *windowController = ((DeskboardAppDelegate *)NSApp.delegate).calendarWindowController;
-    NSRect screenFrame = windowController.windowScreen.visibleFrame;
-    NSSize minSize = windowController.minimumSize;
+    __auto_type defaults = NSUserDefaults.standardUserDefaults;
+    NSRect screenFrame = WLAppDelegate.calendarWindowController.windowScreen.visibleFrame;
+    NSSize minSize = defaults.WL_minimumWindowSize;
     minSize = NSMakeSize(minSize.width / NSWidth(screenFrame), minSize.height / NSHeight(screenFrame));
 
-    NSRect frameRatios = NSUserDefaults.standardUserDefaults.WL_customFrameFactors;
+    NSRect frameRatios = defaults.WL_customFrameFactors;
     frameRatios.origin.y = 1.0 - NSMaxY(frameRatios);
 
     __auto_type scene = [_arrangementView animateFrameRatios:frameRatios minFrameSizeRatios:minSize];
@@ -253,8 +250,7 @@ static void *_WLFrameArrangementDidChangeContext = &_WLFrameArrangementDidChange
 
 - (NSRect)frameArrangement:(WLFrameArrangementView *)anArrangement didChangeMockupPosition:(BLPosition)aPosition
 {
-    DeskboardAppDelegate *appDelegate = (DeskboardAppDelegate *)NSApp.delegate;
-    NSScreen *screen = appDelegate.calendarWindowController.windowScreen;
+    NSScreen *screen = WLAppDelegate.calendarWindowController.windowScreen;
     NSUserDefaults.standardUserDefaults.WL_calendarPosition = aPosition;
     return [self mockupFrameRatiosForPosition:aPosition
                                          size:NSUserDefaults.standardUserDefaults.WL_calendarSize
@@ -357,8 +353,7 @@ static void *_WLFrameArrangementDidChangeContext = &_WLFrameArrangementDidChange
                 // Keep custom frame ratios on par with currently selected size and position
                 // so that relative position of the mockup will be preserved when size is changed to BLCustomSize.
                 __auto_type position = defaults.WL_calendarPosition;
-                DeskboardAppDelegate *appDelegate = (DeskboardAppDelegate *)NSApp.delegate;
-                NSScreen *screen = appDelegate.calendarWindowController.windowScreen;
+                NSScreen *screen = WLAppDelegate.calendarWindowController.windowScreen;
                 NSRect frameRatios = [self mockupFrameRatiosForPosition:position
                                                                    size:size
                                                                onScreen:screen];

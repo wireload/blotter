@@ -2,201 +2,141 @@
 //  WLCalendarWindowController.h
 //  Blotter
 //
-//  Created by Ilya Kulakov on 01.08.11.
-//  Copyright 2011 WireLoad. All rights reserved.
+//  Created by Ilya Kulakov on 3/17/20.
+//  Copyright © 2020 WireLoad. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
+
 #import <WLFoundation/WLFoundation.h>
-#import <WLCalendarStore/WLCalendarStore.h>
-#import "WLCalendarRemindersController.h"
-#import "WLCalendarWindow.h"
-#import "WLCalendarsController.h"
+
+#import "WLCalendarViewController.h"
 
 
-@class WLCalendarRemindersViewController;
-@class WLCalendarDateViewController;
-@class WLCalendarBoxView;
-@class WLCalendarWindowBringToFrontAnimation;
-@class WLCalendarFloatingWeekEventsViewController;
-@class WLCalendarRightNowEventsViewController;
-
-
-typedef NS_ENUM(NSUInteger, WLCalendarWindowState) {
-    WLFinderLevelState,
-    WLFloatingLevelState,
+typedef NS_ENUM(NSInteger, _WLCalendarWindowState)
+{
+    WLCalendarWindowStateInactiveFaded = -1,
+    WLCalendarWindowStateInactive = 0,
+    WLCalendarWindowStateActive = 1
 };
 
 
+NS_ASSUME_NONNULL_BEGIN
+
+@interface _WLCalendarWindow : NSWindow
+@end
+
+
 /*!
- @abstract      This class is responsible for sizing and placing its window according to user settings.
- It observes various system notifications to update its subcontrollers appropriately.
- @performance   You SHOULD prepare the controller and its window before you call -showWindow:
- @coclass       WLCalendarWindow The class of controller's window.
+ Controller of the main Blotter window.
+
+ @discussion
+ Controls window's frame and appearance.
  */
-@interface WLCalendarWindowController : NSWindowController <NSWindowDelegate, NSAnimationDelegate>
-{
-    WLCalendarWindowState windowState;
-    BOOL isFadedOut;
+@interface WLCalendarWindowController : NSWindowController <NSWindowDelegate>
 
-    BOOL _isWindowShowed;
-    WLCalendarFloatingWeekEventsViewController *_weekViewController;
-    WLCalendarRightNowEventsViewController *_rightNowViewController;
-    WLCalendarRemindersViewController *_remindersViewController;
-    WLCalendarDateViewController *_dateViewController;
-    WLCalendarBoxView *_tasksViewBox;
-    WLCalendarBoxView *_rightNowViewBox;
-    WLCalendarWindowBringToFrontAnimation *_fadeInAnimation;
-    WLCalendarWindowBringToFrontAnimation *_fadeOutAnimation;
-}
+/*!
+ Main view controller that is displayed by the window.
 
-@property (nonatomic) WLCalendarWindowState windowState;
+ @discussion
+ The window controller uses window's contentView for custom background which makes contentViewController unsuitable
+ for the main view controller.
+
+ The view is automatically added to the window and its constraints are set up appropriately.
+ */
+@property (readonly) WLCalendarViewController *calendarViewController;
+
+@property (nonatomic) _WLCalendarWindowState windowState;
 
 @property (nonatomic) BOOL isFadedOut;
 
-@property (readonly) WLCalendarsController *calendarsController;
+/*!
+ Window frame in screen coordiates for the current preferences.
 
-@property (strong) WLCalendarWindow *window;
+ @discussion
+ Unlike windowFrame it does not incldue auxiliarily shadows.
 
-- (instancetype)initWithWindow:(WLCalendarWindow *)aWindow;
-
-- (IBAction)showWindow:(id)aSender;
-
-- (IBAction)showNextWeek:(id)aSender;
-
-- (IBAction)showPreviousWeek:(id)aSender;
-
-- (IBAction)showCurrentWeek:(id)aSender;
-
-- (BOOL)canShowNextWeek;
-
-- (BOOL)canShowCurrentWeek;
-
-- (BOOL)canShowPreviousWeek;
-
-- (BOOL)isCurrentWeekShowed;
-
-- (WLCalendarWindow *)window;
+ @see windowFrame
+ @see windowScreen
+ */
+@property (readonly) NSRect windowAlignmentFrame;
 
 /*!
- @abstract      Animates setWindowState.
- @discussion    Takes into account isFadeOut.
- Alpha value of the window at WLFloatingLevelState is always 1.0. Alpha value at WLFinderLevelState depends on isFadeOut property.
- @see           isFadeOut
+ Screen for the current preferences.
+
+ @discussion
+ Returned screen is not necessarily the current screen of the window, but rather
+ a screen designated for the window.
+
+ @note KVO-observable
  */
-- (void)setWindowState:(WLCalendarWindowState)newWindowState animated:(BOOL)isAnimated duration:(NSTimeInterval)aDuration;
+@property (nullable, readonly) NSScreen *windowScreen;
 
-- (void)flushWindowState;
+/*!
+ Visible frame of windowScreen.
 
-- (BOOL)isAnimatingWindowState;
+ @note KVO-observable
+ */
+@property (readonly) NSRect windowScreenVisibleFrame;
+
+- (void)setWindowState:(_WLCalendarWindowState)newState animated:(BOOL)anIsAnimated;
+
+/*!
+ Window frame on a given screen with given preferences.
+
+ @param aScreen Custom screen where the window will be laid on. If nil defaults to preferences.
+
+ @param aPreferences If nil, defaults to standard user defaults.
+
+ @return Frame in screen coordinates.
+ */
++ (NSRect)windowFrameOnScreen:(nullable NSScreen *)aScreen preferences:(nullable NSDictionary *)aPreferences;
+
+/*!
+ Window screen with given preferences
+
+ @param aPreferences If nil, defaults to standard user defaults.
+
+ @return
+ Screen for current user preferences and current system state. Can be nil
+ if there are no connected screens.
+ */
++ (nullable NSScreen *)windowScreenWithPreferences:(nullable NSDictionary *)aPreferences;
+
+/*!
+ Called when either configuration of the connected screens
+ or user preferences change to update window's screen.
+
+ @see NSApplicationDidChangeScreenParametersNotification
+ */
+- (void)windowScreenDidChange;
+
+/*!
+ Called when either configuration of the connected screens
+ or user preferences change to update the main window position and size.
+ */
+- (void)windowFrameDidChange;
+
+/*!
+ Fade the window out and activate it.
+ */
+- (WLAnimationScene *)animateFadeOutAndActivate;
+
+/*!
+ Fade the window out and deactivate it.
+ */
+- (WLAnimationScene *)animateFadeOutAndDeactivate;
+
+/*!
+ Partially fade the window out.
+ */
+- (WLAnimationScene *)animatePartialFadeIn;
+
+/*!
+ Fade the window in.
+ */
+- (WLAnimationScene *)animateFadeIn;
 
 @end
 
-
-typedef NS_ENUM(NSInteger, BLSize)
-{
-    BLNarrowSize    = 0,
-    BLNormalSize    = 1,
-    BLFullSize      = 2,
-    BLCustomSize    = 3
-};
-
-
-typedef NS_ENUM(NSInteger, BLPosition)
-{
-    BLPositionTopLeft =         0,
-    BLPositionTopCenter =       1,
-    BLPositionTopRight =        2,
-    BLPositionCenterLeft =      3,
-    BLPositionCenterCenter =    4,
-    BLPositionCenterRight =     5,
-    BLPositionBottomLeft =      6,
-    BLPositionBottomCenter =    7,
-    BLPositionBottomRight =     8
-};
-
-static const BLPosition BLPositionCount = 9;
-
-
-typedef NS_ENUM(NSUInteger, WLCalendarLayout)
-{
-    WLCalendarCustomLayout = 1,
-    WLCalendarNormalLayout = 0,
-    WLCalendarToDoLayout = 2,
-    WLCalendarRightNowLayout = 3
-};
-
-
-extern NSSize const BLNarrowMinimumSize;
-
-extern NSSize const BLNormalMinimumSize;
-
-@interface WLCalendarWindowController (Frame)
-
-/*!
- @abstract  Returns frame of the calendar window on the window screen's visible frame in device pixel-aligned screen coordinates.
- @result    If it's impossible to calculate frame, returns NSZeroRect.
- @see       windowFrameOnScreen:withPosition:size:margin:
- @see       windowScreen
- */
-- (NSRect)windowFrame;
-
-/*!
- @abstract  Returns screen to show calendar window according to user settings.
- @result    Returns
- 1. User selected screen
- 2. If 1 doesn't exist, screen with the main menu
- 3. If 2 doesn't exist, nil
- */
-- (NSScreen *)windowScreen;
-
-/*!
- @abstract  Designated method to calculate window frame.
- @result    If it's impossible to calculate frame, returns NSZeroRect.
- */
-- (NSRect)windowFrameOnScreen:(NSScreen *)aScreen withPosition:(BLPosition)aPosition size:(BLSize)aSize;
-
-@end
-
-
-@interface WLCalendarWindowController (Layout)
-
-/*!
- @abstract Resizes subviews of the contentView of controller's window according to the windowSize property.
- */
-- (void)_applyWindowSizeToViews;
-
-- (void)_applyNarrowSizeToViews;
-
-- (void)_applyNormalSizeToViews;
-
-- (void)_applyFullSizeToViews;
-
-- (void)_applyCustomSizeToViews;
-
-/*!
- @abstract Updates the controller's window frame.
- */
-- (void)_updateFrame;
-
-/*!
- @abstract Places views to the controller's window.
- */
-- (void)_makeViews;
-
-- (CGFloat)fixedInfoViewsWidth;
-
-- (NSRect)dateViewFrame;
-
-- (NSRect)tasksViewFrame;
-
-- (NSRect)rightNowViewFrame;
-
-- (NSRect)weekViewFrame;
-
-- (CGFloat)defaultTasksViewHeight;
-- (CGFloat)fullTasksViewHeight;
-
-- (NSSize)minimumSize;
-
-@end
+NS_ASSUME_NONNULL_END

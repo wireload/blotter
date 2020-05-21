@@ -27,7 +27,7 @@
 {
     NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
 
-    if (![defaults boolForKey:WLRequestShareAnalyticsConsentAtStartup])
+    if (!defaults.WL_requestShareAnalyticsConsentAtStartup)
         return;
 
     NSAlert *a = [NSAlert new];
@@ -40,8 +40,8 @@
     [a addButtonWithTitle:NSLocalizedString(@"Disallow", @"User consent to share usage dialog's disallow button")];
 
     [a beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse aReturnCode) {
-        [defaults setBool:(aReturnCode == NSAlertFirstButtonReturn) forKey:WLShareAnalytics];
-        [defaults setBool:NO forKey:WLRequestShareAnalyticsConsentAtStartup];
+        defaults.WL_shareAnalytics = (aReturnCode == NSAlertFirstButtonReturn);
+        defaults.WL_requestShareAnalyticsConsentAtStartup = NO;
     }];
 }
 

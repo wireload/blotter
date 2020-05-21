@@ -71,7 +71,7 @@
             static dispatch_once_t onceToken;
             static NSDictionary *attributes = nil;
             dispatch_once(&onceToken, ^{
-                CTTextAlignment a = kCTRightTextAlignment;
+                CTTextAlignment a = kCTTextAlignmentRight;
                 CTParagraphStyleSetting alignmentSetting = {.spec = kCTParagraphStyleSpecifierAlignment, .valueSize = sizeof(CTTextAlignment), .value = &a};
                 CTParagraphStyleRef p = CTParagraphStyleCreate(&alignmentSetting, 1);
                 attributes = [[NSDictionary alloc] initWithObjectsAndKeys:

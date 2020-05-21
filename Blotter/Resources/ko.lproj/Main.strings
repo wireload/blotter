@@ -1,0 +1,30 @@
+
+/* Class = "NSMenuItem"; title = "Preferences…"; ObjectID = "238-3v-1Nk"; Note = "Title for the Preferences menu item"; */
+"238-3v-1Nk.title" = "환경설정...";
+
+/* Class = "NSMenuItem"; title = "New Reminder"; ObjectID = "77s-tV-wGk"; Note = "Title for the New Reminder title"; */
+"77s-tV-wGk.title" = "새로운 미리 알림";
+
+/* Class = "NSMenuItem"; title = "Previous Week"; ObjectID = "8qs-Z4-Sh0"; Note = "Title for the Previous Week menu item"; */
+"8qs-Z4-Sh0.title" = "지난 주";
+
+/* Class = "NSMenuItem"; title = "Rate This App…"; ObjectID = "FOR-0Q-Ie0"; Note = "Title for the Rate This App menu item"; */
+"FOR-0Q-Ie0.title" = "앱 평가하기...";
+
+/* Class = "NSMenuItem"; title = "About Blotter"; ObjectID = "Fej-0p-Dnu"; Note = "Title for the About Blotter menu item"; */
+"Fej-0p-Dnu.title" = "Blotter에 관하여";
+
+/* Class = "NSMenuItem"; title = "Bring to Front"; ObjectID = "G2E-Z5-O59"; Note = "Title for the Bring to Front menu item"; */
+"G2E-Z5-O59.title" = "앞으로 가져오기";
+
+/* Class = "NSMenuItem"; title = "Current Week"; ObjectID = "Nbh-SO-wSk"; Note = "Title for the Current Week menu item"; */
+"Nbh-SO-wSk.title" = "이번 주";
+
+/* Class = "NSMenuItem"; title = "Next Week"; ObjectID = "UZH-p8-Vfa"; Note = "Title for the Next Week menu item"; */
+"UZH-p8-Vfa.title" = "다음 주";
+
+/* Class = "NSMenuItem"; title = "New Event"; ObjectID = "b8e-cI-L7c"; Note = "Title for the New Event menu item"; */
+"b8e-cI-L7c.title" = "새로운 이벤트";
+
+/* Class = "NSMenuItem"; title = "Quit Blotter"; ObjectID = "lgN-Zg-33O"; Note = "Title for the Quit Blotter menu item"; */
+"lgN-Zg-33O.title" = "Blotter 종료";

@@ -2,31 +2,31 @@
 //  WLCalendarDateViewController.h
 //  Blotter
 //
-//  Created by Ilya Kulakov on 08.08.11.
-//  Copyright 2011 WireLoad. All rights reserved.
+//  Created by Ilya Kulakov on 3/17/20.
+//  Copyright © 2020 WireLoad. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
-#import <WLFoundation/WLFoundation.h>
-#import "WLCalendarDateView.h"
 
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface WLCalendarDateViewController : NSViewController <NSSplitViewDelegate>
+
+@property (nonatomic, null_resettable, strong) WLSmartClock *clock;
+
+- (void)updateViewContents;
 
 /*!
-    @brief  Represents date in format relative to current locale.
+ Called when calendar changes in a way that must be reflected in the view.
  */
-@interface WLCalendarDateViewController : NSViewController {
-    NSCache *_cache;
-}
+- (void)calendarDidChange;
 
-- (WLCalendarDateView *)view;
-
-- (WLSmartClock *)representedObject;
-
-- (void)reloadViewData;
-
-
-@property (nonatomic, retain) NSDateFormatter *_monthAndYearDateFormatter;
-
-@property (nonatomic, retain) NSDateFormatter *_weekdayDateFormatter;
+/*!
+ Called when date changes in a way that must be reflected in the view.
+ */
+- (void)dateDidChange;
 
 @end
+
+NS_ASSUME_NONNULL_END

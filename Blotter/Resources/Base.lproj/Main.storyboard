@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15705"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Preferences Window Controller-->
+        <scene sceneID="FaA-MS-1bb">
+            <objects>
+                <windowController storyboardIdentifier="WLPreferencesWindow" showSeguePresentationStyle="single" id="Xuv-vp-YCM" userLabel="Preferences Window Controller" customClass="WLPreferencesWindowController" sceneMemberID="viewController">
+                    <window key="window" title="Blotter" allowsToolTipsWhenApplicationIsInactive="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="XVT-z2-9f9">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+                        <windowCollectionBehavior key="collectionBehavior" canJoinAllSpaces="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="490" y="534" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2880" height="1597"/>
+                        <connections>
+                            <outlet property="delegate" destination="Xuv-vp-YCM" id="6ap-Sn-UuD"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="TVO-bN-NiB" kind="relationship" relationship="window.shadowedContentViewController" id="B7V-qd-9Ge"/>
+                    </connections>
+                </windowController>
+                <customObject id="lp1-YD-lFi" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1409" y="-189"/>
+        </scene>
+        <!--Preferences Tab View Controller-->
+        <scene sceneID="R7c-jn-wtv">
+            <objects>
+                <tabViewController showSeguePresentationStyle="single" tabStyle="toolbar" canPropagateSelectedChildViewControllerTitle="NO" id="TVO-bN-NiB" customClass="WLPreferencesTabViewController" sceneMemberID="viewController">
+                    <viewControllerTransitionOptions key="transitionOptions"/>
+                    <tabView key="tabView" type="noTabsNoBorder" id="C1u-5h-KU9">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <font key="font" metaFont="message"/>
+                        <connections>
+                            <outlet property="delegate" destination="TVO-bN-NiB" id="NBy-Wd-aG8"/>
+                        </connections>
+                    </tabView>
+                    <connections>
+                        <outlet property="tabView" destination="C1u-5h-KU9" id="Qnl-1R-OGc"/>
+                    </connections>
+                </tabViewController>
+                <customObject id="QPT-Y5-cfp" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-827" y="-198"/>
+        </scene>
+        <!--Application-->
+        <scene sceneID="75W-ny-Wzf">
+            <objects>
+                <application id="12V-fZ-YtF" sceneMemberID="viewController">
+                    <menu key="mainMenu" title="Main Menu" systemMenu="main" id="EZs-a3-DS9">
+                        <items>
+                            <menuItem title="Blotter" id="ikG-JG-77I">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Blotter" id="E4F-mi-3RW">
+                                    <items>
+                                        <menuItem title="Quit Blotter" keyEquivalent="q" id="mpI-If-IeU">
+                                            <connections>
+                                                <action selector="terminate:" target="29g-wQ-b6Y" id="pPa-cf-kfi"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                        </items>
+                    </menu>
+                    <connections>
+                        <outlet property="delegate" destination="3YO-gi-ad7" id="APH-QG-8Q2"/>
+                    </connections>
+                </application>
+                <customObject id="29g-wQ-b6Y" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <customObject id="3YO-gi-ad7" userLabel="Application Delegate" customClass="DeskboardAppDelegate">
+                    <connections>
+                        <outlet property="_bringToFrontMenuItem" destination="G2E-Z5-O59" id="xdf-rO-ipY"/>
+                        <outlet property="_newEventMenuItem" destination="b8e-cI-L7c" id="rxw-7f-Z85"/>
+                        <outlet property="_newTaskMenuItem" destination="77s-tV-wGk" id="yK2-kC-UpT"/>
+                        <outlet property="_preferencesMenuItem" destination="238-3v-1Nk" id="idt-XK-HcX"/>
+                        <outlet property="_showCurrentWeekMenuItem" destination="Nbh-SO-wSk" id="6WD-cI-6c9"/>
+                        <outlet property="_showNextWeekMenuItem" destination="UZH-p8-Vfa" id="kgA-Q1-ixC"/>
+                        <outlet property="_showPreviousWeekMenuItem" destination="8qs-Z4-Sh0" id="xbt-Er-Arc"/>
+                        <outlet property="_statusMenu" destination="vHb-1S-bUE" id="u2X-X3-hhF"/>
+                    </connections>
+                </customObject>
+                <menu title="Blotter" systemMenu="apple" id="vHb-1S-bUE" userLabel="Status Item Menu">
+                    <items>
+                        <menuItem title="Bring to Front" identifier="shortcutBringToFront" id="G2E-Z5-O59">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <attributedString key="userComments">
+                                <fragment content="Title for the Bring to Front menu item"/>
+                            </attributedString>
+                            <connections>
+                                <action selector="bringToFrontOrSendToBack:" target="3YO-gi-ad7" id="F9i-3m-dYo"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem isSeparatorItem="YES" id="vgi-pA-GJz"/>
+                        <menuItem title="New Event" tag="1" identifier="shortcutNewEvent" id="b8e-cI-L7c">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <attributedString key="userComments">
+                                <fragment content="Title for the New Event menu item"/>
+                            </attributedString>
+                            <connections>
+                                <action selector="showNewEvent:" target="3YO-gi-ad7" id="2uT-Zl-YCL"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="New Reminder" tag="2" identifier="shortcutNewTask" id="77s-tV-wGk">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <attributedString key="userComments">
+                                <fragment content="Title for the New Reminder title"/>
+                            </attributedString>
+                            <connections>
+                                <action selector="showNewReminder:" target="3YO-gi-ad7" id="yk5-7C-elM"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem isSeparatorItem="YES" id="DYM-Ax-x6M"/>
+                        <menuItem title="Next Week" identifier="shortcutShowNextWeek" id="UZH-p8-Vfa">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <attributedString key="userComments">
+                                <fragment content="Title for the Next Week menu item"/>
+                            </attributedString>
+                            <connections>
+                                <action selector="showNextWeek:" target="3YO-gi-ad7" id="12h-0Z-REB"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="Current Week" identifier="shortcutShowCurrentWeek" id="Nbh-SO-wSk">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <attributedString key="userComments">
+                                <fragment content="Title for the Current Week menu item"/>
+                            </attributedString>
+                            <connections>
+                                <action selector="showCurrentWeek:" target="3YO-gi-ad7" id="RWo-oI-efF"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="Previous Week" identifier="shortcutShowPreviousWeek" id="8qs-Z4-Sh0">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <attributedString key="userComments">
+                                <fragment content="Title for the Previous Week menu item"/>
+                            </attributedString>
+                            <connections>
+                                <action selector="showPreviousWeek:" target="3YO-gi-ad7" id="6YR-NJ-Vuz"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem isSeparatorItem="YES" id="6gd-uS-oSz"/>
+                        <menuItem title="Preferences…" tag="3" id="238-3v-1Nk">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <attributedString key="userComments">
+                                <fragment content="Title for the Preferences menu item"/>
+                            </attributedString>
+                            <connections>
+                                <action selector="showPreferences:" target="3YO-gi-ad7" id="fZ5-Lx-JmY"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="Rate This App…" id="FOR-0Q-Ie0">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <attributedString key="userComments">
+                                <fragment content="Title for the Rate This App menu item"/>
+                            </attributedString>
+                            <connections>
+                                <action selector="showRateThisApp:" target="3YO-gi-ad7" id="llz-EK-Rrg"/>
+                                <binding destination="9sy-cf-go9" name="hidden" keyPath="values.ShowRateThisAppInMenu" id="3tg-NV-Ouj">
+                                    <dictionary key="options">
+                                        <integer key="NSNullPlaceholder" value="1"/>
+                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="About Blotter" id="Fej-0p-Dnu">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <attributedString key="userComments">
+                                <fragment content="Title for the About Blotter menu item"/>
+                            </attributedString>
+                            <connections>
+                                <action selector="showAbout:" target="3YO-gi-ad7" id="Yx8-id-IYI"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem isSeparatorItem="YES" id="jSM-Rw-I8V">
+                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                        </menuItem>
+                        <menuItem title="Quit Blotter" tag="4" id="lgN-Zg-33O">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <attributedString key="userComments">
+                                <fragment content="Title for the Quit Blotter menu item"/>
+                            </attributedString>
+                            <connections>
+                                <action selector="terminate:" target="12V-fZ-YtF" id="zLS-uQ-jOj"/>
+                            </connections>
+                        </menuItem>
+                    </items>
+                    <connections>
+                        <outlet property="delegate" destination="3YO-gi-ad7" id="cju-od-8hb"/>
+                    </connections>
+                </menu>
+                <userDefaultsController representsSharedInstance="YES" id="9sy-cf-go9"/>
+            </objects>
+            <point key="canvasLocation" x="-1409" y="-539"/>
+        </scene>
+    </scenes>
+</document>

@@ -9,6 +9,8 @@
 #import <AppKit/AppKit.h>
 
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(NSUInteger, WLEdge)
 {
     WLEdgeLeft = 0,
@@ -46,13 +48,6 @@ typedef NS_OPTIONS(NSUInteger, WLEdgeMask)
 
 extern const NSAlignmentOptions WLAlignTiebreakerInward;
 extern const NSAlignmentOptions WLAlignTiebreakerOutward;
-
-
-/*!
- @abstract      Draws recessed box shadow.
- @discussion    Draws 1px horizontal white line at the bottom. You may want to inset your content to not overlap this line.
- */
-void WLRecessedBoxShadow(NSRect frame);
 
 /*!
  Round rect to an integral that is a multiple of aMultiple.
@@ -98,3 +93,31 @@ void WLDrawScaledNinePartImage(NSRect bounds,
                                NSCompositingOperation op,
                                CGFloat alphaFraction,
                                BOOL flipped);
+
+
+@interface NSImage (WLGraphics)
+
+- (void)WL_drawScaledNinePartImageInRect:(NSRect)aDstRect
+                           withCapInsets:(NSEdgeInsets)aCapInsets
+                               operation:(NSCompositingOperation)anOperation
+                                fraction:(CGFloat)aFraction
+                          respectFlipped:(BOOL)aRespectContextIsFlipped
+                                   hints:(nullable NSDictionary<NSImageHintKey, id> *)aHints;
+
+@end
+
+
+@interface NSGraphicsContext (WLGraphics)
+
+- (NSDictionary<NSString *, id> *)WL_description;
+
+@end
+
+
+@interface NSColor (WLGraphics)
+
+@property (class, readonly) NSColor *WL_noisePattern;
+
+@end
+
+NS_ASSUME_NONNULL_END

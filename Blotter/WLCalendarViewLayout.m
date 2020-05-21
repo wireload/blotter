@@ -26,6 +26,8 @@ static const CGFloat _WLSpacingAfterAllDayEventsView = 8.0;
                  forParentView:(NSView *)aParentView
                withPreferences:(nullable NSDictionary *)aPreferences
 {
+    NSParameterAssert(aParentView.isFlipped);
+
     self = [super init];
 
     if (!self)
@@ -286,6 +288,48 @@ static const CGFloat _WLSpacingAfterAllDayEventsView = 8.0;
     return [NSSet setWithObject:@"dayEventsHeight"];
 }
 
++ (NSSet<NSString *> *)keyPathsForValuesAffectingDateFrame
+{
+    return [NSSet setWithObjects:
+            @"infoWidth",
+            @"dateHeight",
+            nil];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingRemindersFrame
+{
+    return [NSSet setWithObjects:
+            @"isDateCollapsed",
+            @"infoWidth",
+            @"remindersHeight",
+            @"spacingAfterDate",
+            @"dateFrame",
+            nil];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingRightNowFrame
+{
+    return [NSSet setWithObjects:
+            @"isRemindersCollapsed",
+            @"dateFrame",
+            @"infoWidth",
+            @"rightNowHeight",
+            @"spacingAfterDate",
+            @"spacingAfterReminders",
+            nil];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWeekFrame
+{
+    return [NSSet setWithObjects:
+            @"isInfoCollapsed",
+            @"weekWidth",
+            @"boundsHeight",
+            @"infoWidth",
+            @"spacingAfterInfo",
+            nil];
+}
+
 - (BOOL)isInfoCollapsed
 {
     return _infoWidth == 0.0;
@@ -319,6 +363,35 @@ static const CGFloat _WLSpacingAfterAllDayEventsView = 8.0;
 - (BOOL)isDayEventsCollapsed
 {
     return _dayEventsHeight == 0.0;
+}
+
+- (NSRect)dateFrame
+{
+    return NSMakeRect(0.0, 0.0, self.infoWidth, self.dateHeight);
+}
+
+- (NSRect)remindersFrame
+{
+    if (self.isDateCollapsed)
+        return NSMakeRect(0.0, 0.0, self.infoWidth, self.remindersHeight);
+    else
+        return NSMakeRect(0.0, NSMaxY(self.dateFrame) + self.spacingAfterDate, self.infoWidth, self.remindersHeight);
+}
+
+- (NSRect)rightNowFrame
+{
+    if (self.isRemindersCollapsed)
+        return NSMakeRect(0.0, NSMaxY(self.dateFrame) + self.spacingAfterDate, self.infoWidth, self.rightNowHeight);
+    else
+        return NSMakeRect(0.0, NSMaxY(self.remindersFrame) + self.spacingAfterReminders, self.infoWidth, self.rightNowHeight);
+}
+
+- (NSRect)weekFrame
+{
+    if (self.isInfoCollapsed)
+        return NSMakeRect(0.0, 0.0, self.weekWidth, NSHeight(self.bounds));
+    else
+        return NSMakeRect(self.infoWidth + self.spacingAfterInfo, 0.0, self.weekWidth, NSHeight(self.bounds));
 }
 
 @end

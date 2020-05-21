@@ -6,7 +6,13 @@
 //  Copyright (c) 2012 Wireload. All rights reserved.
 //
 
-#import "WLDateRange.h"
+#import <XCTest/XCTest.h>
+
+#import <WLFoundation/WLFoundation.h>
+
+
+@interface WLDateRangeTests : XCTestCase
+@end
 
 
 @implementation WLDateRangeTests

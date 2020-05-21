@@ -19,13 +19,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nullable, strong) WLPreferencesTabViewController *contentViewController;
 
-/*!
- Request user's consent to share analytics unless there is already an answer stored in user defaults.
-
- @seealso WLRequestShareAnalyticsConsentAtStartup
- */
-- (void)requestShareAnalyticsConsentIfNeeded;
-
 @end
 
 NS_ASSUME_NONNULL_END

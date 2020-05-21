@@ -10,8 +10,6 @@
 
 #import <CalendarStore/CalendarStore.h>
 
-#import "WLCalendarWindowController.h"
-
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -141,6 +139,44 @@ extern NSString* const WLTasksViewHeightKey;
 extern NSString* const WLAllDayViewHeightKey;
 
 
+typedef NS_ENUM(NSUInteger, BLSize)
+{
+    BLNarrowSize = 0,
+    BLNormalSize = 1,
+    BLFullSize = 2,
+    BLCustomSize = 3
+};
+
+static const BLSize BLSizeCount = 4;
+
+
+typedef NS_ENUM(NSUInteger, BLPosition)
+{
+    BLPositionTopLeft = 0,
+    BLPositionTopCenter = 1,
+    BLPositionTopRight = 2,
+    BLPositionCenterLeft = 3,
+    BLPositionCenterCenter = 4,
+    BLPositionCenterRight = 5,
+    BLPositionBottomLeft = 6,
+    BLPositionBottomCenter = 7,
+    BLPositionBottomRight = 8
+};
+
+static const BLPosition BLPositionCount = 9;
+
+
+typedef NS_ENUM(NSUInteger, WLCalendarLayout)
+{
+    WLCalendarLayoutNormal = 0,
+    WLCalendarLayoutCustom = 1,
+    WLCalendarLayoutToDo = 2,
+    WLCalendarLayoutRightNow = 3
+};
+
+static const WLCalendarLayout WLCalendarLayoutCount = 4;
+
+
 @interface NSUserDefaults (WLApplicationDefaults)
 
 - (void)WL_migrateIfNeeded;
@@ -231,11 +267,22 @@ extern NSString* const WLAllDayViewHeightKey;
 @end
 
 
+@interface NSUserDefaults (WLPreferences)
+
+@property BOOL WL_showPreferencesAtStartup;
+
+@end
+
+
 @interface NSUserDefaults (WLGeneralPreferences)
 
-- (BOOL)WL_showInMenuBar;
+@property BOOL WL_showInMenuBar;
 
-- (BOOL)WL_showsNext7Days;
+@property BOOL WL_showNext7Days;
+
+@property BOOL WL_requestShareAnalyticsConsentAtStartup;
+
+@property BOOL WL_shareAnalytics;
 
 @end
 
@@ -282,6 +329,8 @@ extern NSString* const WLAllDayViewHeightKey;
 
 @interface NSUserDefaults (WLPositioningPreferences)
 
+@property (readonly) NSSize WL_minimumWindowSize;
+
 @property BLSize WL_calendarSize;
 
 /*!
@@ -295,15 +344,6 @@ extern NSString* const WLAllDayViewHeightKey;
  UUID of the screen selected by the user for the main window.
  */
 @property (nullable, copy) NSUUID *WL_screenUUID;
-
-@end
-
-
-@interface NSUserDefaults (WLAboutPreferences)
-
-- (BOOL)WL_requestShareAnalyticsConsentAtStartup;
-
-- (BOOL)WL_shareAnalytics;
 
 @end
 

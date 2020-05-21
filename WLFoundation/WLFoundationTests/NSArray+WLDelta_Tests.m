@@ -6,10 +6,16 @@
 //  Copyright (c) 2012 Wireload. All rights reserved.
 //
 
+#import <XCTest/XCTest.h>
+
 #import <WLFoundation/WLFoundation.h>
 
 
 static const NSComparator comparator = ^(id left, id right) { return [left compare:right]; };
+
+
+@interface NSArray_WLDelta_Tests : XCTestCase
+@end
 
 
 @implementation NSArray_WLDelta_Tests

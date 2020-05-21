@@ -2,142 +2,197 @@
 //  WLCalendarDateViewController.m
 //  Blotter
 //
-//  Created by Ilya Kulakov on 08.08.11.
-//  Copyright 2011 WireLoad. All rights reserved.
+//  Created by Ilya Kulakov on 3/17/20.
+//  Copyright © 2020 WireLoad. All rights reserved.
 //
+
+#import <WLFoundation/WLFoundation.h>
 
 #import "WLCalendarDateViewController.h"
 
 
-static NSString* const _WLMonthAndYearDateFormatterCacheKey = @"monthAndYearDateFormatter";
-
-static NSString* const _WLWeekdayDateFormatterCacheKey = @"weekdayDateFormatter";
+void *_WLSmartClockObserverContext = &_WLSmartClockObserverContext;
 
 
 @implementation WLCalendarDateViewController
-
-- (instancetype)init
 {
-    self = [super init];
-    if (self != nil)
-    {
-        _cache = [[NSCache alloc] init];
-        _cache.name = @"WLCalendarDateViewController cache";
-    }
-    return self;
+    NSTextField *_monthDayField;
+    NSTextField *_monthAndYearField;
+    NSTextField *_weekdayField;
+
+    NSDateFormatter *_monthAndYearFormatter;
+    NSDateFormatter *_weekdayFormatter;
+
+    WLSmartClock *_clock;
 }
 
-- (void)dealloc
+#pragma mark Properties
+
+- (WLSmartClock *)clock
 {
-    [_cache release];
-    [self removeObserver:self forKeyPath:@"representedObject.date"];
-    [self removeObserver:self forKeyPath:@"representedObject.calendar.locale"];
-    [super dealloc];
+    if (_clock == nil)
+        _clock = WLSmartClock.defaultClock;
+
+    return _clock;
 }
 
+#pragma mark NSView
 
-#pragma mark Methods
-
-- (void)reloadViewData
+- (void)updateViewContents
 {
-    WLCalendarDateView *view = [self view];
-    NSDate *date = [self representedObject].date;
-    NSInteger day = [[self representedObject].calendar components:NSCalendarUnitDay fromDate:date].day;
-    view.monthDay = [NSString stringWithFormat:@"%ld", day];
-    view.monthAndYear = [self._monthAndYearDateFormatter stringFromDate:date];
-    view.weekday = [self._weekdayDateFormatter stringFromDate:date];
-    [view setNeedsDisplay:YES];
+    static NSDictionary *MonthDayAttributes = nil;
+    static NSDictionary *MonthAndYearAttributes = nil;
+    static NSDictionary *WeekdayAttributes = nil;
+    static dispatch_once_t OnceToken;
+    dispatch_once(&OnceToken, ^{
+        __auto_type shadow = [NSShadow new];
+        shadow.shadowColor = [NSColor colorWithCalibratedRed:47.0 / 255.0
+                                                       green:47.0 / 255.0
+                                                        blue:47.0 / 255.0
+                                                       alpha:0.25];
+        shadow.shadowBlurRadius = 0.0;
+        // Shadow direction is /not/ flipped.
+        shadow.shadowOffset = NSMakeSize(0.0, -1.0);
+
+        __auto_type paragraph = [NSMutableParagraphStyle new];
+        paragraph.alignment = NSCenterTextAlignment;
+        paragraph.lineBreakMode = NSLineBreakByClipping;
+
+        __auto_type attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                  NSColor.whiteColor, NSForegroundColorAttributeName,
+                                  shadow, NSShadowAttributeName,
+                                  paragraph, NSParagraphStyleAttributeName, nil];
+
+        attributes[NSFontAttributeName] = [NSFont fontWithName:@"Helvetica Neue" size:200];
+        MonthDayAttributes = [attributes copy];
+
+        attributes[NSFontAttributeName] = [NSFont fontWithName:@"Helvetica Neue Light" size:26.0];
+        MonthAndYearAttributes = [attributes copy];
+
+        attributes[NSFontAttributeName] = [NSFont fontWithName:@"Helvetica Neue Light" size:26.0];
+        WeekdayAttributes = [attributes copy];
+    });
+
+    NSDate *date = self.clock.date;
+
+    NSInteger day = [self.clock.calendar components:NSCalendarUnitDay fromDate:date].day;
+    NSString *value = [NSString stringWithFormat:@"%ld", day];
+    _monthDayField.attributedStringValue = [[NSAttributedString alloc] initWithString:value attributes:MonthDayAttributes];
+
+    value = [_monthAndYearFormatter stringFromDate:date];
+    _monthAndYearField.attributedStringValue = [[NSAttributedString alloc] initWithString:value attributes:MonthAndYearAttributes];
+
+    value = [_weekdayFormatter stringFromDate:date];
+    _weekdayField.attributedStringValue = [[NSAttributedString alloc] initWithString:value attributes:WeekdayAttributes];
 }
 
-
-#pragma mark Private
-@dynamic _monthAndYearDateFormatter;
-@dynamic _weekdayDateFormatter;
-
-- (NSDateFormatter *)_monthAndYearDateFormatter
+- (void)calendarDidChange
 {
-    NSDateFormatter *f = [[[_cache objectForKey:_WLMonthAndYearDateFormatterCacheKey] retain] autorelease];
-    if (f == nil) {
-        f = [[[NSDateFormatter alloc] init] autorelease];
-        f.dateFormat = [NSDateFormatter dateFormatFromTemplate:@"MMMMy" options:0 locale:([self representedObject].calendar).locale];
-        [_cache setObject:f forKey:_WLMonthAndYearDateFormatterCacheKey];
-    }
-    return f;
+    NSCalendar *calendar = self.clock.calendar;
+    _monthAndYearFormatter = [NSDateFormatter new];
+    _monthAndYearFormatter.dateFormat = [NSDateFormatter dateFormatFromTemplate:@"MMMMy"
+                                                                        options:0
+                                                                         locale:calendar.locale];
+    _weekdayFormatter = [NSDateFormatter new];
+    _weekdayFormatter.dateFormat = [NSDateFormatter dateFormatFromTemplate:@"cccc"
+                                                                   options:0
+                                                                    locale:calendar.locale];
+    [self updateViewContents];
 }
 
-- (void)set_monthAndYearDateFormatter:(NSDateFormatter *)newDateFormatter
+- (void)dateDidChange
 {
-    NSParameterAssert(newDateFormatter == nil);
-    [_cache removeObjectForKey:_WLMonthAndYearDateFormatterCacheKey];
+    [self updateViewContents];
 }
-
-- (NSDateFormatter *)_weekdayDateFormatter
-{
-    NSDateFormatter *f = [[[_cache objectForKey:_WLWeekdayDateFormatterCacheKey] retain] autorelease];
-    if (f == nil) {
-        f = [[[NSDateFormatter alloc] init] autorelease];
-        f.dateFormat = [NSDateFormatter dateFormatFromTemplate:@"cccc" options:0 locale:([self representedObject].calendar).locale];
-        [_cache setObject:f forKey:_WLWeekdayDateFormatterCacheKey];
-    }
-    return f;
-}
-
-- (void)set_weekdayDateFormatter:(NSDateFormatter *)newDateFormatter
-{
-    NSParameterAssert(newDateFormatter == nil);
-    [_cache removeObjectForKey:_WLWeekdayDateFormatterCacheKey];
-}
-
 
 #pragma mark NSViewController
 
 - (void)loadView
 {
-    WLCalendarDateView *v = [[WLCalendarDateView alloc] init];
-    self.view = v;
-    [v release];
-    [self reloadViewData];
-    [self addObserver:self forKeyPath:@"representedObject.date" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:NULL];
-    [self addObserver:self forKeyPath:@"representedObject.calendar.locale" options:NSKeyValueObservingOptionNew context:NULL];
+    __auto_type MakeTextField = ^{
+        NSTextField *f = [NSTextField new];
+        f.editable = NO;
+        f.alignment = NSTextAlignmentCenter;
+        f.bezeled = NO;
+        f.bordered = NO;
+        f.drawsBackground = NO;
+        f.lineBreakMode = NSLineBreakByTruncatingTail;
+        f.selectable = NO;
+        f.refusesFirstResponder = NO;
+        [f setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
+        [f setContentCompressionResistancePriority:NSLayoutPriorityRequired forOrientation:NSLayoutConstraintOrientationVertical];
+        return f;
+    };
+
+    _monthDayField = MakeTextField();
+    _monthAndYearField = MakeTextField();
+    _weekdayField = MakeTextField();
+
+    [_monthDayField.heightAnchor constraintEqualToConstant:200.0].active = YES;
+
+    __auto_type stackView = [NSStackView new];
+    stackView.orientation = NSUserInterfaceLayoutOrientationVertical;
+    stackView.alignment = NSLayoutAttributeCenterX;
+    stackView.distribution = NSStackViewDistributionGravityAreas;
+    stackView.detachesHiddenViews = YES;
+    [stackView setViews:@[_monthDayField, _monthAndYearField, _weekdayField] inGravity:NSStackViewGravityTop];
+    self.view = stackView;
 }
 
-- (WLCalendarDateView *)view
+- (void)viewWillAppear
 {
-    return (WLCalendarDateView *)super.view;
+    [super viewWillAppear];
+
+    [self addObserver:self
+           forKeyPath:@"clock.calendar"
+              options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial
+              context:_WLSmartClockObserverContext];
+    [self addObserver:self
+           forKeyPath:@"clock.date"
+              options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial
+              context:_WLSmartClockObserverContext];
 }
 
-- (WLSmartClock *)representedObject
+- (void)viewDidDisappear
 {
-    return (WLSmartClock *)super.representedObject;
-}
+    [self removeObserver:self
+              forKeyPath:@"clock.calendar"
+                 context:_WLSmartClockObserverContext];
+    [self removeObserver:self
+              forKeyPath:@"clock.date"
+                 context:_WLSmartClockObserverContext];
 
+    [super viewDidDisappear];
+}
 
 #pragma mark NSObject
 
-- (void)observeValueForKeyPath:(NSString *)aKeyPath ofObject:(id)anObject change:(NSDictionary *)aChange context:(void *)aContext
+- (void)observeValueForKeyPath:(NSString *)aKeyPath
+                      ofObject:(id)anObject
+                        change:(NSDictionary<NSKeyValueChangeKey, id> *)aChange
+                       context:(void *)aContext
 {
-    if ([aKeyPath isEqualToString:@"representedObject.calendar.locale"])
+    if (aContext == _WLSmartClockObserverContext)
     {
-        self._monthAndYearDateFormatter = nil;
-        self._weekdayDateFormatter = nil;
-#ifdef DEBUG
-        NSLog(@"%@: locale did changed", NSStringFromSelector(_cmd));
-#endif
-        [self reloadViewData];
-    }
-    else if ([aKeyPath isEqualToString:@"representedObject.date"])
-    {
-        NSCalendar *calendar = [self representedObject].calendar;
-        NSDateComponents *oldDateComponents = [calendar components:NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay
-                                                          fromDate:aChange[NSKeyValueChangeOldKey]];
-        NSDateComponents *newDateComponents = [calendar components:NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay
-                                                          fromDate:aChange[NSKeyValueChangeNewKey]];
-        if (![oldDateComponents isEqual:newDateComponents])
+        if ([aKeyPath isEqualToString:@"clock.calendar"])
+            [self calendarDidChange];
+        else // @"date"
         {
-#ifdef DEBUG
-            NSLog(@"%@ date did changed to %@", NSStringFromSelector(_cmd), aChange[NSKeyValueChangeNewKey]);
-#endif
-            [self reloadViewData];
+            NSDate *oldDate = aChange[NSKeyValueChangeOldKey];
+
+            if (!oldDate)
+            {
+                [self dateDidChange];
+                return;
+            }
+
+            NSCalendar *calendar = self.clock.calendar;
+            __auto_type components = NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
+            __auto_type oldDateComponents = [calendar components:components fromDate:oldDate];
+            __auto_type newDateComponents = [calendar components:components fromDate:aChange[NSKeyValueChangeNewKey]];
+
+            if (![oldDateComponents isEqual:newDateComponents])
+                [self dateDidChange];
         }
     }
     else

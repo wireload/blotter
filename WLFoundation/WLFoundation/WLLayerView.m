@@ -36,6 +36,15 @@ static NSString * const _WLLayerSpeedToken = @"WLLayerSpeed";
 
 @implementation _WLLayerView
 
+#pragma mark Methods
+
+- (void)performWhileAnimationsPaused:(NS_NOESCAPE void (^)(void))aBlock
+{
+    [self pauseAnimations];
+    aBlock();
+    [self resumeAnimations];
+}
+
 #pragma mark NSView
 
 - (void)setFrameSize:(NSSize)newSize
@@ -80,13 +89,6 @@ static NSString * const _WLLayerSpeedToken = @"WLLayerSpeed";
         CFTimeInterval timeSincePause = [aLayer convertTime:CACurrentMediaTime() fromLayer:nil] - pausedTime;
         aLayer.beginTime = timeSincePause / aLayer.speed;
     }];
-}
-
-- (void)performWhileAnimationsPaused:(NS_NOESCAPE void (^)(void))aBlock
-{
-    [self pauseAnimations];
-    aBlock();
-    [self resumeAnimations];
 }
 
 @end

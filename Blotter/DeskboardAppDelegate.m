@@ -11,8 +11,6 @@
 
 #import "DeskboardAppDelegate.h"
 #import "WLAnalytics.h"
-#import "WLCalendarWindow.h"
-#import "WLCalendarWindowController.h"
 #import "WLApplicationRunTimer.h"
 #import "NSUserDefaults+WLApplicationDefaults.h"
 #import "WLLogNames.h"
@@ -27,16 +25,23 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 static NSString* const _WLStatusItemAutosaveName = @"net.wireload.blotter.mac.StatusItem";
 
 
-NSString* const WLBlotterLogName = @"net.wireload.blotter.mac";
+const NSStoryboardSceneIdentifier WLCalendarWindowIdentifier = @"WLCalendarWindow";
 
-NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
-
-
-NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreferencesWindow";
+const NSStoryboardSceneIdentifier WLPreferencesWindowIdentifier = @"WLPreferencesWindow";
 
 
 @implementation DeskboardAppDelegate
 {
+    IBOutlet NSMenu *_statusMenu;
+    IBOutlet NSMenuItem *_bringToFrontMenuItem;
+    IBOutlet NSMenuItem *_newEventMenuItem;
+    IBOutlet NSMenuItem *_newTaskMenuItem;
+    IBOutlet NSMenuItem *_showNextWeekMenuItem;
+    IBOutlet NSMenuItem *_showCurrentWeekMenuItem;
+    IBOutlet NSMenuItem *_showPreviousWeekMenuItem;
+    IBOutlet NSMenuItem *_preferencesMenuItem;
+
+    WLCalendarWindowController *__calendarWindowController;
     WLPreferencesWindowController *_preferencesWindowController;
     WLNewEventWindowController *_newEventWindowController;
     WLNewReminderWindowController *_newReminderWindowController;
@@ -51,14 +56,8 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
 
 + (void)initialize
 {
-    if (self == [DeskboardAppDelegate class])
+    if (self == DeskboardAppDelegate.class)
     {
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        NSURL *defaultsURL = [[NSBundle mainBundle] URLForResource:@"defaults" withExtension:@"plist"];
-        NSDictionary *defaults = [NSDictionary dictionaryWithContentsOfURL:defaultsURL];
-        [userDefaults registerDefaults:defaults];
-        // @see -[WLCalendarWindowController tasksViewFrame] for default value of TasksViewHeight.
-
         // Migrate preferences and set defaults.
         __auto_type defaults = NSUserDefaults.standardUserDefaults;
         [defaults WL_registerDefaults];
@@ -69,23 +68,25 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
 
 - (void)dealloc
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
+    NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
     [defaults removeObserver:self forKeyPath:WLShowInMenuBar];
     [defaults removeObserver:self forKeyPath:WLAutoFadeKey];
     [defaults removeObserver:self forKeyPath:WLAutoFadeSecondsKey];
     [defaults removeObserver:self forKeyPath:WLShareAnalytics];
     _shortcutActions = nil;
 
-    [[WLSmartClock defaultClock] removeObserver:self forKeyPath:@"date"];
+    [WLSmartClock.defaultClock removeObserver:self forKeyPath:@"date"];
 
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [NSNotificationCenter.defaultCenter removeObserver:self];
 
     [_showCurrentWeekTimer invalidate];
     [_autoFadeTimer invalidate];
 
-    if (_statusItem && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_12)
-        [_statusItem removeObserver:self forKeyPath:NSVisibleBinding];
+    if (@available(macOS 10.12, *))
+    {
+        if (_statusItem)
+            [_statusItem removeObserver:self forKeyPath:NSVisibleBinding];
+    }
 }
 
 
@@ -111,6 +112,14 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
     }
 }
 
+- (WLCalendarWindowController *)calendarWindowController
+{
+    if (!__calendarWindowController)
+        __calendarWindowController = [WLCalendarWindowController new];
+
+    return __calendarWindowController;
+}
+
 - (WLPreferencesWindowController *)preferencesWindowController
 {
     if (!_preferencesWindowController)
@@ -131,7 +140,7 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
     {
         _newEventWindowController = [[WLNewEventWindowController alloc] initWithWindowNibName:@"NewEventWindow"];
         [_newEventWindowController bind:@"calCalendars"
-                               toObject:self.calendarWindowController.calendarsController
+                               toObject:self.calendarsController
                             withKeyPath:@"calEventCalendarsToDisplay"
                                 options:nil];
     }
@@ -145,7 +154,7 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
     {
         _newReminderWindowController = [[WLNewReminderWindowController alloc] initWithWindowNibName:@"NewTaskWindow"];
         [_newReminderWindowController bind:@"calCalendars"
-                                  toObject:self.calendarWindowController.calendarsController
+                                  toObject:self.calendarsController
                                withKeyPath:@"calReminderCalendarsToDisplay"
                                    options:nil];
     }
@@ -158,32 +167,14 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
 
 - (IBAction)bringToFrontOrSendToBack:(id)aSender
 {
-    [WLAnalytics.sharedAnalytics reportAction:@"BringToFront"];
-
-    BOOL isStateChangeAnimated = [[NSUserDefaults standardUserDefaults] WL_animatesBringToFront];
-    NSTimeInterval stateChangeDuration = 0.0;
-
-    if (isStateChangeAnimated)
+    if (self.calendarWindowController.windowState <= WLCalendarWindowStateInactive)
     {
-        if (![[NSUserDefaults standardUserDefaults] WL_slowsAnimation])
-            stateChangeDuration = 0.2;
-        else
-            stateChangeDuration = 2.0;
-    }
-
-    if (self.calendarWindowController.windowState == WLFinderLevelState)
-    {
-        [self.calendarWindowController setWindowState:WLFloatingLevelState
-                                             animated:isStateChangeAnimated
-                                             duration:stateChangeDuration];
+        self.calendarWindowController.windowState = WLCalendarWindowStateActive;
         [NSApp activateIgnoringOtherApps:YES];
-
     }
     else
     {
-        [self.calendarWindowController setWindowState:WLFinderLevelState
-                                             animated:isStateChangeAnimated
-                                             duration:stateChangeDuration];
+        self.calendarWindowController.windowState = WLCalendarWindowStateInactive;
         [self deactivateAppIfAllConditionsAreMet:NSApp.windows];
     }
 }
@@ -191,8 +182,7 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
 - (IBAction)showPreferences:(id)aSender
 {
     [self.preferencesWindowController showWindow:aSender];
-    [self _removeAutoFadeTimerIfNeeded];
-    self.calendarWindowController.isFadedOut = NO;
+    [self fadeIn];
     [NSApp activateIgnoringOtherApps:YES];
 }
 
@@ -208,8 +198,7 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
             [(self.newEventWindowController).window center];
 
         [self.newEventWindowController showWindow:aSender];
-        [self _removeAutoFadeTimerIfNeeded];
-        self.calendarWindowController.isFadedOut = NO;
+        [self fadeIn];
         [NSApp activateIgnoringOtherApps:YES];
     }
     else
@@ -228,8 +217,7 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
             [(self.newReminderWindowController).window center];
 
         [self.newReminderWindowController showWindow:aSender];
-        [self _removeAutoFadeTimerIfNeeded];
-        self.calendarWindowController.isFadedOut = NO;
+        [self fadeIn];
         [NSApp activateIgnoringOtherApps:YES];
     }
     else
@@ -246,10 +234,13 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
 {
     [WLAnalytics.sharedAnalytics reportAction:@"NextWeek"];
 
-    if ([self.calendarWindowController canShowNextWeek])
+    __auto_type calendarViewController = self.calendarWindowController.calendarViewController;
+
+    if (calendarViewController.canShowNextWeek)
     {
-        [self.calendarWindowController showNextWeek:aSender];
-        if ([self.calendarWindowController isCurrentWeekShowed])
+        [calendarViewController showNextWeek:aSender];
+
+        if (calendarViewController.isCurrentWeekShown)
         {
             [self _removeShowCurrentWeekTimerIfNeeded];
             [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:NSApp.windows];
@@ -257,8 +248,7 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
         else
         {
             [self _scheduleShowCurrentWeekTimerIfNeeded];
-            [self _removeAutoFadeTimerIfNeeded];
-            self.calendarWindowController.isFadedOut = NO;
+            [self fadeIn];
         }
     }
     else
@@ -269,10 +259,13 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
 {
     [WLAnalytics.sharedAnalytics reportAction:@"PreviousWeek"];
 
-    if ([self.calendarWindowController canShowPreviousWeek])
+    __auto_type calendarViewController = self.calendarWindowController.calendarViewController;
+
+    if (calendarViewController.canShowPreviousWeek)
     {
-        [self.calendarWindowController showPreviousWeek:aSender];
-        if ([self.calendarWindowController isCurrentWeekShowed])
+        [calendarViewController showPreviousWeek:aSender];
+
+        if (calendarViewController.isCurrentWeekShown)
         {
             [self _removeShowCurrentWeekTimerIfNeeded];
             [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:NSApp.windows];
@@ -280,8 +273,7 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
         else
         {
             [self _scheduleShowCurrentWeekTimerIfNeeded];
-            [self _removeAutoFadeTimerIfNeeded];
-            self.calendarWindowController.isFadedOut = NO;
+            [self fadeIn];
         }
     }
     else
@@ -292,10 +284,12 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
 {
     [WLAnalytics.sharedAnalytics reportAction:@"CurrentWeek"];
 
-    if ([self.calendarWindowController canShowCurrentWeek])
+    __auto_type calendarViewController = self.calendarWindowController.calendarViewController;
+
+    if (calendarViewController.canShowCurrentWeek)
     {
         [self _removeShowCurrentWeekTimerIfNeeded];
-        [self.calendarWindowController showCurrentWeek:aSender];
+        [calendarViewController showCurrentWeek:aSender];
         [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:NSApp.windows];
     }
     else
@@ -304,13 +298,13 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
 
 - (IBAction)showRateThisApp:(id)aSender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[[NSUserDefaults standardUserDefaults] WL_rateThisAppURL]];
+    [NSWorkspace.sharedWorkspace openURL:NSUserDefaults.standardUserDefaults.WL_rateThisAppURL];
     [self hideRateThisAppMenuItem];
 }
 
 - (void)toggleStatusItem
 {
-    if ([[NSUserDefaults standardUserDefaults] WL_showInMenuBar])
+    if (NSUserDefaults.standardUserDefaults.WL_showInMenuBar)
     {
         if (_statusItem)
             return;
@@ -318,7 +312,7 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
         NSImage *statusImage = [NSImage imageNamed:@"status-bar"];
         statusImage.template = YES;
 
-        _statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
+        _statusItem = [NSStatusBar.systemStatusBar statusItemWithLength:NSSquareStatusItemLength];
         _statusItem.menu = _statusMenu;
         _statusItem.button.image = statusImage;
 
@@ -334,10 +328,8 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
         if (!_statusItem)
             return;
 
-        // TODO: Might make sense to use the visibility property instead of removal.
-        // That requres deployment target 10.12
         [_statusItem removeObserver:self forKeyPath:NSVisibleBinding];
-        [[NSStatusBar systemStatusBar] removeStatusItem:_statusItem];
+        [NSStatusBar.systemStatusBar removeStatusItem:_statusItem];
         _statusItem = nil;
     }
 }
@@ -360,6 +352,12 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
     [d WL_setShowRateThisAppInMenu:NO];
 }
 
+- (void)fadeIn
+{
+    [self _removeAutoFadeTimerIfNeeded];
+    self.calendarWindowController.isFadedOut = NO;
+}
+
 - (BOOL)isOnlyCalendarWindowVisible:(NSArray *)aVisibleWindows
 {
     NSMutableArray *visibleWindows = [aVisibleWindows mutableCopy];
@@ -373,10 +371,11 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
 {
     BOOL isBlotterActive = NSApp.active;
     BOOL areThereUtilityWindows = ![self isOnlyCalendarWindowVisible:aWindows];
-    BOOL isCurrentWeekShowed = [self.calendarWindowController isCurrentWeekShowed];
-    if ((!isBlotterActive && !areThereUtilityWindows && isCurrentWeekShowed) ||
-        (!isBlotterActive && areThereUtilityWindows && isCurrentWeekShowed) ||
-        (isBlotterActive && !areThereUtilityWindows && isCurrentWeekShowed))
+    BOOL isCurrentWeekShown = self.calendarWindowController.calendarViewController.isCurrentWeekShown;
+
+    if ((!isBlotterActive && !areThereUtilityWindows && isCurrentWeekShown) ||
+        (!isBlotterActive && areThereUtilityWindows && isCurrentWeekShown) ||
+        (isBlotterActive && !areThereUtilityWindows && isCurrentWeekShown))
     {
         [self _scheduleAutoFadeTimerIfNeeded];
     }
@@ -384,7 +383,7 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
 
 - (void)deactivateAppIfAllConditionsAreMet:(NSArray *)aWindows
 {
-    if ([self isOnlyCalendarWindowVisible:aWindows] && self.calendarWindowController.windowState == WLFinderLevelState)
+    if ([self isOnlyCalendarWindowVisible:aWindows] && self.calendarWindowController.windowState <= WLCalendarWindowStateInactive)
         [NSApp hide:self];
 }
 
@@ -392,7 +391,6 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
 {
     _preferencesWindowController = nil;
 }
-
 
 #pragma mark NSApplicationDelegate
 
@@ -402,14 +400,36 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
     [NSAnimationContext WL_enableAnimationTracking];
 #endif
 
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
+
+    [self willChangeValueForKey:@"calendarsController"];
+    [self willChangeValueForKey:@"calendarEventsController"];
+    [self willChangeValueForKey:@"calendarRemindersController"];
+    NSArray *calStores = @[[WLCalendarStore systemStore]]; // TODO: should be configurable
+    _calendarsController = [[WLCalendarsController alloc] initWithCalStores:calStores autosaveKeyPath:WLCalendarsKey];
+    _calendarEventsController = [[WLCalendarEventsController alloc] initWithCalStores:calStores];
+    _calendarRemindersController = [[WLCalendarRemindersController alloc] initWithCalStores:calStores];
+    [self didChangeValueForKey:@"calendarRemindersController"];
+    [self didChangeValueForKey:@"calendarEventsController"];
+    [self didChangeValueForKey:@"calendarsController"];
+
+    [NSNotificationCenter.defaultCenter addObserver:self
+                                           selector:@selector(_calendarsToDisplayDidChange:)
+                                               name:WLCalCalendarsToDisplayDidChangeNotification
+                                             object:_calendarsController];
+    [self _calendarsToDisplayDidChange:nil];
 
     // Configure status bar
-    [defaults addObserver:self forKeyPath:WLShowInMenuBar options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:NULL];
+    [defaults addObserver:self
+               forKeyPath:WLShowInMenuBar
+                  options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial
+                  context:NULL];
 
     // Configure shortcuts
-    [NSValueTransformer setValueTransformer:[[SRKeyEquivalentTransformer alloc] init] forName:@"SRKeyEquivalentTransformer"];
-    [NSValueTransformer setValueTransformer:[[SRKeyEquivalentModifierMaskTransformer alloc] init] forName:@"SRKeyEquivalentModifierMaskTransformer"];
+    [NSValueTransformer setValueTransformer:[[SRKeyEquivalentTransformer alloc] init]
+                                    forName:@"SRKeyEquivalentTransformer"];
+    [NSValueTransformer setValueTransformer:[[SRKeyEquivalentModifierMaskTransformer alloc] init]
+                                    forName:@"SRKeyEquivalentModifierMaskTransformer"];
 
     NSMutableDictionary *actions = [NSMutableDictionary new];
     __auto_type RegisterShortcut = ^(NSString *aKeyPath, NSMenuItem *aMenuItem) {
@@ -437,18 +457,17 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
     _shortcutActions = [actions copy];
 
     // Configure windows.
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(windowWillClose:)
-                                                 name:NSWindowWillCloseNotification
-                                               object:nil];
-    _calendarWindowController = [[WLCalendarWindowController alloc] init];
-    [_calendarWindowController showWindow:self];
+    [NSNotificationCenter.defaultCenter addObserver:self
+                                           selector:@selector(windowWillClose:)
+                                               name:NSWindowWillCloseNotification
+                                             object:nil];
+    [self.calendarWindowController showWindow:self];
 
     // Show preferences at first start or to request share analytics consent.
-    if ([defaults boolForKey:WLShowPreferencesAtStartUp] || [defaults boolForKey:WLRequestShareAnalyticsConsentAtStartup])
+    if (defaults.WL_showPreferencesAtStartup || defaults.WL_requestShareAnalyticsConsentAtStartup)
     {
         [self showPreferences:self];
-        [defaults setBool:NO forKey:WLShowPreferencesAtStartUp];
+        defaults.WL_showPreferencesAtStartup = NO;
     }
 
     // Configure application run timer.
@@ -457,16 +476,16 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
         _applicationRunTimer = [[WLApplicationRunTimer alloc] initWithDelayDefaultsKey:WLApplicationRunTimerDelayKey
                                                                     isFiredDefaultsKey:WLApplicationRunTimerIsFiredKey
                                                              elapsedSecondsDefaultsKey:WLApplicationRunTimerElapsedSecondsKey];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(showRateThisAppMenuItem)
-                                                     name:WLApplicationRunTimerDidFireNotification
-                                                   object:_applicationRunTimer];
+        [NSNotificationCenter.defaultCenter addObserver:self
+                                               selector:@selector(showRateThisAppMenuItem)
+                                                   name:WLApplicationRunTimerDidFireNotification
+                                                 object:_applicationRunTimer];
     }
 
-    [[WLSmartClock defaultClock] addObserver:self
-                                  forKeyPath:@"date"
-                                     options:NSKeyValueObservingOptionNew
-                                     context:NULL];
+    [WLSmartClock.defaultClock addObserver:self
+                                forKeyPath:@"date"
+                                   options:NSKeyValueObservingOptionNew
+                                   context:NULL];
 
     [defaults addObserver:self
                forKeyPath:WLAutoFadeKey
@@ -487,33 +506,20 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
 
 - (void)applicationDidBecomeActive:(NSNotification *)aNotification
 {
-    [self _removeAutoFadeTimerIfNeeded];
-    self.calendarWindowController.isFadedOut = NO;
+    [self fadeIn];
     [self deactivateAppIfAllConditionsAreMet:NSApp.windows];
 }
 
 - (void)applicationDidResignActive:(NSNotification *)aNotification
 {
-    BOOL isStateChangeAnimated = [[NSUserDefaults standardUserDefaults] WL_animatesBringToFront];
-    NSTimeInterval stateChangeDuration = 0.0;
-    if (isStateChangeAnimated)
-    {
-        if (![[NSUserDefaults standardUserDefaults] WL_slowsAnimation])
-            stateChangeDuration = 0.2;
-        else
-            stateChangeDuration = 2.0;
-    }
-    [self.calendarWindowController setWindowState:WLFinderLevelState
-                                         animated:isStateChangeAnimated
-                                         duration:stateChangeDuration];
-
+    self.calendarWindowController.windowState = WLCalendarWindowStateInactive;
     [self deactivateAppIfAllConditionsAreMet:NSApp.windows];
     [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:NSApp.windows];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)anApplication hasVisibleWindows:(BOOL)aFlag
 {
-    if(![[NSUserDefaults standardUserDefaults] WL_showInMenuBar])
+    if(!NSUserDefaults.standardUserDefaults.WL_showInMenuBar)
         [self showPreferences:self];
 
     return NO;
@@ -558,8 +564,7 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
     UpdateKeyEquivalent(_showPreviousWeekMenuItem);
     UpdateKeyEquivalent(_bringToFrontMenuItem);
 
-    [self _removeAutoFadeTimerIfNeeded];
-    self.calendarWindowController.isFadedOut = NO;
+    [self fadeIn];
 }
 
 - (void)menuDidClose:(NSMenu *)aMenu
@@ -572,22 +577,24 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
 
 - (BOOL)validateMenuItem:(NSMenuItem *)aMenuItem
 {
+    __auto_type calendarViewController = self.calendarWindowController.calendarViewController;
+
     if (aMenuItem == _newEventMenuItem)
-        return (self.newEventWindowController).canCreateEvent;
+        return self.newEventWindowController.canCreateEvent;
     else if (aMenuItem == _newTaskMenuItem)
-        return (self.newReminderWindowController).canCreateReminder;
+        return self.newReminderWindowController.canCreateReminder;
     else if (aMenuItem == _showNextWeekMenuItem)
-        return [self.calendarWindowController canShowNextWeek];
+        return calendarViewController.canShowNextWeek;
     else if (aMenuItem == _showCurrentWeekMenuItem)
-        return [self.calendarWindowController canShowCurrentWeek];
+        return calendarViewController.canShowCurrentWeek;
     else if (aMenuItem == _showPreviousWeekMenuItem)
-        return [self.calendarWindowController canShowPreviousWeek];
+        return calendarViewController.canShowPreviousWeek;
     else if (aMenuItem == _bringToFrontMenuItem)
     {
-        if (self.calendarWindowController.windowState != WLFinderLevelState)
-            [aMenuItem setTitle:NSLocalizedString(@"Send to Back", @"Send to Back menu item title")];
+        if (self.calendarWindowController.windowState == WLCalendarWindowStateActive)
+            aMenuItem.title = NSLocalizedString(@"Send to Back", @"Send to Back menu item title");
         else
-            [aMenuItem setTitle:NSLocalizedString(@"Bring to Front", @"Bring to Front menu item title")];
+            aMenuItem.title = NSLocalizedString(@"Bring to Front", @"Bring to Front menu item title");
 
         return YES;
     }
@@ -601,7 +608,8 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
 - (void)_scheduleShowCurrentWeekTimerIfNeeded
 {
     [self _removeShowCurrentWeekTimerIfNeeded];
-    NSInteger delay = [[NSUserDefaults standardUserDefaults] integerForKey:@"AutoShowCurrentWeekDelay"];
+    NSInteger delay = [NSUserDefaults.standardUserDefaults integerForKey:@"AutoShowCurrentWeekDelay"];
+
     if (delay > 0)
     {
         _showCurrentWeekTimer = [NSTimer scheduledTimerWithTimeInterval:delay
@@ -629,8 +637,9 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
 - (void)_scheduleAutoFadeTimerIfNeeded
 {
     [self _removeAutoFadeTimerIfNeeded];
-    BOOL isAutoFadeEnabled = [[NSUserDefaults standardUserDefaults] WL_autoFadeSeconds] > 0;
-    NSTimeInterval delay = [[NSUserDefaults standardUserDefaults] WL_autoFadeSeconds];
+    BOOL isAutoFadeEnabled = NSUserDefaults.standardUserDefaults.WL_autoFadeSeconds > 0;
+    NSTimeInterval delay = NSUserDefaults.standardUserDefaults.WL_autoFadeSeconds;
+
     if (isAutoFadeEnabled && delay > 0)
     {
         _autoFadeTimer = [NSTimer scheduledTimerWithTimeInterval:delay
@@ -652,9 +661,36 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
 - (void)_autoFadeTimerDidFire
 {
     _autoFadeTimer = nil;
-    if (![[NSUserDefaults standardUserDefaults] WL_autoFades])
+
+    if (!NSUserDefaults.standardUserDefaults.WL_autoFades)
         return;
+
     self.calendarWindowController.isFadedOut = YES;
+}
+
+- (void)_calendarsToDisplayDidChange:(NSNotification *)aNotification
+{
+    [NSProcessInfo.processInfo disableSuddenTermination];
+
+    __auto_type log = [WLLog logForName:WLLogNameBlotterCalendarData];
+    NSArray *stores = aNotification ? aNotification.userInfo[WLChangedCalStoresKey] : _calendarsController.calStores;
+
+    for (NSObject<WLCalStore> *s in stores)
+    {
+        NSArray *reminderCalendars = [[self.calendarsController calReminderCalendarsToDisplayForStore:s] valueForKey:@"calendarIdentifier"];
+        [log logDebugWithMessenger:^{
+            return [NSString stringWithFormat:@"Observed Reminder Calendars: %@", reminderCalendars];
+        }];
+        [self.calendarRemindersController setObservedCalendarIdentifiers:[NSSet setWithArray:reminderCalendars] forStore:s];
+
+        NSArray *eventCalendars = [[self.calendarsController calEventCalendarsToDisplayForStore:s] valueForKey:@"calendarIdentifier"];
+        [log logDebugWithMessenger:^{
+            return [NSString stringWithFormat:@"Observed Event Calendars: %@", eventCalendars];
+        }];
+        [self.calendarEventsController setObservedCalendarIdentifiers:[NSSet setWithArray:eventCalendars] forStore:s];
+    }
+
+    [NSProcessInfo.processInfo enableSuddenTermination];
 }
 
 
@@ -662,8 +698,9 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
 
 - (void)cancelOperation:(id)aSender
 {
-    if (self.calendarWindowController.windowState == WLFloatingLevelState &&
-        NSApp.keyWindow == [self.calendarWindowController window])
+    __auto_type calendarWindowController = self.calendarWindowController;
+
+    if (calendarWindowController.windowState <= WLCalendarWindowStateInactive && NSApp.keyWindow == calendarWindowController.window)
     {
         [self bringToFrontOrSendToBack:aSender];
     }
@@ -683,16 +720,13 @@ NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier = @"WLPreference
     }
     else if ([aKeyPath isEqualToString:WLAutoFadeKey] || [aKeyPath isEqualToString:WLAutoFadeSecondsKey])
     {
-        if ([[NSUserDefaults standardUserDefaults] WL_autoFades])
+        if (NSUserDefaults.standardUserDefaults.WL_autoFades)
             [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:NSApp.windows];
         else
-        {
-            [self _removeAutoFadeTimerIfNeeded];
-            self.calendarWindowController.isFadedOut = NO;
-        }
+            [self fadeIn];
     }
     else if ([aKeyPath isEqualToString:NSVisibleBinding])
-        [[NSUserDefaults standardUserDefaults] setValue:aChange[NSKeyValueChangeNewKey] forKeyPath:WLShowInMenuBar];
+        NSUserDefaults.standardUserDefaults.WL_showInMenuBar = [aChange[NSKeyValueChangeNewKey] boolValue];
     else if ([aKeyPath isEqualToString:WLShareAnalytics])
     {
         [WLAnalytics.sharedAnalytics reportLaunchedToMixpanelIfNeeded];

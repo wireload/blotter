@@ -31,7 +31,7 @@
     WLHourRange _hourRange;
     NSDateFormatter *_timeFormatter;
 
-    WLASLLog *_log;
+    WLLog *_log;
 }
 
 - (instancetype)initWithNibName:(NSString *)aNibNameOrNil bundle:(NSBundle *)aNibBundleOrNil
@@ -45,7 +45,7 @@
 
         _numberOfAlignmentUnits = 1;
         _timeFormatter = [[NSDateFormatter alloc] init];
-        _log = [[WLASLLog alloc] initWithName:@"net.wireload.blotter.mac.WLCalendarWeekEventsViewController"];
+        _log = [[WLLog alloc] initWithName:@"net.wireload.blotter.mac.WLCalendarWeekEventsViewController"];
     }
 
     return self;

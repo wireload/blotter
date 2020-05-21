@@ -11,7 +11,6 @@
 #import "WLDesktopMockupView.h"
 #import "WLGraphics.h"
 #import "WLFrameArrangementView.h"
-#import "NSColor+WLPrefColors.h"
 
 
 static const CGFloat _WLCellWidth = 20.0;
@@ -23,7 +22,7 @@ static const CGFloat _WLBorderRadius = 5.0;
 static const CGFloat _WLGridLineWidth = 1.0;
 
 
-#define DEBUG_EDITING DEBUG && 1
+#define DEBUG_EDITING DEBUG && 0
 
 
 @implementation WLFrameArrangementView
@@ -489,6 +488,9 @@ static const CGFloat _WLGridLineWidth = 1.0;
                         _resizingBoundingRightConstraint,
                         _resizingBoundingBottomConstraint
                     ]];
+                case WLEdgeCenter:
+                    NSParameterAssert(NO);
+                    break;
             }
 
             [activeConstraints addObjectsFromArray:@[
@@ -560,6 +562,9 @@ static const CGFloat _WLGridLineWidth = 1.0;
                     _resizingBottomConstraint.constant += yOffset;
                     _resizingBottomConstraint.priority = NSLayoutPriorityDefaultHigh;
                     break;
+                case WLEdgeCenter:
+                    NSParameterAssert(NO);
+                    break;
             }
 
             switch (_resizingHandle)
@@ -608,6 +613,9 @@ static const CGFloat _WLGridLineWidth = 1.0;
                             _resizingLeftConstraint,
                             _resizingRightConstraint
                         ]];
+                    break;
+                case WLEdgeCenter:
+                    NSParameterAssert(NO);
                     break;
             }
         }
@@ -1317,6 +1325,9 @@ static NSUserInterfaceItemIdentifier const _WLDetachmentAnimationIdentifier = @"
         case WLEdgeLeft:
         case WLEdgeRight:
             v.image = [NSImage imageNamed:@"preferences-positioning-mockup-handle-vertical"];
+            break;
+        case WLEdgeCenter:
+            NSParameterAssert(NO);
             break;
     }
     v.editable = NO;

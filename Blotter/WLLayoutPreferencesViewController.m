@@ -10,7 +10,6 @@
 
 #import "WLLayoutPreferencesViewController.h"
 #import "DeskboardAppDelegate.h"
-#import "WLCalendarWindowController.h"
 #import "WLCalendarViewController.h"
 #import "NSUserDefaults+WLApplicationDefaults.h"
 
@@ -47,7 +46,7 @@ static void *_WLCalendarLayoutObservationContext = &_WLCalendarLayoutObservation
 
 - (void)layoutDidChange
 {
-    __auto_type calendarViewController = WLAppDelegate._calendarWindowController.arrangedViewController;
+    __auto_type calendarViewController = WLAppDelegate.calendarWindowController.calendarViewController;
     _layout = [calendarViewController layoutWithPreferences:nil];
 
     _isUpdatingArrangementView = YES;
@@ -367,9 +366,9 @@ static void *_WLCalendarLayoutObservationContext = &_WLCalendarLayoutObservation
 {
     [super viewWillAppear];
 
-    __auto_type calendarController = WLAppDelegate._calendarWindowController;
+    __auto_type calendarController = WLAppDelegate.calendarWindowController;
     [calendarController addObserver:self
-                         forKeyPath:@"windowFrame"
+                         forKeyPath:@"windowAlignmentFrame"
                             options:0
                             context:_WLFrameObservationContext];
     [calendarController addObserver:self
@@ -406,7 +405,7 @@ static void *_WLCalendarLayoutObservationContext = &_WLCalendarLayoutObservation
     [NSNotificationCenter.defaultCenter addObserver:self
                                            selector:@selector(_scheduleLayoutDidChange)
                                                name:NSViewFrameDidChangeNotification
-                                             object:calendarController.arrangedViewController.view];
+                                             object:calendarController.calendarViewController.view];
     [NSNotificationCenter.defaultCenter addObserver:self
                                            selector:@selector(_scheduleLayoutDidChange)
                                                name:NSViewFrameDidChangeNotification
@@ -423,8 +422,8 @@ static void *_WLCalendarLayoutObservationContext = &_WLCalendarLayoutObservation
 
 - (void)viewDidDisappear
 {
-    __auto_type calendarController = WLAppDelegate._calendarWindowController;
-    [calendarController removeObserver:self forKeyPath:@"windowFrame" context:_WLFrameObservationContext];
+    __auto_type calendarController = WLAppDelegate.calendarWindowController;
+    [calendarController removeObserver:self forKeyPath:@"windowAlignmentFrame" context:_WLFrameObservationContext];
     [calendarController removeObserver:self forKeyPath:@"windowScreenVisibleFrame" context:_WLFrameObservationContext];
 
     __auto_type defaults = NSUserDefaults.standardUserDefaults;
@@ -437,7 +436,7 @@ static void *_WLCalendarLayoutObservationContext = &_WLCalendarLayoutObservation
 
     [NSNotificationCenter.defaultCenter removeObserver:self
                                                   name:NSViewFrameDidChangeNotification
-                                                object:calendarController.arrangedViewController.view];
+                                                object:calendarController.calendarViewController.view];
     [NSNotificationCenter.defaultCenter removeObserver:self
                                                   name:NSViewFrameDidChangeNotification
                                                 object:_rootArrangementView];
@@ -457,7 +456,7 @@ static void *_WLCalendarLayoutObservationContext = &_WLCalendarLayoutObservation
 
     // The Desktop view is sized to the aspect ratio of calendar window's screen.
 
-    __auto_type windowController = WLAppDelegate._calendarWindowController;
+    __auto_type windowController = WLAppDelegate.calendarWindowController;
     NSRect screenFrame = windowController.windowScreenVisibleFrame;
     CGFloat screenAspectRatio = NSHeight(screenFrame) > 0.0 ? NSWidth(screenFrame) / NSHeight(screenFrame) : 16.0 / 10.0;
 
@@ -476,7 +475,7 @@ static void *_WLCalendarLayoutObservationContext = &_WLCalendarLayoutObservation
     // Auto Layout (see XIB) takes care of scaling it up fit within the Desktop view,
     // while simultaneously respecting mockup's aspect ratio.
 
-    NSRect windowFrame = windowController.windowFrame;
+    NSRect windowFrame = windowController.windowAlignmentFrame;
     CGFloat mockupAspectRatio = NSHeight(windowFrame) > 0.0 ? NSWidth(windowFrame) / NSHeight(windowFrame) : 16.0 / 10.0;
 
     if (mockupAspectRatio > 1.0)

@@ -6,10 +6,11 @@
 //  Copyright (c) 2012 WireLoad Inc. All rights reserved.
 //
 
-#import "NSUserDefaults+WLApplicationDefaults.h"
-#import "WLCalendarWindowController.h"
-#import "WLScreensController.h"
 #import <ShortcutRecorder/ShortcutRecorder.h>
+#import <WLCalendarStore/WLCalendarStore.h>
+
+#import "NSUserDefaults+WLApplicationDefaults.h"
+#import "WLScreensController.h"
 
 
 NSInteger const WLBlotterBundleVersion2_1 = 9;
@@ -521,16 +522,66 @@ NSString* const WLAllDayViewHeightKey = @"AllDayViewHeight";
 @end
 
 
+@implementation NSUserDefaults (WLPreferences)
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_showPreferencesAtStartup
+{
+    return [NSSet setWithObject:WLShowPreferencesAtStartUp];
+}
+
+- (BOOL)WL_showPreferencesAtStartup
+{
+    return [self boolForKey:WLShowPreferencesAtStartUp];
+}
+
+- (void)setWL_showPreferencesAtStartup:(BOOL)newShowPreferences
+{
+    [self setBool:newShowPreferences forKey:WLShowPreferencesAtStartUp];
+}
+
+@end
+
+
 @implementation NSUserDefaults (WLGeneralPreferences)
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_showInMenuBar
+{
+    return [NSSet setWithObject:WLShowInMenuBar];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_showNext7Days
+{
+    return [NSSet setWithObject:WLShowsNext7DaysKey];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_requestShareAnalyticsConsentAtStartup
+{
+    return [NSSet setWithObject:WLRequestShareAnalyticsConsentAtStartup];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_shareAnalytics
+{
+    return [NSSet setWithObject:WLShareAnalytics];
+}
 
 - (BOOL)WL_showInMenuBar
 {
     return [self boolForKey:WLShowInMenuBar];
 }
 
-- (BOOL)WL_showsNext7Days
+- (void)setWL_showInMenuBar:(BOOL)newShowInMenuBar
+{
+    [self setBool:newShowInMenuBar forKey:WLShowInMenuBar];
+}
+
+- (BOOL)WL_showNext7Days
 {
     return [self boolForKey:WLShowsNext7DaysKey];
+}
+
+- (void)setWL_showNext7Days:(BOOL)newShowNext7Days
+{
+    [self setBool:newShowNext7Days forKey:WLShowsNext7DaysKey];
 }
 
 - (BOOL)WL_requestShareAnalyticsConsentAtStartup
@@ -538,9 +589,19 @@ NSString* const WLAllDayViewHeightKey = @"AllDayViewHeight";
     return [self boolForKey:WLRequestShareAnalyticsConsentAtStartup];
 }
 
+- (void)setWL_requestShareAnalyticsConsentAtStartup:(BOOL)newShareAnalytics
+{
+    [self setBool:newShareAnalytics forKey:WLRequestShareAnalyticsConsentAtStartup];
+}
+
 - (BOOL)WL_shareAnalytics
 {
     return [self boolForKey:WLShareAnalytics];
+}
+
+- (void)setWL_shareAnalytics:(BOOL)newShareAnalytics
+{
+    [self setBool:newShareAnalytics forKey:WLShareAnalytics];
 }
 
 @end
@@ -708,6 +769,11 @@ NSString* const WLAllDayViewHeightKey = @"AllDayViewHeight";
 
 @implementation NSUserDefaults (WLPositioningPreferences)
 
++ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_minimumWindowSize
+{
+    return [NSSet setWithObjects:WLMinimumTasksViewWidthKey, WLMinimumTasksViewHeightKey, nil];
+}
+
 + (NSSet<NSString *> *)keyPathsForValuesAffectingWL_customFrameFactors
 {
     return [NSSet setWithObject:WLCustomFrameFactorsKey];
@@ -726,6 +792,11 @@ NSString* const WLAllDayViewHeightKey = @"AllDayViewHeight";
 + (NSSet<NSString *> *)keyPathsForValuesAffectingWL_screenUUID
 {
     return [NSSet setWithObject:WLScreenUUIDKey];
+}
+
+- (NSSize)WL_minimumWindowSize
+{
+    return NSMakeSize(self.WL_minimumTasksViewWidth, self.WL_minimumTasksViewHeight);
 }
 
 - (NSRect)WL_customFrameFactors

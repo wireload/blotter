@@ -8,8 +8,6 @@
 
 #import "WLGraphics.h"
 #import "WLCalendarWeekView.h"
-#import "NSColor+WLCalendar.h"
-#import "NSFont+WLCalendar.h"
 
 
 // Must be unique!

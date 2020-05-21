@@ -11,39 +11,35 @@
 #import "WLPreferencesWindowController.h"
 #import "WLNewEventWindowController.h"
 #import "WLNewReminderWindowController.h"
-
-
-extern NSString* const WLBlotterLogName;
-
-extern NSString* const WLMixpanelLogName;
-
-
-extern NSStoryboardSceneIdentifier const WLPreferencesWindowIdentifier;
+#import "WLCalendarsController.h"
+#import "WLCalendarRemindersController.h"
+#import "WLCalendarEventsController.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
 
+extern const NSStoryboardSceneIdentifier WLCalendarWindowIdentifier;
+
+extern const NSStoryboardSceneIdentifier WLPreferencesWindowIdentifier;
+
+
 @interface DeskboardAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate, NSMenuItemValidation>
-{
-    IBOutlet NSMenu *_statusMenu;
-    IBOutlet NSMenuItem *_bringToFrontMenuItem;
-    IBOutlet NSMenuItem *_newEventMenuItem;
-    IBOutlet NSMenuItem *_newTaskMenuItem;
-    IBOutlet NSMenuItem *_showNextWeekMenuItem;
-    IBOutlet NSMenuItem *_showCurrentWeekMenuItem;
-    IBOutlet NSMenuItem *_showPreviousWeekMenuItem;
-    IBOutlet NSMenuItem *_preferencesMenuItem;
-}
 
 @property (readonly) NSStoryboard *storyboard;
 
-@property (readonly) WLCalendarWindowController *calendarWindowController;
+@property (nonatomic, readonly) WLCalendarWindowController *calendarWindowController;
 
 @property (nonatomic, readonly) WLPreferencesWindowController *preferencesWindowController;
 
 @property (nonatomic, readonly) WLNewEventWindowController *newEventWindowController;
 
 @property (nonatomic, readonly) WLNewReminderWindowController *newReminderWindowController;
+
+@property (readonly) WLCalendarsController *calendarsController;
+
+@property (readonly) WLCalendarRemindersController *calendarRemindersController;
+
+@property (readonly) WLCalendarEventsController *calendarEventsController;
 
 - (IBAction)bringToFrontOrSendToBack:(id)sender;
 
@@ -72,6 +68,8 @@ NS_ASSUME_NONNULL_BEGIN
     @brief  Makes the Rate This App menu item visible.
  */
 - (void)showRateThisAppMenuItem;
+
+- (void)fadeIn;
 
 /*!
     @brief  Makes the Rate This App menu item hidden.

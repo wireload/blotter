@@ -8,7 +8,6 @@
 
 #import "WLCalendarsPreferencesViewController.h"
 #import "WLColorCheckboxCell.h"
-#import "NSColor+WLCalendar.h"
 #import "DeskboardAppDelegate.h"
 
 
@@ -18,20 +17,15 @@
     NSArray *_calReminderCalendars;
 }
 
-- (void)dealloc
-{
-    [NSNotificationCenter.defaultCenter removeObserver:self];
-}
-
 #pragma mark Methods
 
 - (void)calCalendarsDidChange:(NSNotification *)aNotification
 {
     dispatch_async(dispatch_get_main_queue(), ^
     {
-        WLCalendarsController *c = ((DeskboardAppDelegate *)NSApp.delegate).calendarWindowController.calendarsController;
-        self->_calEventCalendars = [c.calEventCalendars copy];
-        self->_calReminderCalendars = [c.calReminderCalendars copy];
+        __auto_type calendarsController = WLAppDelegate.calendarsController;
+        self->_calEventCalendars = [calendarsController.calEventCalendars copy];
+        self->_calReminderCalendars = [calendarsController.calReminderCalendars copy];
         [self->_eventsTableView reloadData];
         [self->_remindersTableView reloadData];
     });
@@ -68,7 +62,7 @@
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-    WLCalendarsController *c = ((DeskboardAppDelegate *)NSApp.delegate).calendarWindowController.calendarsController;
+    WLCalendarsController *c = WLAppDelegate.calendarsController;
     if ([aTableColumn.identifier isEqualToString:@"check"])
     {
         if (aTableView == _eventsTableView)
@@ -89,7 +83,7 @@
 {
     if ([aTableColumn.identifier isEqualToString:@"check"])
     {
-        WLCalendarsController *c = ((DeskboardAppDelegate *)NSApp.delegate).calendarWindowController.calendarsController;
+        __auto_type c = WLAppDelegate.calendarsController;
         if (aTableView == _eventsTableView)
             [c setCalCalendar:_calEventCalendars[(NSUInteger)rowIndex] usedToDisplayEvents:[anObject boolValue]];
         else
@@ -119,7 +113,7 @@
     _remindersTableView.intercellSpacing = NSMakeSize(3.0, 0.0);
     _remindersTableView.selectionHighlightStyle = NSTableViewSelectionHighlightStyleNone;
 
-    WLCalendarsController *c = ((DeskboardAppDelegate *)NSApp.delegate).calendarWindowController.calendarsController;
+    __auto_type c = WLAppDelegate.calendarsController;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(calCalendarsDidChange:)
                                                  name:WLCalCalendarsDidChangeNotification
