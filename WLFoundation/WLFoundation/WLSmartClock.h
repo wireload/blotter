@@ -21,14 +21,11 @@ extern NSString* const WLSmartClockLogName;
  */
 @interface WLSmartClock : NSObject
 
-@property (readonly) NSCalendar *calendar;
+@property (class, readonly) WLSmartClock *defaultClock;
+
+@property (readonly, copy) NSCalendar *calendar;
 
 @property (readonly) NSDate *date;
-
-/*!
-    @brief  Returns shared instance.
-*/
-+ (instancetype)defaultClock;
 
 - (void)localeDidChange:(NSNotification *)aNotification;
 
