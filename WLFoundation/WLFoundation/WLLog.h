@@ -11,7 +11,7 @@
 typedef NSString * WLLogName NS_TYPED_EXTENSIBLE_ENUM;
 
 
-typedef NSString * (^WLASLLogMessenger)(void);
+typedef NSString * (^WLLogMessenger)(void);
 
 
 /*!
@@ -59,18 +59,18 @@ typedef NSString * (^WLASLLogMessenger)(void);
 
 @interface WLLog (Asynchronous)
 
-- (void)logAlertWithMessenger:(WLASLLogMessenger)aMessenger;
+- (void)logAlertWithMessenger:(WLLogMessenger)aMessenger;
 
-- (void)logCriticalWithMessenger:(WLASLLogMessenger)aMessenger;
+- (void)logCriticalWithMessenger:(WLLogMessenger)aMessenger;
 
-- (void)logErrorWithMessenger:(WLASLLogMessenger)aMessenger;
+- (void)logErrorWithMessenger:(WLLogMessenger)aMessenger;
 
-- (void)logWarningWithMessenger:(WLASLLogMessenger)aMessenger;
+- (void)logWarningWithMessenger:(WLLogMessenger)aMessenger;
 
-- (void)logNoticeWithMessenger:(WLASLLogMessenger)aMessenger;
+- (void)logNoticeWithMessenger:(WLLogMessenger)aMessenger;
 
-- (void)logInfoWithMessenger:(WLASLLogMessenger)aMessenger;
+- (void)logInfoWithMessenger:(WLLogMessenger)aMessenger;
 
-- (void)logDebugWithMessenger:(WLASLLogMessenger)aMessenger;
+- (void)logDebugWithMessenger:(WLLogMessenger)aMessenger;
 
 @end
