@@ -252,18 +252,16 @@ static const WLLogName _WLAnimationLog = @"net.wireload.blotter.mac.Animation";
                         [self _completeIfNeeded:self->_owningSequence];
                 };
 
-                NSMutableArray *traces = [NSMutableArray new];
-                objc_setAssociatedObject(completion, &WLTransactionsToken, traces, OBJC_ASSOCIATION_RETAIN);
-
-                [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull aContext) {
+                __auto_type traces = [NSAnimationContext WL_runAnimationGroup:^(NSAnimationContext * _Nonnull aContext) {
                     self->_pendingChangesCount += 1;
                     [self _configureAnimationContext];
 
                     aBlock();
                 } completionHandler:completion];
 
-                [_changesTraces addObject:traces.lastObject]; // last object contains animations from all nested groups
-                objc_setAssociatedObject(completion, &WLTransactionsToken, nil, OBJC_ASSOCIATION_ASSIGN);
+                if (traces.count)
+                    [_changesTraces addObject:traces.lastObject]; // last object contains animations from all nested groups
+
                 break;
             }
             case WLAnimationSceneStateCancelling:
@@ -420,10 +418,7 @@ static const WLLogName _WLAnimationLog = @"net.wireload.blotter.mac.Animation";
         return;
     }
 
-    NSMutableArray *traces = [NSMutableArray new];
-    objc_setAssociatedObject(completion, &WLTransactionsToken, traces, OBJC_ASSOCIATION_RETAIN);
-
-    [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull aContext) {
+    __auto_type traces = [NSAnimationContext WL_runAnimationGroup:^(NSAnimationContext * _Nonnull aContext) {
         WLNoReentryScope(&aSequence->_reentryCanary);
 
         aContext.duration = 0.0;
@@ -432,7 +427,6 @@ static const WLLogName _WLAnimationLog = @"net.wireload.blotter.mac.Animation";
     } completionHandler:completion];
 
     _preparationTrace = traces.lastObject; // last object contains animations from all nested groups
-    objc_setAssociatedObject(completion, &WLTransactionsToken, nil, OBJC_ASSOCIATION_ASSIGN);
 }
 
 - (void)_run:(WLAnimationSequence *)aSequence
@@ -444,10 +438,7 @@ static const WLLogName _WLAnimationLog = @"net.wireload.blotter.mac.Animation";
         [self _completeIfNeeded:aSequence];
     };
 
-    NSMutableArray *traces = [NSMutableArray new];
-    objc_setAssociatedObject(completion, &WLTransactionsToken, traces, OBJC_ASSOCIATION_RETAIN);
-
-    [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull aContext) {
+    __auto_type traces = [NSAnimationContext WL_runAnimationGroup:^(NSAnimationContext * _Nonnull aContext) {
         WLNoReentryScope(&aSequence->_reentryCanary);
 
         _pendingChangesCount += 1;
@@ -466,8 +457,8 @@ static const WLLogName _WLAnimationLog = @"net.wireload.blotter.mac.Animation";
 
     } completionHandler:completion];
 
-    [_changesTraces addObject:traces.lastObject]; // last object contains animations from all nested groups
-    objc_setAssociatedObject(completion, &WLTransactionsToken, nil, OBJC_ASSOCIATION_ASSIGN);
+    if (traces.count)
+        [_changesTraces addObject:traces.lastObject]; // last object contains animations from all nested groups
 }
 
 -(void)_cancel:(WLAnimationSequence *)aSequence andComplete:(BOOL)aShouldComplete
@@ -489,10 +480,7 @@ static const WLLogName _WLAnimationLog = @"net.wireload.blotter.mac.Animation";
             [self _completeIfNeeded:aSequence];
     };
 
-    NSMutableArray *traces = [NSMutableArray new];
-    objc_setAssociatedObject(completion, &WLTransactionsToken, traces, OBJC_ASSOCIATION_RETAIN);
-
-    [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull aContext) {
+    __auto_type traces = [NSAnimationContext WL_runAnimationGroup:^(NSAnimationContext * _Nonnull aContext) {
         WLNoReentryScope(&aSequence->_reentryCanary);
 
         aContext.duration = 0.0;
@@ -501,8 +489,7 @@ static const WLLogName _WLAnimationLog = @"net.wireload.blotter.mac.Animation";
         [self didChangeValueForKey:@"state"];
     } completionHandler:completion];
 
-    _cancellationTrace = traces.lastObject; // last object contains animations from all nested groups
-    objc_setAssociatedObject(completion, &WLTransactionsToken, nil, OBJC_ASSOCIATION_ASSIGN);
+    _cancellationTrace = traces.lastObject;
 }
 
 - (void)_completeIfNeeded:(WLAnimationSequence *)aSequence

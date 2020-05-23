@@ -222,6 +222,12 @@ extern NSString * const WLTransactionsToken;
  */
 + (void)WL_addAnimationTrace:(WLAnimationTrace *)aTrace;
 
+/*!
+ Same as +[NSAnimationContext runAnimationGroup:completionHandler:] but capture animations in the process.
+ */
++ (NSArray<WLAnimationTrace *> *)WL_runAnimationGroup:(void (NS_NOESCAPE ^)(NSAnimationContext * context))changes
+                                   completionHandler:(nullable void (^)(void))completionHandler;
+
 @end
 
 

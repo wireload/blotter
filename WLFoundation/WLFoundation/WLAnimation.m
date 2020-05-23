@@ -498,6 +498,22 @@ static NSString * const _WLAnimationsStackToken = @"WLAnimationsStackToken";
         [animations addObject:aTrace];
 }
 
++ (NSArray<WLAnimationTrace *> *)WL_runAnimationGroup:(void (NS_NOESCAPE ^)(NSAnimationContext * _Nonnull))aChanges
+                                    completionHandler:(void (^)(void))aCompletionHandler
+{
+    NSMutableArray *traces = [NSMutableArray new];
+
+    if (aCompletionHandler)
+        objc_setAssociatedObject(aCompletionHandler, &WLTransactionsToken, traces, OBJC_ASSOCIATION_RETAIN);
+
+    [NSAnimationContext runAnimationGroup:aChanges completionHandler:aCompletionHandler];
+
+    if (aCompletionHandler)
+        objc_setAssociatedObject(aCompletionHandler, &WLTransactionsToken, nil, OBJC_ASSOCIATION_ASSIGN);
+
+    return traces;
+}
+
 @end
 
 
