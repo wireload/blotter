@@ -181,8 +181,7 @@
                         <menuItem isSeparatorItem="YES" id="jSM-Rw-I8V">
                             <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                         </menuItem>
-                        <menuItem title="Quit Blotter" tag="4" id="lgN-Zg-33O">
-                            <modifierMask key="keyEquivalentModifierMask"/>
+                        <menuItem title="Quit Blotter" tag="4" keyEquivalent="q" id="lgN-Zg-33O">
                             <attributedString key="userComments">
                                 <fragment content="Title for the Quit Blotter menu item"/>
                             </attributedString>
