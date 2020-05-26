@@ -50,7 +50,7 @@ static NSString *_WLLoginItemJobLabel = @"net.wireload.blotter.mac.LoginItem";
 
 - (IBAction)quitBlotter:(id)aSender
 {
-    [[NSApplication sharedApplication] terminate:aSender];
+    [NSApplication.sharedApplication terminate:aSender];
 }
 
 - (IBAction)showMacOSXCalendarSettings:(id)aSender
@@ -70,14 +70,14 @@ static NSString *_WLLoginItemJobLabel = @"net.wireload.blotter.mac.LoginItem";
 
 - (IBAction)showPrivacyPolicy:(id)aSender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[[NSUserDefaults standardUserDefaults] WL_privacyPolicyURL]];
+    [NSWorkspace.sharedWorkspace openURL:NSUserDefaults.standardUserDefaults.WL_privacyPolicyURL];
 }
 
 #pragma mark NSAlertDelegate
 
 - (BOOL)alertShowHelp:(NSAlert *)anAlert
 {
-    [[NSWorkspace sharedWorkspace] openURL:[[NSUserDefaults standardUserDefaults] WL_getSupportURL]];
+    [NSWorkspace.sharedWorkspace openURL:NSUserDefaults.standardUserDefaults.WL_getSupportURL];
     return YES;
 }
 
