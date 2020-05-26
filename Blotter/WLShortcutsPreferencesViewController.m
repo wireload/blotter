@@ -12,6 +12,13 @@
 
 @implementation WLShortcutsPreferencesViewController
 {
+    __weak IBOutlet SRRecorderControl *_bringToFrontRecroderControl;
+    __weak IBOutlet SRRecorderControl *_newEventRecorderControl;
+    __weak IBOutlet SRRecorderControl *_newReminderRecorderControl;
+    __weak IBOutlet SRRecorderControl *_showNextWeekControl;
+    __weak IBOutlet SRRecorderControl *_showCurrentWeekControl;
+    __weak IBOutlet SRRecorderControl *_showPrevWeekControl;
+
     NSTabViewItem *_tabViewItem;
     SRShortcutValidator *_validator;
 }
@@ -32,7 +39,7 @@
     return isValid;
 }
 
-- (BOOL)recorderControl:(SRRecorderControl *)aControl shouldUnconditionallyAllowModifierFlags:(NSEventModifierFlags)aModifierFlags forKeyCode:(unsigned short)aKeyCode
+- (BOOL)recorderControl:(SRRecorderControl *)aControl shouldUnconditionallyAllowModifierFlags:(NSEventModifierFlags)aModifierFlags forKeyCode:(SRKeyCode)aKeyCode
 {
     // Don't allow disallowed flags.
     if ((aModifierFlags & aControl.allowedModifierFlags) != aModifierFlags)

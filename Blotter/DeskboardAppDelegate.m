@@ -73,6 +73,8 @@ const NSStoryboardSceneIdentifier WLPreferencesWindowIdentifier = @"WLPreference
     [defaults removeObserver:self forKeyPath:WLAutoFadeKey];
     [defaults removeObserver:self forKeyPath:WLAutoFadeSecondsKey];
     [defaults removeObserver:self forKeyPath:WLShareAnalytics];
+
+    [SRGlobalShortcutMonitor.sharedMonitor removeAllActions];
     _shortcutActions = nil;
 
     [WLSmartClock.defaultClock removeObserver:self forKeyPath:@"date"];

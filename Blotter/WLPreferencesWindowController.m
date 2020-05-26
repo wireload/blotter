@@ -14,7 +14,7 @@
 
 @implementation WLPreferencesWindowController
 {
-    SRShortcutItemCatalog *_shortcuts;
+    SRLocalShortcutMonitor *_shortcuts;
 }
 
 #pragma mark Properties
@@ -60,8 +60,10 @@
     [super windowDidLoad];
     self.window.level = NSFloatingWindowLevel;
     self.contentViewController.transitionOptions = WLViewControllerTransitionResize;
-    _shortcuts = [SRShortcutItemCatalog new];
-    [_shortcuts addAction:@selector(performClose:) forKeyEquivalent:@"⌘W"];
+
+    _shortcuts = [SRLocalShortcutMonitor new];
+    __auto_type closeWindowAction = [_shortcuts addAction:@selector(performClose:) forKeyEquivalent:@"⌘W" tag:0];
+    closeWindowAction.target = self.window;
 }
 
 - (void)showWindow:(id)aSender
@@ -77,7 +79,7 @@
 
 - (void)keyDown:(NSEvent *)anEvent
 {
-    if (![_shortcuts performEvent:anEvent onTarget:self.window])
+    if (![_shortcuts handleEvent:anEvent withTarget:nil])
         [super keyDown:anEvent];
 }
 
