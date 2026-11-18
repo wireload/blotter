@@ -14,7 +14,7 @@ permissions:
   contents: read
 
 env:
-  XCODE_VERSION: "26.6"
+  XCODE_VERSION: "26.3"
   XCODEGEN_VERSION: "2.44.1"
 
 jobs:
@@ -30,7 +30,7 @@ jobs:
 
   app:
     name: Lint, build & test (macOS)
-    runs-on: macos-26
+    runs-on: macos-15
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
