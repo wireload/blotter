@@ -15,11 +15,10 @@ final class CalendarState {
     /// How long after navigating away the calendar returns to the current week.
     static let returnToCurrentWeekDelay: Duration = .seconds(45)
 
-    /// Whole weeks away from the current week.
-    var weekOffset = 0 {
+    /// Whole weeks away from the current week. Change it with `navigate(to:)`.
+    private(set) var weekOffset = 0 {
         didSet {
             guard weekOffset != oldValue else { return }
-            lastNavigationWasForward = weekOffset > oldValue
             noteActivity()
             scheduleReturnToCurrentWeek()
         }
@@ -59,6 +58,23 @@ final class CalendarState {
         guard settings != fadeSettings else { return }
         fadeSettings = settings
         noteActivity()
+    }
+
+    /// Shows the week `offset` weeks away from the current one.
+    ///
+    /// The slide direction must be in place before the week changes: the outgoing week keeps the transition from its
+    /// last render. When the direction flips, it is committed first and the week changes on the next run loop pass.
+    func navigate(to offset: Int) {
+        guard offset != weekOffset else { return }
+        let forward = offset > weekOffset
+        if forward == lastNavigationWasForward {
+            weekOffset = offset
+        } else {
+            lastNavigationWasForward = forward
+            DispatchQueue.main.async { [weak self] in
+                MainActor.assumeIsolated { self?.weekOffset = offset }
+            }
+        }
     }
 
     func bringToFront() {
@@ -103,7 +119,7 @@ final class CalendarState {
         returnTask = Task { [weak self] in
             try? await Task.sleep(for: Self.returnToCurrentWeekDelay)
             guard !Task.isCancelled else { return }
-            self?.weekOffset = 0
+            self?.navigate(to: 0)
         }
     }
 }

@@ -103,11 +103,11 @@ extension AppDelegate: CalendarActions {
         }
     }
 
-    func showNextWeek() { state.weekOffset += 1 }
+    func showNextWeek() { state.navigate(to: state.weekOffset + 1) }
 
-    func showPreviousWeek() { state.weekOffset -= 1 }
+    func showPreviousWeek() { state.navigate(to: state.weekOffset - 1) }
 
-    func showCurrentWeek() { state.weekOffset = 0 }
+    func showCurrentWeek() { state.navigate(to: 0) }
 
     func showSettings() {
         state.noteActivity()

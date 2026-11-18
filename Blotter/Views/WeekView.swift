@@ -222,7 +222,8 @@ struct DayColumn: View {
 
     var body: some View {
         GeometryReader { geometry in
-            let placements = EventLayout.place(segments)
+            // Beyond one column per 12 points, events would be unreadable slivers; extra ones share columns.
+            let placements = EventLayout.place(segments, maximumColumns: max(Int(geometry.size.width / 12), 1))
             let events = Dictionary(day.timed.map { ($0.event.id, $0.event) }, uniquingKeysWith: { first, _ in first })
 
             ZStack(alignment: .topLeading) {

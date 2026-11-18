@@ -56,7 +56,9 @@ public enum EventLayout {
             var w: CGFloat = 0
             for index in column..<(column + span) { w += columnWidth(index) }
             w += gap * CGFloat(span - 1)
-            return (x, min(w, width - x))
+            // Never negative, even when the gaps alone are wider than `width`.
+            let clampedX = min(max(x, 0), max(width, 0))
+            return (clampedX, max(min(w, width - clampedX), 0))
         }
 
         /// Whether the event is alone in its row.

@@ -113,3 +113,47 @@ import Testing
         #expect(fit.startHour == 0)
     }
 }
+
+@Suite struct LayoutRegressionTests {
+    @Test(arguments: [23.5, 23.6, 23.75, 23.9])
+    func lateEventStaysInside(startHour: Double) {
+        let item = HourFit.Item(startHour: startHour, endHour: startHour + 0.25, minimumHeight: 20)
+        let fit = HourFit.fit([item], height: 528)
+        #expect(fit.offset(ofHour: startHour) + 20 <= 528.0001)
+        #expect(fit.offset(ofHour: startHour) >= 0)
+    }
+
+    @Test func degenerateInputs() {
+        let empty = HourFit.fit([], height: 400, workingHours: 24...24)
+        #expect(empty.hourHeight.isFinite && empty.hourHeight > 0)
+        #expect(empty.startHour <= 23)
+
+        let infinite = HourFit.fit([], height: .infinity)
+        #expect(infinite.hourHeight.isFinite)
+    }
+
+    @Test func horizontalExtentNeverNegative() {
+        typealias Segment = EventLayout.Segment<String>
+        for width: CGFloat in [0, 1, 10, 58] {
+            for columns in [2, 10, 40] {
+                for column in 0..<columns {
+                    let placement = EventLayout.Placement(
+                        segment: Segment(id: "x", top: 0, bottom: 1), row: 0, column: column, span: 1,
+                        columnCount: columns)
+                    let extent = placement.horizontalExtent(width: width, gap: 2)
+                    #expect(extent.width >= 0)
+                    #expect(extent.x >= 0 && extent.x <= width)
+                }
+            }
+        }
+    }
+
+    @Test func allDayAndTimedLeaveRoomForTitles() {
+        let layout = PaneLayout(size: CGSize(width: 1000, height: 700), layout: .normal, calendarSize: .normal)
+        #expect(layout.allDayHeight + PaneLayout.spacingAfterAllDay + layout.timedHeight == CGFloat(700 - 32))
+
+        // Too short for both: the all-day row takes what is left after the titles, not the full height.
+        let short = PaneLayout(size: CGSize(width: 1000, height: 400), layout: .normal, calendarSize: .normal)
+        #expect(short.allDayHeight + short.timedHeight <= CGFloat(400 - 32))
+    }
+}
