@@ -95,7 +95,7 @@ struct PositionSettings: View {
     @AppStorage(DefaultsKey.calendarSize) private var size = CalendarSize.normal.rawValue
     @AppStorage(DefaultsKey.calendarPosition) private var position = CalendarPosition.topLeft.rawValue
     @State private var customFrame = AppDefaults.customFrame
-    @State private var screens = NSScreen.screens.map(ScreenChoice.init)
+    @State private var screens = NSScreen.screens.map { ScreenChoice($0) }
 
     var body: some View {
         Form {
@@ -139,7 +139,7 @@ struct PositionSettings: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didChangeScreenParametersNotification)) {
             _ in
-            screens = NSScreen.screens.map(ScreenChoice.init)
+            screens = NSScreen.screens.map { ScreenChoice($0) }
         }
     }
 
