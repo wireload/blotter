@@ -1,26 +1,12 @@
-# xcode noise
-*.mode1v3
-*.pbxuser
-*.pbxproj -crlf -merge
-*.perspective
-*.perspectivev3
-*.pyc
-*~.nib/
-build/*
-xcuserdata
+# Xcode
+xcuserdata/
+DerivedData/
+build/
+*.xcresult
 
-# Textmate - if you build your xcode projects with it
-*.tm_build_errors
+# Swift Package Manager
+.build/
+.swiftpm/
 
-# old skool
-.svn
-
-# osx noise
+# macOS
 .DS_Store
-profile
-Support/CollectBlotterData.workflow/Contents/QuickLook/Thumbnail.png
-
-# Generated stuff.
-Resources/calendar/calendar-compiled.js
-auxiliary/build/
-Support/*.zip

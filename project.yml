@@ -1,0 +1,88 @@
+# Generates Blotter.xcodeproj. After changing this file, run `xcodegen` and commit the result.
+name: Blotter
+options:
+  bundleIdPrefix: net.wireload
+  deploymentTarget:
+    macOS: "14.0"
+  developmentLanguage: en
+  createIntermediateGroups: true
+  groupSortPosition: top
+  xcodeVersion: "26.0"
+
+settings:
+  base:
+    MARKETING_VERSION: "3.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+    SWIFT_VERSION: "6.0"
+    SWIFT_APPROACHABLE_CONCURRENCY: YES
+    SWIFT_DEFAULT_ACTOR_ISOLATION: MainActor
+    SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY: YES
+    SWIFT_EMIT_LOC_STRINGS: YES
+    LOCALIZATION_PREFERS_STRING_CATALOGS: YES
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    ENABLE_STRICT_OBJC_MSGSEND: YES
+    DEAD_CODE_STRIPPING: YES
+    CODE_SIGN_STYLE: Automatic
+    CODE_SIGN_IDENTITY: "-"
+
+packages:
+  BlotterKit:
+    path: BlotterKit
+  KeyboardShortcuts:
+    url: https://github.com/sindresorhus/KeyboardShortcuts
+    from: "3.1.0"
+
+targets:
+  Blotter:
+    type: application
+    platform: macOS
+    sources:
+      - path: Blotter
+        excludes:
+          - Info.plist
+          - Blotter.entitlements
+    dependencies:
+      - package: BlotterKit
+      - package: KeyboardShortcuts
+    info:
+      path: Blotter/Info.plist
+      properties:
+        CFBundleDisplayName: Blotter
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        LSApplicationCategoryType: public.app-category.productivity
+        LSMinimumSystemVersion: $(MACOSX_DEPLOYMENT_TARGET)
+        LSUIElement: true
+        NSHumanReadableCopyright: "Copyright © 2010–2026 WireLoad Inc. Licensed under the Apache License 2.0."
+        NSCalendarsFullAccessUsageDescription: Blotter shows your events on the desktop and adds the events you create.
+        NSCalendarsUsageDescription: Blotter shows your events on the desktop and adds the events you create.
+        NSRemindersFullAccessUsageDescription: Blotter shows your reminders on the desktop and adds the reminders you create.
+        NSRemindersUsageDescription: Blotter shows your reminders on the desktop and adds the reminders you create.
+        NSSupportsAutomaticGraphicsSwitching: true
+    entitlements:
+      path: Blotter/Blotter.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.personal-information.calendars: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: net.wireload.blotter.mac
+        PRODUCT_NAME: Blotter
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ENABLE_HARDENED_RUNTIME: YES
+        COMBINE_HIDPI_IMAGES: YES
+
+schemes:
+  Blotter:
+    build:
+      targets:
+        Blotter: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      gatherCoverageData: true
+      targets:
+        - package: BlotterKit/BlotterKitTests
+    archive:
+      config: Release
