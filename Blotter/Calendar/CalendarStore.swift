@@ -42,9 +42,11 @@ final class CalendarStore {
     @ObservationIgnored private var reminderFetch: Any?
     @ObservationIgnored private let log = Logger(subsystem: "net.wireload.blotter.mac", category: "CalendarStore")
 
+    @ObservationIgnored private let isDemo = DemoData.isEnabled
+
     init() {
-        eventAccess = Self.access(for: .event)
-        reminderAccess = Self.access(for: .reminder)
+        eventAccess = isDemo ? .granted : Self.access(for: .event)
+        reminderAccess = isDemo ? .granted : Self.access(for: .reminder)
         hiddenCalendarsSnapshot = Self.hiddenCalendarsSnapshot()
 
         let center = NotificationCenter.default
@@ -63,6 +65,7 @@ final class CalendarStore {
     // MARK: Access
 
     func requestAccess() {
+        guard !isDemo else { return }
         if eventAccess == .notDetermined {
             store.requestFullAccessToEvents { @Sendable [weak self] _, _ in
                 Task { @MainActor in self?.accessChanged() }
@@ -92,6 +95,13 @@ final class CalendarStore {
     // MARK: Loading
 
     private func reload() {
+        if isDemo {
+            eventCalendars = DemoData.eventCalendars
+            reminderCalendars = DemoData.reminderCalendars
+            reloadEvents()
+            reminders = DemoData.reminders(around: Date(), calendar: .current)
+            return
+        }
         if eventAccess == .granted {
             eventCalendars = store.calendars(for: .event).map(Self.info).sorted(by: Self.calendarOrder)
         } else {
@@ -119,6 +129,12 @@ final class CalendarStore {
             events = []
             return
         }
+        if isDemo {
+            events = DemoData.events(around: Date(), calendar: .current).filter {
+                $0.range.intersects(range) || range.position(of: $0.start) == .within
+            }
+            return
+        }
         let calendars = visibleCalendars(for: .event)
         guard !calendars.isEmpty else {
             events = []
@@ -129,6 +145,7 @@ final class CalendarStore {
     }
 
     private func reloadReminders() {
+        guard !isDemo else { return }
         if let reminderFetch {
             store.cancelFetchRequest(reminderFetch)
         }
@@ -192,6 +209,7 @@ final class CalendarStore {
     func createEvent(
         title: String, location: String, start: Date, end: Date, isAllDay: Bool, calendarID: String
     ) throws {
+        guard !isDemo else { return }
         let event = EKEvent(eventStore: store)
         event.title = title
         event.location = location.isEmpty ? nil : location
@@ -203,6 +221,7 @@ final class CalendarStore {
     }
 
     func createReminder(title: String, dueDate: Date?, priority: Int, calendarID: String) throws {
+        guard !isDemo else { return }
         let reminder = EKReminder(eventStore: store)
         reminder.title = title
         reminder.priority = priority

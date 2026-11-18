@@ -83,6 +83,32 @@ jobs:
             | tee build/xcodebuild-release.log | xcbeautify --renderer github-actions
           ditto -c -k --keepParent build/DerivedData/Build/Products/Release/Blotter.app build/Blotter.zip
 
+      - name: Screenshots with demo data
+        run: |
+          app=build/DerivedData/Build/Products/Release/Blotter.app/Contents/MacOS/Blotter
+          capture() {
+            local name=$1; shift
+            "$app" -BlotterDemoData YES "$@" > "build/$name.log" 2>&1 &
+            local pid=$!
+            sleep 10
+            screencapture -x "build/screenshot-$name.png" || true
+            kill "$pid" || true
+            wait "$pid" 2>/dev/null || true
+          }
+          capture desktop -ShowPreferencesAtStartUp NO -CalendarSize 2
+          capture settings -ShowPreferencesAtStartUp YES -CalendarSize 1
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: |
+            build/screenshot-*.png
+            build/desktop.log
+            build/settings.log
+          if-no-files-found: ignore
+
       - name: Upload app
         uses: actions/upload-artifact@v4
         with:
