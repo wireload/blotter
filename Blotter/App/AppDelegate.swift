@@ -52,6 +52,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidBecomeActive(_ notification: Notification) {
         state.noteActivity()
+        store.refreshAccess()
     }
 
     func applicationDidResignActive(_ notification: Notification) {

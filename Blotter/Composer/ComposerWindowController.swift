@@ -14,7 +14,11 @@ final class ComposerWindowController {
     /// Shows the New Event window. Returns `false` when there is no calendar to add events to.
     func showEvent() -> Bool {
         guard store.eventCalendars.contains(where: \.allowsModifications) else { return false }
-        eventWindow?.close()
+        if let eventWindow, eventWindow.isVisible {
+            // Keep the draft the user is working on.
+            eventWindow.makeKeyAndOrderFront(nil)
+            return true
+        }
         let window = makeWindow(title: String(localized: "New Event"), autosaveName: "NewEventWindow")
         window.contentViewController = NSHostingController(
             rootView: NewEventView(close: { [weak window] in window?.close() }).environment(store))
@@ -26,7 +30,10 @@ final class ComposerWindowController {
     /// Shows the New Reminder window. Returns `false` when there is no list to add reminders to.
     func showReminder() -> Bool {
         guard store.reminderCalendars.contains(where: \.allowsModifications) else { return false }
-        reminderWindow?.close()
+        if let reminderWindow, reminderWindow.isVisible {
+            reminderWindow.makeKeyAndOrderFront(nil)
+            return true
+        }
         let window = makeWindow(title: String(localized: "New Reminder"), autosaveName: "NewTaskWindow")
         window.contentViewController = NSHostingController(
             rootView: NewReminderView(close: { [weak window] in window?.close() }).environment(store))
@@ -41,7 +48,8 @@ final class ComposerWindowController {
             defer: true)
         window.title = title
         window.titlebarAppearsTransparent = true
-        window.level = .floating
+        // Above the calendar, which floats while it is brought to front.
+        window.level = NSWindow.Level(rawValue: NSWindow.Level.floating.rawValue + 1)
         window.isReleasedWhenClosed = false
         window.hidesOnDeactivate = false
         window.setFrameAutosaveName(autosaveName)

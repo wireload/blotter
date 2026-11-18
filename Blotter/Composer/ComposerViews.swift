@@ -10,10 +10,17 @@ struct NewEventView: View {
     @State private var title = String(localized: "New Event")
     @State private var location = ""
     @State private var isAllDay = false
-    @State private var start = Date.nextFullHour()
-    @State private var end = Date.nextFullHour().addingTimeInterval(3_600)
+    @State private var start: Date
+    @State private var end: Date
     @State private var error: String?
     @FocusState private var titleFocused: Bool
+
+    init(close: @escaping () -> Void) {
+        self.close = close
+        let start = Date.nextFullHour()
+        _start = State(initialValue: start)
+        _end = State(initialValue: start.addingTimeInterval(3_600))
+    }
 
     var body: some View {
         Form {
@@ -23,11 +30,8 @@ struct NewEventView: View {
             Toggle("All day", isOn: $isAllDay)
             DatePicker("Starts", selection: $start, displayedComponents: components)
                 .onChange(of: start) { oldValue, newValue in
-                    // Keep the duration when the start moves later; restart at one hour when it moves earlier.
-                    end =
-                        newValue > oldValue
-                        ? end.addingTimeInterval(newValue.timeIntervalSince(oldValue))
-                        : max(end, newValue.addingTimeInterval(3_600))
+                    // Moving the start moves the whole event, keeping its duration, as in Calendar.
+                    end = end.addingTimeInterval(newValue.timeIntervalSince(oldValue))
                 }
             DatePicker("Ends", selection: $end, in: start..., displayedComponents: components)
             CalendarPicker(
@@ -57,6 +61,14 @@ struct NewEventView: View {
     }
 
     private func save() {
+        var start = start
+        var end = end
+        if isAllDay {
+            // The pickers hide the time, but it is still there: drop it so the event covers exactly the chosen days.
+            let calendar = Calendar.current
+            start = calendar.startOfDay(for: start)
+            end = max(calendar.startOfDay(for: end), start)
+        }
         do {
             try store.createEvent(
                 title: title.trimmingCharacters(in: .whitespacesAndNewlines),

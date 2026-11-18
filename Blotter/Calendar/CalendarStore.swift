@@ -40,6 +40,9 @@ final class CalendarStore {
     @ObservationIgnored private var observers: [any NSObjectProtocol] = []
     @ObservationIgnored private var hiddenCalendarsSnapshot: [String] = []
     @ObservationIgnored private var reminderFetch: Any?
+    /// Incremented on every reminders fetch, so a late result from an older fetch is discarded.
+    @ObservationIgnored private var reminderGeneration = 0
+    @ObservationIgnored private var accessTimer: Timer?
     @ObservationIgnored private let log = Logger(subsystem: "net.wireload.blotter.mac", category: "CalendarStore")
 
     @ObservationIgnored private let isDemo = DemoData.isEnabled
@@ -60,6 +63,7 @@ final class CalendarStore {
                 MainActor.assumeIsolated { self?.calendarSelectionMayHaveChanged() }
             })
         reload()
+        updateAccessTimer()
     }
 
     // MARK: Access
@@ -79,9 +83,41 @@ final class CalendarStore {
     }
 
     private func accessChanged() {
-        eventAccess = Self.access(for: .event)
-        reminderAccess = Self.access(for: .reminder)
+        refreshAccess()
+    }
+
+    /// Re-reads the authorization status, which the user can change in System Settings at any time.
+    func refreshAccess() {
+        guard !isDemo else { return }
+        let events = Self.access(for: .event)
+        let reminders = Self.access(for: .reminder)
+        guard events != eventAccess || reminders != reminderAccess else { return }
+        let gained =
+            (events == .granted && eventAccess != .granted) || (reminders == .granted && reminderAccess != .granted)
+        eventAccess = events
+        reminderAccess = reminders
+        if gained {
+            // A store created before access was granted can keep returning nothing until it is reset.
+            store.reset()
+        }
         reload()
+        updateAccessTimer()
+    }
+
+    /// While some access is missing, check now and then whether it was granted in System Settings.
+    private func updateAccessTimer() {
+        let complete = isDemo || (eventAccess == .granted && reminderAccess == .granted)
+        if complete {
+            accessTimer?.invalidate()
+            accessTimer = nil
+        } else if accessTimer == nil {
+            let timer = Timer(timeInterval: 10, repeats: true) { [weak self] _ in
+                MainActor.assumeIsolated { self?.refreshAccess() }
+            }
+            timer.tolerance = 5
+            RunLoop.main.add(timer, forMode: .common)
+            accessTimer = timer
+        }
     }
 
     private static func access(for type: EKEntityType) -> Access {
@@ -146,8 +182,11 @@ final class CalendarStore {
 
     private func reloadReminders() {
         guard !isDemo else { return }
+        reminderGeneration += 1
+        let generation = reminderGeneration
         if let reminderFetch {
             store.cancelFetchRequest(reminderFetch)
+            self.reminderFetch = nil
         }
         guard reminderAccess == .granted else {
             reminders = []
@@ -162,7 +201,10 @@ final class CalendarStore {
             withDueDateStarting: nil, ending: nil, calendars: calendars)
         reminderFetch = store.fetchReminders(matching: predicate) { @Sendable [weak self] fetched in
             let reminders = (fetched ?? []).map(Self.reminder).sorted(by: Reminder.areInDisplayOrder)
-            Task { @MainActor in self?.reminders = reminders }
+            Task { @MainActor in
+                guard let self, self.reminderGeneration == generation else { return }
+                self.reminders = reminders
+            }
         }
     }
 
@@ -226,8 +268,8 @@ final class CalendarStore {
         reminder.title = title
         reminder.priority = priority
         if let dueDate {
-            reminder.dueDateComponents = Calendar.current.dateComponents(
-                [.calendar, .timeZone, .year, .month, .day, .hour, .minute], from: dueDate)
+            // A date-only, floating due date: no time of day and no time zone, as in Reminders.
+            reminder.dueDateComponents = Calendar.current.dateComponents([.year, .month, .day], from: dueDate)
         }
         reminder.calendar = store.calendar(withIdentifier: calendarID) ?? store.defaultCalendarForNewReminders()
         try store.save(reminder, commit: true)
