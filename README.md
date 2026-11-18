@@ -2,6 +2,8 @@
 
 Blotter puts your calendar on the desktop. It sits behind your icons and windows, on every Space, and shows today's date, your reminders, what's happening right now, and the whole week. When you need it, bring it to the front with a keyboard shortcut.
 
+![Blotter on the desktop, showing today's date, reminders, the current hour and the week](docs/screenshot.png)
+
 Blotter was a Mac App Store app from 2010 to 2020. Version 3 is a rewrite in Swift and SwiftUI for current macOS, released as open source under the Apache License 2.0.
 
 ## Features
