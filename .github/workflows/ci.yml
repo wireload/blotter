@@ -39,6 +39,8 @@ jobs:
 
       - name: Xcode version
         run: |
+          # Report every compile error in a run rather than stopping at the first one.
+          defaults write com.apple.dt.Xcode IDEBuildingContinueBuildingAfterErrors -bool YES
           xcodebuild -version
           xcrun --show-sdk-version
 
