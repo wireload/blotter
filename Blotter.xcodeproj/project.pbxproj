@@ -56,6 +56,7 @@
 		B2F95875A337A64EF513DDB9 /* ComposerWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerWindowController.swift; sourceTree = "<group>"; };
 		B6D0D42B1162F2BFFD870E82 /* LegacyMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyMigration.swift; sourceTree = "<group>"; };
 		D66A7A9DC1B15CDD7E970CA6 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		E63D7226AC881AAA873202DA /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Signing.xcconfig; sourceTree = "<group>"; };
 		EAB683E77DDC787880B51001 /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
 		FB7A450502CE85C6BF89C323 /* DemoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -138,9 +139,18 @@
 			isa = PBXGroup;
 			children = (
 				480F1867AD110604A36948D2 /* Blotter */,
+				8F01648D88FEEEBC501FB723 /* Configs */,
 				3A9DB0295A512720FAA772B8 /* Packages */,
 				E8E5E35B587CC416DE3883D4 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		8F01648D88FEEEBC501FB723 /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+				E63D7226AC881AAA873202DA /* Signing.xcconfig */,
+			);
+			path = Configs;
 			sourceTree = "<group>";
 		};
 		AB103A4A20F55DFF2852C558 /* Settings */ = {
@@ -217,6 +227,7 @@
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					DA0D00305726EF21907EC57E = {
+						DevelopmentTeam = 438Z2G77U3;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -296,6 +307,7 @@
 /* Begin XCBuildConfiguration section */
 		0246F0B2F4D55146A177E343 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E63D7226AC881AAA873202DA /* Signing.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -327,8 +339,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
@@ -381,6 +391,7 @@
 		};
 		68D786AB0A139D3B8008806C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E63D7226AC881AAA873202DA /* Signing.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -412,8 +423,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
