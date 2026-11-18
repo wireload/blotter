@@ -2,6 +2,7 @@ import Foundation
 import Testing
 
 @testable import BlotterKit
+
 #if canImport(CoreGraphics)
     import CoreGraphics
 #endif
