@@ -11,8 +11,6 @@
 
 const WLLogName WLLogNameBlotter = @"net.wireload.blotter.mac";
 
-const WLLogName WLLogNameBlotterAnalytics = @"net.wireload.blotter.mac.Analytics";
 
 const WLLogName WLLogNameBlotterCalendarData = @"net.wireload.blotter.mac.CalendarData";
 
-const WLLogName WLLogNameMixpanel = @"net.wireload.blotter.mac.Mixpanel";

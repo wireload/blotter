@@ -4,6 +4,3 @@
 [submodule "IKPowerSources"]
 	path = WLFoundation/WLFoundation/IKPowerSources
 	url = https://github.com/Kentzo/IKPowerSources.git
-[submodule "Mixpanel"]
-	path = Mixpanel
-	url = https://github.com/mixpanel/mixpanel-iphone.git

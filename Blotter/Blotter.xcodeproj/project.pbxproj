@@ -26,9 +26,6 @@
 		BA2F70DC20E30D5A0079CCD4 /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70DB20E30D5A0079CCD4 /* ShortcutRecorder.framework */; };
 		BA2F70DE20E30D5C0079CCD4 /* WLCalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70DD20E30D5C0079CCD4 /* WLCalendarStore.framework */; };
 		BA2F70E020E30D5F0079CCD4 /* WLFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70DF20E30D5F0079CCD4 /* WLFoundation.framework */; };
-		BA2F955820F4309E000544FA /* MixpanelProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2F955720F4309E000544FA /* MixpanelProxy.m */; };
-		BA2F955A20F4309E000544FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2F955920F4309E000544FA /* main.m */; };
-		BA2F955E20F4309E000544FA /* Mixpanel.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = BA2F955320F4309E000544FA /* Mixpanel.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BA5D90A4245C9F1A00CF1CE6 /* WLCalendarViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = BA5D90A3245C9F1A00CF1CE6 /* WLCalendarViewLayout.m */; };
 		BA5D90A72465B52200CF1CE6 /* WLLogNames.m in Sources */ = {isa = PBXBuildFile; fileRef = BA5D90A62465B52200CF1CE6 /* WLLogNames.m */; };
 		BA699BA620F86C3600F3A0F9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA699BA520F86C3600F3A0F9 /* AppDelegate.m */; };
@@ -38,9 +35,6 @@
 		BA72ED7F20EC178200CF6F83 /* WLFoundation.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70DF20E30D5F0079CCD4 /* WLFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA72ED8020EC178200CF6F83 /* WLCalendarStore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70DD20E30D5C0079CCD4 /* WLCalendarStore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA72ED8120EC178200CF6F83 /* ShortcutRecorder.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70DB20E30D5A0079CCD4 /* ShortcutRecorder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		BA7A22E0219A3DE50078CF86 /* WLAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7A22DF219A3DE50078CF86 /* WLAnalytics.m */; };
-		BA7EFC3F2110D71A00342612 /* Mixpanel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA7EFC3E2110D71A00342612 /* Mixpanel.framework */; };
-		BA7EFC402110D72A00342612 /* Mixpanel.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BA7EFC3E2110D71A00342612 /* Mixpanel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA85BA77218158BE00CAAFC7 /* BlotterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA85BA76218158BE00CAAFC7 /* BlotterTests.m */; };
 		BA85BA81218158DE00CAAFC7 /* WLCalendarWeekEventsViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA85BA7F218158DE00CAAFC7 /* WLCalendarWeekEventsViewControllerTests.m */; };
 		BA85BA82218158DE00CAAFC7 /* WLCalendarEventsControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA85BA80218158DE00CAAFC7 /* WLCalendarEventsControllerTests.m */; };
@@ -105,13 +99,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		BA2F955C20F4309E000544FA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = BA2F955220F4309E000544FA;
-			remoteInfo = Mixpanel;
-		};
 		BA699BB520F86D5A00F3A0F9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -151,28 +138,6 @@
 				BA699BB420F86D4D00F3A0F9 /* LoginItem.app in Copy Login Item */,
 			);
 			name = "Copy Login Item";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BA2F956320F4309E000544FA /* Copy XPC Services */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
-			dstSubfolderSpec = 16;
-			files = (
-				BA2F955E20F4309E000544FA /* Mixpanel.xpc in Copy XPC Services */,
-			);
-			name = "Copy XPC Services";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BAB5145A20F5797F002D6C69 /* Copy Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				BA7EFC402110D72A00342612 /* Mixpanel.framework in Copy Frameworks */,
-			);
-			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -218,13 +183,6 @@
 		BA2F70DB20E30D5A0079CCD4 /* ShortcutRecorder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ShortcutRecorder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA2F70DD20E30D5C0079CCD4 /* WLCalendarStore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WLCalendarStore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA2F70DF20E30D5F0079CCD4 /* WLFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WLFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA2F955320F4309E000544FA /* Mixpanel.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = Mixpanel.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA2F955520F4309E000544FA /* MixpanelProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MixpanelProtocol.h; sourceTree = "<group>"; };
-		BA2F955620F4309E000544FA /* MixpanelProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MixpanelProxy.h; sourceTree = "<group>"; };
-		BA2F955720F4309E000544FA /* MixpanelProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MixpanelProxy.m; sourceTree = "<group>"; };
-		BA2F955920F4309E000544FA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		BA2F955B20F4309E000544FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BA2F956420F4311F000544FA /* Mixpanel.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mixpanel.entitlements; sourceTree = "<group>"; };
 		BA4C212322E8BC8F00D0C973 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/WLCalendarsPreferencesViewController.xib; sourceTree = "<group>"; };
 		BA4C212622E8BD8100D0C973 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/WLCalendarsPreferencesViewController.strings; sourceTree = "<group>"; };
 		BA4C212722E8BD8500D0C973 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/WLCalendarsPreferencesViewController.strings; sourceTree = "<group>"; };
@@ -277,9 +235,6 @@
 		BA699BAD20F86C3800F3A0F9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BA699BAF20F86C3800F3A0F9 /* LoginItem.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LoginItem.entitlements; sourceTree = "<group>"; };
 		BA731EE1210A7F2A0019BE8B /* WLMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLMacro.h; sourceTree = "<group>"; };
-		BA7A22DE219A3DE50078CF86 /* WLAnalytics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLAnalytics.h; sourceTree = "<group>"; };
-		BA7A22DF219A3DE50078CF86 /* WLAnalytics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLAnalytics.m; sourceTree = "<group>"; };
-		BA7EFC3E2110D71A00342612 /* Mixpanel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Mixpanel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA85BA74218158BE00CAAFC7 /* BlotterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlotterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA85BA76218158BE00CAAFC7 /* BlotterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlotterTests.m; sourceTree = "<group>"; };
 		BA85BA78218158BE00CAAFC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -436,14 +391,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BA2F955020F4309E000544FA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BA7EFC3F2110D71A00342612 /* Mixpanel.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		BA699B9F20F86C3600F3A0F9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -466,7 +413,6 @@
 			children = (
 				8D1107320486CEB800E47090 /* Blotter.app */,
 				BA699BA220F86C3600F3A0F9 /* LoginItem.app */,
-				BA2F955320F4309E000544FA /* Mixpanel.xpc */,
 				BA85BA74218158BE00CAAFC7 /* BlotterTests.xctest */,
 			);
 			name = Products;
@@ -477,7 +423,6 @@
 			children = (
 				BA5AC3CB16F9CB6D009321A0 /* Blotter */,
 				BA699BA320F86C3600F3A0F9 /* LoginItem */,
-				BA2F955420F4309E000544FA /* Mixpanel */,
 				BA85BA75218158BE00CAAFC7 /* BlotterTests */,
 				BA2F70D820E30D560079CCD4 /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -576,25 +521,11 @@
 		BA2F70D820E30D560079CCD4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BA7EFC3E2110D71A00342612 /* Mixpanel.framework */,
 				BA2F70DF20E30D5F0079CCD4 /* WLFoundation.framework */,
 				BA2F70DD20E30D5C0079CCD4 /* WLCalendarStore.framework */,
 				BA2F70DB20E30D5A0079CCD4 /* ShortcutRecorder.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		BA2F955420F4309E000544FA /* Mixpanel */ = {
-			isa = PBXGroup;
-			children = (
-				BA2F956420F4311F000544FA /* Mixpanel.entitlements */,
-				BA2F955520F4309E000544FA /* MixpanelProtocol.h */,
-				BA2F955620F4309E000544FA /* MixpanelProxy.h */,
-				BA2F955720F4309E000544FA /* MixpanelProxy.m */,
-				BA2F955920F4309E000544FA /* main.m */,
-				BA2F955B20F4309E000544FA /* Info.plist */,
-			);
-			path = Mixpanel;
 			sourceTree = "<group>";
 		};
 		BA526CED16F8819D0024B2FB /* Reminders */ = {
@@ -684,8 +615,6 @@
 				E2E64B4D1402483500912A92 /* WLSoftEdgeLayer.m */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 				BA731EE1210A7F2A0019BE8B /* WLMacro.h */,
-				BA7A22DE219A3DE50078CF86 /* WLAnalytics.h */,
-				BA7A22DF219A3DE50078CF86 /* WLAnalytics.m */,
 				BA5D90A52465B52200CF1CE6 /* WLLogNames.h */,
 				BA5D90A62465B52200CF1CE6 /* WLLogNames.m */,
 			);
@@ -817,38 +746,17 @@
 				BA7EFC432110E59300342612 /* Prepare Frameworks for Archiving */,
 				2840647F12833643000816FF /* Copy Frameworks */,
 				BA23664F16F739F200779487 /* Copy Login Item */,
-				BA2F956320F4309E000544FA /* Copy XPC Services */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				BA699BB620F86D5A00F3A0F9 /* PBXTargetDependency */,
-				BA2F955D20F4309E000544FA /* PBXTargetDependency */,
 			);
 			name = Blotter;
 			productInstallPath = "$(HOME)/Applications";
 			productName = Deskboard;
 			productReference = 8D1107320486CEB800E47090 /* Blotter.app */;
 			productType = "com.apple.product-type.application";
-		};
-		BA2F955220F4309E000544FA /* Mixpanel */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BA2F956220F4309E000544FA /* Build configuration list for PBXNativeTarget "Mixpanel" */;
-			buildPhases = (
-				BA2F954F20F4309E000544FA /* Sources */,
-				BA2F955020F4309E000544FA /* Frameworks */,
-				BA2F955120F4309E000544FA /* Resources */,
-				BA7EFC422110E23B00342612 /* Prepare Frameworks for Archiving */,
-				BAB5145A20F5797F002D6C69 /* Copy Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = Mixpanel;
-			productName = Mixpanel;
-			productReference = BA2F955320F4309E000544FA /* Mixpanel.xpc */;
-			productType = "com.apple.product-type.xpc-service";
 		};
 		BA699BA120F86C3600F3A0F9 /* LoginItem */ = {
 			isa = PBXNativeTarget;
@@ -906,19 +814,6 @@
 							};
 						};
 					};
-					BA2F955220F4309E000544FA = {
-						CreatedOnToolsVersion = 9.4.1;
-						DevelopmentTeam = 438Z2G77U3;
-						ProvisioningStyle = Automatic;
-						SystemCapabilities = {
-							com.apple.HardenedRuntime = {
-								enabled = 1;
-							};
-							com.apple.Sandbox = {
-								enabled = 1;
-							};
-						};
-					};
 					BA699BA120F86C3600F3A0F9 = {
 						CreatedOnToolsVersion = 9.4.1;
 						DevelopmentTeam = 438Z2G77U3;
@@ -957,7 +852,6 @@
 			targets = (
 				8D1107260486CEB800E47090 /* Blotter */,
 				BA699BA120F86C3600F3A0F9 /* LoginItem */,
-				BA2F955220F4309E000544FA /* Mixpanel */,
 				BA85BA73218158BE00CAAFC7 /* BlotterTests */,
 			);
 		};
@@ -986,13 +880,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BA2F955120F4309E000544FA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		BA699BA020F86C3600F3A0F9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1011,22 +898,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		BA7EFC422110E23B00342612 /* Prepare Frameworks for Archiving */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Prepare Frameworks for Archiving";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# The Mixpanel project is missing the Archiving configuration and Xcode fails to find the framework.\nif [ \"${CONFIGURATION}\" == \"Archiving\" ]; then\n    /bin/cp -vca \"${BUILD_ROOT}/Release/Mixpanel.framework\" \"${CONFIGURATION_BUILD_DIR}/Mixpanel.framework\"\nfi\n";
-		};
 		BA7EFC432110E59300342612 /* Prepare Frameworks for Archiving */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1074,7 +945,6 @@
 				BADC534A24295F21004F2EAE /* WLCalendarViewController.m in Sources */,
 				BA011489241AD05E00CF2AFC /* WLLayoutPreferencesViewController.m in Sources */,
 				E252E9C515545AD300B64F5F /* WLGlassHudPopUpButtonCell.m in Sources */,
-				BA7A22E0219A3DE50078CF86 /* WLAnalytics.m in Sources */,
 				BA08A7721675FE280085F40C /* WLFrameArrangementView.m in Sources */,
 				BA08A7751675FE730085F40C /* WLScreensController.m in Sources */,
 				BAFA72792374F58600A78F49 /* WLCalendarsPreferencesViewController.m in Sources */,
@@ -1113,15 +983,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BA2F954F20F4309E000544FA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BA2F955A20F4309E000544FA /* main.m in Sources */,
-				BA2F955820F4309E000544FA /* MixpanelProxy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		BA699B9E20F86C3600F3A0F9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1144,11 +1005,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		BA2F955D20F4309E000544FA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = BA2F955220F4309E000544FA /* Mixpanel */;
-			targetProxy = BA2F955C20F4309E000544FA /* PBXContainerItemProxy */;
-		};
 		BA699BB620F86D5A00F3A0F9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BA699BA120F86C3600F3A0F9 /* LoginItem */;
@@ -1338,63 +1194,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		BA2F955F20F4309E000544FA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = Mixpanel/Mixpanel.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 438Z2G77U3;
-				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = Mixpanel/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.blotter.mac.mixpanel;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		BA2F956020F4309E000544FA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = Mixpanel/Mixpanel.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 438Z2G77U3;
-				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = Mixpanel/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.blotter.mac.mixpanel;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		BA2F956120F4309E000544FA /* Archiving */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = Mixpanel/Mixpanel.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 438Z2G77U3;
-				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = Mixpanel/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.blotter.mac.mixpanel;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-			};
-			name = Archiving;
-		};
 		BA699BB120F86C3800F3A0F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1773,16 +1572,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BA2F956220F4309E000544FA /* Build configuration list for PBXNativeTarget "Mixpanel" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BA2F955F20F4309E000544FA /* Debug */,
-				BA2F956020F4309E000544FA /* Release */,
-				BA2F956120F4309E000544FA /* Archiving */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		BA699BB020F86C3800F3A0F9 /* Build configuration list for PBXNativeTarget "LoginItem" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

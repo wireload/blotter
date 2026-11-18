@@ -101,9 +101,7 @@ NSString* const WLLastSelectedCalEventCalendarUID = @"uidOfLastSelectedCalendarI
 
 NSString* const WLLastSelectedCalReminderCalendarUID = @"uidOfLastSelectedCalendarInTasks";
 
-NSString* const WLRequestShareAnalyticsConsentAtStartup = @"RequestShareAnalyticsConsentAtStartup";
 
-NSString* const WLShareAnalytics = @"ShareAnalytics";
 
 NSString* const WLShowPreferencesAtStartUp = @"ShowPreferencesAtStartUp";
 
@@ -554,16 +552,6 @@ NSString* const WLAllDayViewHeightKey = @"AllDayViewHeight";
     return [NSSet setWithObject:WLShowsNext7DaysKey];
 }
 
-+ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_requestShareAnalyticsConsentAtStartup
-{
-    return [NSSet setWithObject:WLRequestShareAnalyticsConsentAtStartup];
-}
-
-+ (NSSet<NSString *> *)keyPathsForValuesAffectingWL_shareAnalytics
-{
-    return [NSSet setWithObject:WLShareAnalytics];
-}
-
 - (BOOL)WL_showInMenuBar
 {
     return [self boolForKey:WLShowInMenuBar];
@@ -582,26 +570,6 @@ NSString* const WLAllDayViewHeightKey = @"AllDayViewHeight";
 - (void)setWL_showNext7Days:(BOOL)newShowNext7Days
 {
     [self setBool:newShowNext7Days forKey:WLShowsNext7DaysKey];
-}
-
-- (BOOL)WL_requestShareAnalyticsConsentAtStartup
-{
-    return [self boolForKey:WLRequestShareAnalyticsConsentAtStartup];
-}
-
-- (void)setWL_requestShareAnalyticsConsentAtStartup:(BOOL)newShareAnalytics
-{
-    [self setBool:newShareAnalytics forKey:WLRequestShareAnalyticsConsentAtStartup];
-}
-
-- (BOOL)WL_shareAnalytics
-{
-    return [self boolForKey:WLShareAnalytics];
-}
-
-- (void)setWL_shareAnalytics:(BOOL)newShareAnalytics
-{
-    [self setBool:newShareAnalytics forKey:WLShareAnalytics];
 }
 
 @end
