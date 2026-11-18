@@ -50,7 +50,9 @@ public struct HourFit: Equatable, Sendable {
         workingHours: ClosedRange<Double> = 9...17,
         hoursInDay: Double = 24
     ) -> HourFit {
-        guard height > 0 else { return HourFit(startHour: workingHours.lowerBound, hourHeight: 1) }
+        guard height > 0, height.isFinite, hoursInDay > 0 else {
+            return HourFit(startHour: min(max(workingHours.lowerBound, 0), max(hoursInDay - 1, 0)), hourHeight: 1)
+        }
 
         var start = workingHours.lowerBound
         var end = workingHours.upperBound
@@ -58,7 +60,8 @@ public struct HourFit: Equatable, Sendable {
             start = min(start, item.startHour.rounded(.down))
             end = max(end, item.endHour.rounded(.up))
         }
-        start = max(start, 0)
+        // At least one visible hour, inside the day.
+        start = min(max(start, 0), hoursInDay - 1)
         end = min(max(end, start + 1), hoursInDay)
 
         var hourHeight = height / CGFloat(end - start)
@@ -67,12 +70,24 @@ public struct HourFit: Equatable, Sendable {
             guard room > 0 else { continue }
             hourHeight = min(hourHeight, room / CGFloat(item.startHour - start))
         }
-        // Never show more than the whole day.
-        hourHeight = max(hourHeight, height / CGFloat(hoursInDay))
+        // Never show more than the whole day. If that is not enough for every event, show the whole day.
+        let wholeDay = height / CGFloat(hoursInDay)
+        if hourHeight <= wholeDay {
+            return HourFit(startHour: 0, hourHeight: wholeDay)
+        }
 
+        // If the visible range now runs past the end of the day, show earlier hours instead — but only as far as
+        // every event keeps its minimum height above the bottom edge. Any remaining space stays empty below midnight.
         let visibleHours = Double(height / hourHeight)
         if start + visibleHours > hoursInDay {
-            start = max(hoursInDay - visibleHours, 0)
+            var lowestBottom: CGFloat = 0
+            for item in items {
+                let top = CGFloat(item.startHour - start) * hourHeight
+                let bottom = CGFloat(item.endHour - start) * hourHeight
+                lowestBottom = max(lowestBottom, top + item.minimumHeight, bottom)
+            }
+            let slackHours = Double(max(height - lowestBottom, 0) / hourHeight)
+            start = max(hoursInDay - visibleHours, start - slackHours, 0)
         }
         return HourFit(startHour: start, hourHeight: hourHeight)
     }

@@ -25,6 +25,8 @@ public struct PaneLayout: Equatable, Sendable {
         public var minimumWeekWidth: CGFloat = 460
         public var minimumAllDayHeight: CGFloat = 50
         public var minimumTimedHeight: CGFloat = 300
+        /// Height of the day titles above the all-day events.
+        public var weekTitleHeight: CGFloat = 32
 
         public init() {}
     }
@@ -76,8 +78,9 @@ public struct PaneLayout: Equatable, Sendable {
             minimumB: layout == .toDo ? remainder + 1 : metrics.minimumRightNowHeight
         )
 
+        // The day titles sit above both.
         (allDayHeight, timedHeight) = Self.split(
-            size.height,
+            size.height - metrics.weekTitleHeight,
             minimumA: metrics.minimumAllDayHeight,
             preferredA: metrics.allDayHeight,
             spacing: Self.spacingAfterAllDay,

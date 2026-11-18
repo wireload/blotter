@@ -31,13 +31,17 @@ struct CalendarView: View {
             clock.calendar.dateInterval(of: .day, for: clock.today) ?? DateInterval(start: clock.today, duration: 0))
     }
 
-    /// Events are loaded for the visible week and today (for Right Now).
-    private var loadedRange: DateRange {
-        days.reduce(today) { $0.union($1) }
+    /// Events are loaded for the visible week and today (for Right Now), without the weeks in between.
+    private var loadedRanges: [DateRange] {
+        guard let first = days.first, let last = days.last else { return [today] }
+        let week = first.union(last)
+        return week.intersects(today) || week.end == today.start || today.end == week.start
+            ? [week.union(today)] : [week, today]
     }
 
     var body: some View {
         let theme = Theme(colorScheme: colorScheme)
+        let schedule = Schedule.arrange(store.events, into: days)
 
         GeometryReader { geometry in
             let inner = CGSize(
@@ -70,7 +74,7 @@ struct CalendarView: View {
                 }
                 if panes.showsWeek {
                     WeekView(
-                        days: Schedule.arrange(store.events, into: days),
+                        days: schedule,
                         today: today,
                         calendar: clock.calendar,
                         allDayHeight: panes.allDayHeight,
@@ -92,8 +96,8 @@ struct CalendarView: View {
                 .overlay(RoundedRectangle(cornerRadius: Self.cornerRadius).strokeBorder(theme.outline))
         }
         .animation(Motion.navigation(reduceMotion: reduceMotion), value: state.weekOffset)
-        .onChange(of: loadedRange, initial: true) { _, range in
-            store.visibleRange = range
+        .onChange(of: loadedRanges, initial: true) { _, ranges in
+            store.visibleRanges = ranges
         }
     }
 

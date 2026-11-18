@@ -29,10 +29,10 @@ final class CalendarStore {
     private(set) var events: [Event] = []
     private(set) var reminders: [Reminder] = []
 
-    /// The time span events are loaded for.
-    var visibleRange: DateRange? {
+    /// The time spans events are loaded for (the visible week, and today for Right Now).
+    var visibleRanges: [DateRange] = [] {
         didSet {
-            if visibleRange != oldValue { reloadEvents() }
+            if visibleRanges != oldValue { reloadEvents() }
         }
     }
 
@@ -43,6 +43,7 @@ final class CalendarStore {
     /// Incremented on every reminders fetch, so a late result from an older fetch is discarded.
     @ObservationIgnored private var reminderGeneration = 0
     @ObservationIgnored private var accessTimer: Timer?
+    @ObservationIgnored private var pendingReload: DispatchWorkItem?
     @ObservationIgnored private let log = Logger(subsystem: "net.wireload.blotter.mac", category: "CalendarStore")
 
     @ObservationIgnored private let isDemo = DemoData.isEnabled
@@ -55,7 +56,7 @@ final class CalendarStore {
         let center = NotificationCenter.default
         observers.append(
             center.addObserver(forName: .EKEventStoreChanged, object: store, queue: .main) { [weak self] _ in
-                MainActor.assumeIsolated { self?.reload() }
+                MainActor.assumeIsolated { self?.scheduleReload() }
             })
         observers.append(
             center.addObserver(forName: UserDefaults.didChangeNotification, object: nil, queue: .main) {
@@ -152,6 +153,16 @@ final class CalendarStore {
         reloadReminders()
     }
 
+    /// Syncing posts bursts of change notifications; reload once they settle.
+    private func scheduleReload() {
+        pendingReload?.cancel()
+        let work = DispatchWorkItem { [weak self] in
+            MainActor.assumeIsolated { self?.reload() }
+        }
+        pendingReload = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: work)
+    }
+
     private func calendarSelectionMayHaveChanged() {
         let snapshot = Self.hiddenCalendarsSnapshot()
         guard snapshot != hiddenCalendarsSnapshot else { return }
@@ -161,13 +172,14 @@ final class CalendarStore {
     }
 
     private func reloadEvents() {
-        guard eventAccess == .granted, let range = visibleRange else {
+        let ranges = visibleRanges
+        guard eventAccess == .granted, !ranges.isEmpty else {
             events = []
             return
         }
         if isDemo {
-            events = DemoData.events(around: Date(), calendar: .current).filter {
-                $0.range.intersects(range) || range.position(of: $0.start) == .within
+            events = DemoData.events(around: Date(), calendar: .current).filter { event in
+                ranges.contains { $0.intersects(event.range) || $0.position(of: event.start) == .within }
             }
             return
         }
@@ -176,8 +188,16 @@ final class CalendarStore {
             events = []
             return
         }
-        let predicate = store.predicateForEvents(withStart: range.start, end: range.end, calendars: calendars)
-        events = store.events(matching: predicate).map(Self.event)
+        // Each range is fetched on its own; an event in more than one (today, in the visible week) is kept once.
+        var seen = Set<String>()
+        var loaded: [Event] = []
+        for range in ranges {
+            let predicate = store.predicateForEvents(withStart: range.start, end: range.end, calendars: calendars)
+            for event in store.events(matching: predicate).map(Self.event) where seen.insert(event.id).inserted {
+                loaded.append(event)
+            }
+        }
+        events = loaded
     }
 
     private func reloadReminders() {
