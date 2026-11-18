@@ -14,10 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 extern const WLLogName WLLogNameBlotter;
 
-extern const WLLogName WLLogNameBlotterAnalytics;
 
 extern const WLLogName WLLogNameBlotterCalendarData;
 
-extern const WLLogName WLLogNameMixpanel;
 
 NS_ASSUME_NONNULL_END

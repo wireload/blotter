@@ -100,10 +100,6 @@ extern NSString* const WLLastSelectedCalEventCalendarUID;
 
 extern NSString* const WLLastSelectedCalReminderCalendarUID;
 
-extern NSString* const WLRequestShareAnalyticsConsentAtStartup;
-
-extern NSString* const WLShareAnalytics;
-
 extern NSString* const WLShowPreferencesAtStartUp;
 
 extern NSString* const WLLastReportedDailyEventAt;
@@ -279,10 +275,6 @@ static const WLCalendarLayout WLCalendarLayoutCount = 4;
 @property BOOL WL_showInMenuBar;
 
 @property BOOL WL_showNext7Days;
-
-@property BOOL WL_requestShareAnalyticsConsentAtStartup;
-
-@property BOOL WL_shareAnalytics;
 
 @end
 

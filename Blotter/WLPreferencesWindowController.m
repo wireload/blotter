@@ -23,28 +23,6 @@
 
 #pragma mark Methods
 
-- (void)requestShareAnalyticsConsentIfNeeded
-{
-    NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
-
-    if (!defaults.WL_requestShareAnalyticsConsentAtStartup)
-        return;
-
-    NSAlert *a = [NSAlert new];
-    a.messageText = NSLocalizedString(@"Share Analytics", @"User consent to share usage dialog's message text");
-    a.informativeText = NSLocalizedString(@"Help WireLoad improve its products and services by automatically sending diagnostics and usage data.",
-                                          @"User consent to share usage dialog's informative text");
-    a.showsHelp = YES;
-    a.delegate = self;
-    [a addButtonWithTitle:NSLocalizedString(@"Allow", @"User consent to share usage dialog's allow button")];
-    [a addButtonWithTitle:NSLocalizedString(@"Disallow", @"User consent to share usage dialog's disallow button")];
-
-    [a beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse aReturnCode) {
-        defaults.WL_shareAnalytics = (aReturnCode == NSAlertFirstButtonReturn);
-        defaults.WL_requestShareAnalyticsConsentAtStartup = NO;
-    }];
-}
-
 #pragma mark NSAlertDelegate
 
 - (BOOL)alertShowHelp:(NSAlert *)anAlert
@@ -72,7 +50,6 @@
         [self.window center];
 
     [super showWindow:aSender];
-    [self requestShareAnalyticsConsentIfNeeded];
 }
 
 #pragma mark NSResponder

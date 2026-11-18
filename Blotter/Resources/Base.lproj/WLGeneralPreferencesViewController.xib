@@ -247,44 +247,12 @@
                             </attributedString>
                             <connections>
                                 <action selector="showMacOSXCalendarSettings:" target="-2" id="201"/>
-                                <outlet property="nextKeyView" destination="kWD-tu-3cw" id="RAB-tW-6ZL"/>
+                                <outlet property="nextKeyView" destination="Iw3-HY-NK3" id="RAB-tW-6ZL"/>
                             </connections>
                         </button>
                         <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="erh-s9-bp6">
                             <rect key="frame" x="20" y="193" width="290" height="5"/>
                         </box>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kWD-tu-3cw" userLabel="Analytics Label">
-                            <rect key="frame" x="18" y="160" width="69" height="16"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Analytics:" id="D8j-9o-S8e">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                            <attributedString key="userComments">
-                                <fragment content="Title for the Analaytics label"/>
-                            </attributedString>
-                            <connections>
-                                <outlet property="nextKeyView" destination="cee-CW-FUo" id="swc-Gt-Cv0"/>
-                            </connections>
-                        </textField>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cee-CW-FUo" userLabel="Share Analytics Checkbox">
-                            <rect key="frame" x="91" y="159" width="116" height="18"/>
-                            <buttonCell key="cell" type="check" title="Share Analytics" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="hyU-rN-pZK">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <attributedString key="userComments">
-                                <fragment content="Title for the Share Analytics checkbox"/>
-                            </attributedString>
-                            <connections>
-                                <binding destination="6" name="value" keyPath="values.ShareAnalytics" id="Fn3-CJ-5gl">
-                                    <dictionary key="options">
-                                        <integer key="NSNullPlaceholder" value="0"/>
-                                    </dictionary>
-                                </binding>
-                                <outlet property="nextKeyView" destination="Iw3-HY-NK3" id="uwm-ic-9Ni"/>
-                            </connections>
-                        </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ckg-ly-dfE" userLabel="Privacy Policy Button">
                             <rect key="frame" x="87" y="75" width="124" height="32"/>
                             <buttonCell key="cell" type="push" title="Privacy Policy" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="AKm-he-LGr">
@@ -343,14 +311,12 @@
                         <constraint firstItem="89" firstAttribute="firstBaseline" secondItem="80" secondAttribute="firstBaseline" id="4yN-Mw-EmK"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="38" secondAttribute="trailing" constant="20" symbolic="YES" id="5rs-3B-idp"/>
                         <constraint firstItem="82" firstAttribute="top" secondItem="Ckg-ly-dfE" secondAttribute="bottom" constant="20" id="6zO-7w-nv1"/>
-                        <constraint firstItem="cee-CW-FUo" firstAttribute="leading" secondItem="kWD-tu-3cw" secondAttribute="trailing" constant="8" symbolic="YES" id="76w-0v-LQq"/>
                         <constraint firstItem="2" firstAttribute="leading" secondItem="29" secondAttribute="trailing" constant="8" symbolic="YES" id="7i4-eM-N1z"/>
                         <constraint firstItem="36" firstAttribute="leading" secondItem="33" secondAttribute="trailing" constant="4" id="A59-dX-TzB"/>
                         <constraint firstItem="105" firstAttribute="top" secondItem="84" secondAttribute="bottom" constant="8" id="ASV-A1-hFX"/>
                         <constraint firstItem="29" firstAttribute="firstBaseline" secondItem="2" secondAttribute="firstBaseline" id="B3v-QP-mV9"/>
                         <constraint firstItem="38" firstAttribute="firstBaseline" secondItem="36" secondAttribute="firstBaseline" id="CIE-wJ-TSO"/>
-                        <constraint firstItem="Iw3-HY-NK3" firstAttribute="top" secondItem="cee-CW-FUo" secondAttribute="bottom" constant="8" id="FIX-vS-eYQ"/>
-                        <constraint firstItem="cee-CW-FUo" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="ITA-ni-bq3"/>
+                        <constraint firstItem="Iw3-HY-NK3" firstAttribute="top" secondItem="erh-s9-bp6" secondAttribute="bottom" constant="20" id="FIX-vS-eYQ"/>
                         <constraint firstItem="Ckg-ly-dfE" firstAttribute="top" secondItem="Iw3-HY-NK3" secondAttribute="bottom" constant="8" id="JXd-EK-f7A"/>
                         <constraint firstItem="29" firstAttribute="leading" secondItem="DMf-yO-tjG" secondAttribute="leading" constant="20" symbolic="YES" id="KMT-b7-CEo"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="75" secondAttribute="trailing" constant="20" symbolic="YES" id="Kx9-Cb-2KZ"/>
@@ -362,7 +328,6 @@
                         <constraint firstItem="4" firstAttribute="leading" secondItem="31" secondAttribute="trailing" constant="8" symbolic="YES" id="R3f-DZ-Wov"/>
                         <constraint firstItem="erh-s9-bp6" firstAttribute="leading" secondItem="DMf-yO-tjG" secondAttribute="leading" constant="20" symbolic="YES" id="S7F-On-917"/>
                         <constraint firstItem="197" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="SBI-Fy-T4C"/>
-                        <constraint firstItem="kWD-tu-3cw" firstAttribute="leading" secondItem="DMf-yO-tjG" secondAttribute="leading" constant="20" symbolic="YES" id="SBS-hX-ebK"/>
                         <constraint firstAttribute="bottom" secondItem="80" secondAttribute="bottom" constant="20" symbolic="YES" id="SmZ-yW-zSs"/>
                         <constraint firstItem="31" firstAttribute="firstBaseline" secondItem="4" secondAttribute="firstBaseline" id="TnP-e4-6un"/>
                         <constraint firstItem="2" firstAttribute="top" secondItem="DMf-yO-tjG" secondAttribute="top" constant="21" id="Tnv-Mc-IG1"/>
@@ -375,7 +340,6 @@
                         <constraint firstItem="80" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="dRY-qB-MI5"/>
                         <constraint firstItem="84" firstAttribute="top" secondItem="73" secondAttribute="bottom" constant="8" id="dd3-XV-5jH"/>
                         <constraint firstItem="89" firstAttribute="leading" secondItem="DMf-yO-tjG" secondAttribute="leading" constant="20" symbolic="YES" id="dif-QM-gmZ"/>
-                        <constraint firstItem="cee-CW-FUo" firstAttribute="top" secondItem="erh-s9-bp6" secondAttribute="bottom" constant="20" id="ewL-v5-kxj"/>
                         <constraint firstItem="73" firstAttribute="leading" secondItem="33" secondAttribute="leading" id="h0k-vq-afC"/>
                         <constraint firstItem="73" firstAttribute="top" secondItem="33" secondAttribute="bottom" constant="8" id="hPk-9O-ktp"/>
                         <constraint firstItem="80" firstAttribute="leading" secondItem="89" secondAttribute="trailing" constant="8" symbolic="YES" id="kB4-Q4-BlR"/>
@@ -384,10 +348,8 @@
                         <constraint firstItem="75" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="nA7-tP-Vbw"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="80" secondAttribute="trailing" constant="20" symbolic="YES" id="qtY-PX-NRT"/>
                         <constraint firstAttribute="trailing" secondItem="erh-s9-bp6" secondAttribute="trailing" constant="20" symbolic="YES" id="xVg-LA-a3L"/>
-                        <constraint firstItem="kWD-tu-3cw" firstAttribute="firstBaseline" secondItem="cee-CW-FUo" secondAttribute="firstBaseline" id="yUy-uZ-6dK"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="84" secondAttribute="trailing" constant="20" symbolic="YES" id="yfY-vO-dq3"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="4" secondAttribute="trailing" constant="20" symbolic="YES" id="z6U-Fj-Czw"/>
-                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="cee-CW-FUo" secondAttribute="trailing" constant="20" symbolic="YES" id="zmI-fJ-c1e"/>
                     </constraints>
                 </customView>
             </subviews>

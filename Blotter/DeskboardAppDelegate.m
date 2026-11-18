@@ -10,7 +10,6 @@
 #import <ShortcutRecorder/ShortcutRecorder.h>
 
 #import "DeskboardAppDelegate.h"
-#import "WLAnalytics.h"
 #import "WLApplicationRunTimer.h"
 #import "NSUserDefaults+WLApplicationDefaults.h"
 #import "WLLogNames.h"
@@ -72,7 +71,6 @@ const NSStoryboardSceneIdentifier WLPreferencesWindowIdentifier = @"WLPreference
     [defaults removeObserver:self forKeyPath:WLShowInMenuBar];
     [defaults removeObserver:self forKeyPath:WLAutoFadeKey];
     [defaults removeObserver:self forKeyPath:WLAutoFadeSecondsKey];
-    [defaults removeObserver:self forKeyPath:WLShareAnalytics];
 
     [SRGlobalShortcutMonitor.sharedMonitor removeAllActions];
     _shortcutActions = nil;
@@ -190,8 +188,6 @@ const NSStoryboardSceneIdentifier WLPreferencesWindowIdentifier = @"WLPreference
 
 - (IBAction)showNewEvent:(id)aSender
 {
-    [WLAnalytics.sharedAnalytics reportAction:@"NewEvent"];
-
     if ((self.newEventWindowController).canCreateEvent)
     {
         [self.newEventWindowController resetDefaults:aSender];
@@ -209,8 +205,6 @@ const NSStoryboardSceneIdentifier WLPreferencesWindowIdentifier = @"WLPreference
 
 - (IBAction)showNewReminder:(id)aSender
 {
-    [WLAnalytics.sharedAnalytics reportAction:@"NewReminder"];
-
     if ((self.newReminderWindowController).canCreateReminder)
     {
         [self.newReminderWindowController resetDefaults:aSender];
@@ -234,8 +228,6 @@ const NSStoryboardSceneIdentifier WLPreferencesWindowIdentifier = @"WLPreference
 
 - (IBAction)showNextWeek:(id)aSender
 {
-    [WLAnalytics.sharedAnalytics reportAction:@"NextWeek"];
-
     __auto_type calendarViewController = self.calendarWindowController.calendarViewController;
 
     if (calendarViewController.canShowNextWeek)
@@ -259,8 +251,6 @@ const NSStoryboardSceneIdentifier WLPreferencesWindowIdentifier = @"WLPreference
 
 - (IBAction)showPreviousWeek:(id)aSender
 {
-    [WLAnalytics.sharedAnalytics reportAction:@"PreviousWeek"];
-
     __auto_type calendarViewController = self.calendarWindowController.calendarViewController;
 
     if (calendarViewController.canShowPreviousWeek)
@@ -284,8 +274,6 @@ const NSStoryboardSceneIdentifier WLPreferencesWindowIdentifier = @"WLPreference
 
 - (IBAction)showCurrentWeek:(id)aSender
 {
-    [WLAnalytics.sharedAnalytics reportAction:@"CurrentWeek"];
-
     __auto_type calendarViewController = self.calendarWindowController.calendarViewController;
 
     if (calendarViewController.canShowCurrentWeek)
@@ -465,8 +453,8 @@ const NSStoryboardSceneIdentifier WLPreferencesWindowIdentifier = @"WLPreference
                                              object:nil];
     [self.calendarWindowController showWindow:self];
 
-    // Show preferences at first start or to request share analytics consent.
-    if (defaults.WL_showPreferencesAtStartup || defaults.WL_requestShareAnalyticsConsentAtStartup)
+    // Show preferences at first start.
+    if (defaults.WL_showPreferencesAtStartup)
     {
         [self showPreferences:self];
         defaults.WL_showPreferencesAtStartup = NO;
@@ -496,11 +484,6 @@ const NSStoryboardSceneIdentifier WLPreferencesWindowIdentifier = @"WLPreference
     [defaults addObserver:self
                forKeyPath:WLAutoFadeSecondsKey
                   options:NSKeyValueObservingOptionNew
-                  context:NULL];
-
-    [defaults addObserver:self
-               forKeyPath:WLShareAnalytics
-                  options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial
                   context:NULL];
 
     [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:NSApp.windows];
@@ -716,10 +699,7 @@ const NSStoryboardSceneIdentifier WLPreferencesWindowIdentifier = @"WLPreference
     if ([aKeyPath isEqualToString:WLShowInMenuBar])
         [self toggleStatusItem];
     else if ([aKeyPath isEqualToString:@"date"])
-    {
         [_applicationRunTimer tick];
-        [WLAnalytics.sharedAnalytics reportDailyToMixpanelIfNeeded];
-    }
     else if ([aKeyPath isEqualToString:WLAutoFadeKey] || [aKeyPath isEqualToString:WLAutoFadeSecondsKey])
     {
         if (NSUserDefaults.standardUserDefaults.WL_autoFades)
@@ -729,11 +709,6 @@ const NSStoryboardSceneIdentifier WLPreferencesWindowIdentifier = @"WLPreference
     }
     else if ([aKeyPath isEqualToString:NSVisibleBinding])
         NSUserDefaults.standardUserDefaults.WL_showInMenuBar = [aChange[NSKeyValueChangeNewKey] boolValue];
-    else if ([aKeyPath isEqualToString:WLShareAnalytics])
-    {
-        [WLAnalytics.sharedAnalytics reportLaunchedToMixpanelIfNeeded];
-        [WLAnalytics.sharedAnalytics reportDailyToMixpanelIfNeeded];
-    }
     else
         [super observeValueForKeyPath:aKeyPath ofObject:aObject change:aChange context:aContext];
 }
