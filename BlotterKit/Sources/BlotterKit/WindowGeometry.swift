@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(CoreGraphics)
+    import CoreGraphics
+#endif
 
 /// Computes where the calendar window sits on a screen.
 public enum WindowGeometry {

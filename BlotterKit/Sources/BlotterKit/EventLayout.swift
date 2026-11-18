@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(CoreGraphics)
+    import CoreGraphics
+#endif
 
 /// Arranges overlapping timed events of one day side by side.
 ///

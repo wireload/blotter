@@ -2,6 +2,9 @@ import Foundation
 import Testing
 
 @testable import BlotterKit
+#if canImport(CoreGraphics)
+    import CoreGraphics
+#endif
 
 @Suite struct WindowGeometryTests {
     let screen = CGRect(x: 0, y: 0, width: 2000, height: 1200)

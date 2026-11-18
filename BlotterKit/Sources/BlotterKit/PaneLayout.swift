@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(CoreGraphics)
+    import CoreGraphics
+#endif
 
 /// Sizes of the panes inside the calendar window: an info column (date, To Do, Right Now) beside the week.
 public struct PaneLayout: Equatable, Sendable {

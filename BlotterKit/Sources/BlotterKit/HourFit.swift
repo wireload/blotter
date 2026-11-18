@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(CoreGraphics)
+    import CoreGraphics
+#endif
 
 /// Chooses which hours of a day are visible and how tall an hour is, so that every event fits and stays readable.
 public struct HourFit: Equatable, Sendable {
