@@ -24,7 +24,7 @@ jobs:
     timeout-minutes: 15
     container: swift:6.2
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Test
         run: swift test --package-path BlotterKit
 
@@ -33,7 +33,7 @@ jobs:
     runs-on: macos-15
     timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Select Xcode
         run: |
@@ -43,7 +43,7 @@ jobs:
           defaults write com.apple.dt.Xcode IDEBuildingContinueBuildingAfterErrors -bool YES
 
       - name: swift-format
-        run: swift format lint --strict -r Blotter BlotterKit/Sources BlotterKit/Tests BlotterKit/Package.swift
+        run: swift format lint --strict -r Blotter BlotterTests BlotterKit/Sources BlotterKit/Tests BlotterKit/Package.swift
 
       - name: Xcode project matches project.yml
         run: |
@@ -55,9 +55,7 @@ jobs:
       - name: Translations complete
         run: python3 scripts/check_localizations.py
 
-      - name: Test BlotterKit
-        run: swift test --package-path BlotterKit
-
+      # Runs the app tests and BlotterKit's tests (the latter also run on Linux above).
       - name: Build and test
         run: |
           set -o pipefail
@@ -70,6 +68,7 @@ jobs:
             -resultBundlePath build/Blotter.xcresult \
             -skipMacroValidation \
             CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM= OTHER_CODE_SIGN_FLAGS= \
+            ENABLE_HARDENED_RUNTIME=NO \
             | tee build/xcodebuild-test.log | xcbeautify --renderer github-actions
 
       - name: Build Release app
@@ -107,7 +106,7 @@ jobs:
 
       - name: Upload screenshots
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: screenshots
           path: |
@@ -116,14 +115,14 @@ jobs:
           if-no-files-found: ignore
 
       - name: Upload app
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: Blotter
           path: build/Blotter.zip
 
       - name: Upload logs and results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: xcode-logs
           path: |
