@@ -66,6 +66,17 @@ jobs:
             -resultBundlePath build/Blotter.xcresult \
             $XCODE_FLAGS | tee build-blotter.log | xcbeautify --renderer github-actions
 
+      - name: Package Blotter.app
+        run: |
+          ditto -c -k --keepParent \
+            build/DerivedData/Build/Products/Debug/Blotter.app Blotter-debug.zip
+
+      - name: Upload Blotter.app
+        uses: actions/upload-artifact@v4
+        with:
+          name: Blotter-debug-${{ matrix.runner }}
+          path: Blotter-debug.zip
+
       - name: Upload logs and results
         if: always()
         uses: actions/upload-artifact@v4
