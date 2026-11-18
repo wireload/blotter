@@ -694,6 +694,98 @@
     "Blotter": {
       "shouldTranslate": false
     },
+    "Blotter can’t add events": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter kann keine Ereignisse hinzufügen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter no puede añadir eventos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter ne peut pas ajouter d’événements"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotterはイベントを追加できません"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter에서 이벤트를 추가할 수 없습니다"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter не может добавлять события"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter kan inte lägga till aktiviteter"
+          }
+        }
+      }
+    },
+    "Blotter can’t add reminders": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter kann keine Erinnerungen hinzufügen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter no puede añadir recordatorios"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter ne peut pas ajouter de rappels"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotterはリマインダーを追加できません"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter에서 미리 알림을 추가할 수 없습니다"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter не может добавлять напоминания"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter kan inte lägga till påminnelser"
+          }
+        }
+      }
+    },
     "Blotter needs full access to your calendars and reminders to show them.": {
       "localizations": {
         "de": {
@@ -736,6 +828,52 @@
           "stringUnit": {
             "state": "translated",
             "value": "Blotter behöver full åtkomst till dina kalendrar och påminnelser för att visa dem."
+          }
+        }
+      }
+    },
+    "Blotter needs full access to your calendars and reminders, and a calendar or list it can edit.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter benötigt vollen Zugriff auf deine Kalender und Erinnerungen sowie einen Kalender oder eine Liste, die bearbeitet werden kann."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter necesita acceso completo a tus calendarios y recordatorios, y un calendario o lista que pueda editar."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter a besoin d’un accès complet à vos calendriers et rappels, ainsi que d’un calendrier ou d’une liste modifiable."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotterには、カレンダーとリマインダーへのフルアクセスと、編集可能なカレンダーまたはリストが必要です。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter에는 캘린더와 미리 알림에 대한 전체 접근 권한과 편집 가능한 캘린더 또는 목록이 필요합니다."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter нужен полный доступ к календарям и напоминаниям, а также календарь или список, который можно изменять."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter behöver full åtkomst till dina kalendrar och påminnelser, och en kalender eller lista som går att redigera."
           }
         }
       }

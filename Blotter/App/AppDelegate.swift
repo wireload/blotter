@@ -6,6 +6,21 @@ protocol CalendarActions: AnyObject {
     func toggleFront()
     func showNewEvent()
     func showNewReminder()
+    /// Without full access, or without a calendar that can be edited, there is nowhere to add the new item.
+    private func explainCannotAdd(_ message: String) {
+        let alert = NSAlert()
+        alert.messageText = message
+        alert.informativeText = String(
+            localized: "Blotter needs full access to your calendars and reminders, and a calendar or list it can edit.")
+        alert.addButton(withTitle: String(localized: "Open Privacy & Security Settings…"))
+        alert.addButton(withTitle: String(localized: "Cancel"))
+        if alert.runModal() == .alertFirstButtonReturn,
+            let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Calendars")
+        {
+            NSWorkspace.shared.open(url)
+        }
+    }
+
     func showNextWeek()
     func showPreviousWeek()
     func showCurrentWeek()
@@ -87,19 +102,17 @@ extension AppDelegate: CalendarActions {
 
     func showNewEvent() {
         state.noteActivity()
-        if composer.showEvent() {
-            activate()
-        } else {
-            NSSound.beep()
+        activate()
+        if !composer.showEvent() {
+            explainCannotAdd(String(localized: "Blotter can’t add events"))
         }
     }
 
     func showNewReminder() {
         state.noteActivity()
-        if composer.showReminder() {
-            activate()
-        } else {
-            NSSound.beep()
+        activate()
+        if !composer.showReminder() {
+            explainCannotAdd(String(localized: "Blotter can’t add reminders"))
         }
     }
 

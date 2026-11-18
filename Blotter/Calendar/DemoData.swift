@@ -33,10 +33,15 @@ enum DemoData {
             _ title: String, day: Int, from start: Double, to end: Double, _ info: CalendarInfo, location: String? = nil
         ) {
             guard let dayStart = calendar.date(byAdding: .day, value: day, to: today) else { return }
+            // Clock time, so events stay put on daylight-saving days.
+            func at(_ hours: Double) -> Date {
+                let minutes = Int((hours * 60).rounded())
+                return calendar.date(bySettingHour: minutes / 60, minute: minutes % 60, second: 0, of: dayStart)
+                    ?? dayStart
+            }
             events.append(
                 Event(
-                    id: "\(title)-\(day)", title: title, location: location,
-                    start: dayStart.addingTimeInterval(start * 3_600), end: dayStart.addingTimeInterval(end * 3_600),
+                    id: "\(title)-\(day)", title: title, location: location, start: at(start), end: at(end),
                     calendarID: info.id, color: info.color))
         }
 

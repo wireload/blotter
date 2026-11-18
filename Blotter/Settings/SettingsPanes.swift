@@ -269,12 +269,19 @@ struct LayoutSettings: View {
             Section("Sizes") {
                 pointSlider("Info column width", value: $infoWidth, range: 230...700)
                     .disabled(layout != CalendarLayout.custom.rawValue)
-                pointSlider("Date height", value: $dateHeight, range: 0...500)
+                pointSlider("Date height", value: snapping($dateHeight, minimum: 180), range: 0...500)
                 pointSlider("To Do height", value: $toDoHeight, range: 100...900)
                     .disabled(layout != CalendarLayout.custom.rawValue)
-                pointSlider("All-day events height", value: $allDayHeight, range: 0...300)
+                pointSlider("All-day events height", value: snapping($allDayHeight, minimum: 50), range: 0...300)
             }
         }
+    }
+
+    /// Below its minimum a pane is hidden, so values between 0 and the minimum snap to either end.
+    private func snapping(_ value: Binding<Double>, minimum: Double) -> Binding<Double> {
+        Binding(
+            get: { value.wrappedValue },
+            set: { value.wrappedValue = $0 < minimum / 2 ? 0 : max($0, minimum) })
     }
 
     private func pointSlider(_ title: LocalizedStringKey, value: Binding<Double>, range: ClosedRange<Double>)
@@ -301,7 +308,8 @@ struct CalendarSettings: View {
                 Section {
                     Text("Blotter needs full access to your calendars and reminders to show them.")
                     Button("Open Privacy & Security Settings…") {
-                        open("x-apple.systempreferences:com.apple.preference.security?Privacy_Calendars")
+                        let pane = store.eventAccess == .denied ? "Privacy_Calendars" : "Privacy_Reminders"
+                        open("x-apple.systempreferences:com.apple.preference.security?\(pane)")
                     }
                 }
             }

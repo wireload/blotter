@@ -28,15 +28,23 @@ public enum WindowGeometry {
     ) -> CGRect {
         if size == .custom {
             let factors = sanitized(customFactors)
-            return CGRect(
+            var frame = CGRect(
                 x: visibleFrame.minX + factors.minX * visibleFrame.width,
                 y: visibleFrame.minY + factors.minY * visibleFrame.height,
                 width: factors.width * visibleFrame.width,
                 height: factors.height * visibleFrame.height
             )
+            // Never smaller than the minimum (or the screen, if that is smaller still), and never off the screen.
+            frame.size.width = min(max(frame.width, minimumCustomSize.width), visibleFrame.width)
+            frame.size.height = min(max(frame.height, minimumCustomSize.height), visibleFrame.height)
+            frame.origin.x = min(frame.minX, visibleFrame.maxX - frame.width)
+            frame.origin.y = min(frame.minY, visibleFrame.maxY - frame.height)
+            return frame
         }
 
-        let area = visibleFrame.insetBy(dx: margin, dy: margin)
+        // A screen too small for the margin uses all of its visible frame.
+        let inset = visibleFrame.insetBy(dx: margin, dy: margin)
+        let area = inset.isNull || inset.isEmpty ? visibleFrame : inset
         var windowSize: CGSize
         switch size {
         case .narrow:
@@ -84,7 +92,9 @@ public enum WindowGeometry {
 
     /// Clamps factors into the unit square; an empty or invalid rect falls back to the default.
     public static func sanitized(_ factors: CGRect) -> CGRect {
-        guard factors.width.isFinite, factors.height.isFinite, factors.width > 0, factors.height > 0 else {
+        guard factors.minX.isFinite, factors.minY.isFinite, factors.width.isFinite, factors.height.isFinite,
+            factors.width > 0, factors.height > 0
+        else {
             return defaultCustomFactors
         }
         let width = min(factors.width, 1)

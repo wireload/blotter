@@ -191,6 +191,8 @@ struct TimeRuler: View {
             }
         }
         .frame(width: Self.width, height: height, alignment: .topTrailing)
+        // Events carry their own times for VoiceOver; the ruler would only add noise.
+        .accessibilityHidden(true)
     }
 
     /// Whole hours whose label fits entirely inside the grid.
@@ -201,9 +203,17 @@ struct TimeRuler: View {
         }
     }
 
+    /// Formats the hour on a fixed day without daylight-saving changes, so a skipped hour (02:00 on the
+    /// spring-forward day) is still labelled correctly instead of repeating the next one.
     private func label(for hour: Int) -> String {
-        let date = calendar.date(bySettingHour: hour % 24, minute: 0, second: 0, of: day.start) ?? day.start
-        return date.formatted(.dateTime.hour())
+        var reference = Calendar(identifier: .gregorian)
+        reference.timeZone = TimeZone(secondsFromGMT: 0) ?? .gmt
+        let date =
+            reference.date(from: DateComponents(year: 2001, month: 1, day: 1, hour: hour % 24)) ?? day.start
+        var style = Date.FormatStyle.dateTime.hour()
+        style.timeZone = reference.timeZone
+        style.locale = calendar.locale ?? .current
+        return date.formatted(style)
     }
 }
 
@@ -219,6 +229,8 @@ struct DayColumn: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     static let eventGap: CGFloat = 2
+    /// Fraction of the column hidden by Right Now's fade at the top.
+    static let pinnedTitleInset: CGFloat = 0.08
 
     var body: some View {
         GeometryReader { geometry in
@@ -234,7 +246,11 @@ struct DayColumn: View {
                     if let event = events[placement.segment.id] {
                         let extent = placement.horizontalExtent(width: geometry.size.width, gap: Self.eventGap)
                         let top = CGFloat(placement.segment.top)
-                        let visibleTop = keepsTextVisible ? max(top, 0) : top
+                        let bottom = CGFloat(placement.segment.bottom)
+                        // In Right Now, keep the title of an ongoing event below the fade at the top.
+                        let pinned = geometry.size.height * DayColumn.pinnedTitleInset
+                        let visibleTop =
+                            keepsTextVisible ? max(top, min(pinned, bottom - EventBlock.minimumHeight)) : top
                         EventBlock(event: event, isCompact: false, textInset: visibleTop - top)
                             .frame(width: extent.width, height: CGFloat(placement.segment.bottom) - top)
                             .offset(x: extent.x, y: top)
@@ -243,6 +259,8 @@ struct DayColumn: View {
                 }
             }
             .clipShape(RoundedRectangle(cornerRadius: 6))
+            .accessibilityElement(children: .contain)
+            .accessibilityLabel(Text(day.range.start, format: .dateTime.weekday(.wide).day().month(.wide)))
             .animation(Motion.update(reduceMotion: reduceMotion), value: placements)
         }
     }
@@ -267,6 +285,18 @@ struct EventBlock: View {
     @Environment(\.colorScheme) private var colorScheme
 
     static let minimumHeight: CGFloat = 20
+
+    /// Title, time and location, for VoiceOver.
+    private var accessibilityDescription: String {
+        var parts = [event.title]
+        parts.append(
+            event.isAllDay
+                ? String(localized: "All day") : (event.start..<event.end).formatted(.interval.hour().minute()))
+        if let location = event.location {
+            parts.append(location)
+        }
+        return parts.joined(separator: ", ")
+    }
 
     var body: some View {
         let theme = Theme(colorScheme: colorScheme)
@@ -297,7 +327,8 @@ struct EventBlock: View {
         }
         .overlay(shape.strokeBorder(theme.eventStroke, lineWidth: 1))
         .clipShape(shape)
-        .accessibilityElement(children: .combine)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(accessibilityDescription)
     }
 }
 
