@@ -34,6 +34,32 @@ final class CalendarState {
 
     @ObservationIgnored private var returnTask: Task<Void, Never>?
     @ObservationIgnored private var fadeTask: Task<Void, Never>?
+    @ObservationIgnored private var fadeSettings: [Int] = []
+    @ObservationIgnored private var defaultsObserver: (any NSObjectProtocol)?
+
+    init() {
+        fadeSettings = Self.currentFadeSettings()
+        defaultsObserver = NotificationCenter.default.addObserver(
+            forName: UserDefaults.didChangeNotification, object: nil, queue: .main
+        ) { [weak self] _ in
+            MainActor.assumeIsolated { self?.fadeSettingsMayHaveChanged() }
+        }
+    }
+
+    private static func currentFadeSettings() -> [Int] {
+        let defaults = UserDefaults.standard
+        return [
+            defaults.bool(forKey: DefaultsKey.autoFades) ? 1 : 0, defaults.integer(forKey: DefaultsKey.autoFadeSeconds),
+        ]
+    }
+
+    /// Turning auto-fade off fades the calendar back in; changing it restarts the countdown.
+    private func fadeSettingsMayHaveChanged() {
+        let settings = Self.currentFadeSettings()
+        guard settings != fadeSettings else { return }
+        fadeSettings = settings
+        noteActivity()
+    }
 
     func bringToFront() {
         presentation = .front
@@ -65,7 +91,7 @@ final class CalendarState {
         let seconds = max(defaults.integer(forKey: DefaultsKey.autoFadeSeconds), 5)
         fadeTask = Task { [weak self] in
             try? await Task.sleep(for: .seconds(seconds))
-            guard !Task.isCancelled, let self else { return }
+            guard !Task.isCancelled, let self, UserDefaults.standard.bool(forKey: DefaultsKey.autoFades) else { return }
             self.isFaded = true
             self.onPresentationChange?()
         }

@@ -13,15 +13,20 @@ struct GeneralSettings: View {
     @AppStorage(DefaultsKey.showsNext7Days) private var showsNext7Days = false
     @AppStorage(DefaultsKey.showsWeekdayDates) private var showsWeekdayDates = true
     @AppStorage(AppDefaults.appearance) private var appearance = AppAppearance.system.rawValue
-    @State private var opensAtLogin = SMAppService.mainApp.status == .enabled
+    @State private var loginItemStatus = SMAppService.mainApp.status
 
     var body: some View {
         Form {
             Section {
-                Toggle("Open at login", isOn: $opensAtLogin)
-                    .onChange(of: opensAtLogin) { _, enabled in
-                        setOpensAtLogin(enabled)
+                Toggle("Open at login", isOn: opensAtLogin)
+                if loginItemStatus == .requiresApproval {
+                    LabeledContent {
+                        Button("Open Login Items…") { SMAppService.openSystemSettingsLoginItems() }
+                    } label: {
+                        Text("Approve Blotter in System Settings › General › Login Items.")
+                            .foregroundStyle(.secondary)
                     }
+                }
                 Toggle(isOn: $showsMenuBarItem) {
                     Text("Show menu bar icon")
                     Text("When hidden, open Blotter again from Finder to get back to Settings.")
@@ -61,6 +66,17 @@ struct GeneralSettings: View {
                 }
             }
         }
+        .onAppear { loginItemStatus = SMAppService.mainApp.status }
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
+            loginItemStatus = SMAppService.mainApp.status
+        }
+    }
+
+    /// On while registered, including while waiting for the user's approval in System Settings.
+    private var opensAtLogin: Binding<Bool> {
+        Binding(
+            get: { loginItemStatus == .enabled || loginItemStatus == .requiresApproval },
+            set: { setOpensAtLogin($0) })
     }
 
     private func setOpensAtLogin(_ enabled: Bool) {
@@ -74,7 +90,10 @@ struct GeneralSettings: View {
             Logger(subsystem: "net.wireload.blotter.mac", category: "Settings")
                 .error("Could not change the login item: \(error.localizedDescription, privacy: .public)")
         }
-        opensAtLogin = SMAppService.mainApp.status == .enabled
+        loginItemStatus = SMAppService.mainApp.status
+        if loginItemStatus == .requiresApproval {
+            SMAppService.openSystemSettingsLoginItems()
+        }
     }
 }
 

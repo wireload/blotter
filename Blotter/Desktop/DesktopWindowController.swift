@@ -17,6 +17,8 @@ final class DesktopWindowController: NSWindowController {
     private let blur: NSVisualEffectView
     private var observers: [any NSObjectProtocol] = []
     private var lastFrame: CGRect?
+    /// Set while fading out to change level; the completion re-reads the state, so changes meanwhile are not lost.
+    private var isChangingLevel = false
 
     static let fadeDuration: TimeInterval = 0.25
     static let fadedAlpha: CGFloat = 0.5
@@ -45,6 +47,8 @@ final class DesktopWindowController: NSWindowController {
         window.level = Self.desktopLevel
         window.collectionBehavior = Self.desktopBehavior
         window.ignoresMouseEvents = true
+        // NSApp.hide must never take the calendar off the desktop.
+        window.canHide = false
 
         blur.material = .hudWindow
         blur.blendingMode = .behindWindow
@@ -152,31 +156,38 @@ final class DesktopWindowController: NSWindowController {
     // MARK: Presentation
 
     private func applyPresentation(animated: Bool) {
-        guard let window = window as? DesktopWindow else { return }
+        guard let window = window as? DesktopWindow, !isChangingLevel else { return }
         let toFront = state.presentation == .front
         let targetAlpha: CGFloat = state.isFaded ? Self.fadedAlpha : 1
-        let changesLevel = window.isInFront != toFront
         let reduceMotion = NSWorkspace.shared.accessibilityDisplayShouldReduceMotion
         let duration = animated && !reduceMotion ? Self.fadeDuration : 0
 
-        guard changesLevel else {
+        guard window.isInFront != toFront else {
             animateAlpha(of: window, to: targetAlpha, duration: duration)
             return
         }
 
+        isChangingLevel = true
         animateAlpha(of: window, to: 0, duration: duration / 2) { [weak self] in
             guard let self else { return }
-            window.isInFront = toFront
-            window.level = toFront ? .floating : Self.desktopLevel
-            window.collectionBehavior = toFront ? Self.frontBehavior : Self.desktopBehavior
-            window.ignoresMouseEvents = !toFront
-            self.blur.isHidden = !toFront
-            if toFront {
-                window.makeKeyAndOrderFront(nil)
-            } else {
-                window.orderFront(nil)
-            }
-            self.animateAlpha(of: window, to: targetAlpha, duration: duration / 2)
+            self.isChangingLevel = false
+            // Read the state again: it may have flipped back while fading out.
+            self.setLevel(front: self.state.presentation == .front, of: window)
+            let alpha: CGFloat = self.state.isFaded ? Self.fadedAlpha : 1
+            self.animateAlpha(of: window, to: alpha, duration: duration / 2)
+        }
+    }
+
+    private func setLevel(front: Bool, of window: DesktopWindow) {
+        window.isInFront = front
+        window.level = front ? .floating : Self.desktopLevel
+        window.collectionBehavior = front ? Self.frontBehavior : Self.desktopBehavior
+        window.ignoresMouseEvents = !front
+        blur.isHidden = !front
+        if front {
+            window.makeKeyAndOrderFront(nil)
+        } else {
+            window.orderFront(nil)
         }
     }
 

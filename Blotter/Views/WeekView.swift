@@ -69,9 +69,10 @@ struct WeekView: View {
                 .frame(height: timedHeight)
                 .overlay(alignment: .topLeading) {
                     if days.contains(where: { $0.range == today }) {
-                        CurrentTimeLine(today: today, fit: fit, calendar: calendar)
+                        CurrentTimeLine(today: today, fit: fit, calendar: calendar, height: timedHeight)
                     }
                 }
+                .clipped()
             }
         }
     }
@@ -112,15 +113,19 @@ private struct CurrentTimeLine: View {
     let today: DateRange
     let fit: HourFit
     let calendar: Calendar
+    let height: CGFloat
 
     @Environment(Clock.self) private var clock
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         let y = fit.offset(ofHour: Schedule.hour(of: clock.now, on: today, calendar: calendar))
-        NowLine()
-            .offset(y: y)
-            .animation(reduceMotion ? nil : .smooth(duration: 0.8), value: y)
+        // Outside the visible hours (before the first or after the last), there is no line to draw.
+        if y >= 0, y <= height {
+            NowLine()
+                .offset(y: y)
+                .animation(reduceMotion ? nil : .smooth(duration: 0.8), value: y)
+        }
     }
 }
 
