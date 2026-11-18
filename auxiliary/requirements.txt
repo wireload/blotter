@@ -1,6 +1,0 @@
-PyYAML==3.10
-path.py==4.3
-ply==3.4
-pyCLI==2.0.3
-sh==1.09
-wsgiref==0.1.2

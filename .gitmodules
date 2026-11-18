@@ -1,6 +1,0 @@
-[submodule "ShortcutRecorder"]
-	path = ShortcutRecorder
-	url = https://github.com/Kentzo/ShortcutRecorder.git
-[submodule "IKPowerSources"]
-	path = WLFoundation/WLFoundation/IKPowerSources
-	url = https://github.com/Kentzo/IKPowerSources.git
