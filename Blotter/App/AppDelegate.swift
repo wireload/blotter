@@ -25,6 +25,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         AppDefaults.register()
+        LegacyMigration.runIfNeeded()
 
         let desktopWindow = DesktopWindowController(clock: clock, store: store, state: state)
         desktopWindow.onCancel = { [weak self] in self?.sendToBack() }
