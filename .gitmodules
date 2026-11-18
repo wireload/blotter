@@ -1,12 +1,9 @@
 [submodule "ShortcutRecorder"]
 	path = ShortcutRecorder
-	url = git://github.com/Kentzo/ShortcutRecorder.git
+	url = https://github.com/Kentzo/ShortcutRecorder.git
 [submodule "IKPowerSources"]
 	path = WLFoundation/WLFoundation/IKPowerSources
-	url = git://github.com/Kentzo/IKPowerSources.git
-[submodule "Blotter/IKApplicationPreferences"]
-	path = Blotter/IKApplicationPreferences
-	url = git://github.com/Kentzo/IKApplicationPreferences.git
+	url = https://github.com/Kentzo/IKPowerSources.git
 [submodule "Mixpanel"]
 	path = Mixpanel
-	url = git@github.com:mixpanel/mixpanel-iphone.git
+	url = https://github.com/mixpanel/mixpanel-iphone.git

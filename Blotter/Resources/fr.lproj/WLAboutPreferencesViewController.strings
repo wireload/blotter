@@ -1,0 +1,15 @@
+
+/* Class = "NSButtonCell"; title = "Follow us on Twitter"; ObjectID = "24"; Note = "Title of the Follow us on Twitter button"; */
+"24.title" = "Suivez-nous sur Twitter";
+
+/* Class = "NSButtonCell"; title = "Get Support"; ObjectID = "26"; Note = "Title of the Get Support button"; */
+"26.title" = "Obtenir de l'aide";
+
+/* Class = "NSButtonCell"; title = "Help"; ObjectID = "28"; Note = "Title of the Help button"; */
+"28.title" = "Aide";
+
+/* Class = "NSButtonCell"; title = "Rate This App"; ObjectID = "30"; Note = "Title of the Rate This App button"; */
+"30.title" = "Évaluez cette app";
+
+/* Class = "NSTextFieldCell"; title = "© 2010-19 WireLoad Inc.\nAll rights reserved."; ObjectID = "57"; Note = "Title of the Copyright label"; */
+"57.title" = "© 2010-19 WireLoad Inc.\nTous droits réservés.";

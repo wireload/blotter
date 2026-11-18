@@ -29,7 +29,7 @@ NSString* const WLDateRangeLogName = @"net.wireload.mac.WLFoundation.WLDateRange
             anEndDate = [NSDate date];
 
         if ([aStartDate isGreaterThan:anEndDate])
-            [[WLASLLog logForName:WLDateRangeLogName] logWarning:@"{%@, %@} is a reversed range", aStartDate, anEndDate];
+            [[WLLog logForName:WLDateRangeLogName] logWarning:@"{%@, %@} is a reversed range", aStartDate, anEndDate];
 
         _startDate = [[aStartDate earlierDate:anEndDate] copy];
         _endDate = [[aStartDate laterDate:anEndDate] copy];
@@ -250,7 +250,7 @@ NSString* const WLDateRangeLogName = @"net.wireload.mac.WLFoundation.WLDateRange
     }
 
     if ([startDate isGreaterThan:endDate])
-        [[WLASLLog logForName:WLDateRangeLogName] logWarning:[NSString stringWithFormat:@"Alignment of %@ with %lu (%lu) resulted in reversed range", self, aCalendarUnit, anOptions]];
+        [[WLLog logForName:WLDateRangeLogName] logWarning:[NSString stringWithFormat:@"Alignment of %@ with %lu (%lu) resulted in reversed range", self, aCalendarUnit, anOptions]];
 
     return [WLDateRange dateRangeWithStartDate:startDate endDate:endDate];
 }

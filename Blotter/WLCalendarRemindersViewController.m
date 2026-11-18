@@ -269,7 +269,7 @@
 {
     WLCalendarRemindersView *v = [[WLCalendarRemindersView alloc] initWithFrame:NSZeroRect];
     v.dataSource = self;
-    [v makeLayers];
+    [v prepareForHostingLayers];
     self.view = v;
     [CATransaction WL_performWithDisabledActions:^{
         [(WLCalendarRemindersView *)self.view reloadData];

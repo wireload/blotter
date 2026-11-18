@@ -2,144 +2,145 @@
 //  WLCalendarWindowController.m
 //  Blotter
 //
-//  Created by Ilya Kulakov on 01.08.11.
-//  Copyright 2011 WireLoad. All rights reserved.
+//  Created by Ilya Kulakov on 3/17/20.
+//  Copyright © 2020 WireLoad. All rights reserved.
 //
 
+#import <CoreImage/CoreImage.h>
+#import <os/trace.h>
+
 #import "WLCalendarWindowController.h"
-#import "WLCalendarRemindersViewController.h"
-#import "WLCalendarDateViewController.h"
-#import "WLCalendarBoxView.h"
-#import "WLCalendarWindowBringToFrontAnimation.h"
+#import "WLCalendarViewController.h"
+#import "WLGraphics.h"
+#import "WLScreensController.h"
 #import "NSUserDefaults+WLApplicationDefaults.h"
-#import "WLCalendarRemindersController.h"
-#import "WLCalendarEventsController.h"
-#import "WLCalendarFloatingWeekEventsViewController.h"
-#import "WLCalendarRightNowEventsViewController.h"
-#import "DeskboardAppDelegate.h"
 
 
-// Sizes are chosen so that when switching between these 2 modes only week view is disappeard. that is the date, todo and right now vies are visually unchanged.
-const NSSize BLNarrowMinimumSize = {308, 718};
+static void *_WLScreenObservationContext = &_WLScreenObservationContext;
+static void *_WLFrameObservationContext = &_WLFrameObservationContext;
 
-const NSSize BLNormalMinimumSize = {950, 718};
+static const NSUserInterfaceItemIdentifier _WLFadeOutAndActivateScene = @"WLFadeOutAndActivate";
+static const NSUserInterfaceItemIdentifier _WLFadeOutAndDeactivateScene = @"WLFadeOutAndDeactivate";
+static const NSUserInterfaceItemIdentifier _WLPartialFadeInScene = @"WLPartialFadeIn";
+static const NSUserInterfaceItemIdentifier _WLFadeInScene = @"WLFadeIn";
 
-/**
-    This is the overall smallest possible size for Blotter when using custom sizing.
-*/
-const NSSize BLMinimumSize = {280, 215};
+static const NSTimeInterval _WLFadeTotalDuration = 0.25; // duration to change alphaValue from 0.0 to 1.0
+
+static const CGFloat _WLFadedAlphaValue = 0.5;
 
 
-static const float _WLFadeOutAlphaValue = 0.5f;
+static const NSEdgeInsets _WLShadowInsets = {.top = 6.0, .left = 9.0, .right = 9.0, .bottom = 12.0};
+static const NSEdgeInsets _WLBorderInsets = {.top = 3.0, .left = 3.0, .right = 3.0, .bottom = 3.0};
+static const NSEdgeInsets _WLLayoutInsets = {.top = 17.0, .left = 17.0, .right = 17.0, .bottom = 17.0};
+
+
+static const NSSize BLNarrowMinimumSize = {.width = 308.0, .height = 718.0};
+static const NSSize BLNormalMinimumSize = {.width = 950.0, .height = 718.0};
+
+
+@implementation _WLCalendarWindow
+
+- (instancetype)initWithContentRect:(NSRect)aContentRect
+                          styleMask:(NSWindowStyleMask)aStyle
+                            backing:(NSBackingStoreType)aBackingStoreType
+                              defer:(BOOL)aFlag
+{
+    self = [super initWithContentRect:aContentRect
+                            styleMask:aStyle
+                              backing:aBackingStoreType
+                                defer:aFlag];
+
+    if (self)
+    {
+        self.hasShadow = NO;
+        self.restorable = NO;
+        self.hidesOnDeactivate = NO;
+        self.releasedWhenClosed = NO;
+        self.allowsToolTipsWhenApplicationIsInactive = NO;
+        self.autorecalculatesKeyViewLoop = NO;
+        if (@available(macOS 10.12, *))
+        {
+            self.tabbingMode = NSWindowTabbingModeDisallowed;
+        }
+        self.collectionBehavior = NSWindowCollectionBehaviorCanJoinAllSpaces | NSWindowCollectionBehaviorTransient | NSWindowCollectionBehaviorIgnoresCycle | NSWindowCollectionBehaviorFullScreenNone | NSWindowCollectionBehaviorFullScreenDisallowsTiling;
+        self.animationBehavior = NSWindowAnimationBehaviorNone;
+        self.ignoresMouseEvents = YES;
+        self.canHide = NO;
+        self.backgroundColor = NSColor.clearColor;
+        self.opaque = NO;
+    }
+
+    return self;
+}
+
+@end
 
 
 @implementation WLCalendarWindowController
 {
-    id _calendarsObserver;
-    WLCalendarRemindersController *_remindersController;
-    WLCalendarEventsController *_eventsController;
-    WLSmartClock *_smartClock;
+    WLCalendarViewController *_calendarViewController;
+    NSView *_activeBackgroundView;
+    NSView *_inactiveBackgroundView;
 
-    WLASLLog *_log;
+    WLAnimationSequence *_runningAnimation;
+
+    __weak NSLayoutConstraint *_windowWidthConstraint;
+    __weak NSLayoutConstraint *_windowHeightConstraint;
 }
 
-- (instancetype)init
+- (instancetype)initWithWindow:(NSWindow *)aWindow
 {
-    self = [self initWithWindow:[[[WLCalendarWindow alloc] init] autorelease]];
-    if (self != nil)
+    if (aWindow == nil)
     {
+        aWindow = [[_WLCalendarWindow alloc] initWithContentRect:NSZeroRect
+                                                       styleMask:NSWindowStyleMaskBorderless
+                                                         backing:NSBackingStoreBuffered
+                                                           defer:YES];
+        aWindow.delegate = self;
     }
-    return self;
-}
 
-- (instancetype)initWithWindow:(WLCalendarWindow *)aWindow
-{
-    NSParameterAssert([aWindow isKindOfClass:[WLCalendarWindow class]]);
     self = [super initWithWindow:aWindow];
 
-    if (self != nil)
+    if (self)
     {
-        _log = [[WLASLLog alloc] initWithName:@"Calendar Window"];
-        aWindow.delegate = self;
+        __auto_type defaults = NSUserDefaults.standardUserDefaults;
+        [defaults addObserver:self
+                   forKeyPath:WLScreenUUIDKey
+                      options:NSKeyValueObservingOptionNew
+                      context:_WLScreenObservationContext];
+        [defaults addObserver:self
+                   forKeyPath:WLCalendarSizeKey
+                      options:NSKeyValueObservingOptionNew
+                      context:_WLFrameObservationContext];
+        [defaults addObserver:self
+                   forKeyPath:WLCalendarPositionKey
+                      options:NSKeyValueObservingOptionNew
+                      context:_WLFrameObservationContext];
+        [defaults addObserver:self
+                   forKeyPath:WLCustomFrameFactorsKey
+                      options:NSKeyValueObservingOptionNew
+                      context:_WLFrameObservationContext];
+        [NSNotificationCenter.defaultCenter addObserver:self
+                                               selector:@selector(_scheduleWindowScreenDidChange)
+                                                   name:NSApplicationDidChangeScreenParametersNotification
+                                                 object:NSApp];
 
-        windowState = WLFinderLevelState;
-
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-
-        // It's important to allocate "consumers" before calendars controller because they MUST exists at time
-        // when WLCalCalendarsToDisplayDidChangeNotification is fired which can happen just after calendarsController is initialized.
-        NSArray *calStores = @[[WLCalendarStore systemStore]]; // TODO: should be configurable
-        _remindersController = [[WLCalendarRemindersController alloc] initWithCalStores:calStores];
-        _eventsController = [[WLCalendarEventsController alloc] initWithCalStores:calStores];
-        _calendarsController = [[WLCalendarsController alloc] initWithCalStores:calStores
-                                                                autosaveKeyPath:WLCalendarsKey];
-
-        void (^updateCalendars)(NSArray *aStores) = ^(NSArray *aStores)
+        switch (_windowState)
         {
-            for (NSObject<WLCalStore> *s in aStores)
-            {
-                NSArray *reminderCalendars = [[self.calendarsController calReminderCalendarsToDisplayForStore:s] valueForKey:@"calendarIdentifier"];
-                [_log logDebugWithMessenger:^NSString *
-                {
-                    return [NSString stringWithFormat:@"Observed Reminder Calendars: %@", reminderCalendars];
-                }];
-                [_remindersController setObservedCalendarIdentifiers:[NSSet setWithArray:reminderCalendars] forStore:s];
+            case WLCalendarWindowStateInactiveFaded:
+                [self _deactivate:self.window];
+                self.window.alphaValue = _WLFadedAlphaValue;
+                break;
+            case WLCalendarWindowStateInactive:
+                [self _deactivate:self.window];
+                break;
+            case WLCalendarWindowStateActive:
+                [self _activate:self.window];
+                break;
+        }
 
-                NSArray *eventCalendars = [[self.calendarsController calEventCalendarsToDisplayForStore:s] valueForKey:@"calendarIdentifier"];
-                [_log logDebugWithMessenger:^NSString *
-                {
-                    return [NSString stringWithFormat:@"Observed Event Calendars: %@", eventCalendars];
-                }];
-                [_eventsController setObservedCalendarIdentifiers:[NSSet setWithArray:eventCalendars] forStore:s];
-            }
-        };
-
-        _calendarsObserver = [defaultCenter addObserverForName:WLCalCalendarsToDisplayDidChangeNotification
-                                                        object:_calendarsController
-                                                         queue:nil
-                                                    usingBlock:^(NSNotification *aNotification)
-        {
-            updateCalendars(aNotification.userInfo[WLChangedCalStoresKey]);
-        }];
-
-        updateCalendars(_calendarsController.calStores);
-
-        _smartClock = [WLSmartClock defaultClock];
-
-        _weekViewController = [[WLCalendarFloatingWeekEventsViewController alloc] initWithNibName:nil bundle:nil];
-        _weekViewController.date = _smartClock.date;
-        _weekViewController.representedObject = _eventsController;
-        [_weekViewController bind:@"titleFormat" toObject:defaults withKeyPath:WLTitleFormatKey options:nil];
-
-        _rightNowViewController = [[WLCalendarRightNowEventsViewController alloc] init];
-        _rightNowViewController.date = _smartClock.date;
-        [_rightNowViewController setAlignmentUnit:NSCalendarUnitDay number:1 animated:NO];
-        _rightNowViewController.representedObject = _eventsController;
-
-        [_smartClock addObserver:self forKeyPath:@"calendar" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:NULL];
-        [_smartClock addObserver:self forKeyPath:@"date" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:NULL];
-
-        _remindersViewController = [[WLCalendarRemindersViewController alloc] initWithNibName:nil bundle:nil];
-        _remindersViewController.representedObject = _remindersController;
-
-        _dateViewController = [[WLCalendarDateViewController alloc] init];
-        _dateViewController.representedObject = _smartClock;
-
-        [defaults addObserver:self forKeyPath:@"CalendarSize" options:NSKeyValueObservingOptionNew context:NULL];
-        [defaults addObserver:self forKeyPath:@"CalendarPosition" options:NSKeyValueObservingOptionNew context:NULL];
-        [defaults addObserver:self forKeyPath:WLScreenIdentifierKey options:NSKeyValueObservingOptionNew context:NULL];
-        [defaults addObserver:self forKeyPath:@"CustomFrameFactors" options:NSKeyValueObservingOptionNew context:NULL];
-        [defaults addObserver:self forKeyPath:@"InfoViewsWidth" options:NSKeyValueObservingOptionNew context:NULL];
-        [defaults addObserver:self forKeyPath:@"DateViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
-        [defaults addObserver:self forKeyPath:@"TasksViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
-        [defaults addObserver:self forKeyPath:@"AllDayViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
-        [defaults addObserver:self forKeyPath:WLShowsNext7DaysKey options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:NULL];
-
-        [defaultCenter addObserver:self
-                          selector:@selector(_updateFrame)
-                              name:NSApplicationDidChangeScreenParametersNotification
-                            object:NSApp];
+        [self windowScreenDidChange];
+        [self windowFrameDidChange];
     }
 
     return self;
@@ -147,488 +148,241 @@ static const float _WLFadeOutAlphaValue = 0.5f;
 
 - (void)dealloc
 {
-    [_weekViewController release];
-    [_rightNowViewController release];
-    [_remindersViewController release];
-    [_dateViewController release];
-    [_tasksViewBox release];
-    [_rightNowViewBox release];
+    [self.class cancelPreviousPerformRequestsWithTarget:self selector:@selector(windowFrameDidChange) object:nil];
+    [self.class cancelPreviousPerformRequestsWithTarget:self selector:@selector(windowScreenDidChange) object:nil];
 
-    [_fadeOutAnimation stopAnimation];
-    [_fadeOutAnimation release];
-    [_fadeInAnimation stopAnimation];
-    [_fadeInAnimation release];
-
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObserver:self forKeyPath:@"InfoViewsWidth"];
-    [defaults removeObserver:self forKeyPath:@"DateViewHeight"];
-    [defaults removeObserver:self forKeyPath:@"TasksViewHeight"];
-    [defaults removeObserver:self forKeyPath:@"AllDayViewHeight"];
-    [defaults removeObserver:self forKeyPath:@"CalendarSize"];
-    [defaults removeObserver:self forKeyPath:@"CalendarPosition"];
-    [defaults removeObserver:self forKeyPath:WLScreenIdentifierKey];
-    [defaults removeObserver:self forKeyPath:@"CustomFrameFactors"];
-
-    [_smartClock removeObserver:self forKeyPath:@"calendar"];
-    [_smartClock removeObserver:self forKeyPath:@"date"];
-
-    [_remindersController release];
-    [_calendarsController release];
-    [_log release];
-    [super dealloc];
+    __auto_type defaults = NSUserDefaults.standardUserDefaults;
+    [defaults removeObserver:self forKeyPath:WLScreenUUIDKey context:_WLScreenObservationContext];
+    [defaults removeObserver:self forKeyPath:WLCustomFrameFactorsKey context:_WLFrameObservationContext];
+    [defaults removeObserver:self forKeyPath:WLCalendarPositionKey context:_WLFrameObservationContext];
+    [defaults removeObserver:self forKeyPath:WLCalendarSizeKey context:_WLFrameObservationContext];
 }
-
 
 #pragma mark Properties
-@dynamic window;
-@synthesize windowState;
-@synthesize isFadedOut;
-
-- (void)setWindowState:(WLCalendarWindowState)newWindowState
-{
-    [self setWindowState:newWindowState animated:NO duration:0.0];
-}
-
-- (void)setIsFadedOut:(BOOL)newIsFadedOut
-{
-    if (newIsFadedOut != isFadedOut)
-    {
-        [self willChangeValueForKey:@"isFadedOut"];
-        isFadedOut = newIsFadedOut;
-        [NSAnimationContext beginGrouping];
-        if ([[NSUserDefaults standardUserDefaults] WL_slowsAnimation])
-            [NSAnimationContext currentContext].duration = [NSAnimationContext currentContext].duration * 10;
-        if (![self isAnimatingWindowState] && self.windowState == WLFinderLevelState)
-        {
-            if (isFadedOut)
-                [[self window] animator].alphaValue = _WLFadeOutAlphaValue;
-            else
-                [self window].alphaValue = 1.0;
-        }
-        else
-        {
-            // setWindowState animation will handle isFadedOut property automatically.
-        }
-        [NSAnimationContext endGrouping];
-        [self didChangeValueForKey:@"isFadedOut"];
-    }
-}
-
-+ (BOOL)automaticallyNotifiesObserversOfWindowState
-{
-    return NO;
-}
 
 + (BOOL)automaticallyNotifiesObserversOfIsFadedOut
 {
     return NO;
 }
 
++ (NSSet<NSString *> *)keyPathsForValuesAffectingIsFadedOut
+{
+    return [NSSet setWithObject:@"windowState"];
+}
+
+- (WLCalendarViewController *)calendarViewController
+{
+    if (_calendarViewController == nil)
+        _calendarViewController = [WLCalendarViewController new];
+
+    return _calendarViewController;
+}
+
+- (void)setWindowState:(_WLCalendarWindowState)newState
+{
+    BOOL isAnimated = NO;
+
+    if (_windowState <= WLCalendarWindowStateInactive && newState <= WLCalendarWindowStateInactive)
+        isAnimated = self.window.occlusionState & NSWindowOcclusionStateVisible;
+    else
+        isAnimated = NSUserDefaults.standardUserDefaults.WL_animatesBringToFront;
+
+    [self setWindowState:newState animated:isAnimated];
+}
+
+- (void)setWindowState:(_WLCalendarWindowState)newState animated:(BOOL)anIsAnimated
+{
+    __auto_type oldState = _windowState;
+
+    _windowState = newState;
+
+    if (oldState == newState)
+    {
+        if (!anIsAnimated)
+            [_runningAnimation cancelWithReason:WLAnimationStateReasonFastForward];
+
+        return;
+    }
+
+    if (anIsAnimated)
+    {
+        if (_runningAnimation.state != WLAnimationSequenceStateRunning)
+        {
+            __auto_type scenes = [NSMutableArray new];
+
+            switch (newState)
+            {
+                case WLCalendarWindowStateInactiveFaded:
+                    if (oldState == WLCalendarWindowStateActive)
+                        [scenes addObject:[self animateFadeOutAndDeactivate]];
+
+                    [scenes addObject:[self animatePartialFadeIn]];
+                    break;
+                case WLCalendarWindowStateInactive:
+                    if (oldState == WLCalendarWindowStateActive)
+                        [scenes addObject:[self animateFadeOutAndDeactivate]];
+
+                    [scenes addObject:[self animateFadeIn]];
+                    break;
+                case WLCalendarWindowStateActive:
+                    [scenes setArray:@[
+                        [self animateFadeOutAndActivate],
+                        [self animateFadeIn]
+                    ]];
+                    break;
+            }
+
+            __auto_type animation = [WLAnimationSequence new];
+            [animation.mutableScenes setArray:scenes];
+
+            __auto_type previousAnimation = _runningAnimation;
+            _runningAnimation = animation;
+            [_runningAnimation runAfter:previousAnimation withCompletion:^(WLAnimationSequence * _Nonnull aSequence) {
+                if (self->_runningAnimation == aSequence)
+                    self->_runningAnimation = nil;
+            }];
+        }
+        else
+        {
+            NSParameterAssert(_runningAnimation.currentScene.state == WLAnimationSceneStateRunning);
+
+            switch (newState)
+            {
+                case WLCalendarWindowStateInactiveFaded:
+                    if (oldState == WLCalendarWindowStateInactive)
+                    {
+                        // FadeIn is the last scene of the Inactive animation.
+                        // Its only difference from PartialFadeIn is target alphaValue
+                        [[_runningAnimation sceneWithIdentifier:_WLFadeInScene] mergeWithScene:[self animatePartialFadeIn]];
+                    }
+                    else // WLCalendarWindowStateActive
+                    {
+                        if ([_runningAnimation.currentScene.identifier isEqual:_WLFadeOutAndActivateScene])
+                        {
+                            // FadeOutAndActivate did not yet complete and thus window
+                            // is still in the Inactive state with wrong alphaValue.
+                            [_runningAnimation.currentScene mergeWithScene:[self animatePartialFadeIn]];
+                            [_runningAnimation.mutableScenes removeAllObjects];
+                        }
+                        else // _WLFadeInScene
+                        {
+                            NSParameterAssert([_runningAnimation.currentScene.identifier isEqual:_WLFadeInScene]);
+                            NSParameterAssert(_runningAnimation.scenes.count == 0);
+
+                            // FadeOutAndActivate has completed and the window is in the Active state.
+                            // FadeIn only changes alphaValue and can be substituted with FadeOutAndDeactivate.
+                            [_runningAnimation.currentScene mergeWithScene:[self animateFadeOutAndDeactivate]];
+                            [_runningAnimation.mutableScenes addObject:[self animatePartialFadeIn]];
+                        }
+                    }
+                    break;
+                case WLCalendarWindowStateInactive:
+                    if (oldState == WLCalendarWindowStateInactiveFaded)
+                    {
+                        // PartialFadeIn is the last scene of the InactiveFaded animation.
+                        // Its only difference from FadeIn is target alphaValue.
+                        [[_runningAnimation sceneWithIdentifier:_WLPartialFadeInScene] mergeWithScene:[self animateFadeIn]];
+                    }
+                    else // WLCalendarWindowStateActive
+                    {
+                        if ([_runningAnimation.currentScene.identifier isEqual:_WLFadeOutAndActivateScene])
+                        {
+                            // FadeOutAndActivate did not yet complete and thus window
+                            // is still in the Inactive state with wrong alphaValue.
+                            [_runningAnimation.currentScene mergeWithScene:[self animateFadeIn]];
+                            [_runningAnimation.mutableScenes removeAllObjects];
+                        }
+                        else // _WLFadeInScene
+                        {
+                            // FadeOutAndActivate has completed and the window is in the Active state.
+                            // FadeIn only changes alphaValue and can be substituted with FadeOutAndDeactivate.
+                            NSParameterAssert([_runningAnimation.currentScene.identifier isEqual:_WLFadeInScene]);
+                            NSParameterAssert(_runningAnimation.scenes.count == 0);
+
+                            [_runningAnimation.currentScene mergeWithScene:[self animateFadeOutAndDeactivate]];
+                            [_runningAnimation.mutableScenes addObject:[self animateFadeIn]];
+                        }
+                    }
+                    break;
+                case WLCalendarWindowStateActive:
+                    if ([_runningAnimation.currentScene.identifier isEqual:_WLFadeOutAndDeactivateScene])
+                    {
+                        // _WLFadeOutAndDeactivate did not yet complete and thus window
+                        // is still in the Active state with wrong alphaValue.
+                        [_runningAnimation.currentScene mergeWithScene:[self animateFadeIn]];
+                        [_runningAnimation.mutableScenes removeAllObjects];
+                    }
+                    else // _WLFadeInScene or _WLPartialFadeInScene
+                    {
+                        [_runningAnimation.currentScene mergeWithScene:[self animateFadeOutAndActivate]];
+                        [_runningAnimation.mutableScenes addObject:[self animateFadeIn]];
+                    }
+                    break;
+            }
+        }
+    }
+    else
+    {
+        [_runningAnimation abort];
+
+        __auto_type window = self.window;
+
+        switch (newState)
+        {
+            case WLCalendarWindowStateInactive:
+                [self _deactivate:window];
+                window.alphaValue = 1.0;
+                break;
+            case WLCalendarWindowStateInactiveFaded:
+                [self _deactivate:window];
+                window.alphaValue = _WLFadedAlphaValue;
+                break;
+            case WLCalendarWindowStateActive:
+                [self _activate:window];
+                window.alphaValue = 1.0;
+                break;
+        }
+    }
+}
+
+- (BOOL)isFadedOut
+{
+    return self.windowState == WLCalendarWindowStateInactiveFaded;
+}
+
+- (void)setIsFadedOut:(BOOL)isFadedOut
+{
+    if (isFadedOut)
+        self.windowState = WLCalendarWindowStateInactiveFaded;
+    else if (self.windowState == WLCalendarWindowStateInactiveFaded)
+        self.windowState = WLCalendarWindowStateInactive;
+}
 
 #pragma mark Methods
 
-- (IBAction)showNextWeek:(id)aSender
++ (NSRect)windowFrameOnScreen:(NSScreen *)aScreen preferences:(nullable NSDictionary *)aPreferences
 {
-    if ([self canShowNextWeek])
-        [_weekViewController showNextWeek:aSender animated:YES];
-}
+    if (!aPreferences)
+        aPreferences = (NSDictionary *)NSUserDefaults.standardUserDefaults;
 
-- (IBAction)showPreviousWeek:(id)aSender
-{
-    if ([self canShowPreviousWeek])
-        [_weekViewController showPreviousWeek:aSender animated:YES];
-}
+    if (!aScreen)
+        aScreen = [self windowScreenWithPreferences:aPreferences];
 
-- (IBAction)showCurrentWeek:(id)aSender
-{
-    if ([self canShowCurrentWeek])
-        [_weekViewController showCurrentWeek:aSender animated:YES];
-}
-
-- (BOOL)canShowNextWeek
-{
-    return _isWindowShowed && ![_weekViewController view].hidden && _weekViewController.canShowNextWeek;
-}
-
-- (BOOL)canShowCurrentWeek
-{
-    return _isWindowShowed && ![_weekViewController view].hidden && _weekViewController.canShowCurrentWeek;
-}
-
-- (BOOL)canShowPreviousWeek
-{
-    return _isWindowShowed && ![_weekViewController view].hidden && _weekViewController.canShowPreviousWeek;
-}
-
-- (BOOL)isCurrentWeekShowed
-{
-    return _isWindowShowed && _weekViewController.weekOffset == 0;
-}
-
-- (void)setWindowState:(WLCalendarWindowState)newWindowState animated:(BOOL)isAnimated duration:(NSTimeInterval)aDuration;
-{
-    NSParameterAssert(_fadeOutAnimation == nil || _fadeInAnimation == nil);
-
-    /*
-     | = current position
-                        set level
-     1.0        0.5        0.0        0.5       1.0
-     |--------------------------------------------> alpha value
-     */
-    if (isAnimated)
-    {
-        if (newWindowState == windowState)
-            return;
-
-        [self willChangeValueForKey:@"windowState"];
-        windowState = newWindowState;
-        [self didChangeValueForKey:@"windowState"];
-
-        if (_fadeOutAnimation == nil && _fadeInAnimation == nil)
-        {
-            /*
-             1.0                                        0.0
-             |--------------------------------------------> alpha value
-
-             No animation is running.
-             */
-            _fadeOutAnimation = [[WLCalendarWindowBringToFrontAnimation alloc] initWithWindow:[self window]];
-            _fadeOutAnimation.delegate = self;
-            _fadeOutAnimation.animationBlockingMode = NSAnimationNonblocking;
-            _fadeOutAnimation.duration = aDuration / 2.0;
-            _fadeOutAnimation.currentProgress = (float)(1.0 - [self window].alphaValue);
-            [_fadeOutAnimation startAnimation];
-        }
-        else if (_fadeOutAnimation != nil)
-        {
-            /*
-             1.0                                        0.0
-             ------------------|--------------------------> alpha value
-             <----progress---->
-
-             Window is fading out, level is not changed yet.
-             */
-            [_fadeOutAnimation stopAnimation];
-            NSTimeInterval duration = aDuration / 2.0;
-            // Invert progress, because value will be inverted again in -animation:valueForProgress:
-            NSAnimationProgress progress = 1.0f - _fadeOutAnimation.currentProgress;
-            [_fadeOutAnimation release];
-            _fadeOutAnimation = nil;
-
-            _fadeInAnimation = [[WLCalendarWindowBringToFrontAnimation alloc] initWithWindow:[self window]];
-            _fadeInAnimation.delegate = self;
-            _fadeInAnimation.animationBlockingMode = NSAnimationNonblocking;
-            _fadeInAnimation.duration = duration;
-            _fadeInAnimation.currentProgress = progress;
-            [_fadeInAnimation startAnimation];
-        }
-        else /* if (_fadeInAnimation != nil) */
-        {
-            /*
-             1.0        0.5        0.0        0.5       1.0
-             ------------------------------------------|--> alpha value
-                                     <----progress---->
-
-             Window is fading in, level is already changed.
-             */
-            [_fadeInAnimation stopAnimation];
-            NSTimeInterval duration = aDuration / 2.0;
-            // Invert progress, because value will be inverted again in -animation:valueForProgress:
-            NSAnimationProgress progress = 1.0f - _fadeInAnimation.currentProgress;
-            [_fadeInAnimation release];
-            _fadeInAnimation = nil;
-
-            _fadeOutAnimation = [[WLCalendarWindowBringToFrontAnimation alloc] initWithWindow:[self window]];
-            _fadeOutAnimation.delegate = self;
-            _fadeOutAnimation.animationBlockingMode = NSAnimationNonblocking;
-            _fadeOutAnimation.duration = duration;
-            _fadeOutAnimation.currentProgress = progress;
-            [_fadeOutAnimation startAnimation];
-        }
-    }
-    else
-    {
-        if (_fadeOutAnimation == nil && _fadeInAnimation == nil)
-        {
-            if (newWindowState == windowState)
-                return;
-
-            [self willChangeValueForKey:@"windowState"];
-            windowState = newWindowState;
-
-            switch (windowState)
-            {
-                case WLFinderLevelState:
-                    self.window.isFloatingWindow = NO;
-                    if (self.isFadedOut)
-                        [self window].alphaValue = _WLFadeOutAlphaValue;
-                    else
-                        [self window].alphaValue = 1.0;
-                    break;
-                case WLFloatingLevelState:
-                    [self window].alphaValue = 1.0;
-                    self.window.isFloatingWindow = YES;
-                    break;
-            }
-            [self didChangeValueForKey:@"windowState"];
-        }
-        else if (_fadeOutAnimation != nil)
-        {
-            if (newWindowState == windowState)
-            {
-                [self flushWindowState];
-            }
-            else
-            {
-                [self willChangeValueForKey:@"windowState"];
-                windowState = newWindowState;
-                [_fadeOutAnimation stopAnimation];
-                _fadeOutAnimation.currentProgress = 0.0;
-                [_fadeOutAnimation release];
-                _fadeOutAnimation = nil;
-                [self didChangeValueForKey:@"windowState"];
-            }
-        }
-        else /* if (_fadeInAnimation != nil) */
-        {
-            if (newWindowState == windowState)
-                [self flushWindowState];
-            else
-            {
-                [self willChangeValueForKey:@"windowState"];
-                windowState = newWindowState;
-
-                [_fadeInAnimation stopAnimation];
-                _fadeInAnimation.currentProgress = 1.0;
-                [_fadeInAnimation release];
-                _fadeInAnimation = nil;
-
-                switch (windowState)
-                {
-                    case WLFinderLevelState:
-                        self.window.isFloatingWindow = NO;
-                        if (self.isFadedOut)
-                            [self window].alphaValue = _WLFadeOutAlphaValue;
-                        else
-                            [self window].alphaValue = 1.0;
-                        break;
-                    case WLFloatingLevelState:
-                        [self window].alphaValue = 1.0;
-                        self.window.isFloatingWindow = YES;
-                        break;
-                }
-                [self didChangeValueForKey:@"windowState"];
-            }
-        }
-    }
-}
-
-- (void)flushWindowState
-{
-    NSParameterAssert(_fadeOutAnimation == nil || _fadeInAnimation == nil);
-
-    if (_fadeOutAnimation != nil)
-    {
-        [_fadeOutAnimation stopAnimation];
-        [_fadeOutAnimation release];
-        _fadeOutAnimation = nil;
-
-        switch (self.windowState)
-        {
-            case WLFinderLevelState:
-                self.window.isFloatingWindow = NO;
-                if (self.isFadedOut)
-                    [self window].alphaValue = _WLFadeOutAlphaValue;
-                else
-                    [self window].alphaValue = 1.0;
-                break;
-            case WLFloatingLevelState:
-                [self window].alphaValue = 1.0;
-                self.window.isFloatingWindow = YES;
-                break;
-        }
-    }
-    else if (_fadeInAnimation != nil)
-    {
-        [_fadeInAnimation stopAnimation];
-        _fadeInAnimation.currentProgress = 1.0;
-        [_fadeInAnimation release];
-        _fadeInAnimation = nil;
-    }
-}
-
-- (BOOL)isAnimatingWindowState
-{
-    return (_fadeOutAnimation != nil || _fadeInAnimation != nil);
-}
-
-
-#pragma mark NSAnimationDelegate
-
-- (float)animation:(NSAnimation *)anAnimation valueForProgress:(NSAnimationProgress)aProgress
-{
-    NSParameterAssert(_fadeOutAnimation == nil || _fadeInAnimation == nil);
-
-    if (anAnimation == _fadeOutAnimation)
-    {
-        switch (self.windowState)
-        {
-            case WLFinderLevelState:
-            {
-                // If the window is faded out, we have to restore to fade out value.
-                if (self.isFadedOut)
-                    return (1.0f - aProgress) * _WLFadeOutAlphaValue;
-                else
-                    return 1.0f - aProgress;
-            }
-            case WLFloatingLevelState:
-                return 1.0f - aProgress;
-        }
-    }
-    else
-    {
-        switch (self.windowState)
-        {
-            case WLFinderLevelState:
-            {
-                // If the window is faded out, we have to restore to fade out value.
-                if (self.isFadedOut)
-                    return aProgress * _WLFadeOutAlphaValue;
-                else
-                    return aProgress;
-            }
-            case WLFloatingLevelState:
-                return aProgress;
-        }
-    }
-}
-
-- (void)animationDidEnd:(NSAnimation *)anAnimation
-{
-    NSParameterAssert(_fadeOutAnimation == nil || _fadeInAnimation == nil);
-
-    if (anAnimation == _fadeOutAnimation)
-    {
-        switch (self.windowState)
-        {
-            case WLFinderLevelState:
-                self.window.isFloatingWindow = NO;
-                break;
-            case WLFloatingLevelState:
-                self.window.isFloatingWindow = YES;
-                if ([(DeskboardAppDelegate *)NSApp.delegate isOnlyCalendarWindowVisible:NSApp.windows])
-                    [self.window makeKeyWindow];
-                break;
-        }
-
-        _fadeInAnimation = [[WLCalendarWindowBringToFrontAnimation alloc] initWithWindow:[self window]];
-        _fadeInAnimation.delegate = self;
-        _fadeInAnimation.duration = _fadeOutAnimation.duration;
-        _fadeInAnimation.animationBlockingMode = NSAnimationNonblocking;
-        [_fadeInAnimation startAnimation];
-
-        [_fadeOutAnimation release];
-        _fadeOutAnimation = nil;
-    }
-    else if (anAnimation == _fadeInAnimation)
-    {
-        [_fadeInAnimation release];
-        _fadeInAnimation = nil;
-    }
-}
-
-
-#pragma mark NSWindowController
-
-- (WLCalendarWindow *)window
-{
-    return (WLCalendarWindow *)super.window;
-}
-
-- (IBAction)showWindow:(id)aSender
-{
-    if (!_isWindowShowed)
-    {
-        [self _makeViews];
-        [self _updateFrame];
-        self.window.isFloatingWindow = (self.windowState == WLFloatingLevelState);
-        _isWindowShowed = YES;
-    }
-}
-
-
-#pragma mark NSObject
-
-- (void)observeValueForKeyPath:(NSString *)aKeyPath ofObject:(id)anObject change:(NSDictionary *)aChange context:(void *)aContext
-{
-    if ([aKeyPath isEqualToString:@"InfoViewsWidth"] ||
-        [aKeyPath isEqualToString:@"DateViewHeight"] ||
-        [aKeyPath isEqualToString:@"TasksViewHeight"] ||
-        [aKeyPath isEqualToString:@"AllDayViewHeight"])
-    {
-        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_updateFrame) object:nil];
-        [self performSelector:@selector(_updateFrame) withObject:nil afterDelay:0.0];
-    }
-    else if ([aKeyPath isEqualToString:@"CalendarSize"] ||
-             [aKeyPath isEqualToString:@"CalendarPosition"] ||
-             [aKeyPath isEqualToString:WLScreenIdentifierKey] ||
-             [aKeyPath isEqualToString:@"CustomFrameFactors"])
-    {
-        BLSize calendarSize = (BLSize)[[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"];
-        if (![aKeyPath isEqualToString:@"CustomFrameFactors"] ||
-            ([aKeyPath isEqualToString:@"CustomFrameFactors"] && calendarSize == BLCustomSize))
-        {
-            if (_isWindowShowed)
-                [self _updateFrame];
-        }
-    }
-    else if ([aKeyPath isEqualToString:WLShowsNext7DaysKey])
-    {
-        if ([aChange[NSKeyValueChangeNewKey] boolValue])
-            [_weekViewController setAlignmentUnit:NSCalendarUnitDay number:7 animated:YES];
-        else
-            [_weekViewController setAlignmentUnit:NSCalendarUnitWeekOfMonth number:1 animated:YES];
-    }
-    else if ([aKeyPath isEqualToString:@"calendar"])
-    {
-        [_weekViewController setCalendar:aChange[NSKeyValueChangeNewKey] animated:YES];
-        [_rightNowViewController setCalendar:aChange[NSKeyValueChangeNewKey] animated:YES];
-    }
-    else if ([aKeyPath isEqualToString:@"date"])
-    {
-        [_weekViewController setDate:aChange[NSKeyValueChangeNewKey] animated:YES];
-        [_rightNowViewController setDate:aChange[NSKeyValueChangeNewKey] animated:YES];
-    }
-    else
-        [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];
-}
-
-@end
-
-
-@implementation WLCalendarWindowController (Frame)
-
-- (NSRect)windowFrame
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    return [self windowFrameOnScreen:[self windowScreen]
-                        withPosition:(BLPosition)[defaults integerForKey:@"CalendarPosition"]
-                                size:(BLSize)[defaults integerForKey:@"CalendarSize"]];
-}
-
-- (NSRect)windowFrameOnScreen:(NSScreen *)aScreen withPosition:(BLPosition)aPosition size:(BLSize)aSize
-{
-    if (aScreen == nil)
-        return NSZeroRect;
+    BLSize prefSize = [[aPreferences objectForKey:WLCalendarSizeKey] unsignedIntegerValue];
+    BLPosition prefPosition = [[aPreferences objectForKey:WLCalendarPositionKey] unsignedIntegerValue];
+    NSRect prefRatios = NSRectFromString([aPreferences objectForKey:WLCustomFrameFactorsKey]);
 
     NSRect screenFrame = aScreen.visibleFrame;
     NSRect windowFrame = NSZeroRect;
-    if (aSize != BLCustomSize)
+
+    if (prefSize != BLCustomSize)
     {
         static const NSSize Margin = {.width = 14.0, .height = 14.0};
+
         screenFrame = NSInsetRect(screenFrame, Margin.width, Margin.height);
-        switch (aSize) {
+
+        switch (prefSize)
+        {
             case BLNarrowSize:
                 windowFrame.size.width = BLNarrowMinimumSize.width;
                 windowFrame.size.height = fmin(BLNarrowMinimumSize.height, NSHeight(screenFrame));
@@ -640,349 +394,520 @@ static const float _WLFadeOutAlphaValue = 0.5f;
             case BLFullSize:
                 windowFrame.size = screenFrame.size;
                 break;
-            default:
+            case BLCustomSize:
+                __builtin_unreachable();
                 break;
         }
 
         CGFloat px = 0.0;
         CGFloat py = 0.0;
 
-        if (aPosition == BLPositionTopCenter ||
-            aPosition == BLPositionCenterCenter ||
-            aPosition == BLPositionBottomCenter)
+        if (prefPosition == BLPositionTopCenter ||
+            prefPosition == BLPositionCenterCenter ||
+            prefPosition == BLPositionBottomCenter)
         {
             px = floor(NSWidth(screenFrame) / 2.0 - NSWidth(windowFrame) / 2.0);
         }
-        else if (aPosition == BLPositionTopRight ||
-            aPosition == BLPositionCenterRight ||
-            aPosition == BLPositionBottomRight)
+        else if (prefPosition == BLPositionTopRight ||
+                 prefPosition == BLPositionCenterRight ||
+                 prefPosition == BLPositionBottomRight)
         {
             px = NSWidth(screenFrame) - NSWidth(windowFrame);
         }
 
-        if (aPosition == BLPositionTopLeft ||
-            aPosition == BLPositionTopCenter ||
-            aPosition == BLPositionTopRight)
+        if (prefPosition == BLPositionTopLeft ||
+            prefPosition == BLPositionTopCenter ||
+            prefPosition == BLPositionTopRight)
         {
             py = NSHeight(screenFrame) - NSHeight(windowFrame);
         }
-        else if (aPosition == BLPositionCenterLeft ||
-            aPosition == BLPositionCenterCenter ||
-            aPosition == BLPositionCenterRight)
+        else if (prefPosition == BLPositionCenterLeft ||
+                 prefPosition == BLPositionCenterCenter ||
+                 prefPosition == BLPositionCenterRight)
         {
             py = NSHeight(screenFrame) / 2.0 - NSHeight(windowFrame) / 2.0;
         }
+
         windowFrame.origin = NSMakePoint(screenFrame.origin.x + px, screenFrame.origin.y + py);
     }
     else
     {
-        NSRect customFrameFactos = NSRectFromString([[NSUserDefaults standardUserDefaults] stringForKey:@"CustomFrameFactors"]);
-        windowFrame = NSMakeRect(screenFrame.origin.x + customFrameFactos.origin.x * screenFrame.size.width,
-                                 screenFrame.origin.y + customFrameFactos.origin.y * screenFrame.size.height,
-                                 customFrameFactos.size.width * screenFrame.size.width,
-                                 customFrameFactos.size.height * screenFrame.size.height);
+        windowFrame = NSMakeRect(NSMinX(screenFrame) + NSMinX(prefRatios) * NSWidth(screenFrame),
+                                 NSMinY(screenFrame) + NSMinY(prefRatios) * NSHeight(screenFrame),
+                                 NSWidth(prefRatios) * NSWidth(screenFrame),
+                                 NSHeight(prefRatios) * NSHeight(screenFrame));
     }
 
-    return [aScreen backingAlignedRect:windowFrame options:NSAlignAllEdgesInward];
+    return [aScreen backingAlignedRect:windowFrame
+                               options:NSAlignMinXNearest | NSAlignMaxYNearest | NSAlignWidthOutward | NSAlignHeightOutward];
 }
 
-- (NSScreen *)windowScreen
++ (nullable NSScreen *)windowScreenWithPreferences:(nullable NSDictionary *)aPreferences
 {
-    NSArray *screens = [NSScreen screens];
-    NSNumber *screenIdentifier = [[NSUserDefaults standardUserDefaults] WL_screenIdentifier];
-    if (screens.count > 0)
+    if (!aPreferences)
+        aPreferences = (NSDictionary *)NSUserDefaults.standardUserDefaults;
+
+    __auto_type newScreen = [NSScreen WL_screenWithUUID:[aPreferences objectForKey:WLScreenUUIDKey]];
+
+    if (!newScreen)
     {
-        NSUInteger index = NSNotFound;
-        if (screenIdentifier != nil)
-        {
-            index = [screens indexOfObjectPassingTest:^(NSScreen *screen, NSUInteger idx, BOOL *stop)
-            {
-                return [[screen valueForKeyPath:@"deviceDescription.NSScreenNumber"] isEqualToNumber:screenIdentifier];
-            }];
-        }
-        if (index != NSNotFound)
-            return screens[index];
-        else
-            return screens[0];
+        __auto_type screens = NSScreen.screens;
+
+        if (screens.count)
+            newScreen = screens[0];
     }
+
+    return newScreen;
+}
+
+- (NSView *)makeActiveBackgroundView
+{
+    __auto_type effectsView = [NSVisualEffectView new];
+    effectsView.translatesAutoresizingMaskIntoConstraints = NO;
+    effectsView.state = NSVisualEffectStateActive;
+    effectsView.blendingMode = NSVisualEffectBlendingModeBehindWindow;
+    effectsView.maskImage = [NSImage imageNamed:@"calendar-background-active-mask"];
+
+    if (@available(macOS 10.14, *))
+        effectsView.material = NSVisualEffectMaterialHUDWindow;
     else
-        return nil;
+        effectsView.material = NSVisualEffectMaterialPopover;
+
+    __auto_type backgroundView = [self _makeBackgroundView:YES];
+    [effectsView addSubview:backgroundView];
+
+    [NSLayoutConstraint activateConstraints:@[
+        [effectsView.leftAnchor constraintEqualToAnchor:backgroundView.leftAnchor],
+        [effectsView.topAnchor constraintEqualToAnchor:backgroundView.topAnchor],
+        [effectsView.rightAnchor constraintEqualToAnchor:backgroundView.rightAnchor],
+        [effectsView.bottomAnchor constraintEqualToAnchor:backgroundView.bottomAnchor]
+    ]];
+
+    return effectsView;
 }
 
-@end
-
-
-@implementation  WLCalendarWindowController (Layout)
-
-// Belongs to the right now view.
-static const CGFloat _WLYMarginBetweenTasksAndRightNow = 10.0;
-
-// Belongs to the calendar view.
-static const CGFloat _WLXMarginBetweenInfoAndWeek = 17.0;
-
-// Belongs to the date view.
-static const CGFloat _WLYMarginBetweenBoundsAndDate = -40.0;
-
-- (void)_applyWindowSizeToViews
+- (NSView *)makeInactiveBackgroundView
 {
-    switch ((BLSize)[[NSUserDefaults standardUserDefaults] integerForKey:@"CalendarSize"])
+    return [self _makeBackgroundView:NO];
+}
+
+- (void)windowScreenDidChange
+{
+    __auto_type newScreen = [self.class windowScreenWithPreferences:nil];
+
+    if (!newScreen)
+        return;
+
+    __auto_type newScreenVisibleFrame = newScreen.visibleFrame;
+    BOOL shouldUpdateScreen = ![_windowScreen isEqual:newScreen];
+    BOOL shouldUpdateScreenFrame = !NSEqualRects(_windowScreenVisibleFrame, newScreenVisibleFrame);
+
+    if (shouldUpdateScreen)
+        [self willChangeValueForKey:@"windowScreen"];
+
+    if (shouldUpdateScreenFrame)
+        [self willChangeValueForKey:@"windowScreenVisibleFrame"];
+
+    _windowScreen = newScreen;
+    _windowScreenVisibleFrame = newScreenVisibleFrame;
+
+    if (shouldUpdateScreenFrame || shouldUpdateScreen)
+        [self _performWindowFrameDidChange];
+
+    if (shouldUpdateScreenFrame)
+        [self didChangeValueForKey:@"windowScreenVisibleFrame"];
+
+    if (shouldUpdateScreen)
+        [self didChangeValueForKey:@"windowScreen"];
+}
+
+- (void)windowFrameDidChange
+{
+    __auto_type screen = self.windowScreen;
+
+    if (!screen)
+        return;
+
+    __auto_type window = self.window;
+    __auto_type contentView = window.contentView;
+
+    NSParameterAssert(contentView != nil);
+
+    __auto_type newWindowAlignmentFrame = [self.class windowFrameOnScreen:screen preferences:nil];
+
+    // Window frame specified by the user is an alignment rect that does not include shadow.
+    // Since the window uses custom shadow that is part of the background image
+    // user's frame needs to be extended appropriately.
+
+    __auto_type newWindowFrame = newWindowAlignmentFrame;
+    __auto_type newContentViewFrame = [window convertRectFromScreen:newWindowFrame];
+    newContentViewFrame = [contentView convertRect:newContentViewFrame fromView:nil];
+
+    switch (_windowState)
     {
-        case BLNarrowSize:
-            [self _applyNarrowSizeToViews];
+        case WLCalendarWindowStateInactiveFaded:
+        case WLCalendarWindowStateInactive:
+            newContentViewFrame.origin.x -= _WLShadowInsets.left;
+
+            if (contentView.isFlipped)
+                newContentViewFrame.origin.y -= _WLShadowInsets.top;
+            else
+                newContentViewFrame.origin.y -= _WLShadowInsets.bottom;
+
+            newContentViewFrame.size.width += _WLShadowInsets.left + _WLShadowInsets.right;
+            newContentViewFrame.size.height += _WLShadowInsets.top + _WLShadowInsets.bottom;
+            newWindowFrame = [contentView convertRect:newContentViewFrame toView:nil];
+            newWindowFrame = [window convertRectToScreen:newWindowFrame];
             break;
-        case BLCustomSize:
-            [self _applyCustomSizeToViews];
-            break;
-        case BLNormalSize:
-            [self _applyNormalSizeToViews];
-            break;
-        case BLFullSize:
-            [self _applyFullSizeToViews];
+        case WLCalendarWindowStateActive:
             break;
     }
+
+    _windowWidthConstraint.constant = NSWidth(newContentViewFrame);
+    _windowHeightConstraint.constant = NSHeight(newContentViewFrame);
+
+    BOOL shouldUpdateWindowAlignmentFrame = !NSEqualRects(_windowAlignmentFrame, newWindowAlignmentFrame);
+
+    if (shouldUpdateWindowAlignmentFrame)
+        [self willChangeValueForKey:@"windowAlignmentFrame"];
+
+    _windowAlignmentFrame = newWindowAlignmentFrame;
+    [window setFrameTopLeftPoint:NSMakePoint(NSMinX(newWindowFrame), NSMaxY(newWindowFrame))];
+
+    if (shouldUpdateWindowAlignmentFrame)
+        [self didChangeValueForKey:@"windowAlignmentFrame"];
 }
 
-- (void)_applyNarrowSizeToViews
+- (WLAnimationScene *)animateFadeOutAndActivate
 {
-    // Ignore width for info section, but don't overwrite it in user defaults.
-    CGFloat width = (self.window).contentView.bounds.size.width;
+    __auto_type window = self.window;
 
-    [self _applyCustomSizeToViews];
-
-    NSRect r = [_dateViewController view].frame;
-    r.size.width = width;
-    [_dateViewController view].frame = r;
-    [[_dateViewController view] setNeedsDisplay:YES];
-
-    r = _tasksViewBox.frame;
-    r.size.width = width;
-    _tasksViewBox.frame = r;
-    [_tasksViewBox setNeedsDisplay:YES];
-
-    r = _rightNowViewBox.frame;
-    r.size.width = width;
-    _rightNowViewBox.frame = r;
-    [_rightNowViewBox setNeedsDisplay:YES];
-
-    [[_weekViewController view] setHidden:YES];
-}
-
-- (void)_applyCustomSizeToViews
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
-    NSRect dateViewFrame = [self dateViewFrame];
-    NSSize minimumDateViewSize = NSMakeSize([defaults doubleForKey:@"MinimumDateViewWidth"],
-                                            [defaults doubleForKey:@"MinimumDateViewHeight"]);
-    BOOL showDateView = (dateViewFrame.size.width >= minimumDateViewSize.width &&
-                         dateViewFrame.size.height >= minimumDateViewSize.height);
-    [_dateViewController view].hidden = !showDateView;
-    [_dateViewController view].frame = dateViewFrame;
-    [[_dateViewController view] setNeedsDisplay:YES];
-
-    NSRect tasksViewFrame = [self tasksViewFrame];
-    NSSize minimumTasksViewSize = NSMakeSize([defaults doubleForKey:@"MinimumTasksViewWidth"],
-                                             [defaults doubleForKey:@"MinimumTasksViewHeight"]);
-    BOOL showTasksView = (tasksViewFrame.size.width >= minimumTasksViewSize.width &&
-                          tasksViewFrame.size.height >= minimumTasksViewSize.height);
-    _tasksViewBox.hidden = !showTasksView;
-    _tasksViewBox.frame = tasksViewFrame;
-    [_tasksViewBox setNeedsDisplay:YES];
-
-    NSRect rightNowViewFrame = [self rightNowViewFrame];
-    NSSize minimumRightNowViewSize = NSMakeSize([defaults doubleForKey:@"MinimumRightNowViewWidth"],
-                                                [defaults doubleForKey:@"MinimumRightNowViewHeight"]);
-    BOOL showRightNowView = (rightNowViewFrame.size.width >= minimumRightNowViewSize.width &&
-                             rightNowViewFrame.size.height >= minimumRightNowViewSize.height);
-    _rightNowViewBox.hidden = !showRightNowView;
-    _rightNowViewBox.frame = rightNowViewFrame;
-    [_rightNowViewBox setNeedsDisplay:YES];
-
-    NSRect weekViewFrame = [self weekViewFrame];
-    [_weekViewController view].heightOfAllDayPartOfColumn = [defaults doubleForKey:@"AllDayViewHeight"];
-    [_weekViewController view].frame = weekViewFrame;
-
-    // Sizes in defaults know nothing about margins. Take care of them here.
-    NSSize minimumWeekViewSize = NSMakeSize([defaults doubleForKey:@"MinimumWeekViewWidth"] - _WLXMarginBetweenInfoAndWeek,
-                                            [defaults doubleForKey:@"MinimumWeekViewHeight"]);
-    BOOL isTooSmall = (weekViewFrame.size.width < minimumWeekViewSize.width ||
-                       weekViewFrame.size.height < minimumWeekViewSize.height);
-    [_weekViewController view].hidden = isTooSmall;
-    [[_weekViewController view] setNeedsDisplay:YES];
-}
-
-- (void)_applyNormalSizeToViews
-{
-    [self _applyCustomSizeToViews];
-}
-
-- (void)_applyFullSizeToViews
-{
-    [self _applyCustomSizeToViews];
-}
-
-- (void)_updateFrame
-{
-    NSRect windowFrame = [self windowFrame];
-    BOOL shouldDisableUpdates = _isWindowShowed;
-    if (shouldDisableUpdates)
-        NSDisableScreenUpdates();
-    [CATransaction begin];
-    [CATransaction setDisableActions:YES];
-    [CATransaction setCompletionBlock:^(void) {
-        [self.window displayIfNeeded];
-        if (shouldDisableUpdates)
-            NSEnableScreenUpdates();
+    __auto_type scene = [WLAnimationScene sceneWithAnimatorChanges:^(WLAnimationSequence * _Nonnull aSequence) {
+        window.animator.alphaValue = 0.0;
     }];
-    [self flushWindowState];
-    [self.window setFrame:windowFrame display:NO];
-    [self _applyWindowSizeToViews];
-    [CATransaction commit];
+    scene.completionHandler = ^(WLAnimationSequence * _Nonnull aSequence) {
+        if (aSequence.state != WLAnimationSequenceStateAborting)
+        {
+            [self _activate:window];
+            [window.contentView layoutSubtreeIfNeeded];
+            [window orderBack:nil];
+        }
+    };
+    scene.identifier = _WLFadeOutAndActivateScene;
+    scene.durationHandler = ^{ return window.alphaValue * _WLFadeTotalDuration; };
+    scene.defaultTimingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+
+    if (@available(macOS 10.12, *))
+    {
+        if (NSWorkspace.sharedWorkspace.accessibilityDisplayShouldReduceMotion)
+        {
+            scene.defaultDuration = @0.0;
+            scene.durationHandler = nil;
+        }
+    }
+
+    return scene;
 }
 
-- (void)_makeViews
+- (WLAnimationScene *)animateFadeOutAndDeactivate
 {
-    NSParameterAssert(!_isWindowShowed);
-    NSView *contentView = (self.window).contentView;
-    [contentView setWantsLayer:YES];
-    [contentView setAutoresizesSubviews:NO];
-    if ([[NSUserDefaults standardUserDefaults] WL_slowsAnimation])
-        contentView.layer.speed = 0.1f;
+    __auto_type window = self.window;
 
-    NSView *dateView = [_dateViewController view];
-    [dateView setWantsLayer:YES];
-    [contentView addSubview:dateView];
+    __auto_type scene = [WLAnimationScene sceneWithAnimatorChanges:^(WLAnimationSequence * _Nonnull aSequence) {
+        window.animator.alphaValue = 0.0;
+    }];
+    scene.completionHandler = ^(WLAnimationSequence * _Nonnull aSequence) {
+        if (aSequence.state != WLAnimationSequenceStateAborting)
+        {
+            [self _deactivate:window];
+            [window.contentView layoutSubtreeIfNeeded];
+            [window orderBack:nil];
+        }
+    };
+    scene.identifier = _WLFadeOutAndDeactivateScene;
+    scene.durationHandler = ^{ return window.alphaValue * _WLFadeTotalDuration; };
+    scene.defaultTimingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
 
-    _tasksViewBox = [[WLCalendarBoxView alloc] initWithFrame:NSZeroRect];
-    _tasksViewBox.title = NSLocalizedString(@"To Do", @"Header of To Do items list");
-    _tasksViewBox.contentView = _remindersViewController.view;
-    [_tasksViewBox setWantsLayer:YES];
-    [contentView addSubview:_tasksViewBox];
-    [_tasksViewBox release];
+    if (@available(macOS 10.12, *))
+    {
+        if (NSWorkspace.sharedWorkspace.accessibilityDisplayShouldReduceMotion)
+        {
+            scene.defaultDuration = @0.0;
+            scene.durationHandler = nil;
+        }
+    }
 
-    _rightNowViewBox = [[WLCalendarBoxView alloc] initWithFrame:NSZeroRect];
-    [_rightNowViewBox setWantsLayer:YES];
-    _rightNowViewBox.title = NSLocalizedString(@"Right Now", @"Header of Right Now items list");
-    _rightNowViewBox.contentView = [_rightNowViewController view];
-    _rightNowViewBox.softEdges = YES;
-    [contentView addSubview:_rightNowViewBox];
-    [_rightNowViewBox release];
-
-    [contentView addSubview:[_weekViewController view]];
+    return scene;
 }
 
-- (CGFloat)fixedInfoViewsWidth
+- (WLAnimationScene *)animatePartialFadeIn
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    CGFloat infoViewWidth = [defaults doubleForKey:@"InfoViewsWidth"];
-    CGFloat minWeekWidth = [defaults doubleForKey:@"MinimumWeekViewWidth"];
-    NSRect bounds = [self window].contentView.bounds;
-    CGFloat weekWidth = NSWidth(bounds) - infoViewWidth;
-    if (weekWidth > minWeekWidth)
-        return infoViewWidth;
-    else if (weekWidth < minWeekWidth / 2.0)
-        return NSWidth(bounds);
+    __auto_type window = self.window;
+
+    __auto_type scene = [WLAnimationScene sceneWithAnimatorChanges:^(WLAnimationSequence * _Nonnull aSequence) {
+        window.animator.alphaValue = _WLFadedAlphaValue;
+    }];
+    scene.completionHandler = WLAnimationHandlerNoop;
+    scene.identifier = _WLPartialFadeInScene;
+    scene.durationHandler = ^{ return fabs(_WLFadedAlphaValue - window.alphaValue) * _WLFadeTotalDuration; };
+    scene.defaultTimingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+
+    if (@available(macOS 10.12, *))
+    {
+        if (NSWorkspace.sharedWorkspace.accessibilityDisplayShouldReduceMotion)
+        {
+            scene.defaultDuration = @0.0;
+            scene.durationHandler = nil;
+        }
+    }
+
+    return scene;
+}
+
+- (WLAnimationScene *)animateFadeIn
+{
+    __auto_type window = self.window;
+
+    __auto_type scene = [WLAnimationScene sceneWithAnimatorChanges:^(WLAnimationSequence * _Nonnull aSequence) {
+        window.animator.alphaValue = 1.0;
+    }];
+    scene.completionHandler = WLAnimationHandlerNoop;
+    scene.identifier = _WLFadeInScene;
+    scene.durationHandler = ^{ return (1.0 - window.alphaValue) * _WLFadeTotalDuration; };
+    scene.defaultTimingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+
+    if (@available(macOS 10.12, *))
+    {
+        if (NSWorkspace.sharedWorkspace.accessibilityDisplayShouldReduceMotion)
+        {
+            scene.defaultDuration = @0.0;
+            scene.durationHandler = nil;
+        }
+    }
+
+    return scene;
+}
+
+#pragma mark Private
+
+- (NSView *)_makeBackgroundView:(BOOL)anIsActive
+{
+    static NSColor *NoisePatternColor = nil;
+    static dispatch_once_t Once;
+    dispatch_once(&Once, ^{
+        __auto_type noiseImage = [NSImage imageNamed:@"calendar-background-noise"];
+        __auto_type transparentNoiseImage = [NSImage imageWithSize:noiseImage.size
+                                                           flipped:NO
+                                                    drawingHandler:^BOOL(NSRect aDestinationRect)
+        {
+            [noiseImage drawInRect:aDestinationRect
+                          fromRect:aDestinationRect
+                         operation:NSCompositeSourceOver
+                          fraction:1.0];
+            [[NSColor.clearColor colorWithAlphaComponent:0.03] set];
+            NSRectFillUsingOperation(aDestinationRect, NSCompositeDestinationIn);
+            return YES;
+        }];
+
+        NoisePatternColor = [NSColor colorWithPatternImage:transparentNoiseImage];
+    });
+
+    __auto_type imageView = [NSImageView new];
+    imageView.translatesAutoresizingMaskIntoConstraints = NO;
+    imageView.image = [NSImage imageNamed:anIsActive ? @"calendar-background-active" : @"calendar-background-inactive"];
+    imageView.editable = NO;
+    imageView.imageScaling = NSImageScaleAxesIndependently;
+    imageView.imageAlignment = NSImageAlignCenter;
+    imageView.imageFrameStyle = NSImageFrameNone;
+
+    if (@available(macOS 10.15, *))
+    {
+        imageView.horizontalContentSizeConstraintActive = NO;
+        imageView.verticalContentSizeConstraintActive = NO;
+    }
     else
-        return NSWidth(bounds) - minWeekWidth;
-}
-
-- (NSRect)dateViewFrame
-{
-    NSRect bounds = [self window].contentView.bounds;
-    NSRect r = [[self window].contentView centerScanRect:NSMakeRect(NSMinX(bounds),
-                                                               NSMinY(bounds) + _WLYMarginBetweenBoundsAndDate,
-                                                               [self fixedInfoViewsWidth],
-                                                               [[NSUserDefaults standardUserDefaults] doubleForKey:@"DateViewHeight"] - _WLYMarginBetweenBoundsAndDate)];
-    r.origin.x = fmax(NSMinX(bounds), fmin(NSMaxX(bounds), r.origin.x));
-    r.origin.y = fmax(NSMinY(bounds) + _WLYMarginBetweenBoundsAndDate, fmin(NSMaxY(bounds), r.origin.y));
-    r.size.width = fmin(NSMaxX(bounds) - r.origin.x, r.size.width);
-    r.size.height = fmin(NSMaxY(bounds) - r.origin.y, r.size.height);
-    return r;
-}
-
-- (NSRect)tasksViewFrame
-{
-    NSRect bounds = [self window].contentView.bounds;
-    // By default tasks and right now have the same height. Since window size is unknown until user start blotter
-    // set the default value here.
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:@"TasksViewHeight"] == nil || [defaults integerForKey:@"CalendarLayout"] == WLCalendarNormalLayout)
     {
-        [defaults removeObserver:self forKeyPath:@"TasksViewHeight"];
-        [defaults setDouble:[self defaultTasksViewHeight] forKey:@"TasksViewHeight"];
-        [defaults addObserver:self forKeyPath:@"TasksViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
+        [imageView setContentCompressionResistancePriority:NSLayoutPriorityDefaultLow
+                                            forOrientation:NSLayoutConstraintOrientationHorizontal];
+        [imageView setContentCompressionResistancePriority:NSLayoutPriorityDefaultLow
+                                            forOrientation:NSLayoutConstraintOrientationVertical];
     }
-    else if ([defaults integerForKey:@"CalendarLayout"] == WLCalendarToDoLayout)
-    {
-        [defaults removeObserver:self forKeyPath:@"TasksViewHeight"];
-        [defaults setDouble:[self fullTasksViewHeight] forKey:@"TasksViewHeight"];
-        [defaults addObserver:self forKeyPath:@"TasksViewHeight" options:NSKeyValueObservingOptionNew context:NULL];
-    }
-    NSRect r = [[self window].contentView centerScanRect:NSMakeRect(NSMinX(bounds),
-                                                                      NSMaxY([self dateViewFrame]),
-                                                                      [self fixedInfoViewsWidth],
-                                                                      [defaults doubleForKey:@"TasksViewHeight"])];
-    r.origin.x = fmax(NSMinX(bounds), fmin(NSMaxX(bounds), r.origin.x));
-    r.origin.y = fmax(NSMinY(bounds), fmin(NSMaxY(bounds), r.origin.y));
-    r.size.width = fmin(NSMaxX(bounds) - r.origin.x, r.size.width);
-    r.size.height = fmin(NSMaxY(bounds) - r.origin.y, r.size.height);
-    return r;
+
+    NSEdgeInsets noiseInsets = NSEdgeInsetsMake(anIsActive ? _WLBorderInsets.left : (_WLShadowInsets.left + _WLBorderInsets.left),
+                                                anIsActive ? _WLBorderInsets.top : (_WLShadowInsets.top + _WLBorderInsets.top),
+                                                anIsActive ? _WLBorderInsets.right : (_WLShadowInsets.right + _WLBorderInsets.right),
+                                                anIsActive ? _WLBorderInsets.bottom : (_WLShadowInsets.bottom + _WLBorderInsets.bottom));
+
+    __auto_type noiseView = [NSBox new];
+    noiseView.translatesAutoresizingMaskIntoConstraints = NO;
+    noiseView.boxType = NSBoxCustom;
+    noiseView.titlePosition = NSNoTitle;
+    noiseView.fillColor = NSColor.WL_noisePattern;
+    noiseView.borderWidth = 0.0;
+    noiseView.cornerRadius = 5.0;
+
+    __auto_type rootView = [NSView new];
+    rootView.translatesAutoresizingMaskIntoConstraints = NO;
+    rootView.canDrawSubviewsIntoLayer = YES;
+    rootView.subviews = @[imageView, noiseView];
+
+    [NSLayoutConstraint activateConstraints:@[
+        [rootView.leftAnchor constraintEqualToAnchor:imageView.leftAnchor],
+        [rootView.topAnchor constraintEqualToAnchor:imageView.topAnchor],
+        [rootView.rightAnchor constraintEqualToAnchor:imageView.rightAnchor],
+        [rootView.bottomAnchor constraintEqualToAnchor:imageView.bottomAnchor],
+
+        [noiseView.leftAnchor constraintEqualToAnchor:rootView.leftAnchor constant:noiseInsets.left],
+        [noiseView.topAnchor constraintEqualToAnchor:rootView.topAnchor constant:noiseInsets.top],
+        [rootView.rightAnchor constraintEqualToAnchor:noiseView.rightAnchor constant:noiseInsets.right],
+        [rootView.bottomAnchor constraintEqualToAnchor:noiseView.bottomAnchor constant:noiseInsets.bottom]
+    ]];
+
+    return rootView;
 }
 
-- (NSRect)rightNowViewFrame
+- (void)_scheduleWindowScreenDidChange
 {
-    NSRect tasksViewFrame = [self tasksViewFrame];
-    CGFloat margin = 0.0;
-    if (fabs(tasksViewFrame.size.height - 0.0) > FLT_EPSILON)
-        margin = _WLYMarginBetweenTasksAndRightNow;
-    NSRect bounds = (self.window).contentView.bounds;
-    NSRect r = [[self window].contentView centerScanRect:NSMakeRect(NSMinX(bounds),
-                                                               NSMaxY(tasksViewFrame) + margin,
-                                                               [self fixedInfoViewsWidth],
-                                                               NSHeight(bounds) - NSMaxY([self tasksViewFrame]) - margin)];
-    r.origin.x = fmax(NSMinX(bounds), fmin(NSMaxX(bounds), r.origin.x));
-    r.origin.y = fmax(NSMinY(bounds) + margin, fmin(NSMaxY(bounds), r.origin.y));
-    r.size.width = fmin(NSMaxX(bounds) - r.origin.x, r.size.width);
-    r.size.height = fmin(NSMaxY(bounds) - r.origin.y, r.size.height);
-    return r;
+    NSParameterAssert(NSThread.isMainThread);
+    [self.class cancelPreviousPerformRequestsWithTarget:self selector:@selector(windowScreenDidChange) object:nil];
+    [self performSelector:@selector(windowScreenDidChange) withObject:nil afterDelay:0.0];
 }
 
-- (NSRect)weekViewFrame
+- (void)_performWindowScreenDidChange
 {
-    NSRect bounds = [self window].contentView.bounds;
-    CGFloat infoViewWidth = [self fixedInfoViewsWidth];
-    if (fabs(infoViewWidth - 0.0) > FLT_EPSILON)
-        infoViewWidth += _WLXMarginBetweenInfoAndWeek;
-    NSRect r = [[self window].contentView centerScanRect:NSMakeRect(NSMinX(bounds) + infoViewWidth,
-                                                               NSMinY(bounds),
-                                                               NSWidth(bounds) - infoViewWidth,
-                                                               NSHeight(bounds))];
-    r.origin.x = fmax(NSMinX(bounds), fmin(NSMaxX(bounds), r.origin.x));
-    r.origin.y = fmax(NSMinY(bounds), fmin(NSMaxY(bounds), r.origin.y));
-    r.size.width = fmin(NSMaxX(bounds) - r.origin.x, r.size.width);
-    r.size.height = fmin(NSMaxY(bounds) - r.origin.y, r.size.height);
-    return r;
+    NSParameterAssert(NSThread.isMainThread);
+    [self.class cancelPreviousPerformRequestsWithTarget:self selector:@selector(windowScreenDidChange) object:nil];
+    [self windowScreenDidChange];
 }
 
-- (CGFloat)defaultTasksViewHeight
+- (void)_scheduleWindowFrameDidChange
 {
-    NSRect bounds = (self.window).contentView.bounds;
-    NSURL *defaultsURL = [[NSBundle mainBundle] URLForResource:@"defaults" withExtension:@"plist"];
-    NSDictionary *defaults = [NSDictionary dictionaryWithContentsOfURL:defaultsURL];
-    return round((NSHeight(bounds) - ([defaults[@"DateViewHeight"] floatValue]) - _WLYMarginBetweenTasksAndRightNow) / 2);
+    NSParameterAssert(NSThread.isMainThread);
+    [self.class cancelPreviousPerformRequestsWithTarget:self selector:@selector(windowFrameDidChange) object:nil];
+    [self performSelector:@selector(windowFrameDidChange) withObject:nil afterDelay:0.0];
 }
 
-- (CGFloat)fullTasksViewHeight
+- (void)_performWindowFrameDidChange
 {
-    NSRect bounds = (self.window).contentView.bounds;
-    NSURL *defaultsURL = [[NSBundle mainBundle] URLForResource:@"defaults" withExtension:@"plist"];
-    NSDictionary *defaults = [NSDictionary dictionaryWithContentsOfURL:defaultsURL];
-    return round(NSHeight(bounds) - ([defaults[@"DateViewHeight"] floatValue]));
+    NSParameterAssert(NSThread.isMainThread);
+    [self.class cancelPreviousPerformRequestsWithTarget:self selector:@selector(windowFrameDidChange) object:nil];
+    [self windowFrameDidChange];
 }
 
-- (NSSize)minimumSize
+- (void)_activate:(NSWindow *)aWindow
 {
-    return BLMinimumSize;
+    NSParameterAssert(_windowState == WLCalendarWindowStateActive);
+
+    aWindow.hasShadow = YES;
+    aWindow.level = NSFloatingWindowLevel;
+    aWindow.collectionBehavior = (NSWindowCollectionBehaviorTransient |
+                                  NSWindowCollectionBehaviorIgnoresCycle |
+                                  NSWindowCollectionBehaviorFullScreenNone |
+                                  NSWindowCollectionBehaviorFullScreenDisallowsTiling);
+
+    if (!_activeBackgroundView)
+        _activeBackgroundView = [self makeActiveBackgroundView];
+
+    __auto_type calendarView = self.calendarViewController.view;
+    [_activeBackgroundView addSubview:calendarView];
+
+    [NSLayoutConstraint activateConstraints:@[
+        [calendarView.leftAnchor constraintEqualToAnchor:_activeBackgroundView.leftAnchor
+                                                constant:_WLBorderInsets.left + _WLLayoutInsets.left],
+        [calendarView.topAnchor constraintEqualToAnchor:_activeBackgroundView.topAnchor
+                                               constant:_WLBorderInsets.top + _WLLayoutInsets.top],
+        [_activeBackgroundView.rightAnchor constraintEqualToAnchor:calendarView.rightAnchor
+                                                          constant:_WLBorderInsets.right + _WLLayoutInsets.right],
+        [_activeBackgroundView.bottomAnchor constraintEqualToAnchor:calendarView.bottomAnchor
+                                                           constant:_WLBorderInsets.bottom + _WLLayoutInsets.bottom]
+    ]];
+
+    aWindow.contentView = _activeBackgroundView;
+    [self _activateContentSizeConstraints:_activeBackgroundView];
+
+    [self _performWindowFrameDidChange];
+}
+
+- (void)_deactivate:(NSWindow *)aWindow
+{
+    NSParameterAssert(_windowState == WLCalendarWindowStateInactiveFaded ||
+                      _windowState == WLCalendarWindowStateInactive);
+
+    aWindow.hasShadow = NO;
+    // In 10.7+ window level of desktop elements is kCGDesktopWindowLevel + 21.
+    aWindow.level = kCGDesktopWindowLevel + 15;
+    aWindow.collectionBehavior = (NSWindowCollectionBehaviorCanJoinAllSpaces |
+                                  NSWindowCollectionBehaviorTransient |
+                                  NSWindowCollectionBehaviorIgnoresCycle |
+                                  NSWindowCollectionBehaviorFullScreenNone |
+                                  NSWindowCollectionBehaviorFullScreenDisallowsTiling);
+
+    if (!_inactiveBackgroundView)
+        _inactiveBackgroundView = [self makeInactiveBackgroundView];
+
+    __auto_type calendarView = self.calendarViewController.view;
+    [_inactiveBackgroundView addSubview:calendarView];
+
+    [NSLayoutConstraint activateConstraints:@[
+        [calendarView.leftAnchor constraintEqualToAnchor:_inactiveBackgroundView.leftAnchor
+                                                constant:_WLShadowInsets.left + _WLBorderInsets.left + _WLLayoutInsets.left],
+        [calendarView.topAnchor constraintEqualToAnchor:_inactiveBackgroundView.topAnchor
+                                               constant:_WLShadowInsets.top + _WLBorderInsets.top + _WLLayoutInsets.top],
+        [_inactiveBackgroundView.rightAnchor constraintEqualToAnchor:calendarView.rightAnchor
+                                                            constant:_WLShadowInsets.right + _WLBorderInsets.right + _WLLayoutInsets.right],
+        [_inactiveBackgroundView.bottomAnchor constraintEqualToAnchor:calendarView.bottomAnchor
+                                                             constant:_WLShadowInsets.bottom + _WLBorderInsets.bottom + _WLLayoutInsets.bottom]
+    ]];
+
+    aWindow.contentView = _inactiveBackgroundView;
+    [self _activateContentSizeConstraints:_inactiveBackgroundView];
+
+    [self _performWindowFrameDidChange];
+}
+
+- (void)_activateContentSizeConstraints:(NSView *)aContentView
+{
+    NSParameterAssert(aContentView != nil);
+
+    if (_windowWidthConstraint)
+        _windowWidthConstraint.active = NO;
+
+    if (_windowHeightConstraint)
+        _windowHeightConstraint.active = NO;
+
+    // arbitrary size to avoid a layout warning: actual values are set in -windowFrameDidChange
+    [NSLayoutConstraint activateConstraints:@[
+        (_windowWidthConstraint = [aContentView.widthAnchor constraintEqualToConstant:64.0]),
+        (_windowHeightConstraint = [aContentView.heightAnchor constraintEqualToConstant:64.0])
+    ]];
+}
+
+#pragma mark NSWindowController
+
+- (void)showWindow:(id)aSender
+{
+    [self.window orderBack:aSender];
+}
+
+- (void)windowDidChangeScreen:(NSNotification *)aNotification
+{
+    if (!self.window.screen)
+        [_runningAnimation cancelWithReason:WLAnimationStateReasonFastForward];
+}
+
+#pragma mark NSObject
+
+- (void)observeValueForKeyPath:(NSString *)aKeyPath
+                      ofObject:(id)anObject
+                        change:(NSDictionary<NSKeyValueChangeKey,id> *)aChange
+                       context:(void *)aContext
+{
+    if (aContext == _WLScreenObservationContext)
+        [self _scheduleWindowScreenDidChange];
+    else if (aContext == _WLFrameObservationContext)
+        [self _scheduleWindowFrameDidChange];
+    else
+        [super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];
 }
 
 @end

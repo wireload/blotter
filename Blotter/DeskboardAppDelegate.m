@@ -7,18 +7,13 @@
 //
 
 #import <WLFoundation/WLFoundation.h>
+#import <ShortcutRecorder/ShortcutRecorder.h>
+
 #import "DeskboardAppDelegate.h"
 #import "WLAnalytics.h"
-#import "WLCalendarWindow.h"
-#import "WLCalendarWindowController.h"
 #import "WLApplicationRunTimer.h"
-#import "WLGeneralPreferences.h"
-#import "WLShortcutsPreferences.h"
-#import "WLPositioningPreferences.h"
-#import "WLLayoutPreferences.h"
-#import "WLCalendarsPreferences.h"
-#import "WLAboutPreferences.h"
 #import "NSUserDefaults+WLApplicationDefaults.h"
+#import "WLLogNames.h"
 
 
 // TODO: Update if the New Event/Task windows stop centering at first launch.
@@ -30,14 +25,24 @@ static NSString* const _WLNewTaskWindowAutosaveName = @"NSWindow Frame NewTaskWi
 static NSString* const _WLStatusItemAutosaveName = @"net.wireload.blotter.mac.StatusItem";
 
 
-NSString* const WLBlotterLogName = @"net.wireload.blotter.mac";
+const NSStoryboardSceneIdentifier WLCalendarWindowIdentifier = @"WLCalendarWindow";
 
-NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
+const NSStoryboardSceneIdentifier WLPreferencesWindowIdentifier = @"WLPreferencesWindow";
 
 
 @implementation DeskboardAppDelegate
 {
-    WLApplicationPreferences *_preferencesController;
+    IBOutlet NSMenu *_statusMenu;
+    IBOutlet NSMenuItem *_bringToFrontMenuItem;
+    IBOutlet NSMenuItem *_newEventMenuItem;
+    IBOutlet NSMenuItem *_newTaskMenuItem;
+    IBOutlet NSMenuItem *_showNextWeekMenuItem;
+    IBOutlet NSMenuItem *_showCurrentWeekMenuItem;
+    IBOutlet NSMenuItem *_showPreviousWeekMenuItem;
+    IBOutlet NSMenuItem *_preferencesMenuItem;
+
+    WLCalendarWindowController *__calendarWindowController;
+    WLPreferencesWindowController *_preferencesWindowController;
     WLNewEventWindowController *_newEventWindowController;
     WLNewReminderWindowController *_newReminderWindowController;
 
@@ -46,72 +51,89 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
     NSTimer *_autoFadeTimer;
     WLApplicationRunTimer *_applicationRunTimer;
 
-    NSDictionary<NSString *, SRShortcutRegistration *> *_shortcutRegistrations;
+    NSDictionary<NSUserInterfaceItemIdentifier, SRShortcutAction *> *_shortcutActions;
 }
 
 + (void)initialize
 {
-    if (self == [DeskboardAppDelegate class])
+    if (self == DeskboardAppDelegate.class)
     {
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        NSURL *defaultsURL = [[NSBundle mainBundle] URLForResource:@"defaults" withExtension:@"plist"];
-        NSDictionary *defaults = [NSDictionary dictionaryWithContentsOfURL:defaultsURL];
-        [userDefaults registerDefaults:defaults];
-        // @see -[WLCalendarWindowController tasksViewFrame] for default value of TasksViewHeight.
-
         // Migrate preferences and set defaults.
-        [userDefaults WL_migrateIfNeeded];
-        [userDefaults WL_setDefaultScreenIdentifierIfNeeded];
+        __auto_type defaults = NSUserDefaults.standardUserDefaults;
+        [defaults WL_registerDefaults];
+        [defaults WL_migrateIfNeeded];
+        [defaults WL_validateAndFixIfNeeded];
     }
 }
 
 - (void)dealloc
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
+    NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
     [defaults removeObserver:self forKeyPath:WLShowInMenuBar];
     [defaults removeObserver:self forKeyPath:WLAutoFadeKey];
     [defaults removeObserver:self forKeyPath:WLAutoFadeSecondsKey];
     [defaults removeObserver:self forKeyPath:WLShareAnalytics];
-    _shortcutRegistrations = nil;
 
-    [[WLSmartClock defaultClock] removeObserver:self forKeyPath:@"date"];
+    [SRGlobalShortcutMonitor.sharedMonitor removeAllActions];
+    _shortcutActions = nil;
 
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [WLSmartClock.defaultClock removeObserver:self forKeyPath:@"date"];
+
+    [NSNotificationCenter.defaultCenter removeObserver:self];
 
     [_showCurrentWeekTimer invalidate];
     [_autoFadeTimer invalidate];
 
-    if (_statusItem && floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_12)
-        [_statusItem removeObserver:self forKeyPath:NSVisibleBinding];
+    if (@available(macOS 10.12, *))
+    {
+        if (_statusItem)
+            [_statusItem removeObserver:self forKeyPath:NSVisibleBinding];
+    }
 }
 
 
 #pragma mark Properties
 
-- (WLApplicationPreferences *)preferencesController
+- (NSStoryboard *)storyboard
 {
-    if (_preferencesController == nil)
+    if (@available(macOS 10.13, *))
     {
-        WLGeneralPreferences *general = [[WLGeneralPreferences alloc] initWithNibName:@"GeneralPrefPaneView" bundle:nil];
-        WLShortcutsPreferences *shortcuts = [[WLShortcutsPreferences alloc] initWithNibName:@"ShortcutsPrefPaneView" bundle:nil];
-        WLPositioningPreferences *positioning = [[WLPositioningPreferences alloc] initWithNibName:@"PositionPrefPaneView" bundle:nil];
-        WLLayoutPreferences *layout = [[WLLayoutPreferences alloc] initWithNibName:@"LayoutPrefPaneView" bundle:nil];
-        WLCalendarsPreferences *calendars = [[WLCalendarsPreferences alloc] initWithNibName:@"CalendarsPrefPaneView" bundle:nil];
-        WLAboutPreferences *about = [[WLAboutPreferences alloc] initWithNibName:@"AboutPrefPaneView" bundle:nil];
-        _preferencesController = [WLApplicationPreferences preferencesWithWindowNibName:@"WLApplicationPreferencesWindow"
-                                                                           visualFormat:@"general,shortcuts,positioning,layout,calendars,-,about"
-                                                                        representations:@{
-                                                                           @"general": general,
-                                                                           @"shortcuts": shortcuts,
-                                                                           @"positioning": positioning,
-                                                                           @"layout": layout,
-                                                                           @"calendars": calendars,
-                                                                           @"about": about
-                                                                        }];
+        return NSStoryboard.mainStoryboard;
+    }
+    else
+    {
+        static NSStoryboard *MainStoryboard;
+        static dispatch_once_t OnceToken;
+        dispatch_once(&OnceToken, ^{
+            NSBundle *mainBundle = NSBundle.mainBundle;
+            NSStoryboardName mainStoryboardName = mainBundle.infoDictionary[@"NSMainStoryboardFile"];
+            MainStoryboard = [NSStoryboard storyboardWithName:mainStoryboardName bundle:mainBundle];
+        });
+
+        return MainStoryboard;
+    }
+}
+
+- (WLCalendarWindowController *)calendarWindowController
+{
+    if (!__calendarWindowController)
+        __calendarWindowController = [WLCalendarWindowController new];
+
+    return __calendarWindowController;
+}
+
+- (WLPreferencesWindowController *)preferencesWindowController
+{
+    if (!_preferencesWindowController)
+    {
+        _preferencesWindowController = [self.storyboard instantiateControllerWithIdentifier:WLPreferencesWindowIdentifier];
+        [NSNotificationCenter.defaultCenter addObserver:self
+                                               selector:@selector(preferencesWindowDidClose:)
+                                                   name:NSWindowWillCloseNotification
+                                                 object:_preferencesWindowController.window];
     }
 
-    return _preferencesController;
+    return _preferencesWindowController;
 }
 
 - (WLNewEventWindowController *)newEventWindowController
@@ -120,7 +142,7 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
     {
         _newEventWindowController = [[WLNewEventWindowController alloc] initWithWindowNibName:@"NewEventWindow"];
         [_newEventWindowController bind:@"calCalendars"
-                               toObject:self.calendarWindowController.calendarsController
+                               toObject:self.calendarsController
                             withKeyPath:@"calEventCalendarsToDisplay"
                                 options:nil];
     }
@@ -134,7 +156,7 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
     {
         _newReminderWindowController = [[WLNewReminderWindowController alloc] initWithWindowNibName:@"NewTaskWindow"];
         [_newReminderWindowController bind:@"calCalendars"
-                                  toObject:self.calendarWindowController.calendarsController
+                                  toObject:self.calendarsController
                                withKeyPath:@"calReminderCalendarsToDisplay"
                                    options:nil];
     }
@@ -147,41 +169,22 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 
 - (IBAction)bringToFrontOrSendToBack:(id)aSender
 {
-    [WLAnalytics.sharedAnalytics reportAction:@"BringToFront"];
-
-    BOOL isStateChangeAnimated = [[NSUserDefaults standardUserDefaults] WL_animatesBringToFront];
-    NSTimeInterval stateChangeDuration = 0.0;
-
-    if (isStateChangeAnimated)
+    if (self.calendarWindowController.windowState <= WLCalendarWindowStateInactive)
     {
-        if (![[NSUserDefaults standardUserDefaults] WL_slowsAnimation])
-            stateChangeDuration = 0.2;
-        else
-            stateChangeDuration = 2.0;
-    }
-
-    if (self.calendarWindowController.windowState == WLFinderLevelState)
-    {
-        [self.calendarWindowController setWindowState:WLFloatingLevelState
-                                             animated:isStateChangeAnimated
-                                             duration:stateChangeDuration];
+        self.calendarWindowController.windowState = WLCalendarWindowStateActive;
         [NSApp activateIgnoringOtherApps:YES];
-
     }
     else
     {
-        [self.calendarWindowController setWindowState:WLFinderLevelState
-                                             animated:isStateChangeAnimated
-                                             duration:stateChangeDuration];
+        self.calendarWindowController.windowState = WLCalendarWindowStateInactive;
         [self deactivateAppIfAllConditionsAreMet:NSApp.windows];
     }
 }
 
 - (IBAction)showPreferences:(id)aSender
 {
-    [self.preferencesController showWindow:aSender];
-    [self _removeAutoFadeTimerIfNeeded];
-    self.calendarWindowController.isFadedOut = NO;
+    [self.preferencesWindowController showWindow:aSender];
+    [self fadeIn];
     [NSApp activateIgnoringOtherApps:YES];
 }
 
@@ -197,8 +200,7 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
             [(self.newEventWindowController).window center];
 
         [self.newEventWindowController showWindow:aSender];
-        [self _removeAutoFadeTimerIfNeeded];
-        self.calendarWindowController.isFadedOut = NO;
+        [self fadeIn];
         [NSApp activateIgnoringOtherApps:YES];
     }
     else
@@ -217,8 +219,7 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
             [(self.newReminderWindowController).window center];
 
         [self.newReminderWindowController showWindow:aSender];
-        [self _removeAutoFadeTimerIfNeeded];
-        self.calendarWindowController.isFadedOut = NO;
+        [self fadeIn];
         [NSApp activateIgnoringOtherApps:YES];
     }
     else
@@ -227,7 +228,7 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 
 - (IBAction)showAbout:(id)aSender
 {
-    [self.preferencesController setSelectedRepresentationIdentifier:@"about" animated:NO];
+    self.preferencesWindowController.contentViewController.selectedPreferencesIdentifier = WLAboutPreferencesIdentifier;
     [self showPreferences:aSender];
 }
 
@@ -235,10 +236,13 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 {
     [WLAnalytics.sharedAnalytics reportAction:@"NextWeek"];
 
-    if ([self.calendarWindowController canShowNextWeek])
+    __auto_type calendarViewController = self.calendarWindowController.calendarViewController;
+
+    if (calendarViewController.canShowNextWeek)
     {
-        [self.calendarWindowController showNextWeek:aSender];
-        if ([self.calendarWindowController isCurrentWeekShowed])
+        [calendarViewController showNextWeek:aSender];
+
+        if (calendarViewController.isCurrentWeekShown)
         {
             [self _removeShowCurrentWeekTimerIfNeeded];
             [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:NSApp.windows];
@@ -246,8 +250,7 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
         else
         {
             [self _scheduleShowCurrentWeekTimerIfNeeded];
-            [self _removeAutoFadeTimerIfNeeded];
-            self.calendarWindowController.isFadedOut = NO;
+            [self fadeIn];
         }
     }
     else
@@ -258,10 +261,13 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 {
     [WLAnalytics.sharedAnalytics reportAction:@"PreviousWeek"];
 
-    if ([self.calendarWindowController canShowPreviousWeek])
+    __auto_type calendarViewController = self.calendarWindowController.calendarViewController;
+
+    if (calendarViewController.canShowPreviousWeek)
     {
-        [self.calendarWindowController showPreviousWeek:aSender];
-        if ([self.calendarWindowController isCurrentWeekShowed])
+        [calendarViewController showPreviousWeek:aSender];
+
+        if (calendarViewController.isCurrentWeekShown)
         {
             [self _removeShowCurrentWeekTimerIfNeeded];
             [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:NSApp.windows];
@@ -269,8 +275,7 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
         else
         {
             [self _scheduleShowCurrentWeekTimerIfNeeded];
-            [self _removeAutoFadeTimerIfNeeded];
-            self.calendarWindowController.isFadedOut = NO;
+            [self fadeIn];
         }
     }
     else
@@ -281,10 +286,12 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 {
     [WLAnalytics.sharedAnalytics reportAction:@"CurrentWeek"];
 
-    if ([self.calendarWindowController canShowCurrentWeek])
+    __auto_type calendarViewController = self.calendarWindowController.calendarViewController;
+
+    if (calendarViewController.canShowCurrentWeek)
     {
         [self _removeShowCurrentWeekTimerIfNeeded];
-        [self.calendarWindowController showCurrentWeek:aSender];
+        [calendarViewController showCurrentWeek:aSender];
         [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:NSApp.windows];
     }
     else
@@ -293,13 +300,13 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 
 - (IBAction)showRateThisApp:(id)aSender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[[NSUserDefaults standardUserDefaults] WL_rateThisAppURL]];
+    [NSWorkspace.sharedWorkspace openURL:NSUserDefaults.standardUserDefaults.WL_rateThisAppURL];
     [self hideRateThisAppMenuItem];
 }
 
 - (void)toggleStatusItem
 {
-    if ([[NSUserDefaults standardUserDefaults] WL_showInMenuBar])
+    if (NSUserDefaults.standardUserDefaults.WL_showInMenuBar)
     {
         if (_statusItem)
             return;
@@ -307,7 +314,7 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
         NSImage *statusImage = [NSImage imageNamed:@"status-bar"];
         statusImage.template = YES;
 
-        _statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
+        _statusItem = [NSStatusBar.systemStatusBar statusItemWithLength:NSSquareStatusItemLength];
         _statusItem.menu = _statusMenu;
         _statusItem.button.image = statusImage;
 
@@ -323,10 +330,8 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
         if (!_statusItem)
             return;
 
-        // TODO: Might make sense to use the visibility property instead of removal.
-        // That requres deployment target 10.12
         [_statusItem removeObserver:self forKeyPath:NSVisibleBinding];
-        [[NSStatusBar systemStatusBar] removeStatusItem:_statusItem];
+        [NSStatusBar.systemStatusBar removeStatusItem:_statusItem];
         _statusItem = nil;
     }
 }
@@ -349,6 +354,12 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
     [d WL_setShowRateThisAppInMenu:NO];
 }
 
+- (void)fadeIn
+{
+    [self _removeAutoFadeTimerIfNeeded];
+    self.calendarWindowController.isFadedOut = NO;
+}
+
 - (BOOL)isOnlyCalendarWindowVisible:(NSArray *)aVisibleWindows
 {
     NSMutableArray *visibleWindows = [aVisibleWindows mutableCopy];
@@ -362,10 +373,11 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 {
     BOOL isBlotterActive = NSApp.active;
     BOOL areThereUtilityWindows = ![self isOnlyCalendarWindowVisible:aWindows];
-    BOOL isCurrentWeekShowed = [self.calendarWindowController isCurrentWeekShowed];
-    if ((!isBlotterActive && !areThereUtilityWindows && isCurrentWeekShowed) ||
-        (!isBlotterActive && areThereUtilityWindows && isCurrentWeekShowed) ||
-        (isBlotterActive && !areThereUtilityWindows && isCurrentWeekShowed))
+    BOOL isCurrentWeekShown = self.calendarWindowController.calendarViewController.isCurrentWeekShown;
+
+    if ((!isBlotterActive && !areThereUtilityWindows && isCurrentWeekShown) ||
+        (!isBlotterActive && areThereUtilityWindows && isCurrentWeekShown) ||
+        (isBlotterActive && !areThereUtilityWindows && isCurrentWeekShown))
     {
         [self _scheduleAutoFadeTimerIfNeeded];
     }
@@ -373,36 +385,69 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 
 - (void)deactivateAppIfAllConditionsAreMet:(NSArray *)aWindows
 {
-    if ([self isOnlyCalendarWindowVisible:aWindows] && self.calendarWindowController.windowState == WLFinderLevelState)
+    if ([self isOnlyCalendarWindowVisible:aWindows] && self.calendarWindowController.windowState <= WLCalendarWindowStateInactive)
         [NSApp hide:self];
 }
 
+- (void)preferencesWindowDidClose:(NSNotification *)aNotification
+{
+    _preferencesWindowController = nil;
+}
 
 #pragma mark NSApplicationDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+#ifdef DEBUG
+    [NSAnimationContext WL_enableAnimationTracking];
+#endif
+
+    NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
+
+    [self willChangeValueForKey:@"calendarsController"];
+    [self willChangeValueForKey:@"calendarEventsController"];
+    [self willChangeValueForKey:@"calendarRemindersController"];
+    NSArray *calStores = @[[WLCalendarStore systemStore]]; // TODO: should be configurable
+    _calendarsController = [[WLCalendarsController alloc] initWithCalStores:calStores autosaveKeyPath:WLCalendarsKey];
+    _calendarEventsController = [[WLCalendarEventsController alloc] initWithCalStores:calStores];
+    _calendarRemindersController = [[WLCalendarRemindersController alloc] initWithCalStores:calStores];
+    [self didChangeValueForKey:@"calendarRemindersController"];
+    [self didChangeValueForKey:@"calendarEventsController"];
+    [self didChangeValueForKey:@"calendarsController"];
+
+    [NSNotificationCenter.defaultCenter addObserver:self
+                                           selector:@selector(_calendarsToDisplayDidChange:)
+                                               name:WLCalCalendarsToDisplayDidChangeNotification
+                                             object:_calendarsController];
+    [self _calendarsToDisplayDidChange:nil];
 
     // Configure status bar
-    [defaults addObserver:self forKeyPath:WLShowInMenuBar options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:NULL];
+    [defaults addObserver:self
+               forKeyPath:WLShowInMenuBar
+                  options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial
+                  context:NULL];
 
     // Configure shortcuts
-    [NSValueTransformer setValueTransformer:[[SRKeyEquivalentTransformer alloc] init] forName:@"SRKeyEquivalentTransformer"];
-    [NSValueTransformer setValueTransformer:[[SRKeyEquivalentModifierMaskTransformer alloc] init] forName:@"SRKeyEquivalentModifierMaskTransformer"];
+    [NSValueTransformer setValueTransformer:[[SRKeyEquivalentTransformer alloc] init]
+                                    forName:@"SRKeyEquivalentTransformer"];
+    [NSValueTransformer setValueTransformer:[[SRKeyEquivalentModifierMaskTransformer alloc] init]
+                                    forName:@"SRKeyEquivalentModifierMaskTransformer"];
 
-    _shortcutRegistrations = NSMutableDictionary.dictionary;
+    NSMutableDictionary *actions = [NSMutableDictionary new];
     __auto_type RegisterShortcut = ^(NSString *aKeyPath, NSMenuItem *aMenuItem) {
-        SRShortcutRegistration *registration = [SRShortcutRegistration registerShortcutKeyPath:aKeyPath
-                                                                                      ofObject:defaults
-                                                                                 actionHandler:^(SRShortcutRegistration *aRegistration)
+        SRShortcutAction *action = [SRShortcutAction shortcutActionWithKeyPath:aKeyPath
+                                                                      ofObject:defaults
+                                                                 actionHandler:^BOOL(SRShortcutAction *anAction)
         {
             NSMenu *menu = aMenuItem.menu;
             NSInteger i = [menu indexOfItem:aMenuItem];
-            NSAssert(i != -1, @"Item must be added to the main menu");
+            NSAssert(i != -1, @"Item must be added to the menu");
             [menu performActionForItemAtIndex:i];
+            return YES;
         }];
-        [(NSMutableDictionary *)self->_shortcutRegistrations setObject:registration forKey:aKeyPath];
+
+        [SRGlobalShortcutMonitor.sharedMonitor addAction:action forKeyEvent:SRKeyEventTypeDown];
+        actions[aMenuItem.identifier] = action;
     };
 
     RegisterShortcut(@"shortcutNewEvent", _newEventMenuItem);
@@ -411,21 +456,20 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
     RegisterShortcut(@"shortcutShowPreviousWeek", _showPreviousWeekMenuItem);
     RegisterShortcut(@"shortcutShowCurrentWeek", _showCurrentWeekMenuItem);
     RegisterShortcut(@"shortcutBringToFront", _bringToFrontMenuItem);
-    _shortcutRegistrations = [_shortcutRegistrations copy];
+    _shortcutActions = [actions copy];
 
     // Configure windows.
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(windowWillClose:)
-                                                 name:NSWindowWillCloseNotification
-                                               object:nil];
-    _calendarWindowController = [[WLCalendarWindowController alloc] init];
-    [_calendarWindowController showWindow:self];
+    [NSNotificationCenter.defaultCenter addObserver:self
+                                           selector:@selector(windowWillClose:)
+                                               name:NSWindowWillCloseNotification
+                                             object:nil];
+    [self.calendarWindowController showWindow:self];
 
     // Show preferences at first start or to request share analytics consent.
-    if ([defaults boolForKey:WLShowPreferencesAtStartUp] || [defaults boolForKey:WLRequestShareAnalyticsConsentAtStartup])
+    if (defaults.WL_showPreferencesAtStartup || defaults.WL_requestShareAnalyticsConsentAtStartup)
     {
         [self showPreferences:self];
-        [defaults setBool:NO forKey:WLShowPreferencesAtStartUp];
+        defaults.WL_showPreferencesAtStartup = NO;
     }
 
     // Configure application run timer.
@@ -434,16 +478,16 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
         _applicationRunTimer = [[WLApplicationRunTimer alloc] initWithDelayDefaultsKey:WLApplicationRunTimerDelayKey
                                                                     isFiredDefaultsKey:WLApplicationRunTimerIsFiredKey
                                                              elapsedSecondsDefaultsKey:WLApplicationRunTimerElapsedSecondsKey];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(showRateThisAppMenuItem)
-                                                     name:WLApplicationRunTimerDidFireNotification
-                                                   object:_applicationRunTimer];
+        [NSNotificationCenter.defaultCenter addObserver:self
+                                               selector:@selector(showRateThisAppMenuItem)
+                                                   name:WLApplicationRunTimerDidFireNotification
+                                                 object:_applicationRunTimer];
     }
 
-    [[WLSmartClock defaultClock] addObserver:self
-                                  forKeyPath:@"date"
-                                     options:NSKeyValueObservingOptionNew
-                                     context:NULL];
+    [WLSmartClock.defaultClock addObserver:self
+                                forKeyPath:@"date"
+                                   options:NSKeyValueObservingOptionNew
+                                   context:NULL];
 
     [defaults addObserver:self
                forKeyPath:WLAutoFadeKey
@@ -464,33 +508,20 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 
 - (void)applicationDidBecomeActive:(NSNotification *)aNotification
 {
-    [self _removeAutoFadeTimerIfNeeded];
-    self.calendarWindowController.isFadedOut = NO;
+    [self fadeIn];
     [self deactivateAppIfAllConditionsAreMet:NSApp.windows];
 }
 
 - (void)applicationDidResignActive:(NSNotification *)aNotification
 {
-    BOOL isStateChangeAnimated = [[NSUserDefaults standardUserDefaults] WL_animatesBringToFront];
-    NSTimeInterval stateChangeDuration = 0.0;
-    if (isStateChangeAnimated)
-    {
-        if (![[NSUserDefaults standardUserDefaults] WL_slowsAnimation])
-            stateChangeDuration = 0.2;
-        else
-            stateChangeDuration = 2.0;
-    }
-    [self.calendarWindowController setWindowState:WLFinderLevelState
-                                         animated:isStateChangeAnimated
-                                         duration:stateChangeDuration];
-
+    self.calendarWindowController.windowState = WLCalendarWindowStateInactive;
     [self deactivateAppIfAllConditionsAreMet:NSApp.windows];
     [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:NSApp.windows];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)anApplication hasVisibleWindows:(BOOL)aFlag
 {
-    if(![[NSUserDefaults standardUserDefaults] WL_showInMenuBar])
+    if(!NSUserDefaults.standardUserDefaults.WL_showInMenuBar)
         [self showPreferences:self];
 
     return NO;
@@ -514,8 +545,7 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 - (void)menuWillOpen:(NSMenu *)aMenu
 {
     __auto_type UpdateKeyEquivalent = ^(NSMenuItem *anItem) {
-        SRShortcutRegistration *registration = self->_shortcutRegistrations[anItem.identifier];
-        SRShortcut *shortcut = registration.shortcut;
+        SRShortcut *shortcut = self->_shortcutActions[anItem.identifier].shortcut;
 
         if (shortcut != nil)
         {
@@ -536,8 +566,7 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
     UpdateKeyEquivalent(_showPreviousWeekMenuItem);
     UpdateKeyEquivalent(_bringToFrontMenuItem);
 
-    [self _removeAutoFadeTimerIfNeeded];
-    self.calendarWindowController.isFadedOut = NO;
+    [self fadeIn];
 }
 
 - (void)menuDidClose:(NSMenu *)aMenu
@@ -546,26 +575,28 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 }
 
 
-#pragma mark NSMenuValidation
+#pragma mark NSMenuItemValidation
 
 - (BOOL)validateMenuItem:(NSMenuItem *)aMenuItem
 {
+    __auto_type calendarViewController = self.calendarWindowController.calendarViewController;
+
     if (aMenuItem == _newEventMenuItem)
-        return (self.newEventWindowController).canCreateEvent;
+        return self.newEventWindowController.canCreateEvent;
     else if (aMenuItem == _newTaskMenuItem)
-        return (self.newReminderWindowController).canCreateReminder;
+        return self.newReminderWindowController.canCreateReminder;
     else if (aMenuItem == _showNextWeekMenuItem)
-        return [self.calendarWindowController canShowNextWeek];
+        return calendarViewController.canShowNextWeek;
     else if (aMenuItem == _showCurrentWeekMenuItem)
-        return [self.calendarWindowController canShowCurrentWeek];
+        return calendarViewController.canShowCurrentWeek;
     else if (aMenuItem == _showPreviousWeekMenuItem)
-        return [self.calendarWindowController canShowPreviousWeek];
+        return calendarViewController.canShowPreviousWeek;
     else if (aMenuItem == _bringToFrontMenuItem)
     {
-        if (self.calendarWindowController.windowState != WLFinderLevelState)
-            [aMenuItem setTitle:NSLocalizedString(@"Send to Back", @"Send to Back menu item title")];
+        if (self.calendarWindowController.windowState == WLCalendarWindowStateActive)
+            aMenuItem.title = NSLocalizedString(@"Send to Back", @"Send to Back menu item title");
         else
-            [aMenuItem setTitle:NSLocalizedString(@"Bring to Front", @"Bring to Front menu item title")];
+            aMenuItem.title = NSLocalizedString(@"Bring to Front", @"Bring to Front menu item title");
 
         return YES;
     }
@@ -574,21 +605,13 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 }
 
 
-#pragma mark NSAlertDelegate
-
-- (BOOL)alertShowHelp:(NSAlert *)anAlert
-{
-    [[NSWorkspace sharedWorkspace] openURL:[[NSUserDefaults standardUserDefaults] WL_privacyPolicyURL]];
-    return YES;
-}
-
-
 #pragma mark Private
 
 - (void)_scheduleShowCurrentWeekTimerIfNeeded
 {
     [self _removeShowCurrentWeekTimerIfNeeded];
-    NSInteger delay = [[NSUserDefaults standardUserDefaults] integerForKey:@"AutoShowCurrentWeekDelay"];
+    NSInteger delay = [NSUserDefaults.standardUserDefaults integerForKey:@"AutoShowCurrentWeekDelay"];
+
     if (delay > 0)
     {
         _showCurrentWeekTimer = [NSTimer scheduledTimerWithTimeInterval:delay
@@ -616,8 +639,9 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 - (void)_scheduleAutoFadeTimerIfNeeded
 {
     [self _removeAutoFadeTimerIfNeeded];
-    BOOL isAutoFadeEnabled = [[NSUserDefaults standardUserDefaults] WL_autoFadeSeconds] > 0;
-    NSTimeInterval delay = [[NSUserDefaults standardUserDefaults] WL_autoFadeSeconds];
+    BOOL isAutoFadeEnabled = NSUserDefaults.standardUserDefaults.WL_autoFadeSeconds > 0;
+    NSTimeInterval delay = NSUserDefaults.standardUserDefaults.WL_autoFadeSeconds;
+
     if (isAutoFadeEnabled && delay > 0)
     {
         _autoFadeTimer = [NSTimer scheduledTimerWithTimeInterval:delay
@@ -639,9 +663,36 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 - (void)_autoFadeTimerDidFire
 {
     _autoFadeTimer = nil;
-    if (![[NSUserDefaults standardUserDefaults] WL_autoFades])
+
+    if (!NSUserDefaults.standardUserDefaults.WL_autoFades)
         return;
+
     self.calendarWindowController.isFadedOut = YES;
+}
+
+- (void)_calendarsToDisplayDidChange:(NSNotification *)aNotification
+{
+    [NSProcessInfo.processInfo disableSuddenTermination];
+
+    __auto_type log = [WLLog logForName:WLLogNameBlotterCalendarData];
+    NSArray *stores = aNotification ? aNotification.userInfo[WLChangedCalStoresKey] : _calendarsController.calStores;
+
+    for (NSObject<WLCalStore> *s in stores)
+    {
+        NSArray *reminderCalendars = [[self.calendarsController calReminderCalendarsToDisplayForStore:s] valueForKey:@"calendarIdentifier"];
+        [log logDebugWithMessenger:^{
+            return [NSString stringWithFormat:@"Observed Reminder Calendars: %@", reminderCalendars];
+        }];
+        [self.calendarRemindersController setObservedCalendarIdentifiers:[NSSet setWithArray:reminderCalendars] forStore:s];
+
+        NSArray *eventCalendars = [[self.calendarsController calEventCalendarsToDisplayForStore:s] valueForKey:@"calendarIdentifier"];
+        [log logDebugWithMessenger:^{
+            return [NSString stringWithFormat:@"Observed Event Calendars: %@", eventCalendars];
+        }];
+        [self.calendarEventsController setObservedCalendarIdentifiers:[NSSet setWithArray:eventCalendars] forStore:s];
+    }
+
+    [NSProcessInfo.processInfo enableSuddenTermination];
 }
 
 
@@ -649,8 +700,9 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
 
 - (void)cancelOperation:(id)aSender
 {
-    if (self.calendarWindowController.windowState == WLFloatingLevelState &&
-        NSApp.keyWindow == [self.calendarWindowController window])
+    __auto_type calendarWindowController = self.calendarWindowController;
+
+    if (calendarWindowController.windowState <= WLCalendarWindowStateInactive && NSApp.keyWindow == calendarWindowController.window)
     {
         [self bringToFrontOrSendToBack:aSender];
     }
@@ -670,16 +722,13 @@ NSString* const WLMixpanelLogName = @"net.wireload.blotter.mac.mixpanel";
     }
     else if ([aKeyPath isEqualToString:WLAutoFadeKey] || [aKeyPath isEqualToString:WLAutoFadeSecondsKey])
     {
-        if ([[NSUserDefaults standardUserDefaults] WL_autoFades])
+        if (NSUserDefaults.standardUserDefaults.WL_autoFades)
             [self scheduleAutoFadeCalendarWindowIfAllConditionsAreMet:NSApp.windows];
         else
-        {
-            [self _removeAutoFadeTimerIfNeeded];
-            self.calendarWindowController.isFadedOut = NO;
-        }
+            [self fadeIn];
     }
     else if ([aKeyPath isEqualToString:NSVisibleBinding])
-        [[NSUserDefaults standardUserDefaults] setValue:aChange[NSKeyValueChangeNewKey] forKeyPath:WLShowInMenuBar];
+        NSUserDefaults.standardUserDefaults.WL_showInMenuBar = [aChange[NSKeyValueChangeNewKey] boolValue];
     else if ([aKeyPath isEqualToString:WLShareAnalytics])
     {
         [WLAnalytics.sharedAnalytics reportLaunchedToMixpanelIfNeeded];

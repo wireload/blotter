@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15705" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15705"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="WLCalendarsPreferencesViewController">
+            <connections>
+                <outlet property="_eventsTableView" destination="5" id="110"/>
+                <outlet property="_remindersTableView" destination="90" id="111"/>
+                <outlet property="view" destination="1" id="125"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="438" height="466"/>
+            <subviews>
+                <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="73" userLabel="Selection Options">
+                    <rect key="frame" x="20" y="408" width="398" height="38"/>
+                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    <size key="cellSize" width="398" height="18"/>
+                    <size key="intercellSpacing" width="4" height="2"/>
+                    <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="76">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <cells>
+                        <column>
+                            <buttonCell type="radio" title="All Calendars" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="74">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                                <attributedString key="userComments">
+                                    <fragment content="Title for the All Calendars option"/>
+                                </attributedString>
+                            </buttonCell>
+                            <buttonCell type="radio" title="Selected Calendars:" imagePosition="left" alignment="left" inset="2" id="75">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                                <attributedString key="userComments">
+                                    <fragment content="Title for the Selected Calendars option"/>
+                                </attributedString>
+                            </buttonCell>
+                        </column>
+                    </cells>
+                    <connections>
+                        <binding destination="77" name="selectedTag" keyPath="values.DisplayAllCalendars" id="86"/>
+                        <outlet property="nextKeyView" destination="100" id="113"/>
+                    </connections>
+                </matrix>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="100" userLabel="Events Label">
+                    <rect key="frame" x="38" y="384" width="382" height="16"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Events:" id="101">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <attributedString key="userComments">
+                        <fragment content="Title for the Events table"/>
+                    </attributedString>
+                    <connections>
+                        <binding destination="77" name="enabled" keyPath="values.DisplayAllCalendars" id="106">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
+                        <outlet property="nextKeyView" destination="5" id="122"/>
+                    </connections>
+                </textField>
+                <scrollView autoresizesSubviews="NO" autohidesScrollers="YES" horizontalLineScroll="22" horizontalPageScroll="10" verticalLineScroll="22" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2" userLabel="Events Table">
+                    <rect key="frame" x="40" y="214" width="378" height="162"/>
+                    <clipView key="contentView" id="UKK-7c-ocs">
+                        <rect key="frame" x="1" y="1" width="376" height="160"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="20" id="5">
+                                <rect key="frame" x="0.0" y="0.0" width="376" height="160"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <size key="intercellSpacing" width="3" height="2"/>
+                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                <tableColumns>
+                                    <tableColumn identifier="check" width="39" minWidth="39" maxWidth="39" id="7">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
+                                        </tableHeaderCell>
+                                        <buttonCell key="dataCell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="72" customClass="WLColorCheckboxCell">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="smallSystem"/>
+                                        </buttonCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                    </tableColumn>
+                                    <tableColumn identifier="title" editable="NO" width="331" minWidth="10" maxWidth="3.4028234663852886e+38" id="13">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="14">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                    </tableColumn>
+                                </tableColumns>
+                                <connections>
+                                    <binding destination="77" name="enabled" keyPath="values.DisplayAllCalendars" id="84">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                    <outlet property="dataSource" destination="-2" id="70"/>
+                                    <outlet property="delegate" destination="-2" id="39"/>
+                                    <outlet property="nextKeyView" destination="102" id="123"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                    </clipView>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="162" id="WaA-hg-GhN"/>
+                        <constraint firstAttribute="width" constant="378" id="mLi-m6-V8Q"/>
+                    </constraints>
+                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="4">
+                        <rect key="frame" x="1" y="148" width="378" height="16"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="3">
+                        <rect key="frame" x="224" y="17" width="15" height="102"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <connections>
+                        <accessibilityConnection property="title" destination="100" id="zqq-rD-rzD"/>
+                    </connections>
+                </scrollView>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="102" userLabel="Reminders Label">
+                    <rect key="frame" x="38" y="190" width="382" height="16"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Reminders:" id="103">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <attributedString key="userComments">
+                        <fragment content="Title for the Reminders table"/>
+                    </attributedString>
+                    <connections>
+                        <binding destination="77" name="enabled" keyPath="values.DisplayAllCalendars" id="109">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
+                        <outlet property="nextKeyView" destination="90" id="124"/>
+                    </connections>
+                </textField>
+                <scrollView autoresizesSubviews="NO" autohidesScrollers="YES" horizontalLineScroll="22" horizontalPageScroll="10" verticalLineScroll="22" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="89" userLabel="Reminders Table">
+                    <rect key="frame" x="41" y="20" width="378" height="162"/>
+                    <clipView key="contentView" id="DyK-Xl-ChC">
+                        <rect key="frame" x="1" y="1" width="376" height="160"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="20" id="90">
+                                <rect key="frame" x="0.0" y="0.0" width="376" height="160"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <size key="intercellSpacing" width="3" height="2"/>
+                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                <tableColumns>
+                                    <tableColumn identifier="check" width="39" minWidth="39" maxWidth="39" id="93">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
+                                        </tableHeaderCell>
+                                        <buttonCell key="dataCell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="96" customClass="WLColorCheckboxCell">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="smallSystem"/>
+                                        </buttonCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                    </tableColumn>
+                                    <tableColumn identifier="title" editable="NO" width="331" minWidth="10" maxWidth="3.4028234663852886e+38" id="94">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="95">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                    </tableColumn>
+                                </tableColumns>
+                                <connections>
+                                    <binding destination="77" name="enabled" keyPath="values.DisplayAllCalendars" id="99">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                    <outlet property="dataSource" destination="-2" id="98"/>
+                                    <outlet property="delegate" destination="-2" id="97"/>
+                                    <outlet property="nextKeyView" destination="1" id="121"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="91">
+                        <rect key="frame" x="1" y="148" width="378" height="16"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="92">
+                        <rect key="frame" x="224" y="17" width="15" height="102"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <connections>
+                        <accessibilityConnection property="title" destination="102" id="O6m-d8-Y2J"/>
+                    </connections>
+                </scrollView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="89" firstAttribute="leading" secondItem="5" secondAttribute="leading" id="0Mn-bf-lzQ"/>
+                <constraint firstAttribute="trailing" secondItem="2" secondAttribute="trailing" constant="20" symbolic="YES" id="2vT-O5-eWb"/>
+                <constraint firstItem="100" firstAttribute="top" secondItem="73" secondAttribute="bottom" constant="8" symbolic="YES" id="685-kG-0jt"/>
+                <constraint firstAttribute="bottom" secondItem="89" secondAttribute="bottom" constant="20" symbolic="YES" id="8Nl-LC-Aiw"/>
+                <constraint firstItem="89" firstAttribute="width" secondItem="2" secondAttribute="width" id="G6j-6c-Ned"/>
+                <constraint firstItem="90" firstAttribute="top" secondItem="102" secondAttribute="bottom" constant="9" id="MUV-3H-tQy"/>
+                <constraint firstItem="89" firstAttribute="height" secondItem="2" secondAttribute="height" id="QRy-0i-KTb"/>
+                <constraint firstAttribute="trailing" secondItem="73" secondAttribute="trailing" constant="20" symbolic="YES" id="ScZ-M1-vfK"/>
+                <constraint firstAttribute="trailing" secondItem="102" secondAttribute="trailing" constant="20" symbolic="YES" id="UDn-H3-VYP"/>
+                <constraint firstAttribute="trailing" secondItem="100" secondAttribute="trailing" constant="20" symbolic="YES" id="W5J-0S-K3r"/>
+                <constraint firstItem="102" firstAttribute="leading" secondItem="100" secondAttribute="leading" id="XAr-eA-8pK"/>
+                <constraint firstItem="102" firstAttribute="top" secondItem="2" secondAttribute="bottom" constant="8" symbolic="YES" id="dUH-TH-c5I"/>
+                <constraint firstItem="2" firstAttribute="leading" secondItem="100" secondAttribute="leading" id="eAo-1l-nPS"/>
+                <constraint firstItem="73" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" symbolic="YES" id="o7s-99-IWi"/>
+                <constraint firstItem="5" firstAttribute="top" secondItem="100" secondAttribute="bottom" constant="9" id="ocm-ks-ugb"/>
+                <constraint firstItem="100" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="40" id="qza-wZ-ZFf"/>
+                <constraint firstItem="73" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="xxo-Hd-SUr"/>
+            </constraints>
+            <connections>
+                <outlet property="nextKeyView" destination="73" id="112"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="154"/>
+        </customView>
+        <userDefaultsController representsSharedInstance="YES" id="77"/>
+    </objects>
+</document>

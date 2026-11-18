@@ -11,40 +11,26 @@
 		28F69A1B129C1CAA00D4BB97 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 28F69A1A129C1CAA00D4BB97 /* Credits.rtf */; };
 		28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 28F69CF4129CC12100D4BB97 /* Licenses.rtf */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
-		BA08A75B1675EE4E0085F40C /* WLShortcutsPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A75A1675EE4E0085F40C /* WLShortcutsPreferences.m */; };
-		BA08A76F1675FDE70085F40C /* WLPositioningPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A76E1675FDE70085F40C /* WLPositioningPreferences.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		BA08A7721675FE280085F40C /* WLCalendarWindowArrangementView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7711675FE280085F40C /* WLCalendarWindowArrangementView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		BA08A7751675FE730085F40C /* WLScreensController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7741675FE730085F40C /* WLScreensController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		BA08A7781675FEE50085F40C /* WLNinePartBlockLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7771675FEE50085F40C /* WLNinePartBlockLayer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		BA08A77B1675FEF90085F40C /* WLBlockLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A77A1675FEF80085F40C /* WLBlockLayoutManager.m */; };
-		BA08A77E1675FF160085F40C /* NSCursor+WLPositioningPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A77D1675FF160085F40C /* NSCursor+WLPositioningPreferences.m */; };
-		BA08A7811675FF390085F40C /* NSColor+WLPrefColors.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7801675FF390085F40C /* NSColor+WLPrefColors.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		BA08A78D167601790085F40C /* WLPositioningPaneView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A78C167601790085F40C /* WLPositioningPaneView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		BA08A7A6167729A90085F40C /* WLLayoutPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7A5167729A90085F40C /* WLLayoutPreferences.m */; };
-		BA08A7BD167729E50085F40C /* WLLayoutAllDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7A8167729E30085F40C /* WLLayoutAllDayView.m */; };
-		BA08A7BE167729E50085F40C /* WLLayoutCalendarWindowView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7AA167729E30085F40C /* WLLayoutCalendarWindowView.m */; };
-		BA08A7BF167729E50085F40C /* WLLayoutDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7AC167729E30085F40C /* WLLayoutDateView.m */; };
-		BA08A7C0167729E50085F40C /* WLLayoutDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7AE167729E30085F40C /* WLLayoutDayView.m */; };
-		BA08A7C1167729E50085F40C /* WLLayoutInfoSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7B0167729E30085F40C /* WLLayoutInfoSplitView.m */; };
-		BA08A7C2167729E50085F40C /* WLLayoutRightNowView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7B2167729E40085F40C /* WLLayoutRightNowView.m */; };
-		BA08A7C3167729E50085F40C /* WLLayoutRoundedAquaImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7B4167729E40085F40C /* WLLayoutRoundedAquaImageView.m */; };
-		BA08A7C4167729E50085F40C /* WLLayoutSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7B6167729E40085F40C /* WLLayoutSplitView.m */; };
-		BA08A7C5167729E50085F40C /* WLLayoutTasksView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7B8167729E40085F40C /* WLLayoutTasksView.m */; };
-		BA08A7C6167729E50085F40C /* WLLayoutView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7BA167729E40085F40C /* WLLayoutView.m */; };
-		BA08A7C7167729E50085F40C /* WLLayoutWeekSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7BC167729E50085F40C /* WLLayoutWeekSplitView.m */; };
-		BA08A7E1167735130085F40C /* README in Resources */ = {isa = PBXBuildFile; fileRef = BA08A7E0167735130085F40C /* README */; };
-		BA08A981167737730085F40C /* WLCalendarsPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7E3167737730085F40C /* WLCalendarsPreferences.m */; };
+		BA0114842419845600CF2AFC /* WLStringToUUIDTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0114832419845600CF2AFC /* WLStringToUUIDTransformer.m */; };
+		BA011489241AD05E00CF2AFC /* WLLayoutPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7A5167729A90085F40C /* WLLayoutPreferencesViewController.m */; };
+		BA08A7721675FE280085F40C /* WLFrameArrangementView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7711675FE280085F40C /* WLFrameArrangementView.m */; };
+		BA08A7751675FE730085F40C /* WLScreensController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7741675FE730085F40C /* WLScreensController.m */; };
+		BA08A7C6167729E50085F40C /* WLLayoutArrangementView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A7BA167729E40085F40C /* WLLayoutArrangementView.m */; };
 		BA08AA34167737730085F40C /* WLColorCheckboxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08A980167737730085F40C /* WLColorCheckboxCell.m */; };
-		BA08AA51167743A50085F40C /* WLAboutPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08AA4C167743A50085F40C /* WLAboutPreferences.m */; };
 		BA08AA53167743A50085F40C /* WLPreferencesButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA08AA50167743A50085F40C /* WLPreferencesButtonCell.m */; };
 		BA105998168DAD8F00A3DDF5 /* WLCalendarEventsController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA105997168DAD8F00A3DDF5 /* WLCalendarEventsController.m */; };
-		BA1F51DB1663B2A400ABD662 /* WLGeneralPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1F51DA1663B2A400ABD662 /* WLGeneralPreferences.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		BA1B33B122EE96C600FFF0D1 /* WLShortcutsPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1B33B022EE96C600FFF0D1 /* WLShortcutsPreferencesViewController.m */; };
+		BA1B33DE22EF7FDC00FFF0D1 /* WLAboutPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1B33DD22EF7FDC00FFF0D1 /* WLAboutPreferencesViewController.m */; };
+		BA1B33E122F0C25F00FFF0D1 /* WLPreferencesTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1B33E022F0C25F00FFF0D1 /* WLPreferencesTabViewController.m */; };
+		BA21667A2375F6B700F49FAE /* WLPositioningPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2166792375F6B700F49FAE /* WLPositioningPreferencesViewController.m */; };
 		BA2F70DC20E30D5A0079CCD4 /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70DB20E30D5A0079CCD4 /* ShortcutRecorder.framework */; };
 		BA2F70DE20E30D5C0079CCD4 /* WLCalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70DD20E30D5C0079CCD4 /* WLCalendarStore.framework */; };
 		BA2F70E020E30D5F0079CCD4 /* WLFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2F70DF20E30D5F0079CCD4 /* WLFoundation.framework */; };
 		BA2F955820F4309E000544FA /* MixpanelProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2F955720F4309E000544FA /* MixpanelProxy.m */; };
 		BA2F955A20F4309E000544FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2F955920F4309E000544FA /* main.m */; };
 		BA2F955E20F4309E000544FA /* Mixpanel.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = BA2F955320F4309E000544FA /* Mixpanel.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BA5D90A4245C9F1A00CF1CE6 /* WLCalendarViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = BA5D90A3245C9F1A00CF1CE6 /* WLCalendarViewLayout.m */; };
+		BA5D90A72465B52200CF1CE6 /* WLLogNames.m in Sources */ = {isa = PBXBuildFile; fileRef = BA5D90A62465B52200CF1CE6 /* WLLogNames.m */; };
 		BA699BA620F86C3600F3A0F9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA699BA520F86C3600F3A0F9 /* AppDelegate.m */; };
 		BA699BAB20F86C3800F3A0F9 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA699BA920F86C3800F3A0F9 /* MainMenu.xib */; };
 		BA699BAE20F86C3800F3A0F9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BA699BAD20F86C3800F3A0F9 /* main.m */; };
@@ -55,25 +41,31 @@
 		BA7A22E0219A3DE50078CF86 /* WLAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7A22DF219A3DE50078CF86 /* WLAnalytics.m */; };
 		BA7EFC3F2110D71A00342612 /* Mixpanel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA7EFC3E2110D71A00342612 /* Mixpanel.framework */; };
 		BA7EFC402110D72A00342612 /* Mixpanel.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = BA7EFC3E2110D71A00342612 /* Mixpanel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		BA807F0F1645460C0033B85B /* IKApplicationPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BA807F0C1645460C0033B85B /* IKApplicationPreferences.m */; };
-		BA81A834164548070058EB16 /* IKApplicationPreferences.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA81A832164548070058EB16 /* IKApplicationPreferences.strings */; };
 		BA85BA77218158BE00CAAFC7 /* BlotterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA85BA76218158BE00CAAFC7 /* BlotterTests.m */; };
 		BA85BA81218158DE00CAAFC7 /* WLCalendarWeekEventsViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA85BA7F218158DE00CAAFC7 /* WLCalendarWeekEventsViewControllerTests.m */; };
 		BA85BA82218158DE00CAAFC7 /* WLCalendarEventsControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA85BA80218158DE00CAAFC7 /* WLCalendarEventsControllerTests.m */; };
+		BA8DF1D123A45DBC00AE44B2 /* WLPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8DF1D023A45DBC00AE44B2 /* WLPreferencesViewController.m */; };
 		BA9617F120E440EB00AACC98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA9617F020E440EB00AACC98 /* Assets.xcassets */; };
+		BAAC022B22EA900500D20F7F /* WLPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAC022A22EA900500D20F7F /* WLPreferencesWindowController.m */; };
+		BAB730072476CA5000FF3C0B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAB730092476CA5000FF3C0B /* Main.storyboard */; };
+		BAB7302A2476F0C400FF3C0B /* NSFont+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB730272476F0C400FF3C0B /* NSFont+WLCalendar.m */; };
+		BAB7302B2476F0C400FF3C0B /* NSColor+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB730292476F0C400FF3C0B /* NSColor+WLCalendar.m */; };
+		BAD40DDB241B9921007AD60E /* WLCalendarMockupView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD40DDA241B9921007AD60E /* WLCalendarMockupView.m */; };
+		BAD40DDE241B9B4D007AD60E /* WLDesktopMockupView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD40DDD241B9B4D007AD60E /* WLDesktopMockupView.m */; };
+		BAD40DE72420ECCF007AD60E /* WLCalendarDateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD40DE32420C8F0007AD60E /* WLCalendarDateViewController.m */; };
+		BADC53272421452D004F2EAE /* WLCalendarWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = BADC53262421452D004F2EAE /* WLCalendarWindowController.m */; };
+		BADC534A24295F21004F2EAE /* WLCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BADC534924295F21004F2EAE /* WLCalendarViewController.m */; };
 		BAF67C8C16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67C8B16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.m */; };
-		BAF67CBB16D607280047FE2A /* WLClosableWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67CB516D607270047FE2A /* WLClosableWindow.m */; };
 		BAF67CBC16D607280047FE2A /* WLCountGreaterThanOneTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67CB716D607270047FE2A /* WLCountGreaterThanOneTransformer.m */; };
 		BAF67CBD16D607280047FE2A /* WLGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67CB916D607280047FE2A /* WLGraphics.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		BAF67DCA16D622820047FE2A /* AboutPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAF67DBE16D622820047FE2A /* AboutPrefPaneView.xib */; };
-		BAF67DCB16D622820047FE2A /* CalendarsPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAF67DC016D622820047FE2A /* CalendarsPrefPaneView.xib */; };
-		BAF67DCC16D622820047FE2A /* GeneralPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAF67DC216D622820047FE2A /* GeneralPrefPaneView.xib */; };
-		BAF67DCD16D622820047FE2A /* LayoutPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAF67DC416D622820047FE2A /* LayoutPrefPaneView.xib */; };
-		BAF67DCE16D622820047FE2A /* PositionPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAF67DC616D622820047FE2A /* PositionPrefPaneView.xib */; };
-		BAF67DCF16D622820047FE2A /* ShortcutsPrefPaneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAF67DC816D622820047FE2A /* ShortcutsPrefPaneView.xib */; };
-		BAF67F9C16D624C90047FE2A /* WLApplicationPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67F9916D624C80047FE2A /* WLApplicationPreferences.m */; };
-		BAF67F9D16D624C90047FE2A /* WLApplicationPreferencesWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF67F9B16D624C90047FE2A /* WLApplicationPreferencesWindow.m */; };
-		BAF67F9F16D624FE0047FE2A /* WLApplicationPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAF67F9E16D624FE0047FE2A /* WLApplicationPreferencesWindow.xib */; };
+		BAF67DCA16D622820047FE2A /* WLAboutPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAF67DBE16D622820047FE2A /* WLAboutPreferencesViewController.xib */; };
+		BAF67DCB16D622820047FE2A /* WLCalendarsPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAF67DC016D622820047FE2A /* WLCalendarsPreferencesViewController.xib */; };
+		BAF67DCC16D622820047FE2A /* WLGeneralPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAF67DC216D622820047FE2A /* WLGeneralPreferencesViewController.xib */; };
+		BAF67DCD16D622820047FE2A /* WLLayoutPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAF67DC416D622820047FE2A /* WLLayoutPreferencesViewController.xib */; };
+		BAF67DCE16D622820047FE2A /* WLPositioningPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAF67DC616D622820047FE2A /* WLPositioningPreferencesViewController.xib */; };
+		BAF67DCF16D622820047FE2A /* WLShortcutsPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAF67DC816D622820047FE2A /* WLShortcutsPreferencesViewController.xib */; };
+		BAFA72762374EA6A00A78F49 /* WLGeneralPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA72752374EA6A00A78F49 /* WLGeneralPreferencesViewController.m */; };
+		BAFA72792374F58600A78F49 /* WLCalendarsPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA72782374F58600A78F49 /* WLCalendarsPreferencesViewController.m */; };
 		BC5991C3493EE347942823FD /* WLCalendarAllDayEventsLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5990857F56C36A9052CD73 /* WLCalendarAllDayEventsLayer.m */; };
 		BC5992938A36F5C335797DC6 /* WLCalEventPart.m in Sources */ = {isa = PBXBuildFile; fileRef = BC59953630502CB8677131C0 /* WLCalEventPart.m */; };
 		BC5992DF714338D62CE3D801 /* WLCalendarTimeIndicatorLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5991DEA0F674C9A3ED2D49 /* WLCalendarTimeIndicatorLayer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -91,7 +83,6 @@
 		BC599F40F71330FB583F52A2 /* WLCalendarTimeRulerMarkerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BC59915011B7F9C2C5190C3B /* WLCalendarTimeRulerMarkerLayer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C8E878D32171427F00BA697E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C8E878D52171427F00BA697E /* InfoPlist.strings */; };
 		E21A5F451403D2A4000B6634 /* WLCalendarReminderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E21A5F441403D2A4000B6634 /* WLCalendarReminderLayer.m */; };
-		E22C78AB13FFCD9F00EE44C0 /* NSColor+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E23F746F14434DE40055D6CE /* WLHourRange.m in Sources */ = {isa = PBXBuildFile; fileRef = E23F746E14434DE40055D6CE /* WLHourRange.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E252E9C515545AD300B64F5F /* WLGlassHudPopUpButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E252E9C415545AD300B64F5F /* WLGlassHudPopUpButtonCell.m */; };
 		E253575013DC884D0010A2ED /* NSDate+WLDayBoundaries.m in Sources */ = {isa = PBXBuildFile; fileRef = E253574F13DC884D0010A2ED /* NSDate+WLDayBoundaries.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -102,23 +93,14 @@
 		E278ECF413C8B73D00B327EB /* WLCalendarRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E278ECF313C8B73D00B327EB /* WLCalendarRemindersViewController.m */; };
 		E279363A1324F05800BC5224 /* WLGlassHudWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E27936391324F05800BC5224 /* WLGlassHudWindow.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E27936461324F6E200BC5224 /* WLGlassHudWindowBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = E27936451324F6E200BC5224 /* WLGlassHudWindowBackgroundView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		E286C00314068703008C0CDB /* NSFont+WLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = E286C00214068703008C0CDB /* NSFont+WLCalendar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E28C418D13F081A1005789DD /* defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = E28C418C13F081A1005789DD /* defaults.plist */; };
-		E292D7E013E9DCEA00433262 /* WLCalendarWindowBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = E292D7DF13E9DCEA00433262 /* WLCalendarWindowBackgroundView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E2948D941401484B007122BC /* NSCalendar+WLWeekend.m in Sources */ = {isa = PBXBuildFile; fileRef = E2948D931401484B007122BC /* NSCalendar+WLWeekend.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E2957E5A152B117E00AE05E8 /* WLApplicationRunTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2957E59152B117E00AE05E8 /* WLApplicationRunTimer.m */; };
 		E29F38EE1319694C00A865D9 /* WLNewReminderWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E29F38ED1319694C00A865D9 /* WLNewReminderWindowController.m */; };
-		E2A61A80140745FC0059F201 /* WLCalendarBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A61A7F140745FC0059F201 /* WLCalendarBoxView.m */; };
-		E2A701ED13EFE4C500A4BF3A /* WLCalendarDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A701EC13EFE4C500A4BF3A /* WLCalendarDateView.m */; };
-		E2A7085E13F0427800A4BF3A /* WLCalendarDateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A7085D13F0427800A4BF3A /* WLCalendarDateViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		E2D6D8F9153335C8005F070D /* WLCalendarWindowBringToFrontAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D6D8F8153335C8005F070D /* WLCalendarWindowBringToFrontAnimation.m */; };
 		E2E64B4E1402483500912A92 /* WLSoftEdgeLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E64B4D1402483500912A92 /* WLSoftEdgeLayer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E2E826CF145023A6007035E5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C7145023A6007035E5 /* Localizable.strings */; };
-		E2E826D0145023A6007035E5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826C9145023A6007035E5 /* MainMenu.xib */; };
 		E2E826D1145023A6007035E5 /* NewEventWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CB145023A6007035E5 /* NewEventWindow.xib */; };
 		E2E826D2145023A6007035E5 /* NewTaskWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E826CD145023A6007035E5 /* NewTaskWindow.xib */; };
-		E2F112DD13E6E263001C2B7B /* WLCalendarWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F112DC13E6E263001C2B7B /* WLCalendarWindow.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		E2F1133D13E70B4F001C2B7B /* WLCalendarWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F1133C13E70B4F001C2B7B /* WLCalendarWindowController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E2FCE09D133F9264006E713F /* WLGlassHudDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FCE09C133F9264006E713F /* WLGlassHudDatePicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
@@ -198,81 +180,40 @@
 /* Begin PBXFileReference section */
 		256AC3D80F4B6AC300CF3369 /* DeskboardAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeskboardAppDelegate.h; sourceTree = "<group>"; };
 		256AC3D90F4B6AC300CF3369 /* DeskboardAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeskboardAppDelegate.m; sourceTree = "<group>"; };
-		289D40EE18117C3D009EAD73 /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ja; path = Resources/ja.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
-		28B3CDD1180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/AboutPrefPaneView.xib; sourceTree = "<group>"; };
-		28B3CDD2180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
-		28B3CDD5180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
-		28B3CDD6180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/LayoutPrefPaneView.xib; sourceTree = "<group>"; };
 		28B3CDD7180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
-		28B3CDD8180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		28B3CDD9180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
 		28B3CDDA180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
-		28B3CDDB180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/PositionPrefPaneView.xib; sourceTree = "<group>"; };
-		28B3CDDC180D7C7C004CF0DE /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
 		28F69A1A129C1CAA00D4BB97 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		28F69CF4129CC12100D4BB97 /* Licenses.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Licenses.rtf; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		8D1107310486CEB800E47090 /* Blotter-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Blotter-Info.plist"; path = "../Blotter-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Blotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA0114822419845600CF2AFC /* WLStringToUUIDTransformer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLStringToUUIDTransformer.h; sourceTree = "<group>"; };
+		BA0114832419845600CF2AFC /* WLStringToUUIDTransformer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLStringToUUIDTransformer.m; sourceTree = "<group>"; };
 		BA08A6E61675DC900085F40C /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		BA08A6E71675DCA00085F40C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		BA08A6E81675DCA80085F40C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
 		BA08A6E91675DCB00085F40C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
-		BA08A7591675EE4E0085F40C /* WLShortcutsPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLShortcutsPreferences.h; sourceTree = "<group>"; };
-		BA08A75A1675EE4E0085F40C /* WLShortcutsPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLShortcutsPreferences.m; sourceTree = "<group>"; };
-		BA08A76D1675FDE70085F40C /* WLPositioningPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLPositioningPreferences.h; sourceTree = "<group>"; };
-		BA08A76E1675FDE70085F40C /* WLPositioningPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLPositioningPreferences.m; sourceTree = "<group>"; };
-		BA08A7701675FE280085F40C /* WLCalendarWindowArrangementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowArrangementView.h; sourceTree = "<group>"; };
-		BA08A7711675FE280085F40C /* WLCalendarWindowArrangementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindowArrangementView.m; sourceTree = "<group>"; };
+		BA08A7701675FE280085F40C /* WLFrameArrangementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLFrameArrangementView.h; sourceTree = "<group>"; };
+		BA08A7711675FE280085F40C /* WLFrameArrangementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLFrameArrangementView.m; sourceTree = "<group>"; };
 		BA08A7731675FE730085F40C /* WLScreensController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLScreensController.h; sourceTree = "<group>"; };
 		BA08A7741675FE730085F40C /* WLScreensController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLScreensController.m; sourceTree = "<group>"; };
-		BA08A7761675FEE40085F40C /* WLNinePartBlockLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNinePartBlockLayer.h; sourceTree = "<group>"; };
-		BA08A7771675FEE50085F40C /* WLNinePartBlockLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNinePartBlockLayer.m; sourceTree = "<group>"; };
-		BA08A7791675FEF80085F40C /* WLBlockLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLBlockLayoutManager.h; sourceTree = "<group>"; };
-		BA08A77A1675FEF80085F40C /* WLBlockLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLBlockLayoutManager.m; sourceTree = "<group>"; };
-		BA08A77C1675FF160085F40C /* NSCursor+WLPositioningPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCursor+WLPositioningPreferences.h"; sourceTree = "<group>"; };
-		BA08A77D1675FF160085F40C /* NSCursor+WLPositioningPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCursor+WLPositioningPreferences.m"; sourceTree = "<group>"; };
-		BA08A77F1675FF390085F40C /* NSColor+WLPrefColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+WLPrefColors.h"; sourceTree = "<group>"; };
-		BA08A7801675FF390085F40C /* NSColor+WLPrefColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+WLPrefColors.m"; sourceTree = "<group>"; };
-		BA08A78B167601790085F40C /* WLPositioningPaneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLPositioningPaneView.h; sourceTree = "<group>"; };
-		BA08A78C167601790085F40C /* WLPositioningPaneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLPositioningPaneView.m; sourceTree = "<group>"; };
-		BA08A7A4167729A90085F40C /* WLLayoutPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutPreferences.h; sourceTree = "<group>"; };
-		BA08A7A5167729A90085F40C /* WLLayoutPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutPreferences.m; sourceTree = "<group>"; };
-		BA08A7A7167729E30085F40C /* WLLayoutAllDayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutAllDayView.h; sourceTree = "<group>"; };
-		BA08A7A8167729E30085F40C /* WLLayoutAllDayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutAllDayView.m; sourceTree = "<group>"; };
-		BA08A7A9167729E30085F40C /* WLLayoutCalendarWindowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutCalendarWindowView.h; sourceTree = "<group>"; };
-		BA08A7AA167729E30085F40C /* WLLayoutCalendarWindowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutCalendarWindowView.m; sourceTree = "<group>"; };
-		BA08A7AB167729E30085F40C /* WLLayoutDateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutDateView.h; sourceTree = "<group>"; };
-		BA08A7AC167729E30085F40C /* WLLayoutDateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutDateView.m; sourceTree = "<group>"; };
-		BA08A7AD167729E30085F40C /* WLLayoutDayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutDayView.h; sourceTree = "<group>"; };
-		BA08A7AE167729E30085F40C /* WLLayoutDayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutDayView.m; sourceTree = "<group>"; };
-		BA08A7AF167729E30085F40C /* WLLayoutInfoSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutInfoSplitView.h; sourceTree = "<group>"; };
-		BA08A7B0167729E30085F40C /* WLLayoutInfoSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutInfoSplitView.m; sourceTree = "<group>"; };
-		BA08A7B1167729E30085F40C /* WLLayoutRightNowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutRightNowView.h; sourceTree = "<group>"; };
-		BA08A7B2167729E40085F40C /* WLLayoutRightNowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutRightNowView.m; sourceTree = "<group>"; };
-		BA08A7B3167729E40085F40C /* WLLayoutRoundedAquaImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutRoundedAquaImageView.h; sourceTree = "<group>"; };
-		BA08A7B4167729E40085F40C /* WLLayoutRoundedAquaImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutRoundedAquaImageView.m; sourceTree = "<group>"; };
-		BA08A7B5167729E40085F40C /* WLLayoutSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutSplitView.h; sourceTree = "<group>"; };
-		BA08A7B6167729E40085F40C /* WLLayoutSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutSplitView.m; sourceTree = "<group>"; };
-		BA08A7B7167729E40085F40C /* WLLayoutTasksView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutTasksView.h; sourceTree = "<group>"; };
-		BA08A7B8167729E40085F40C /* WLLayoutTasksView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutTasksView.m; sourceTree = "<group>"; };
-		BA08A7B9167729E40085F40C /* WLLayoutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutView.h; sourceTree = "<group>"; };
-		BA08A7BA167729E40085F40C /* WLLayoutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutView.m; sourceTree = "<group>"; };
-		BA08A7BB167729E40085F40C /* WLLayoutWeekSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutWeekSplitView.h; sourceTree = "<group>"; };
-		BA08A7BC167729E50085F40C /* WLLayoutWeekSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutWeekSplitView.m; sourceTree = "<group>"; };
-		BA08A7E0167735130085F40C /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
-		BA08A7E2167737730085F40C /* WLCalendarsPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarsPreferences.h; sourceTree = "<group>"; };
-		BA08A7E3167737730085F40C /* WLCalendarsPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarsPreferences.m; sourceTree = "<group>"; };
+		BA08A7A4167729A90085F40C /* WLLayoutPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutPreferencesViewController.h; sourceTree = "<group>"; };
+		BA08A7A5167729A90085F40C /* WLLayoutPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutPreferencesViewController.m; sourceTree = "<group>"; };
+		BA08A7B9167729E40085F40C /* WLLayoutArrangementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLayoutArrangementView.h; sourceTree = "<group>"; };
+		BA08A7BA167729E40085F40C /* WLLayoutArrangementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLayoutArrangementView.m; sourceTree = "<group>"; };
 		BA08A97F167737730085F40C /* WLColorCheckboxCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLColorCheckboxCell.h; sourceTree = "<group>"; };
 		BA08A980167737730085F40C /* WLColorCheckboxCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLColorCheckboxCell.m; sourceTree = "<group>"; };
-		BA08AA4B167743A50085F40C /* WLAboutPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLAboutPreferences.h; sourceTree = "<group>"; };
-		BA08AA4C167743A50085F40C /* WLAboutPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = WLAboutPreferences.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		BA08AA4F167743A50085F40C /* WLPreferencesButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLPreferencesButtonCell.h; sourceTree = "<group>"; };
 		BA08AA50167743A50085F40C /* WLPreferencesButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = WLPreferencesButtonCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		BA105996168DAD8F00A3DDF5 /* WLCalendarEventsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarEventsController.h; sourceTree = "<group>"; };
 		BA105997168DAD8F00A3DDF5 /* WLCalendarEventsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarEventsController.m; sourceTree = "<group>"; };
-		BA1F51D91663B2A400ABD662 /* WLGeneralPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGeneralPreferences.h; sourceTree = "<group>"; };
-		BA1F51DA1663B2A400ABD662 /* WLGeneralPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGeneralPreferences.m; sourceTree = "<group>"; };
+		BA1B33AF22EE96C600FFF0D1 /* WLShortcutsPreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLShortcutsPreferencesViewController.h; sourceTree = "<group>"; };
+		BA1B33B022EE96C600FFF0D1 /* WLShortcutsPreferencesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLShortcutsPreferencesViewController.m; sourceTree = "<group>"; };
+		BA1B33DC22EF7FDC00FFF0D1 /* WLAboutPreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLAboutPreferencesViewController.h; sourceTree = "<group>"; };
+		BA1B33DD22EF7FDC00FFF0D1 /* WLAboutPreferencesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLAboutPreferencesViewController.m; sourceTree = "<group>"; };
+		BA1B33DF22F0C25F00FFF0D1 /* WLPreferencesTabViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLPreferencesTabViewController.h; sourceTree = "<group>"; };
+		BA1B33E022F0C25F00FFF0D1 /* WLPreferencesTabViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLPreferencesTabViewController.m; sourceTree = "<group>"; };
+		BA2166782375F6B700F49FAE /* WLPositioningPreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLPositioningPreferencesViewController.h; sourceTree = "<group>"; };
+		BA2166792375F6B700F49FAE /* WLPositioningPreferencesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLPositioningPreferencesViewController.m; sourceTree = "<group>"; };
 		BA23660816F706B600779487 /* Blotter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Blotter.entitlements; path = ../Blotter.entitlements; sourceTree = "<group>"; };
 		BA2F70DB20E30D5A0079CCD4 /* ShortcutRecorder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ShortcutRecorder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA2F70DD20E30D5C0079CCD4 /* WLCalendarStore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WLCalendarStore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -284,6 +225,50 @@
 		BA2F955920F4309E000544FA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BA2F955B20F4309E000544FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BA2F956420F4311F000544FA /* Mixpanel.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mixpanel.entitlements; sourceTree = "<group>"; };
+		BA4C212322E8BC8F00D0C973 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/WLCalendarsPreferencesViewController.xib; sourceTree = "<group>"; };
+		BA4C212622E8BD8100D0C973 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/WLCalendarsPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C212722E8BD8500D0C973 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/WLCalendarsPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C212822E8BD8800D0C973 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/WLCalendarsPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C212922E8BD8C00D0C973 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/WLCalendarsPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C212A22E8BD9000D0C973 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/WLCalendarsPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C212B22E8BD9300D0C973 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/WLCalendarsPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C212D22E8BD9B00D0C973 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/WLCalendarsPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C213022E8D48200D0C973 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/WLLayoutPreferencesViewController.xib; sourceTree = "<group>"; };
+		BA4C213122E8D9FA00D0C973 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/WLLayoutPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C213222E8D9FF00D0C973 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/WLLayoutPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C213322E8DA0300D0C973 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/WLLayoutPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C213422E8DA0700D0C973 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/WLLayoutPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C213522E8DA0B00D0C973 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/WLLayoutPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C213622E8DA0F00D0C973 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/WLLayoutPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C213722E8DA1500D0C973 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/WLLayoutPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C213A22E8DBF400D0C973 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/WLPositioningPreferencesViewController.xib; sourceTree = "<group>"; };
+		BA4C213B22E8DF6000D0C973 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/WLPositioningPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C213C22E8DF6500D0C973 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/WLPositioningPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C213D22E8DF6900D0C973 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/WLPositioningPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C213E22E8DF6D00D0C973 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/WLPositioningPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C213F22E8DF7100D0C973 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/WLPositioningPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C214022E8DF7500D0C973 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/WLPositioningPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C214122E8DF7A00D0C973 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/WLPositioningPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C214422E8E19200D0C973 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/WLGeneralPreferencesViewController.xib; sourceTree = "<group>"; };
+		BA4C214522E8ED1200D0C973 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/WLGeneralPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C214622E8ED1600D0C973 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/WLGeneralPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C214722E8ED1A00D0C973 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/WLGeneralPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C214822E8ED1F00D0C973 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/WLGeneralPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C214922E8ED2400D0C973 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/WLGeneralPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C214A22E8ED2900D0C973 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/WLGeneralPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA4C214B22E8ED2E00D0C973 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/WLGeneralPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA5D90A2245C9F1A00CF1CE6 /* WLCalendarViewLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLCalendarViewLayout.h; sourceTree = "<group>"; };
+		BA5D90A3245C9F1A00CF1CE6 /* WLCalendarViewLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLCalendarViewLayout.m; sourceTree = "<group>"; };
+		BA5D90A52465B52200CF1CE6 /* WLLogNames.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLLogNames.h; sourceTree = "<group>"; };
+		BA5D90A62465B52200CF1CE6 /* WLLogNames.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLLogNames.m; sourceTree = "<group>"; };
+		BA6955DA22E619E90047152A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/WLAboutPreferencesViewController.xib; sourceTree = "<group>"; };
+		BA6955DB22E628560047152A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/WLAboutPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA6955DC22E628690047152A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/WLAboutPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA6955DD22E6286E0047152A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/WLAboutPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA6955DE22E628720047152A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/WLAboutPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA6955DF22E628760047152A /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/WLAboutPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA6955E022E6287A0047152A /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/WLAboutPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA6955E122E6287F0047152A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/WLAboutPreferencesViewController.strings; sourceTree = "<group>"; };
 		BA699BA220F86C3600F3A0F9 /* LoginItem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoginItem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA699BA420F86C3600F3A0F9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BA699BA520F86C3600F3A0F9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -295,16 +280,6 @@
 		BA7A22DE219A3DE50078CF86 /* WLAnalytics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLAnalytics.h; sourceTree = "<group>"; };
 		BA7A22DF219A3DE50078CF86 /* WLAnalytics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLAnalytics.m; sourceTree = "<group>"; };
 		BA7EFC3E2110D71A00342612 /* Mixpanel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Mixpanel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA807F0B1645460C0033B85B /* IKApplicationPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKApplicationPreferences.h; sourceTree = "<group>"; };
-		BA807F0C1645460C0033B85B /* IKApplicationPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKApplicationPreferences.m; sourceTree = "<group>"; };
-		BA807F0E1645460C0033B85B /* IKPreferencesRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKPreferencesRepresentation.h; sourceTree = "<group>"; };
-		BA81A833164548070058EB16 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
-		BA81A8351645480B0058EB16 /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
-		BA81A8361645480D0058EB16 /* es */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
-		BA81A8371645480F0058EB16 /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = Resources/fr.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
-		BA81A838164548110058EB16 /* ko */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ko; path = Resources/ko.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
-		BA81A839164548120058EB16 /* ru */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ru; path = Resources/ru.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
-		BA81A83A164548140058EB16 /* sv */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = sv; path = Resources/sv.lproj/IKApplicationPreferences.strings; sourceTree = "<group>"; };
 		BA85BA74218158BE00CAAFC7 /* BlotterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlotterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA85BA76218158BE00CAAFC7 /* BlotterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlotterTests.m; sourceTree = "<group>"; };
 		BA85BA78218158BE00CAAFC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -312,62 +287,52 @@
 		BA85BA80218158DE00CAAFC7 /* WLCalendarEventsControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarEventsControllerTests.m; sourceTree = "<group>"; };
 		BA85BA832181594400CAAFC7 /* WLCalendarWeekEventsViewControllerTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWeekEventsViewControllerTests.h; sourceTree = "<group>"; };
 		BA85BA842181594400CAAFC7 /* WLCalendarEventsControllerTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarEventsControllerTests.h; sourceTree = "<group>"; };
+		BA8794D522E7FCDF00F46966 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/WLShortcutsPreferencesViewController.xib; sourceTree = "<group>"; };
+		BA8794D822E8106800F46966 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/WLShortcutsPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA8794D922E8107000F46966 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/WLShortcutsPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA8794DA22E8107400F46966 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/WLShortcutsPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA8794DB22E8107700F46966 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/WLShortcutsPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA8794DC22E8107B00F46966 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/WLShortcutsPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA8794DD22E8107E00F46966 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/WLShortcutsPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA8794DE22E8108200F46966 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/WLShortcutsPreferencesViewController.strings; sourceTree = "<group>"; };
+		BA8DF1CF23A45DBC00AE44B2 /* WLPreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLPreferencesViewController.h; sourceTree = "<group>"; };
+		BA8DF1D023A45DBC00AE44B2 /* WLPreferencesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLPreferencesViewController.m; sourceTree = "<group>"; };
 		BA9617F020E440EB00AACC98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BAAC022922EA900500D20F7F /* WLPreferencesWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLPreferencesWindowController.h; sourceTree = "<group>"; };
+		BAAC022A22EA900500D20F7F /* WLPreferencesWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLPreferencesWindowController.m; sourceTree = "<group>"; };
+		BAB730082476CA5000FF3C0B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		BAB7300B2476CA5F00FF3C0B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
+		BAB7300D2476CA6200FF3C0B /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
+		BAB7300F2476CA6700FF3C0B /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		BAB730112476CA6D00FF3C0B /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
+		BAB730132476CA7000FF3C0B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
+		BAB730152476CA7300FF3C0B /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Main.strings; sourceTree = "<group>"; };
+		BAB730192476CA8700FF3C0B /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		BAB730242476E13E00FF3C0B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BAB730262476F0C400FF3C0B /* NSFont+WLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFont+WLCalendar.h"; sourceTree = "<group>"; };
+		BAB730272476F0C400FF3C0B /* NSFont+WLCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFont+WLCalendar.m"; sourceTree = "<group>"; };
+		BAB730282476F0C400FF3C0B /* NSColor+WLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+WLCalendar.h"; sourceTree = "<group>"; };
+		BAB730292476F0C400FF3C0B /* NSColor+WLCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+WLCalendar.m"; sourceTree = "<group>"; };
+		BAD40DD9241B9921007AD60E /* WLCalendarMockupView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLCalendarMockupView.h; sourceTree = "<group>"; };
+		BAD40DDA241B9921007AD60E /* WLCalendarMockupView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLCalendarMockupView.m; sourceTree = "<group>"; };
+		BAD40DDC241B9B4D007AD60E /* WLDesktopMockupView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLDesktopMockupView.h; sourceTree = "<group>"; };
+		BAD40DDD241B9B4D007AD60E /* WLDesktopMockupView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLDesktopMockupView.m; sourceTree = "<group>"; };
+		BAD40DE22420C8F0007AD60E /* WLCalendarDateViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLCalendarDateViewController.h; sourceTree = "<group>"; };
+		BAD40DE32420C8F0007AD60E /* WLCalendarDateViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLCalendarDateViewController.m; sourceTree = "<group>"; };
+		BADC53252421452D004F2EAE /* WLCalendarWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowController.h; sourceTree = "<group>"; };
+		BADC53262421452D004F2EAE /* WLCalendarWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindowController.m; sourceTree = "<group>"; };
+		BADC534824295F21004F2EAE /* WLCalendarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLCalendarViewController.h; sourceTree = "<group>"; };
+		BADC534924295F21004F2EAE /* WLCalendarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLCalendarViewController.m; sourceTree = "<group>"; };
 		BAF67C8A16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+WLApplicationDefaults.h"; sourceTree = "<group>"; };
 		BAF67C8B16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+WLApplicationDefaults.m"; sourceTree = "<group>"; };
-		BAF67CB416D607270047FE2A /* WLClosableWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLClosableWindow.h; sourceTree = "<group>"; };
-		BAF67CB516D607270047FE2A /* WLClosableWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLClosableWindow.m; sourceTree = "<group>"; };
 		BAF67CB616D607270047FE2A /* WLCountGreaterThanOneTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCountGreaterThanOneTransformer.h; sourceTree = "<group>"; };
 		BAF67CB716D607270047FE2A /* WLCountGreaterThanOneTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCountGreaterThanOneTransformer.m; sourceTree = "<group>"; };
 		BAF67CB816D607280047FE2A /* WLGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGraphics.h; sourceTree = "<group>"; };
 		BAF67CB916D607280047FE2A /* WLGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGraphics.m; sourceTree = "<group>"; };
-		BAF67DBF16D622820047FE2A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/AboutPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DC116D622820047FE2A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DC316D622820047FE2A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DC516D622820047FE2A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LayoutPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DC716D622820047FE2A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PositionPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DC916D622820047FE2A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DD016D6229B0047FE2A /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/AboutPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DD116D6229D0047FE2A /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/AboutPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DD216D622A00047FE2A /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/AboutPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DD316D622A20047FE2A /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = ko.lproj/AboutPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DD416D622A40047FE2A /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/AboutPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DD516D622A60047FE2A /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = sv.lproj/AboutPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DD616D622B10047FE2A /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DD716D622B20047FE2A /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DD816D622B40047FE2A /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DD916D622B60047FE2A /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = ko.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DDA16D622B80047FE2A /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DDB16D622BA0047FE2A /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = sv.lproj/CalendarsPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DDC16D622BF0047FE2A /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DDD16D622C30047FE2A /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DDE16D622C60047FE2A /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DDF16D622C80047FE2A /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = ko.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DE016D622CA0047FE2A /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DE116D622CC0047FE2A /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = sv.lproj/GeneralPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DE216D622D00047FE2A /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/LayoutPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DE316D622D20047FE2A /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/LayoutPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DE416D622D40047FE2A /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/LayoutPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DE516D622D60047FE2A /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = ko.lproj/LayoutPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DE616D622D90047FE2A /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/LayoutPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DE716D622DB0047FE2A /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = sv.lproj/LayoutPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DE816D622DF0047FE2A /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/PositionPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DE916D622E10047FE2A /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/PositionPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DEA16D622E30047FE2A /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/PositionPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DEB16D622E50047FE2A /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = ko.lproj/PositionPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DEC16D622E70047FE2A /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/PositionPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DED16D622EA0047FE2A /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = sv.lproj/PositionPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DEE16D622ED0047FE2A /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DEF16D622EF0047FE2A /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DF016D622F10047FE2A /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DF116D622F20047FE2A /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = ko.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DF216D622F50047FE2A /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = sv.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67DF316D622F70047FE2A /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/ShortcutsPrefPaneView.xib; sourceTree = "<group>"; };
-		BAF67F9816D624C80047FE2A /* WLApplicationPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLApplicationPreferences.h; sourceTree = "<group>"; };
-		BAF67F9916D624C80047FE2A /* WLApplicationPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLApplicationPreferences.m; sourceTree = "<group>"; };
-		BAF67F9A16D624C90047FE2A /* WLApplicationPreferencesWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLApplicationPreferencesWindow.h; sourceTree = "<group>"; };
-		BAF67F9B16D624C90047FE2A /* WLApplicationPreferencesWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLApplicationPreferencesWindow.m; sourceTree = "<group>"; };
-		BAF67F9E16D624FE0047FE2A /* WLApplicationPreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WLApplicationPreferencesWindow.xib; sourceTree = "<group>"; };
+		BAFA72742374EA6A00A78F49 /* WLGeneralPreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLGeneralPreferencesViewController.h; sourceTree = "<group>"; };
+		BAFA72752374EA6A00A78F49 /* WLGeneralPreferencesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLGeneralPreferencesViewController.m; sourceTree = "<group>"; };
+		BAFA72772374F58600A78F49 /* WLCalendarsPreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLCalendarsPreferencesViewController.h; sourceTree = "<group>"; };
+		BAFA72782374F58600A78F49 /* WLCalendarsPreferencesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLCalendarsPreferencesViewController.m; sourceTree = "<group>"; };
 		BC59902DC94859E084E9608A /* WLCalendarWeekEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWeekEventsViewController.h; sourceTree = "<group>"; };
 		BC599075FDBA438B51AD8058 /* WLCalendarAllDayEventsLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarAllDayEventsLayer.h; sourceTree = "<group>"; };
 		BC5990857F56C36A9052CD73 /* WLCalendarAllDayEventsLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarAllDayEventsLayer.m; sourceTree = "<group>"; };
@@ -409,8 +374,6 @@
 		C8E878DC217142A700BA697E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E21A5F431403D2A4000B6634 /* WLCalendarReminderLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarReminderLayer.h; sourceTree = "<group>"; };
 		E21A5F441403D2A4000B6634 /* WLCalendarReminderLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarReminderLayer.m; sourceTree = "<group>"; };
-		E22C78A913FFCD9F00EE44C0 /* NSColor+WLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+WLCalendar.h"; sourceTree = "<group>"; };
-		E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+WLCalendar.m"; sourceTree = "<group>"; };
 		E23F746D14434DE40055D6CE /* WLHourRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLHourRange.h; sourceTree = "<group>"; };
 		E23F746E14434DE40055D6CE /* WLHourRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLHourRange.m; sourceTree = "<group>"; };
 		E252E9C315545AD300B64F5F /* WLGlassHudPopUpButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudPopUpButtonCell.h; sourceTree = "<group>"; };
@@ -431,55 +394,33 @@
 		E27936391324F05800BC5224 /* WLGlassHudWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudWindow.m; sourceTree = "<group>"; };
 		E27936441324F6E200BC5224 /* WLGlassHudWindowBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudWindowBackgroundView.h; sourceTree = "<group>"; };
 		E27936451324F6E200BC5224 /* WLGlassHudWindowBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudWindowBackgroundView.m; sourceTree = "<group>"; };
-		E286C00114068703008C0CDB /* NSFont+WLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFont+WLCalendar.h"; sourceTree = "<group>"; };
-		E286C00214068703008C0CDB /* NSFont+WLCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFont+WLCalendar.m"; sourceTree = "<group>"; };
 		E28C418C13F081A1005789DD /* defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = defaults.plist; sourceTree = "<group>"; };
-		E292D7DE13E9DCEA00433262 /* WLCalendarWindowBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowBackgroundView.h; sourceTree = "<group>"; };
-		E292D7DF13E9DCEA00433262 /* WLCalendarWindowBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindowBackgroundView.m; sourceTree = "<group>"; };
 		E2948D921401484B007122BC /* NSCalendar+WLWeekend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCalendar+WLWeekend.h"; sourceTree = "<group>"; };
 		E2948D931401484B007122BC /* NSCalendar+WLWeekend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+WLWeekend.m"; sourceTree = "<group>"; };
 		E2957E58152B117E00AE05E8 /* WLApplicationRunTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLApplicationRunTimer.h; sourceTree = "<group>"; };
 		E2957E59152B117E00AE05E8 /* WLApplicationRunTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLApplicationRunTimer.m; sourceTree = "<group>"; };
 		E29F38EC1319694C00A865D9 /* WLNewReminderWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNewReminderWindowController.h; sourceTree = "<group>"; };
 		E29F38ED1319694C00A865D9 /* WLNewReminderWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNewReminderWindowController.m; sourceTree = "<group>"; };
-		E2A61A7E140745FB0059F201 /* WLCalendarBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarBoxView.h; sourceTree = "<group>"; };
-		E2A61A7F140745FC0059F201 /* WLCalendarBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarBoxView.m; sourceTree = "<group>"; };
-		E2A701EB13EFE4C500A4BF3A /* WLCalendarDateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarDateView.h; sourceTree = "<group>"; };
-		E2A701EC13EFE4C500A4BF3A /* WLCalendarDateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarDateView.m; sourceTree = "<group>"; };
-		E2A7085C13F0427800A4BF3A /* WLCalendarDateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarDateViewController.h; sourceTree = "<group>"; };
-		E2A7085D13F0427800A4BF3A /* WLCalendarDateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarDateViewController.m; sourceTree = "<group>"; };
-		E2D6D8F7153335C8005F070D /* WLCalendarWindowBringToFrontAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowBringToFrontAnimation.h; sourceTree = "<group>"; };
-		E2D6D8F8153335C8005F070D /* WLCalendarWindowBringToFrontAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindowBringToFrontAnimation.m; sourceTree = "<group>"; };
 		E2E64B4C1402483500912A92 /* WLSoftEdgeLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLSoftEdgeLayer.h; sourceTree = "<group>"; };
 		E2E64B4D1402483500912A92 /* WLSoftEdgeLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLSoftEdgeLayer.m; sourceTree = "<group>"; };
 		E2E826C8145023A6007035E5 /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E2E826CA145023A6007035E5 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		E2E826CC145023A6007035E5 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
 		E2E826CE145023A6007035E5 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
 		E2E826DB145023BE007035E5 /* es */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E2E826DC145023BE007035E5 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		E2E826DD145023BE007035E5 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
 		E2E826DE145023BE007035E5 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
 		E2E826E3145023CD007035E5 /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E2E826E4145023CD007035E5 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		E2E826E5145023CD007035E5 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
 		E2E826E6145023CD007035E5 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
 		E2E826EB145023DA007035E5 /* ko */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E2E826EC145023DA007035E5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = ko.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		E2E826ED145023DA007035E5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = ko.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
 		E2E826EE145023DA007035E5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = ko.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
 		E2E826F3145023E5007035E5 /* ru */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E2E826F4145023E5007035E5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		E2E826F5145023E5007035E5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
 		E2E826F6145023E5007035E5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
 		E2E826FB145023EF007035E5 /* sv */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E2E826FC145023EF007035E5 /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = sv.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		E2E826FD145023EF007035E5 /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = sv.lproj/NewEventWindow.xib; sourceTree = "<group>"; };
 		E2E826FE145023EF007035E5 /* sv */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = sv; path = sv.lproj/NewTaskWindow.xib; sourceTree = "<group>"; };
-		E2F112DB13E6E263001C2B7B /* WLCalendarWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindow.h; sourceTree = "<group>"; };
-		E2F112DC13E6E263001C2B7B /* WLCalendarWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindow.m; sourceTree = "<group>"; };
-		E2F1133B13E70B4F001C2B7B /* WLCalendarWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCalendarWindowController.h; sourceTree = "<group>"; };
-		E2F1133C13E70B4F001C2B7B /* WLCalendarWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCalendarWindowController.m; sourceTree = "<group>"; };
 		E2FCE09B133F9264006E713F /* WLGlassHudDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLGlassHudDatePicker.h; sourceTree = "<group>"; };
 		E2FCE09C133F9264006E713F /* WLGlassHudDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLGlassHudDatePicker.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -547,25 +488,23 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BAB730092476CA5000FF3C0B /* Main.storyboard */,
+				BAF67DC216D622820047FE2A /* WLGeneralPreferencesViewController.xib */,
+				BAF67DC816D622820047FE2A /* WLShortcutsPreferencesViewController.xib */,
+				BAF67DC616D622820047FE2A /* WLPositioningPreferencesViewController.xib */,
+				BAF67DC416D622820047FE2A /* WLLayoutPreferencesViewController.xib */,
+				BAF67DC016D622820047FE2A /* WLCalendarsPreferencesViewController.xib */,
+				BAF67DBE16D622820047FE2A /* WLAboutPreferencesViewController.xib */,
+				E2E826CB145023A6007035E5 /* NewEventWindow.xib */,
+				E2E826CD145023A6007035E5 /* NewTaskWindow.xib */,
 				C8E878D52171427F00BA697E /* InfoPlist.strings */,
-				BA08A7E0167735130085F40C /* README */,
+				E2E826C7145023A6007035E5 /* Localizable.strings */,
+				BA9617F020E440EB00AACC98 /* Assets.xcassets */,
 				BA23660816F706B600779487 /* Blotter.entitlements */,
-				8D1107310486CEB800E47090 /* Blotter-Info.plist */,
+				BAB730242476E13E00FF3C0B /* Info.plist */,
 				E28C418C13F081A1005789DD /* defaults.plist */,
 				28F69A1A129C1CAA00D4BB97 /* Credits.rtf */,
 				28F69CF4129CC12100D4BB97 /* Licenses.rtf */,
-				BAF67F9E16D624FE0047FE2A /* WLApplicationPreferencesWindow.xib */,
-				BAF67DBE16D622820047FE2A /* AboutPrefPaneView.xib */,
-				BAF67DC016D622820047FE2A /* CalendarsPrefPaneView.xib */,
-				BAF67DC216D622820047FE2A /* GeneralPrefPaneView.xib */,
-				BAF67DC416D622820047FE2A /* LayoutPrefPaneView.xib */,
-				E2E826C7145023A6007035E5 /* Localizable.strings */,
-				E2E826C9145023A6007035E5 /* MainMenu.xib */,
-				E2E826CB145023A6007035E5 /* NewEventWindow.xib */,
-				E2E826CD145023A6007035E5 /* NewTaskWindow.xib */,
-				BAF67DC616D622820047FE2A /* PositionPrefPaneView.xib */,
-				BAF67DC816D622820047FE2A /* ShortcutsPrefPaneView.xib */,
-				BA9617F020E440EB00AACC98 /* Assets.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -573,8 +512,8 @@
 		BA1F51D11663B23700ABD662 /* General */ = {
 			isa = PBXGroup;
 			children = (
-				BA1F51D91663B2A400ABD662 /* WLGeneralPreferences.h */,
-				BA1F51DA1663B2A400ABD662 /* WLGeneralPreferences.m */,
+				BAFA72742374EA6A00A78F49 /* WLGeneralPreferencesViewController.h */,
+				BAFA72752374EA6A00A78F49 /* WLGeneralPreferencesViewController.m */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -582,8 +521,8 @@
 		BA1F51D41663B23F00ABD662 /* Shortcuts */ = {
 			isa = PBXGroup;
 			children = (
-				BA08A7591675EE4E0085F40C /* WLShortcutsPreferences.h */,
-				BA08A75A1675EE4E0085F40C /* WLShortcutsPreferences.m */,
+				BA1B33AF22EE96C600FFF0D1 /* WLShortcutsPreferencesViewController.h */,
+				BA1B33B022EE96C600FFF0D1 /* WLShortcutsPreferencesViewController.m */,
 			);
 			name = Shortcuts;
 			sourceTree = "<group>";
@@ -591,16 +530,12 @@
 		BA1F51D51663B24A00ABD662 /* Positioning */ = {
 			isa = PBXGroup;
 			children = (
-				BA08A78B167601790085F40C /* WLPositioningPaneView.h */,
-				BA08A78C167601790085F40C /* WLPositioningPaneView.m */,
-				BA08A77C1675FF160085F40C /* NSCursor+WLPositioningPreferences.h */,
-				BA08A77D1675FF160085F40C /* NSCursor+WLPositioningPreferences.m */,
 				BA08A7731675FE730085F40C /* WLScreensController.h */,
 				BA08A7741675FE730085F40C /* WLScreensController.m */,
-				BA08A7701675FE280085F40C /* WLCalendarWindowArrangementView.h */,
-				BA08A7711675FE280085F40C /* WLCalendarWindowArrangementView.m */,
-				BA08A76D1675FDE70085F40C /* WLPositioningPreferences.h */,
-				BA08A76E1675FDE70085F40C /* WLPositioningPreferences.m */,
+				BA08A7701675FE280085F40C /* WLFrameArrangementView.h */,
+				BA08A7711675FE280085F40C /* WLFrameArrangementView.m */,
+				BA2166782375F6B700F49FAE /* WLPositioningPreferencesViewController.h */,
+				BA2166792375F6B700F49FAE /* WLPositioningPreferencesViewController.m */,
 			);
 			name = Positioning;
 			sourceTree = "<group>";
@@ -608,30 +543,10 @@
 		BA1F51D61663B25300ABD662 /* Layout */ = {
 			isa = PBXGroup;
 			children = (
-				BA08A7A7167729E30085F40C /* WLLayoutAllDayView.h */,
-				BA08A7A8167729E30085F40C /* WLLayoutAllDayView.m */,
-				BA08A7A9167729E30085F40C /* WLLayoutCalendarWindowView.h */,
-				BA08A7AA167729E30085F40C /* WLLayoutCalendarWindowView.m */,
-				BA08A7AB167729E30085F40C /* WLLayoutDateView.h */,
-				BA08A7AC167729E30085F40C /* WLLayoutDateView.m */,
-				BA08A7AD167729E30085F40C /* WLLayoutDayView.h */,
-				BA08A7AE167729E30085F40C /* WLLayoutDayView.m */,
-				BA08A7AF167729E30085F40C /* WLLayoutInfoSplitView.h */,
-				BA08A7B0167729E30085F40C /* WLLayoutInfoSplitView.m */,
-				BA08A7B1167729E30085F40C /* WLLayoutRightNowView.h */,
-				BA08A7B2167729E40085F40C /* WLLayoutRightNowView.m */,
-				BA08A7B3167729E40085F40C /* WLLayoutRoundedAquaImageView.h */,
-				BA08A7B4167729E40085F40C /* WLLayoutRoundedAquaImageView.m */,
-				BA08A7B5167729E40085F40C /* WLLayoutSplitView.h */,
-				BA08A7B6167729E40085F40C /* WLLayoutSplitView.m */,
-				BA08A7B7167729E40085F40C /* WLLayoutTasksView.h */,
-				BA08A7B8167729E40085F40C /* WLLayoutTasksView.m */,
-				BA08A7B9167729E40085F40C /* WLLayoutView.h */,
-				BA08A7BA167729E40085F40C /* WLLayoutView.m */,
-				BA08A7BB167729E40085F40C /* WLLayoutWeekSplitView.h */,
-				BA08A7BC167729E50085F40C /* WLLayoutWeekSplitView.m */,
-				BA08A7A4167729A90085F40C /* WLLayoutPreferences.h */,
-				BA08A7A5167729A90085F40C /* WLLayoutPreferences.m */,
+				BA08A7B9167729E40085F40C /* WLLayoutArrangementView.h */,
+				BA08A7BA167729E40085F40C /* WLLayoutArrangementView.m */,
+				BA08A7A4167729A90085F40C /* WLLayoutPreferencesViewController.h */,
+				BA08A7A5167729A90085F40C /* WLLayoutPreferencesViewController.m */,
 			);
 			name = Layout;
 			sourceTree = "<group>";
@@ -641,8 +556,8 @@
 			children = (
 				BA08A97F167737730085F40C /* WLColorCheckboxCell.h */,
 				BA08A980167737730085F40C /* WLColorCheckboxCell.m */,
-				BA08A7E2167737730085F40C /* WLCalendarsPreferences.h */,
-				BA08A7E3167737730085F40C /* WLCalendarsPreferences.m */,
+				BAFA72772374F58600A78F49 /* WLCalendarsPreferencesViewController.h */,
+				BAFA72782374F58600A78F49 /* WLCalendarsPreferencesViewController.m */,
 			);
 			name = Calendars;
 			sourceTree = "<group>";
@@ -652,8 +567,8 @@
 			children = (
 				BA08AA4F167743A50085F40C /* WLPreferencesButtonCell.h */,
 				BA08AA50167743A50085F40C /* WLPreferencesButtonCell.m */,
-				BA08AA4B167743A50085F40C /* WLAboutPreferences.h */,
-				BA08AA4C167743A50085F40C /* WLAboutPreferences.m */,
+				BA1B33DC22EF7FDC00FFF0D1 /* WLAboutPreferencesViewController.h */,
+				BA1B33DD22EF7FDC00FFF0D1 /* WLAboutPreferencesViewController.m */,
 			);
 			name = About;
 			sourceTree = "<group>";
@@ -753,14 +668,10 @@
 				E253574F13DC884D0010A2ED /* NSDate+WLDayBoundaries.m */,
 				E2957E58152B117E00AE05E8 /* WLApplicationRunTimer.h */,
 				E2957E59152B117E00AE05E8 /* WLApplicationRunTimer.m */,
-				E2A7085C13F0427800A4BF3A /* WLCalendarDateViewController.h */,
-				E2A7085D13F0427800A4BF3A /* WLCalendarDateViewController.m */,
-				E2F1133B13E70B4F001C2B7B /* WLCalendarWindowController.h */,
-				E2F1133C13E70B4F001C2B7B /* WLCalendarWindowController.m */,
-				BAF67CB416D607270047FE2A /* WLClosableWindow.h */,
-				BAF67CB516D607270047FE2A /* WLClosableWindow.m */,
 				BAF67CB616D607270047FE2A /* WLCountGreaterThanOneTransformer.h */,
 				BAF67CB716D607270047FE2A /* WLCountGreaterThanOneTransformer.m */,
+				BA0114822419845600CF2AFC /* WLStringToUUIDTransformer.h */,
+				BA0114832419845600CF2AFC /* WLStringToUUIDTransformer.m */,
 				BAF67CB816D607280047FE2A /* WLGraphics.h */,
 				BAF67CB916D607280047FE2A /* WLGraphics.m */,
 				E23F746D14434DE40055D6CE /* WLHourRange.h */,
@@ -775,6 +686,8 @@
 				BA731EE1210A7F2A0019BE8B /* WLMacro.h */,
 				BA7A22DE219A3DE50078CF86 /* WLAnalytics.h */,
 				BA7A22DF219A3DE50078CF86 /* WLAnalytics.m */,
+				BA5D90A52465B52200CF1CE6 /* WLLogNames.h */,
+				BA5D90A62465B52200CF1CE6 /* WLLogNames.m */,
 			);
 			name = Blotter;
 			sourceTree = "<group>";
@@ -795,39 +708,27 @@
 		BA807E8D164545950033B85B /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
-				BA807E901645459D0033B85B /* IKApplicationPreferences */,
 				BA1F51D11663B23700ABD662 /* General */,
 				BA1F51D41663B23F00ABD662 /* Shortcuts */,
 				BA1F51D51663B24A00ABD662 /* Positioning */,
 				BA1F51D61663B25300ABD662 /* Layout */,
 				BA1F51D71663B25A00ABD662 /* Calendars */,
 				BA1F51D81663B26000ABD662 /* About */,
+				BAD40DDC241B9B4D007AD60E /* WLDesktopMockupView.h */,
+				BAD40DDD241B9B4D007AD60E /* WLDesktopMockupView.m */,
+				BAD40DD9241B9921007AD60E /* WLCalendarMockupView.h */,
+				BAD40DDA241B9921007AD60E /* WLCalendarMockupView.m */,
+				BAAC022922EA900500D20F7F /* WLPreferencesWindowController.h */,
+				BAAC022A22EA900500D20F7F /* WLPreferencesWindowController.m */,
+				BA1B33DF22F0C25F00FFF0D1 /* WLPreferencesTabViewController.h */,
+				BA1B33E022F0C25F00FFF0D1 /* WLPreferencesTabViewController.m */,
+				BA8DF1CF23A45DBC00AE44B2 /* WLPreferencesViewController.h */,
+				BA8DF1D023A45DBC00AE44B2 /* WLPreferencesViewController.m */,
 				BAF67C8A16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.h */,
 				BAF67C8B16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.m */,
-				BA08A77F1675FF390085F40C /* NSColor+WLPrefColors.h */,
-				BA08A7801675FF390085F40C /* NSColor+WLPrefColors.m */,
-				BAF67F9816D624C80047FE2A /* WLApplicationPreferences.h */,
-				BAF67F9916D624C80047FE2A /* WLApplicationPreferences.m */,
-				BAF67F9A16D624C90047FE2A /* WLApplicationPreferencesWindow.h */,
-				BAF67F9B16D624C90047FE2A /* WLApplicationPreferencesWindow.m */,
-				BA08A7791675FEF80085F40C /* WLBlockLayoutManager.h */,
-				BA08A77A1675FEF80085F40C /* WLBlockLayoutManager.m */,
-				BA08A7761675FEE40085F40C /* WLNinePartBlockLayer.h */,
-				BA08A7771675FEE50085F40C /* WLNinePartBlockLayer.m */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";
-		};
-		BA807E901645459D0033B85B /* IKApplicationPreferences */ = {
-			isa = PBXGroup;
-			children = (
-				BA81A832164548070058EB16 /* IKApplicationPreferences.strings */,
-				BA807F0B1645460C0033B85B /* IKApplicationPreferences.h */,
-				BA807F0C1645460C0033B85B /* IKApplicationPreferences.m */,
-				BA807F0E1645460C0033B85B /* IKPreferencesRepresentation.h */,
-			);
-			path = IKApplicationPreferences;
-			sourceTree = SOURCE_ROOT;
 		};
 		BA85BA75218158BE00CAAFC7 /* BlotterTests */ = {
 			isa = PBXGroup;
@@ -840,6 +741,15 @@
 				BA85BA78218158BE00CAAFC7 /* Info.plist */,
 			);
 			path = BlotterTests;
+			sourceTree = "<group>";
+		};
+		BAD40DE12420C8A7007AD60E /* Date */ = {
+			isa = PBXGroup;
+			children = (
+				BAD40DE22420C8F0007AD60E /* WLCalendarDateViewController.h */,
+				BAD40DE32420C8F0007AD60E /* WLCalendarDateViewController.m */,
+			);
+			name = Date;
 			sourceTree = "<group>";
 		};
 		BC5984E917510297F1E282FD /* Calendar Data Engine */ = {
@@ -858,22 +768,19 @@
 		E27196B713C5A19E008E5C43 /* Calendar Window */ = {
 			isa = PBXGroup;
 			children = (
+				BAD40DE12420C8A7007AD60E /* Date */,
 				BA526CF016F882560024B2FB /* Events */,
 				BA526CED16F8819D0024B2FB /* Reminders */,
-				E2A701EB13EFE4C500A4BF3A /* WLCalendarDateView.h */,
-				E2A701EC13EFE4C500A4BF3A /* WLCalendarDateView.m */,
-				E2A61A7E140745FB0059F201 /* WLCalendarBoxView.h */,
-				E2A61A7F140745FC0059F201 /* WLCalendarBoxView.m */,
-				E292D7DE13E9DCEA00433262 /* WLCalendarWindowBackgroundView.h */,
-				E292D7DF13E9DCEA00433262 /* WLCalendarWindowBackgroundView.m */,
-				E2F112DB13E6E263001C2B7B /* WLCalendarWindow.h */,
-				E2F112DC13E6E263001C2B7B /* WLCalendarWindow.m */,
-				E22C78A913FFCD9F00EE44C0 /* NSColor+WLCalendar.h */,
-				E22C78AA13FFCD9F00EE44C0 /* NSColor+WLCalendar.m */,
-				E286C00114068703008C0CDB /* NSFont+WLCalendar.h */,
-				E286C00214068703008C0CDB /* NSFont+WLCalendar.m */,
-				E2D6D8F7153335C8005F070D /* WLCalendarWindowBringToFrontAnimation.h */,
-				E2D6D8F8153335C8005F070D /* WLCalendarWindowBringToFrontAnimation.m */,
+				BAB730282476F0C400FF3C0B /* NSColor+WLCalendar.h */,
+				BAB730292476F0C400FF3C0B /* NSColor+WLCalendar.m */,
+				BAB730262476F0C400FF3C0B /* NSFont+WLCalendar.h */,
+				BAB730272476F0C400FF3C0B /* NSFont+WLCalendar.m */,
+				BADC534824295F21004F2EAE /* WLCalendarViewController.h */,
+				BADC534924295F21004F2EAE /* WLCalendarViewController.m */,
+				BADC53252421452D004F2EAE /* WLCalendarWindowController.h */,
+				BADC53262421452D004F2EAE /* WLCalendarWindowController.m */,
+				BA5D90A2245C9F1A00CF1CE6 /* WLCalendarViewLayout.h */,
+				BA5D90A3245C9F1A00CF1CE6 /* WLCalendarViewLayout.m */,
 			);
 			name = "Calendar Window";
 			sourceTree = "<group>";
@@ -984,7 +891,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = WireLoad;
 				TargetAttributes = {
 					8D1107260486CEB800E47090 = {
@@ -1031,44 +938,17 @@
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Blotter" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
-				English,
-				Japanese,
-				French,
-				German,
 				ru,
-				se,
 				es,
 				de,
-				kr,
 				fr,
 				sv,
 				ko,
-				"zh-Hans",
-				ca,
-				cs,
-				da,
-				el,
-				"en-GB",
 				en,
-				fi,
-				he,
-				hr,
-				hu,
-				it,
 				ja,
-				"nb-NO",
-				nl,
-				pl,
-				pt,
-				ro,
-				sk,
-				th,
-				tr,
-				uk,
-				"zh-Hant",
 				Base,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* Deskboard */;
@@ -1092,20 +972,17 @@
 				28F69CF5129CC12100D4BB97 /* Licenses.rtf in Resources */,
 				E28C418D13F081A1005789DD /* defaults.plist in Resources */,
 				E2E826CF145023A6007035E5 /* Localizable.strings in Resources */,
-				E2E826D0145023A6007035E5 /* MainMenu.xib in Resources */,
 				E2E826D1145023A6007035E5 /* NewEventWindow.xib in Resources */,
 				E2E826D2145023A6007035E5 /* NewTaskWindow.xib in Resources */,
 				C8E878D32171427F00BA697E /* InfoPlist.strings in Resources */,
-				BA81A834164548070058EB16 /* IKApplicationPreferences.strings in Resources */,
-				BA08A7E1167735130085F40C /* README in Resources */,
-				BAF67DCA16D622820047FE2A /* AboutPrefPaneView.xib in Resources */,
-				BAF67DCB16D622820047FE2A /* CalendarsPrefPaneView.xib in Resources */,
-				BAF67DCC16D622820047FE2A /* GeneralPrefPaneView.xib in Resources */,
-				BAF67DCD16D622820047FE2A /* LayoutPrefPaneView.xib in Resources */,
-				BAF67DCE16D622820047FE2A /* PositionPrefPaneView.xib in Resources */,
-				BAF67DCF16D622820047FE2A /* ShortcutsPrefPaneView.xib in Resources */,
+				BAF67DCA16D622820047FE2A /* WLAboutPreferencesViewController.xib in Resources */,
+				BAF67DCB16D622820047FE2A /* WLCalendarsPreferencesViewController.xib in Resources */,
+				BAF67DCC16D622820047FE2A /* WLGeneralPreferencesViewController.xib in Resources */,
+				BAF67DCD16D622820047FE2A /* WLLayoutPreferencesViewController.xib in Resources */,
+				BAF67DCE16D622820047FE2A /* WLPositioningPreferencesViewController.xib in Resources */,
+				BAF67DCF16D622820047FE2A /* WLShortcutsPreferencesViewController.xib in Resources */,
 				BA9617F120E440EB00AACC98 /* Assets.xcassets in Resources */,
-				BAF67F9F16D624FE0047FE2A /* WLApplicationPreferencesWindow.xib in Resources */,
+				BAB730072476CA5000FF3C0B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1171,7 +1048,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BADC53272421452D004F2EAE /* WLCalendarWindowController.m in Sources */,
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				BA0114842419845600CF2AFC /* WLStringToUUIDTransformer.m in Sources */,
 				256AC3DA0F4B6AC300CF3369 /* DeskboardAppDelegate.m in Sources */,
 				E2596D731316C8C100A8B15E /* WLNewEventWindowController.m in Sources */,
 				E29F38EE1319694C00A865D9 /* WLNewReminderWindowController.m in Sources */,
@@ -1183,56 +1062,34 @@
 				E27196BB13C5A1C3008E5C43 /* WLCalendarRemindersView.m in Sources */,
 				E278ECF413C8B73D00B327EB /* WLCalendarRemindersViewController.m in Sources */,
 				E253575013DC884D0010A2ED /* NSDate+WLDayBoundaries.m in Sources */,
-				E2F112DD13E6E263001C2B7B /* WLCalendarWindow.m in Sources */,
-				E2F1133D13E70B4F001C2B7B /* WLCalendarWindowController.m in Sources */,
-				E292D7E013E9DCEA00433262 /* WLCalendarWindowBackgroundView.m in Sources */,
-				E2A701ED13EFE4C500A4BF3A /* WLCalendarDateView.m in Sources */,
-				E2A7085E13F0427800A4BF3A /* WLCalendarDateViewController.m in Sources */,
-				E22C78AB13FFCD9F00EE44C0 /* NSColor+WLCalendar.m in Sources */,
+				BA1B33E122F0C25F00FFF0D1 /* WLPreferencesTabViewController.m in Sources */,
 				E2948D941401484B007122BC /* NSCalendar+WLWeekend.m in Sources */,
+				BA21667A2375F6B700F49FAE /* WLPositioningPreferencesViewController.m in Sources */,
+				BAD40DDB241B9921007AD60E /* WLCalendarMockupView.m in Sources */,
 				E2E64B4E1402483500912A92 /* WLSoftEdgeLayer.m in Sources */,
 				E21A5F451403D2A4000B6634 /* WLCalendarReminderLayer.m in Sources */,
-				E286C00314068703008C0CDB /* NSFont+WLCalendar.m in Sources */,
-				E2A61A80140745FC0059F201 /* WLCalendarBoxView.m in Sources */,
 				E23F746F14434DE40055D6CE /* WLHourRange.m in Sources */,
 				E2957E5A152B117E00AE05E8 /* WLApplicationRunTimer.m in Sources */,
-				E2D6D8F9153335C8005F070D /* WLCalendarWindowBringToFrontAnimation.m in Sources */,
+				BAD40DDE241B9B4D007AD60E /* WLDesktopMockupView.m in Sources */,
+				BADC534A24295F21004F2EAE /* WLCalendarViewController.m in Sources */,
+				BA011489241AD05E00CF2AFC /* WLLayoutPreferencesViewController.m in Sources */,
 				E252E9C515545AD300B64F5F /* WLGlassHudPopUpButtonCell.m in Sources */,
 				BA7A22E0219A3DE50078CF86 /* WLAnalytics.m in Sources */,
-				BA807F0F1645460C0033B85B /* IKApplicationPreferences.m in Sources */,
-				BA1F51DB1663B2A400ABD662 /* WLGeneralPreferences.m in Sources */,
-				BA08A75B1675EE4E0085F40C /* WLShortcutsPreferences.m in Sources */,
-				BA08A76F1675FDE70085F40C /* WLPositioningPreferences.m in Sources */,
-				BA08A7721675FE280085F40C /* WLCalendarWindowArrangementView.m in Sources */,
+				BA08A7721675FE280085F40C /* WLFrameArrangementView.m in Sources */,
 				BA08A7751675FE730085F40C /* WLScreensController.m in Sources */,
-				BA08A7781675FEE50085F40C /* WLNinePartBlockLayer.m in Sources */,
-				BA08A77B1675FEF90085F40C /* WLBlockLayoutManager.m in Sources */,
-				BA08A77E1675FF160085F40C /* NSCursor+WLPositioningPreferences.m in Sources */,
-				BA08A7811675FF390085F40C /* NSColor+WLPrefColors.m in Sources */,
-				BA08A78D167601790085F40C /* WLPositioningPaneView.m in Sources */,
-				BA08A7A6167729A90085F40C /* WLLayoutPreferences.m in Sources */,
-				BA08A7BD167729E50085F40C /* WLLayoutAllDayView.m in Sources */,
-				BA08A7BE167729E50085F40C /* WLLayoutCalendarWindowView.m in Sources */,
-				BA08A7BF167729E50085F40C /* WLLayoutDateView.m in Sources */,
-				BA08A7C0167729E50085F40C /* WLLayoutDayView.m in Sources */,
-				BA08A7C1167729E50085F40C /* WLLayoutInfoSplitView.m in Sources */,
-				BA08A7C2167729E50085F40C /* WLLayoutRightNowView.m in Sources */,
-				BA08A7C3167729E50085F40C /* WLLayoutRoundedAquaImageView.m in Sources */,
-				BA08A7C4167729E50085F40C /* WLLayoutSplitView.m in Sources */,
-				BA08A7C5167729E50085F40C /* WLLayoutTasksView.m in Sources */,
-				BA08A7C6167729E50085F40C /* WLLayoutView.m in Sources */,
-				BA08A7C7167729E50085F40C /* WLLayoutWeekSplitView.m in Sources */,
-				BA08A981167737730085F40C /* WLCalendarsPreferences.m in Sources */,
+				BAFA72792374F58600A78F49 /* WLCalendarsPreferencesViewController.m in Sources */,
+				BAAC022B22EA900500D20F7F /* WLPreferencesWindowController.m in Sources */,
+				BA08A7C6167729E50085F40C /* WLLayoutArrangementView.m in Sources */,
 				BA08AA34167737730085F40C /* WLColorCheckboxCell.m in Sources */,
-				BA08AA51167743A50085F40C /* WLAboutPreferences.m in Sources */,
 				BA08AA53167743A50085F40C /* WLPreferencesButtonCell.m in Sources */,
+				BA5D90A4245C9F1A00CF1CE6 /* WLCalendarViewLayout.m in Sources */,
 				BA105998168DAD8F00A3DDF5 /* WLCalendarEventsController.m in Sources */,
 				BAF67C8C16D603290047FE2A /* NSUserDefaults+WLApplicationDefaults.m in Sources */,
-				BAF67CBB16D607280047FE2A /* WLClosableWindow.m in Sources */,
 				BAF67CBC16D607280047FE2A /* WLCountGreaterThanOneTransformer.m in Sources */,
 				BAF67CBD16D607280047FE2A /* WLGraphics.m in Sources */,
-				BAF67F9C16D624C90047FE2A /* WLApplicationPreferences.m in Sources */,
-				BAF67F9D16D624C90047FE2A /* WLApplicationPreferencesWindow.m in Sources */,
+				BAB7302B2476F0C400FF3C0B /* NSColor+WLCalendar.m in Sources */,
+				BA1B33DE22EF7FDC00FFF0D1 /* WLAboutPreferencesViewController.m in Sources */,
+				BAD40DE72420ECCF007AD60E /* WLCalendarDateViewController.m in Sources */,
 				BC5994A0A3B188B70572162C /* WLCalendarRemindersController.m in Sources */,
 				BC59962B9F05EFB31F00E8AC /* WLCalendarsController.m in Sources */,
 				BC59994C6338E92FCB036C10 /* WLCalendarEventsStorage.m in Sources */,
@@ -1242,9 +1099,14 @@
 				BC59940942A17B4798FCA3E4 /* WLCalendarWeekEventsViewController.m in Sources */,
 				BC599F40F71330FB583F52A2 /* WLCalendarTimeRulerMarkerLayer.m in Sources */,
 				BC5991C3493EE347942823FD /* WLCalendarAllDayEventsLayer.m in Sources */,
+				BAB7302A2476F0C400FF3C0B /* NSFont+WLCalendar.m in Sources */,
 				BC5993B71E2EDB1F83491648 /* WLCalendarTimeRulerLayer.m in Sources */,
+				BA8DF1D123A45DBC00AE44B2 /* WLPreferencesViewController.m in Sources */,
+				BAFA72762374EA6A00A78F49 /* WLGeneralPreferencesViewController.m in Sources */,
+				BA1B33B122EE96C600FFF0D1 /* WLShortcutsPreferencesViewController.m in Sources */,
 				BC599AB4A76677D3767F215A /* WLCalendarDayEventsBackgroundLayer.m in Sources */,
 				BC599C624B5E265A7EBB16E3 /* WLCalendarWeekView.m in Sources */,
+				BA5D90A72465B52200CF1CE6 /* WLLogNames.m in Sources */,
 				BC5997B3EB9782C3E77A2BFB /* WLCalendarEventLayer.m in Sources */,
 				BC5997F3D69F5BF811DAD1A9 /* WLCalendarDayEventsLayer.m in Sources */,
 				BC5992DF714338D62CE3D801 /* WLCalendarTimeIndicatorLayer.m in Sources */,
@@ -1308,109 +1170,109 @@
 			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
-		BA81A832164548070058EB16 /* IKApplicationPreferences.strings */ = {
+		BAB730092476CA5000FF3C0B /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				BA81A833164548070058EB16 /* en */,
-				BA81A8351645480B0058EB16 /* de */,
-				BA81A8361645480D0058EB16 /* es */,
-				BA81A8371645480F0058EB16 /* fr */,
-				BA81A838164548110058EB16 /* ko */,
-				BA81A839164548120058EB16 /* ru */,
-				BA81A83A164548140058EB16 /* sv */,
-				289D40EE18117C3D009EAD73 /* ja */,
+				BAB730082476CA5000FF3C0B /* Base */,
+				BAB7300B2476CA5F00FF3C0B /* de */,
+				BAB7300D2476CA6200FF3C0B /* es */,
+				BAB7300F2476CA6700FF3C0B /* fr */,
+				BAB730112476CA6D00FF3C0B /* ko */,
+				BAB730132476CA7000FF3C0B /* ru */,
+				BAB730152476CA7300FF3C0B /* sv */,
+				BAB730192476CA8700FF3C0B /* ja */,
 			);
-			name = IKApplicationPreferences.strings;
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		BAF67DBE16D622820047FE2A /* AboutPrefPaneView.xib */ = {
+		BAF67DBE16D622820047FE2A /* WLAboutPreferencesViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				BAF67DBF16D622820047FE2A /* en */,
-				BAF67DD016D6229B0047FE2A /* de */,
-				BAF67DD116D6229D0047FE2A /* es */,
-				BAF67DD216D622A00047FE2A /* fr */,
-				BAF67DD316D622A20047FE2A /* ko */,
-				BAF67DD416D622A40047FE2A /* ru */,
-				BAF67DD516D622A60047FE2A /* sv */,
-				28B3CDD1180D7C7C004CF0DE /* ja */,
+				BA6955DA22E619E90047152A /* Base */,
+				BA6955DB22E628560047152A /* de */,
+				BA6955DC22E628690047152A /* ru */,
+				BA6955DD22E6286E0047152A /* es */,
+				BA6955DE22E628720047152A /* fr */,
+				BA6955DF22E628760047152A /* sv */,
+				BA6955E022E6287A0047152A /* ko */,
+				BA6955E122E6287F0047152A /* ja */,
 			);
-			name = AboutPrefPaneView.xib;
+			name = WLAboutPreferencesViewController.xib;
 			sourceTree = "<group>";
 		};
-		BAF67DC016D622820047FE2A /* CalendarsPrefPaneView.xib */ = {
+		BAF67DC016D622820047FE2A /* WLCalendarsPreferencesViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				BAF67DC116D622820047FE2A /* en */,
-				BAF67DD616D622B10047FE2A /* de */,
-				BAF67DD716D622B20047FE2A /* es */,
-				BAF67DD816D622B40047FE2A /* fr */,
-				BAF67DD916D622B60047FE2A /* ko */,
-				BAF67DDA16D622B80047FE2A /* ru */,
-				BAF67DDB16D622BA0047FE2A /* sv */,
-				28B3CDD2180D7C7C004CF0DE /* ja */,
+				BA4C212322E8BC8F00D0C973 /* Base */,
+				BA4C212622E8BD8100D0C973 /* ru */,
+				BA4C212722E8BD8500D0C973 /* es */,
+				BA4C212822E8BD8800D0C973 /* de */,
+				BA4C212922E8BD8C00D0C973 /* fr */,
+				BA4C212A22E8BD9000D0C973 /* sv */,
+				BA4C212B22E8BD9300D0C973 /* ko */,
+				BA4C212D22E8BD9B00D0C973 /* ja */,
 			);
-			name = CalendarsPrefPaneView.xib;
+			name = WLCalendarsPreferencesViewController.xib;
 			sourceTree = "<group>";
 		};
-		BAF67DC216D622820047FE2A /* GeneralPrefPaneView.xib */ = {
+		BAF67DC216D622820047FE2A /* WLGeneralPreferencesViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				BAF67DC316D622820047FE2A /* en */,
-				BAF67DDC16D622BF0047FE2A /* de */,
-				BAF67DDD16D622C30047FE2A /* es */,
-				BAF67DDE16D622C60047FE2A /* fr */,
-				BAF67DDF16D622C80047FE2A /* ko */,
-				BAF67DE016D622CA0047FE2A /* ru */,
-				BAF67DE116D622CC0047FE2A /* sv */,
-				28B3CDD5180D7C7C004CF0DE /* ja */,
+				BA4C214422E8E19200D0C973 /* Base */,
+				BA4C214522E8ED1200D0C973 /* ru */,
+				BA4C214622E8ED1600D0C973 /* es */,
+				BA4C214722E8ED1A00D0C973 /* de */,
+				BA4C214822E8ED1F00D0C973 /* fr */,
+				BA4C214922E8ED2400D0C973 /* sv */,
+				BA4C214A22E8ED2900D0C973 /* ko */,
+				BA4C214B22E8ED2E00D0C973 /* ja */,
 			);
-			name = GeneralPrefPaneView.xib;
+			name = WLGeneralPreferencesViewController.xib;
 			sourceTree = "<group>";
 		};
-		BAF67DC416D622820047FE2A /* LayoutPrefPaneView.xib */ = {
+		BAF67DC416D622820047FE2A /* WLLayoutPreferencesViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				BAF67DC516D622820047FE2A /* en */,
-				BAF67DE216D622D00047FE2A /* de */,
-				BAF67DE316D622D20047FE2A /* es */,
-				BAF67DE416D622D40047FE2A /* fr */,
-				BAF67DE516D622D60047FE2A /* ko */,
-				BAF67DE616D622D90047FE2A /* ru */,
-				BAF67DE716D622DB0047FE2A /* sv */,
-				28B3CDD6180D7C7C004CF0DE /* ja */,
+				BA4C213022E8D48200D0C973 /* Base */,
+				BA4C213122E8D9FA00D0C973 /* ru */,
+				BA4C213222E8D9FF00D0C973 /* es */,
+				BA4C213322E8DA0300D0C973 /* de */,
+				BA4C213422E8DA0700D0C973 /* fr */,
+				BA4C213522E8DA0B00D0C973 /* sv */,
+				BA4C213622E8DA0F00D0C973 /* ko */,
+				BA4C213722E8DA1500D0C973 /* ja */,
 			);
-			name = LayoutPrefPaneView.xib;
+			name = WLLayoutPreferencesViewController.xib;
 			sourceTree = "<group>";
 		};
-		BAF67DC616D622820047FE2A /* PositionPrefPaneView.xib */ = {
+		BAF67DC616D622820047FE2A /* WLPositioningPreferencesViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				BAF67DC716D622820047FE2A /* en */,
-				BAF67DE816D622DF0047FE2A /* de */,
-				BAF67DE916D622E10047FE2A /* es */,
-				BAF67DEA16D622E30047FE2A /* fr */,
-				BAF67DEB16D622E50047FE2A /* ko */,
-				BAF67DEC16D622E70047FE2A /* ru */,
-				BAF67DED16D622EA0047FE2A /* sv */,
-				28B3CDDB180D7C7C004CF0DE /* ja */,
+				BA4C213A22E8DBF400D0C973 /* Base */,
+				BA4C213B22E8DF6000D0C973 /* ru */,
+				BA4C213C22E8DF6500D0C973 /* es */,
+				BA4C213D22E8DF6900D0C973 /* de */,
+				BA4C213E22E8DF6D00D0C973 /* fr */,
+				BA4C213F22E8DF7100D0C973 /* sv */,
+				BA4C214022E8DF7500D0C973 /* ko */,
+				BA4C214122E8DF7A00D0C973 /* ja */,
 			);
-			name = PositionPrefPaneView.xib;
+			name = WLPositioningPreferencesViewController.xib;
 			sourceTree = "<group>";
 		};
-		BAF67DC816D622820047FE2A /* ShortcutsPrefPaneView.xib */ = {
+		BAF67DC816D622820047FE2A /* WLShortcutsPreferencesViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				BAF67DC916D622820047FE2A /* en */,
-				BAF67DEE16D622ED0047FE2A /* de */,
-				BAF67DEF16D622EF0047FE2A /* es */,
-				BAF67DF016D622F10047FE2A /* fr */,
-				BAF67DF116D622F20047FE2A /* ko */,
-				BAF67DF216D622F50047FE2A /* sv */,
-				BAF67DF316D622F70047FE2A /* ru */,
-				28B3CDDC180D7C7C004CF0DE /* ja */,
+				BA8794D522E7FCDF00F46966 /* Base */,
+				BA8794D822E8106800F46966 /* de */,
+				BA8794D922E8107000F46966 /* ru */,
+				BA8794DA22E8107400F46966 /* es */,
+				BA8794DB22E8107700F46966 /* fr */,
+				BA8794DC22E8107B00F46966 /* sv */,
+				BA8794DD22E8107E00F46966 /* ko */,
+				BA8794DE22E8108200F46966 /* ja */,
 			);
-			name = ShortcutsPrefPaneView.xib;
+			name = WLShortcutsPreferencesViewController.xib;
 			sourceTree = "<group>";
 		};
 		C8E878D52171427F00BA697E /* InfoPlist.strings */ = {
@@ -1441,21 +1303,6 @@
 				28B3CDD7180D7C7C004CF0DE /* ja */,
 			);
 			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		E2E826C9145023A6007035E5 /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E2E826CA145023A6007035E5 /* de */,
-				E2E826DC145023BE007035E5 /* es */,
-				E2E826E4145023CD007035E5 /* fr */,
-				E2E826EC145023DA007035E5 /* ko */,
-				E2E826F4145023E5007035E5 /* ru */,
-				E2E826FC145023EF007035E5 /* sv */,
-				BA08A6E71675DCA00085F40C /* en */,
-				28B3CDD8180D7C7C004CF0DE /* ja */,
-			);
-			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 		E2E826CB145023A6007035E5 /* NewEventWindow.xib */ = {
@@ -1690,6 +1537,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_GCD_PERFORMANCE = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1741,7 +1589,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
-				VALID_ARCHS = x86_64;
 			};
 			name = Archiving;
 		};
@@ -1753,9 +1600,10 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 27;
 				DEVELOPMENT_TEAM = 438Z2G77U3;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = "Blotter-Info.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.blotter.mac;
 				PRODUCT_NAME = Blotter;
@@ -1771,9 +1619,10 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 27;
 				DEVELOPMENT_TEAM = 438Z2G77U3;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = "Blotter-Info.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.blotter.mac;
 				PRODUCT_NAME = Blotter;
@@ -1789,9 +1638,10 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 27;
 				DEVELOPMENT_TEAM = 438Z2G77U3;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = "Blotter-Info.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.wireload.blotter.mac;
 				PRODUCT_NAME = Blotter;
@@ -1803,6 +1653,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_GCD_PERFORMANCE = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1857,7 +1708,6 @@
 				PROVISIONING_PROFILE = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = macosx;
-				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
 		};
@@ -1865,6 +1715,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_GCD_PERFORMANCE = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1916,7 +1767,6 @@
 				PROVISIONING_PROFILE = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = macosx;
-				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};

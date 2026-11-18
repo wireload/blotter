@@ -11,9 +11,9 @@
 
 @interface NSFont (WLCalendar)
 
-+ (CTFontRef)WL_columnTitleFont;
++ (NSFont *)WL_columnTitleFont;
 
-+ (CTFontRef)WL_columnBoldTitleFont;
++ (NSFont *)WL_columnBoldTitleFont;
 
 
 + (NSFont *)WL_dateViewMonthDayFont;
@@ -26,14 +26,14 @@
 + (NSFont *)WL_boxViewTitleFont;
 
 
-+ (CTFontRef)WL_eventTitleFont;
++ (NSFont *)WL_eventTitleFont;
 
-+ (CTFontRef)WL_eventLocationFont;
-
-
-+ (CTFontRef)WL_taskFont;
++ (NSFont *)WL_eventLocationFont;
 
 
-+ (CTFontRef)WL_timeRulerMarkerFont;
++ (NSFont *)WL_taskFont;
+
+
++ (NSFont *)WL_timeRulerMarkerFont;
 
 @end

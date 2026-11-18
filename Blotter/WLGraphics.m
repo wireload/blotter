@@ -9,40 +9,214 @@
 #import "WLGraphics.h"
 
 
-void WLRecessedBoxShadow(NSRect frame)
-{
-    static dispatch_once_t onceToken;
-    static NSImage *Images[9];
-    dispatch_once(&onceToken, ^{
-        Images[0] = [NSImage imageNamed:@"recessed-box-shadow-top-left"];
-        Images[1] = [NSImage imageNamed:@"recessed-box-shadow-top-centre"];
-        Images[2] = [NSImage imageNamed:@"recessed-box-shadow-top-right"];
-        Images[3] = [NSImage imageNamed:@"recessed-box-shadow-centre-left"];
-        Images[4] = [NSImage imageNamed:@"recessed-box-shadow-centre-centre"];
-        Images[5] = [NSImage imageNamed:@"recessed-box-shadow-centre-right"];
-        Images[6] = [NSImage imageNamed:@"recessed-box-shadow-bottom-left"];
-        Images[7] = [NSImage imageNamed:@"recessed-box-shadow-bottom-centre"];
-        Images[8] = [NSImage imageNamed:@"recessed-box-shadow-bottom-right"];
-    });
+const NSAlignmentOptions WLAlignTiebreakerInward = 1ULL << 32;
+const NSAlignmentOptions WLAlignTiebreakerOutward = 1ULL << 33;
 
-    [NSGraphicsContext saveGraphicsState];
-    NSDrawNinePartImage(frame,
-                        Images[0],
-                        Images[1],
-                        Images[2],
-                        Images[3],
-                        Images[4],
-                        Images[5],
-                        Images[6],
-                        Images[7],
-                        Images[8],
-                        NSCompositeSourceOver,
-                        1.0,
-                        NO);
-    [NSGraphicsContext restoreGraphicsState];
+
+NSRect WLIntegralRect(NSRect aRect, NSAlignmentOptions anOptions, CGFloat aMultiple)
+{
+    static const CGFloat Tolerance = 1e-6;
+
+    NSCParameterAssert((anOptions & (WLAlignTiebreakerInward | WLAlignTiebreakerOutward)) != (WLAlignTiebreakerInward | WLAlignTiebreakerOutward));
+
+    NSRect intRect = NSMakeRect(NSMinX(aRect) / aMultiple,
+                                NSMinY(aRect) / aMultiple,
+                                NSWidth(aRect) / aMultiple,
+                                NSHeight(aRect) / aMultiple);
+
+    if (anOptions & NSAlignMinXNearest && anOptions & (WLAlignTiebreakerInward | WLAlignTiebreakerOutward))
+    {
+        CGFloat minXInt;
+        CGFloat minXFrac = modf(NSMinX(intRect), &minXInt);
+        if (fabs(minXFrac - 0.5) < Tolerance)
+            anOptions ^= NSAlignMinXNearest | ((anOptions & WLAlignTiebreakerInward) ? NSAlignMinXInward : NSAlignMinXOutward);
+    }
+
+    if (anOptions & NSAlignMinYNearest && anOptions & (WLAlignTiebreakerInward | WLAlignTiebreakerOutward))
+    {
+        CGFloat minYInt;
+        CGFloat minYFrac = modf(NSMinY(intRect), &minYInt);
+        if (fabs(minYFrac - 0.5) < Tolerance)
+            anOptions ^= NSAlignMinYNearest | ((anOptions & WLAlignTiebreakerInward) ? NSAlignMinYInward : NSAlignMinYOutward);
+    }
+
+    if (anOptions & NSAlignMaxXNearest && anOptions & (WLAlignTiebreakerInward | WLAlignTiebreakerOutward))
+    {
+        CGFloat maxXInt;
+        CGFloat maxXFrac = modf(NSMaxX(intRect), &maxXInt);
+        if (fabs(maxXFrac - 0.5) < Tolerance)
+            anOptions ^= NSAlignMaxXNearest | ((anOptions & WLAlignTiebreakerInward) ? NSAlignMaxXInward : NSAlignMaxXOutward);
+    }
+
+    if (anOptions & NSAlignMaxYNearest && anOptions & (WLAlignTiebreakerInward | WLAlignTiebreakerOutward))
+    {
+        CGFloat maxYInt;
+        CGFloat maxYFrac = modf(NSMaxY(intRect), &maxYInt);
+        if (fabs(maxYFrac - 0.5) < Tolerance)
+            anOptions ^= NSAlignMaxYNearest | ((anOptions & WLAlignTiebreakerInward) ? NSAlignMaxYInward : NSAlignMaxYOutward);
+    }
+
+    if (anOptions & NSAlignWidthNearest && anOptions & (WLAlignTiebreakerInward | WLAlignTiebreakerOutward))
+    {
+        CGFloat widthInt;
+        CGFloat widthFrac = modf(NSWidth(intRect), &widthInt);
+        if (fabs(widthFrac - 0.5) < Tolerance)
+            anOptions ^= NSAlignWidthNearest | ((anOptions & WLAlignTiebreakerInward) ? NSAlignWidthInward : NSAlignWidthOutward);
+    }
+
+    if (anOptions & NSAlignHeightNearest && anOptions & (WLAlignTiebreakerInward | WLAlignTiebreakerOutward))
+    {
+        CGFloat heightInt;
+        CGFloat heightFrac = modf(NSWidth(intRect), &heightInt);
+        if (fabs(heightFrac - 0.5) < Tolerance)
+            anOptions ^= NSAlignHeightNearest | ((anOptions & WLAlignTiebreakerInward) ? NSAlignHeightInward : NSAlignHeightOutward);
+    }
+
+    intRect = NSIntegralRectWithOptions(intRect, anOptions);
+    return NSMakeRect(NSMinX(intRect) * aMultiple,
+                      NSMinY(intRect) * aMultiple,
+                      NSWidth(intRect) * aMultiple,
+                      NSHeight(intRect) * aMultiple);
 }
 
-#define NSRectFromSize(size) (NSMakeRect(0, 0, (size).width, (size).height))
+NSRect WLConstrainedIntegralRect(NSRect aRect, NSAlignmentOptions anOptions, CGFloat aMultiple, NSSize aMinSize, WLEdge aMovingEdge)
+{
+    __block NSRect intRect = WLIntegralRect(aRect, anOptions, aMultiple);
+
+    BOOL shouldAdjustWidth = NO;
+    BOOL shouldAdjustHeight = NO;
+    if ((shouldAdjustWidth = NSWidth(intRect) < aMinSize.width) || (shouldAdjustHeight = NSHeight(intRect) < aMinSize.height))
+    {
+        // intRect is integral and aligned perfectly but too small
+        // It needs to be resized with respect to the edge being stationary (i.e. edge which position is unchanged)
+
+        __block NSAlignmentOptions resizeOptions = anOptions & NSAlignRectFlipped;
+
+        __auto_type KeepLeft = ^{
+            if (shouldAdjustWidth)
+            {
+                resizeOptions |= NSAlignMinXNearest | NSAlignWidthOutward;
+                intRect.size.width = aMinSize.width;
+            }
+            else
+                resizeOptions |= NSAlignMinXNearest | NSAlignMaxXNearest;
+        };
+
+        __auto_type KeepMidX = ^{
+            if (shouldAdjustWidth)
+            {
+                resizeOptions |= NSAlignMinXOutward | NSAlignMaxXOutward;
+                intRect.origin.x = NSMidX(intRect) - aMinSize.width / 2.0;
+                intRect.size.width = aMinSize.width;
+            }
+            else
+                resizeOptions |= NSAlignMinXNearest | NSAlignMaxXNearest;
+        };
+
+        __auto_type KeepRight = ^{
+            if (shouldAdjustWidth)
+            {
+                resizeOptions |= NSAlignMaxXNearest | NSAlignWidthOutward;
+                intRect.origin.x = NSMaxX(intRect) - aMinSize.width;
+                intRect.size.width = aMinSize.width;
+            }
+            else
+                resizeOptions |= NSAlignMinXNearest | NSAlignMaxXNearest;
+        };
+        __auto_type KeepTop = ^{
+            if (shouldAdjustHeight)
+            {
+                if (anOptions & NSAlignRectFlipped)
+                {
+                    resizeOptions |= NSAlignMinYNearest | NSAlignHeightOutward;
+                    intRect.size.height = aMinSize.height;
+                }
+                else
+                {
+                    resizeOptions |= NSAlignMaxYNearest | NSAlignHeightOutward;
+                    intRect.origin.y = NSMaxY(intRect) - aMinSize.height;
+                    intRect.size.height = aMinSize.height;
+                }
+            }
+            else
+                resizeOptions |= NSAlignMinYNearest | NSAlignMaxYNearest;
+        };
+
+        __auto_type KeepMidY = ^{
+            if (shouldAdjustHeight)
+            {
+                resizeOptions |= NSAlignMinYOutward | NSAlignMaxYOutward;
+                intRect.origin.y = NSMidY(intRect) - aMinSize.height / 2.0;
+                intRect.size.height = aMinSize.height;
+            }
+            else
+                resizeOptions |= NSAlignMinYNearest | NSAlignMaxYNearest;
+        };
+
+        __auto_type KeepBottom = ^{
+            if (shouldAdjustHeight)
+            {
+                if (anOptions & NSAlignRectFlipped)
+                {
+                    resizeOptions |= NSAlignMaxYNearest | NSAlignHeightOutward;
+                    intRect.origin.y = NSMaxY(intRect) - aMinSize.height;
+                    intRect.size.height = aMinSize.height;
+                }
+                else
+                {
+                    resizeOptions |= NSAlignMinYNearest | NSAlignHeightOutward;
+                    intRect.size.height = aMinSize.height;
+                }
+            }
+            else
+                resizeOptions |= NSAlignMinYNearest | NSAlignMaxYNearest;
+        };
+
+        switch (aMovingEdge)
+        {
+            case WLEdgeLeft:
+                KeepRight();
+                KeepMidY();
+                break;
+            case WLEdgeTopLeft:
+                KeepRight();
+                KeepBottom();
+                break;
+            case WLEdgeTop:
+                KeepMidX();
+                KeepBottom();
+                break;
+            case WLEdgeTopRight:
+                KeepLeft();
+                KeepBottom();
+                break;
+            case WLEdgeRight:
+                KeepLeft();
+                KeepMidY();
+                break;
+            case WLEdgeBottomRight:
+                KeepLeft();
+                KeepTop();
+                break;
+            case WLEdgeBottom:
+                KeepMidX();
+                KeepTop();
+                break;
+            case WLEdgeBottomLeft:
+                KeepRight();
+                KeepTop();
+                break;
+            case WLEdgeCenter:
+                KeepMidX();
+                KeepMidY();
+                break;
+        }
+
+        intRect = WLIntegralRect(intRect, resizeOptions, aMultiple);
+    }
+
+    return intRect;
+}
 
 void WLDrawScaledThreePartImage(NSRect frame,
                                 NSImage *startCap,
@@ -298,4 +472,202 @@ void WLDrawScaledNinePartImage(NSRect bounds,
     bottomEdgeFill.matchesOnlyOnBestFittingAxis = matchesOnlyOnBestFittingAxisBottomEdgeFill;
 }
 
-#undef NSRectFromSize
+
+@implementation NSImage (WLGraphics)
+
+- (void)WL_drawScaledNinePartImageInRect:(NSRect)aDstRect
+                           withCapInsets:(NSEdgeInsets)aCapInsets
+                               operation:(NSCompositingOperation)anOperation
+                                fraction:(CGFloat)aFraction
+                          respectFlipped:(BOOL)aRespectContextIsFlipped
+                                   hints:(NSDictionary<NSImageHintKey, id> *)aHints
+{
+    NSParameterAssert(aCapInsets.left > 0.0 && aCapInsets.top >= 0.0 && aCapInsets.right >= 0.0 && aCapInsets.bottom >= 0.0);
+
+    __auto_type size = self.size;
+    BOOL isDstFlipped = aRespectContextIsFlipped ? NSGraphicsContext.currentContext.isFlipped : NO;
+
+    // If we are drawing in an area in which the corner parts don't fit, remove pixels
+    // from the centre instead of from the edges (and avoid overlapping). This looks a
+    // lot better when a border style 9-part image shrinks, assuming the top/bottom
+    // and left/right are symmetrical and can fit together at smaller sizes.
+    CGFloat excessWidth = aCapInsets.left + aCapInsets.right - aDstRect.size.width;
+    CGFloat excessHeight = aCapInsets.top + aCapInsets.bottom - aDstRect.size.height;
+
+    if (excessWidth > 0.0)
+    {
+        aCapInsets.left -= floor(excessWidth / 2.0);
+        aCapInsets.right -= excessWidth - floor(excessWidth / 2.0);
+    }
+
+    if (excessHeight > 0.0)
+    {
+        aCapInsets.top -= floor(excessHeight / 2.0);
+        aCapInsets.bottom -= excessHeight - floor(excessHeight / 2.0);
+    }
+
+    CGFloat leftX = 0.0;
+    CGFloat midX = aCapInsets.left;
+    CGFloat rightX = aDstRect.size.width - aCapInsets.right;
+    CGFloat midWidth = rightX - midX;
+
+    CGFloat bottomY = isDstFlipped ? aDstRect.size.height - aCapInsets.bottom : 0.0;
+    CGFloat midY = isDstFlipped ? aCapInsets.top : aCapInsets.bottom;
+    CGFloat topY = isDstFlipped ? 0.0 : aDstRect.size.height - aCapInsets.top;
+    CGFloat midHeight = isDstFlipped ? bottomY - midY : topY - midY;
+
+    BOOL drawMiddleX = midWidth > 0.0;
+    BOOL drawMiddleY = midHeight > 0.0;
+
+    NSParameterAssert(!drawMiddleX || excessWidth <= 0.0);
+    NSParameterAssert(!drawMiddleY || excessHeight <= 0.0);
+
+    [self drawInRect:NSMakeRect(leftX, topY, aCapInsets.left, aCapInsets.top)
+            fromRect:NSMakeRect(0.0, size.height - aCapInsets.top, aCapInsets.left, aCapInsets.top)
+           operation:anOperation
+            fraction:aFraction
+      respectFlipped:aRespectContextIsFlipped
+               hints:aHints];
+
+    if (drawMiddleX)
+    {
+        [self drawInRect:NSMakeRect(midX, topY, midWidth, aCapInsets.top)
+                fromRect:NSMakeRect(aCapInsets.left, size.height - aCapInsets.top, size.width - aCapInsets.left - aCapInsets.right, aCapInsets.top)
+               operation:anOperation
+                fraction:aFraction
+          respectFlipped:aRespectContextIsFlipped
+                   hints:aHints];
+    }
+
+    [self drawInRect:NSMakeRect(rightX, topY, aCapInsets.right, aCapInsets.top)
+            fromRect:NSMakeRect(size.width - aCapInsets.right, size.height - aCapInsets.top, aCapInsets.right, aCapInsets.top)
+           operation:anOperation
+            fraction:aFraction
+      respectFlipped:aRespectContextIsFlipped
+               hints:aHints];
+
+    if (drawMiddleY)
+    {
+        [self drawInRect:NSMakeRect(leftX, midY, aCapInsets.left, midHeight)
+                fromRect:NSMakeRect(0.0, aCapInsets.bottom, aCapInsets.left, size.height - aCapInsets.top - aCapInsets.bottom)
+               operation:anOperation
+                fraction:aFraction
+          respectFlipped:aRespectContextIsFlipped
+                   hints:aHints];
+
+        if (drawMiddleX)
+        {
+            [self drawInRect:NSMakeRect(midX, midY, midWidth, midHeight)
+                    fromRect:NSMakeRect(aCapInsets.left, aCapInsets.bottom, size.width - aCapInsets.left - aCapInsets.right, size.height - aCapInsets.top - aCapInsets.bottom)
+                   operation:anOperation
+                    fraction:aFraction
+              respectFlipped:aRespectContextIsFlipped
+                       hints:aHints];
+        }
+
+        [self drawInRect:NSMakeRect(rightX, midY, aCapInsets.right, midHeight)
+                fromRect:NSMakeRect(size.width - aCapInsets.right, aCapInsets.bottom, aCapInsets.right, size.height - aCapInsets.top - aCapInsets.bottom)
+               operation:anOperation
+                fraction:aFraction
+          respectFlipped:aRespectContextIsFlipped
+                   hints:aHints];
+    }
+
+    [self drawInRect:NSMakeRect(leftX, bottomY, aCapInsets.left, aCapInsets.bottom)
+            fromRect:NSMakeRect(0.0, 0.0, aCapInsets.left, aCapInsets.bottom)
+           operation:anOperation
+            fraction:aFraction
+      respectFlipped:aRespectContextIsFlipped
+               hints:aHints];
+
+    if (drawMiddleX)
+    {
+        [self drawInRect:NSMakeRect(midX, bottomY, midWidth, aCapInsets.bottom)
+                fromRect:NSMakeRect(aCapInsets.left, 0.0, size.width - aCapInsets.left - aCapInsets.right, aCapInsets.bottom)
+               operation:anOperation
+                fraction:aFraction
+          respectFlipped:aRespectContextIsFlipped
+                   hints:aHints];
+    }
+
+    [self drawInRect:NSMakeRect(rightX, bottomY, aCapInsets.right, aCapInsets.bottom)
+            fromRect:NSMakeRect(size.width - aCapInsets.right, 0.0, aCapInsets.right, aCapInsets.bottom)
+           operation:anOperation
+            fraction:aFraction
+      respectFlipped:aRespectContextIsFlipped
+               hints:aHints];
+}
+
+@end
+
+
+@implementation NSGraphicsContext (WLGraphics)
+
+- (NSDictionary<NSString *,id> *)WL_description
+{
+    __auto_type cgContext = self.CGContext;
+
+    __auto_type stringFromAffineTransform = ^(CGAffineTransform transform) {
+        return [NSString stringWithFormat:@"[%.2f, %.2f, %.2f, %.2f, %.2f, %.2f]",
+                transform.a,
+                transform.b,
+                transform.c,
+                transform.d,
+                transform.tx,
+                transform.ty];
+    };
+
+    NSString *colorSpaceName = @"none";
+    __auto_type colorSpace = CGBitmapContextGetColorSpace(cgContext);
+    if (colorSpace)
+    {
+        CFStringRef colorSpaceNameRef = CGColorSpaceCopyName(colorSpace);
+        if (colorSpaceNameRef)
+            colorSpaceName = CFAutorelease(colorSpaceNameRef);
+    }
+
+    return @{
+        @"CTM": stringFromAffineTransform(CGContextGetCTM(cgContext)),
+        @"InterpolationQuality": @(CGContextGetInterpolationQuality(cgContext)),
+        @"UserSpaceToDeviceSpaceTransform": stringFromAffineTransform(CGContextGetUserSpaceToDeviceSpaceTransform(cgContext)),
+        @"BitmapWidth": @(CGBitmapContextGetWidth(cgContext)),
+        @"BitmapHeight": @(CGBitmapContextGetHeight(cgContext)),
+        @"BitmapAlphaInfo": @(CGBitmapContextGetAlphaInfo(cgContext)),
+        @"BitmapInfo": @(CGBitmapContextGetBitmapInfo(cgContext)),
+        @"BitmapColorSpace": colorSpaceName,
+        @"BitmapBytesPerRow": @(CGBitmapContextGetBytesPerRow(cgContext)),
+        @"BitmapBitsPerPixel": @(CGBitmapContextGetBitsPerPixel(cgContext)),
+        @"BitmapBitsPerComponent": @(CGBitmapContextGetBitsPerComponent(cgContext))
+    };
+}
+
+@end
+
+
+@implementation NSColor (WLGraphics)
+
++ (NSColor *)WL_noisePattern
+{
+    static NSColor *NoisePatternColor = nil;
+    static dispatch_once_t Once;
+    dispatch_once(&Once, ^{
+        __auto_type noiseImage = [NSImage imageNamed:@"calendar-background-noise"];
+        __auto_type transparentNoiseImage = [NSImage imageWithSize:noiseImage.size
+                                                           flipped:NO
+                                                    drawingHandler:^BOOL(NSRect aDestinationRect)
+                                             {
+            [noiseImage drawInRect:aDestinationRect
+                          fromRect:aDestinationRect
+                         operation:NSCompositeSourceOver
+                          fraction:1.0];
+            [[NSColor.clearColor colorWithAlphaComponent:0.03] set];
+            NSRectFillUsingOperation(aDestinationRect, NSCompositeDestinationIn);
+            return YES;
+        }];
+
+        NoisePatternColor = [NSColor colorWithPatternImage:transparentNoiseImage];
+    });
+    return NoisePatternColor;
+}
+
+@end

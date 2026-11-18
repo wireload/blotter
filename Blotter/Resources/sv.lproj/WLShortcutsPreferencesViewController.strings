@@ -1,0 +1,18 @@
+
+/* Class = "NSTextFieldCell"; title = "Previous Week:"; ObjectID = "20"; Note = "Title for the Previous Week label"; */
+"20.title" = "Förgående Vecka:";
+
+/* Class = "NSTextFieldCell"; title = "Current Week:"; ObjectID = "22"; Note = "Title for the Current Week label"; */
+"22.title" = "Nuvarande Vecka:";
+
+/* Class = "NSTextFieldCell"; title = "Next Week:"; ObjectID = "26"; Note = "Title for the Next Week label"; */
+"26.title" = "Nästa Vecka:";
+
+/* Class = "NSTextFieldCell"; title = "New Reminder:"; ObjectID = "28"; Note = "Title for the New Reminder label"; */
+"28.title" = "Ny Påminnelse:";
+
+/* Class = "NSTextFieldCell"; title = "Bring to Front:"; ObjectID = "30"; Note = "Title for the Bring to Front label"; */
+"30.title" = "Lägg Överst:";
+
+/* Class = "NSTextFieldCell"; title = "New Event:"; ObjectID = "32"; Note = "Title for the New Event label"; */
+"32.title" = "Ny Aktivitet:";

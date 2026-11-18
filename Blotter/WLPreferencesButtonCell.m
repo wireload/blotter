@@ -13,11 +13,6 @@
 
 #pragma mark Methods
 
-- (BOOL)isTall:(NSRect)cellFrame
-{
-    return cellFrame.size.height == 50.0;
-}
-
 - (NSBezierPath *)focusRingShapeForCellFrame:(NSRect)aCellFrame
 {
     NSRect outlineFrame = aCellFrame;
@@ -32,7 +27,7 @@
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-    if (![self isTall:cellFrame])
+    if (!self.isTall)
     {
         float alpha = self.enabled ? 1.0 : 0.75;
 
@@ -122,6 +117,17 @@
 - (void)drawFocusRingMaskWithFrame:(NSRect)aCellFrame inView:(NSView *)aControlView
 {
     [[self focusRingShapeForCellFrame:aCellFrame] fill];
+}
+
+- (NSSize)cellSize
+{
+    NSSize s = [super cellSize];
+    s.height = self.isTall ? 50.0 : 22.0;
+
+    if (self.image != nil && self.imagePosition == NSImageLeft)
+        s.width += 20.0;
+
+    return s;
 }
 
 @end

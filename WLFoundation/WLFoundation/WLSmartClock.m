@@ -8,7 +8,7 @@
 
 #import "WLSmartClock.h"
 #import "IKPowerSources.h"
-#import "WLASLLog.h"
+#import "WLLog.h"
 
 
 NSString* const WLSmartClockLogName = @"net.wireload.mac.WLFoundation.WLSmartClock";
@@ -18,6 +18,8 @@ NSString* const WLSmartClockLogName = @"net.wireload.mac.WLFoundation.WLSmartClo
 {
     NSTimer *_nextMinuteTimer;
     NSTimer *_nextDayTimer;
+
+    NSCalendar *_calendar;
 }
 
 - (instancetype)init
@@ -26,7 +28,7 @@ NSString* const WLSmartClockLogName = @"net.wireload.mac.WLFoundation.WLSmartClo
 
     if (self)
     {
-        NSNotificationCenter *n = [NSNotificationCenter defaultCenter];
+        NSNotificationCenter *n = NSNotificationCenter.defaultCenter;
         [n addObserver:self
               selector:@selector(localeDidChange:)
                   name:NSCurrentLocaleDidChangeNotification
@@ -40,12 +42,12 @@ NSString* const WLSmartClockLogName = @"net.wireload.mac.WLFoundation.WLSmartClo
                   name:NSSystemTimeZoneDidChangeNotification
                 object:nil];
 
-        [[NSWorkspace sharedWorkspace].notificationCenter addObserver:self
-                                                               selector:@selector(dateDidChange)
-                                                                   name:NSWorkspaceDidWakeNotification
-                                                                 object:nil];
+        [NSWorkspace.sharedWorkspace.notificationCenter addObserver:self
+                                                           selector:@selector(dateDidChange)
+                                                               name:NSWorkspaceDidWakeNotification
+                                                             object:nil];
 
-        _calendar = [[NSCalendar currentCalendar] copy];
+        _calendar = [NSCalendar.currentCalendar copy];
         _date = [NSDate date];
 
         [self scheduleNextMinuteTimer];
@@ -59,10 +61,17 @@ NSString* const WLSmartClockLogName = @"net.wireload.mac.WLFoundation.WLSmartClo
 {
     [_nextMinuteTimer invalidate];
     [_nextDayTimer invalidate];
-    [[NSRunLoop mainRunLoop] cancelPerformSelector:@selector(calendarDidChange) target:self argument:nil];
-    [[NSRunLoop mainRunLoop] cancelPerformSelector:@selector(dateDidChange) target:self argument:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self];
+    [NSRunLoop.mainRunLoop cancelPerformSelector:@selector(calendarDidChange) target:self argument:nil];
+    [NSRunLoop.mainRunLoop cancelPerformSelector:@selector(dateDidChange) target:self argument:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self];
+    [NSWorkspace.sharedWorkspace.notificationCenter removeObserver:self];
+}
+
+#pragma mark Properties
+
+- (NSCalendar *)calendar
+{
+    return [_calendar copy];
 }
 
 
@@ -134,7 +143,7 @@ NSString* const WLSmartClockLogName = @"net.wireload.mac.WLFoundation.WLSmartClo
                                                 selector:@selector(nextMinuteTimerDidFire)
                                                 userInfo:nil
                                                  repeats:NO];
-    [[NSRunLoop currentRunLoop] addTimer:_nextMinuteTimer forMode:NSDefaultRunLoopMode];
+    [NSRunLoop.currentRunLoop addTimer:_nextMinuteTimer forMode:NSDefaultRunLoopMode];
 }
 
 - (void)scheduleNextDayTimer
@@ -149,7 +158,7 @@ NSString* const WLSmartClockLogName = @"net.wireload.mac.WLFoundation.WLSmartClo
                                              selector:@selector(nextDayTimerDidFire)
                                              userInfo:nil
                                               repeats:NO];
-    [[NSRunLoop currentRunLoop] addTimer:_nextDayTimer forMode:NSDefaultRunLoopMode];
+    [NSRunLoop.currentRunLoop addTimer:_nextDayTimer forMode:NSDefaultRunLoopMode];
 }
 
 - (void)nextMinuteTimerDidFire
@@ -166,13 +175,13 @@ NSString* const WLSmartClockLogName = @"net.wireload.mac.WLFoundation.WLSmartClo
 
 - (void)calendarDidChange
 {
-    NSAssert([NSThread currentThread] == [NSThread mainThread], @"%@ MUST be called on the Main Thread", NSStringFromSelector(_cmd));
+    NSAssert(NSThread.currentThread.isMainThread, @"%@ MUST be called on the Main Thread", NSStringFromSelector(_cmd));
 
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(calendarDidChange) object:nil];
-    [[WLASLLog logForName:WLSmartClockLogName] logDebug:@"Calendar did change"];
+    [[WLLog logForName:WLSmartClockLogName] logDebug:@"Calendar did change"];
 
     [self willChangeValueForKey:@"calendar"];
-    _calendar = [[NSCalendar currentCalendar] copy];
+    _calendar = [NSCalendar.currentCalendar copy];
     [self didChangeValueForKey:@"calendar"];
 
     [self scheduleNextDayTimer];
@@ -181,10 +190,10 @@ NSString* const WLSmartClockLogName = @"net.wireload.mac.WLFoundation.WLSmartClo
 
 - (void)dateDidChange
 {
-    NSAssert([NSThread currentThread] == [NSThread mainThread], @"%@ MUST be called on the Main Thread", NSStringFromSelector(_cmd));
+    NSAssert(NSThread.currentThread.isMainThread, @"%@ MUST be called on the Main Thread", NSStringFromSelector(_cmd));
 
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(dateDidChange) object:nil];
-    [[WLASLLog logForName:WLSmartClockLogName] logDebug:@"Date did change"];
+    [[WLLog logForName:WLSmartClockLogName] logDebug:@"Date did change"];
 
     [self willChangeValueForKey:@"date"];
     _date = [NSDate date];

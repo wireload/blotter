@@ -1,0 +1,15 @@
+
+/* Class = "NSMenuItem"; title = "Custom"; ObjectID = "64"; Note = "Title for the Custom layout option"; */
+"64.title" = "カスタム";
+
+/* Class = "NSMenuItem"; title = "Normal"; ObjectID = "66"; Note = "Title for the Normal layout option"; */
+"66.title" = "ノーマル";
+
+/* Class = "NSTextFieldCell"; title = "Calendar Layout:"; ObjectID = "72"; Note = "Title for the Layout label"; */
+"72.title" = "カレンダーのレイアウト：";
+
+/* Class = "NSMenuItem"; title = "To Do"; ObjectID = "81"; Note = "Title for the To Do layout option"; */
+"81.title" = "リマインダー";
+
+/* Class = "NSMenuItem"; title = "Right Now"; ObjectID = "82"; Note = "Title for the Right Now layout option"; */
+"82.title" = "今すぐ";

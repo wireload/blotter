@@ -7,8 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import <CalendarStore/CalendarStore.h>
 
+
+NS_ASSUME_NONNULL_BEGIN
 
 extern NSInteger const WLBlotterBundleVersion2_1;
 
@@ -26,11 +29,12 @@ extern NSInteger const WLBlotterBundleVersion2_2_5;
 
 extern NSInteger const WLBlotterBundleVersion2_2_6;
 
+
 extern NSString* const WLLastMigratedBundleVersionKey;
 
 extern NSString* const WLCalendarSizeKey;
 
-extern NSString* const WLScreenIdentifierKey;
+extern NSString* const WLScreenUUIDKey;
 
 extern NSString* const WLDisplayAllCalendarsKey;
 
@@ -104,6 +108,74 @@ extern NSString* const WLShowPreferencesAtStartUp;
 
 extern NSString* const WLLastReportedDailyEventAt;
 
+extern NSString* const WLCustomFrameFactorsKey;
+
+extern NSString* const WLCalendarPositionKey;
+
+extern NSString* const WLCalendarLayoutKey;
+
+extern NSString* const WLMinimumDateViewWidthtKey;
+
+extern NSString* const WLMinimumDateViewHeightKey;
+
+extern NSString* const WLMinimumWeekViewWidthKey;
+
+extern NSString* const WLMinimumWeekViewHeightKey;
+
+extern NSString* const WLMinimumTasksViewWidthKey;
+
+extern NSString* const WLMinimumTasksViewHeightKey;
+
+extern NSString* const WLMinimumRightNowViewWidthKey;
+
+extern NSString* const WLMinimumRightNowViewHeightKey;
+
+extern NSString* const WLInfoViewsWidthKey;
+
+extern NSString* const WLDateViewHeightKey;
+
+extern NSString* const WLTasksViewHeightKey;
+
+extern NSString* const WLAllDayViewHeightKey;
+
+
+typedef NS_ENUM(NSUInteger, BLSize)
+{
+    BLNarrowSize = 0,
+    BLNormalSize = 1,
+    BLFullSize = 2,
+    BLCustomSize = 3
+};
+
+static const BLSize BLSizeCount = 4;
+
+
+typedef NS_ENUM(NSUInteger, BLPosition)
+{
+    BLPositionTopLeft = 0,
+    BLPositionTopCenter = 1,
+    BLPositionTopRight = 2,
+    BLPositionCenterLeft = 3,
+    BLPositionCenterCenter = 4,
+    BLPositionCenterRight = 5,
+    BLPositionBottomLeft = 6,
+    BLPositionBottomCenter = 7,
+    BLPositionBottomRight = 8
+};
+
+static const BLPosition BLPositionCount = 9;
+
+
+typedef NS_ENUM(NSUInteger, WLCalendarLayout)
+{
+    WLCalendarLayoutNormal = 0,
+    WLCalendarLayoutCustom = 1,
+    WLCalendarLayoutToDo = 2,
+    WLCalendarLayoutRightNow = 3
+};
+
+static const WLCalendarLayout WLCalendarLayoutCount = 4;
+
 
 @interface NSUserDefaults (WLApplicationDefaults)
 
@@ -116,20 +188,28 @@ extern NSString* const WLLastReportedDailyEventAt;
 - (void)WL_migrateTo2_2_1;
 
 /*!
+ @discussion
  - Transform NSDictionary-based shortcuts into SRShortcut
  */
 - (void)WL_migrateTo2_2_5;
 
-@end
+/*!
+ @discussion
+ - Replace screen identifier with screen UUID.
+    Screen's identifier may change for the same screen when GPU is automatically switched (e.g. on MBP)
+    while its UUID is more persistent.
+ */
+- (void)WL_migrateTo2_2_6;
 
+/*!
+ Register defaults values for application preferences.
+ */
+- (void)WL_registerDefaults;
 
-@interface NSUserDefaults (WLScreensController)
-
-- (void)WL_setDefaultScreenIdentifierIfNeeded;
-
-- (void)WL_setScreenIdentifier:(NSNumber *)newScreenIdentifier;
-
-- (NSNumber *)WL_screenIdentifier;
+/*!
+ Verify that serialized application preferences are correct and fix them if needed.
+ */
+- (void)WL_validateAndFixIfNeeded;
 
 @end
 
@@ -170,28 +250,39 @@ extern NSString* const WLLastReportedDailyEventAt;
 
 @interface NSUserDefaults (WLURLs)
 
-- (NSURL *)WL_rateThisAppURL;
+@property (nullable, readonly, copy) NSURL *WL_rateThisAppURL;
 
-- (NSURL *)WL_getHelpURL;
+@property (nullable, readonly, copy) NSURL *WL_getHelpURL;
 
-- (NSURL *)WL_getSupportURL;
+@property (nullable, readonly, copy) NSURL *WL_getSupportURL;
 
-- (NSURL *)WL_followOnTwitterURL;
+@property (nullable, readonly, copy) NSURL *WL_followOnTwitterURL;
 
-- (NSURL *)WL_wireloadURL;
+@property (nullable, readonly, copy) NSURL *WL_wireloadURL;
 
-- (NSURL *)WL_bannerURL;
+@property (nullable, readonly, copy) NSURL *WL_bannerURL;
 
-- (NSURL *)WL_privacyPolicyURL;
+@property (nullable, readonly, copy) NSURL *WL_privacyPolicyURL;
+
+@end
+
+
+@interface NSUserDefaults (WLPreferences)
+
+@property BOOL WL_showPreferencesAtStartup;
 
 @end
 
 
 @interface NSUserDefaults (WLGeneralPreferences)
 
-- (BOOL)WL_showInMenuBar;
+@property BOOL WL_showInMenuBar;
 
-- (BOOL)WL_showsNext7Days;
+@property BOOL WL_showNext7Days;
+
+@property BOOL WL_requestShareAnalyticsConsentAtStartup;
+
+@property BOOL WL_shareAnalytics;
 
 @end
 
@@ -205,22 +296,67 @@ extern NSString* const WLLastReportedDailyEventAt;
 @end
 
 
-@interface NSUserDefaults (WLAboutPreferences)
+@interface NSUserDefaults (WLLayoutPreferences)
 
-- (BOOL)WL_requestShareAnalyticsConsentAtStartup;
+@property WLCalendarLayout WL_calendarLayout;
 
-- (BOOL)WL_shareAnalytics;
+@property (readonly) CGFloat WL_minimumWeekViewWidth;
+
+@property (readonly) CGFloat WL_minimumWeekViewHeight;
+
+@property (readonly) CGFloat WL_minimumDateViewWidth;
+
+@property (readonly) CGFloat WL_minimumDateViewHeight;
+
+@property (readonly) CGFloat WL_minimumTasksViewWidth;
+
+@property (readonly) CGFloat WL_minimumTasksViewHeight;
+
+@property (readonly) CGFloat WL_minimumRightNowViewWidth;
+
+@property (readonly) CGFloat WL_minimumRightNowViewHeight;
+
+@property CGFloat WL_infoViewsWidth;
+
+@property CGFloat WL_dateViewHeight;
+
+@property CGFloat WL_tasksViewHeight;
+
+@property CGFloat WL_allDayViewHeight;
+
+@end
+
+
+@interface NSUserDefaults (WLPositioningPreferences)
+
+@property (readonly) NSSize WL_minimumWindowSize;
+
+@property BLSize WL_calendarSize;
+
+/*!
+ Frame expressed using the screen coordinate system.
+ */
+@property NSRect WL_customFrameFactors;
+
+@property BLPosition WL_calendarPosition;
+
+/*!
+ UUID of the screen selected by the user for the main window.
+ */
+@property (nullable, copy) NSUUID *WL_screenUUID;
 
 @end
 
 
 #pragma mark - Deprecated
 
-__attribute__((deprecated("Deprecated since 2.2"))) extern NSString* const WLCalendarUIDKey;
+extern NSString* const WLCalendarUIDKey __attribute__((deprecated("Deprecated since 2.2")));
 
-__attribute__((deprecated("Deprecated since 2.2"))) typedef void (^WLCalendarsUpdaterBlock)(NSMutableArray *aCalendars);
+extern NSString* const WLScreenIdentifierKey __attribute__((deprecated("Deprecated in 2.2.6", "WLScreenUUIDKey")));
 
-__attribute__((deprecated("Deprecated since 2.2"))) extern NSComparator const WLCalendarsComparator;
+typedef void (^WLCalendarsUpdaterBlock)(NSMutableArray *aCalendars) __attribute__((deprecated("Deprecated since 2.2"))) ;
+
+extern NSComparator const WLCalendarsComparator __attribute__((deprecated("Deprecated since 2.2"))) ;
 
 
 @interface NSUserDefaults (WLCalendarController)
@@ -231,36 +367,6 @@ __attribute__((deprecated("Deprecated since 2.2"))) extern NSComparator const WL
 
 - (void)WL_updateCalendars:(WLCalendarsUpdaterBlock)anUpdaterBlock __attribute__((deprecated("Deprecated since 2.2")));
 
-- (void)WL_setAllowsAdvancedCalendarTypeCheck:(BOOL)newAllowsAdvancedCalendarTypeCheck __attribute__((deprecated("Deprecated since 2.2")));
-
-- (BOOL)WL_allowsAdvancedCalendarTypeCheck __attribute__((deprecated("Deprecated since 2.2")));
-
 @end
 
-
-@interface NSArray (WLCalendarController)
-
-- (NSUInteger)WL_indexOfCalendarWithUID:(NSString *)anUID __attribute__((deprecated("Deprecated since 2.2")));
-
-- (NSDictionary *)WL_calendarWithUID:(NSString *)anUID __attribute__((deprecated("Deprecated since 2.2")));
-
-@end
-
-
-@interface NSMutableArray (WLCalendarController)
-
-- (void)WL_insertCalendar:(NSDictionary *)aCalendar __attribute__((deprecated("Deprecated since 2.2")));
-
-- (void)WL_removeCalendarWithUID:(NSString *)anUID __attribute__((deprecated("Deprecated since 2.2")));
-
-@end
-
-
-@interface NSDictionary (WLCalendarController)
-
-/*!
- @param aCalCalendar    MUST be non-nil.
- */
-+ (NSDictionary *)WL_makeCalendarWithCalCalendar:(CalCalendar *)aCalCalendar __attribute__((deprecated("Deprecated since 2.2")));
-
-@end
+NS_ASSUME_NONNULL_END

@@ -1,0 +1,18 @@
+
+/* Class = "NSMenuItem"; title = "Narrow"; ObjectID = "11"; Note = "Title for the Narrow size option"; */
+"11.title" = "Angosto";
+
+/* Class = "NSMenuItem"; title = "Normal"; ObjectID = "12"; Note = "Title for the Normal size option"; */
+"12.title" = "Normal";
+
+/* Class = "NSMenuItem"; title = "Full"; ObjectID = "13"; Note = "Title for the Full size option"; */
+"13.title" = "Toda la pantalla";
+
+/* Class = "NSTextFieldCell"; title = "Calendar Size:"; ObjectID = "15"; Note = "Title for the Calendar Size label"; */
+"15.title" = "Tamaño del Calendario:";
+
+/* Class = "NSTextFieldCell"; title = "Display:"; ObjectID = "35"; Note = "Title for the Display label"; */
+"35.title" = "Pantalla:";
+
+/* Class = "NSMenuItem"; title = "Custom"; ObjectID = "133"; Note = "Title for the custom size option"; */
+"133.title" = "Personalizado";

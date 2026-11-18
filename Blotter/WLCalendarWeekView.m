@@ -8,8 +8,6 @@
 
 #import "WLGraphics.h"
 #import "WLCalendarWeekView.h"
-#import "NSColor+WLCalendar.h"
-#import "NSFont+WLCalendar.h"
 
 
 // Must be unique!
@@ -1091,16 +1089,16 @@ static const CGFloat _WLYColumnTitleFrameBottomOffset = 2.0;
 
 #pragma mark WLLayerBackedView
 
-- (void)makeLayers
+- (void)prepareForHostingLayers
 {
-    [super makeLayers];
+    [super prepareForHostingLayers];
     [self reloadDataAnimated:NO];
     [self.layer setNeedsLayout];
 }
 
-- (CALayer *)makeRootLayer
+- (CALayer *)makeHostedLayer
 {
-    CALayer *l = [super makeRootLayer];
+    CALayer *l = [super makeHostedLayer];
     l.masksToBounds = YES;
     l.name = _WLRootLayerName;
     l.layoutManager = self;

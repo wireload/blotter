@@ -8,37 +8,38 @@
 
 #import <Cocoa/Cocoa.h>
 #import "WLCalendarWindowController.h"
-#import "WLApplicationPreferences.h"
+#import "WLPreferencesWindowController.h"
 #import "WLNewEventWindowController.h"
 #import "WLNewReminderWindowController.h"
-
-
-extern NSString* const WLBlotterLogName;
-
-extern NSString* const WLMixpanelLogName;
+#import "WLCalendarsController.h"
+#import "WLCalendarRemindersController.h"
+#import "WLCalendarEventsController.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DeskboardAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate /*, NSMenuValidation*/>
-{
-    IBOutlet NSMenu *_statusMenu;
-    IBOutlet NSMenuItem *_bringToFrontMenuItem;
-    IBOutlet NSMenuItem *_newEventMenuItem;
-    IBOutlet NSMenuItem *_newTaskMenuItem;
-    IBOutlet NSMenuItem *_showNextWeekMenuItem;
-    IBOutlet NSMenuItem *_showCurrentWeekMenuItem;
-    IBOutlet NSMenuItem *_showPreviousWeekMenuItem;
-    IBOutlet NSMenuItem *_preferencesMenuItem;
-}
+extern const NSStoryboardSceneIdentifier WLCalendarWindowIdentifier;
 
-@property (readonly) WLCalendarWindowController *calendarWindowController;
+extern const NSStoryboardSceneIdentifier WLPreferencesWindowIdentifier;
 
-@property (nonatomic, readonly) WLApplicationPreferences *preferencesController;
+
+@interface DeskboardAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate, NSMenuItemValidation>
+
+@property (readonly) NSStoryboard *storyboard;
+
+@property (nonatomic, readonly) WLCalendarWindowController *calendarWindowController;
+
+@property (nonatomic, readonly) WLPreferencesWindowController *preferencesWindowController;
 
 @property (nonatomic, readonly) WLNewEventWindowController *newEventWindowController;
 
 @property (nonatomic, readonly) WLNewReminderWindowController *newReminderWindowController;
+
+@property (readonly) WLCalendarsController *calendarsController;
+
+@property (readonly) WLCalendarRemindersController *calendarRemindersController;
+
+@property (readonly) WLCalendarEventsController *calendarEventsController;
 
 - (IBAction)bringToFrontOrSendToBack:(id)sender;
 
@@ -68,6 +69,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)showRateThisAppMenuItem;
 
+- (void)fadeIn;
+
 /*!
     @brief  Makes the Rate This App menu item hidden.
  */
@@ -90,6 +93,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)deactivateAppIfAllConditionsAreMet:(NSArray *)aWindows;
 
+/*!
+ Called when the preferences window is closed to release the associated resources.
+ */
+- (void)preferencesWindowDidClose:(NSNotification *)aNotification;
+
 
 - (void)_scheduleShowCurrentWeekTimerIfNeeded;
 
@@ -105,5 +113,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)_autoFadeTimerDidFire;
 
 @end
+
+
+#define WLAppDelegate ((DeskboardAppDelegate *)NSApp.delegate)
 
 NS_ASSUME_NONNULL_END

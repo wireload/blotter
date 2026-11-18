@@ -11,6 +11,8 @@
 
 @interface WLPreferencesButtonCell : NSButtonCell
 
+@property IBInspectable BOOL isTall;
+
 - (NSBezierPath *)focusRingShapeForCellFrame:(NSRect)aCellFrame;
 
 @end

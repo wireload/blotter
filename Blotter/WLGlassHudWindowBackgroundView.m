@@ -8,7 +8,6 @@
 
 #import "WLGraphics.h"
 #import "WLGlassHudWindowBackgroundView.h"
-#import "WLCalendarWindowBackgroundView.h"
 
 static const CGFloat _WLGlassHudBackgroundShadowTop = 6.0;
 
@@ -80,7 +79,7 @@ static const CGFloat _WLGlassHudBackgroundActiveDarkness = 0.70;
                               self.flipped);
 
 
-    [[WLCalendarWindowBackgroundView backgroundNoisePatternColor] setFill];
+    [NSColor.WL_noisePattern setFill];
     [innerPath fill];
     [NSGraphicsContext restoreGraphicsState];
 }

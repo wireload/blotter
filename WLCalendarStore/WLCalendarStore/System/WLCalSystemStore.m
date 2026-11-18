@@ -32,7 +32,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
     NSMutableDictionary *_calendarTypeCache;
     dispatch_semaphore_t _calendarTypeCacheSemaphore;
 
-    WLASLLog *_log;
+    WLLog *_log;
 }
 
 - (instancetype)init
@@ -41,7 +41,7 @@ static const NSTimeInterval _WLAccumulateSystemNotificationsInterval = 1.0;
 
     if (self)
     {
-        _log = [[WLASLLog alloc] initWithName:@"net.wireload.WLCalendarStore.System"];
+        _log = [[WLLog alloc] initWithName:@"net.wireload.WLCalendarStore.System"];
 
         _calendarStoreSemaphore = dispatch_semaphore_create(1);
 

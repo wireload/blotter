@@ -24,6 +24,24 @@
 
 
 @implementation ServiceDelegate
+{
+    Mixpanel *_mixpanel;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+
+    if (self)
+    {
+        NSParameterAssert([NSThread.mainThread isEqual:NSThread.currentThread]); // Mixpanel requires running main run loop to initialize
+        static NSString* const MixpanelToken = @"ece5b68a45f2721dd049f2e5585478ea";
+        _mixpanel = [Mixpanel sharedInstanceWithToken:MixpanelToken];
+        [_mixpanel identify:[self makeDistinctIdWithMixpanel:_mixpanel]];
+    }
+
+    return self;
+}
 
 #pragma mark Methods
 
@@ -55,13 +73,8 @@
 
 - (BOOL)listener:(NSXPCListener *)aListener shouldAcceptNewConnection:(NSXPCConnection *)newConnection
 {
-    static NSString* const MixpanelToken = @"ece5b68a45f2721dd049f2e5585478ea";
-
-    Mixpanel *mixpanel = [Mixpanel sharedInstanceWithToken:MixpanelToken];
-    [mixpanel identify:[self makeDistinctIdWithMixpanel:mixpanel]];
-
     newConnection.exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(MixpanelProtocol)];
-    newConnection.exportedObject = [[MixpanelProxy alloc] initWithMixpanel:mixpanel];
+    newConnection.exportedObject = [[MixpanelProxy alloc] initWithMixpanel:_mixpanel];
     [newConnection resume];
 
     return YES;
