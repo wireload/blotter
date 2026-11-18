@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0F067637F911CF1DDC9A3C5D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C499315086814D391D635A /* AppDelegate.swift */; };
+		100B504297BA7059B4E2EC40 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9B6889B3E2DEF68A35EEC29A /* InfoPlist.xcstrings */; };
+		25F8097CC5B71C517B410C1A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 8613B4D32EB797DCEADA9EBA /* Localizable.xcstrings */; };
 		3C8EA796A679C613BD1C448D /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66A7A9DC1B15CDD7E970CA6 /* CalendarView.swift */; };
 		442D214084AF2836CF976F75 /* Hotkeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B211D3CFF1CF666A5F50D14C /* Hotkeys.swift */; };
 		48B139E9DCFBDE48B2C62CFD /* DemoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7A450502CE85C6BF89C323 /* DemoData.swift */; };
@@ -41,8 +43,10 @@
 		68D711593EEC0A6D2F558722 /* Blotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CBA1F507173A58E28FD0006 /* ComposerViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerViews.swift; sourceTree = "<group>"; };
 		80C499315086814D391D635A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		8613B4D32EB797DCEADA9EBA /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		90F72FD8B73B39494A9C9FE9 /* Clock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clock.swift; sourceTree = "<group>"; };
 		91B70DC5796F2B4D55503295 /* InfoViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViews.swift; sourceTree = "<group>"; };
+		9B6889B3E2DEF68A35EEC29A /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		A457F5005D2B31C85D1B396B /* DesktopWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesktopWindowController.swift; sourceTree = "<group>"; };
 		A5BD3CEA2ED40D9181113154 /* SettingsPanes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPanes.swift; sourceTree = "<group>"; };
 		B211D3CFF1CF666A5F50D14C /* Hotkeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hotkeys.swift; sourceTree = "<group>"; };
@@ -159,6 +163,8 @@
 			isa = PBXGroup;
 			children = (
 				29CD7860A7C064170B3BC70A /* Assets.xcassets */,
+				9B6889B3E2DEF68A35EEC29A /* InfoPlist.xcstrings */,
+				8613B4D32EB797DCEADA9EBA /* Localizable.xcstrings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -215,7 +221,14 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,
+				de,
 				en,
+				es,
+				fr,
+				ja,
+				ko,
+				ru,
+				sv,
 			);
 			mainGroup = 8369A2CF3DFCCED04249107F;
 			minimizedProjectReferenceProxies = 1;
@@ -238,6 +251,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				76B8D9596745BE7BCFBF5AD8 /* Assets.xcassets in Resources */,
+				100B504297BA7059B4E2EC40 /* InfoPlist.xcstrings in Resources */,
+				25F8097CC5B71C517B410C1A /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

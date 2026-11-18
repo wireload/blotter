@@ -51,6 +51,16 @@ swift test --package-path BlotterKit
 
 The Blotter scheme in Xcode runs the same tests.
 
+## Localization
+
+Blotter is translated into English, German, Spanish, French, Japanese, Korean, Russian and Swedish. Strings live in the String Catalogs `Blotter/Resources/Localizable.xcstrings` (the interface) and `Blotter/Resources/InfoPlist.xcstrings` (permission prompts and copyright).
+
+Use string literals in SwiftUI views, or `String(localized:)` in AppKit code, so Xcode picks new strings up into the catalog when you build. CI fails if any string is missing a translation:
+
+```sh
+python3 scripts/check_localizations.py
+```
+
 ## Formatting
 
 Code is formatted with `swift format`, which ships with Xcode:

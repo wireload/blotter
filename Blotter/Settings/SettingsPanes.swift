@@ -74,14 +74,14 @@ struct ShortcutSettings: View {
     var body: some View {
         Form {
             Section {
-                KeyboardShortcuts.Recorder("Bring to front:", name: .toggleFront)
-                KeyboardShortcuts.Recorder("New event:", name: .newEvent)
-                KeyboardShortcuts.Recorder("New reminder:", name: .newReminder)
+                KeyboardShortcuts.Recorder(String(localized: "Bring to front:"), name: .toggleFront)
+                KeyboardShortcuts.Recorder(String(localized: "New event:"), name: .newEvent)
+                KeyboardShortcuts.Recorder(String(localized: "New reminder:"), name: .newReminder)
             }
             Section {
-                KeyboardShortcuts.Recorder("Next week:", name: .nextWeek)
-                KeyboardShortcuts.Recorder("Previous week:", name: .previousWeek)
-                KeyboardShortcuts.Recorder("Current week:", name: .currentWeek)
+                KeyboardShortcuts.Recorder(String(localized: "Next week:"), name: .nextWeek)
+                KeyboardShortcuts.Recorder(String(localized: "Previous week:"), name: .previousWeek)
+                KeyboardShortcuts.Recorder(String(localized: "Current week:"), name: .currentWeek)
             } footer: {
                 Text("Shortcuts work from any app.")
                     .foregroundStyle(.secondary)
@@ -214,9 +214,11 @@ private struct AnchorPicker: View {
     }
 
     private static func name(of anchor: Int) -> String {
-        let rows = [String(localized: "Top"), String(localized: "Middle"), String(localized: "Bottom")]
-        let columns = [String(localized: "left"), String(localized: "centre"), String(localized: "right")]
-        return "\(rows[anchor / 3]) \(columns[anchor % 3])"
+        [
+            String(localized: "Top left"), String(localized: "Top center"), String(localized: "Top right"),
+            String(localized: "Middle left"), String(localized: "Center"), String(localized: "Middle right"),
+            String(localized: "Bottom left"), String(localized: "Bottom center"), String(localized: "Bottom right"),
+        ][anchor]
     }
 }
 
