@@ -87,6 +87,11 @@ nonisolated final class LegacyShortcut: NSObject, NSCoding {
     let keyCode: Int
     let modifierFlags: UInt
 
+    init(keyCode: Int, modifierFlags: UInt) {
+        self.keyCode = keyCode
+        self.modifierFlags = modifierFlags
+    }
+
     init?(coder: NSCoder) {
         guard let keyCode = coder.decodeObject(forKey: "keyCode") as? NSNumber else { return nil }
         self.keyCode = keyCode.intValue

@@ -74,6 +74,18 @@ targets:
         ENABLE_HARDENED_RUNTIME: YES
         COMBINE_HIDPI_IMAGES: YES
 
+  BlotterTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: BlotterTests
+    dependencies:
+      - target: Blotter
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: net.wireload.blotter.mac.tests
+        GENERATE_INFOPLIST_FILE: YES
+
 schemes:
   Blotter:
     build:
@@ -85,6 +97,11 @@ schemes:
       config: Debug
       gatherCoverageData: true
       targets:
+        - BlotterTests
         - package: BlotterKit/BlotterKitTests
+      # Tests run inside the app; sample data keeps EventKit (and its permission prompt) out of the way.
+      commandLineArguments:
+        "-BlotterDemoData YES": true
+        "-ShowPreferencesAtStartUp NO": true
     archive:
       config: Release
