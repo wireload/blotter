@@ -1,0 +1,26 @@
+// Code signing for Blotter.
+//
+// Debug builds sign for development, Release builds with Developer ID so they can be notarized and distributed
+// outside the Mac App Store. Both use WireLoad's team.
+//
+// To build with your own team, or without signing at all, create Configs/Local.xcconfig (ignored by git), e.g.:
+//
+//     DEVELOPMENT_TEAM = ABCDE12345
+//
+// or, to sign ad hoc:
+//
+//     CODE_SIGN_IDENTITY = -
+//     CODE_SIGN_STYLE = Manual
+//     DEVELOPMENT_TEAM =
+
+DEVELOPMENT_TEAM = 438Z2G77U3
+
+CODE_SIGN_STYLE = Automatic
+CODE_SIGN_IDENTITY = Apple Development
+
+CODE_SIGN_STYLE[config=Release] = Manual
+CODE_SIGN_IDENTITY[config=Release] = Developer ID Application
+// Notarization requires a secure timestamp.
+OTHER_CODE_SIGN_FLAGS[config=Release] = --timestamp
+
+#include? "Local.xcconfig"

@@ -10,3 +10,6 @@ build/
 
 # macOS
 .DS_Store
+
+# Local signing overrides
+Configs/Local.xcconfig

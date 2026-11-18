@@ -28,6 +28,8 @@ open Blotter.xcodeproj
 
 Then build and run the **Blotter** scheme. Blotter asks for access to your calendars and reminders on first launch.
 
+Builds are signed with WireLoad's team: Debug for development, Release with Developer ID. To use your own team, or to sign ad hoc, create `Configs/Local.xcconfig` as described in `Configs/Signing.xcconfig`.
+
 The Xcode project is generated from `project.yml` with [XcodeGen](https://github.com/yonaskolb/XcodeGen). After adding or moving files, or changing build settings, regenerate it and commit the result:
 
 ```sh

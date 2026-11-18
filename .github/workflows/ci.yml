@@ -69,7 +69,7 @@ jobs:
             -derivedDataPath build/DerivedData \
             -resultBundlePath build/Blotter.xcresult \
             -skipMacroValidation \
-            CODE_SIGN_IDENTITY=- \
+            CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM= OTHER_CODE_SIGN_FLAGS= \
             | tee build/xcodebuild-test.log | xcbeautify --renderer github-actions
 
       - name: Build Release app
@@ -82,7 +82,7 @@ jobs:
             -destination 'generic/platform=macOS' \
             -derivedDataPath build/DerivedData \
             -skipMacroValidation \
-            CODE_SIGN_IDENTITY=- \
+            CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM= OTHER_CODE_SIGN_FLAGS= \
             | tee build/xcodebuild-release.log | xcbeautify --renderer github-actions
           ditto -c -k --keepParent build/DerivedData/Build/Products/Release/Blotter.app build/Blotter.zip
 
