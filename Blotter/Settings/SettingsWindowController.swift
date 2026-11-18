@@ -62,8 +62,8 @@ final class SettingsWindowController: NSWindowController {
         if let pane {
             tabs.selectedTabViewItemIndex = pane.rawValue
         }
-        if window?.isVisible != true {
-            window?.center()
+        if let window, !window.isVisible, !window.setFrameUsingName("Settings") {
+            window.center()
         }
         showWindow(nil)
         window?.makeKeyAndOrderFront(nil)

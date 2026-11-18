@@ -37,6 +37,8 @@ struct ToDoView: View {
     let reminders: [Reminder]
     let access: CalendarStore.Access
 
+    @Environment(\.colorScheme) private var colorScheme
+
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     static let rowHeight: CGFloat = 20
@@ -51,14 +53,23 @@ struct ToDoView: View {
                 EmptyView()
             case .granted:
                 GeometryReader { geometry in
-                    let fitting = Int((geometry.size.height + Self.rowSpacing) / (Self.rowHeight + Self.rowSpacing))
+                    let fitting = max(
+                        Int((geometry.size.height + Self.rowSpacing) / (Self.rowHeight + Self.rowSpacing)), 0)
+                    let overflows = reminders.count > fitting
+                    let shown = overflows ? max(fitting - 1, 0) : reminders.count
                     VStack(alignment: .leading, spacing: Self.rowSpacing) {
-                        ForEach(reminders.prefix(max(fitting, 0))) { reminder in
+                        ForEach(reminders.prefix(shown)) { reminder in
                             ReminderRow(reminder: reminder)
                                 .transition(
                                     .asymmetric(
                                         insertion: .opacity.combined(with: .move(edge: .leading)),
                                         removal: .opacity))
+                        }
+                        if overflows, fitting > 0 {
+                            Text("+\(reminders.count - shown) more")
+                                .font(.system(size: 13))
+                                .foregroundStyle(Theme(colorScheme: colorScheme).secondaryText)
+                                .frame(height: Self.rowHeight)
                         }
                     }
                     .animation(Motion.update(reduceMotion: reduceMotion), value: reminders)
@@ -132,8 +143,8 @@ private struct RightNowTimeline: View {
             LinearGradient(
                 stops: [
                     .init(color: .clear, location: 0),
-                    .init(color: .black, location: 0.08),
-                    .init(color: .black, location: 0.92),
+                    .init(color: .black, location: DayColumn.pinnedTitleInset),
+                    .init(color: .black, location: 1 - DayColumn.pinnedTitleInset),
                     .init(color: .clear, location: 1),
                 ],
                 startPoint: .top, endPoint: .bottom)

@@ -40,6 +40,28 @@ import Testing
         #expect(WindowGeometry.customFactors(for: frame, in: screen) == factors)
     }
 
+    @Test func customFrameKeepsMinimumSize() {
+        let frame = WindowGeometry.frame(
+            in: screen, size: .custom, position: .topLeft,
+            customFactors: CGRect(x: 0.95, y: 0.95, width: 0.01, height: 0.01))
+        #expect(frame.width == WindowGeometry.minimumCustomSize.width)
+        #expect(frame.height == WindowGeometry.minimumCustomSize.height)
+        #expect(screen.contains(frame))
+    }
+
+    @Test func rejectsNonFiniteOrigin() {
+        #expect(
+            WindowGeometry.sanitized(CGRect(x: .nan, y: 0, width: 0.5, height: 0.5))
+                == WindowGeometry.defaultCustomFactors)
+    }
+
+    @Test func tinyScreen() {
+        let tiny = CGRect(x: 0, y: 0, width: 20, height: 20)
+        let frame = WindowGeometry.frame(in: tiny, size: .normal, position: .center)
+        #expect(frame.minX.isFinite && frame.minY.isFinite)
+        #expect(tiny.contains(frame))
+    }
+
     @Test func sanitizesInvalidFactors() {
         #expect(WindowGeometry.sanitized(.zero) == WindowGeometry.defaultCustomFactors)
         #expect(
