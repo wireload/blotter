@@ -1,6 +1,3 @@
-#import <dlfcn.h>
-#import <objc/runtime.h>
-
 #import <WLFoundation/NSObject+WLAnimationTracking.h>
 
 
@@ -8,8 +5,10 @@
 
 - (NSDictionary *)WL_animationManagerAnimations
 {
-    void *key = dlsym(RTLD_DEFAULT, "NSApplicationMain") + 2183531;
-    return objc_getAssociatedObject(self, key);
+    // NSAnimationManager keyed its associated object with a private AppKit symbol whose address used to be
+    // resolved at build time by running nm against AppKit. Since macOS 11 system frameworks only exist in the
+    // dyld shared cache, so the key can no longer be resolved and animation tracking is unavailable.
+    return nil;
 }
 
 @end

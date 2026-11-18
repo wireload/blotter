@@ -449,7 +449,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BA81DA7C160DA09D00C83DC3 /* Build configuration list for PBXNativeTarget "WLFoundation" */;
 			buildPhases = (
-				BAAAC0C623C575F7006F3843 /* ShellScript */,
 				BA81DA62160DA09D00C83DC3 /* Sources */,
 				BA81DA63160DA09D00C83DC3 /* Frameworks */,
 				BA81DA64160DA09D00C83DC3 /* Headers */,
@@ -514,27 +513,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		BAAAC0C623C575F7006F3843 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(PROJECT_DIR)/WLFoundation/NSObject+WLAnimationTracking.h",
-				"$(PROJECT_DIR)/WLFoundation/NSObject+WLAnimationTracking.m",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nNSAnimationManagerGetAnimationsForObjectAddr=0x$(/usr/bin/xcrun nm -arch x86_64 -p /System/Library/Frameworks/AppKit.framework/AppKit | /usr/bin/grep NSAnimationManagerGetAnimationsForObject | /usr/bin/cut -f 1 -d \" \" -)\nNSApplicationMainAddr=0x$(/usr/bin/xcrun nm -arch x86_64 -p /System/Library/Frameworks/AppKit.framework/AppKit | /usr/bin/grep NSApplicationMain | /usr/bin/cut -f 1 -d \" \" -)\nAddrDiff=$(($NSAnimationManagerGetAnimationsForObjectAddr-$NSApplicationMainAddr))\n\n\ncat > \"$SCRIPT_OUTPUT_FILE_0\" << EOL\n#import <AppKit/AppKit.h>\n\n\n@interface NSObject (WLAnimationTracking)\n\n/*!\n Animations currently in progress under NSAnimationManager's control.\n \n @discussion\n Current implementation works only against AppKit version present at compile time.\n*/\n- (nullable NSDictionary<NSString *, CAAnimation *> *)WL_animationManagerAnimations;\n\n@end\nEOL\n\ncat > \"$SCRIPT_OUTPUT_FILE_1\" << EOL\n#import <dlfcn.h>\n#import <objc/runtime.h>\n\n#import <WLFoundation/NSObject+WLAnimationTracking.h>\n\n\n@implementation NSObject (WLAnimationTracking)\n\n- (NSDictionary *)WL_animationManagerAnimations\n{\n    void *key = dlsym(RTLD_DEFAULT, \"NSApplicationMain\") + ${AddrDiff};\n    return objc_getAssociatedObject(self, key);\n}\n\n@end\nEOL\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BA6C872020D8C77900D0C30C /* Sources */ = {
