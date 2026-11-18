@@ -53,22 +53,24 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         let menu = NSMenu()
         menu.delegate = self
 
-        let front = item("Bring to Front", #selector(toggleFront), shortcut: .toggleFront)
+        let front = item(String(localized: "Bring to Front"), #selector(toggleFront), shortcut: .toggleFront)
         frontItem = front
         menu.addItem(front)
-        menu.addItem(item("New Event…", #selector(newEvent), shortcut: .newEvent))
-        menu.addItem(item("New Reminder…", #selector(newReminder), shortcut: .newReminder))
+        menu.addItem(item(String(localized: "New Event…"), #selector(newEvent), shortcut: .newEvent))
+        menu.addItem(item(String(localized: "New Reminder…"), #selector(newReminder), shortcut: .newReminder))
         menu.addItem(.separator())
-        menu.addItem(item("Next Week", #selector(nextWeek), shortcut: .nextWeek))
-        menu.addItem(item("Current Week", #selector(currentWeek), shortcut: .currentWeek))
-        menu.addItem(item("Previous Week", #selector(previousWeek), shortcut: .previousWeek))
+        menu.addItem(item(String(localized: "Next Week"), #selector(nextWeek), shortcut: .nextWeek))
+        menu.addItem(item(String(localized: "Current Week"), #selector(currentWeek), shortcut: .currentWeek))
+        menu.addItem(item(String(localized: "Previous Week"), #selector(previousWeek), shortcut: .previousWeek))
         menu.addItem(.separator())
-        let settings = item("Settings…", #selector(settings))
+        let settings = item(String(localized: "Settings…"), #selector(settings))
         settings.keyEquivalent = ","
         menu.addItem(settings)
-        menu.addItem(item("About Blotter", #selector(about)))
+        menu.addItem(item(String(localized: "About Blotter"), #selector(about)))
         menu.addItem(.separator())
-        let quit = NSMenuItem(title: "Quit Blotter", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        let quit = NSMenuItem(
+            title: String(localized: "Quit Blotter"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"
+        )
         menu.addItem(quit)
         return menu
     }
@@ -87,7 +89,8 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     }
 
     func menuNeedsUpdate(_ menu: NSMenu) {
-        frontItem?.title = state.presentation == .front ? "Send to Back" : "Bring to Front"
+        frontItem?.title =
+            state.presentation == .front ? String(localized: "Send to Back") : String(localized: "Bring to Front")
     }
 
     @objc private func toggleFront() { actions?.toggleFront() }

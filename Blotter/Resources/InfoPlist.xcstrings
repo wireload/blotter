@@ -1,0 +1,241 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "NSCalendarsFullAccessUsageDescription": {
+      "comment": "Blotter shows your events on the desktop and adds the events you create.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter zeigt deine Ereignisse auf dem Schreibtisch an und fügt die Ereignisse hinzu, die du erstellst."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter muestra tus eventos en el escritorio y añade los eventos que creas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter affiche vos événements sur le bureau et ajoute ceux que vous créez."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotterはデスクトップにイベントを表示し、作成したイベントを追加します。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter는 데스크탑에 이벤트를 표시하고 사용자가 만든 이벤트를 추가합니다."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter показывает ваши события на рабочем столе и добавляет созданные вами события."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter visar dina aktiviteter på skrivbordet och lägger till aktiviteterna du skapar."
+          }
+        }
+      }
+    },
+    "NSCalendarsUsageDescription": {
+      "comment": "Blotter shows your events on the desktop and adds the events you create.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter zeigt deine Ereignisse auf dem Schreibtisch an und fügt die Ereignisse hinzu, die du erstellst."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter muestra tus eventos en el escritorio y añade los eventos que creas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter affiche vos événements sur le bureau et ajoute ceux que vous créez."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotterはデスクトップにイベントを表示し、作成したイベントを追加します。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter는 데스크탑에 이벤트를 표시하고 사용자가 만든 이벤트를 추가합니다."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter показывает ваши события на рабочем столе и добавляет созданные вами события."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter visar dina aktiviteter på skrivbordet och lägger till aktiviteterna du skapar."
+          }
+        }
+      }
+    },
+    "NSHumanReadableCopyright": {
+      "comment": "Copyright © 2010–2026 WireLoad Inc. Licensed under the Apache License 2.0.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copyright © 2010–2026 WireLoad Inc. Lizenziert unter der Apache License 2.0."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copyright © 2010–2026 WireLoad Inc. Con licencia Apache License 2.0."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copyright © 2010–2026 WireLoad Inc. Distribué sous licence Apache License 2.0."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copyright © 2010–2026 WireLoad Inc. Apache License 2.0に基づきライセンスされています。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copyright © 2010–2026 WireLoad Inc. Apache License 2.0에 따라 사용이 허가됩니다."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copyright © 2010–2026 WireLoad Inc. Распространяется по лицензии Apache License 2.0."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copyright © 2010–2026 WireLoad Inc. Licensierad under Apache License 2.0."
+          }
+        }
+      }
+    },
+    "NSRemindersFullAccessUsageDescription": {
+      "comment": "Blotter shows your reminders on the desktop and adds the reminders you create.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter zeigt deine Erinnerungen auf dem Schreibtisch an und fügt die Erinnerungen hinzu, die du erstellst."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter muestra tus recordatorios en el escritorio y añade los recordatorios que creas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter affiche vos rappels sur le bureau et ajoute ceux que vous créez."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotterはデスクトップにリマインダーを表示し、作成したリマインダーを追加します。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter는 데스크탑에 미리 알림을 표시하고 사용자가 만든 미리 알림을 추가합니다."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter показывает ваши напоминания на рабочем столе и добавляет созданные вами напоминания."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter visar dina påminnelser på skrivbordet och lägger till påminnelserna du skapar."
+          }
+        }
+      }
+    },
+    "NSRemindersUsageDescription": {
+      "comment": "Blotter shows your reminders on the desktop and adds the reminders you create.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter zeigt deine Erinnerungen auf dem Schreibtisch an und fügt die Erinnerungen hinzu, die du erstellst."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter muestra tus recordatorios en el escritorio y añade los recordatorios que creas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter affiche vos rappels sur le bureau et ajoute ceux que vous créez."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotterはデスクトップにリマインダーを表示し、作成したリマインダーを追加します。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter는 데스크탑에 미리 알림을 표시하고 사용자가 만든 미리 알림을 추가합니다."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter показывает ваши напоминания на рабочем столе и добавляет созданные вами напоминания."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blotter visar dina påminnelser på skrivbordet och lägger till påminnelserna du skapar."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

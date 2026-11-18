@@ -52,6 +52,9 @@ jobs:
           "$RUNNER_TEMP/xcodegen/bin/xcodegen"
           git diff --exit-code -- Blotter.xcodeproj Blotter/Info.plist Blotter/Blotter.entitlements
 
+      - name: Translations complete
+        run: python3 scripts/check_localizations.py
+
       - name: Test BlotterKit
         run: swift test --package-path BlotterKit
 
@@ -97,6 +100,8 @@ jobs:
           }
           capture desktop -ShowPreferencesAtStartUp NO -CalendarSize 2
           capture settings -ShowPreferencesAtStartUp YES -CalendarSize 1
+          capture german -ShowPreferencesAtStartUp YES -CalendarSize 1 -AppleLanguages '(de)' -AppleLocale de_DE
+          capture japanese -ShowPreferencesAtStartUp NO -CalendarSize 2 -AppleLanguages '(ja)' -AppleLocale ja_JP
 
       - name: Upload screenshots
         if: always()
@@ -105,8 +110,7 @@ jobs:
           name: screenshots
           path: |
             build/screenshot-*.png
-            build/desktop.log
-            build/settings.log
+            build/*.log
           if-no-files-found: ignore
 
       - name: Upload app
