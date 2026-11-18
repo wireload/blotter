@@ -10,6 +10,7 @@
 		0F067637F911CF1DDC9A3C5D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C499315086814D391D635A /* AppDelegate.swift */; };
 		3C8EA796A679C613BD1C448D /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66A7A9DC1B15CDD7E970CA6 /* CalendarView.swift */; };
 		442D214084AF2836CF976F75 /* Hotkeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B211D3CFF1CF666A5F50D14C /* Hotkeys.swift */; };
+		48B139E9DCFBDE48B2C62CFD /* DemoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7A450502CE85C6BF89C323 /* DemoData.swift */; };
 		62E5BD8B91F24BBE502341D4 /* ComposerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F95875A337A64EF513DDB9 /* ComposerWindowController.swift */; };
 		649567E2B91E6D41ACCCFB17 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F72FD8B73B39494A9C9FE9 /* Clock.swift */; };
 		76B8D9596745BE7BCFBF5AD8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29CD7860A7C064170B3BC70A /* Assets.xcassets */; };
@@ -48,6 +49,7 @@
 		B2F95875A337A64EF513DDB9 /* ComposerWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerWindowController.swift; sourceTree = "<group>"; };
 		D66A7A9DC1B15CDD7E970CA6 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		EAB683E77DDC787880B51001 /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
+		FB7A450502CE85C6BF89C323 /* DemoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				099D7023BF02F6A4AFCC7DC5 /* CalendarStore.swift */,
+				FB7A450502CE85C6BF89C323 /* DemoData.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 				649567E2B91E6D41ACCCFB17 /* Clock.swift in Sources */,
 				8B730ECAEBDB0E789EB49529 /* ComposerViews.swift in Sources */,
 				62E5BD8B91F24BBE502341D4 /* ComposerWindowController.swift in Sources */,
+				48B139E9DCFBDE48B2C62CFD /* DemoData.swift in Sources */,
 				F948C6E955A84B0DB0DACB6C /* DesktopWindowController.swift in Sources */,
 				442D214084AF2836CF976F75 /* Hotkeys.swift in Sources */,
 				8B8F993846BC3DB10860C6CA /* InfoViews.swift in Sources */,
