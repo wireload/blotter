@@ -12,6 +12,7 @@ struct GeneralSettings: View {
     @AppStorage(DefaultsKey.autoFadeSeconds) private var autoFadeSeconds = 60
     @AppStorage(DefaultsKey.showsNext7Days) private var showsNext7Days = false
     @AppStorage(DefaultsKey.showsWeekdayDates) private var showsWeekdayDates = true
+    @AppStorage(AppDefaults.appearance) private var appearance = AppAppearance.system.rawValue
     @State private var opensAtLogin = SMAppService.mainApp.status == .enabled
 
     var body: some View {
@@ -24,6 +25,13 @@ struct GeneralSettings: View {
                 Toggle(isOn: $showsMenuBarItem) {
                     Text("Show menu bar icon")
                     Text("When hidden, open Blotter again from Finder to get back to Settings.")
+                }
+            }
+            Section {
+                Picker("Appearance", selection: $appearance) {
+                    Text("System").tag(AppAppearance.system.rawValue)
+                    Text("Light").tag(AppAppearance.light.rawValue)
+                    Text("Dark").tag(AppAppearance.dark.rawValue)
                 }
             }
             Section {

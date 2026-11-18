@@ -6,11 +6,15 @@ import SwiftUI
 ///
 /// On the desktop it sits just above the wallpaper and below desktop icons, ignores the mouse, and appears on every
 /// Space. "Bring to Front" lifts it above other windows on the current Space until it is sent back.
+///
+/// On the desktop the calendar draws a plain translucent tint. A behind-window blur would resample the wallpaper on
+/// every Space switch (the calendar briefly turned dark) and keeps the GPU busy, so the blur is only used in front.
 final class DesktopWindowController: NSWindowController {
     /// Called when the user presses Escape while the calendar is in front.
     var onCancel: (() -> Void)?
 
     private let state: CalendarState
+    private let blur: NSVisualEffectView
     private var observers: [any NSObjectProtocol] = []
     private var lastFrame: CGRect?
 
@@ -27,6 +31,8 @@ final class DesktopWindowController: NSWindowController {
 
     init(clock: Clock, store: CalendarStore, state: CalendarState) {
         self.state = state
+        let blur = NSVisualEffectView()
+        self.blur = blur
 
         let window = DesktopWindow(contentRect: .zero, styleMask: [.borderless], backing: .buffered, defer: false)
         window.isOpaque = false
@@ -36,16 +42,19 @@ final class DesktopWindowController: NSWindowController {
         window.isRestorable = false
         window.tabbingMode = .disallowed
         window.animationBehavior = .none
-        window.appearance = NSAppearance(named: .darkAqua)
         window.level = Self.desktopLevel
         window.collectionBehavior = Self.desktopBehavior
         window.ignoresMouseEvents = true
 
-        let background = NSVisualEffectView()
-        background.material = .hudWindow
-        background.blendingMode = .behindWindow
-        background.state = .active
-        background.maskImage = Self.roundedMask(radius: 12)
+        blur.material = .hudWindow
+        blur.blendingMode = .behindWindow
+        blur.state = .active
+        blur.maskImage = Self.roundedMask(radius: CalendarView.cornerRadius)
+        blur.isHidden = true
+        blur.translatesAutoresizingMaskIntoConstraints = false
+
+        let background = NSView()
+        background.addSubview(blur)
 
         let content = NSHostingView(
             rootView: CalendarView()
@@ -57,6 +66,10 @@ final class DesktopWindowController: NSWindowController {
         content.translatesAutoresizingMaskIntoConstraints = false
         background.addSubview(content)
         NSLayoutConstraint.activate([
+            blur.leadingAnchor.constraint(equalTo: background.leadingAnchor),
+            blur.trailingAnchor.constraint(equalTo: background.trailingAnchor),
+            blur.topAnchor.constraint(equalTo: background.topAnchor),
+            blur.bottomAnchor.constraint(equalTo: background.bottomAnchor),
             content.leadingAnchor.constraint(equalTo: background.leadingAnchor),
             content.trailingAnchor.constraint(equalTo: background.trailingAnchor),
             content.topAnchor.constraint(equalTo: background.topAnchor),
@@ -65,6 +78,7 @@ final class DesktopWindowController: NSWindowController {
         window.contentView = background
 
         super.init(window: window)
+        applyAppearance()
 
         window.onCancel = { [weak self] in self?.onCancel?() }
         state.onPresentationChange = { [weak self] in self?.applyPresentation(animated: true) }
@@ -78,7 +92,10 @@ final class DesktopWindowController: NSWindowController {
         observers.append(
             center.addObserver(forName: UserDefaults.didChangeNotification, object: nil, queue: .main) {
                 [weak self] _ in
-                MainActor.assumeIsolated { self?.updateFrame() }
+                MainActor.assumeIsolated {
+                    self?.updateFrame()
+                    self?.applyAppearance()
+                }
             })
     }
 
@@ -120,6 +137,18 @@ final class DesktopWindowController: NSWindowController {
         window.setFrame(frame, display: true)
     }
 
+    // MARK: Appearance
+
+    private func applyAppearance() {
+        guard let window else { return }
+        let appearance =
+            AppAppearance(rawValue: UserDefaults.standard.integer(forKey: AppDefaults.appearance)) ?? .system
+        let name = appearance.appearanceName
+        if window.appearance?.name != name {
+            window.appearance = name.map { NSAppearance(named: $0) } ?? nil
+        }
+    }
+
     // MARK: Presentation
 
     private func applyPresentation(animated: Bool) {
@@ -141,6 +170,7 @@ final class DesktopWindowController: NSWindowController {
             window.level = toFront ? .floating : Self.desktopLevel
             window.collectionBehavior = toFront ? Self.frontBehavior : Self.desktopBehavior
             window.ignoresMouseEvents = !toFront
+            self.blur.isHidden = !toFront
             if toFront {
                 window.makeKeyAndOrderFront(nil)
             } else {
@@ -160,7 +190,7 @@ final class DesktopWindowController: NSWindowController {
         }
         NSAnimationContext.runAnimationGroup { context in
             context.duration = duration
-            context.timingFunction = CAMediaTimingFunction(name: .linear)
+            context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
             window.animator().alphaValue = alpha
         } completionHandler: {
             MainActor.assumeIsolated { completion?() }

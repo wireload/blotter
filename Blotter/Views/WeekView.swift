@@ -1,21 +1,46 @@
 import BlotterKit
 import SwiftUI
 
-/// The week: day titles, all-day events, and a time grid fitted to the day's events.
+/// The week: day titles, all-day events, and a time grid fitted to the week's events.
+///
+/// The time ruler stays in place while the days slide in from the side when navigating between weeks; the hour scale
+/// animates to fit the new week's events.
 struct WeekView: View {
     let days: [Schedule.Day]
     let today: DateRange
-    let now: Date
     let calendar: Calendar
     let allDayHeight: CGFloat
     let access: CalendarStore.Access
+    let weekOffset: Int
+    let navigatesForward: Bool
 
     @AppStorage(DefaultsKey.showsWeekdayDates) private var showsWeekdayDates = true
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     static let columnSpacing: CGFloat = 6
     static let titleHeight: CGFloat = 32
 
     var body: some View {
+        GeometryReader { geometry in
+            let allDayBlock = allDayHeight > 0 ? allDayHeight + PaneLayout.spacingAfterAllDay : 0
+            let timedHeight = max(geometry.size.height - Self.titleHeight - allDayBlock, 0)
+            let fit = HourFit.fit(fitItems, height: timedHeight)
+
+            HStack(alignment: .top, spacing: Self.columnSpacing) {
+                TimeRuler(fit: fit, height: timedHeight, day: today, calendar: calendar)
+                    .padding(.top, Self.titleHeight + allDayBlock)
+
+                ZStack {
+                    weekDays(fit: fit, timedHeight: timedHeight, allDayBlock: allDayBlock)
+                        .id(weekOffset)
+                        .transition(transition)
+                }
+                .clipped()
+            }
+        }
+    }
+
+    private func weekDays(fit: HourFit, timedHeight: CGFloat, allDayBlock: CGFloat) -> some View {
         VStack(spacing: 0) {
             columns { day in
                 Text(day.range.start, format: titleFormat)
@@ -36,10 +61,23 @@ struct WeekView: View {
 
             if access == .denied {
                 AccessHint(text: "Allow Blotter to access your calendars in System Settings › Privacy & Security.")
+                    .frame(height: timedHeight)
             } else {
-                TimeGrid(days: days, today: today, now: now, calendar: calendar)
+                columns { day in
+                    DayColumn(day: day, fit: fit, calendar: calendar, keepsTextVisible: false)
+                }
+                .frame(height: timedHeight)
+                .overlay(alignment: .topLeading) {
+                    if days.contains(where: { $0.range == today }) {
+                        CurrentTimeLine(today: today, fit: fit, calendar: calendar)
+                    }
+                }
             }
         }
+    }
+
+    private var transition: AnyTransition {
+        reduceMotion ? .opacity : .push(from: navigatesForward ? .trailing : .leading)
     }
 
     private var titleFormat: Date.FormatStyle {
@@ -48,73 +86,11 @@ struct WeekView: View {
             : .dateTime.weekday(.wide)
     }
 
-    /// One cell per day, aligned with the time grid's columns.
+    /// One cell per day.
     private func columns<Content: View>(@ViewBuilder content: @escaping (Schedule.Day) -> Content) -> some View {
         HStack(spacing: Self.columnSpacing) {
-            Color.clear.frame(width: TimeRuler.width)
             ForEach(days) { day in
                 content(day).frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
-        }
-    }
-}
-
-/// All-day events of one day, stacked; whatever does not fit is summarised.
-struct AllDayColumn: View {
-    let events: [Event]
-
-    static let rowHeight: CGFloat = 18
-    static let rowSpacing: CGFloat = 3
-
-    var body: some View {
-        GeometryReader { geometry in
-            let capacity = max(Int((geometry.size.height + Self.rowSpacing) / (Self.rowHeight + Self.rowSpacing)), 0)
-            let overflows = events.count > capacity
-            let shown = overflows ? max(capacity - 1, 0) : events.count
-
-            VStack(spacing: Self.rowSpacing) {
-                ForEach(events.prefix(shown)) { event in
-                    EventBlock(event: event, isCompact: true)
-                        .frame(height: Self.rowHeight)
-                }
-                if overflows, capacity > 0 {
-                    Text("+\(events.count - shown) more")
-                        .font(.system(size: 10, weight: .medium))
-                        .foregroundStyle(.white.opacity(0.8))
-                        .frame(height: Self.rowHeight)
-                }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .background(.white.opacity(0.04), in: RoundedRectangle(cornerRadius: 6))
-        }
-    }
-}
-
-/// Timed events of the week, with the time ruler and the current-time line.
-struct TimeGrid: View {
-    let days: [Schedule.Day]
-    let today: DateRange
-    let now: Date
-    let calendar: Calendar
-
-    var body: some View {
-        GeometryReader { geometry in
-            let height = geometry.size.height
-            let fit = HourFit.fit(fitItems, height: height)
-            let todayIndex = days.firstIndex { $0.range == today }
-
-            HStack(spacing: WeekView.columnSpacing) {
-                TimeRuler(fit: fit, height: height, day: today, calendar: calendar)
-                ForEach(days) { day in
-                    DayColumn(day: day, fit: fit, calendar: calendar, keepsTextVisible: false)
-                }
-            }
-            .overlay(alignment: .topLeading) {
-                if todayIndex != nil {
-                    NowLine()
-                        .padding(.leading, TimeRuler.width + WeekView.columnSpacing)
-                        .offset(y: fit.offset(ofHour: Schedule.hour(of: now, on: today, calendar: calendar)))
-                }
             }
         }
     }
@@ -125,8 +101,62 @@ struct TimeGrid: View {
                 HourFit.Item(
                     startHour: Schedule.hour(of: entry.part.start, on: day.range, calendar: calendar),
                     endHour: Schedule.hour(of: entry.part.end, on: day.range, calendar: calendar),
-                    minimumHeight: EventBlock.minimumHeight(for: entry.event))
+                    minimumHeight: EventBlock.minimumHeight)
             }
+        }
+    }
+}
+
+/// The current-time line across the week. It reads the clock itself, so minute ticks only redraw the line.
+private struct CurrentTimeLine: View {
+    let today: DateRange
+    let fit: HourFit
+    let calendar: Calendar
+
+    @Environment(Clock.self) private var clock
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    var body: some View {
+        let y = fit.offset(ofHour: Schedule.hour(of: clock.now, on: today, calendar: calendar))
+        NowLine()
+            .offset(y: y)
+            .animation(reduceMotion ? nil : .smooth(duration: 0.8), value: y)
+    }
+}
+
+/// All-day events of one day, stacked; whatever does not fit is summarised.
+struct AllDayColumn: View {
+    let events: [Event]
+
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    static let rowHeight: CGFloat = 18
+    static let rowSpacing: CGFloat = 3
+
+    var body: some View {
+        let theme = Theme(colorScheme: colorScheme)
+        GeometryReader { geometry in
+            let capacity = max(Int((geometry.size.height + Self.rowSpacing) / (Self.rowHeight + Self.rowSpacing)), 0)
+            let overflows = events.count > capacity
+            let shown = overflows ? max(capacity - 1, 0) : events.count
+
+            VStack(spacing: Self.rowSpacing) {
+                ForEach(events.prefix(shown)) { event in
+                    EventBlock(event: event, isCompact: true)
+                        .frame(height: Self.rowHeight)
+                        .transition(.opacity)
+                }
+                if overflows, capacity > 0 {
+                    Text("+\(events.count - shown) more")
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundStyle(theme.secondaryText)
+                        .frame(height: Self.rowHeight)
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .background(theme.panelFill, in: RoundedRectangle(cornerRadius: 6))
+            .animation(Motion.update(reduceMotion: reduceMotion), value: events)
         }
     }
 }
@@ -138,6 +168,8 @@ struct TimeRuler: View {
     let day: DateRange
     let calendar: Calendar
 
+    @Environment(\.colorScheme) private var colorScheme
+
     static let width: CGFloat = 40
     static let spacing: CGFloat = 6
 
@@ -146,10 +178,11 @@ struct TimeRuler: View {
             ForEach(visibleHours, id: \.self) { hour in
                 Text(label(for: hour))
                     .font(.system(size: 10))
-                    .foregroundStyle(.white.opacity(0.85))
+                    .foregroundStyle(Theme(colorScheme: colorScheme).secondaryText)
                     .desktopTextShadow()
                     .frame(width: Self.width, height: 12, alignment: .trailing)
                     .offset(y: fit.offset(ofHour: Double(hour)) - 6)
+                    .transition(.opacity)
             }
         }
         .frame(width: Self.width, height: height, alignment: .topTrailing)
@@ -177,18 +210,19 @@ struct DayColumn: View {
     /// Keeps the title of an event that starts above the visible area in view.
     let keepsTextVisible: Bool
 
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     static let eventGap: CGFloat = 2
 
     var body: some View {
         GeometryReader { geometry in
-            let placements = EventLayout.place(segments(height: geometry.size.height))
+            let placements = EventLayout.place(segments)
             let events = Dictionary(day.timed.map { ($0.event.id, $0.event) }, uniquingKeysWith: { first, _ in first })
 
             ZStack(alignment: .topLeading) {
                 RoundedRectangle(cornerRadius: 6)
-                    .fill(
-                        LinearGradient(
-                            colors: [.white.opacity(0.10), .white.opacity(0.03)], startPoint: .top, endPoint: .bottom))
+                    .fill(Theme(colorScheme: colorScheme).columnFill)
 
                 ForEach(placements, id: \.segment.id) { placement in
                     if let event = events[placement.segment.id] {
@@ -198,54 +232,64 @@ struct DayColumn: View {
                         EventBlock(event: event, isCompact: false, textInset: visibleTop - top)
                             .frame(width: extent.width, height: CGFloat(placement.segment.bottom) - top)
                             .offset(x: extent.x, y: top)
+                            .transition(.opacity.combined(with: .scale(scale: 0.96, anchor: .top)))
                     }
                 }
             }
             .clipShape(RoundedRectangle(cornerRadius: 6))
+            .animation(Motion.update(reduceMotion: reduceMotion), value: placements)
         }
     }
 
     /// Event extents in points, each at least tall enough for its title.
-    private func segments(height: CGFloat) -> [EventLayout.Segment<String>] {
+    private var segments: [EventLayout.Segment<String>] {
         day.timed.map { entry in
             let top = fit.offset(ofHour: Schedule.hour(of: entry.part.start, on: day.range, calendar: calendar))
             var bottom = fit.offset(ofHour: Schedule.hour(of: entry.part.end, on: day.range, calendar: calendar))
-            bottom = max(bottom, top + EventBlock.minimumHeight(for: entry.event))
+            bottom = max(bottom, top + EventBlock.minimumHeight)
             return EventLayout.Segment(id: entry.event.id, top: Double(top), bottom: Double(bottom))
         }
     }
 }
 
-/// An event drawn in its calendar's colour.
+/// An event drawn in its calendar's colour, with a solid bar along its leading edge.
 struct EventBlock: View {
     let event: Event
     let isCompact: Bool
     var textInset: CGFloat = 0
 
-    static func minimumHeight(for event: Event) -> CGFloat { 20 }
+    @Environment(\.colorScheme) private var colorScheme
+
+    static let minimumHeight: CGFloat = 20
 
     var body: some View {
+        let theme = Theme(colorScheme: colorScheme)
         let shape = RoundedRectangle(cornerRadius: 4)
+
         VStack(alignment: .leading, spacing: 1) {
             Text(event.title)
                 .font(.system(size: 10, weight: .medium))
+                .foregroundStyle(theme.eventText)
             if !isCompact, let location = event.location {
                 Text(location)
                     .font(.system(size: 10).italic())
-                    .foregroundStyle(.white.opacity(0.8))
+                    .foregroundStyle(theme.eventSecondaryText)
             }
         }
         .lineLimit(isCompact ? 1 : nil)
-        .desktopTextShadow()
-        .padding(.horizontal, 5)
+        .padding(.leading, 7)
+        .padding(.trailing, 4)
         .padding(.vertical, 3)
         .padding(.top, textInset)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background {
-            shape.fill(Color(event.color).opacity(0.55))
-            shape.fill(LinearGradient(colors: [.clear, .black.opacity(0.15)], startPoint: .top, endPoint: .bottom))
+            shape.fill(theme.eventFill(event.color))
+            Rectangle()
+                .fill(Color(event.color))
+                .frame(width: 3)
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .overlay(shape.strokeBorder(.white.opacity(0.25), lineWidth: 1))
+        .overlay(shape.strokeBorder(theme.eventStroke, lineWidth: 1))
         .clipShape(shape)
         .accessibilityElement(children: .combine)
     }
@@ -253,14 +297,15 @@ struct EventBlock: View {
 
 /// The dashed current-time line.
 struct NowLine: View {
+    @Environment(\.colorScheme) private var colorScheme
+
     var body: some View {
         GeometryReader { geometry in
             Path { path in
                 path.move(to: .zero)
                 path.addLine(to: CGPoint(x: geometry.size.width, y: 0))
             }
-            .stroke(.white.opacity(0.75), style: StrokeStyle(lineWidth: 1, dash: [3, 3]))
-            .shadow(color: .black.opacity(0.25), radius: 0, x: 0, y: -1)
+            .stroke(Theme(colorScheme: colorScheme).nowLine, style: StrokeStyle(lineWidth: 1, dash: [3, 3]))
         }
         .frame(height: 1)
         .accessibilityHidden(true)

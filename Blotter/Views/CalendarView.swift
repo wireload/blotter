@@ -6,6 +6,8 @@ struct CalendarView: View {
     @Environment(Clock.self) private var clock
     @Environment(CalendarStore.self) private var store
     @Environment(CalendarState.self) private var state
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @AppStorage(DefaultsKey.calendarLayout) private var layout = CalendarLayout.normal.rawValue
     @AppStorage(DefaultsKey.calendarSize) private var size = CalendarSize.normal.rawValue
@@ -16,14 +18,17 @@ struct CalendarView: View {
     @AppStorage(DefaultsKey.showsNext7Days) private var showsNext7Days = false
 
     static let padding: CGFloat = 20
+    static let cornerRadius: CGFloat = 12
 
+    // Everything here derives from `clock.today`, not `clock.now`, so the calendar is not rebuilt every minute.
     private var days: [DateRange] {
         Schedule.days(
-            containing: clock.now, weekOffset: state.weekOffset, rolling: showsNext7Days, calendar: clock.calendar)
+            containing: clock.today, weekOffset: state.weekOffset, rolling: showsNext7Days, calendar: clock.calendar)
     }
 
     private var today: DateRange {
-        DateRange(clock.calendar.dateInterval(of: .day, for: clock.now) ?? DateInterval(start: clock.now, duration: 0))
+        DateRange(
+            clock.calendar.dateInterval(of: .day, for: clock.today) ?? DateInterval(start: clock.today, duration: 0))
     }
 
     /// Events are loaded for the visible week and today (for Right Now).
@@ -32,6 +37,8 @@ struct CalendarView: View {
     }
 
     var body: some View {
+        let theme = Theme(colorScheme: colorScheme)
+
         GeometryReader { geometry in
             let inner = CGSize(
                 width: max(geometry.size.width - Self.padding * 2, 0),
@@ -46,7 +53,7 @@ struct CalendarView: View {
                 if panes.showsInfo {
                     VStack(spacing: PaneLayout.spacingAfterDate) {
                         if panes.dateHeight > 0 {
-                            DateView(date: clock.now)
+                            DateView(date: clock.today)
                                 .frame(height: panes.dateHeight)
                         }
                         if panes.toDoHeight > 0 {
@@ -54,7 +61,7 @@ struct CalendarView: View {
                                 .frame(height: panes.toDoHeight)
                         }
                         if panes.rightNowHeight > 0 {
-                            RightNowView(day: today, events: store.events, now: clock.now, calendar: clock.calendar)
+                            RightNowView(day: today, events: store.events, calendar: clock.calendar)
                                 .frame(height: panes.rightNowHeight)
                         }
                         Spacer(minLength: 0)
@@ -65,13 +72,12 @@ struct CalendarView: View {
                     WeekView(
                         days: Schedule.arrange(store.events, into: days),
                         today: today,
-                        now: clock.now,
                         calendar: clock.calendar,
                         allDayHeight: panes.allDayHeight,
-                        access: store.eventAccess
+                        access: store.eventAccess,
+                        weekOffset: state.weekOffset,
+                        navigatesForward: state.lastNavigationWasForward
                     )
-                    .id(days.first?.start)
-                    .transition(weekTransition)
                     .frame(width: panes.weekWidth)
                 }
             }
@@ -79,9 +85,13 @@ struct CalendarView: View {
             .frame(width: geometry.size.width, height: geometry.size.height, alignment: .topLeading)
             .clipped()
         }
-        .foregroundStyle(.white)
-        .environment(\.colorScheme, .dark)
-        .animation(.easeInOut(duration: 0.25), value: state.weekOffset)
+        .foregroundStyle(theme.text)
+        .background {
+            RoundedRectangle(cornerRadius: Self.cornerRadius)
+                .fill(state.presentation == .front ? theme.frontBackground : theme.desktopBackground)
+                .overlay(RoundedRectangle(cornerRadius: Self.cornerRadius).strokeBorder(theme.outline))
+        }
+        .animation(Motion.navigation(reduceMotion: reduceMotion), value: state.weekOffset)
         .onChange(of: loadedRange, initial: true) { _, range in
             store.visibleRange = range
         }
@@ -95,23 +105,6 @@ struct CalendarView: View {
         metrics.allDayHeight = allDayHeight
         return metrics
     }
-
-    private var weekTransition: AnyTransition {
-        .push(from: state.lastNavigationWasForward ? .trailing : .leading)
-    }
-}
-
-/// Shared styling for text drawn over the desktop.
-extension View {
-    func desktopTextShadow() -> some View {
-        shadow(color: .black.opacity(0.3), radius: 1, x: 0, y: 1)
-    }
-}
-
-extension Color {
-    init(_ color: RGBAColor) {
-        self.init(.sRGB, red: color.red, green: color.green, blue: color.blue, opacity: color.alpha)
-    }
 }
 
 /// A titled, softly outlined box, used for To Do and Right Now.
@@ -119,7 +112,10 @@ struct Box<Content: View>: View {
     let title: LocalizedStringKey
     @ViewBuilder let content: Content
 
+    @Environment(\.colorScheme) private var colorScheme
+
     var body: some View {
+        let theme = Theme(colorScheme: colorScheme)
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
                 .font(.system(size: 26, weight: .light))
@@ -129,7 +125,7 @@ struct Box<Content: View>: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
         .padding(EdgeInsets(top: 12, leading: 15, bottom: 15, trailing: 13))
-        .background(.white.opacity(0.06), in: RoundedRectangle(cornerRadius: 10))
-        .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(.white.opacity(0.12)))
+        .background(theme.panelFill, in: RoundedRectangle(cornerRadius: 10))
+        .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(theme.outline))
     }
 }
