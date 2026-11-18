@@ -99,6 +99,8 @@ jobs:
             wait "$pid" 2>/dev/null || true
           }
           capture desktop -ShowPreferencesAtStartUp NO -CalendarSize 2
+          capture dark -ShowPreferencesAtStartUp NO -CalendarSize 2 -Appearance 2
+          capture light -ShowPreferencesAtStartUp NO -CalendarSize 2 -Appearance 1
           capture settings -ShowPreferencesAtStartUp YES -CalendarSize 1
           capture german -ShowPreferencesAtStartUp YES -CalendarSize 1 -AppleLanguages '(de)' -AppleLocale de_DE
           capture japanese -ShowPreferencesAtStartUp NO -CalendarSize 2 -AppleLanguages '(ja)' -AppleLocale ja_JP

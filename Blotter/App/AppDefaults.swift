@@ -4,6 +4,7 @@ import BlotterKit
 /// Registers default values and reads preferences that need more than a plain `@AppStorage`.
 enum AppDefaults {
     static let showsSettingsAtLaunch = "ShowPreferencesAtStartUp"
+    static let appearance = "Appearance"
     /// Custom frame as written by Blotter 2.x (an `NSStringFromRect` string), migrated to `DefaultsKey.customFrame`.
     private static let legacyCustomFrame = "CustomFrameFactors"
 
@@ -24,6 +25,7 @@ enum AppDefaults {
             DefaultsKey.showsNext7Days: false,
             DefaultsKey.showsWeekdayDates: true,
             showsSettingsAtLaunch: true,
+            appearance: AppAppearance.system.rawValue,
         ])
         migrateLegacyCustomFrame()
     }
@@ -51,6 +53,23 @@ enum AppDefaults {
         let rect = NSRectFromString(legacy)
         if rect.width > 0, rect.height > 0 {
             customFrame = rect
+        }
+    }
+}
+
+/// Whether the calendar follows the system appearance or always uses light or dark.
+enum AppAppearance: Int, CaseIterable, Identifiable {
+    case system = 0
+    case light = 1
+    case dark = 2
+
+    var id: Int { rawValue }
+
+    var appearanceName: NSAppearance.Name? {
+        switch self {
+        case .system: nil
+        case .light: .aqua
+        case .dark: .darkAqua
         }
     }
 }
