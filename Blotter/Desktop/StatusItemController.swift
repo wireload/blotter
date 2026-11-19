@@ -1,6 +1,5 @@
 import AppKit
 import BlotterKit
-import KeyboardShortcuts
 
 /// The menu bar item and its menu.
 final class StatusItemController: NSObject, NSMenuDelegate {
@@ -8,6 +7,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     private weak var actions: (any CalendarActions)?
     private let state: CalendarState
     private var frontItem: NSMenuItem?
+    private var shortcutItems: [(item: NSMenuItem, action: HotkeyAction)] = []
     private var visibilityObservation: NSKeyValueObservation?
     private var defaultsObserver: (any NSObjectProtocol)?
 
@@ -75,13 +75,27 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         return menu
     }
 
-    private func item(_ title: String, _ action: Selector, shortcut: KeyboardShortcuts.Name? = nil) -> NSMenuItem {
+    private func item(_ title: String, _ action: Selector, shortcut: HotkeyAction? = nil) -> NSMenuItem {
         let item = NSMenuItem(title: title, action: action, keyEquivalent: "")
         item.target = self
         if let shortcut {
-            item.setShortcut(for: shortcut)
+            shortcutItems.append((item, shortcut))
         }
         return item
+    }
+
+    /// Shows each action's global shortcut next to it.
+    private func updateShortcuts() {
+        for (item, action) in shortcutItems {
+            if let combo = HotkeyStore.shared.combo(for: action) {
+                let equivalent = KeyDisplay.menuEquivalent(for: combo)
+                item.keyEquivalent = equivalent.key
+                item.keyEquivalentModifierMask = equivalent.modifiers
+            } else {
+                item.keyEquivalent = ""
+                item.keyEquivalentModifierMask = []
+            }
+        }
     }
 
     func menuWillOpen(_ menu: NSMenu) {
@@ -89,6 +103,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     }
 
     func menuNeedsUpdate(_ menu: NSMenu) {
+        updateShortcuts()
         frontItem?.title =
             state.presentation == .front ? String(localized: "Send to Back") : String(localized: "Bring to Front")
     }

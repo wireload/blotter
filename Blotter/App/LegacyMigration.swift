@@ -1,6 +1,5 @@
 import AppKit
 import BlotterKit
-import KeyboardShortcuts
 import OSLog
 import ServiceManagement
 
@@ -40,7 +39,7 @@ enum LegacyMigration {
 
     // MARK: Shortcuts
 
-    private static let legacyShortcuts: [(key: String, name: KeyboardShortcuts.Name)] = [
+    private static let legacyShortcuts: [(key: String, action: HotkeyAction)] = [
         ("shortcutBringToFront", .toggleFront),
         ("shortcutNewEvent", .newEvent),
         ("shortcutNewTask", .newReminder),
@@ -50,18 +49,15 @@ enum LegacyMigration {
     ]
 
     /// 2.x stored ShortcutRecorder's `SRShortcut`, keyed-archived, under the same names.
-    static func migrateShortcuts(defaults: UserDefaults) {
-        for (key, name) in legacyShortcuts {
-            guard KeyboardShortcuts.getShortcut(for: name) == nil,
+    static func migrateShortcuts(defaults: UserDefaults, store: HotkeyStore = .shared) {
+        for (key, action) in legacyShortcuts {
+            guard store.combo(for: action) == nil,
                 let data = defaults.data(forKey: key),
-                let legacy = LegacyShortcut.unarchive(data)
+                let legacy = LegacyShortcut.unarchive(data),
+                let combo = KeyCombo(legacyKeyCode: legacy.keyCode, modifierFlags: legacy.modifierFlags),
+                KeyCombo.conflict(for: combo, assigningTo: action, in: store.combos) == nil
             else { continue }
-            KeyboardShortcuts.setShortcut(
-                KeyboardShortcuts.Shortcut(
-                    KeyboardShortcuts.Key(rawValue: legacy.keyCode),
-                    modifiers: NSEvent.ModifierFlags(rawValue: legacy.modifierFlags)
-                        .intersection(.deviceIndependentFlagsMask)),
-                for: name)
+            store.set(combo, for: action)
         }
     }
 

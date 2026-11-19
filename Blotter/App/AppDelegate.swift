@@ -33,7 +33,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         self.desktopWindow = desktopWindow
 
         statusItem = StatusItemController(actions: self, state: state)
-        Hotkeys.install(actions: self)
+        HotkeyCenter.shared.start(store: HotkeyStore.shared) { [weak self] action in
+            self?.perform(action)
+        }
         state.noteActivity()
 
         store.requestAccess()
@@ -41,7 +43,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let defaults = UserDefaults.standard
         if defaults.bool(forKey: AppDefaults.showsSettingsAtLaunch) {
             defaults.set(false, forKey: AppDefaults.showsSettingsAtLaunch)
-            showSettings()
+            // `-BlotterSettingsPane <n>` opens a specific pane, for screenshots.
+            let pane = SettingsWindowController.Pane(rawValue: defaults.integer(forKey: "BlotterSettingsPane"))
+            state.noteActivity()
+            settingsWindow.show(pane: pane)
+            activate()
         }
     }
 
@@ -113,6 +119,17 @@ extension AppDelegate: CalendarActions {
             let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Calendars")
         {
             NSWorkspace.shared.open(url)
+        }
+    }
+
+    private func perform(_ action: HotkeyAction) {
+        switch action {
+        case .toggleFront: toggleFront()
+        case .newEvent: showNewEvent()
+        case .newReminder: showNewReminder()
+        case .nextWeek: showNextWeek()
+        case .previousWeek: showPreviousWeek()
+        case .currentWeek: showCurrentWeek()
         }
     }
 

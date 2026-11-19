@@ -1,7 +1,6 @@
 import AppKit
 import BlotterKit
 import EventKit
-import KeyboardShortcuts
 import OSLog
 import ServiceManagement
 import SwiftUI
@@ -101,14 +100,14 @@ struct ShortcutSettings: View {
     var body: some View {
         Form {
             Section {
-                KeyboardShortcuts.Recorder(String(localized: "Bring to front:"), name: .toggleFront)
-                KeyboardShortcuts.Recorder(String(localized: "New event:"), name: .newEvent)
-                KeyboardShortcuts.Recorder(String(localized: "New reminder:"), name: .newReminder)
+                LabeledContent("Bring to front:") { ShortcutRecorder(action: .toggleFront) }
+                LabeledContent("New event:") { ShortcutRecorder(action: .newEvent) }
+                LabeledContent("New reminder:") { ShortcutRecorder(action: .newReminder) }
             }
             Section {
-                KeyboardShortcuts.Recorder(String(localized: "Next week:"), name: .nextWeek)
-                KeyboardShortcuts.Recorder(String(localized: "Previous week:"), name: .previousWeek)
-                KeyboardShortcuts.Recorder(String(localized: "Current week:"), name: .currentWeek)
+                LabeledContent("Next week:") { ShortcutRecorder(action: .nextWeek) }
+                LabeledContent("Previous week:") { ShortcutRecorder(action: .previousWeek) }
+                LabeledContent("Current week:") { ShortcutRecorder(action: .currentWeek) }
             } footer: {
                 Text("Shortcuts work from any app.")
                     .foregroundStyle(.secondary)
