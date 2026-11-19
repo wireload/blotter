@@ -203,7 +203,7 @@ struct AllDayColumn: View {
 
             VStack(spacing: Self.rowSpacing) {
                 ForEach(events.prefix(shown)) { event in
-                    EventBlock(event: event, isCompact: true)
+                    EventBlock(event: event, style: .allDay)
                         .frame(height: Self.rowHeight)
                         .transition(.opacity)
                 }
@@ -286,6 +286,8 @@ struct DayColumn: View {
     static let eventGap: CGFloat = 2
     /// Space between events and the day's edges.
     static let inset: CGFloat = 2
+    /// Space above and below each event, so events that end and start at the same time stay distinct.
+    static let verticalGap: CGFloat = 1
     /// Fraction of the column hidden by Right Now's fade at the top.
     static let pinnedTitleInset: CGFloat = 0.08
 
@@ -312,15 +314,24 @@ struct DayColumn: View {
                     if let event = events[placement.segment.id] {
                         let extent = placement.horizontalExtent(width: eventWidth, gap: Self.eventGap)
                         let top = CGFloat(placement.segment.top)
-                        let bottom = CGFloat(placement.segment.bottom)
+                        // Short events are drawn tall enough for a line of text, even if that covers the start of
+                        // the next one; the next one is drawn on top, as in Calendar.
+                        let bottom = max(CGFloat(placement.segment.bottom), top + EventBlock.minimumHeight)
+                        let height = bottom - top
                         // In Right Now, keep the title of an ongoing event below the fade at the top.
                         let pinned = geometry.size.height * DayColumn.pinnedTitleInset
                         let visibleTop =
                             keepsTextVisible ? max(top, min(pinned, bottom - EventBlock.minimumHeight)) : top
-                        EventBlock(event: event, isCompact: false, textInset: visibleTop - top)
-                            .frame(width: extent.width, height: CGFloat(placement.segment.bottom) - top)
-                            .offset(x: extent.x + Self.inset, y: top)
-                            .transition(.opacity.combined(with: .scale(scale: 0.96, anchor: .top)))
+                        EventBlock(
+                            event: event,
+                            style: height - (visibleTop - top) < EventBlock.twoLineHeight ? .oneLine : .full,
+                            textInset: visibleTop - top
+                        )
+                        // A point of space above and below keeps back-to-back events apart.
+                        .frame(width: extent.width, height: max(height - Self.verticalGap * 2, 1))
+                        .offset(x: extent.x + Self.inset, y: top + Self.verticalGap)
+                        .zIndex(Double(top))
+                        .transition(.opacity.combined(with: .scale(scale: 0.96, anchor: .top)))
                     }
                 }
             }
@@ -331,26 +342,40 @@ struct DayColumn: View {
         }
     }
 
-    /// Event extents in points, each at least tall enough for its title.
+    /// Event extents in points, from their real start and end times.
+    ///
+    /// Overlaps are decided on real times: a 15-minute event that ends as the next one starts is not an overlap, even
+    /// though it is drawn taller than 15 minutes to fit its title. Otherwise both would be squeezed side by side.
     private var segments: [EventLayout.Segment<String>] {
         day.timed.map { entry in
             let top = fit.offset(ofHour: Schedule.hour(of: entry.part.start, on: day.range, calendar: calendar))
-            var bottom = fit.offset(ofHour: Schedule.hour(of: entry.part.end, on: day.range, calendar: calendar))
-            bottom = max(bottom, top + EventBlock.minimumHeight)
-            return EventLayout.Segment(id: entry.event.id, top: Double(top), bottom: Double(bottom))
+            let bottom = fit.offset(ofHour: Schedule.hour(of: entry.part.end, on: day.range, calendar: calendar))
+            return EventLayout.Segment(id: entry.event.id, top: Double(top), bottom: Double(max(bottom, top + 1)))
         }
     }
 }
 
 /// An event drawn in its calendar's colour, with a solid bar along its leading edge.
 struct EventBlock: View {
+    enum Style {
+        /// Title, time and location, on separate lines.
+        case full
+        /// Title and time on one line, for short events.
+        case oneLine
+        /// Title only, for all-day events.
+        case allDay
+    }
+
     let event: Event
-    let isCompact: Bool
+    let style: Style
     var textInset: CGFloat = 0
 
     @Environment(\.colorScheme) private var colorScheme
 
+    /// Tall enough for one line of text.
     static let minimumHeight: CGFloat = 20
+    /// Below this height, title and time share one line.
+    static let twoLineHeight: CGFloat = 32
 
     /// Title, time and location, for VoiceOver.
     private var accessibilityDescription: String {
@@ -364,32 +389,56 @@ struct EventBlock: View {
         return parts.joined(separator: ", ")
     }
 
+    private var time: some View {
+        Text(event.start, format: .dateTime.hour().minute())
+            .font(.system(size: 10))
+            .monospacedDigit()
+            .opacity(0.8)
+            .lineLimit(1)
+    }
+
     var body: some View {
         let theme = Theme(colorScheme: colorScheme)
         let shape = RoundedRectangle(cornerRadius: 5, style: .continuous)
         let textColor = theme.eventText(event.color)
 
-        VStack(alignment: .leading, spacing: 1) {
-            Text(event.title)
-                .font(.system(size: 11, weight: .semibold))
-            if !isCompact {
-                Text(event.start, format: .dateTime.hour().minute())
-                    .font(.system(size: 10))
-                    .monospacedDigit()
-                    .opacity(0.8)
-                    .lineLimit(1)
-                if let location = event.location {
-                    Text(location)
-                        .font(.system(size: 10))
-                        .opacity(0.8)
+        Group {
+            switch style {
+            case .full:
+                VStack(alignment: .leading, spacing: 1) {
+                    Text(event.title)
+                        .font(.system(size: 11, weight: .semibold))
+                    time
+                    if let location = event.location {
+                        Text(location)
+                            .font(.system(size: 10))
+                            .opacity(0.8)
+                    }
                 }
+            case .oneLine:
+                // The time only when title and time both fit; a cut-off time ("7…") says nothing.
+                ViewThatFits(in: .horizontal) {
+                    HStack(alignment: .firstTextBaseline, spacing: 4) {
+                        Text(event.title)
+                            .font(.system(size: 11, weight: .semibold))
+                            .fixedSize()
+                        time
+                            .fixedSize()
+                    }
+                    Text(event.title)
+                        .font(.system(size: 11, weight: .semibold))
+                }
+                .lineLimit(1)
+            case .allDay:
+                Text(event.title)
+                    .font(.system(size: 11, weight: .semibold))
+                    .lineLimit(1)
             }
         }
         .foregroundStyle(textColor)
-        .lineLimit(isCompact ? 1 : nil)
         .padding(.leading, 8)
         .padding(.trailing, 4)
-        .padding(.vertical, isCompact ? 2 : 3)
+        .padding(.vertical, style == .full ? 3 : 2)
         .padding(.top, textInset)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background {
@@ -400,6 +449,8 @@ struct EventBlock: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .clipShape(shape)
+        // A hairline edge separates an event from one drawn over it.
+        .overlay(shape.strokeBorder(theme.eventEdge, lineWidth: 0.5))
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(accessibilityDescription)
     }
