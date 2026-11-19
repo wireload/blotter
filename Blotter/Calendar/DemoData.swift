@@ -68,6 +68,11 @@ enum DemoData {
             add("Planning", day: offset + 1, from: 13, to: 15, work)
             add("Customer call", day: offset + 1, from: 14, to: 15, work)
             add("Gym", day: offset - 1, from: 7, to: 8, home)
+            // Back to back, and a 15-minute event right before the next one.
+            add("Check messages", day: offset + 1, from: 7, to: 7.5, home)
+            add("Personal time", day: offset + 1, from: 7.5, to: 8.75, home)
+            add("School drop-off", day: offset + 1, from: 8.75, to: 9, family)
+            add("Design sync", day: offset + 1, from: 9, to: 10, work)
             add("Dentist", day: offset + 2, from: 15.5, to: 16.25, home, location: "Main Street 12")
             add("Football practice", day: offset + 3, from: 17, to: 18.5, family)
             add("Dinner party", day: offset + 4, from: 19, to: 22.5, family)

@@ -25,7 +25,14 @@ struct Theme {
     var gridLine: Color { isDark ? .white.opacity(0.1) : .black.opacity(0.08) }
     var weekendFill: Color { isDark ? .white.opacity(0.035) : .black.opacity(0.025) }
 
-    func eventFill(_ color: RGBAColor) -> Color { Color(color).opacity(isDark ? 0.32 : 0.18) }
+    /// An opaque tint of the calendar colour. Opaque, so overlapping events do not show through each other.
+    func eventFill(_ color: RGBAColor) -> Color {
+        var fill = isDark ? color.mixed(with: .black, by: 0.62) : color.mixed(with: .white, by: 0.8)
+        fill.alpha = 1
+        return Color(fill)
+    }
+    /// The hairline around events, matching the card behind them.
+    var eventEdge: Color { isDark ? .black.opacity(0.35) : .white.opacity(0.8) }
     /// Event text in a darker (light appearance) or lighter (dark appearance) shade of the calendar colour.
     func eventText(_ color: RGBAColor) -> Color {
         Color(isDark ? color.mixed(with: .white, by: 0.45) : color.mixed(with: .black, by: 0.45))
