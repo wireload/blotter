@@ -119,7 +119,7 @@ struct ShortcutSettings: View {
 struct PositionSettings: View {
     @AppStorage(DefaultsKey.screenID) private var screenID = ""
     @AppStorage(DefaultsKey.calendarSize) private var size = CalendarSize.normal.rawValue
-    @AppStorage(DefaultsKey.calendarPosition) private var position = CalendarPosition.topLeft.rawValue
+    @AppStorage(DefaultsKey.calendarPosition) private var position = CalendarPosition.defaultPosition.rawValue
     @State private var customFrame = AppDefaults.customFrame
     @State private var screens = NSScreen.screens.map { ScreenChoice($0) }
 
@@ -194,7 +194,7 @@ struct PositionSettings: View {
         let frame = WindowGeometry.frame(
             in: screen.visibleFrame,
             size: CalendarSize(rawValue: previousSize) ?? .normal,
-            position: CalendarPosition(rawValue: position) ?? .topLeft)
+            position: CalendarPosition(rawValue: position) ?? .defaultPosition)
         customFrame = WindowGeometry.customFactors(for: frame, in: screen.visibleFrame)
         AppDefaults.customFrame = customFrame
     }

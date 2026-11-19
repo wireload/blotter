@@ -12,7 +12,7 @@ enum AppDefaults {
         let metrics = PaneLayout.Metrics()
         UserDefaults.standard.register(defaults: [
             DefaultsKey.calendarSize: CalendarSize.normal.rawValue,
-            DefaultsKey.calendarPosition: CalendarPosition.topLeft.rawValue,
+            DefaultsKey.calendarPosition: CalendarPosition.defaultPosition.rawValue,
             DefaultsKey.calendarLayout: CalendarLayout.normal.rawValue,
             DefaultsKey.infoWidth: Double(metrics.infoWidth),
             DefaultsKey.dateHeight: Double(metrics.dateHeight),

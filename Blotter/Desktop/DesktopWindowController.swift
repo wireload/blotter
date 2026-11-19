@@ -127,7 +127,8 @@ final class DesktopWindowController: NSWindowController {
         let frame = WindowGeometry.frame(
             in: screen.visibleFrame,
             size: CalendarSize(rawValue: defaults.integer(forKey: DefaultsKey.calendarSize)) ?? .normal,
-            position: CalendarPosition(rawValue: defaults.integer(forKey: DefaultsKey.calendarPosition)) ?? .topLeft,
+            position: CalendarPosition(rawValue: defaults.integer(forKey: DefaultsKey.calendarPosition))
+                ?? .defaultPosition,
             customFactors: AppDefaults.customFrame
         )
         return screen.backingAlignedRect(frame, options: [.alignAllEdgesNearest])

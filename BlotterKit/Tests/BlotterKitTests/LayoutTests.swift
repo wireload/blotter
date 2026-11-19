@@ -33,6 +33,12 @@ import Testing
         #expect(small.insetBy(dx: 14, dy: 14).contains(frame))
     }
 
+    @Test func defaultsToBottomRight() {
+        #expect(CalendarPosition.defaultPosition == .bottomRight)
+        let frame = WindowGeometry.frame(in: screen, size: .custom, position: .topLeft)
+        #expect(frame.maxX == screen.maxX && frame.minY == screen.minY)
+    }
+
     @Test func customRoundTrips() {
         let factors = CGRect(x: 0.25, y: 0.1, width: 0.5, height: 0.8)
         let frame = WindowGeometry.frame(in: screen, size: .custom, position: .topLeft, customFactors: factors)
