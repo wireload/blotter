@@ -26,9 +26,6 @@ settings:
 packages:
   BlotterKit:
     path: BlotterKit
-  KeyboardShortcuts:
-    url: https://github.com/sindresorhus/KeyboardShortcuts
-    from: "3.1.0"
 
 configFiles:
   Debug: Configs/Signing.xcconfig
@@ -45,7 +42,6 @@ targets:
           - Blotter.entitlements
     dependencies:
       - package: BlotterKit
-      - package: KeyboardShortcuts
     info:
       path: Blotter/Info.plist
       properties:
