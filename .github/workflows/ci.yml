@@ -102,6 +102,7 @@ jobs:
           capture light -ShowPreferencesAtStartUp NO -CalendarSize 2 -Appearance 1
           capture settings -ShowPreferencesAtStartUp YES -CalendarSize 1
           capture shortcuts -ShowPreferencesAtStartUp YES -CalendarSize 1 -BlotterSettingsPane 1
+          capture layout -ShowPreferencesAtStartUp YES -CalendarSize 1 -BlotterSettingsPane 3
           capture german -ShowPreferencesAtStartUp YES -CalendarSize 1 -AppleLanguages '(de)' -AppleLocale de_DE
           capture japanese -ShowPreferencesAtStartUp NO -CalendarSize 2 -AppleLanguages '(ja)' -AppleLocale ja_JP
 

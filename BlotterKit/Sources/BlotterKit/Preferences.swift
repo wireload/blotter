@@ -34,7 +34,7 @@ public enum CalendarPosition: Int, CaseIterable, Identifiable, Sendable {
 public enum CalendarLayout: Int, CaseIterable, Identifiable, Sendable {
     /// To Do and Right Now split the column evenly.
     case normal = 0
-    /// Pane sizes come from the user's custom values.
+    /// To Do and Right Now, split at the user's To Do height.
     case custom = 1
     /// Only To Do.
     case toDo = 2
