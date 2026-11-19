@@ -254,46 +254,197 @@ struct LayoutSettings: View {
     @AppStorage(DefaultsKey.dateHeight) private var dateHeight = 250.0
     @AppStorage(DefaultsKey.toDoHeight) private var toDoHeight = 200.0
     @AppStorage(DefaultsKey.allDayHeight) private var allDayHeight = 110.0
+    @AppStorage(DefaultsKey.calendarSize) private var size = CalendarSize.normal.rawValue
+
+    private enum Sidebar: Hashable {
+        case both, toDo, rightNow
+    }
+
+    private static let defaultDateHeight = 250.0
+    private static let defaultAllDayHeight = 110.0
 
     var body: some View {
         Form {
             Section {
-                Picker("Beside the week", selection: $layout) {
-                    Text("To Do and Right Now").tag(CalendarLayout.normal.rawValue)
-                    Text("To Do only").tag(CalendarLayout.toDo.rawValue)
-                    Text("Right Now only").tag(CalendarLayout.rightNow.rawValue)
-                    Text("Custom").tag(CalendarLayout.custom.rawValue)
+                LayoutPreview(panes: panes, size: calendarSize)
+                    .frame(height: 150)
+                    .frame(maxWidth: .infinity)
+                    .accessibilityHidden(true)
+            }
+            Section {
+                Picker("Sidebar", selection: sidebar) {
+                    Text("To Do and Right Now").tag(Sidebar.both)
+                    Text("To Do only").tag(Sidebar.toDo)
+                    Text("Right Now only").tag(Sidebar.rightNow)
+                }
+                Toggle("Show today’s date", isOn: shows($dateHeight, restoring: Self.defaultDateHeight))
+                Toggle("Show all-day events", isOn: shows($allDayHeight, restoring: Self.defaultAllDayHeight))
+            }
+            Section {
+                sizeSlider("Sidebar width", value: $infoWidth, range: 230...500, from: "Narrow", to: "Wide")
+                if dateHeight > 0 {
+                    sizeSlider("Date", value: $dateHeight, range: 180...400, from: "Short", to: "Tall")
+                }
+                if sidebar.wrappedValue == .both {
+                    sizeSlider("To Do", value: customLayout($toDoHeight), range: 100...600, from: "Less", to: "More")
+                }
+                if allDayHeight > 0 {
+                    sizeSlider("All-day events", value: $allDayHeight, range: 50...250, from: "Less", to: "More")
+                }
+            } header: {
+                Text("Sizes")
+            } footer: {
+                HStack(alignment: .firstTextBaseline) {
+                    Text("Panes that don’t fit in the calendar are hidden.")
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Button("Reset to Defaults", action: reset)
                 }
             }
-            Section("Sizes") {
-                pointSlider("Info column width", value: $infoWidth, range: 230...700)
-                    .disabled(layout != CalendarLayout.custom.rawValue)
-                pointSlider("Date height", value: snapping($dateHeight, minimum: 180), range: 0...500)
-                pointSlider("To Do height", value: $toDoHeight, range: 100...900)
-                    .disabled(layout != CalendarLayout.custom.rawValue)
-                pointSlider("All-day events height", value: snapping($allDayHeight, minimum: 50), range: 0...300)
-            }
         }
     }
 
-    /// Below its minimum a pane is hidden, so values between 0 and the minimum snap to either end.
-    private func snapping(_ value: Binding<Double>, minimum: Double) -> Binding<Double> {
+    /// The sidebar's contents. A custom To Do height still shows both panes.
+    private var sidebar: Binding<Sidebar> {
+        Binding(
+            get: {
+                switch CalendarLayout(rawValue: layout) ?? .normal {
+                case .normal, .custom: .both
+                case .toDo: .toDo
+                case .rightNow: .rightNow
+                }
+            },
+            set: { newValue in
+                switch newValue {
+                case .both:
+                    if layout != CalendarLayout.custom.rawValue { layout = CalendarLayout.normal.rawValue }
+                case .toDo: layout = CalendarLayout.toDo.rawValue
+                case .rightNow: layout = CalendarLayout.rightNow.rawValue
+                }
+            })
+    }
+
+    /// A pane height of 0 hides the pane; turning it back on restores its default height.
+    private func shows(_ height: Binding<Double>, restoring defaultHeight: Double) -> Binding<Bool> {
+        Binding(
+            get: { height.wrappedValue > 0 },
+            set: { height.wrappedValue = $0 ? defaultHeight : 0 })
+    }
+
+    /// Choosing a To Do height switches from the even split to a custom one.
+    private func customLayout(_ value: Binding<Double>) -> Binding<Double> {
         Binding(
             get: { value.wrappedValue },
-            set: { value.wrappedValue = $0 < minimum / 2 ? 0 : max($0, minimum) })
+            set: {
+                value.wrappedValue = $0
+                layout = CalendarLayout.custom.rawValue
+            })
     }
 
-    private func pointSlider(_ title: LocalizedStringKey, value: Binding<Double>, range: ClosedRange<Double>)
+    private func reset() {
+        let defaults = UserDefaults.standard
+        for key in [
+            DefaultsKey.calendarLayout, DefaultsKey.infoWidth, DefaultsKey.dateHeight, DefaultsKey.toDoHeight,
+            DefaultsKey.allDayHeight,
+        ] {
+            defaults.removeObject(forKey: key)
+        }
+    }
+
+    private func sizeSlider(
+        _ title: LocalizedStringKey, value: Binding<Double>, range: ClosedRange<Double>, from: LocalizedStringKey,
+        to: LocalizedStringKey
+    ) -> some View {
+        // No step: stepped sliders draw a tick mark for every step. Values are rounded to whole points instead.
+        Slider(
+            value: Binding(get: { value.wrappedValue }, set: { value.wrappedValue = $0.rounded() }), in: range
+        ) {
+            Text(title)
+        } minimumValueLabel: {
+            Text(from).font(.caption).foregroundStyle(.secondary)
+        } maximumValueLabel: {
+            Text(to).font(.caption).foregroundStyle(.secondary)
+        }
+    }
+
+    /// The calendar's size on its screen, without its padding.
+    private var calendarSize: CGSize {
+        _ = size  // Recompute when the calendar size changes.
+        guard let screen = DesktopWindowController.targetScreen() else { return CGSize(width: 1000, height: 700) }
+        let frame = DesktopWindowController.frame(on: screen)
+        return CGSize(
+            width: max(frame.width - CalendarView.padding * 2, 1),
+            height: max(frame.height - CalendarView.padding * 2, 1))
+    }
+
+    private var panes: PaneLayout {
+        var metrics = PaneLayout.Metrics()
+        metrics.infoWidth = infoWidth
+        metrics.dateHeight = dateHeight
+        metrics.toDoHeight = toDoHeight
+        metrics.allDayHeight = allDayHeight
+        return PaneLayout(
+            size: calendarSize, layout: CalendarLayout(rawValue: layout) ?? .normal,
+            calendarSize: CalendarSize(rawValue: size) ?? .normal, metrics: metrics)
+    }
+}
+
+/// A miniature of the calendar, showing which panes are visible and how large they are.
+private struct LayoutPreview: View {
+    let panes: PaneLayout
+    let size: CGSize
+
+    var body: some View {
+        GeometryReader { geometry in
+            // Leave room for the padding around the miniature.
+            let scale = min((geometry.size.width - 12) / size.width, (geometry.size.height - 12) / size.height)
+            let width = size.width * scale
+            let height = size.height * scale
+            ZStack(alignment: .topLeading) {
+                if panes.showsInfo {
+                    let toDoY = panes.dateHeight > 0 ? panes.dateHeight + PaneLayout.spacingAfterDate : 0
+                    let rightNowY = toDoY + (panes.toDoHeight > 0 ? panes.toDoHeight + PaneLayout.spacingAfterToDo : 0)
+                    if panes.dateHeight > 0 {
+                        pane("calendar", x: 0, y: 0, width: panes.infoWidth, height: panes.dateHeight, scale: scale)
+                    }
+                    if panes.toDoHeight > 0 {
+                        pane(
+                            "checklist", x: 0, y: toDoY, width: panes.infoWidth, height: panes.toDoHeight, scale: scale)
+                    }
+                    if panes.rightNowHeight > 0 {
+                        pane(
+                            "clock", x: 0, y: rightNowY, width: panes.infoWidth, height: panes.rightNowHeight,
+                            scale: scale)
+                    }
+                }
+                if panes.showsWeek {
+                    let x = panes.showsInfo ? panes.infoWidth + PaneLayout.spacingAfterInfo : 0
+                    pane(
+                        "calendar.day.timeline.left", x: x, y: 0, width: panes.weekWidth, height: size.height,
+                        scale: scale)
+                }
+            }
+            .frame(width: width, height: height, alignment: .topLeading)
+            .padding(6)
+            .background(.quaternary.opacity(0.6), in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+        .animation(.smooth(duration: 0.25), value: panes)
+    }
+
+    private func pane(_ symbol: String, x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, scale: CGFloat)
         -> some View
     {
-        LabeledContent(title) {
-            HStack {
-                Slider(value: value, in: range, step: 5)
-                Text("\(Int(value.wrappedValue)) pt")
-                    .monospacedDigit()
-                    .frame(width: 52, alignment: .trailing)
+        RoundedRectangle(cornerRadius: 4, style: .continuous)
+            .fill(Color.accentColor.opacity(0.18))
+            .overlay(RoundedRectangle(cornerRadius: 4, style: .continuous).strokeBorder(Color.accentColor.opacity(0.4)))
+            .overlay {
+                Image(systemName: symbol)
+                    .font(.system(size: 13))
+                    .foregroundStyle(Color.accentColor)
             }
-        }
+            .frame(width: max(width * scale, 0), height: max(height * scale, 0))
+            .offset(x: x * scale, y: y * scale)
     }
 }
 

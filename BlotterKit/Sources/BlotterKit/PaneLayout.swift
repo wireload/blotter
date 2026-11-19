@@ -43,12 +43,10 @@ public struct PaneLayout: Equatable, Sendable {
     public var showsWeek: Bool { weekWidth > 0 }
 
     public init(size: CGSize, layout: CalendarLayout, calendarSize: CalendarSize, metrics: Metrics = Metrics()) {
-        let defaults = Metrics()
-
         (infoWidth, weekWidth) = Self.split(
             size.width,
             minimumA: metrics.minimumInfoWidth,
-            preferredA: layout == .custom ? metrics.infoWidth : defaults.infoWidth,
+            preferredA: metrics.infoWidth,
             spacing: Self.spacingAfterInfo,
             // A narrow calendar never shows the week.
             minimumB: calendarSize == .narrow ? size.width + 1 : metrics.minimumWeekWidth
