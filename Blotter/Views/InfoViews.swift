@@ -1,51 +1,54 @@
 import BlotterKit
 import SwiftUI
 
-/// Today's date, large.
+/// Today's date, like Calendar's date widget: the weekday in red capitals over a large day number.
 struct DateView: View {
     let date: Date
 
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        VStack(spacing: 0) {
+        let theme = Theme(colorScheme: colorScheme)
+        VStack(alignment: .leading, spacing: 0) {
+            Text(date.formatted(.dateTime.weekday(.wide)).localizedUppercase)
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundStyle(theme.accent)
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
+                .contentTransition(.opacity)
             Text(date, format: .dateTime.day())
-                .font(.system(size: 200, weight: .ultraLight))
-                .minimumScaleFactor(0.3)
+                .font(.system(size: 160, weight: .light))
+                .minimumScaleFactor(0.25)
                 .lineLimit(1)
                 .contentTransition(.numericText(countsDown: false))
+                .frame(maxHeight: .infinity, alignment: .leading)
             Text(date, format: .dateTime.month(.wide).year())
-                .font(.system(size: 26, weight: .light))
+                .font(.system(size: 17, weight: .medium))
+                .foregroundStyle(theme.secondaryText)
                 .lineLimit(1)
-                .minimumScaleFactor(0.5)
-                .contentTransition(.opacity)
-            Text(date, format: .dateTime.weekday(.wide))
-                .font(.system(size: 26, weight: .light))
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
+                .minimumScaleFactor(0.6)
                 .contentTransition(.opacity)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .desktopTextShadow()
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         .animation(reduceMotion ? nil : .smooth(duration: 0.6), value: date)
         .accessibilityElement(children: .combine)
     }
 }
 
-/// Incomplete reminders.
+/// Incomplete reminders, styled like the Reminders widget.
 struct ToDoView: View {
     let reminders: [Reminder]
     let access: CalendarStore.Access
 
     @Environment(\.colorScheme) private var colorScheme
-
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     static let rowHeight: CGFloat = 20
-    static let rowSpacing: CGFloat = 9
+    static let rowSpacing: CGFloat = 8
 
     var body: some View {
-        Box(title: "To Do") {
+        Card(title: "To Do") {
             switch access {
             case .denied:
                 AccessHint(text: "Allow Blotter to access Reminders in System Settings.")
@@ -67,7 +70,7 @@ struct ToDoView: View {
                         }
                         if overflows, fitting > 0 {
                             Text("+\(reminders.count - shown) more")
-                                .font(.system(size: 13))
+                                .font(.system(size: 12, weight: .medium))
                                 .foregroundStyle(Theme(colorScheme: colorScheme).secondaryText)
                                 .frame(height: Self.rowHeight)
                         }
@@ -79,21 +82,21 @@ struct ToDoView: View {
     }
 }
 
+/// A reminder with the list's coloured ring, as in Reminders.
 private struct ReminderRow: View {
     let reminder: Reminder
 
     var body: some View {
         HStack(spacing: 8) {
             Circle()
-                .fill(Color(reminder.color))
-                .frame(width: 8, height: 8)
+                .strokeBorder(Color(reminder.color), lineWidth: 1.5)
+                .frame(width: 13, height: 13)
             Text(reminder.title)
-                .font(.system(size: 15))
+                .font(.system(size: 13))
                 .lineLimit(1)
                 .truncationMode(.tail)
         }
         .frame(height: ToDoView.rowHeight)
-        .desktopTextShadow()
     }
 }
 
@@ -104,7 +107,7 @@ struct RightNowView: View {
     let calendar: Calendar
 
     var body: some View {
-        Box(title: "Right Now") {
+        Card(title: "Right Now") {
             GeometryReader { geometry in
                 RightNowTimeline(day: day, events: events, calendar: calendar, height: geometry.size.height)
             }
@@ -112,7 +115,7 @@ struct RightNowView: View {
     }
 }
 
-/// The scrolling part of Right Now. It is the only part of the box that depends on the current minute.
+/// The scrolling part of Right Now. It is the only part of the card that depends on the current minute.
 private struct RightNowTimeline: View {
     let day: DateRange
     let events: [Event]
@@ -136,6 +139,7 @@ private struct RightNowTimeline: View {
         }
         .overlay(alignment: .topLeading) {
             NowLine()
+                .padding(.leading, TimeRuler.width + TimeRuler.spacing)
                 .offset(y: fit.offset(ofHour: nowHour))
         }
         .animation(reduceMotion ? nil : .smooth(duration: 0.8), value: start)

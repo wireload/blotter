@@ -16,6 +16,21 @@ public struct RGBAColor: Hashable, Sendable {
 
     /// Fallback for calendars without a colour.
     public static let fallback = RGBAColor(red: 0.2, green: 0.45, blue: 0.95)
+
+    public static let white = RGBAColor(red: 1, green: 1, blue: 1)
+    public static let black = RGBAColor(red: 0, green: 0, blue: 0)
+
+    /// This colour moved `fraction` (0–1) of the way towards `other`, keeping this colour's alpha.
+    ///
+    /// Used to derive readable text colours from calendar colours: darker on light backgrounds, lighter on dark.
+    public func mixed(with other: RGBAColor, by fraction: Double) -> RGBAColor {
+        let t = min(max(fraction, 0), 1)
+        return RGBAColor(
+            red: red + (other.red - red) * t,
+            green: green + (other.green - green) * t,
+            blue: blue + (other.blue - blue) * t,
+            alpha: alpha)
+    }
 }
 
 /// A calendar event, independent of EventKit.

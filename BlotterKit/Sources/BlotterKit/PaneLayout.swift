@@ -26,7 +26,7 @@ public struct PaneLayout: Equatable, Sendable {
         public var minimumAllDayHeight: CGFloat = 50
         public var minimumTimedHeight: CGFloat = 300
         /// Height of the day titles above the all-day events.
-        public var weekTitleHeight: CGFloat = 32
+        public var weekTitleHeight: CGFloat = 44
 
         public init() {}
     }

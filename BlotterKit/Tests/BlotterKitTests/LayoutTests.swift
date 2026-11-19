@@ -172,10 +172,12 @@ import Testing
 
     @Test func allDayAndTimedLeaveRoomForTitles() {
         let layout = PaneLayout(size: CGSize(width: 1000, height: 700), layout: .normal, calendarSize: .normal)
-        #expect(layout.allDayHeight + PaneLayout.spacingAfterAllDay + layout.timedHeight == CGFloat(700 - 32))
+        #expect(
+            layout.allDayHeight + PaneLayout.spacingAfterAllDay + layout.timedHeight == 700
+                - PaneLayout.Metrics().weekTitleHeight)
 
         // Too short for both: the all-day row takes what is left after the titles, not the full height.
         let short = PaneLayout(size: CGSize(width: 1000, height: 400), layout: .normal, calendarSize: .normal)
-        #expect(short.allDayHeight + short.timedHeight <= CGFloat(400 - 32))
+        #expect(short.allDayHeight + short.timedHeight <= 400 - PaneLayout.Metrics().weekTitleHeight)
     }
 }

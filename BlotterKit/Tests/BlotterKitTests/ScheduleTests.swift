@@ -70,6 +70,13 @@ import Testing
         #expect(Schedule.hour(of: date(19), on: day, calendar: calendar) == 24)
     }
 
+    @Test func colorMixing() {
+        let red = RGBAColor(red: 1, green: 0, blue: 0, alpha: 0.5)
+        #expect(red.mixed(with: .black, by: 0.5) == RGBAColor(red: 0.5, green: 0, blue: 0, alpha: 0.5))
+        #expect(red.mixed(with: .white, by: 1) == RGBAColor(red: 1, green: 1, blue: 1, alpha: 0.5))
+        #expect(red.mixed(with: .white, by: -1) == red)
+    }
+
     @Test func reminderOrder() {
         let reminders = [
             Reminder(id: "1", title: "Undated low", priority: 9, calendarID: "a"),

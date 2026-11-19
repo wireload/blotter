@@ -17,8 +17,9 @@ struct WeekView: View {
     @AppStorage(DefaultsKey.showsWeekdayDates) private var showsWeekdayDates = true
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    static let columnSpacing: CGFloat = 6
-    static let titleHeight: CGFloat = 32
+    /// Days sit edge to edge, separated by hairlines, as in Calendar.
+    static let columnSpacing: CGFloat = 0
+    static let titleHeight = PaneLayout.Metrics().weekTitleHeight
 
     var body: some View {
         GeometryReader { geometry in
@@ -26,7 +27,7 @@ struct WeekView: View {
             let timedHeight = max(geometry.size.height - Self.titleHeight - allDayBlock, 0)
             let fit = HourFit.fit(fitItems, height: timedHeight)
 
-            HStack(alignment: .top, spacing: Self.columnSpacing) {
+            HStack(alignment: .top, spacing: TimeRuler.spacing) {
                 TimeRuler(fit: fit, height: timedHeight, day: today, calendar: calendar)
                     .padding(.top, Self.titleHeight + allDayBlock)
 
@@ -43,11 +44,7 @@ struct WeekView: View {
     private func weekDays(fit: HourFit, timedHeight: CGFloat, allDayBlock: CGFloat) -> some View {
         VStack(spacing: 0) {
             columns { day in
-                Text(day.range.start, format: titleFormat)
-                    .font(.system(size: 11, weight: day.range == today ? .bold : .regular))
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .desktopTextShadow()
+                DayHeader(date: day.range.start, isToday: day.range == today, showsDate: showsWeekdayDates)
             }
             .frame(height: Self.titleHeight)
 
@@ -68,8 +65,10 @@ struct WeekView: View {
                 }
                 .frame(height: timedHeight)
                 .overlay(alignment: .topLeading) {
-                    if days.contains(where: { $0.range == today }) {
-                        CurrentTimeLine(today: today, fit: fit, calendar: calendar, height: timedHeight)
+                    if let todayIndex = days.firstIndex(where: { $0.range == today }) {
+                        CurrentTimeLine(
+                            today: today, fit: fit, calendar: calendar, height: timedHeight,
+                            todayIndex: todayIndex, dayCount: days.count)
                     }
                 }
                 .clipped()
@@ -79,12 +78,6 @@ struct WeekView: View {
 
     private var transition: AnyTransition {
         reduceMotion ? .opacity : .push(from: navigatesForward ? .trailing : .leading)
-    }
-
-    private var titleFormat: Date.FormatStyle {
-        showsWeekdayDates
-            ? .dateTime.weekday(.abbreviated).day().month(.abbreviated)
-            : .dateTime.weekday(.wide)
     }
 
     /// One cell per day.
@@ -108,23 +101,85 @@ struct WeekView: View {
     }
 }
 
-/// The current-time line across the week. It reads the clock itself, so minute ticks only redraw the line.
+/// A day's title, as in Calendar's week view: the weekday in small capitals over the day number, today's number in a
+/// red circle.
+private struct DayHeader: View {
+    let date: Date
+    let isToday: Bool
+    let showsDate: Bool
+
+    @Environment(\.colorScheme) private var colorScheme
+
+    var body: some View {
+        let theme = Theme(colorScheme: colorScheme)
+        if showsDate {
+            VStack(spacing: 3) {
+                Text(date.formatted(.dateTime.weekday(.abbreviated)).localizedUppercase)
+                    .font(.system(size: 10, weight: .semibold))
+                    .foregroundStyle(isToday ? theme.accent : theme.secondaryText)
+                Text(date, format: .dateTime.day())
+                    .font(.system(size: 15, weight: isToday ? .semibold : .regular))
+                    .monospacedDigit()
+                    .foregroundStyle(isToday ? .white : theme.text)
+                    .frame(width: 26, height: 26)
+                    .background {
+                        if isToday {
+                            Circle().fill(theme.accent)
+                        }
+                    }
+            }
+            .lineLimit(1)
+            .accessibilityElement(children: .combine)
+        } else {
+            Text(date, format: .dateTime.weekday(.wide))
+                .font(.system(size: 12, weight: isToday ? .semibold : .medium))
+                .foregroundStyle(isToday ? theme.accent : theme.secondaryText)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+        }
+    }
+}
+
+/// The current-time line: faint across the week, solid red across today with a dot at its start, as in Calendar.
+/// It reads the clock itself, so minute ticks only redraw the line.
 private struct CurrentTimeLine: View {
     let today: DateRange
     let fit: HourFit
     let calendar: Calendar
     let height: CGFloat
+    let todayIndex: Int
+    let dayCount: Int
 
     @Environment(Clock.self) private var clock
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         let y = fit.offset(ofHour: Schedule.hour(of: clock.now, on: today, calendar: calendar))
+        let accent = Theme(colorScheme: colorScheme).accent
         // Outside the visible hours (before the first or after the last), there is no line to draw.
         if y >= 0, y <= height {
-            NowLine()
+            GeometryReader { geometry in
+                let dayWidth = geometry.size.width / CGFloat(max(dayCount, 1))
+                let x = dayWidth * CGFloat(todayIndex)
+                ZStack(alignment: .topLeading) {
+                    Rectangle()
+                        .fill(accent.opacity(0.35))
+                        .frame(height: 1)
+                    Rectangle()
+                        .fill(accent)
+                        .frame(width: dayWidth, height: 1.5)
+                        .offset(x: x)
+                    Circle()
+                        .fill(accent)
+                        .frame(width: 7, height: 7)
+                        .offset(x: x - 3.5, y: -2.75)
+                }
                 .offset(y: y)
-                .animation(reduceMotion ? nil : .smooth(duration: 0.8), value: y)
+            }
+            .frame(height: height)
+            .animation(reduceMotion ? nil : .smooth(duration: 0.8), value: y)
+            .accessibilityHidden(true)
         }
     }
 }
@@ -159,8 +214,8 @@ struct AllDayColumn: View {
                         .frame(height: Self.rowHeight)
                 }
             }
+            .padding(.horizontal, 2)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .background(theme.panelFill, in: RoundedRectangle(cornerRadius: 6))
             .animation(Motion.update(reduceMotion: reduceMotion), value: events)
         }
     }
@@ -176,15 +231,15 @@ struct TimeRuler: View {
     @Environment(\.colorScheme) private var colorScheme
 
     static let width: CGFloat = 40
-    static let spacing: CGFloat = 6
+    static let spacing: CGFloat = 8
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
             ForEach(visibleHours, id: \.self) { hour in
                 Text(label(for: hour))
-                    .font(.system(size: 10))
+                    .font(.system(size: 10, weight: .medium))
+                    .monospacedDigit()
                     .foregroundStyle(Theme(colorScheme: colorScheme).secondaryText)
-                    .desktopTextShadow()
                     .frame(width: Self.width, height: 12, alignment: .trailing)
                     .offset(y: fit.offset(ofHour: Double(hour)) - 6)
                     .transition(.opacity)
@@ -229,22 +284,33 @@ struct DayColumn: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     static let eventGap: CGFloat = 2
+    /// Space between events and the day's edges.
+    static let inset: CGFloat = 2
     /// Fraction of the column hidden by Right Now's fade at the top.
     static let pinnedTitleInset: CGFloat = 0.08
 
     var body: some View {
         GeometryReader { geometry in
             // Beyond one column per 12 points, events would be unreadable slivers; extra ones share columns.
-            let placements = EventLayout.place(segments, maximumColumns: max(Int(geometry.size.width / 12), 1))
+            let placements = EventLayout.place(segments, maximumColumns: max(Int(geometry.size.width / 14), 1))
             let events = Dictionary(day.timed.map { ($0.event.id, $0.event) }, uniquingKeysWith: { first, _ in first })
 
+            let theme = Theme(colorScheme: colorScheme)
+            let eventWidth = max(geometry.size.width - Self.inset * 2, 0)
+
             ZStack(alignment: .topLeading) {
-                RoundedRectangle(cornerRadius: 6)
-                    .fill(Theme(colorScheme: colorScheme).columnFill)
+                Rectangle()
+                    .fill(calendar.isDateInWeekend(day.range.start) ? theme.weekendFill : .clear)
+                HourGrid(fit: fit, height: geometry.size.height)
+                    .stroke(theme.gridLine, lineWidth: 0.5)
+                Rectangle()
+                    .fill(theme.gridLine)
+                    .frame(width: 0.5)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
 
                 ForEach(placements, id: \.segment.id) { placement in
                     if let event = events[placement.segment.id] {
-                        let extent = placement.horizontalExtent(width: geometry.size.width, gap: Self.eventGap)
+                        let extent = placement.horizontalExtent(width: eventWidth, gap: Self.eventGap)
                         let top = CGFloat(placement.segment.top)
                         let bottom = CGFloat(placement.segment.bottom)
                         // In Right Now, keep the title of an ongoing event below the fade at the top.
@@ -253,12 +319,12 @@ struct DayColumn: View {
                             keepsTextVisible ? max(top, min(pinned, bottom - EventBlock.minimumHeight)) : top
                         EventBlock(event: event, isCompact: false, textInset: visibleTop - top)
                             .frame(width: extent.width, height: CGFloat(placement.segment.bottom) - top)
-                            .offset(x: extent.x, y: top)
+                            .offset(x: extent.x + Self.inset, y: top)
                             .transition(.opacity.combined(with: .scale(scale: 0.96, anchor: .top)))
                     }
                 }
             }
-            .clipShape(RoundedRectangle(cornerRadius: 6))
+            .clipped()
             .accessibilityElement(children: .contain)
             .accessibilityLabel(Text(day.range.start, format: .dateTime.weekday(.wide).day().month(.wide)))
             .animation(Motion.update(reduceMotion: reduceMotion), value: placements)
@@ -300,22 +366,30 @@ struct EventBlock: View {
 
     var body: some View {
         let theme = Theme(colorScheme: colorScheme)
-        let shape = RoundedRectangle(cornerRadius: 4)
+        let shape = RoundedRectangle(cornerRadius: 5, style: .continuous)
+        let textColor = theme.eventText(event.color)
 
         VStack(alignment: .leading, spacing: 1) {
             Text(event.title)
-                .font(.system(size: 10, weight: .medium))
-                .foregroundStyle(theme.eventText)
-            if !isCompact, let location = event.location {
-                Text(location)
-                    .font(.system(size: 10).italic())
-                    .foregroundStyle(theme.eventSecondaryText)
+                .font(.system(size: 11, weight: .semibold))
+            if !isCompact {
+                Text(event.start, format: .dateTime.hour().minute())
+                    .font(.system(size: 10))
+                    .monospacedDigit()
+                    .opacity(0.8)
+                    .lineLimit(1)
+                if let location = event.location {
+                    Text(location)
+                        .font(.system(size: 10))
+                        .opacity(0.8)
+                }
             }
         }
+        .foregroundStyle(textColor)
         .lineLimit(isCompact ? 1 : nil)
-        .padding(.leading, 7)
+        .padding(.leading, 8)
         .padding(.trailing, 4)
-        .padding(.vertical, 3)
+        .padding(.vertical, isCompact ? 2 : 3)
         .padding(.top, textInset)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background {
@@ -325,26 +399,46 @@ struct EventBlock: View {
                 .frame(width: 3)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .overlay(shape.strokeBorder(theme.eventStroke, lineWidth: 1))
         .clipShape(shape)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(accessibilityDescription)
     }
 }
 
-/// The dashed current-time line.
+/// Hairlines at every whole hour, as in Calendar's day and week views.
+private nonisolated struct HourGrid: Shape {
+    let fit: HourFit
+    let height: CGFloat
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        for hour in 0...24 {
+            let y = fit.offset(ofHour: Double(hour))
+            guard y > 0, y < height else { continue }
+            path.move(to: CGPoint(x: rect.minX, y: y))
+            path.addLine(to: CGPoint(x: rect.maxX, y: y))
+        }
+        return path
+    }
+}
+
+/// The current-time line in Right Now: red, with a dot at its start.
 struct NowLine: View {
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
-        GeometryReader { geometry in
-            Path { path in
-                path.move(to: .zero)
-                path.addLine(to: CGPoint(x: geometry.size.width, y: 0))
-            }
-            .stroke(Theme(colorScheme: colorScheme).nowLine, style: StrokeStyle(lineWidth: 1, dash: [3, 3]))
+        let accent = Theme(colorScheme: colorScheme).accent
+        ZStack(alignment: .leading) {
+            Rectangle()
+                .fill(accent)
+                .frame(height: 1.5)
+            Circle()
+                .fill(accent)
+                .frame(width: 7, height: 7)
+                .offset(x: -3.5)
         }
-        .frame(height: 1)
+        .frame(height: 7)
+        .offset(y: -3.5)
         .accessibilityHidden(true)
     }
 }
