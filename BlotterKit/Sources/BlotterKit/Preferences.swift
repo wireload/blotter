@@ -24,6 +24,10 @@ public enum CalendarPosition: Int, CaseIterable, Identifiable, Sendable {
 
     public var id: Int { rawValue }
 
+    /// Where a new calendar goes: bottom right. Since macOS Sonoma, desktop widgets fill the top left, and
+    /// Notification Center and desktop icons start at the top right.
+    public static let defaultPosition = CalendarPosition.bottomRight
+
     /// 0 = left, 1 = centre, 2 = right.
     public var column: Int { rawValue % 3 }
     /// 0 = top, 1 = centre, 2 = bottom.

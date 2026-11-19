@@ -49,6 +49,9 @@ final class SettingsWindowController: NSWindowController {
         window.styleMask = [.titled, .closable]
         window.toolbarStyle = .preference
         window.isReleasedWhenClosed = false
+        // Above the calendar when it is brought to front (which floats), like Blotter 2's preferences and the
+        // New Event window.
+        window.level = NSWindow.Level(rawValue: NSWindow.Level.floating.rawValue + 1)
         window.setFrameAutosaveName("Settings")
         super.init(window: window)
     }

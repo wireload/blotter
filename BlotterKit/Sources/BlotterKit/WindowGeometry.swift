@@ -12,8 +12,9 @@ public enum WindowGeometry {
     public static let normalMinimumSize = CGSize(width: 950, height: 718)
     /// Smallest custom frame, in points.
     public static let minimumCustomSize = CGSize(width: 230, height: 100)
-    /// Custom frame used until the user picks one: the normal size, top left.
-    public static let defaultCustomFactors = CGRect(x: 0, y: 0.5, width: 0.5, height: 0.5)
+    /// Custom frame used until the user picks one: half the screen, bottom right (see
+    /// `CalendarPosition.defaultPosition`).
+    public static let defaultCustomFactors = CGRect(x: 0.5, y: 0, width: 0.5, height: 0.5)
 
     /// Frame of the calendar window, in the same bottom-left-origin coordinates as `visibleFrame`.
     ///
