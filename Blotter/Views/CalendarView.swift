@@ -57,7 +57,7 @@ struct CalendarView: View {
                 if panes.showsInfo {
                     VStack(spacing: PaneLayout.spacingAfterDate) {
                         if panes.dateHeight > 0 {
-                            DateView(date: clock.today)
+                            Card { DateView(date: clock.today) }
                                 .frame(height: panes.dateHeight)
                         }
                         if panes.toDoHeight > 0 {
@@ -73,15 +73,17 @@ struct CalendarView: View {
                     .frame(width: panes.infoWidth)
                 }
                 if panes.showsWeek {
-                    WeekView(
-                        days: schedule,
-                        today: today,
-                        calendar: clock.calendar,
-                        allDayHeight: panes.allDayHeight,
-                        access: store.eventAccess,
-                        weekOffset: state.weekOffset,
-                        navigatesForward: state.lastNavigationWasForward
-                    )
+                    Card {
+                        WeekView(
+                            days: schedule,
+                            today: today,
+                            calendar: clock.calendar,
+                            allDayHeight: panes.allDayHeight,
+                            access: store.eventAccess,
+                            weekOffset: state.weekOffset,
+                            navigatesForward: state.lastNavigationWasForward
+                        )
+                    }
                     .frame(width: panes.weekWidth)
                 }
             }
@@ -91,9 +93,11 @@ struct CalendarView: View {
         }
         .foregroundStyle(theme.text)
         .background {
-            RoundedRectangle(cornerRadius: Self.cornerRadius)
-                .fill(state.presentation == .front ? theme.frontBackground : theme.desktopBackground)
-                .overlay(RoundedRectangle(cornerRadius: Self.cornerRadius).strokeBorder(theme.outline))
+            // On the desktop each pane is its own card; in front, the whole window gets a backdrop.
+            if state.presentation == .front {
+                RoundedRectangle(cornerRadius: Self.cornerRadius, style: .continuous)
+                    .fill(theme.frontBackground)
+            }
         }
         .animation(Motion.navigation(reduceMotion: reduceMotion), value: state.weekOffset)
         .onChange(of: loadedRanges, initial: true) { _, ranges in
@@ -108,28 +112,5 @@ struct CalendarView: View {
         metrics.toDoHeight = toDoHeight
         metrics.allDayHeight = allDayHeight
         return metrics
-    }
-}
-
-/// A titled, softly outlined box, used for To Do and Right Now.
-struct Box<Content: View>: View {
-    let title: LocalizedStringKey
-    @ViewBuilder let content: Content
-
-    @Environment(\.colorScheme) private var colorScheme
-
-    var body: some View {
-        let theme = Theme(colorScheme: colorScheme)
-        VStack(alignment: .leading, spacing: 8) {
-            Text(title)
-                .font(.system(size: 26, weight: .light))
-                .lineLimit(1)
-                .desktopTextShadow()
-            content
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        }
-        .padding(EdgeInsets(top: 12, leading: 15, bottom: 15, trailing: 13))
-        .background(theme.panelFill, in: RoundedRectangle(cornerRadius: 10))
-        .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(theme.outline))
     }
 }
