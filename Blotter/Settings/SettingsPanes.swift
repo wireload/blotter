@@ -396,7 +396,8 @@ private struct LayoutPreview: View {
 
     var body: some View {
         GeometryReader { geometry in
-            let scale = min(geometry.size.width / size.width, geometry.size.height / size.height)
+            // Leave room for the padding around the miniature.
+            let scale = min((geometry.size.width - 12) / size.width, (geometry.size.height - 12) / size.height)
             let width = size.width * scale
             let height = size.height * scale
             ZStack(alignment: .topLeading) {
