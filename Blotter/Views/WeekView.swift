@@ -416,11 +416,17 @@ struct EventBlock: View {
                     }
                 }
             case .oneLine:
-                HStack(alignment: .firstTextBaseline, spacing: 4) {
+                // The time only when title and time both fit; a cut-off time ("7…") says nothing.
+                ViewThatFits(in: .horizontal) {
+                    HStack(alignment: .firstTextBaseline, spacing: 4) {
+                        Text(event.title)
+                            .font(.system(size: 11, weight: .semibold))
+                            .fixedSize()
+                        time
+                            .fixedSize()
+                    }
                     Text(event.title)
                         .font(.system(size: 11, weight: .semibold))
-                        .layoutPriority(1)
-                    time
                 }
                 .lineLimit(1)
             case .allDay:
